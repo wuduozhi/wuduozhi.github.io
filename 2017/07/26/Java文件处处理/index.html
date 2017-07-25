@@ -4,25 +4,25 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>my summer holiday | 只为不凡而来</title>
+    <title>Java文件处处理 | 只为不凡而来</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="wuduozhi">
     
 
     
-    <meta name="description" content="My Colleage life">
-<meta name="keywords" content="hello">
+    <meta name="description" content="谈谈Java文件处理今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。 文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：  定位要操作的文件 建立管道 进行操作  简单点说，就是我们只需要找到我们想要操作的文件的路径，就能定">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="my summer holiday">
-<meta property="og:url" content="http://yoursite.com/2017/07/25/my-summer-holiday/index.html">
+<meta property="og:title" content="Java文件处处理">
+<meta property="og:url" content="http://yoursite.com/2017/07/26/Java文件处处理/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="My Colleage life">
+<meta property="og:description" content="谈谈Java文件处理今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。 文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：  定位要操作的文件 建立管道 进行操作  简单点说，就是我们只需要找到我们想要操作的文件的路径，就能定">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2017-07-25T14:31:58.743Z">
+<meta property="og:updated_time" content="2017-07-25T15:14:01.102Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="my summer holiday">
-<meta name="twitter:description" content="My Colleage life">
+<meta name="twitter:title" content="Java文件处处理">
+<meta name="twitter:description" content="谈谈Java文件处理今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。 文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：  定位要操作的文件 建立管道 进行操作  简单点说，就是我们只需要找到我们想要操作的文件的路径，就能定">
 
     
     <link rel="alternative" href="atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -50,7 +50,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -70,7 +70,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -86,40 +86,49 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/07/25/my-summer-holiday/" title="my summer holiday" itemprop="url">my summer holiday</a>
+      <a href="/2017/07/26/Java文件处处理/" title="Java文件处处理" itemprop="url">Java文件处处理</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-25T12:43:14.000Z" itemprop="datePublished"> 發表於 2017-07-25</time>
+    <time datetime="2017-07-25T22:46:17.000Z" itemprop="datePublished"> Published 2017-07-26</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目錄</strong>
+			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#My-Colleage-life"><span class="toc-number">1.</span> <span class="toc-text">My Colleage life</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#谈谈Java文件处理"><span class="toc-number">1.</span> <span class="toc-text">谈谈Java文件处理</span></a></li></ol>
 		
 		</div>
 		
-		<h3 id="My-Colleage-life"><a href="#My-Colleage-life" class="headerlink" title="My Colleage life"></a>My Colleage life</h3>  
+		<h3 id="谈谈Java文件处理"><a href="#谈谈Java文件处理" class="headerlink" title="谈谈Java文件处理"></a>谈谈Java文件处理</h3><p>今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。</p>
+<p>文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：</p>
+<ol>
+<li>定位要操作的文件</li>
+<li>建立管道</li>
+<li>进行操作</li>
+</ol>
+<p>简单点说，就是我们只需要找到我们想要操作的文件的路径，就能定位到它，就能对其进行一些列的操作，比如查看、复制、删除…这些操作，Java都已经为我们准备好了，需要用的时候查看文档就好了，最主要的是要记住步骤。</p>
+<p>另外，需要注意的是，IO流的操作是很占用内存的，举个例子吧：如果我们要把文件A里的内容复制到B中，计算机是这样工作的：计算机要先找到A文件，然后读取内容到JVM的内存中，然后在写进B文件中，但我们的A文件很大时，计算机就需要进行多次这样的循环工作，非常耗时，浪费资源。所以我们可以改进一下，我们可以这样设想，如果我们把从A读取的内容先在JVM中存起来，当达到足够的量时在一次把这些内容写进B中，这样就减少了一些重复性的工作，效率会提高不少，这也就是缓冲流的使用。</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/colleage/">colleage</a>
+  <a class="article-category-link" href="/categories/Java/">Java</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/hello/">hello</a>
+  <span></span> <a href="/tags/Java/">Java</a>
   </div>
 
 </div>
@@ -135,8 +144,8 @@
  
 
 <div class="next">
-<a href="/2017/07/25/MyBlog/"  title="hello hexo markdown">
- <span>hello hexo markdown
+<a href="/2017/07/25/MyBlog/"  title="Hexo">
+ <span>Hexo
 </span>
 </a>
 </div>
@@ -146,10 +155,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -177,11 +186,15 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分類</p>
+	<p class="asidetitle">Categories</p>
 		<ul>
 		
 		  
-			<li><a href="/categories/colleage/" title="colleage">colleage<sup>2</sup></a></li>
+			<li><a href="/categories/Java/" title="Java">Java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>1</sup></a></li>
 		  
 		
 		</ul>
@@ -190,11 +203,11 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/hello/" title="hello">hello<sup>2</sup></a></li>
+				<li><a href="/tags/hello/" title="hello">hello<sup>1</sup></a></li>
 			
 		
 			
@@ -203,6 +216,10 @@
 		
 			
 				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -393,7 +410,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
