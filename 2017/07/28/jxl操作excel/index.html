@@ -4,25 +4,25 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Java加密系统 | 只为不凡而来</title>
+    <title>jxl操作excel | 只为不凡而来</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="wuduozhi">
     
 
     
-    <meta name="description" content="加密系统最近,在学习文件操作这一部分的内容，在了解了一些文件的增、删、改、查后，突发奇想不如来整合一些这些功能，弄个简单的软件。 生成密文加密的方法有很多种，有对称、非对称加密算法，具体区别就不再这里细说了。初次尝试，用的是对称的加密算法，就是用来加密和解密的密文都是一样的。对于密文的实现，自己用的是一个很简单的算法，就是随机生成一些随机数，然后写进一个文件里，然后就可以使用其进行加密。 加密/解">
+    <meta name="description" content="Java操作Excel（jxl）读读的时候是这样的一个思路,先用一个输入流(InputStream)得到Excel文件,然后用jxl中的Workbook得到工作薄,用Sheet从工作薄中得到工作表,用Cell得到工作表中得某个单元格.InputStream-&amp;gt;Workbook-&amp;gt;Sheet-&amp;gt;Cell,就得到了excel文件中的单元格 12345678String path =">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java加密系统">
-<meta property="og:url" content="http://yoursite.com/2017/07/27/Java加密系统/index.html">
+<meta property="og:title" content="jxl操作excel">
+<meta property="og:url" content="http://yoursite.com/2017/07/28/jxl操作excel/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="加密系统最近,在学习文件操作这一部分的内容，在了解了一些文件的增、删、改、查后，突发奇想不如来整合一些这些功能，弄个简单的软件。 生成密文加密的方法有很多种，有对称、非对称加密算法，具体区别就不再这里细说了。初次尝试，用的是对称的加密算法，就是用来加密和解密的密文都是一样的。对于密文的实现，自己用的是一个很简单的算法，就是随机生成一些随机数，然后写进一个文件里，然后就可以使用其进行加密。 加密/解">
+<meta property="og:description" content="Java操作Excel（jxl）读读的时候是这样的一个思路,先用一个输入流(InputStream)得到Excel文件,然后用jxl中的Workbook得到工作薄,用Sheet从工作薄中得到工作表,用Cell得到工作表中得某个单元格.InputStream-&amp;gt;Workbook-&amp;gt;Sheet-&amp;gt;Cell,就得到了excel文件中的单元格 12345678String path =">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2017-07-26T13:02:02.315Z">
+<meta property="og:updated_time" content="2017-07-28T01:59:07.438Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java加密系统">
-<meta name="twitter:description" content="加密系统最近,在学习文件操作这一部分的内容，在了解了一些文件的增、删、改、查后，突发奇想不如来整合一些这些功能，弄个简单的软件。 生成密文加密的方法有很多种，有对称、非对称加密算法，具体区别就不再这里细说了。初次尝试，用的是对称的加密算法，就是用来加密和解密的密文都是一样的。对于密文的实现，自己用的是一个很简单的算法，就是随机生成一些随机数，然后写进一个文件里，然后就可以使用其进行加密。 加密/解">
+<meta name="twitter:title" content="jxl操作excel">
+<meta name="twitter:description" content="Java操作Excel（jxl）读读的时候是这样的一个思路,先用一个输入流(InputStream)得到Excel文件,然后用jxl中的Workbook得到工作薄,用Sheet从工作薄中得到工作表,用Cell得到工作表中得某个单元格.InputStream-&amp;gt;Workbook-&amp;gt;Sheet-&amp;gt;Cell,就得到了excel文件中的单元格 12345678String path =">
 
     
     <link rel="alternative" href="atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -86,14 +86,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/07/27/Java加密系统/" title="Java加密系统" itemprop="url">Java加密系统</a>
+      <a href="/2017/07/28/jxl操作excel/" title="jxl操作excel" itemprop="url">jxl操作excel</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-26T20:17:32.000Z" itemprop="datePublished"> 发表于 2017-07-27</time>
+    <time datetime="2017-07-28T09:53:44.000Z" itemprop="datePublished"> 发表于 2017-07-28</time>
     
   </p>
 </header>
@@ -102,14 +102,15 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#加密系统"><span class="toc-number">1.</span> <span class="toc-text">加密系统</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#生成密文"><span class="toc-number">1.0.1.</span> <span class="toc-text">生成密文</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#加密-解密"><span class="toc-number">1.0.2.</span> <span class="toc-text">加密/解密</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Finall"><span class="toc-number">1.0.3.</span> <span class="toc-text">Finall</span></a></li></ol></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Java操作Excel（jxl）"><span class="toc-number">1.</span> <span class="toc-text">Java操作Excel（jxl）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#读"><span class="toc-number">1.0.1.</span> <span class="toc-text">读</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#写"><span class="toc-number">1.0.2.</span> <span class="toc-text">写</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#总结"><span class="toc-number">1.0.3.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol>
 		
 		</div>
 		
-		<h3 id="加密系统"><a href="#加密系统" class="headerlink" title="加密系统"></a>加密系统</h3><p>最近,在学习文件操作这一部分的内容，在了解了一些文件的增、删、改、查后，突发奇想不如来整合一些这些功能，弄个简单的软件。</p>
-<h5 id="生成密文"><a href="#生成密文" class="headerlink" title="生成密文"></a>生成密文</h5><p>加密的方法有很多种，有对称、非对称加密算法，具体区别就不再这里细说了。初次尝试，用的是对称的加密算法，就是用来加密和解密的密文都是一样的。对于密文的实现，自己用的是一个很简单的算法，就是随机生成一些随机数，然后写进一个文件里，然后就可以使用其进行加密。</p>
-<h5 id="加密-解密"><a href="#加密-解密" class="headerlink" title="加密/解密"></a>加密/解密</h5><p>密文有了，我们就可以加密了，也很简单。我们先把密文的信息取出来，存在一个数组中，然后一个字节一个字节的把需要在加密的信息读出来，先加上数组的值，然后在写到另一个文件，这样就能加密了。是不是很简单呀，知道了加密，那解密也就不是事了，用同样的密文，减去相应的值就好啦。</p>
-<h5 id="Finall"><a href="#Finall" class="headerlink" title="Finall"></a>Finall</h5><p>最后，需要指出的是这种加密方法还是挺容易被破解的，只要拿到加密所需要的密文，一切就都可以解决了。</p>
+		<h3 id="Java操作Excel（jxl）"><a href="#Java操作Excel（jxl）" class="headerlink" title="Java操作Excel（jxl）"></a>Java操作Excel（jxl）</h3><h5 id="读"><a href="#读" class="headerlink" title="读"></a>读</h5><p>读的时候是这样的一个思路,先用一个输入流(InputStream)得到Excel文件,然后用jxl中的Workbook得到工作薄,用Sheet从工作薄中得到工作表,用Cell得到工作表中得某个单元格.<br>InputStream-&gt;Workbook-&gt;Sheet-&gt;Cell,就得到了excel文件中的单元格</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">String path = &quot;c:\\excel.xls&quot;; //Excel文件URL</div><div class="line">InputStream is = new FileInputStream(path); //写入到FileInputStream</div><div class="line">jxl.Workbook wb = Workbook.getWorkbook(is); //得到工作薄 </div><div class="line">jxl.Sheet st = wb.getSheet(0); //得到工作薄中的第一个工作表</div><div class="line">Cell cell = st.getCell(0, 0); //得到工作表的第一个单元格,即A1</div><div class="line">String content = cell.getContents(); //getContents()将Cell中的字符转为字符串</div><div class="line">wb.close(); //关闭工作薄</div><div class="line">is.close(); //关闭输入流</div></pre></td></tr></table></figure>
+<p>我们可以通过Sheet的getCell(x,y)方法得到任意一个单元格,x,y和excel中的坐标对应.<br>例如A1对应(0,0),A2对应(0,1),D3对应(3,2).Excel中坐标从A,1开始,jxl中全部是从0开始.<br>还可以通过Sheet的getRows(),getColumns()方法得到行数列数,并用于循环控制,输出一个sheet中的所有内容.</p>
+<h5 id="写"><a href="#写" class="headerlink" title="写"></a>写</h5><p>往Excel中写入内容主要是用jxl.write包中的类.<br>思路是这样的:<br>OutputStream&lt;-WritableWorkbook&lt;-WritableSheet&lt;-Label<br>这里面Label代表的是写入Sheet的Cell位置及内容.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">OutputStream os = new FileOutputStream(&quot;c:\\test.xls&quot;); </div><div class="line">WritableWorkbook wwb = Workbook.createWorkbook(os); </div><div class="line">WritableSheet ws = wwb.createSheet(&quot;sheet1&quot;, 0);    //创建可写工作表</div><div class="line">Label labelCF = new Label(0, 0, &quot;hello&quot;);    //创建写入位置和内容</div><div class="line">ws.addCell(labelCF);    //将Label写入sheet中</div><div class="line">//Label的构造函数Label(int x, int y,String aString)xy意同读的时候的xy,aString是写入的内容.</div><div class="line">WritableFont wf = new WritableFont(WritableFont.TIMES, 12, WritableFont.BOLD, false);   //设置写入字体</div><div class="line">WritableCellFormat wcfF = new WritableCellFormat(wf);    //设置CellFormat</div><div class="line">Label labelCF = new Label(0, 0, &quot;hello&quot;);   //创建写入位置,内容和格式</div><div class="line">//Label的另一构造函数Label(int c, int r, String cont, CellFormat st)可以对写入内容进行格式化,设置字体及其它的属性.</div><div class="line">    </div><div class="line">wwb.write();</div><div class="line">wwb.close();</div><div class="line">os.close;</div></pre></td></tr></table></figure></p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>OK,了解了怎么读与写，我们只要把读和写结合起来,就可以在N个Excel中读取数据写入你希望的Excel新表中,还是比较方便的。举个例子吧:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">sql = &quot;select * from tablename&quot;;</div><div class="line">rs = stmt.executeQuery(sql);</div><div class="line">//新建Excel文件</div><div class="line">String filePath = request.getRealPath(&quot;aaa.xls&quot;);</div><div class="line">File myFilePath = new File(filePath);</div><div class="line">if (!myFilePath.exists()) myFilePath.createNewFile();</div><div class="line">FileWriter resultFile = new FileWriter(myFilePath);</div><div class="line">PrintWriter myFile = new PrintWriter(resultFile);</div><div class="line">resultFile.close();</div><div class="line">//用JXL向新建的文件中添加内容</div><div class="line">OutputStream outf = new FileOutputStream(filePath);</div><div class="line">jxl.write.WritableWorkbook wwb = Workbook.createWorkbook(outf);</div><div class="line">jxl.write.WritableSheet ws = wwb.createSheet(&quot;sheettest&quot;, 0);</div><div class="line">int i = 0;</div><div class="line">int j = 0;</div><div class="line">for (int k = 0; k &lt; rs.getMetaData().getColumnCount(); k++) &#123;</div><div class="line">    ws.addCell(new Label(k, 0, rs.getMetaData().getColumnName(k + 1)));</div><div class="line">&#125;</div><div class="line">while (rs.next()) &#123;</div><div class="line">    out.println(rs.getMetaData().getColumnCount());</div><div class="line">    for (int k = 0; k &lt; rs.getMetaData().getColumnCount(); k++) &#123;</div><div class="line">        ws.addCell(new Label(k, j + i + 1, rs.getString(k + 1)));</div><div class="line">    &#125;</div><div class="line">    i++;</div><div class="line">&#125;</div><div class="line">wwb.write();</div><div class="line">wwb.close();</div><div class="line">&#125; catch(Exception e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; finally &#123;</div><div class="line">    rs.close();</div><div class="line">    conn.close();</div><div class="line">&#125;</div><div class="line">response.sendRedirect(&quot;aaa.xls&quot;);</div></pre></td></tr></table></figure></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -138,16 +139,16 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2017/07/28/a-b-c/" title="a+b=c">
+ <a href="/2017/07/29/Java服务器编程/" title="Java浅谈Socket">
   <span>
-  a+b=c</span>
+  Java浅谈Socket</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2017/07/26/Java文件处处理/"  title="Java文件处处理">
- <span>Java文件处处理
+<a href="/2017/07/28/a-b-c/"  title="a+b=c">
+ <span>a+b=c
 </span>
 </a>
 </div>
