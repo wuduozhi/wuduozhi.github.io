@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>只为不凡而来</title>
+  <subtitle>小智的世界</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2017-07-28T16:07:02.039Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>wuduozhi</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>我的大一</title>
+    <link href="http://yoursite.com/2017/07/29/%E6%88%91%E7%9A%84%E5%A4%A7%E4%B8%80/"/>
+    <id>http://yoursite.com/2017/07/29/我的大一/</id>
+    <published>2017-07-29T00:07:02.000Z</published>
+    <updated>2017-07-28T16:07:02.039Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Java浅谈Socket</title>
+    <link href="http://yoursite.com/2017/07/29/Java%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B/"/>
+    <id>http://yoursite.com/2017/07/29/Java服务器编程/</id>
+    <published>2017-07-28T20:30:36.000Z</published>
+    <updated>2017-07-28T13:23:20.098Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h3><p>现在是互联网的时代，说到底也就是连接的时代。人与人、人与物、物与物都需要连接，那为什么要连接呢？<br>我的答案是：为了交换信息。人与人的连接，就是我们说的交流，这也是一个互享信息的过程；人与物的连接，也是为了交换信息，举个简单的例子：但我们在自动购物机上购物时，我们通过挑选我们需要的商品告诉购物机我们要的是什么，这是你给购物机的信息，你扫二维码付款，告诉了购物机你的身份，这难道不是一个交换信息的过程吗？物与物的连接，也是这样的，就像智能家居里的家具，是要连接起来，共享信息，才能把我们的家控制在一个适宜的状态。我们写程序也一样，也要连接，也要交流，也要共享信息…</p>
+<h3 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h3><p>客户端套接字（也可以就叫“套接字”），套接字是两台机器之间的通信端点，是源IP地址和目的IP地址以及源端口号和目的端口号的组合，一般用于标识客户端请求的服务器和服务，是支持TCP/IP的网络通信的基本操作单元。</p>
+<p>一个Socket由一个IP地址和一个端口号唯一确定。在Java环境下，Socket编程主要是指基于TCP/IP协议的网络编程。具体的介绍参考Oracle的Socket说明文档。</p>
+<h5 id="使用Socket的过程有："><a href="#使用Socket的过程有：" class="headerlink" title="使用Socket的过程有："></a>使用Socket的过程有：</h5><ol>
+<li><p>创建</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">指定ip地址和端口号</div><div class="line">Socket client = new Socket(&quot;127.0.0.1.&quot;, 8080);</div><div class="line">打开连接到Socket的输入/输出流</div><div class="line">BufferedReader input=new BufferedReader(new InputStreamReader(client.getInputStream()));</div><div class="line">BufferedReader output=new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));</div></pre></td></tr></table></figure>
+</li>
+<li><p>进行读/写操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">String line = input.readLine();</div><div class="line">output.write(&quot;Success!&quot;);</div><div class="line">output.flush();</div></pre></td></tr></table></figure>
+</li>
+<li><p>关闭Socket</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">input.close();</div><div class="line">output.close();</div><div class="line">client.close();</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="ServerSocket"><a href="#ServerSocket" class="headerlink" title="ServerSocket"></a>ServerSocket</h3><p>服务器套接字，可以绑定到指定的服务器IP地址和端口，等待请求通过网络传入，基于该请求执行某些操作，然后可能向请求者返回结果。</p>
+<h5 id="使用ServerSocket的过程有："><a href="#使用ServerSocket的过程有：" class="headerlink" title="使用ServerSocket的过程有："></a>使用ServerSocket的过程有：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">这里绑定8080端口，默认绑定本地IP地址，侦听并接收HTTP请求。</div><div class="line">ServerSocket server = new ServerSocket(8080);</div><div class="line">accept()方法，侦听并接受到此套接字的连接,程序会在此处堵塞，简单点说，程序会在此处停住，一直等到有客户端连接</div><div class="line">Socket socket = server.accept();</div><div class="line"></div><div class="line">Server接收消息后再对请求做处理，注意服务端input对应客户端的output，服务端的output对应客户端的input。</div></pre></td></tr></table></figure>
+<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">package service.com;</div><div class="line"></div><div class="line">import java.io.IOException;</div><div class="line">import java.net.ServerSocket;</div><div class="line">import java.net.Socket;</div><div class="line">import java.util.Date;</div><div class="line"></div><div class="line">import org.apache.commons.lang3.time.DateFormatUtils;</div><div class="line"></div><div class="line">public class HttpServer &#123;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line"></div><div class="line">        try &#123;</div><div class="line">            // 侦听8080端口</div><div class="line">            ServerSocket server = new ServerSocket(8080);</div><div class="line"></div><div class="line">            System.out.println(&quot;Info:Server start,&quot; + DateFormatUtils.format(new Date(), &quot;yyyy-MM-dd HH:mm:ss&quot;));</div><div class="line">            while (1 == 1) &#123;</div><div class="line">                // 接收客户端请求数据   程序堵塞</div><div class="line">                Socket socket = server.accept();</div><div class="line"></div><div class="line">                // 读取</div><div class="line">                BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));</div><div class="line">                // 写入</div><div class="line">                BufferedWriter output = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));</div><div class="line"></div><div class="line">                String line = input.readLine();</div><div class="line"></div><div class="line">                while (line != null) &#123;</div><div class="line">                    System.out.println(line);</div><div class="line">                    output.write(&quot;Success!!&quot; + DateFormatUtils.format(new Date(), &quot;yyyy-MM-dd HH:mm:ss&quot;) + &quot;\r\n&quot;);</div><div class="line">                    output.flush();</div><div class="line">                    line = input.readLine();</div><div class="line">                    return;</div><div class="line">                &#125;</div><div class="line">                //必须关闭</div><div class="line">                input.close();</div><div class="line">                output.close();</div><div class="line"></div><div class="line">                socket.close();</div><div class="line">            &#125;</div><div class="line">        &#125; catch (IOException e) &#123;</div><div class="line">           System.out.println(&quot;Error binding the specified port.&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h5><ol>
+<li><p>启动程序后，控制台信息输出：<br>Info:Server start,2016-12-02 15:26:13</p>
+</li>
+<li><p>使用cmd,输入命令 telnet localhost 8080:<br>输入 hello world</p>
+</li>
+<li><p>命令行显示:<br>Success!!2016-12-02 15:29:01</p>
+</li>
+<li><p>控制台输出：<br>hello world</p>
+</li>
+</ol>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>通过上面的讲述，不难发现，虽然我们说的Socket编程，但这一部分的内容并不多，无非就是建立SocketServer和Socket，两者使用同样的端口，就能相互连接上，<br>最主要的还是怎么处理连接后的的IO流的操作。此外，还需要服务器端的输入输出流和客户端的输入输出流，必要弄混淆了。</p>
+<p>我们用的例子是发送字符串，但我们要看到本质性的东西：我们发送的字符串是以字节的形式发送出去的，那是不是说明我们就可以发送图像、视频…了呢？是的，我们能把计算机上的任何东西发送出去，只需要找到我们要发送的文件的URI，就能打开它，保存到字节数组里，然后发送出去。当然，如果文件过大，还要注意内存溢出的问题。</p>
+<p>此外，我们常说的Web服务器，其实也就是一个用来接收客户端请求，并处理用户端的请求并返回信息的程序，只不过有一些特别的规定，也就是Http协议。那是不是说，如果我们了解了Http协议的规定，我们也能写一个Http服务器了呢？下一节咱们就来完成一个简单的能处理http请求的服务器。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;开篇&quot;&gt;&lt;a href=&quot;#开篇&quot; class=&quot;headerlink&quot; title=&quot;开篇&quot;&gt;&lt;/a&gt;开篇&lt;/h3&gt;&lt;p&gt;现在是互联网的时代，说到底也就是连接的时代。人与人、人与物、物与物都需要连接，那为什么要连接呢？&lt;br&gt;我的答案是：为了交换信息。人与人的连
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>jxl操作excel</title>
+    <link href="http://yoursite.com/2017/07/28/jxl%E6%93%8D%E4%BD%9Cexcel/"/>
+    <id>http://yoursite.com/2017/07/28/jxl操作excel/</id>
+    <published>2017-07-28T09:53:44.000Z</published>
+    <updated>2017-07-28T01:59:07.438Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Java操作Excel（jxl）"><a href="#Java操作Excel（jxl）" class="headerlink" title="Java操作Excel（jxl）"></a>Java操作Excel（jxl）</h3><h5 id="读"><a href="#读" class="headerlink" title="读"></a>读</h5><p>读的时候是这样的一个思路,先用一个输入流(InputStream)得到Excel文件,然后用jxl中的Workbook得到工作薄,用Sheet从工作薄中得到工作表,用Cell得到工作表中得某个单元格.<br>InputStream-&gt;Workbook-&gt;Sheet-&gt;Cell,就得到了excel文件中的单元格</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">String path = &quot;c:\\excel.xls&quot;; //Excel文件URL</div><div class="line">InputStream is = new FileInputStream(path); //写入到FileInputStream</div><div class="line">jxl.Workbook wb = Workbook.getWorkbook(is); //得到工作薄 </div><div class="line">jxl.Sheet st = wb.getSheet(0); //得到工作薄中的第一个工作表</div><div class="line">Cell cell = st.getCell(0, 0); //得到工作表的第一个单元格,即A1</div><div class="line">String content = cell.getContents(); //getContents()将Cell中的字符转为字符串</div><div class="line">wb.close(); //关闭工作薄</div><div class="line">is.close(); //关闭输入流</div></pre></td></tr></table></figure>
+<p>我们可以通过Sheet的getCell(x,y)方法得到任意一个单元格,x,y和excel中的坐标对应.<br>例如A1对应(0,0),A2对应(0,1),D3对应(3,2).Excel中坐标从A,1开始,jxl中全部是从0开始.<br>还可以通过Sheet的getRows(),getColumns()方法得到行数列数,并用于循环控制,输出一个sheet中的所有内容.</p>
+<h5 id="写"><a href="#写" class="headerlink" title="写"></a>写</h5><p>往Excel中写入内容主要是用jxl.write包中的类.<br>思路是这样的:<br>OutputStream&lt;-WritableWorkbook&lt;-WritableSheet&lt;-Label<br>这里面Label代表的是写入Sheet的Cell位置及内容.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">OutputStream os = new FileOutputStream(&quot;c:\\test.xls&quot;); </div><div class="line">WritableWorkbook wwb = Workbook.createWorkbook(os); </div><div class="line">WritableSheet ws = wwb.createSheet(&quot;sheet1&quot;, 0);    //创建可写工作表</div><div class="line">Label labelCF = new Label(0, 0, &quot;hello&quot;);    //创建写入位置和内容</div><div class="line">ws.addCell(labelCF);    //将Label写入sheet中</div><div class="line">//Label的构造函数Label(int x, int y,String aString)xy意同读的时候的xy,aString是写入的内容.</div><div class="line">WritableFont wf = new WritableFont(WritableFont.TIMES, 12, WritableFont.BOLD, false);   //设置写入字体</div><div class="line">WritableCellFormat wcfF = new WritableCellFormat(wf);    //设置CellFormat</div><div class="line">Label labelCF = new Label(0, 0, &quot;hello&quot;);   //创建写入位置,内容和格式</div><div class="line">//Label的另一构造函数Label(int c, int r, String cont, CellFormat st)可以对写入内容进行格式化,设置字体及其它的属性.</div><div class="line">    </div><div class="line">wwb.write();</div><div class="line">wwb.close();</div><div class="line">os.close;</div></pre></td></tr></table></figure></p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>OK,了解了怎么读与写，我们只要把读和写结合起来,就可以在N个Excel中读取数据写入你希望的Excel新表中,还是比较方便的。举个例子吧:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">sql = &quot;select * from tablename&quot;;</div><div class="line">rs = stmt.executeQuery(sql);</div><div class="line">//新建Excel文件</div><div class="line">String filePath = request.getRealPath(&quot;aaa.xls&quot;);</div><div class="line">File myFilePath = new File(filePath);</div><div class="line">if (!myFilePath.exists()) myFilePath.createNewFile();</div><div class="line">FileWriter resultFile = new FileWriter(myFilePath);</div><div class="line">PrintWriter myFile = new PrintWriter(resultFile);</div><div class="line">resultFile.close();</div><div class="line">//用JXL向新建的文件中添加内容</div><div class="line">OutputStream outf = new FileOutputStream(filePath);</div><div class="line">jxl.write.WritableWorkbook wwb = Workbook.createWorkbook(outf);</div><div class="line">jxl.write.WritableSheet ws = wwb.createSheet(&quot;sheettest&quot;, 0);</div><div class="line">int i = 0;</div><div class="line">int j = 0;</div><div class="line">for (int k = 0; k &lt; rs.getMetaData().getColumnCount(); k++) &#123;</div><div class="line">    ws.addCell(new Label(k, 0, rs.getMetaData().getColumnName(k + 1)));</div><div class="line">&#125;</div><div class="line">while (rs.next()) &#123;</div><div class="line">    out.println(rs.getMetaData().getColumnCount());</div><div class="line">    for (int k = 0; k &lt; rs.getMetaData().getColumnCount(); k++) &#123;</div><div class="line">        ws.addCell(new Label(k, j + i + 1, rs.getString(k + 1)));</div><div class="line">    &#125;</div><div class="line">    i++;</div><div class="line">&#125;</div><div class="line">wwb.write();</div><div class="line">wwb.close();</div><div class="line">&#125; catch(Exception e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; finally &#123;</div><div class="line">    rs.close();</div><div class="line">    conn.close();</div><div class="line">&#125;</div><div class="line">response.sendRedirect(&quot;aaa.xls&quot;);</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Java操作Excel（jxl）&quot;&gt;&lt;a href=&quot;#Java操作Excel（jxl）&quot; class=&quot;headerlink&quot; title=&quot;Java操作Excel（jxl）&quot;&gt;&lt;/a&gt;Java操作Excel（jxl）&lt;/h3&gt;&lt;h5 id=&quot;读&quot;&gt;&lt;a hre
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>a+b=c</title>
+    <link href="http://yoursite.com/2017/07/28/a-b-c/"/>
+    <id>http://yoursite.com/2017/07/28/a-b-c/</id>
+    <published>2017-07-27T16:53:27.000Z</published>
+    <updated>2017-07-27T14:39:52.285Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="见林见森"><a href="#见林见森" class="headerlink" title="见林见森"></a>见林见森</h3><p>小时候，常听大人们讲”看问题要看本质”，那是还小，不太懂这句话的意思，也没有进行深入的思考。慢慢的长大，经历的许多事情后，再次听到这句话，觉得自己有了一点理解。</p>
+<p>就拿我们小时候学的算术来举个例子，我们都知道2+3=5，6+8=10…在小学，我们学了很多这样的例子；等我们到了初中的时候，接触到代数，有了这样的表达式  a+b=c ，人们所说的代数。一个简单的表达式就涵盖了我们小学6年所学的算术，说到底，我们在小学学的无穷的算术，就是为了在初中能更好地理解为什么 a+b=c 是可以成立的。换句话来说a+b=c就是我们在学了无穷的算术后，所真正需要掌握的东西,如果小学毕业后我们不能理解为什么a+b=c ，那就是我们的不对了。a+b=c的背后，是一种思考方法…</p>
+<p>我们长大了，需要学习的东西也变多了，也没有多少个六年让我们去掌握一件东西了。所以在学习的时候，我们就需要从表面的东西看到最深层的东西，这不容易，需要平常多思考，多与人交流。</p>
+<p>拿自己来说吧，一个以后极其可能走上码农道路上的人来说，有无数中高级语言需要我们去学习，因为我们并不知道客户的需求是什么样的。那是不是说如果客户要求使用的语言我没学过，那这工作我是不是就不能接了呢？如果是这样，那码农这个职业的存在就是不合理的。要解决这种问题，需要我们有学过一本语言，就能知道怎么使用其他语言的能力，那怎么做到呢？是的，这时候我们就需要找到这些编程语言的共性。如果我们有学过一本编程语言，就应该知道用这门语言完成一些操作时的步骤，比如说用来操作文件，一般都是先找到文件、建立通道、操作文件…再比如说数据库操作，一般步骤为怎么连接数据库、怎么发送SQL语句…是的，能够发现这些基本的步骤，才是我们学习一门语言的目的，也只有这样，我们才能更快的学习另一门语言，满足客户的要求。</p>
+<p>在唠叨一下，如果我们今天自己完成了一个可以复制、加密文件的小程序，第二天，有一个叫做“学生信息管理系统”的项目需要你来完成，你的反应是什么呢？第一反应极大可能是我不会呀，我只会最基本的文件复制、加密，怎么完成你的这个学生信息管理系统呀。这是正常的，我们接触到新的事物时，正常反应都是这样的。但如果我们仔细想想，管理系统说到底也就是信息处理呀，就是把把填写的学生信息存起来或者能把学生的信息读取出来，跟我们完成的文件复制、加密程序，不是一样的功能吗？还是那句话，见到树，就要想到森林。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;见林见森&quot;&gt;&lt;a href=&quot;#见林见森&quot; class=&quot;headerlink&quot; title=&quot;见林见森&quot;&gt;&lt;/a&gt;见林见森&lt;/h3&gt;&lt;p&gt;小时候，常听大人们讲”看问题要看本质”，那是还小，不太懂这句话的意思，也没有进行深入的思考。慢慢的长大，经历的许多事情后，再
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Java加密系统</title>
+    <link href="http://yoursite.com/2017/07/27/Java%E5%8A%A0%E5%AF%86%E7%B3%BB%E7%BB%9F/"/>
+    <id>http://yoursite.com/2017/07/27/Java加密系统/</id>
+    <published>2017-07-26T20:17:32.000Z</published>
+    <updated>2017-07-26T13:02:02.315Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="加密系统"><a href="#加密系统" class="headerlink" title="加密系统"></a>加密系统</h3><p>最近,在学习文件操作这一部分的内容，在了解了一些文件的增、删、改、查后，突发奇想不如来整合一些这些功能，弄个简单的软件。</p>
+<h5 id="生成密文"><a href="#生成密文" class="headerlink" title="生成密文"></a>生成密文</h5><p>加密的方法有很多种，有对称、非对称加密算法，具体区别就不再这里细说了。初次尝试，用的是对称的加密算法，就是用来加密和解密的密文都是一样的。对于密文的实现，自己用的是一个很简单的算法，就是随机生成一些随机数，然后写进一个文件里，然后就可以使用其进行加密。</p>
+<h5 id="加密-解密"><a href="#加密-解密" class="headerlink" title="加密/解密"></a>加密/解密</h5><p>密文有了，我们就可以加密了，也很简单。我们先把密文的信息取出来，存在一个数组中，然后一个字节一个字节的把需要在加密的信息读出来，先加上数组的值，然后在写到另一个文件，这样就能加密了。是不是很简单呀，知道了加密，那解密也就不是事了，用同样的密文，减去相应的值就好啦。</p>
+<h5 id="Finall"><a href="#Finall" class="headerlink" title="Finall"></a>Finall</h5><p>最后，需要指出的是这种加密方法还是挺容易被破解的，只要拿到加密所需要的密文，一切就都可以解决了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;加密系统&quot;&gt;&lt;a href=&quot;#加密系统&quot; class=&quot;headerlink&quot; title=&quot;加密系统&quot;&gt;&lt;/a&gt;加密系统&lt;/h3&gt;&lt;p&gt;最近,在学习文件操作这一部分的内容，在了解了一些文件的增、删、改、查后，突发奇想不如来整合一些这些功能，弄个简单的软件。&lt;/
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java文件处处理</title>
+    <link href="http://yoursite.com/2017/07/26/Java%E6%96%87%E4%BB%B6%E5%A4%84%E5%A4%84%E7%90%86/"/>
+    <id>http://yoursite.com/2017/07/26/Java文件处处理/</id>
+    <published>2017-07-25T22:46:17.000Z</published>
+    <updated>2017-07-27T02:57:58.678Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="谈谈Java文件处理"><a href="#谈谈Java文件处理" class="headerlink" title="谈谈Java文件处理"></a>谈谈Java文件处理</h3><p>今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。</p>
+<p>文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：</p>
+<ol>
+<li>定位要操作的文件</li>
+<li>建立管道</li>
+<li>进行操作</li>
+</ol>
+<p>简单点说，就是我们只需要找到我们想要操作的文件的路径，就能定位到它，就能对其进行一些列的操作，比如查看、复制、删除…这些操作，Java都已经为我们准备好了，需要用的时候查看文档就好了，最主要的是要记住步骤。</p>
+<p>另外，需要注意的是，IO流的操作是很占用内存的，举个例子吧：如果我们要把文件A里的内容复制到B中，计算机是这样工作的：计算机要先找到A文件，然后读取内容到JVM的内存中，然后在写进B文件中，但我们的A文件很大时，计算机就需要进行多次这样的循环工作，非常耗时，浪费资源。所以我们可以改进一下，我们可以这样设想，如果我们把从A读取的内容先在JVM中存起来，当达到足够的量时在一次把这些内容写进B中，这样就减少了一些重复性的工作，效率会提高不少。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;谈谈Java文件处理&quot;&gt;&lt;a href=&quot;#谈谈Java文件处理&quot; class=&quot;headerlink&quot; title=&quot;谈谈Java文件处理&quot;&gt;&lt;/a&gt;谈谈Java文件处理&lt;/h3&gt;&lt;p&gt;今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java文件处理器</title>
+    <link href="http://yoursite.com/2017/07/26/Java%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86%E5%99%A8/"/>
+    <id>http://yoursite.com/2017/07/26/Java文件处理器/</id>
+    <published>2017-07-25T22:46:17.000Z</published>
+    <updated>2017-07-26T12:32:02.072Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="谈谈Java文件处理"><a href="#谈谈Java文件处理" class="headerlink" title="谈谈Java文件处理"></a>谈谈Java文件处理</h3><p>今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。</p>
+<p>文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：</p>
+<ol>
+<li>定位要操作的文件</li>
+<li>建立管道</li>
+<li>进行操作</li>
+</ol>
+<p>简单点说，就是我们只需要找到我们想要操作的文件的路径，就能定位到它，就能对其进行一些列的操作，比如查看、复制、删除…这些操作，Java都已经为我们准备好了，需要用的时候查看文档就好了，最主要的是要记住步骤。</p>
+<p>另外，需要注意的是，IO流的操作是很占用内存的，举个例子吧：如果我们要把文件A里的内容复制到B中，计算机是这样工作的：计算机要先找到A文件，然后读取内容到JVM的内存中，然后在写进B文件中，但我们的A文件很大时，计算机就需要进行多次这样的循环工作，非常耗时，浪费资源。所以我们可以改进一下，我们可以这样设想，如果我们把从A读取的内容先在JVM中存起来，当达到足够的量时在一次把这些内容写进B中，这样就减少了一些重复性的工作，效率会提高不少。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;谈谈Java文件处理&quot;&gt;&lt;a href=&quot;#谈谈Java文件处理&quot; class=&quot;headerlink&quot; title=&quot;谈谈Java文件处理&quot;&gt;&lt;/a&gt;谈谈Java文件处理&lt;/h3&gt;&lt;p&gt;今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo</title>
+    <link href="http://yoursite.com/2017/07/25/MyBlog/"/>
+    <id>http://yoursite.com/2017/07/25/MyBlog/</id>
+    <published>2017-07-25T01:05:19.000Z</published>
+    <updated>2017-07-25T14:45:09.687Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="My-First-Hexo-Blog"><a href="#My-First-Hexo-Blog" class="headerlink" title="My First Hexo Blog"></a>My First Hexo Blog</h3><p>  Hexo，一个博客框架，之前听学长讲过，今天跟着教程弄了一下，不是很难，如果之前有接触过git，那就更简单了，跟装个软件差不多。<a href="https://xuanwo.org/2015/03/26/hexo-intor/" target="_blank" rel="external">教程</a> <a href="https://lfkid.github.io/2016/11/16/Hexo%E6%95%99%E7%A8%8B%EF%BC%9A%EF%BC%88%E5%9B%9B%EF%BC%89%E5%B0%86%E6%9C%AC%E5%9C%B0Hexo%E7%AB%99%E7%82%B9%E9%83%A8%E7%BD%B2%E5%88%B0GitHubPages/" target="_blank" rel="external">部署</a> <a href="https://lfkid.github.io/2016/11/16/Hexo%E6%95%99%E7%A8%8B%EF%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/" target="_blank" rel="external">系列教程</a></p>
+<h3 id="Hexo常用命令"><a href="#Hexo常用命令" class="headerlink" title="Hexo常用命令"></a>Hexo常用命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">* hexo new &quot;postName&quot; #新建文章</div><div class="line">* hexo generate #生成静态页面至public目录</div><div class="line">* hexo server #开启预览访问端口（默认端口4000，&apos;ctrl + c&apos;关闭server）</div><div class="line">* hexo deploy #部署到GitHub</div><div class="line">* hexo help  # 查看帮助</div><div class="line">* hexo version  #查看Hexo的版本</div><div class="line"></div><div class="line">缩写：</div><div class="line"></div><div class="line">* hexo n == hexo new</div><div class="line">* hexo g == hexo generate</div><div class="line">* hexo s == hexo server</div><div class="line">* hexo d == hexo deploy</div><div class="line"></div><div class="line">组合命令：</div><div class="line"></div><div class="line">* hexo s -g #生成并本地预览</div><div class="line">* hexo d -g #生成并上传</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;My-First-Hexo-Blog&quot;&gt;&lt;a href=&quot;#My-First-Hexo-Blog&quot; class=&quot;headerlink&quot; title=&quot;My First Hexo Blog&quot;&gt;&lt;/a&gt;My First Hexo Blog&lt;/h3&gt;&lt;p&gt;  Hexo
+    
+    </summary>
+    
+      <category term="colleage" scheme="http://yoursite.com/categories/colleage/"/>
+    
+    
+      <category term="hello" scheme="http://yoursite.com/tags/hello/"/>
+    
+      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+    
+      <category term="markdowm" scheme="http://yoursite.com/tags/markdowm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://yoursite.com/2017/07/24/hello-world/"/>
+    <id>http://yoursite.com/2017/07/24/hello-world/</id>
+    <published>2017-07-24T15:54:03.205Z</published>
+    <updated>2017-07-24T15:54:03.206Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
