@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-07-30T16:14:31.631Z</updated>
+  <updated>2017-07-30T16:50:36.804Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,160 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>玩转cmd</title>
+    <link href="http://yoursite.com/2017/07/31/%E7%8E%A9%E8%BD%ACcmdmd/"/>
+    <id>http://yoursite.com/2017/07/31/玩转cmdmd/</id>
+    <published>2017-07-31T00:22:04.000Z</published>
+    <updated>2017-07-30T16:50:36.804Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="cmd应用基础"><a href="#cmd应用基础" class="headerlink" title="cmd应用基础"></a>cmd应用基础</h3><p>Posted on 2012-12-15</p>
+<h4 id="cmd是什么？"><a href="#cmd是什么？" class="headerlink" title="cmd是什么？"></a>cmd是什么？</h4><p>对于程序员而言，cmd命令提示符是windows操作系统下一个比较重要的工具。对于程序员而言，为了追求更高的效率而抛弃花俏的界面已然是意见很常见的行为，截止到目前的，全世界仍有大量的服务器还使用着单一的命令行界面。</p>
+<p>使用命令行界面的一个重要因素就是，在远程管理的过程中，命令行操作紧需要传递少量的数据就可以对机器进行操作，如果是图形界面，由于需要传输大量的图形数据，很可能出现延迟、链接不稳定等情况，亦或者在同样情况下效率没有使用命令行界面操作来得高。所以，至今人们依旧离不开命令行操作。</p>
+<p>而cmd则是windows系列操作系统下的命令行操作程序 <strong>(不论是命令行或者是桌面这样的图形界面本质上都是程序)</strong></p>
+<p>命令行界面程序cmd.exe所在的目录是C:\Windows\System32</p>
+<p>顺带一提我们的桌面（图形操作界面）则是位于C:\Windows下的explorer.exe</p>
+<h4 id="如何打开cmd"><a href="#如何打开cmd" class="headerlink" title="如何打开cmd"></a>如何打开cmd</h4><p><strong>方法有很多，以下列举几种</strong></p>
+<ol>
+<li>打开C:\WindowsSystem32目录，找到cmd.exe双击运行。当然，通常人们都不会这么做。</li>
+<li>打开开始菜单-&gt;运行-&gt;输入cmd-&gt;回车</li>
+<li>通过快捷键：win（windows商标键） + r 调出运行框，然后输入cmd回车</li>
+<li>win7打开开始菜单之后可以直接输入cmd回车</li>
+</ol>
+<p><strong>关于当前目录</strong></p>
+<p>对于新手而言，这是一个必须要搞清楚的问题。首先我们来学习几个命令：</p>
+<h5 id="cd-C-cd是change-directory的简写，意思是改变目录，上面这条命令的意思就是切换到C-目录下。"><a href="#cd-C-cd是change-directory的简写，意思是改变目录，上面这条命令的意思就是切换到C-目录下。" class="headerlink" title="cd C:\  cd是change directory的简写，意思是改变目录，上面这条命令的意思就是切换到C:\目录下。"></a>cd C:\  cd是change directory的简写，意思是改变目录，上面这条命令的意思就是切换到C:\目录下。</h5><p>可以观察到，cmd界面上的目录变成了C:\</p>
+<p><img src="/images/cmd.jpg" alt=""></p>
+<p>我们可以从图中看到，cmd中的文字有变化，而有变化的地方就是我们要注意的地方。</p>
+<p>在每一行的最前面就是当前目录的地址，例如最开始的</p>
+<p>C:\Users\Lellansin&gt;cd C:\  这当中”C:\Users\Lellansin” 你的账户名称是Admin的话就是C:\Users\Admin,注意是win7的默认目录)就是我的当前目录而执行了cd C:\命令之后当前目录就变成了 C:\</p>
+<p>当前目录是一个相对重要的概念，因为很多操作只能对当前目录里面的文件进行。就好比，通常情况下，你要操作E盘某个目录下的某个文件，你首先要双击“我的电脑”打开E盘相应的文件夹，找到那个目录才能操作那个目录下的文件一样。对于cmd而言，要操作相应目录下的文件需要切换到相应的目录。</p>
+<h5 id="输入dir回车，系统会返回当前目录下的文件列表"><a href="#输入dir回车，系统会返回当前目录下的文件列表" class="headerlink" title="输入dir回车，系统会返回当前目录下的文件列表"></a>输入dir回车，系统会返回当前目录下的文件列表</h5><ol>
+<li><p>如何执行或打开文件</p>
+<ul>
+<li><p>C:>1.txt</p>
+<ul>
+<li><p>如果我在C盘根目录下有一个1.txt的文本文件，那么就可以直接输入1.txt回车，即可打开该文件。（这个在linux下也是同样的情况，博主当年也搞不清楚怎么运行程序来着）</p>
+</li>
+<li><p>同样的，如果存在hello.exe，那么直接输入hello.exe即可运行该程序。当然需要注意的是，某些系统默认的应用程序格式（如.exe文件）在cmd中调用的时候是可以省略后缀的。也就是可以直接输入hello，然后回车也同样可以运行hello.exe。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>环境变量</p>
+<ul>
+<li><p>环境变量一般是指在操作系统中用来指定操作系统运行环境的一些参数，比如临时文件夹位置和系统文件夹位置等。</p>
+</li>
+<li><p>常见的环境变量：</p>
+</li>
+</ul>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>变量名</th>
+<th style="text-align:right">变量值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Path</td>
+<td style="text-align:right">…太多省略…</td>
+</tr>
+<tr>
+<td>OS</td>
+<td style="text-align:right">Windows_NT</td>
+</tr>
+<tr>
+<td>windir</td>
+<td style="text-align:right">%SystemRoot%</td>
+</tr>
+<tr>
+<td>TMP</td>
+<td style="text-align:right">%SystemRoot%TEMP</td>
+</tr>
+<tr>
+<td>ComSpec</td>
+<td style="text-align:right">%SystemRoot%system32cmd.exe</td>
+</tr>
+</tbody>
+</table>
+<p>至于%SystemRoot%的值是什么，大家只要把它复制到文件浏览上面的地址栏里面然后回车就知道了。</p>
+<ol>
+<li><p>环境变量的作用</p>
+<ul>
+<li>为系统或者用户程序设置一些默认参数。比如windir这个环境变量，就可能有程序通过读取这个环境变量的值来查看系统的版本。</li>
+</ul>
+</li>
+<li><p>环境变量的设置方法</p>
+<p> -【我的电脑】-&gt;右键【属性】-&gt;【高级】-&gt;【环境变量】-&gt;选中你要修改的环境变量点击【编辑】即可</p>
+<ul>
+<li>通过cmd设置（不推荐）</li>
+</ul>
+</li>
+<li><p>path的作用</p>
+<ul>
+<li><p>path是一个很常见得环境变量。主要用来配置系统的默认路径。也就是当你在某个目录下执行某个程序，但是本身目录下却没有这个程序的时候，系统会自动到默认路径下面也去找一找，有没有你要执行的程序。</p>
+</li>
+<li><p>比如你写了一个hello.exe（编译运行后，能在在程序的相应的debug目录下能找到）。然后把这个hello.exe移动到E:\test目录下，接着</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># 切换到E盘</div><div class="line">cd E:\</div><div class="line"># 切换到E盘下的test文件中</div><div class="line">cd test</div><div class="line">#执行hello.exe</div><div class="line">hello.exe</div><div class="line"># 假设程序输出hello world</div><div class="line"># 这个时候再切换到E盘根目录下(cd .. 是切换到上级目录)</div><div class="line">cd ..</div><div class="line"># 再执行hello.exe</div><div class="line">hello.exe</div><div class="line"># 这个时候系统会提醒你找不到这个命令</div><div class="line"># 但是如果你将 E:\test 这个目录加入到 path中，</div><div class="line"># 就可以在任意地方运行hello.exe</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="cmd的常见作用"><a href="#cmd的常见作用" class="headerlink" title="cmd的常见作用"></a>cmd的常见作用</h4><p>1.自动关机<br>2.常看本地ip<br>3.使用ping<br>4.快速查询本地服务、端口使用情况<br>5.快速调用一些常用工具<br>6.原始编程方式，用cmd调用编译<br>7.学汇编都应该知道cmd下的debug<br>8.批处理</p>
+<h4 id="自动关机"><a href="#自动关机" class="headerlink" title="自动关机"></a>自动关机</h4><p>先说自动关机,貌似很多人都被开过自动关机的玩笑,我们通过cmd就可以实现自动关机命令</p>
+<h6 id="输入shutdown回车"><a href="#输入shutdown回车" class="headerlink" title="输入shutdown回车"></a>输入shutdown回车</h6><p>shutdown并不是一个cmd命令而是一个windows系统自带的程序shutdown.exe，位于C:\WINDOWS\system32目录下，之所以能够直接执行，是因为C:\WINDOWS\system32目录，是系统默认配置在环境变量path中的。其他还有很多的自带程序都在这个目录，以下其他程序不做过多说明。（PS：这里仅仅只讲一些cmd的常见应用，至于cmd的语法之类的，讲了也有些鸡肋，如果想学习批处理再研究也不迟）<br>废话不多说，我们可以从上面的图片看到，直接输入程序自动给出了一些提示，这些参数告诉了我们这个shutdown.exe要怎么使用</p>
+<h4 id="shutdown-s"><a href="#shutdown-s" class="headerlink" title="shutdown -s"></a>shutdown -s</h4><p>按照他提示的参数输入这个命令，会弹出提示：</p>
+<p>博主是在xp下测试，当然如果是在win7等系统下的话效果会不一样。如果你在实验这个命令，不要慌张马上按照提示执行下面的命令：</p>
+<h4 id="取消关机"><a href="#取消关机" class="headerlink" title="取消关机"></a>取消关机</h4><p>shutdown -a<br>接下来我们来看一下这个程序最常用的方式：</p>
+<h4 id="1小时-3600秒-后关机"><a href="#1小时-3600秒-后关机" class="headerlink" title="1小时(3600秒)后关机"></a>1小时(3600秒)后关机</h4><p>shutdown -s -t 3600<br>博主就经常用到上面这个命令，甚至桌面常备取消关机的批处理（哈哈，当年没少被开过这种玩笑）<br>好吧，少年，你是要问我批处理是什么嘛？<br>请你新建一个文件把“shutdown -s -t 3600”复制进去，然后保存，另存为.bat后缀的文件（如何更改文件后缀，不懂请戳度娘谷歌），接着双击这个bat文件。<br>如果你看到系统提示你一小时后会自动关闭，那么恭喜你，你已经写好了一个自动关机的批处理文件。那么同样的可以想象，取消关机的批处理，就是一个.bat文件，里面写着一行“shutdown -a”，双击一下就可以运行了（批处理的特点之一）。</p>
+<p>当然如果，想在C语言中调用这个命令也很简单。<br>先引入stdlib.h库。接着就可以通过system()命令来调用了，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#include&lt;stdio.h&gt;</div><div class="line">#include&lt;stdlib.h&gt;</div><div class="line">main()</div><div class="line">&#123;</div><div class="line">    system(&quot;shutdown -s -t 3600&quot;);</div><div class="line">    printf(&quot;自动关机已设置！&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="常看本地ip"><a href="#常看本地ip" class="headerlink" title="常看本地ip"></a>常看本地ip</h4><p>通过ipconfig.exe就可以查看本地ip</p>
+<p>当然也可以通过 /? 参数获取更多的帮助</p>
+<p>ipconfig /?</p>
+<p>当然ipconfig还有很多其他的用处，比如按照提示上面说的<br>/all Display full configuration information.<br>通过/all参数调用,可以显示出全部的设置信息:</p>
+<p>Windows IP Configuration</p>
+<pre><code>Host Name . . . . . . . . . . . . : s3049
+Primary Dns Suffix  . . . . . . . :
+Node Type . . . . . . . . . . . . : Unknown
+IP Routing Enabled. . . . . . . . : No
+WINS Proxy Enabled. . . . . . . . : No
+</code></pre><p>Ethernet adapter 本地连接:</p>
+<pre><code>Connection-specific DNS Suffix  . :
+Description . . . . . . . . . . . : Realtek PCIe GBE Family Controller
+Physical Address. . . . . . . . . : 78-E3-B5-A3-A5-44
+Dhcp Enabled. . . . . . . . . . . : No
+IP Address. . . . . . . . . . . . : 172.26.22.49
+Subnet Mask . . . . . . . . . . . : 255.255.0.0
+Default Gateway . . . . . . . . . : 172.26.2.6
+DNS Servers . . . . . . . . . . . : 58.22.96.66
+</code></pre><p>（直接复制了，发图麻烦）</p>
+<p>这里可以查看到一些常见的信息，比如host name是主机名，Physical Address 则是传说中的mac地址，IP Address 就是你的本机地址（注意这个通常是局域网下的）。至于后面的子网掩码还有默认网关什么的，想了解的一可以去搜索一下。<br>还有/flushdns(flush DNS)刷新DNS缓存什么的。相信这些信息，网管专业的同学应该都非常熟悉。（注：不明情况的围观群众不要随意开跳这个坑，了解基本即可。）</p>
+<h4 id="ping命令"><a href="#ping命令" class="headerlink" title="ping命令"></a>ping命令</h4><p>记得原来微博上面有个吐槽，就是说很多人普通人用百度来搜索，而很多程序员则用百度来测试网络是否联通。那么如果使用ping.exe来测试网络是否联通：</p>
+<p>ping www.baidu.com</p>
+<p>除了这个用处以外还有一个很常见的作用就是测试自己是否能够连接到某个ip，这里有一个路由器，连接了两台电脑，在每台电脑上都可以通过ipconfig查看自己在局域网中的ip地址，假设对方的ip是192.168.1.106。那么便可以使用ping命令测试是否能联通对方的电脑。</p>
+<p>ping 192.168.1.106<br>当然，眼尖的同学应该已经发现了ping.exe的另一个作用，那就使用获取某个网站的ip地址：</p>
+<p>其他闲话</p>
+<p>至于<br>4.快速查询本地服务、端口使用情况<br>5.快速调用一些常用工具<br>6.原始编程方式，用cmd调用编译<br>7.学汇编都应该知道cmd下的debug<br>8.批处理</p>
+<p>这些有的内容对于新手而言略坑，这里暂不做介绍。</p>
+<p>其中的5.快速调用一些常用工具，就简单说一下博主常用的工具：</p>
+<p>notepad 记事本<br>calc 计算器<br>mspaint 画图板</p>
+<p>这些实际上通过菜单调出运行（或者win+r）就可以直接输入调出来。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;cmd应用基础&quot;&gt;&lt;a href=&quot;#cmd应用基础&quot; class=&quot;headerlink&quot; title=&quot;cmd应用基础&quot;&gt;&lt;/a&gt;cmd应用基础&lt;/h3&gt;&lt;p&gt;Posted on 2012-12-15&lt;/p&gt;
+&lt;h4 id=&quot;cmd是什么？&quot;&gt;&lt;a href=
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Java异常处理</title>
@@ -325,11 +479,11 @@
   </entry>
   
   <entry>
-    <title>Java文件处理器</title>
-    <link href="http://yoursite.com/2017/07/26/Java%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86%E5%99%A8/"/>
-    <id>http://yoursite.com/2017/07/26/Java文件处理器/</id>
+    <title>Java文件处处理</title>
+    <link href="http://yoursite.com/2017/07/26/Java%E6%96%87%E4%BB%B6%E5%A4%84%E5%A4%84%E7%90%86/"/>
+    <id>http://yoursite.com/2017/07/26/Java文件处处理/</id>
     <published>2017-07-25T22:46:17.000Z</published>
-    <updated>2017-07-26T12:32:02.072Z</updated>
+    <updated>2017-07-27T02:57:58.678Z</updated>
     
     <content type="html"><![CDATA[<h3 id="谈谈Java文件处理"><a href="#谈谈Java文件处理" class="headerlink" title="谈谈Java文件处理"></a>谈谈Java文件处理</h3><p>今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。</p>
 <p>文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：</p>
@@ -356,11 +510,11 @@
   </entry>
   
   <entry>
-    <title>Java文件处处理</title>
-    <link href="http://yoursite.com/2017/07/26/Java%E6%96%87%E4%BB%B6%E5%A4%84%E5%A4%84%E7%90%86/"/>
-    <id>http://yoursite.com/2017/07/26/Java文件处处理/</id>
+    <title>Java文件处理器</title>
+    <link href="http://yoursite.com/2017/07/26/Java%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86%E5%99%A8/"/>
+    <id>http://yoursite.com/2017/07/26/Java文件处理器/</id>
     <published>2017-07-25T22:46:17.000Z</published>
-    <updated>2017-07-27T02:57:58.678Z</updated>
+    <updated>2017-07-26T12:32:02.072Z</updated>
     
     <content type="html"><![CDATA[<h3 id="谈谈Java文件处理"><a href="#谈谈Java文件处理" class="headerlink" title="谈谈Java文件处理"></a>谈谈Java文件处理</h3><p>今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。</p>
 <p>文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：</p>
