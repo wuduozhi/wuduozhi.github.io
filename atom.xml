@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-07-28T16:07:02.039Z</updated>
+  <updated>2017-07-30T16:14:31.631Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,16 +16,183 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Java异常处理</title>
+    <link href="http://yoursite.com/2017/07/31/Java%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/"/>
+    <id>http://yoursite.com/2017/07/31/Java异常处理/</id>
+    <published>2017-07-30T19:13:02.000Z</published>
+    <updated>2017-07-30T16:14:31.631Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Java异常处理"><a href="#Java异常处理" class="headerlink" title="Java异常处理"></a>Java异常处理</h3><h4 id="先说什么是异常"><a href="#先说什么是异常" class="headerlink" title="先说什么是异常"></a>先说什么是异常</h4><p>异常指不期而至的各种状况，如：文件找不到、网络连接失败、非法参数等。异常是一个事件，它发生在程序运行期间，干扰了正常的指令流程。Java通过API中Throwable类的众多子类描述各种不同的异常。因而，Java异常都是对象，是Throwable子类的实例，描述了出现在一段编码中的错误条件。当条件生成时，错误将引发异常。<strong>异常的正确使用，能帮助程序员迅速找到异常的出现，同时，也不至于让程序崩溃，得已继续执行下去。当然，在出现异常后，还能让程序继续运行去，对程序员的要求是极高的。</strong></p>
+<h4 id="Java的异常处理方式"><a href="#Java的异常处理方式" class="headerlink" title="Java的异常处理方式"></a>Java的异常处理方式</h4><ol>
+<li><p>throw Exception.当我们写个函数来处理IO流或Socket连接的时候，函数内部可能会发生错误，我们就需要把程序抛出给调用函数的人，让他来处理。</p>
+</li>
+<li><p>try..catch。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">try&#123;</div><div class="line">    可能出现异常的语句</div><div class="line">&#125;eacth(Exception e)&#123;  //捕捉异常</div><div class="line">    处理异常的语句</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这种方式，也就是说我们知道要发生的具体错误是什么，然后我们自己解决掉错误。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>不知道我们有没有想过为什么Java需要有两种异常处理方式呢？我们应该知道，我们写的代码、写的类、写的函数，不仅仅只是我们自己用的，同时我们也发现这两种方式对异常的处理也是不同的。throw这种方式，错误是由调用方来解决的；try..catch这种方式呢，是写代码的人来解决的。学技术，不仅仅只是为了知道怎么使用这种技术，还应该清楚技术背后的含义。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Java异常处理&quot;&gt;&lt;a href=&quot;#Java异常处理&quot; class=&quot;headerlink&quot; title=&quot;Java异常处理&quot;&gt;&lt;/a&gt;Java异常处理&lt;/h3&gt;&lt;h4 id=&quot;先说什么是异常&quot;&gt;&lt;a href=&quot;#先说什么是异常&quot; class=&quot;header
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>windows 安装Mysql</title>
+    <link href="http://yoursite.com/2017/07/31/windows-%E5%AE%89%E8%A3%85Mysql/"/>
+    <id>http://yoursite.com/2017/07/31/windows-安装Mysql/</id>
+    <published>2017-07-30T19:11:01.000Z</published>
+    <updated>2017-07-30T15:59:29.802Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Windows-环境下-MySQL-5-7-安装配置指南"><a href="#Windows-环境下-MySQL-5-7-安装配置指南" class="headerlink" title="Windows 环境下 MySQL 5.7 安装配置指南"></a>Windows 环境下 MySQL 5.7 安装配置指南</h3><h5 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h5><ul>
+<li>Windows 版本：Windows 10 专业版 64bit</li>
+<li>MySQL 版本：MySQL 5.7.16</li>
+</ul>
+<h5 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h5><p>在安装 MySQL 前请务必确认自己电脑的 net 指令是正常工作的。有些 Windows 系统会丢失 net 指令<em>(环境变量缺失)</em>，解决方法请自行搜索一下。</p>
+<h4 id="配置过程"><a href="#配置过程" class="headerlink" title="配置过程"></a>配置过程</h4><ol>
+<li><p>下载 MySQL Community Server <a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="external">下载链接</a></p>
+<ul>
+<li>选择合适自己操作系统的版本，通常使用 Windows (x86, 64-bit), ZIP Archive</li>
+</ul>
+</li>
+<li><p>解压并“合理安放” MySQL Server。</p>
+<ul>
+<li>将下载好的mysql-5.7.16-winx64.zip解压，并将解压好的文件夹妥善放置（比如放置在 Program FIles 文件夹内）。本教程中 MySQL 被放置在了D:\ProgramFiles下，并被重命名为了 MySQL。</li>
+</ul>
+</li>
+<li><p>为 MySQL Server 配置环境变量</p>
+<ul>
+<li>右击开始菜单按钮，选择“系统”选项。</li>
+<li>在“系统”界面左侧，选择“高级系统设置”。</li>
+<li><p>在打开的“系统属性”对话框中的“高级”选项卡页面的下方，选择“环境变量”。</p>
+<ul>
+<li><p>系统属性设置窗口</p>
+<p> 在“用户变量”区块中，选择“新建”，在打开的对话框中，变量名写 MySQL，变量值写 MySQL 文件夹的完整路径（本教程为D:\Program Files\MySQL）。</p>
+</li>
+<li><p>添加环境变量</p>
+<p> 同样在用户区块中寻找 PATH 环境变量，如果有，点击“编辑”。在弹出的对<br> 话框中点击“新建”，输入%MySQL%\bin（在老版本 Windows 系统中，变量值末尾用英文分号;分开后再添加%MySQL%\bin）。如果没有，点击“新建”，添加一个变量名为 Path 的环境变量。在这个环境变量的变量值处，添加%MySQL%\bin</p>
+</li>
+<li><p>修改环境变量<br>  点击确定按钮退出环境变量配置对话框。<br>  点击确定按钮退出系统属性配置对话框。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>注册 MySQL 服务</p>
+<ul>
+<li>右击开始菜单按钮，选择/“命令提示符（管理员）”/选项。</li>
+<li>输入盘符 + “:” 指令，进入MySQL文件夹所在的磁盘（本教程是 D 盘）。再使用  cd指令进入MySQL Server所在文件夹的bin文件夹中。<strong>这一步非常重要，如果不在这个目录下，无法正确注册 MySQL 服务。</strong></li>
+</ul>
+</li>
+<li><p>定位到 MySQL 所在路径</p>
+<ul>
+<li>执行mysqld -install指令，注册 MySQL 服务。</li>
+</ul>
+</li>
+<li><p>注册 MySQL 服务</p>
+<ul>
+<li>执行完毕后，请不要退出“命令提示符”。</li>
+</ul>
+</li>
+<li><p>配置 MySQL Server</p>
+<ul>
+<li>进入 MySQL Server 所在的文件夹 （本教程为D:\Program Files\MySQL）</li>
+<li><p>编辑my-default.ini</p>
+<ul>
+<li><p>在该文件中，#是注释标记。<br>去掉 basedir 的注释符号，并在等号后边填写 MySQL Server 文件夹的完整地址。<br>去掉 datadir 的注释符号，并在等号后边填写 MySQL Server 文件夹的完整地址外加\data。<br> <strong>切记不要手动创建 data 文件夹！</strong></p>
+</li>
+<li><p>port 不需要配置，不配置的状态下默认为 3306。（MySQL Server 默认使用的端口号）</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>最终配置</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"># For advice on how to change settings please see</div><div class="line"># http://dev.mysql.com/doc/refman/5.7/en/server-configuration-defaults.html</div><div class="line"># *** DO NOT EDIT THIS FILE. It&apos;s a template which will be copied to the</div><div class="line"># *** default location during install, and will be replaced if you</div><div class="line"># *** upgrade to a newer version of MySQL.</div><div class="line"></div><div class="line">[mysqld]</div><div class="line"></div><div class="line"># Remove leading # and set to the amount of RAM for the most important data</div><div class="line"># cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.</div><div class="line"># innodb_buffer_pool_size = 128M</div><div class="line"></div><div class="line"># Remove leading # to turn on a very important data integrity option: logging</div><div class="line"># changes to the binary log between backups.</div><div class="line"># log_bin</div><div class="line"></div><div class="line"># These are commonly set, remove the # and set as required.</div><div class="line">basedir =D:\Program Files\MySQL</div><div class="line">datadir =D:\Program Files\MySQL\date</div><div class="line"># port = .....</div><div class="line"># server_id = .....</div><div class="line"></div><div class="line"></div><div class="line"># Remove leading # to set options mainly useful for reporting servers.</div><div class="line"># The server defaults are faster for transactions and fast SELECTs.</div><div class="line"># Adjust sizes as needed, experiment to find the optimal values.</div><div class="line"># join_buffer_size = 128M</div><div class="line"># sort_buffer_size = 2M</div><div class="line"># read_rnd_buffer_size = 2M </div><div class="line"></div><div class="line">sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES</div></pre></td></tr></table></figure></p>
+<p>保存退出。退出后将my-default.ini重命名为my.ini</p>
+<ol>
+<li><p>在刚才的“命令提示符”中，执行mysqld –initialize（可能会假死，等一分钟手动关闭就好）。</p>
+</li>
+<li><p>开启 MySQL Server</p>
+<ul>
+<li>在“命令提示符”中执行net start mysql，开启 MySQL Server。</li>
+</ul>
+</li>
+<li><p>配置 MySQL root 账户。</p>
+<ul>
+<li>在“命令提示符”中，执行net stop mysql关闭 MySQL Server。</li>
+<li>再执行mysqld –skip-grant-tables开启无密码的 MySQL Server。</li>
+</ul>
+</li>
+<li><p>无密码启动 MySQL Server</p>
+<ul>
+<li>打开一个新的“命令提示符”，执行mysql -u root登陆 MySQL Server。</li>
+<li>执行flush privileges刷新权限。</li>
+<li>执行grant all privileges on <em>.</em> to ‘root’@’localhost’ identified by ‘你想设置的密码’ with grant option;。</li>
+<li>执行flush privileges刷新新的 root 用户密码。</li>
+<li>执行exit退出 MySQL。</li>
+</ul>
+</li>
+<li><p>结束进程</p>
+<ul>
+<li>在任务管理器下手动结束mysqld.exe。</li>
+</ul>
+</li>
+<li><p>正常登陆</p>
+<ul>
+<li>在“命令提示符”下执行net mysql start重新开启MySQL Server，再次使用mysql -u root -p 你设置的密码即可安全登陆 MySQL。</li>
+</ul>
+</li>
+</ol>
+<h5 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h5><p><strong>本教程中所有的“命令提示符”，一定要运行在 管理员模式下，否则会出现“拒绝访问”的问题。</strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Windows-环境下-MySQL-5-7-安装配置指南&quot;&gt;&lt;a href=&quot;#Windows-环境下-MySQL-5-7-安装配置指南&quot; class=&quot;headerlink&quot; title=&quot;Windows 环境下 MySQL 5.7 安装配置指南&quot;&gt;&lt;/a&gt;Wi
+    
+    </summary>
+    
+      <category term="config" scheme="http://yoursite.com/categories/config/"/>
+    
+    
+      <category term="Mysql" scheme="http://yoursite.com/tags/Mysql/"/>
+    
+  </entry>
+  
+  <entry>
     <title>我的大一</title>
     <link href="http://yoursite.com/2017/07/29/%E6%88%91%E7%9A%84%E5%A4%A7%E4%B8%80/"/>
     <id>http://yoursite.com/2017/07/29/我的大一/</id>
     <published>2017-07-29T00:07:02.000Z</published>
-    <updated>2017-07-28T16:07:02.039Z</updated>
+    <updated>2017-07-29T03:12:50.858Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h3><p>一眨眼间，我的大一就结束了，等开学就有人叫我学长了，还真有点不习惯。现在还记得刚来时的陌生、军训时的痛苦，回想起来，感觉还是昨天的事情，但早已过去一年了，自己也从当初的小鲜肉变成老司机了。大一新生的保护伞也没了，遇到问题再也不能说自己是大一新生，以前没学过，不懂了。这一年自己都干嘛了呢？</p>
+<h4 id="大一上"><a href="#大一上" class="headerlink" title="大一上"></a>大一上</h4><p>在大一上个学期，一时间还是不能适应大学这种宽松的生活，但还好自己以前也都是住校生，能管理好自己的生活和学习，虽然不是完全适应，但还不会迷失自己，不会一天天无所事事。</p>
+<p>后来，在老乡群，有一个学长发了一个招新信息，是学校千年弦歌网络工作室的。恰好自己对网站这一块也比较感兴趣，大一上的课也很少，跟学长了解了一下，就报名了，然后过段时间就面试，自己第一次面试，挺紧张的。但自己也很幸运，当了实习程序员。<br>还记得第一次去开会的时候，学长们说的一些名词，自己之前从来没听过，学长们说的很happy，自己听的很懵逼，但也装作听懂了一样。弦歌实行的是放养政策，就是你不懂，你就自己学去。</p>
+<p>之后，自己就踏上了自学的道路，这个过程中自己学到了很多。自己先看了前端的一些知识，就是一些简单的HTML便签很CSS样式表，然后简写一些简单的页面，接着学习了JS,让自己的网页有了一些特效。现在说起来，感觉没什么，但回想其自己当时的学习历程，还是 觉得自己很棒。在大学之前，只会装软件，上网聊天的人，要自己学习这些东西，还是有点困难的。那段时间，自己总是往图书馆跑，每次都是借好几本书回来，因为自己不知道那本适合自己，也不知道从哪里开始学起，就把自己觉得还可以的都借回来了，然后慢慢看，找到一本适合自己的。同时呢，因为在网上学习，看一些视频呀，做一些小练习呀。就这样的学习节奏，自己的大一就结束了。</p>
+]]></content>
     
     <summary type="html">
     
+      &lt;h3 id=&quot;开篇&quot;&gt;&lt;a href=&quot;#开篇&quot; class=&quot;headerlink&quot; title=&quot;开篇&quot;&gt;&lt;/a&gt;开篇&lt;/h3&gt;&lt;p&gt;一眨眼间，我的大一就结束了，等开学就有人叫我学长了，还真有点不习惯。现在还记得刚来时的陌生、军训时的痛苦，回想起来，感觉还是昨天的事情，但早
+    
     </summary>
     
+      <category term="colleage" scheme="http://yoursite.com/categories/colleage/"/>
+    
+    
+      <category term="life" scheme="http://yoursite.com/tags/life/"/>
     
   </entry>
   
@@ -224,7 +391,7 @@
     <link href="http://yoursite.com/2017/07/25/MyBlog/"/>
     <id>http://yoursite.com/2017/07/25/MyBlog/</id>
     <published>2017-07-25T01:05:19.000Z</published>
-    <updated>2017-07-25T14:45:09.687Z</updated>
+    <updated>2017-07-30T15:29:35.545Z</updated>
     
     <content type="html"><![CDATA[<h3 id="My-First-Hexo-Blog"><a href="#My-First-Hexo-Blog" class="headerlink" title="My First Hexo Blog"></a>My First Hexo Blog</h3><p>  Hexo，一个博客框架，之前听学长讲过，今天跟着教程弄了一下，不是很难，如果之前有接触过git，那就更简单了，跟装个软件差不多。<a href="https://xuanwo.org/2015/03/26/hexo-intor/" target="_blank" rel="external">教程</a> <a href="https://lfkid.github.io/2016/11/16/Hexo%E6%95%99%E7%A8%8B%EF%BC%9A%EF%BC%88%E5%9B%9B%EF%BC%89%E5%B0%86%E6%9C%AC%E5%9C%B0Hexo%E7%AB%99%E7%82%B9%E9%83%A8%E7%BD%B2%E5%88%B0GitHubPages/" target="_blank" rel="external">部署</a> <a href="https://lfkid.github.io/2016/11/16/Hexo%E6%95%99%E7%A8%8B%EF%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/" target="_blank" rel="external">系列教程</a></p>
 <h3 id="Hexo常用命令"><a href="#Hexo常用命令" class="headerlink" title="Hexo常用命令"></a>Hexo常用命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">* hexo new &quot;postName&quot; #新建文章</div><div class="line">* hexo generate #生成静态页面至public目录</div><div class="line">* hexo server #开启预览访问端口（默认端口4000，&apos;ctrl + c&apos;关闭server）</div><div class="line">* hexo deploy #部署到GitHub</div><div class="line">* hexo help  # 查看帮助</div><div class="line">* hexo version  #查看Hexo的版本</div><div class="line"></div><div class="line">缩写：</div><div class="line"></div><div class="line">* hexo n == hexo new</div><div class="line">* hexo g == hexo generate</div><div class="line">* hexo s == hexo server</div><div class="line">* hexo d == hexo deploy</div><div class="line"></div><div class="line">组合命令：</div><div class="line"></div><div class="line">* hexo s -g #生成并本地预览</div><div class="line">* hexo d -g #生成并上传</div></pre></td></tr></table></figure>
@@ -238,8 +405,6 @@
     
       <category term="colleage" scheme="http://yoursite.com/categories/colleage/"/>
     
-    
-      <category term="hello" scheme="http://yoursite.com/tags/hello/"/>
     
       <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
     
