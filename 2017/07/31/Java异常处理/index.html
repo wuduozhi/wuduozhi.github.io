@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="Java异常处理先说什么是异常异常指不期而至的各种状况，如：文件找不到、网络连接失败、非法参数等。异常是一个事件，它发生在程序运行期间，干扰了正常的指令流程。Java通过API中Throwable类的众多子类描述各种不同的异常。因而，Java异常都是对象，是Throwable子类的实例，描述了出现在一段编码中的错误条件。当条件生成时，错误将引发异常。异常的正确使用，能帮助程序员迅速找到异常的出现，">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2017-07-30T16:14:31.631Z">
+<meta property="og:updated_time" content="2017-08-05T16:13:46.798Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java异常处理">
 <meta name="twitter:description" content="Java异常处理先说什么是异常异常指不期而至的各种状况，如：文件找不到、网络连接失败、非法参数等。异常是一个事件，它发生在程序运行期间，干扰了正常的指令流程。Java通过API中Throwable类的众多子类描述各种不同的异常。因而，Java异常都是对象，是Throwable子类的实例，描述了出现在一段编码中的错误条件。当条件生成时，错误将引发异常。异常的正确使用，能帮助程序员迅速找到异常的出现，">
@@ -102,7 +102,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Java异常处理"><span class="toc-number">1.</span> <span class="toc-text">Java异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#先说什么是异常"><span class="toc-number">1.1.</span> <span class="toc-text">先说什么是异常</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Java的异常处理方式"><span class="toc-number">1.2.</span> <span class="toc-text">Java的异常处理方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#总结"><span class="toc-number">1.3.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Java异常处理"><span class="toc-number">1.</span> <span class="toc-text">Java异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#先说什么是异常"><span class="toc-number">1.1.</span> <span class="toc-text">先说什么是异常</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Java的异常处理方式"><span class="toc-number">1.2.</span> <span class="toc-text">Java的异常处理方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#异常的重要性"><span class="toc-number">1.3.</span> <span class="toc-text">异常的重要性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#总结"><span class="toc-number">1.4.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -115,6 +115,10 @@
 </li>
 </ol>
 <p>这种方式，也就是说我们知道要发生的具体错误是什么，然后我们自己解决掉错误。</p>
+<h4 id="异常的重要性"><a href="#异常的重要性" class="headerlink" title="异常的重要性"></a>异常的重要性</h4><blockquote>
+<p>在一个完美的世界中，用户不会输入错误，计算机硬件永远不会出错，相关的数据文件永远不会被丢失…遗憾的是，这个世界并不是如此美好。</p>
+</blockquote>
+<p>程序运行时可能遇到各种非正常状况—-用户输入的数据非法、电脑硬盘空间不足，程序所需要的文件被删除等等。一个足够健壮的程序，用于处理异常的代码要占到很大部分。正是由于异常处理如此重要，Java设计者将异常处理作为Java语言的一种内置特性。在其他语言中，编写者可以偷懒不写异常处理；而在Java中，如果一个方法声明可能会抛出异常，那么调用方法的人必须对此进行处理；否则不能编译通过。</p>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>不知道我们有没有想过为什么Java需要有两种异常处理方式呢？我们应该知道，我们写的代码、写的类、写的函数，不仅仅只是我们自己用的，同时我们也发现这两种方式对异常的处理也是不同的。throw这种方式，错误是由调用方来解决的；try..catch这种方式呢，是写代码的人来解决的。学技术，不仅仅只是为了知道怎么使用这种技术，还应该清楚技术背后的含义。</p>
   
 	</div>
@@ -198,7 +202,7 @@
 		<ul>
 		
 		  
-			<li><a href="/categories/Java/" title="Java">Java<sup>6</sup></a></li>
+			<li><a href="/categories/Java/" title="Java">Java<sup>7</sup></a></li>
 		  
 		
 		  
@@ -219,7 +223,15 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Java/" title="Java">Java<sup>6</sup></a></li>
+				<li><a href="/tags/Java/" title="Java">Java<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
 			
 		
 			
@@ -228,14 +240,6 @@
 		
 			
 				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/life/" title="life">life<sup>1</sup></a></li>
 			
 		
 		</ul>
