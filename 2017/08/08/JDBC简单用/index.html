@@ -4,25 +4,25 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Java文件处理器 | 只为不凡而来</title>
+    <title>JDBC简单用 | 只为不凡而来</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="wuduozhi">
     
 
     
-    <meta name="description" content="谈谈Java文件处理今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。 文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：  定位要操作的文件 建立管道 进行操作  简单点说，就是我们只需要找到我们想要操作的文件的路径，就能定">
+    <meta name="description" content="何为JDBCJDBC（Java Data Base Connectivity,Java数据库连接）是由原Sun公司制定的数据库连接技术。SQL是用户操作数据库的语言，JDBC则为用户与数据库之间搭起了通信的通道。JDBC的根本目的：为Java编程人员提供操作各种数据库统一接口 作为程序员，我们不能要求我们的用户只用一种数据库，所以说同一个Java应用能运用在不同的数据库之上是非常重要的，同时，这也">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java文件处理器">
-<meta property="og:url" content="http://yoursite.com/2017/07/26/Java文件处理器/index.html">
+<meta property="og:title" content="JDBC简单用">
+<meta property="og:url" content="http://yoursite.com/2017/08/08/JDBC简单用/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="谈谈Java文件处理今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。 文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：  定位要操作的文件 建立管道 进行操作  简单点说，就是我们只需要找到我们想要操作的文件的路径，就能定">
+<meta property="og:description" content="何为JDBCJDBC（Java Data Base Connectivity,Java数据库连接）是由原Sun公司制定的数据库连接技术。SQL是用户操作数据库的语言，JDBC则为用户与数据库之间搭起了通信的通道。JDBC的根本目的：为Java编程人员提供操作各种数据库统一接口 作为程序员，我们不能要求我们的用户只用一种数据库，所以说同一个Java应用能运用在不同的数据库之上是非常重要的，同时，这也">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2017-07-26T12:32:02.072Z">
+<meta property="og:updated_time" content="2017-08-07T14:40:31.782Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java文件处理器">
-<meta name="twitter:description" content="谈谈Java文件处理今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。 文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：  定位要操作的文件 建立管道 进行操作  简单点说，就是我们只需要找到我们想要操作的文件的路径，就能定">
+<meta name="twitter:title" content="JDBC简单用">
+<meta name="twitter:description" content="何为JDBCJDBC（Java Data Base Connectivity,Java数据库连接）是由原Sun公司制定的数据库连接技术。SQL是用户操作数据库的语言，JDBC则为用户与数据库之间搭起了通信的通道。JDBC的根本目的：为Java编程人员提供操作各种数据库统一接口 作为程序员，我们不能要求我们的用户只用一种数据库，所以说同一个Java应用能运用在不同的数据库之上是非常重要的，同时，这也">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -86,14 +86,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/07/26/Java文件处理器/" title="Java文件处理器" itemprop="url">Java文件处理器</a>
+      <a href="/2017/08/08/JDBC简单用/" title="JDBC简单用" itemprop="url">JDBC简单用</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-25T22:46:17.000Z" itemprop="datePublished"> Published 2017-07-26</time>
+    <time datetime="2017-08-07T22:15:28.000Z" itemprop="datePublished"> Published 2017-08-08</time>
     
   </p>
 </header>
@@ -102,19 +102,17 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#谈谈Java文件处理"><span class="toc-number">1.</span> <span class="toc-text">谈谈Java文件处理</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#何为JDBC"><span class="toc-number">1.</span> <span class="toc-text">何为JDBC</span></a></li></ol>
 		
 		</div>
 		
-		<h3 id="谈谈Java文件处理"><a href="#谈谈Java文件处理" class="headerlink" title="谈谈Java文件处理"></a>谈谈Java文件处理</h3><p>今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。</p>
-<p>文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：</p>
-<ol>
-<li>定位要操作的文件</li>
-<li>建立管道</li>
-<li>进行操作</li>
-</ol>
-<p>简单点说，就是我们只需要找到我们想要操作的文件的路径，就能定位到它，就能对其进行一些列的操作，比如查看、复制、删除…这些操作，Java都已经为我们准备好了，需要用的时候查看文档就好了，最主要的是要记住步骤。</p>
-<p>另外，需要注意的是，IO流的操作是很占用内存的，举个例子吧：如果我们要把文件A里的内容复制到B中，计算机是这样工作的：计算机要先找到A文件，然后读取内容到JVM的内存中，然后在写进B文件中，但我们的A文件很大时，计算机就需要进行多次这样的循环工作，非常耗时，浪费资源。所以我们可以改进一下，我们可以这样设想，如果我们把从A读取的内容先在JVM中存起来，当达到足够的量时在一次把这些内容写进B中，这样就减少了一些重复性的工作，效率会提高不少。</p>
+		<h4 id="何为JDBC"><a href="#何为JDBC" class="headerlink" title="何为JDBC"></a>何为JDBC</h4><p>JDBC（Java Data Base Connectivity,Java数据库连接）是由原Sun公司制定的数据库连接技术。SQL是用户操作数据库的语言，JDBC则为用户与数据库之间搭起了<strong>通信</strong>的通道。JDBC的根本目的：<strong>为Java编程人员提供操作各种数据库统一接口</strong></p>
+<p>作为程序员，我们不能要求我们的用户只用一种数据库，所以说同一个Java应用能运用在不同的数据库之上是非常重要的，同时，这也是很不容易的。当今的数据库种类繁多，就像不同的国家的人说不同的语言一样，不同的数据库也使用着不同的语言…想要跟不同的数据库“交流”，就要使用他们的语言，那是不是说作为一名Java程序员要懂得所有的数据库语言？</p>
+<p>要解决这个问题，我们就需要一个翻译，就像国家领导人经常出访不同的国家，但不需要懂得全世界的语言一样。</p>
+<p>原Sun公司制定了JDBC的标准，这个标准规定了JDBC的接口，就如同规定了Java程序员与JDBC使用的语言。不同数据库语言的表达方式被JDBC统一了起来。就拿 “给我一个数据库连接” 这样一个命令来说，不论在各个数据库中是怎么实现的，在JDBC中都是一个命令—-“getConnection” 。</p>
+<p>这些功能的实现，主要靠的是“JDBC驱动” 这个东西，它承担了翻译的核心机能。JDBC标准规定后，各个数据库厂商根据这个标准，开发出对应自己数据库产品的JDBC驱动。所以想要操作什么数据库，只要找到相应的驱动就好了。当然，JDBC驱动实际上就是一组class文件，它们被打包为Java专用压缩格式jar。</p>
+<p>这样一来，数据库程序的开发就变得简单了。JDBC为Java提供了一个统一接口，程序员在编程时，可以不考虑所要操作的是什么数据库，只需要使用标准的JDBC书写数据库操作代码，再根据目标数据库的不同，加在相应的JDBC驱动就行了。</p>
+<p>JDBC的所有接口都在Java基础类库的  java.sql 包以及 javax.sql 包中，但请注意这些都只是接口，所有的实现类就是由各数据库厂商根据这些接口编写的具体类而已。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -143,16 +141,16 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2017/07/26/Java文件处处理/" title="Java文件处处理">
+ <a href="/2017/08/09/Java动态网页/" title="Java动态网页">
   <span>
-  Java文件处处理</span>
+  Java动态网页</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2017/07/25/MyBlog/"  title="Hexo">
- <span>Hexo
+<a href="/2017/08/07/数据库相关/"  title="数据库的优势">
+ <span>数据库的优势
 </span>
 </a>
 </div>

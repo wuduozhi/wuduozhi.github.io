@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-08-05T16:07:37.260Z</updated>
+  <updated>2017-08-12T01:49:26.298Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,436 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://yoursite.com/2017/08/12/Hibernate/"/>
+    <id>http://yoursite.com/2017/08/12/Hibernate/</id>
+    <published>2017-08-12T01:18:20.304Z</published>
+    <updated>2017-08-12T01:49:26.298Z</updated>
+    
+    <content type="html"><![CDATA[<p>欢迎使用 <strong>{小书匠}(xiaoshujiang)编辑器</strong>，您可以通过==设置==里的修改模板来改变新建文章的内容。1.下载hibernate</p>
+<pre><code>需要到hibernate的官网下载一个hibernate。网址是：http://hibernate.org/orm/downloads/
+</code></pre><p>2.解压hibernate</p>
+<pre><code>下载后解压缩，得到一个hibernate-release-4.3.11.Final文件夹（我下载的hibernate版本是4.3.11），在hibernate-release-4.3.11.Final文件夹里有一个lib文件夹，里面放着hibernate的jar包。
+
+例子中使用了lib下的required文件夹中的所有jar包。如图：
+
+
+
+这些包的作用如下（待验证）：
+</code></pre><p>包名<br>说明<br>antlr-2.7.7<br>可以接收词文法语言描述，并能产生识别这些语言的语句的程序，hibernate利用它实现hql到sql的转换。<br>dom4j-1.6.1<br>xml解析器，用来读写xml文件的。<br>hibernate-commons-annotations-4.0.5.Final<br>hibernate中支持注解开发的程序。<br>hibernate-core-4.3.11.Final<br>hibernate的核心程序。<br>hibernate-jpa-2.1-api-1.0.0.Final    hibernate对jap(java persistence API)规范的支持，可以理解为JAP是标准接口，hibernate是实现。<br>jandex-1.1.0.Final    用来检索注解(annotation)索引的程序，识别该对象是注解对象(待验证)？<br>javassist-3.18.1-GA    用来操作字节码的程序，可直接编辑和生成java字节码，以达到对.class文件的动态修改。<br>jboss-logging-3.1.3.GA    提供hibernate日志功能的程序(待验证)?<br>jboss-logging-annotations-1.2.0.Beta1    解析logging的注解模式程序(待验证)?<br>jboss-transaction-api_1.2_spec-1.0.0.Final    事务控制程序(待验证)?<br>3.导入hibernate的jar包</p>
+<pre><code>创建一个JavaProject，引用上面图片中的jar包，这里需要另外一个jar包，由于我连接的是mysql数据库，所以需要在导入一个mysql-connector-java-5.1.7-bin.jar
+</code></pre><p>4.新建一个测试用的java对象</p>
+<p>package cn.net.bysoft.lesson1;</p>
+<p>import java.util.Date;</p>
+<p>public class User {</p>
+<pre><code>public User() {
+}
+
+public User(String name, Date birthday) {
+    this.name = name;
+    this.birthday = birthday;
+}
+
+@Override
+public String toString() {
+    return &quot;User [id=&quot; + id + &quot;, name=&quot; + name + &quot;, birthday=&quot; + birthday
+            + &quot;]&quot;;
+}
+
+public int getId() {
+    return id;
+}
+
+public void setId(int id) {
+    this.id = id;
+}
+
+public String getName() {
+    return name;
+}
+
+public void setName(String name) {
+    this.name = name;
+}
+
+public Date getBirthday() {
+    return birthday;
+}
+
+public void setBirthday(Date birthday) {
+    this.birthday = birthday;
+}
+
+private int id;
+private String name;
+private Date birthday;
+</code></pre><p>}<br>    编写的java对象需要满足如下要素：</p>
+<p>需要有一个无参的构造函数，因为在session.get时需要用到反射创建java对象；</p>
+<p>需要提供一个id属性，对应数据库的主键；</p>
+<p>需要为对象的其他属性提供get/set方法；</p>
+<p>需要定义成非final的类，以便在hibernate进行延迟加载时为类创建代理；</p>
+<p>如有必要保存到集合中，需要重equals方法和hashcode方法；</p>
+<p>5.设置java对象与数据库的映射关系</p>
+<pre><code>需要创建一个User.hbm.xml文件，编辑java对象与数据库的映射关系，格式如下：
+</code></pre><p>&lt;?xml version=”1.0” encoding=”UTF-8”?&gt;<br>&lt;!DOCTYPE hibernate-mapping PUBLIC “-//Hibernate/Hibernate Mapping DTD 3.0//EN”<br>“<a href="http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd&quot;&gt;" target="_blank" rel="external">http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd&quot;&gt;</a></p>
+<p><hibernate-mapping><br>    <class name="cn.net.bysoft.lesson1.User" table="S_USER"><br>        <id name="id" type="integer" column="ID"><br>            <!-- 指定主键的生成方式，native是使用数据库本地的方式 --><br>            <generator class="native"></generator><br>        </id><br>        <property name="name" type="string" column="NAME"></property><br>        <property name="birthday" type="timestamp" column="BIRTHDAY"></property><br>    </class><br></hibernate-mapping><br>    该文件是用来配置java对象与数据表之间的映射关系的，其中需要留意的是id这个属性，generator来指定主键的生成方式，而native则代表是调用数据库本地的方式来生成主键，我使用的mysql数据库就会自动将id列设置成自增。</p>
+<pre><code>主键具体有哪些生成方式，待接下来详细研究。
+</code></pre><p>6.配置hibernate的配置信息</p>
+<p>在src下创建一个hibernate.cfg.xml文件，格式如下：</p>
+<p>&lt;!DOCTYPE hibernate-configuration PUBLIC<br>    “-//Hibernate/Hibernate Configuration DTD 3.0//EN”<br>    “<a href="http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd&quot;&gt;" target="_blank" rel="external">http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd&quot;&gt;</a></p>
+<p><hibernate-configuration><br>    <session-factory><br>        <!-- 连接数据库的基本信息 --><br>        <property name="hibernate.connection.username">root</property><br>        <property name="hibernate.connection.password">root</property><br>        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property><br>        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hibernate4</property></session-factory></hibernate-configuration></p>
+<pre><code>    &lt;!-- hibernate使用的数据库方言
+         如果不知道可以去/hibernate-release-4.3.11.Final/project/etc/hibernate.properties
+         中查找 --&gt;
+    &lt;property name=&quot;hibernate.dialect&quot;&gt;org.hibernate.dialect.MySQL5Dialect&lt;/property&gt;
+    &lt;!-- 是否在控制台显示sql语句 --&gt;
+    &lt;property name=&quot;hibernate.show_sql&quot;&gt;true&lt;/property&gt;
+    &lt;!-- 是否格式化显示的sql语句 --&gt;
+    &lt;property name=&quot;hibernate.format_sql&quot;&gt;true&lt;/property&gt;
+    &lt;!-- 是否自动生成数据表的策略,create代表每次启动程序都重新创建数据表 --&gt;
+    &lt;property name=&quot;hibernate.hbm2ddl.auto&quot;&gt;create&lt;/property&gt;
+
+    &lt;!-- 需要使用到的*.hbm.xml文件 --&gt;
+    &lt;mapping resource=&quot;cn/net/bysoft/lesson1/User.hbm.xml&quot;/&gt;
+&lt;/session-factory&gt;
+</code></pre><p><br>    该文件需要注意的有两个地方，第一个是mapping属性，第二个是hibernate.hbm2ddl.auto这个属性。</p>
+<pre><code>mapping属性用来配置*.hbm.xml的资源文件地址，这里需要注意的是没有用cn.net.bysoft.lession的形式，而是使用的&apos;/&apos;来描述目录位置。
+
+接下来是自动执行ddl语句的设置(也就是hibernate.hbm2ddl.auto)参数有4个，分别是：
+</code></pre><p>create</p>
+<p>create为每次创建sessionfactory时，会根据*.hbm.xml文件中所配置的信息来drop掉数据表，drop后重新create数据表；</p>
+<p>create-drop</p>
+<p>create-drop为每次创建sessionfactory时，会根据*.hbm.xml文件中所配置的信息来create数据表。而每当sessionfactory被close时，会drop掉开始时create的数据表；</p>
+<p>update</p>
+<p>update为每次创建sessionfactory时，如果数据库中没有对应的表，则新建。</p>
+<p>若已经新建过，则会判断*.hbm.xml文件的配置与建立好的数据表的结构是否相同。</p>
+<p>如果相同则不去进行ddl的操作。</p>
+<p>如果不同，则会根据*.hbm.xml文件中有变化的配置项去更新数据表，但不会删除数据表中已创建过的任何信息。</p>
+<p>validate</p>
+<p>validate为每次创建sessionfactory时，将用*.hbm.xml文件中的配置信息与现有的对应的数据表结构进行比较，若发现不同则抛出异常。</p>
+<p>7.编写代码测试</p>
+<p>package cn.net.bysoft.lesson1;</p>
+<p>import java.util.Date;</p>
+<p>import org.hibernate.Session;<br>import org.hibernate.SessionFactory;<br>import org.hibernate.Transaction;<br>import org.hibernate.boot.registry.StandardServiceRegistry;<br>import org.hibernate.boot.registry.StandardServiceRegistryBuilder;<br>import org.hibernate.cfg.Configuration;<br>import org.junit.Test;</p>
+<p>public class UserTest {</p>
+<pre><code>@Test
+public void test() {
+    // 0.创建configuration对象，该对象保存着hibernate的配置信息和对象关系映射的信息。
+    Configuration cfg = new Configuration().configure();
+    // 1.创建sessionfactory对象
+    StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties());
+    StandardServiceRegistry registry =  builder.build();
+    SessionFactory sessionFactory = cfg.buildSessionFactory(registry); 
+    // 2.创建session对象
+    Session session = sessionFactory.openSession();
+    // 3.开始事务
+    Transaction transaction = session.beginTransaction();
+    // 4.保存
+    User user = new User(&quot;Jack&quot;, new Date());
+    session.save(user);
+    // 5.提交事务
+    transaction.commit();
+    // 6.关闭session对象
+    session.close();
+    // 7.关闭sessionfactory对象
+    sessionFactory.close();
+}
+</code></pre><p>}<br>    上面这段代码中configuration对象用来保存则hibernate的配置信息，如hibernate.cfg.xml中的配置信息，和*.hbm.xml的映射信息。</p>
+<pre><code>sessionfactory为创建session的工厂，它是线程安全的。一般建议一个项目中只有一个sessionfactory，因为创建sessionfactory非常费资源。
+
+接下来是session对象，该对象是hibernate的核心，是一个单线程的对象，内部有session缓存。
+
+对需要持久化的java对象的所有操作都用到了session。
+
+常用的方法有get、load、save、update、saveorupdate、delete、begintransaction、isopen、flush、clear、evicto、close等等方法，接下来将会一个一个研究这些方法的使用。
+
+这是执行这段代码后，控制台输出的内容：
+
+
+
+创建了一张名为S_USER的数据表，并insert了一条数据。
+
+
+
+到此位置，一个简单的hibernate环境就搭建好了。工程的目录结构如下：
+</code></pre><p>1.下载hibernate</p>
+<pre><code>需要到hibernate的官网下载一个hibernate。网址是：http://hibernate.org/orm/downloads/
+</code></pre><p>2.解压hibernate</p>
+<pre><code>下载后解压缩，得到一个hibernate-release-4.3.11.Final文件夹（我下载的hibernate版本是4.3.11），在hibernate-release-4.3.11.Final文件夹里有一个lib文件夹，里面放着hibernate的jar包。
+
+例子中使用了lib下的required文件夹中的所有jar包。如图：
+
+
+
+这些包的作用如下（待验证）：
+</code></pre><p>包名<br>说明<br>antlr-2.7.7<br>可以接收词文法语言描述，并能产生识别这些语言的语句的程序，hibernate利用它实现hql到sql的转换。<br>dom4j-1.6.1<br>xml解析器，用来读写xml文件的。<br>hibernate-commons-annotations-4.0.5.Final<br>hibernate中支持注解开发的程序。<br>hibernate-core-4.3.11.Final<br>hibernate的核心程序。<br>hibernate-jpa-2.1-api-1.0.0.Final    hibernate对jap(java persistence API)规范的支持，可以理解为JAP是标准接口，hibernate是实现。<br>jandex-1.1.0.Final    用来检索注解(annotation)索引的程序，识别该对象是注解对象(待验证)？<br>javassist-3.18.1-GA    用来操作字节码的程序，可直接编辑和生成java字节码，以达到对.class文件的动态修改。<br>jboss-logging-3.1.3.GA    提供hibernate日志功能的程序(待验证)?<br>jboss-logging-annotations-1.2.0.Beta1    解析logging的注解模式程序(待验证)?<br>jboss-transaction-api_1.2_spec-1.0.0.Final    事务控制程序(待验证)?<br>3.导入hibernate的jar包</p>
+<pre><code>创建一个JavaProject，引用上面图片中的jar包，这里需要另外一个jar包，由于我连接的是mysql数据库，所以需要在导入一个mysql-connector-java-5.1.7-bin.jar
+</code></pre><p>4.新建一个测试用的java对象</p>
+<p>package cn.net.bysoft.lesson1;</p>
+<p>import java.util.Date;</p>
+<p>public class User {</p>
+<pre><code>public User() {
+}
+
+public User(String name, Date birthday) {
+    this.name = name;
+    this.birthday = birthday;
+}
+
+@Override
+public String toString() {
+    return &quot;User [id=&quot; + id + &quot;, name=&quot; + name + &quot;, birthday=&quot; + birthday
+            + &quot;]&quot;;
+}
+
+public int getId() {
+    return id;
+}
+
+public void setId(int id) {
+    this.id = id;
+}
+
+public String getName() {
+    return name;
+}
+
+public void setName(String name) {
+    this.name = name;
+}
+
+public Date getBirthday() {
+    return birthday;
+}
+
+public void setBirthday(Date birthday) {
+    this.birthday = birthday;
+}
+
+private int id;
+private String name;
+private Date birthday;
+</code></pre><p>}<br>    编写的java对象需要满足如下要素：</p>
+<p>需要有一个无参的构造函数，因为在session.get时需要用到反射创建java对象；</p>
+<p>需要提供一个id属性，对应数据库的主键；</p>
+<p>需要为对象的其他属性提供get/set方法；</p>
+<p>需要定义成非final的类，以便在hibernate进行延迟加载时为类创建代理；</p>
+<p>如有必要保存到集合中，需要重equals方法和hashcode方法；</p>
+<p>5.设置java对象与数据库的映射关系</p>
+<pre><code>需要创建一个User.hbm.xml文件，编辑java对象与数据库的映射关系，格式如下：
+</code></pre><p>&lt;?xml version=”1.0” encoding=”UTF-8”?&gt;<br>&lt;!DOCTYPE hibernate-mapping PUBLIC “-//Hibernate/Hibernate Mapping DTD 3.0//EN”<br>“<a href="http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd&quot;&gt;" target="_blank" rel="external">http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd&quot;&gt;</a></p>
+<p><hibernate-mapping><br>    <class name="cn.net.bysoft.lesson1.User" table="S_USER"><br>        <id name="id" type="integer" column="ID"><br>            <!-- 指定主键的生成方式，native是使用数据库本地的方式 --><br>            <generator class="native"></generator><br>        </id><br>        <property name="name" type="string" column="NAME"></property><br>        <property name="birthday" type="timestamp" column="BIRTHDAY"></property><br>    </class><br></hibernate-mapping><br>    该文件是用来配置java对象与数据表之间的映射关系的，其中需要留意的是id这个属性，generator来指定主键的生成方式，而native则代表是调用数据库本地的方式来生成主键，我使用的mysql数据库就会自动将id列设置成自增。</p>
+<pre><code>主键具体有哪些生成方式，待接下来详细研究。
+</code></pre><p>6.配置hibernate的配置信息</p>
+<p>在src下创建一个hibernate.cfg.xml文件，格式如下：</p>
+<p>&lt;!DOCTYPE hibernate-configuration PUBLIC<br>    “-//Hibernate/Hibernate Configuration DTD 3.0//EN”<br>    “<a href="http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd&quot;&gt;" target="_blank" rel="external">http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd&quot;&gt;</a></p>
+<p><hibernate-configuration><br>    <session-factory><br>        <!-- 连接数据库的基本信息 --><br>        <property name="hibernate.connection.username">root</property><br>        <property name="hibernate.connection.password">root</property><br>        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property><br>        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hibernate4</property></session-factory></hibernate-configuration></p>
+<pre><code>    &lt;!-- hibernate使用的数据库方言
+         如果不知道可以去/hibernate-release-4.3.11.Final/project/etc/hibernate.properties
+         中查找 --&gt;
+    &lt;property name=&quot;hibernate.dialect&quot;&gt;org.hibernate.dialect.MySQL5Dialect&lt;/property&gt;
+    &lt;!-- 是否在控制台显示sql语句 --&gt;
+    &lt;property name=&quot;hibernate.show_sql&quot;&gt;true&lt;/property&gt;
+    &lt;!-- 是否格式化显示的sql语句 --&gt;
+    &lt;property name=&quot;hibernate.format_sql&quot;&gt;true&lt;/property&gt;
+    &lt;!-- 是否自动生成数据表的策略,create代表每次启动程序都重新创建数据表 --&gt;
+    &lt;property name=&quot;hibernate.hbm2ddl.auto&quot;&gt;create&lt;/property&gt;
+
+    &lt;!-- 需要使用到的*.hbm.xml文件 --&gt;
+    &lt;mapping resource=&quot;cn/net/bysoft/lesson1/User.hbm.xml&quot;/&gt;
+&lt;/session-factory&gt;
+</code></pre><p><br>    该文件需要注意的有两个地方，第一个是mapping属性，第二个是hibernate.hbm2ddl.auto这个属性。</p>
+<pre><code>mapping属性用来配置*.hbm.xml的资源文件地址，这里需要注意的是没有用cn.net.bysoft.lession的形式，而是使用的&apos;/&apos;来描述目录位置。
+
+接下来是自动执行ddl语句的设置(也就是hibernate.hbm2ddl.auto)参数有4个，分别是：
+</code></pre><p>create</p>
+<p>create为每次创建sessionfactory时，会根据*.hbm.xml文件中所配置的信息来drop掉数据表，drop后重新create数据表；</p>
+<p>create-drop</p>
+<p>create-drop为每次创建sessionfactory时，会根据*.hbm.xml文件中所配置的信息来create数据表。而每当sessionfactory被close时，会drop掉开始时create的数据表；</p>
+<p>update</p>
+<p>update为每次创建sessionfactory时，如果数据库中没有对应的表，则新建。</p>
+<p>若已经新建过，则会判断*.hbm.xml文件的配置与建立好的数据表的结构是否相同。</p>
+<p>如果相同则不去进行ddl的操作。</p>
+<p>如果不同，则会根据*.hbm.xml文件中有变化的配置项去更新数据表，但不会删除数据表中已创建过的任何信息。</p>
+<p>validate</p>
+<p>validate为每次创建sessionfactory时，将用*.hbm.xml文件中的配置信息与现有的对应的数据表结构进行比较，若发现不同则抛出异常。</p>
+<p>7.编写代码测试</p>
+<p>package cn.net.bysoft.lesson1;</p>
+<p>import java.util.Date;</p>
+<p>import org.hibernate.Session;<br>import org.hibernate.SessionFactory;<br>import org.hibernate.Transaction;<br>import org.hibernate.boot.registry.StandardServiceRegistry;<br>import org.hibernate.boot.registry.StandardServiceRegistryBuilder;<br>import org.hibernate.cfg.Configuration;<br>import org.junit.Test;</p>
+<p>public class UserTest {</p>
+<pre><code>@Test
+public void test() {
+    // 0.创建configuration对象，该对象保存着hibernate的配置信息和对象关系映射的信息。
+    Configuration cfg = new Configuration().configure();
+    // 1.创建sessionfactory对象
+    StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties());
+    StandardServiceRegistry registry =  builder.build();
+    SessionFactory sessionFactory = cfg.buildSessionFactory(registry); 
+    // 2.创建session对象
+    Session session = sessionFactory.openSession();
+    // 3.开始事务
+    Transaction transaction = session.beginTransaction();
+    // 4.保存
+    User user = new User(&quot;Jack&quot;, new Date());
+    session.save(user);
+    // 5.提交事务
+    transaction.commit();
+    // 6.关闭session对象
+    session.close();
+    // 7.关闭sessionfactory对象
+    sessionFactory.close();
+}
+</code></pre><p>}<br>    上面这段代码中configuration对象用来保存则hibernate的配置信息，如hibernate.cfg.xml中的配置信息，和*.hbm.xml的映射信息。</p>
+<pre><code>sessionfactory为创建session的工厂，它是线程安全的。一般建议一个项目中只有一个sessionfactory，因为创建sessionfactory非常费资源。
+
+接下来是session对象，该对象是hibernate的核心，是一个单线程的对象，内部有session缓存。
+
+对需要持久化的java对象的所有操作都用到了session。
+
+常用的方法有get、load、save、update、saveorupdate、delete、begintransaction、isopen、flush、clear、evicto、close等等方法，接下来将会一个一个研究这些方法的使用。
+
+这是执行这段代码后，控制台输出的内容：
+
+
+
+创建了一张名为S_USER的数据表，并insert了一条数据。
+
+
+
+到此位置，一个简单的hibernate环境就搭建好了。工程的目录结构如下：
+</code></pre><p>配置对象<br>配置对象是你在任何 Hibernate 应用程序中创造的第一个 Hibernate 对象，并且经常只在应用程序初始化期间创造。它代表了 Hibernate 所需一个配置或属性文件。配置对象提供了两种基础组件。</p>
+<p>数据库连接：由 Hibernate 支持的一个或多个配置文件处理。这些文件是 hibernate.properties 和 hibernate.cfg.xml。<br>类映射设置：这个组件创造了 Java 类和数据库表格之间的联系。<br>SessionFactory 对象<br>配置对象被用于创造一个 SessionFactory 对象，使用提供的配置文件为应用程序依次配置 Hibernate，并允许实例化一个会话对象。SessionFactory 是一个线程安全对象并由应用程序所有的线程所使用。</p>
+<p>SessionFactory 是一个重量级对象所以通常它都是在应用程序启动时创造然后留存为以后使用。每个数据库需要一个 SessionFactory 对象使用一个单独的配置文件。所以如果你使用多种数据库那么你要创造多种 SessionFactory 对象。</p>
+<p>Session 对象<br>一个会话被用于与数据库的物理连接。Session 对象是轻量级的，并被设计为每次实例化都需要与数据库的交互。持久对象通过 Session 对象保存和检索。</p>
+<p>Session 对象不应该长时间保持开启状态因为它们通常情况下并非线程安全，并且它们应该按照所需创造和销毁。</p>
+<p>Transaction 对象<br>一个事务代表了与数据库工作的一个单元并且大部分 RDBMS 支持事务功能。在 Hibernate 中事务由底层事务管理器和事务（来自 JDBC 或者 JTA）处理。</p>
+<p>这是一个选择性对象，Hibernate 应用程序可能不选择使用这个接口，而是在自己应用程序代码中管理事务。</p>
+<p>Query 对象<br>Query 对象使用 SQL 或者 Hibernate 查询语言（HQL）字符串在数据库中来检索数据并创造对象。一个查询的实例被用于连结查询参数，限制由查询返回的结果数量，并最终执行查询。</p>
+<p>Criteria 对象<br>Criteria 对象被用于创造和执行面向规则查询的对象来检索对象。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;欢迎使用 &lt;strong&gt;{小书匠}(xiaoshujiang)编辑器&lt;/strong&gt;，您可以通过==设置==里的修改模板来改变新建文章的内容。1.下载hibernate&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;需要到hibernate的官网下载一个hibernate。网址是：ht
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hibernate基础</title>
+    <link href="http://yoursite.com/2017/08/11/Hibernate%E5%9F%BA%E7%A1%80/"/>
+    <id>http://yoursite.com/2017/08/11/Hibernate基础/</id>
+    <published>2017-08-11T11:11:43.000Z</published>
+    <updated>2017-08-12T01:49:34.531Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h3><p>众所周知，Java是面向对象的世界，但数据库不是，现在的主流数据库大多都是关系型数据库。Java的对象想要进入数据库，就必须遵守数据库的“关系”规范，变成一条条的“记录”，数据库中的记录要变成Java中的对象，也同样需要有一个变身的过程—-繁琐的过程。通过SQL这个关系世界的魔法，我们建立起了“面向世界的世界”和“面向关系的世界”的桥梁。</p>
+<p>那么问题来了，SQL是面向关系的语言， 它的脑袋里只有数据库中死板的记录，和眼中 “万事万物皆对象” 的Java在一起，显得格格不入。所以，“用面向对象的方法处理数据库操作”的 Hibernate 出世了。可以这么说，Hibernate 为 “面向对象” 和 “面向关系” 这两个截然不同的世界搭起了桥梁，所以它被称为ORM（Object–Relation Maping）—-对象映射框架。</p>
+<h3 id="Hibernate基本工作原理"><a href="#Hibernate基本工作原理" class="headerlink" title="Hibernate基本工作原理"></a>Hibernate基本工作原理</h3><p>配置对象<br>配置对象是你在任何 Hibernate 应用程序中创造的第一个 Hibernate 对象，并且经常只在应用程序初始化期间创造。它代表了 Hibernate 所需一个配置或属性文件。配置对象提供了两种基础组件。</p>
+<p>数据库连接：由 Hibernate 支持的一个或多个配置文件处理。这些文件是 hibernate.properties 和 hibernate.cfg.xml。<br>类映射设置：这个组件创造了 Java 类和数据库表格之间的联系。<br>SessionFactory 对象<br>配置对象被用于创造一个 SessionFactory 对象，使用提供的配置文件为应用程序依次配置 Hibernate，并允许实例化一个会话对象。SessionFactory 是一个线程安全对象并由应用程序所有的线程所使用。</p>
+<p>SessionFactory 是一个重量级对象所以通常它都是在应用程序启动时创造然后留存为以后使用。每个数据库需要一个 SessionFactory 对象使用一个单独的配置文件。所以如果你使用多种数据库那么你要创造多种 SessionFactory 对象。</p>
+<p>Session 对象<br>一个会话被用于与数据库的物理连接。Session 对象是轻量级的，并被设计为每次实例化都需要与数据库的交互。持久对象通过 Session 对象保存和检索。</p>
+<p>Session 对象不应该长时间保持开启状态因为它们通常情况下并非线程安全，并且它们应该按照所需创造和销毁。</p>
+<p>Transaction 对象<br>一个事务代表了与数据库工作的一个单元并且大部分 RDBMS 支持事务功能。在 Hibernate 中事务由底层事务管理器和事务（来自 JDBC 或者 JTA）处理。</p>
+<p>这是一个选择性对象，Hibernate 应用程序可能不选择使用这个接口，而是在自己应用程序代码中管理事务。</p>
+<p>Query 对象<br>Query 对象使用 SQL 或者 Hibernate 查询语言（HQL）字符串在数据库中来检索数据并创造对象。一个查询的实例被用于连结查询参数，限制由查询返回的结果数量，并最终执行查询。</p>
+<p>Criteria 对象<br>Criteria 对象被用于创造和执行面向规则查询的对象来检索对象。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Why&quot;&gt;&lt;a href=&quot;#Why&quot; class=&quot;headerlink&quot; title=&quot;Why&quot;&gt;&lt;/a&gt;Why&lt;/h3&gt;&lt;p&gt;众所周知，Java是面向对象的世界，但数据库不是，现在的主流数据库大多都是关系型数据库。Java的对象想要进入数据库，就必须遵守数据
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java动态网页</title>
+    <link href="http://yoursite.com/2017/08/09/Java%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5/"/>
+    <id>http://yoursite.com/2017/08/09/Java动态网页/</id>
+    <published>2017-08-09T12:56:59.000Z</published>
+    <updated>2017-08-09T14:28:53.457Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="何为动态网页"><a href="#何为动态网页" class="headerlink" title="何为动态网页"></a>何为动态网页</h3><p>所谓动态，是指浏览器所接受到的HTML页面是由服务器端的程序动态生成的，而不是事先制作好的。</p>
+<h4 id="Java动态网页"><a href="#Java动态网页" class="headerlink" title="Java动态网页"></a>Java动态网页</h4><p>Java的动态Web编程技术是从Servlet（Servlet是服务器端小程序的意思）开始的。它在服务器端运行，动态地向客户端输出HTML页面。</p>
+<h4 id="从HTML到JSP"><a href="#从HTML到JSP" class="headerlink" title="从HTML到JSP"></a>从HTML到JSP</h4><p>JSP是Servlet技术的扩展—-JSP(Java Server Pages) 。JSP实际上是Servlet的 一种变体，二者在本质上是一致的。为什么这样说呢？首先，Servlet和JSP是不能直接运行的，它们必须部署到一种特殊的应用程序—-Web服务器中。Web服务器会将JSP编译为Servlet，最后用于响应客户端浏览器的请求。虽然JSP和Servlet在本质上没有不同。只是Servlet在Java中插入HTML代码，而JSP是在HTML中插入Java代码而已。但这种形式上的转变简化了页面的编写工作：在JSP中书写静态HTML代码更加方便，不必在用print输出每一行。网页设计师和JSP程序员也可以很好地配合，前者只需要制作好HTML静态页面，将需要生成的地方预留空白，再交给后者加入动态内容、制作成JSP页面就可以了。 </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;何为动态网页&quot;&gt;&lt;a href=&quot;#何为动态网页&quot; class=&quot;headerlink&quot; title=&quot;何为动态网页&quot;&gt;&lt;/a&gt;何为动态网页&lt;/h3&gt;&lt;p&gt;所谓动态，是指浏览器所接受到的HTML页面是由服务器端的程序动态生成的，而不是事先制作好的。&lt;/p&gt;
+&lt;h4
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JDBC简单用</title>
+    <link href="http://yoursite.com/2017/08/08/JDBC%E7%AE%80%E5%8D%95%E7%94%A8/"/>
+    <id>http://yoursite.com/2017/08/08/JDBC简单用/</id>
+    <published>2017-08-07T22:15:28.000Z</published>
+    <updated>2017-08-07T14:40:31.782Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="何为JDBC"><a href="#何为JDBC" class="headerlink" title="何为JDBC"></a>何为JDBC</h4><p>JDBC（Java Data Base Connectivity,Java数据库连接）是由原Sun公司制定的数据库连接技术。SQL是用户操作数据库的语言，JDBC则为用户与数据库之间搭起了<strong>通信</strong>的通道。JDBC的根本目的：<strong>为Java编程人员提供操作各种数据库统一接口</strong></p>
+<p>作为程序员，我们不能要求我们的用户只用一种数据库，所以说同一个Java应用能运用在不同的数据库之上是非常重要的，同时，这也是很不容易的。当今的数据库种类繁多，就像不同的国家的人说不同的语言一样，不同的数据库也使用着不同的语言…想要跟不同的数据库“交流”，就要使用他们的语言，那是不是说作为一名Java程序员要懂得所有的数据库语言？</p>
+<p>要解决这个问题，我们就需要一个翻译，就像国家领导人经常出访不同的国家，但不需要懂得全世界的语言一样。</p>
+<p>原Sun公司制定了JDBC的标准，这个标准规定了JDBC的接口，就如同规定了Java程序员与JDBC使用的语言。不同数据库语言的表达方式被JDBC统一了起来。就拿 “给我一个数据库连接” 这样一个命令来说，不论在各个数据库中是怎么实现的，在JDBC中都是一个命令—-“getConnection” 。</p>
+<p>这些功能的实现，主要靠的是“JDBC驱动” 这个东西，它承担了翻译的核心机能。JDBC标准规定后，各个数据库厂商根据这个标准，开发出对应自己数据库产品的JDBC驱动。所以想要操作什么数据库，只要找到相应的驱动就好了。当然，JDBC驱动实际上就是一组class文件，它们被打包为Java专用压缩格式jar。</p>
+<p>这样一来，数据库程序的开发就变得简单了。JDBC为Java提供了一个统一接口，程序员在编程时，可以不考虑所要操作的是什么数据库，只需要使用标准的JDBC书写数据库操作代码，再根据目标数据库的不同，加在相应的JDBC驱动就行了。</p>
+<p>JDBC的所有接口都在Java基础类库的  java.sql 包以及 javax.sql 包中，但请注意这些都只是接口，所有的实现类就是由各数据库厂商根据这些接口编写的具体类而已。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;何为JDBC&quot;&gt;&lt;a href=&quot;#何为JDBC&quot; class=&quot;headerlink&quot; title=&quot;何为JDBC&quot;&gt;&lt;/a&gt;何为JDBC&lt;/h4&gt;&lt;p&gt;JDBC（Java Data Base Connectivity,Java数据库连接）是由原Sun公司制定的
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数据库的优势</title>
+    <link href="http://yoursite.com/2017/08/07/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3/"/>
+    <id>http://yoursite.com/2017/08/07/数据库相关/</id>
+    <published>2017-08-07T15:18:28.000Z</published>
+    <updated>2017-08-07T14:11:20.323Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="使用数据库的优势"><a href="#使用数据库的优势" class="headerlink" title="使用数据库的优势"></a>使用数据库的优势</h3><h4 id="1、灵活、高效地管理数据"><a href="#1、灵活、高效地管理数据" class="headerlink" title="1、灵活、高效地管理数据"></a>1、灵活、高效地管理数据</h4><p>数据库可不是简单地把存进去的数据堆积起来。它会将数据分门别类存放好，并在此基础上建立起一整套查询、修改、输入与输出的机制，极大地提高工作效率。</p>
+<h4 id="2、方便共享数据"><a href="#2、方便共享数据" class="headerlink" title="2、方便共享数据"></a>2、方便共享数据</h4><p>在现实中，不少用户之间都经常存在重复数据的现象。此外，现实中的数据经常要同时提供给许多使用者，如果每个使用者都保存一份相同的数据，一方面会造成巨大的浪费，另一方面也会为保证数据的一致性增加困难。举个简单例子，中国所有的公民的有关数据的量是非常庞大的，而很多地方都需要这些数据，即使真的把这些数据都复制成千上万份发放给各个机关，那么一旦这些数据更改（每一秒都有人出生、死亡），所有的机关必须对自己手中的数据进行准确无误的更改…工作量是很大的。但将公民的数据统一保存在数据库中，以上的问题便能迎刃而解：各个机关通过网络访问数据库，数据库中数据的更改也会及时。统一地反映给各个机构。</p>
+<p>将“数据”与“应用”分离。把程序中的数据部分转移到数据库这个安全稳定的盒子中，这些数据就与应用程序之间有了清晰的界限。这样一来，程序的任何改变都不会影响到数据，就算程序废弃了，数据库中的数据仍然能为其他应用程序所用。</p>
+<h4 id="3、增强安全性"><a href="#3、增强安全性" class="headerlink" title="3、增强安全性"></a>3、增强安全性</h4><p>任何对数据库内任何数据的访问都必须经过数据库系统的授权，从而更加有力地保障了数据的安全。举个例子吧，说白了，数据库就相当与现实生活中的图书馆，堆积如山的书籍就是数据。乱七八糟的图书进入图书馆后，被一个个贴上标签，分类整理好之后放入指定的位置。之后，读者更方便查找、借阅书籍，一本书也能给更多人阅读—-这些都类似于数据库为数据提供的管理、共享功能。与此同时，读者借阅书籍时必须经过图书管理者的允许，借阅之后限期归还，这就像数据库为数据提供的安全保障。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;使用数据库的优势&quot;&gt;&lt;a href=&quot;#使用数据库的优势&quot; class=&quot;headerlink&quot; title=&quot;使用数据库的优势&quot;&gt;&lt;/a&gt;使用数据库的优势&lt;/h3&gt;&lt;h4 id=&quot;1、灵活、高效地管理数据&quot;&gt;&lt;a href=&quot;#1、灵活、高效地管理数据&quot; cla
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>写代码前的准备</title>
@@ -593,11 +1023,11 @@ DNS Servers . . . . . . . . . . . : 58.22.96.66
   </entry>
   
   <entry>
-    <title>Java文件处理器</title>
-    <link href="http://yoursite.com/2017/07/26/Java%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86%E5%99%A8/"/>
-    <id>http://yoursite.com/2017/07/26/Java文件处理器/</id>
+    <title>Java文件处处理</title>
+    <link href="http://yoursite.com/2017/07/26/Java%E6%96%87%E4%BB%B6%E5%A4%84%E5%A4%84%E7%90%86/"/>
+    <id>http://yoursite.com/2017/07/26/Java文件处处理/</id>
     <published>2017-07-25T22:46:17.000Z</published>
-    <updated>2017-07-26T12:32:02.072Z</updated>
+    <updated>2017-07-27T02:57:58.678Z</updated>
     
     <content type="html"><![CDATA[<h3 id="谈谈Java文件处理"><a href="#谈谈Java文件处理" class="headerlink" title="谈谈Java文件处理"></a>谈谈Java文件处理</h3><p>今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。</p>
 <p>文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：</p>
@@ -624,11 +1054,11 @@ DNS Servers . . . . . . . . . . . : 58.22.96.66
   </entry>
   
   <entry>
-    <title>Java文件处处理</title>
-    <link href="http://yoursite.com/2017/07/26/Java%E6%96%87%E4%BB%B6%E5%A4%84%E5%A4%84%E7%90%86/"/>
-    <id>http://yoursite.com/2017/07/26/Java文件处处理/</id>
+    <title>Java文件处理器</title>
+    <link href="http://yoursite.com/2017/07/26/Java%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86%E5%99%A8/"/>
+    <id>http://yoursite.com/2017/07/26/Java文件处理器/</id>
     <published>2017-07-25T22:46:17.000Z</published>
-    <updated>2017-07-27T02:57:58.678Z</updated>
+    <updated>2017-07-26T12:32:02.072Z</updated>
     
     <content type="html"><![CDATA[<h3 id="谈谈Java文件处理"><a href="#谈谈Java文件处理" class="headerlink" title="谈谈Java文件处理"></a>谈谈Java文件处理</h3><p>今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。</p>
 <p>文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：</p>
