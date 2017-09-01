@@ -48,9 +48,9 @@
     <link href="http://yoursite.com/2017/08/12/Hibernate/"/>
     <id>http://yoursite.com/2017/08/12/Hibernate/</id>
     <published>2017-08-12T01:18:20.304Z</published>
-    <updated>2017-08-12T01:49:26.298Z</updated>
+    <updated>2017-09-01T16:33:16.389Z</updated>
     
-    <content type="html"><![CDATA[<p>欢迎使用 <strong>{小书匠}(xiaoshujiang)编辑器</strong>，您可以通过==设置==里的修改模板来改变新建文章的内容。1.下载hibernate</p>
+    <content type="html"><![CDATA[<p>1.下载hibernate</p>
 <pre><code>需要到hibernate的官网下载一个hibernate。网址是：http://hibernate.org/orm/downloads/
 </code></pre><p>2.解压hibernate</p>
 <pre><code>下载后解压缩，得到一个hibernate-release-4.3.11.Final文件夹（我下载的hibernate版本是4.3.11），在hibernate-release-4.3.11.Final文件夹里有一个lib文件夹，里面放着hibernate的jar包。
@@ -355,8 +355,10 @@ public void test() {
     
     <summary type="html">
     
-      &lt;p&gt;欢迎使用 &lt;strong&gt;{小书匠}(xiaoshujiang)编辑器&lt;/strong&gt;，您可以通过==设置==里的修改模板来改变新建文章的内容。1.下载hibernate&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;需要到hibernate的官网下载一个hibernate。网址是：ht
+      &lt;p&gt;1.下载hibernate&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;需要到hibernate的官网下载一个hibernate。网址是：http://hibernate.org/orm/downloads/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.解压hibernate&lt;/p&gt;
+&lt;pre&gt;
     
     </summary>
     
