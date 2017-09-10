@@ -1,0 +1,460 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>动态规划从新手到专家 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="前言我们遇到的问题中，有很大一部分可以用动态规划(简称DP)来解。 解决这类问题可以很大地提升你的能力与技巧，我会试着帮助你理解如何使用DP来解题。 这篇文章是基于实例展开来讲的，因为干巴巴的理论实在不好理解。 注意：如果你对于其中某一节已经了解并且不想阅读它，没关系，直接跳过它即可。 简介简介(入门) 什么是动态规划，我们要如何描述它? 动态规划算法通常基于一个递推公式及一个或多个初始状态。 当">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划从新手到专家">
+<meta property="og:url" content="http://yoursite.com/2017/09/09/动态规划从新手到专家/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="前言我们遇到的问题中，有很大一部分可以用动态规划(简称DP)来解。 解决这类问题可以很大地提升你的能力与技巧，我会试着帮助你理解如何使用DP来解题。 这篇文章是基于实例展开来讲的，因为干巴巴的理论实在不好理解。 注意：如果你对于其中某一节已经了解并且不想阅读它，没关系，直接跳过它即可。 简介简介(入门) 什么是动态规划，我们要如何描述它? 动态规划算法通常基于一个递推公式及一个或多个初始状态。 当">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/2017/09/09/动态规划从新手到专家/images/sum.png">
+<meta property="og:updated_time" content="2017-09-08T08:07:36.737Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="动态规划从新手到专家">
+<meta name="twitter:description" content="前言我们遇到的问题中，有很大一部分可以用动态规划(简称DP)来解。 解决这类问题可以很大地提升你的能力与技巧，我会试着帮助你理解如何使用DP来解题。 这篇文章是基于实例展开来讲的，因为干巴巴的理论实在不好理解。 注意：如果你对于其中某一节已经了解并且不想阅读它，没关系，直接跳过它即可。 简介简介(入门) 什么是动态规划，我们要如何描述它? 动态规划算法通常基于一个递推公式及一个或多个初始状态。 当">
+<meta name="twitter:image" content="http://yoursite.com/2017/09/09/动态规划从新手到专家/images/sum.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/09/09/动态规划从新手到专家/" title="动态规划从新手到专家" itemprop="url">动态规划从新手到专家</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2017-09-08T16:00:34.000Z" itemprop="datePublished"> Published 2017-09-09</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">2.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#初级"><span class="toc-number">3.</span> <span class="toc-text">初级</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>我们遇到的问题中，有很大一部分可以用动态规划(简称DP)来解。 解决这类问题可以很大地提升你的能力与技巧，我会试着帮助你理解如何使用DP来解题。 这篇文章是基于实例展开来讲的，因为干巴巴的理论实在不好理解。</p>
+<p>注意：如果你对于其中某一节已经了解并且不想阅读它，没关系，直接跳过它即可。</p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>简介(入门)</p>
+<p>什么是动态规划，我们要如何描述它?</p>
+<p>动态规划算法通常基于一个递推公式及一个或多个初始状态。 当前子问题的解将由上一次子问题的解推出。使用动态规划来解题只需要多项式时间复杂度， 因此它比回溯法、暴力法等要快许多。</p>
+<p>现在让我们通过一个例子来了解一下DP的基本原理。</p>
+<p>首先，我们要找到某个状态的最优解，然后在它的帮助下，找到下一个状态的最优解。</p>
+<p>“状态”代表什么及如何找到它?</p>
+<p>“状态”用来描述该问题的子问题的解。原文中有两段作者阐述得不太清楚，跳过直接上例子。</p>
+<p>如果我们有面值为1元、3元和5元的硬币若干枚，如何用最少的硬币凑够11元？ (表面上这道题可以用贪心算法，但贪心算法无法保证可以求出解，比如1元换成2元的时候)</p>
+<p>首先我们思考一个问题，如何用最少的硬币凑够i元(i&lt;11)？为什么要这么问呢？ 两<img src="./images/sum.png" alt="个原因：1.当我们遇到一个大问题时，总是习惯把问题的规模变小，这样便于分析讨论。 2." title="sum">这个规模变小后的问题和原来的问题是同质的，除了规模变小，其它的都是一样的， 本质上它还是同一个问题(规模变小后的问题其实是原问题的子问题)。</p>
+<p>好了，让我们从最小的i开始吧。当i=0，即我们需要多少个硬币来凑够0元。 由于1，3，5都大于0，即没有比0小的币值，因此凑够0元我们最少需要0个硬币。 (这个分析很傻是不是？别着急，这个思路有利于我们理清动态规划究竟在做些什么。) 这时候我们发现用一个标记来表示这句“凑够0元我们最少需要0个硬币。”会比较方便， 如果一直用纯文字来表述，不出一会儿你就会觉得很绕了。那么， 我们用d(i)=j来表示凑够i元最少需要j个硬币。于是我们已经得到了d(0)=0， 表示凑够0元最小需要0个硬币。当i=1时，只有面值为1元的硬币可用， 因此我们拿起一个面值为1的硬币，接下来只需要凑够0元即可，而这个是已经知道答案的， 即d(0)=0。所以，d(1)=d(1-1)+1=d(0)+1=0+1=1。当i=2时， 仍然只有面值为1的硬币可用，于是我拿起一个面值为1的硬币， 接下来我只需要再凑够2-1=1元即可(记得要用最小的硬币数量)，而这个答案也已经知道了。 所以d(2)=d(2-1)+1=d(1)+1=1+1=2。一直到这里，你都可能会觉得，好无聊， 感觉像做小学生的题目似的。因为我们一直都只能操作面值为1的硬币！耐心点， 让我们看看i=3时的情况。当i=3时，我们能用的硬币就有两种了：1元的和3元的( 5元的仍然没用，因为你需要凑的数目是3元！5元太多了亲)。 既然能用的硬币有两种，我就有两种方案。如果我拿了一个1元的硬币，我的目标就变为了： 凑够3-1=2元需要的最少硬币数量。即d(3)=d(3-1)+1=d(2)+1=2+1=3。 这个方案说的是，我拿3个1元的硬币；第二种方案是我拿起一个3元的硬币， 我的目标就变成：凑够3-3=0元需要的最少硬币数量。即d(3)=d(3-3)+1=d(0)+1=0+1=1. 这个方案说的是，我拿1个3元的硬币。好了，这两种方案哪种更优呢？ 记得我们可是要用最少的硬币数量来凑够3元的。所以， 选择d(3)=1，怎么来的呢？具体是这样得到的：d(3)=min{d(3-1)+1, d(3-3)+1}。</p>
+<p>OK，码了这么多字讲具体的东西，让我们来点抽象的。从以上的文字中， 我们要抽出动态规划里非常重要的两个概念：状态和状态转移方程。</p>
+<p>上文中d(i)表示凑够i元需要的最少硬币数量，我们将它定义为该问题的”状态”， 这个状态是怎么找出来的呢？我在另一篇文章 动态规划之背包问题(一)中写过： 根据子问题定义状态。你找到子问题，状态也就浮出水面了。 最终我们要求解的问题，可以用这个状态来表示：d(11)，即凑够11元最少需要多少个硬币。 那状态转移方程是什么呢？既然我们用d(i)表示状态，那么状态转移方程自然包含d(i)， 上文中包含状态d(i)的方程是：d(3)=min{d(3-1)+1, d(3-3)+1}。没错， 它就是状态转移方程，描述状态之间是如何转移的。当然，我们要对它抽象一下，</p>
+<p>d(i)=min{ d(i-vj)+1 }，其中i-vj &gt;=0，vj表示第j个硬币的面值;</p>
+<p>有了状态和状态转移方程，这个问题基本上也就解决了。当然了，Talk is cheap,show me the code!</p>
+<p>  从上图可以得出，要凑够11元至少需要3枚硬币。</p>
+<p>此外，通过追踪我们是如何从前一个状态值得到当前状态值的， 可以找到每一次我们用的是什么面值的硬币。比如，从上面的图我们可以看出， 最终结果d(11)=d(10)+1(面值为1)，而d(10)=d(5)+1(面值为5)，最后d(5)=d(0)+1 (面值为5)。所以我们凑够11元最少需要的3枚硬币是：1元、5元、5元。</p>
+<h3 id="初级"><a href="#初级" class="headerlink" title="初级"></a>初级</h3><p>上面讨论了一个非常简单的例子。现在让我们来看看对于更复杂的问题， 如何找到状态之间的转移方式(即找到状态转移方程)。 为此我们要引入一个新词叫递推关系来将状态联系起来(说的还是状态转移方程)</p>
+<p>OK，上例子，看看它是如何工作的。</p>
+<p>一个序列有N个数：A<a href="./images/sum.png" title="sum">1</a>,A[2],…,A[N]，求出最长非降子序列的长度。 (讲DP基本都会讲到的一个问题LIS：longest increasing subsequence)</p>
+<p>正如上面我们讲的，面对这样一个问题，我们首先要定义一个“状态”来代表它的子问题， 并且找到它的解。注意，大部分情况下，某个状态只与它前面出现的状态有关， 而独立于后面的状态。</p>
+<p>让我们沿用“入门”一节里那道简单题的思路来一步步找到“状态”和“状态转移方程”。 假如我们考虑求A<a href="./images/sum.png" title="sum">1</a>,A[2],…,A[i]的最长非降子序列的长度，其中i&lt;N， 那么上面的问题变成了原问题的一个子问题(问题规模变小了，你可以让i=1,2,3等来分析) 然后我们定义d(i)，表示前i个数中以A[i]结尾的最长非降子序列的长度。OK， 对照“入门”中的简单题，你应该可以估计到这个d(i)就是我们要找的状态。 如果我们把d(1)到d(N)都计算出来，那么最终我们要找的答案就是这里面最大的那个。 状态找到了，下一步找出状态转移方程。</p>
+<p>为了方便理解我们是如何找到状态转移方程的，我先把下面的例子提到前面来讲。 如果我们要求的这N个数的序列是：</p>
+<p>5，3，4，8，6，7<br>根据上面找到的状态，我们可以得到：（下文的最长非降子序列都用LIS表示）</p>
+<p>前1个数的LIS长度d(1)=1(序列：5)<br>前2个数的LIS长度d(2)=1(序列：3；3前面没有比3小的)<br>前3个数的LIS长度d(3)=2(序列：3，4；4前面有个比它小的3，所以d(3)=d(2)+1)<br>前4个数的LIS长度d(4)=3(序列：3，4，8；8前面比它小的有3个数，所以 d(4)=max{d(1),d(2),d(3)}+1=3)<br>OK，分析到这，我觉得状态转移方程已经很明显了，如果我们已经求出了d(1)到d(i-1)， 那么d(i)可以用下面的状态转移方程得到：</p>
+<p>d(i) = max{1, d(j)+1},其中j&lt;i,A[j]&lt;=A[i]<br>用大白话解释就是，想要求d(i)，就把i前面的各个子序列中， 最后一个数不大于A[i]的序列长度加1，然后取出最大的长度即为d(i)。 当然了，有可能i前面的各个子序列中最后一个数都大于A[i]，那么d(i)=1， 即它自身成为一个长度为1的子序列。</p>
+<p>Talk is cheap, show me the code:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">#include &lt;iostream&gt;</div><div class="line">using namespace std;</div><div class="line"></div><div class="line">int lis(int A[], int n)&#123;</div><div class="line">    int *d = new int[n];</div><div class="line">    int len = 1;</div><div class="line">    for(int i=0; i&lt;n; ++i)&#123;</div><div class="line">        d[i] = 1;</div><div class="line">        for(int j=0; j&lt;i; ++j)</div><div class="line">            if(A[j]&lt;=A[i] &amp;&amp; d[j]+1&gt;d[i])</div><div class="line">                d[i] = d[j] + 1;</div><div class="line">        if(d[i]&gt;len) len = d[i];</div><div class="line">    &#125;</div><div class="line">    delete[] d;</div><div class="line">    return len;</div><div class="line">&#125;</div><div class="line">int main()&#123;</div><div class="line">    int A[] = &#123;</div><div class="line">        5, 3, 4, 8, 6, 7</div><div class="line">    &#125;;</div><div class="line">    cout&lt;&lt;lis(A, 6)&lt;&lt;endl;</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>该算法的时间复杂度是O(n^2 )，并不是最优的解法。 还有一种很巧妙的算法可以将时间复杂度降到O(nlogn)，网上已经有各种文章介绍它， 这里就不再赘述。传送门： LIS的O(nlogn)解法。 此题还可以用“排序+LCS”来解，感兴趣的话可自行Google。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/09/11/My-Plan/" title="My-Plan">
+  <span>
+  My-Plan</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/09/06/动态规划之背包问题/"  title="动态规划之背包问题">
+ <span>动态规划之背包问题
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>11</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2017 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
