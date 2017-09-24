@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-24T16:39:06.465Z</updated>
+  <updated>2017-09-24T16:49:29.401Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2017/09/25/%E7%94%9F%E6%B4%BB-%E8%AE%B0%E4%B8%80%E5%91%A8%E7%9A%84%E6%B1%82%E8%81%8C%E7%BB%8F%E5%8E%86/"/>
     <id>http://yoursite.com/2017/09/25/生活-记一周的求职经历/</id>
     <published>2017-09-25T00:03:54.000Z</published>
-    <updated>2017-09-24T16:39:06.465Z</updated>
+    <updated>2017-09-24T16:49:29.401Z</updated>
     
     <content type="html"><![CDATA[<h3 id="小记"><a href="#小记" class="headerlink" title="小记"></a>小记</h3><p>大二开学第一周，自己就尝试着扮演大三或者大四的角色，加入到找实习找工作的行列中，体验生活。在这一周的折腾中，自己也有所感悟。</p>
 <h3 id="历程"><a href="#历程" class="headerlink" title="历程"></a>历程</h3><h4 id="猎豹移动"><a href="#猎豹移动" class="headerlink" title="猎豹移动"></a>猎豹移动</h4><p>自己在宣讲会的前一天就在蓝杰见到 Hr 小姐姐了，听小姐姐讲了猎豹移动的一些信息，比如员工宿舍啊、食堂啊、培养计划啊…说实话，自己当时是很被吸引的，也很希望自己能有机会到这样的公司里学习。第二天晚上（周一），自己约上几个学长，就一起听了宣讲会，然后参加笔试。当然，笔试的结果是惨败（在前前一篇文章就讲过了），这里就不细讲了。</p>
@@ -37,6 +37,8 @@
 &lt;h3
     
     </summary>
+    
+      <category term="life" scheme="http://yoursite.com/categories/life/"/>
     
     
   </entry>
