@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-21T15:48:37.838Z</updated>
+  <updated>2017-09-24T16:39:06.465Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>生活|记一周的求职经历</title>
+    <link href="http://yoursite.com/2017/09/25/%E7%94%9F%E6%B4%BB-%E8%AE%B0%E4%B8%80%E5%91%A8%E7%9A%84%E6%B1%82%E8%81%8C%E7%BB%8F%E5%8E%86/"/>
+    <id>http://yoursite.com/2017/09/25/生活-记一周的求职经历/</id>
+    <published>2017-09-25T00:03:54.000Z</published>
+    <updated>2017-09-24T16:39:06.465Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="小记"><a href="#小记" class="headerlink" title="小记"></a>小记</h3><p>大二开学第一周，自己就尝试着扮演大三或者大四的角色，加入到找实习找工作的行列中，体验生活。在这一周的折腾中，自己也有所感悟。</p>
+<h3 id="历程"><a href="#历程" class="headerlink" title="历程"></a>历程</h3><h4 id="猎豹移动"><a href="#猎豹移动" class="headerlink" title="猎豹移动"></a>猎豹移动</h4><p>自己在宣讲会的前一天就在蓝杰见到 Hr 小姐姐了，听小姐姐讲了猎豹移动的一些信息，比如员工宿舍啊、食堂啊、培养计划啊…说实话，自己当时是很被吸引的，也很希望自己能有机会到这样的公司里学习。第二天晚上（周一），自己约上几个学长，就一起听了宣讲会，然后参加笔试。当然，笔试的结果是惨败（在前前一篇文章就讲过了），这里就不细讲了。</p>
+<h4 id="深信服"><a href="#深信服" class="headerlink" title="深信服"></a>深信服</h4><p>深信服的笔试是在网上弄的。自己也不知到怎么滴就投了PHP岗位的，虽然也学过并用PHP开发了新生宝典，但熟练程度还不至于背出来一些常见函数啊，基本上都是现用现查的，所以结果可想而知。除了PHP，笔试还设计了服务器、linux、数据库方面的知识，也就是关于网站的方方面面都有了，并且都是一些很深入的问题，比如说怎么Apache和Nginx的差别啊，Nginx还有什么其他的作用啊；怎么优化Mysql数据库啊；怎么防止sql注入攻击啊；各种数据库引擎的不同啊…哇，我天，我只能说自己要走的路还很长呢…</p>
+<h4 id="恒生"><a href="#恒生" class="headerlink" title="恒生"></a>恒生</h4><p>恒生的笔试是在今天（周六）进行的。自己本来不想去的，但仔细想想反正周六也没什么事，就去玩玩嘛，就在学校。笔试的题目感觉还可以，不算难，就是一些基础的东西，但自己还是不是很懂，可能好久没有看了吧，记忆有点模糊了。笔试中考了一些简单的数据库操作，就是给你一些表，让你写SQL语句找出需要的数据，说实话，这是很容易的，但自己基本都是用客户端操作数据库的，并且用到的都是一些简单的增删改查，总之，就是自己不懂做。</p>
+<h4 id="博登信息"><a href="#博登信息" class="headerlink" title="博登信息"></a>博登信息</h4><p>这是唯一一家不需要笔试的，投简历就直接通知面试了。周五下午去面试，更可恶的是并不是一个懂技术的人来面试而是Hr小姐姐来跟我聊，聊的就是自己的一些情况：在学校学了什么 核心课，自己有学了什么，做过什么，并没有问用到什么技术。好吧，我也无话可说啊。虽然不是技术面试，但也算是面试，自己感觉自己表现还是可以的，不是很紧张，也表达出来了自己想要表达的东西。如果放在中学，自己肯定会吞吞吐吐的，不懂怎么组织语言，讲话没主次.。 </p>
+<h3 id="自己的一些感悟"><a href="#自己的一些感悟" class="headerlink" title="自己的一些感悟"></a>自己的一些感悟</h3><p>经过这一周的折腾，自己还是有点收获的，也明确了自己今后的学习重点，折腾是值得的。同时，也意识到笔试是个很重要的东西，笔试也确实能看出一个人的水平。同时，笔试考的知识，也同样是面试的时候，面试官要问你的问题，比如说上面提到的Mysql数据库的优化啊、怎么防止SQL注入攻击啊…如果你用笔都不能写下你想要表达的东西，你怎么能用言语讲述出来呢？此外，如果你真的有水平，笔试也是你展示自己的一个很好的机会。如果你的答案与别人与众不同且正确，那么肯定会得到面试官的青睐。</p>
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>小伙子，还是要一步一个脚印踏踏实实来，打好基础，并多思考技术背后的原理…</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;小记&quot;&gt;&lt;a href=&quot;#小记&quot; class=&quot;headerlink&quot; title=&quot;小记&quot;&gt;&lt;/a&gt;小记&lt;/h3&gt;&lt;p&gt;大二开学第一周，自己就尝试着扮演大三或者大四的角色，加入到找实习找工作的行列中，体验生活。在这一周的折腾中，自己也有所感悟。&lt;/p&gt;
+&lt;h3
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>记一次深信服网上笔试</title>
@@ -1218,58 +1244,6 @@ DNS Servers . . . . . . . . . . . : 58.22.96.66
     
     
       <category term="life" scheme="http://yoursite.com/tags/life/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java浅谈Socket</title>
-    <link href="http://yoursite.com/2017/07/29/Java%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B/"/>
-    <id>http://yoursite.com/2017/07/29/Java服务器编程/</id>
-    <published>2017-07-28T20:30:36.000Z</published>
-    <updated>2017-07-28T13:23:20.098Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h3><p>现在是互联网的时代，说到底也就是连接的时代。人与人、人与物、物与物都需要连接，那为什么要连接呢？<br>我的答案是：为了交换信息。人与人的连接，就是我们说的交流，这也是一个互享信息的过程；人与物的连接，也是为了交换信息，举个简单的例子：但我们在自动购物机上购物时，我们通过挑选我们需要的商品告诉购物机我们要的是什么，这是你给购物机的信息，你扫二维码付款，告诉了购物机你的身份，这难道不是一个交换信息的过程吗？物与物的连接，也是这样的，就像智能家居里的家具，是要连接起来，共享信息，才能把我们的家控制在一个适宜的状态。我们写程序也一样，也要连接，也要交流，也要共享信息…</p>
-<h3 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h3><p>客户端套接字（也可以就叫“套接字”），套接字是两台机器之间的通信端点，是源IP地址和目的IP地址以及源端口号和目的端口号的组合，一般用于标识客户端请求的服务器和服务，是支持TCP/IP的网络通信的基本操作单元。</p>
-<p>一个Socket由一个IP地址和一个端口号唯一确定。在Java环境下，Socket编程主要是指基于TCP/IP协议的网络编程。具体的介绍参考Oracle的Socket说明文档。</p>
-<h5 id="使用Socket的过程有："><a href="#使用Socket的过程有：" class="headerlink" title="使用Socket的过程有："></a>使用Socket的过程有：</h5><ol>
-<li><p>创建</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">指定ip地址和端口号</div><div class="line">Socket client = new Socket(&quot;127.0.0.1.&quot;, 8080);</div><div class="line">打开连接到Socket的输入/输出流</div><div class="line">BufferedReader input=new BufferedReader(new InputStreamReader(client.getInputStream()));</div><div class="line">BufferedReader output=new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));</div></pre></td></tr></table></figure>
-</li>
-<li><p>进行读/写操作</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">String line = input.readLine();</div><div class="line">output.write(&quot;Success!&quot;);</div><div class="line">output.flush();</div></pre></td></tr></table></figure>
-</li>
-<li><p>关闭Socket</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">input.close();</div><div class="line">output.close();</div><div class="line">client.close();</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="ServerSocket"><a href="#ServerSocket" class="headerlink" title="ServerSocket"></a>ServerSocket</h3><p>服务器套接字，可以绑定到指定的服务器IP地址和端口，等待请求通过网络传入，基于该请求执行某些操作，然后可能向请求者返回结果。</p>
-<h5 id="使用ServerSocket的过程有："><a href="#使用ServerSocket的过程有：" class="headerlink" title="使用ServerSocket的过程有："></a>使用ServerSocket的过程有：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">这里绑定8080端口，默认绑定本地IP地址，侦听并接收HTTP请求。</div><div class="line">ServerSocket server = new ServerSocket(8080);</div><div class="line">accept()方法，侦听并接受到此套接字的连接,程序会在此处堵塞，简单点说，程序会在此处停住，一直等到有客户端连接</div><div class="line">Socket socket = server.accept();</div><div class="line"></div><div class="line">Server接收消息后再对请求做处理，注意服务端input对应客户端的output，服务端的output对应客户端的input。</div></pre></td></tr></table></figure>
-<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">package service.com;</div><div class="line"></div><div class="line">import java.io.IOException;</div><div class="line">import java.net.ServerSocket;</div><div class="line">import java.net.Socket;</div><div class="line">import java.util.Date;</div><div class="line"></div><div class="line">import org.apache.commons.lang3.time.DateFormatUtils;</div><div class="line"></div><div class="line">public class HttpServer &#123;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line"></div><div class="line">        try &#123;</div><div class="line">            // 侦听8080端口</div><div class="line">            ServerSocket server = new ServerSocket(8080);</div><div class="line"></div><div class="line">            System.out.println(&quot;Info:Server start,&quot; + DateFormatUtils.format(new Date(), &quot;yyyy-MM-dd HH:mm:ss&quot;));</div><div class="line">            while (1 == 1) &#123;</div><div class="line">                // 接收客户端请求数据   程序堵塞</div><div class="line">                Socket socket = server.accept();</div><div class="line"></div><div class="line">                // 读取</div><div class="line">                BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));</div><div class="line">                // 写入</div><div class="line">                BufferedWriter output = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));</div><div class="line"></div><div class="line">                String line = input.readLine();</div><div class="line"></div><div class="line">                while (line != null) &#123;</div><div class="line">                    System.out.println(line);</div><div class="line">                    output.write(&quot;Success!!&quot; + DateFormatUtils.format(new Date(), &quot;yyyy-MM-dd HH:mm:ss&quot;) + &quot;\r\n&quot;);</div><div class="line">                    output.flush();</div><div class="line">                    line = input.readLine();</div><div class="line">                    return;</div><div class="line">                &#125;</div><div class="line">                //必须关闭</div><div class="line">                input.close();</div><div class="line">                output.close();</div><div class="line"></div><div class="line">                socket.close();</div><div class="line">            &#125;</div><div class="line">        &#125; catch (IOException e) &#123;</div><div class="line">           System.out.println(&quot;Error binding the specified port.&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h5 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h5><ol>
-<li><p>启动程序后，控制台信息输出：<br>Info:Server start,2016-12-02 15:26:13</p>
-</li>
-<li><p>使用cmd,输入命令 telnet localhost 8080:<br>输入 hello world</p>
-</li>
-<li><p>命令行显示:<br>Success!!2016-12-02 15:29:01</p>
-</li>
-<li><p>控制台输出：<br>hello world</p>
-</li>
-</ol>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>通过上面的讲述，不难发现，虽然我们说的Socket编程，但这一部分的内容并不多，无非就是建立SocketServer和Socket，两者使用同样的端口，就能相互连接上，<br>最主要的还是怎么处理连接后的的IO流的操作。此外，还需要服务器端的输入输出流和客户端的输入输出流，必要弄混淆了。</p>
-<p>我们用的例子是发送字符串，但我们要看到本质性的东西：我们发送的字符串是以字节的形式发送出去的，那是不是说明我们就可以发送图像、视频…了呢？是的，我们能把计算机上的任何东西发送出去，只需要找到我们要发送的文件的URI，就能打开它，保存到字节数组里，然后发送出去。当然，如果文件过大，还要注意内存溢出的问题。</p>
-<p>此外，我们常说的Web服务器，其实也就是一个用来接收客户端请求，并处理用户端的请求并返回信息的程序，只不过有一些特别的规定，也就是Http协议。那是不是说，如果我们了解了Http协议的规定，我们也能写一个Http服务器了呢？下一节咱们就来完成一个简单的能处理http请求的服务器。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;开篇&quot;&gt;&lt;a href=&quot;#开篇&quot; class=&quot;headerlink&quot; title=&quot;开篇&quot;&gt;&lt;/a&gt;开篇&lt;/h3&gt;&lt;p&gt;现在是互联网的时代，说到底也就是连接的时代。人与人、人与物、物与物都需要连接，那为什么要连接呢？&lt;br&gt;我的答案是：为了交换信息。人与人的连
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
