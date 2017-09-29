@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-27T13:32:58.379Z</updated>
+  <updated>2017-09-29T16:43:12.315Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>求职|第一次电话面试</title>
+    <link href="http://yoursite.com/2017/09/30/%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%94%B5%E8%AF%9D%E9%9D%A2%E8%AF%95/"/>
+    <id>http://yoursite.com/2017/09/30/第一次电话面试/</id>
+    <published>2017-09-30T00:08:21.000Z</published>
+    <updated>2017-09-29T16:43:12.315Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h3><p>经过开学第一个星期的疯狂投简历、笔试风波后，自己本以为求职风波就可以暂停一波了，但是就在前几天，蓝杰的学长发了一则深信服的招聘信息，自己看了一下觉得自己挺符合的，并且简历也都写好了，就给学长发过去了，反正不管结果如何，自己也没损失嘛…</p>
+<h3 id="电话面试"><a href="#电话面试" class="headerlink" title="电话面试"></a>电话面试</h3><p>投了简历之后，学长跟我说这两天就会有电话面试，让我保持手机畅通。说实话，这两天我手机的电池还真没有少过50%，毕竟第一次电话面试，万一没电了就尴尬了。同时，自己还对笔试时发现的不足进行了一次恶补，就是一些Mysql的知识和PHP面向对象的一些细节啦。然后，自己还上网找了一些PHP的面试题看了一下，不看不知道啊，一看收获还挺大的，还真的有一些知识是自己不知道的，并且平时也不会注意的细节。偷偷告诉你，面试的时候还真的问了一些题，好开心。</p>
+<p>一共打了20分钟的电话。面试官问的话就10多分钟吧，并且问的问题都是一些不能在基础的问题了，比如说get和post的区别啊，主键和索引的区别啊，php中echo、print，print_r的区别啊,mvc思想啊，一些比较难的问题，比如说计算机网络啊、Linux啊，都没有问道。在面试官问到数据库这一部分的时候，自己很担心问道Mysql的优化方面的东西，毕竟自己在这一块真的可以说是空白。自己也知道他肯定会问的，所以就提前坦白了说自己在这一块没什么了解，然后面试官就只问了一些简单的问题，就问其他的问题了。是啊，不懂就是不懂，面试官提前并不知道你不懂，出于对你的考虑，肯定会问你一下，如果你坦白了，就不会问了，并且这样也不会让面试变的尴尬。</p>
+<p>各个领域都问了一些简单的问题后，面试官就说觉得我还可以，问我什么时候可以来面试。我说寒假或者暑假，然后他就叫我有时间就联系他，他好让Hr联系我。接着，我就问了一些实习方面的问题，面试就结束了。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>哈哈，没想到自己第一次电话面试就通过了，有一点有意外。虽然说，难度算不上是一些正规的面试，但是对自己也是一种锻炼。</p>
+<p>不得不说，有人内推，就是不一样，起码笔试就省了，直接进入面试环节。说实话，笔试也是不容易的，运气不好，碰到自己不擅长的领域就什么都没了。还有就是，要提前准备好简历，机会一来，就果断把简历发出去。</p>
+<p>我在努力，我在成长。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;开篇&quot;&gt;&lt;a href=&quot;#开篇&quot; class=&quot;headerlink&quot; title=&quot;开篇&quot;&gt;&lt;/a&gt;开篇&lt;/h3&gt;&lt;p&gt;经过开学第一个星期的疯狂投简历、笔试风波后，自己本以为求职风波就可以暂停一波了，但是就在前几天，蓝杰的学长发了一则深信服的招聘信息，自己看了
+    
+    </summary>
+    
+      <category term="colleage" scheme="http://yoursite.com/categories/colleage/"/>
+    
+    
+      <category term="求职" scheme="http://yoursite.com/tags/%E6%B1%82%E8%81%8C/"/>
+    
+  </entry>
   
   <entry>
     <title>数据结构|什么是数据结构</title>
@@ -1127,129 +1156,6 @@ DNS Servers . . . . . . . . . . . : 58.22.96.66
     
     
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>windows 安装Mysql</title>
-    <link href="http://yoursite.com/2017/07/31/windows-%E5%AE%89%E8%A3%85Mysql/"/>
-    <id>http://yoursite.com/2017/07/31/windows-安装Mysql/</id>
-    <published>2017-07-30T19:11:01.000Z</published>
-    <updated>2017-07-30T15:59:29.802Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="Windows-环境下-MySQL-5-7-安装配置指南"><a href="#Windows-环境下-MySQL-5-7-安装配置指南" class="headerlink" title="Windows 环境下 MySQL 5.7 安装配置指南"></a>Windows 环境下 MySQL 5.7 安装配置指南</h3><h5 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h5><ul>
-<li>Windows 版本：Windows 10 专业版 64bit</li>
-<li>MySQL 版本：MySQL 5.7.16</li>
-</ul>
-<h5 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h5><p>在安装 MySQL 前请务必确认自己电脑的 net 指令是正常工作的。有些 Windows 系统会丢失 net 指令<em>(环境变量缺失)</em>，解决方法请自行搜索一下。</p>
-<h4 id="配置过程"><a href="#配置过程" class="headerlink" title="配置过程"></a>配置过程</h4><ol>
-<li><p>下载 MySQL Community Server <a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="external">下载链接</a></p>
-<ul>
-<li>选择合适自己操作系统的版本，通常使用 Windows (x86, 64-bit), ZIP Archive</li>
-</ul>
-</li>
-<li><p>解压并“合理安放” MySQL Server。</p>
-<ul>
-<li>将下载好的mysql-5.7.16-winx64.zip解压，并将解压好的文件夹妥善放置（比如放置在 Program FIles 文件夹内）。本教程中 MySQL 被放置在了D:\ProgramFiles下，并被重命名为了 MySQL。</li>
-</ul>
-</li>
-<li><p>为 MySQL Server 配置环境变量</p>
-<ul>
-<li>右击开始菜单按钮，选择“系统”选项。</li>
-<li>在“系统”界面左侧，选择“高级系统设置”。</li>
-<li><p>在打开的“系统属性”对话框中的“高级”选项卡页面的下方，选择“环境变量”。</p>
-<ul>
-<li><p>系统属性设置窗口</p>
-<p> 在“用户变量”区块中，选择“新建”，在打开的对话框中，变量名写 MySQL，变量值写 MySQL 文件夹的完整路径（本教程为D:\Program Files\MySQL）。</p>
-</li>
-<li><p>添加环境变量</p>
-<p> 同样在用户区块中寻找 PATH 环境变量，如果有，点击“编辑”。在弹出的对<br> 话框中点击“新建”，输入%MySQL%\bin（在老版本 Windows 系统中，变量值末尾用英文分号;分开后再添加%MySQL%\bin）。如果没有，点击“新建”，添加一个变量名为 Path 的环境变量。在这个环境变量的变量值处，添加%MySQL%\bin</p>
-</li>
-<li><p>修改环境变量<br>  点击确定按钮退出环境变量配置对话框。<br>  点击确定按钮退出系统属性配置对话框。</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>注册 MySQL 服务</p>
-<ul>
-<li>右击开始菜单按钮，选择/“命令提示符（管理员）”/选项。</li>
-<li>输入盘符 + “:” 指令，进入MySQL文件夹所在的磁盘（本教程是 D 盘）。再使用  cd指令进入MySQL Server所在文件夹的bin文件夹中。<strong>这一步非常重要，如果不在这个目录下，无法正确注册 MySQL 服务。</strong></li>
-</ul>
-</li>
-<li><p>定位到 MySQL 所在路径</p>
-<ul>
-<li>执行mysqld -install指令，注册 MySQL 服务。</li>
-</ul>
-</li>
-<li><p>注册 MySQL 服务</p>
-<ul>
-<li>执行完毕后，请不要退出“命令提示符”。</li>
-</ul>
-</li>
-<li><p>配置 MySQL Server</p>
-<ul>
-<li>进入 MySQL Server 所在的文件夹 （本教程为D:\Program Files\MySQL）</li>
-<li><p>编辑my-default.ini</p>
-<ul>
-<li><p>在该文件中，#是注释标记。<br>去掉 basedir 的注释符号，并在等号后边填写 MySQL Server 文件夹的完整地址。<br>去掉 datadir 的注释符号，并在等号后边填写 MySQL Server 文件夹的完整地址外加\data。<br> <strong>切记不要手动创建 data 文件夹！</strong></p>
-</li>
-<li><p>port 不需要配置，不配置的状态下默认为 3306。（MySQL Server 默认使用的端口号）</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<p><strong>最终配置</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"># For advice on how to change settings please see</div><div class="line"># http://dev.mysql.com/doc/refman/5.7/en/server-configuration-defaults.html</div><div class="line"># *** DO NOT EDIT THIS FILE. It&apos;s a template which will be copied to the</div><div class="line"># *** default location during install, and will be replaced if you</div><div class="line"># *** upgrade to a newer version of MySQL.</div><div class="line"></div><div class="line">[mysqld]</div><div class="line"></div><div class="line"># Remove leading # and set to the amount of RAM for the most important data</div><div class="line"># cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.</div><div class="line"># innodb_buffer_pool_size = 128M</div><div class="line"></div><div class="line"># Remove leading # to turn on a very important data integrity option: logging</div><div class="line"># changes to the binary log between backups.</div><div class="line"># log_bin</div><div class="line"></div><div class="line"># These are commonly set, remove the # and set as required.</div><div class="line">basedir =D:\Program Files\MySQL</div><div class="line">datadir =D:\Program Files\MySQL\date</div><div class="line"># port = .....</div><div class="line"># server_id = .....</div><div class="line"></div><div class="line"></div><div class="line"># Remove leading # to set options mainly useful for reporting servers.</div><div class="line"># The server defaults are faster for transactions and fast SELECTs.</div><div class="line"># Adjust sizes as needed, experiment to find the optimal values.</div><div class="line"># join_buffer_size = 128M</div><div class="line"># sort_buffer_size = 2M</div><div class="line"># read_rnd_buffer_size = 2M </div><div class="line"></div><div class="line">sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES</div></pre></td></tr></table></figure></p>
-<p>保存退出。退出后将my-default.ini重命名为my.ini</p>
-<ol>
-<li><p>在刚才的“命令提示符”中，执行mysqld –initialize（可能会假死，等一分钟手动关闭就好）。</p>
-</li>
-<li><p>开启 MySQL Server</p>
-<ul>
-<li>在“命令提示符”中执行net start mysql，开启 MySQL Server。</li>
-</ul>
-</li>
-<li><p>配置 MySQL root 账户。</p>
-<ul>
-<li>在“命令提示符”中，执行net stop mysql关闭 MySQL Server。</li>
-<li>再执行mysqld –skip-grant-tables开启无密码的 MySQL Server。</li>
-</ul>
-</li>
-<li><p>无密码启动 MySQL Server</p>
-<ul>
-<li>打开一个新的“命令提示符”，执行mysql -u root登陆 MySQL Server。</li>
-<li>执行flush privileges刷新权限。</li>
-<li>执行grant all privileges on <em>.</em> to ‘root’@’localhost’ identified by ‘你想设置的密码’ with grant option;。</li>
-<li>执行flush privileges刷新新的 root 用户密码。</li>
-<li>执行exit退出 MySQL。</li>
-</ul>
-</li>
-<li><p>结束进程</p>
-<ul>
-<li>在任务管理器下手动结束mysqld.exe。</li>
-</ul>
-</li>
-<li><p>正常登陆</p>
-<ul>
-<li>在“命令提示符”下执行net mysql start重新开启MySQL Server，再次使用mysql -u root -p 你设置的密码即可安全登陆 MySQL。</li>
-</ul>
-</li>
-</ol>
-<h5 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h5><p><strong>本教程中所有的“命令提示符”，一定要运行在 管理员模式下，否则会出现“拒绝访问”的问题。</strong></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;Windows-环境下-MySQL-5-7-安装配置指南&quot;&gt;&lt;a href=&quot;#Windows-环境下-MySQL-5-7-安装配置指南&quot; class=&quot;headerlink&quot; title=&quot;Windows 环境下 MySQL 5.7 安装配置指南&quot;&gt;&lt;/a&gt;Wi
-    
-    </summary>
-    
-      <category term="config" scheme="http://yoursite.com/categories/config/"/>
-    
-    
-      <category term="Mysql" scheme="http://yoursite.com/tags/Mysql/"/>
     
   </entry>
   
