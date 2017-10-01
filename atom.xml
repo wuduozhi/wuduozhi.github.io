@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-29T16:43:12.315Z</updated>
+  <updated>2017-10-01T14:47:49.179Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>凤凰|旅游攻略</title>
+    <link href="http://yoursite.com/2017/10/02/%E5%87%A4%E5%87%B0-%E6%97%85%E6%B8%B8%E6%94%BB%E7%95%A5/"/>
+    <id>http://yoursite.com/2017/10/02/凤凰-旅游攻略/</id>
+    <published>2017-10-01T22:41:08.000Z</published>
+    <updated>2017-10-01T14:47:49.179Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="l-旅游攻略"><a href="#l-旅游攻略" class="headerlink" title="l 旅游攻略"></a>l 旅游攻略</h3><ul>
+<li><a href="http://travel.sina.com.cn/china/2009-10-26/1109113003.shtml" target="_blank" rel="external">http://travel.sina.com.cn/china/2009-10-26/1109113003.shtml</a></li>
+<li><a href="http://www.mafengwo.cn/gonglve/ziyouxing/8026.html" target="_blank" rel="external">http://www.mafengwo.cn/gonglve/ziyouxing/8026.html</a></li>
+<li><a href="http://www.mafengwo.cn/gonglve/ziyouxing/1280.html" target="_blank" rel="external">http://www.mafengwo.cn/gonglve/ziyouxing/1280.html</a></li>
+<li><a href="http://www.sohu.com/a/120537188_264081" target="_blank" rel="external">http://www.sohu.com/a/120537188_264081</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;l-旅游攻略&quot;&gt;&lt;a href=&quot;#l-旅游攻略&quot; class=&quot;headerlink&quot; title=&quot;l 旅游攻略&quot;&gt;&lt;/a&gt;l 旅游攻略&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://travel.sina.com.cn/china/2009-10
+    
+    </summary>
+    
+      <category term="colleage" scheme="http://yoursite.com/categories/colleage/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>求职|第一次电话面试</title>
@@ -1120,42 +1147,6 @@ DNS Servers . . . . . . . . . . . : 58.22.96.66
     
     </summary>
     
-    
-  </entry>
-  
-  <entry>
-    <title>Java异常处理</title>
-    <link href="http://yoursite.com/2017/07/31/Java%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/"/>
-    <id>http://yoursite.com/2017/07/31/Java异常处理/</id>
-    <published>2017-07-30T19:13:02.000Z</published>
-    <updated>2017-08-05T16:13:46.798Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="Java异常处理"><a href="#Java异常处理" class="headerlink" title="Java异常处理"></a>Java异常处理</h3><h4 id="先说什么是异常"><a href="#先说什么是异常" class="headerlink" title="先说什么是异常"></a>先说什么是异常</h4><p>异常指不期而至的各种状况，如：文件找不到、网络连接失败、非法参数等。异常是一个事件，它发生在程序运行期间，干扰了正常的指令流程。Java通过API中Throwable类的众多子类描述各种不同的异常。因而，Java异常都是对象，是Throwable子类的实例，描述了出现在一段编码中的错误条件。当条件生成时，错误将引发异常。<strong>异常的正确使用，能帮助程序员迅速找到异常的出现，同时，也不至于让程序崩溃，得已继续执行下去。当然，在出现异常后，还能让程序继续运行去，对程序员的要求是极高的。</strong></p>
-<h4 id="Java的异常处理方式"><a href="#Java的异常处理方式" class="headerlink" title="Java的异常处理方式"></a>Java的异常处理方式</h4><ol>
-<li><p>throw Exception.当我们写个函数来处理IO流或Socket连接的时候，函数内部可能会发生错误，我们就需要把程序抛出给调用函数的人，让他来处理。</p>
-</li>
-<li><p>try..catch。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">try&#123;</div><div class="line">    可能出现异常的语句</div><div class="line">&#125;eacth(Exception e)&#123;  //捕捉异常</div><div class="line">    处理异常的语句</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>这种方式，也就是说我们知道要发生的具体错误是什么，然后我们自己解决掉错误。</p>
-<h4 id="异常的重要性"><a href="#异常的重要性" class="headerlink" title="异常的重要性"></a>异常的重要性</h4><blockquote>
-<p>在一个完美的世界中，用户不会输入错误，计算机硬件永远不会出错，相关的数据文件永远不会被丢失…遗憾的是，这个世界并不是如此美好。</p>
-</blockquote>
-<p>程序运行时可能遇到各种非正常状况—-用户输入的数据非法、电脑硬盘空间不足，程序所需要的文件被删除等等。一个足够健壮的程序，用于处理异常的代码要占到很大部分。正是由于异常处理如此重要，Java设计者将异常处理作为Java语言的一种内置特性。在其他语言中，编写者可以偷懒不写异常处理；而在Java中，如果一个方法声明可能会抛出异常，那么调用方法的人必须对此进行处理；否则不能编译通过。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>不知道我们有没有想过为什么Java需要有两种异常处理方式呢？我们应该知道，我们写的代码、写的类、写的函数，不仅仅只是我们自己用的，同时我们也发现这两种方式对异常的处理也是不同的。throw这种方式，错误是由调用方来解决的；try..catch这种方式呢，是写代码的人来解决的。学技术，不仅仅只是为了知道怎么使用这种技术，还应该清楚技术背后的含义。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;Java异常处理&quot;&gt;&lt;a href=&quot;#Java异常处理&quot; class=&quot;headerlink&quot; title=&quot;Java异常处理&quot;&gt;&lt;/a&gt;Java异常处理&lt;/h3&gt;&lt;h4 id=&quot;先说什么是异常&quot;&gt;&lt;a href=&quot;#先说什么是异常&quot; class=&quot;header
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
