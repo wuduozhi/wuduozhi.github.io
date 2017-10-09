@@ -4,25 +4,31 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Java文件处理器 | 只为不凡而来</title>
+    <title>游玩|2017国庆 | 只为不凡而来</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="wuduozhi">
     
 
     
-    <meta name="description" content="谈谈Java文件处理今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。 文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：  定位要操作的文件 建立管道 进行操作  简单点说，就是我们只需要找到我们想要操作的文件的路径，就能定">
-<meta name="keywords" content="Java">
+    <meta name="description" content="写在前面的话高中那会，就想着在大学的时候，要多走走，了解外面的世界是怎么样的… 八班国庆小分队不知为何，很多人都想来长沙玩，说实话，确实不知道长沙有什么好玩的，这是个无解的问题。就连我远在大连和吉林的同学都过来了，坐30个小时的绿皮车过来确实不容易啊。人家大老远过来，怎么着也不能让人家留有遗憾，所以就带这几个哥们去凤凰古城玩一波啦，去之前听人家说那边挺美的，去之后，应该也算挺美的吧。先来几张图吧：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java文件处理器">
-<meta property="og:url" content="http://yoursite.com/2017/07/26/Java文件处理器/index.html">
+<meta property="og:title" content="游玩|2017国庆">
+<meta property="og:url" content="http://yoursite.com/2017/10/10/游玩-2017国庆/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="谈谈Java文件处理今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。 文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：  定位要操作的文件 建立管道 进行操作  简单点说，就是我们只需要找到我们想要操作的文件的路径，就能定">
+<meta property="og:description" content="写在前面的话高中那会，就想着在大学的时候，要多走走，了解外面的世界是怎么样的… 八班国庆小分队不知为何，很多人都想来长沙玩，说实话，确实不知道长沙有什么好玩的，这是个无解的问题。就连我远在大连和吉林的同学都过来了，坐30个小时的绿皮车过来确实不容易啊。人家大老远过来，怎么着也不能让人家留有遗憾，所以就带这几个哥们去凤凰古城玩一波啦，去之前听人家说那边挺美的，去之后，应该也算挺美的吧。先来几张图吧：">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2017-07-26T12:32:02.072Z">
+<meta property="og:image" content="http://yoursite.com/images/1507427701193.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/IMG_20171003_223043.jpg">
+<meta property="og:image" content="http://yoursite.com/images/IMG_20171003_211350.jpg">
+<meta property="og:image" content="http://yoursite.com/images/-f4fce435b08868e.jpg">
+<meta property="og:image" content="http://yoursite.com/images/135d0a2aa2cfb394.jpg">
+<meta property="og:image" content="http://yoursite.com/images/173694c9a419c1e0.jpg">
+<meta property="og:updated_time" content="2017-10-09T16:04:50.789Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java文件处理器">
-<meta name="twitter:description" content="谈谈Java文件处理今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。 文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：  定位要操作的文件 建立管道 进行操作  简单点说，就是我们只需要找到我们想要操作的文件的路径，就能定">
+<meta name="twitter:title" content="游玩|2017国庆">
+<meta name="twitter:description" content="写在前面的话高中那会，就想着在大学的时候，要多走走，了解外面的世界是怎么样的… 八班国庆小分队不知为何，很多人都想来长沙玩，说实话，确实不知道长沙有什么好玩的，这是个无解的问题。就连我远在大连和吉林的同学都过来了，坐30个小时的绿皮车过来确实不容易啊。人家大老远过来，怎么着也不能让人家留有遗憾，所以就带这几个哥们去凤凰古城玩一波啦，去之前听人家说那边挺美的，去之后，应该也算挺美的吧。先来几张图吧：">
+<meta name="twitter:image" content="http://yoursite.com/images/1507427701193.jpeg">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -86,14 +92,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/07/26/Java文件处理器/" title="Java文件处理器" itemprop="url">Java文件处理器</a>
+      <a href="/2017/10/10/游玩-2017国庆/" title="游玩|2017国庆" itemprop="url">游玩|2017国庆</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-25T22:46:17.000Z" itemprop="datePublished"> Published 2017-07-26</time>
+    <time datetime="2017-10-09T23:06:50.000Z" itemprop="datePublished"> Published 2017-10-10</time>
     
   </p>
 </header>
@@ -102,19 +108,19 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#谈谈Java文件处理"><span class="toc-number">1.</span> <span class="toc-text">谈谈Java文件处理</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#写在前面的话"><span class="toc-number">1.</span> <span class="toc-text">写在前面的话</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#八班国庆小分队"><span class="toc-number">2.</span> <span class="toc-text">八班国庆小分队</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#坐车恐惧症"><span class="toc-number">3.</span> <span class="toc-text">坐车恐惧症</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在凤凰"><span class="toc-number">4.</span> <span class="toc-text">在凤凰</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#长沙会师"><span class="toc-number">5.</span> <span class="toc-text">长沙会师</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#大聚餐"><span class="toc-number">6.</span> <span class="toc-text">大聚餐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#散伙"><span class="toc-number">7.</span> <span class="toc-text">散伙</span></a></li></ol>
 		
 		</div>
 		
-		<h3 id="谈谈Java文件处理"><a href="#谈谈Java文件处理" class="headerlink" title="谈谈Java文件处理"></a>谈谈Java文件处理</h3><p>今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。</p>
-<p>文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：</p>
-<ol>
-<li>定位要操作的文件</li>
-<li>建立管道</li>
-<li>进行操作</li>
-</ol>
-<p>简单点说，就是我们只需要找到我们想要操作的文件的路径，就能定位到它，就能对其进行一些列的操作，比如查看、复制、删除…这些操作，Java都已经为我们准备好了，需要用的时候查看文档就好了，最主要的是要记住步骤。</p>
-<p>另外，需要注意的是，IO流的操作是很占用内存的，举个例子吧：如果我们要把文件A里的内容复制到B中，计算机是这样工作的：计算机要先找到A文件，然后读取内容到JVM的内存中，然后在写进B文件中，但我们的A文件很大时，计算机就需要进行多次这样的循环工作，非常耗时，浪费资源。所以我们可以改进一下，我们可以这样设想，如果我们把从A读取的内容先在JVM中存起来，当达到足够的量时在一次把这些内容写进B中，这样就减少了一些重复性的工作，效率会提高不少。</p>
+		<h3 id="写在前面的话"><a href="#写在前面的话" class="headerlink" title="写在前面的话"></a>写在前面的话</h3><p>高中那会，就想着在大学的时候，要多走走，了解外面的世界是怎么样的…</p>
+<h3 id="八班国庆小分队"><a href="#八班国庆小分队" class="headerlink" title="八班国庆小分队"></a>八班国庆小分队</h3><p>不知为何，很多人都想来长沙玩，说实话，确实不知道长沙有什么好玩的，这是个无解的问题。就连我远在大连和吉林的同学都过来了，坐30个小时的绿皮车过来确实不容易啊。人家大老远过来，怎么着也不能让人家留有遗憾，所以就带这几个哥们去凤凰古城玩一波啦，去之前听人家说那边挺美的，去之后，应该也算挺美的吧。先来几张图吧：<br><img src="/images/1507427701193.jpeg" alt="enter description here" title="1507427701193"><br><img src="/images/IMG_20171003_223043.jpg" alt="enter description here" title="IMG_20171003_223043"><br><img src="/images/IMG_20171003_211350.jpg" alt="enter description here" title="IMG_20171003_211350"></p>
+<p>哈哈，不骗你吧，在城市久了，到了这古镇，还是会有另一番韵味的。</p>
+<h3 id="坐车恐惧症"><a href="#坐车恐惧症" class="headerlink" title="坐车恐惧症"></a>坐车恐惧症</h3><p>不骗你，去一趟凤凰回来，我对大巴车有了一种恐惧感。为什么呢？就是坐车多了，怕了呗。我的天，从长沙到凤凰，需要做6个小时的大巴车，要注意的是六个小时是开的比较快的情况下，如果司机技术不是很好，那就好坐七八个小时了。长这么大，这是坐车最久的一次了。我们早上七点出发，到下午3点才到，途中还只能吃方便面充饥，那个酸楚不是能想象的到的。坐车的时候，真后悔出来玩啊，在宿舍带着多好，何必来受这份罪呢？还好景色不让我失望，不然这会是一个悲惨的国庆。</p>
+<h3 id="在凤凰"><a href="#在凤凰" class="headerlink" title="在凤凰"></a>在凤凰</h3><p>两天时间，在车上就度过了一天，留给我们的就只有一天的时间了。到了之后，就找酒店放行李，然后大吃一餐，那叫一个爽啊。接着，我们就去看篝火晚会，去之前，意为会想电视上那样一群人围着火坐一圈，然后大碗喝酒大口吃肉呢。现实是这样的，大家确实是围着火坐一圈，但酒和肉就没有了，想哭。在晚会中，也了解到苗族的一些风俗，不虚此行吧。</p>
+<h3 id="长沙会师"><a href="#长沙会师" class="headerlink" title="长沙会师"></a>长沙会师</h3><p>在五号这一天，想着东北老同学晚上也要走了，长沙的就都来聚聚，一起吃个饭吧。然后，能过来的就都过来了。然后，在五一地铁站口会师了，接着就到五一消遣。说实话，人多确实难办事啊，一条街走了两个小时，从街头走到街尾，就到了吃饭的时间了。在茶颜悦色这破店就停了差不多一个小时了，等好久才买到的茶，还是带头发的，可以说是买一送一啦，然后就去找店员干一波…<br><img src="/images/-f4fce435b08868e.jpg" alt="enter description here" title="-f4fce435b08868e"><br><img src="/images/135d0a2aa2cfb394.jpg" alt="enter description here" title="135d0a2aa2cfb394"><br><img src="/images/173694c9a419c1e0.jpg" alt="enter description here" title="173694c9a419c1e0"></p>
+<h3 id="大聚餐"><a href="#大聚餐" class="headerlink" title="大聚餐"></a>大聚餐</h3><p>逛累玩累，就找地吃饭了。大家找了一个湘菜馆，坐一起吃饭。在他乡一起吃饭和在海南一起吃饭的感觉就是不一样，这种感觉难以用言语表达，就像一家人一样。</p>
+<h3 id="散伙"><a href="#散伙" class="headerlink" title="散伙"></a>散伙</h3><p>天下没有不散的聚会。吃饱喝足的时刻，也是分离的时刻了。到车站后，时间还早，就到麦当劳里坐，聊聊家常啊。随着年龄的增长，现在聊天的话题都是跟工作相关的了，有要考研的，要工作的….</p>
+<p>愿我们都能变成自己想成为的那个人，世界在变，我们感情不变。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -122,14 +128,9 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Java/">Java</a>
+  <a class="article-category-link" href="/categories/colleage/">colleage</a>
 </div>
 
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Java/">Java</a>
-  </div>
 
 </div>
 
@@ -142,17 +143,10 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/07/27/Java加密系统/" title="Java加密系统">
-  <span>
-  Java加密系统</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/07/26/Java文件处处理/"  title="Java文件处处理">
- <span>Java文件处处理
+<a href="/2017/09/30/第一次电话面试/"  title="求职|第一次电话面试">
+ <span>求职|第一次电话面试
 </span>
 </a>
 </div>
