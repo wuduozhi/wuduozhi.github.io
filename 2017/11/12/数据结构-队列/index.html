@@ -1,0 +1,523 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>数据结构|队列 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="队列简介队列的特点队列 (Queue) 与栈一样，是一种线性存储结构，它具有如下特点：   队列中的数据元素遵循 “先进先出”（First In First Out）的原则 在队尾添加元素，在队头删除元素  简单点说，队列就像排队打饭一样，先来的先打饭，后来的在队尾后面排队，等前面的人打好，才轮到自己。 队列的相关概念 队头与队尾：允许元素插入的一端称为队尾，允许元素删除的一端称为队头 入队：队列">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构|队列">
+<meta property="og:url" content="http://yoursite.com/2017/11/12/数据结构-队列/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="队列简介队列的特点队列 (Queue) 与栈一样，是一种线性存储结构，它具有如下特点：   队列中的数据元素遵循 “先进先出”（First In First Out）的原则 在队尾添加元素，在队头删除元素  简单点说，队列就像排队打饭一样，先来的先打饭，后来的在队尾后面排队，等前面的人打好，才轮到自己。 队列的相关概念 队头与队尾：允许元素插入的一端称为队尾，允许元素删除的一端称为队头 入队：队列">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/2017/11/12/数据结构-队列/images/610439-20160130151830318-592472607.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/12/数据结构-队列/images/610439-20160130151820974-712348880.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/12/数据结构-队列/images/610439-20160130152004193-1945216114.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/12/数据结构-队列/images/610439-20160130152048146-364086587.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/12/数据结构-队列/images/610439-20160130152133068-1288144578.png">
+<meta property="og:updated_time" content="2017-11-11T16:44:12.932Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构|队列">
+<meta name="twitter:description" content="队列简介队列的特点队列 (Queue) 与栈一样，是一种线性存储结构，它具有如下特点：   队列中的数据元素遵循 “先进先出”（First In First Out）的原则 在队尾添加元素，在队头删除元素  简单点说，队列就像排队打饭一样，先来的先打饭，后来的在队尾后面排队，等前面的人打好，才轮到自己。 队列的相关概念 队头与队尾：允许元素插入的一端称为队尾，允许元素删除的一端称为队头 入队：队列">
+<meta name="twitter:image" content="http://yoursite.com/2017/11/12/数据结构-队列/images/610439-20160130151830318-592472607.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/11/12/数据结构-队列/" title="数据结构|队列" itemprop="url">数据结构|队列</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2017-11-11T23:36:59.000Z" itemprop="datePublished"> 發表於 2017-11-12</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#队列简介"><span class="toc-number">1.</span> <span class="toc-text">队列简介</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#队列的特点"><span class="toc-number">1.1.</span> <span class="toc-text">队列的特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#队列的相关概念"><span class="toc-number">1.2.</span> <span class="toc-text">队列的相关概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#队列的操作"><span class="toc-number">1.3.</span> <span class="toc-text">队列的操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#队列的存储结构"><span class="toc-number">1.4.</span> <span class="toc-text">队列的存储结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于数组的循环队列实现"><span class="toc-number">2.</span> <span class="toc-text">基于数组的循环队列实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#循环队列的抽象数据类型"><span class="toc-number">2.1.</span> <span class="toc-text">循环队列的抽象数据类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#队列的具体实现"><span class="toc-number">2.2.</span> <span class="toc-text">队列的具体实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于链表的队列实现"><span class="toc-number">3.</span> <span class="toc-text">基于链表的队列实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#链表节点"><span class="toc-number">3.1.</span> <span class="toc-text">链表节点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#队列的抽象数据类型"><span class="toc-number">3.2.</span> <span class="toc-text">队列的抽象数据类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#队列的具体实现-1"><span class="toc-number">3.3.</span> <span class="toc-text">队列的具体实现</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h3 id="队列简介"><a href="#队列简介" class="headerlink" title="队列简介"></a>队列简介</h3><h4 id="队列的特点"><a href="#队列的特点" class="headerlink" title="队列的特点"></a>队列的特点</h4><p>队列 (Queue) 与栈一样，是一种线性存储结构，它具有如下特点： </p>
+<ol>
+<li>队列中的数据元素遵循 “先进先出”（First In First Out）的原则</li>
+<li>在队尾添加元素，在队头删除元素</li>
+</ol>
+<p>简单点说，队列就像排队打饭一样，先来的先打饭，后来的在队尾后面排队，等前面的人打好，才轮到自己。</p>
+<h4 id="队列的相关概念"><a href="#队列的相关概念" class="headerlink" title="队列的相关概念"></a>队列的相关概念</h4><ol>
+<li>队头与队尾：允许元素插入的一端称为队尾，允许元素删除的一端称为队头</li>
+<li>入队：队列的插入操作</li>
+<li>出队：队列的删除操作</li>
+</ol>
+<p>例如，我们有一个存储整型元素的队列，我们依次入队：{ 1,2,3 }</p>
+<p><img src="./images/610439-20160130151830318-592472607.png" alt="enter description here" title="610439-20160130151830318-592472607"></p>
+<p>添加元素时，元素只能从队尾一端进入队列，也就是说2只能跟在1后面，3只能跟在2后面。</p>
+<p>出队的顺序是这样的：</p>
+<p><img src="./images/610439-20160130151820974-712348880.png" alt="enter description here" title="610439-20160130151820974-712348880"></p>
+<p>元素只能从队首出队列，出队列的顺序为：1、2、3，与入队列时的顺序是一样的，这就是我们说的 “先进新出” 啦。</p>
+<h4 id="队列的操作"><a href="#队列的操作" class="headerlink" title="队列的操作"></a>队列的操作</h4><p>队列通常提供的操作：</p>
+<ol>
+<li>入队：通常命名为push( );</li>
+<li>出队：通常命名为pop( );</li>
+<li>求队列中元素的个数</li>
+<li>判断队列是否为空</li>
+<li>获取队首元素</li>
+</ol>
+<h4 id="队列的存储结构"><a href="#队列的存储结构" class="headerlink" title="队列的存储结构"></a>队列的存储结构</h4><p>队列跟栈一样，都是一种特殊的线性结构，因此可以使用数组、链表作为底层的数据结构。</p>
+<h3 id="基于数组的循环队列实现"><a href="#基于数组的循环队列实现" class="headerlink" title="基于数组的循环队列实现"></a>基于数组的循环队列实现</h3><p>以数组作为底层数据结构时，一般讲的队列为<strong>循环队列</strong>。这是因为队列在顺序存储上的不足：每次从数组头部删除元素（出队）后，需要将头部以后的所有元素往前移动一个位置，这是一个时间复杂度为O（n）的操作，代价挺大的。</p>
+<p><img src="./images/610439-20160130152004193-1945216114.png" alt="enter description here" title="610439-20160130152004193-1945216114"></p>
+<p>可能有人说，把队首标志往后移不就不用移动元素了吗？的确，但那样会造成数组空间的 “流失”。我们希望队列的插入与删除操作O(1)的时间复杂度，同时不会造成数组空间的浪费，我们应该使用循环队列。所谓的循环队列，可以把数组看成一个首尾相连的圆环，删除元素是将队首标志往后移动，添加元素是若数组尾部已经没有空间，则考虑数组首部的空间是否空闲，如果是，则在数组头部进行插入。</p>
+<p><img src="./images/610439-20160130152048146-364086587.png" alt="enter description here" title="610439-20160130152048146-364086587"></p>
+<p>那么问题来啦,我们怎么区别空队列和队列已满这两种状态呢？</p>
+<ol>
+<li>栈空：队首标志 = 队尾标志是，表示栈空，即红绿两个标志在图中重叠是为栈空。</li>
+<li>栈满：队尾+1 = 队首时，表示栈空。图三最下面的队列极为一个满队列。尽管还有一个空位，但我们不存储元素。</li>
+</ol>
+<h4 id="循环队列的抽象数据类型"><a href="#循环队列的抽象数据类型" class="headerlink" title="循环队列的抽象数据类型"></a>循环队列的抽象数据类型</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">template &lt;typename T&gt;</div><div class="line">class LoopQueue</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">    LoopQueue(int c = 10);</div><div class="line">    ~LoopQueue();</div><div class="line">public:</div><div class="line">    bool isEmpty();        //队列的判空</div><div class="line">    int size();            //队列的大小</div><div class="line">    bool push(T t);        //入队列</div><div class="line">    bool pop();            //出队列</div><div class="line">    T front();            //队首元素</div><div class="line"> </div><div class="line">private:</div><div class="line">    int capacity;</div><div class="line">    int begin;</div><div class="line">    int end;</div><div class="line">    T*  queue;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ol>
+<li>begin：队首标志</li>
+<li>end：队尾标志</li>
+<li>c\apacity：数组容量</li>
+<li>queue：数组</li>
+</ol>
+<h4 id="队列的具体实现"><a href="#队列的具体实现" class="headerlink" title="队列的具体实现"></a>队列的具体实现</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">template&lt;typename T&gt;</div><div class="line">LoopQueue&lt;T&gt;::LoopQueue(int c = 10)</div><div class="line">: capacity(c), begin(0), end(0), queue(nullptr)</div><div class="line">&#123;</div><div class="line">    queue = new T[capacity];</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">template&lt;typename T&gt;</div><div class="line">LoopQueue&lt;T&gt;::~LoopQueue()</div><div class="line">&#123;</div><div class="line">    delete[]queue;</div><div class="line">&#125;</div><div class="line"> </div><div class="line">template &lt;typename T&gt;</div><div class="line">bool LoopQueue&lt;T&gt;::isEmpty()</div><div class="line">&#123;</div><div class="line">    if (begin == end)</div><div class="line">        return true;</div><div class="line">    return false;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">template&lt;typename T&gt;</div><div class="line">int LoopQueue&lt;T&gt;::size()</div><div class="line">&#123;</div><div class="line">    return (end-begin+capacity)%capacity; //计算队列长度</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">template&lt;typename T&gt;</div><div class="line">bool LoopQueue&lt;T&gt;::push(T t)</div><div class="line">&#123;</div><div class="line">    if (end + 1 % capacity == begin) //判断队列是否已满</div><div class="line">    &#123;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">    queue[end] = t;</div><div class="line">    end = (end + 1) % capacity;</div><div class="line">    return true;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">template &lt;typename T&gt;</div><div class="line">bool LoopQueue&lt;T&gt;::pop()</div><div class="line">&#123;</div><div class="line">    if (end == begin) //判断队列是否为空</div><div class="line">    &#123;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">    begin = (begin + 1) % capacity;</div><div class="line">    return true;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">template &lt;typename T&gt;</div><div class="line">T LoopQueue&lt;T&gt;::front()</div><div class="line">&#123;</div><div class="line">    if (end == begin)</div><div class="line">    &#123;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">    return queue[begin];</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="基于链表的队列实现"><a href="#基于链表的队列实现" class="headerlink" title="基于链表的队列实现"></a>基于链表的队列实现</h3><p>链队列是基于链表实现的队列，它不存在数组 O(n) 的元素移动问题或空间浪费问题。我们所要确定的就是链表那头做队首，那头做队尾。考虑到链表的特点，以链表头部作为队首，尾部作为队尾是最适合的。由于插入是在尾部，所以存储一个指向队尾的指针，可以节省遍历找队尾的时间，方便从链表尾部插入数据；使用带头节点的链表，方便从链表头删除元素。</p>
+<p><img src="./images/610439-20160130152133068-1288144578.png" alt="enter description here" title="610439-20160130152133068-1288144578"></p>
+<h4 id="链表节点"><a href="#链表节点" class="headerlink" title="链表节点"></a>链表节点</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">template&lt;typename T&gt;</div><div class="line">struct Node</div><div class="line">&#123;</div><div class="line">    Node(T t) :value(t), next(nullptr)&#123;&#125;</div><div class="line">    Node() = default;</div><div class="line"> </div><div class="line">    T value;</div><div class="line">    Node&lt;T&gt; * next;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ol>
+<li>vaule : 链表节点的值</li>
+<li>next : 指针，指向下一个节点</li>
+</ol>
+<h4 id="队列的抽象数据类型"><a href="#队列的抽象数据类型" class="headerlink" title="队列的抽象数据类型"></a>队列的抽象数据类型</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">template&lt;typename T&gt;</div><div class="line">class LinkQueue</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">    LinkQueue();</div><div class="line">    ~LinkQueue();</div><div class="line"> </div><div class="line">    bool isEmpty();</div><div class="line">    int size();</div><div class="line">    bool pop();</div><div class="line">    void push(T t);</div><div class="line">    T front();</div><div class="line"> </div><div class="line">private:</div><div class="line">    Node&lt;T&gt;* phead;</div><div class="line">    Node&lt;T&gt;* pend;</div><div class="line">    int count;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h4 id="队列的具体实现-1"><a href="#队列的具体实现-1" class="headerlink" title="队列的具体实现"></a>队列的具体实现</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">template&lt;typename T&gt;</div><div class="line">LinkQueue&lt;T&gt;::LinkQueue()</div><div class="line">    :phead(nullptr),pend(nullptr),count(0)</div><div class="line">&#123;</div><div class="line">    phead = new Node&lt;T&gt;();</div><div class="line">    pend = phead;</div><div class="line">    count = 0;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">template &lt;typename T&gt;</div><div class="line">LinkQueue&lt;T&gt;::~LinkQueue()</div><div class="line">&#123;</div><div class="line">    while (phead-&gt;next != nullptr)</div><div class="line">    &#123;</div><div class="line">        Node&lt;T&gt; * pnode = phead;</div><div class="line">        phead = phead-&gt;next;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">template &lt;typename T&gt;</div><div class="line">bool LinkQueue&lt;T&gt;:: isEmpty()</div><div class="line">&#123;</div><div class="line">    return count==0;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">template &lt;typename T&gt;</div><div class="line">int LinkQueue&lt;T&gt;::size()</div><div class="line">&#123;</div><div class="line">    return count;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">//在队尾插入</div><div class="line">template &lt;typename T&gt;</div><div class="line">void LinkQueue&lt;T&gt;::push(T t)</div><div class="line">&#123;</div><div class="line">    Node&lt;T&gt;* pnode = new Node&lt;T&gt;(t);</div><div class="line">    pend-&gt;next = pnode;</div><div class="line">    pend = pnode;</div><div class="line">    count++;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">//在队首弹出</div><div class="line">template &lt;typename T&gt;</div><div class="line">bool LinkQueue&lt;T&gt;::pop()</div><div class="line">&#123;</div><div class="line">    if (count == 0)</div><div class="line">        return false;</div><div class="line">    Node&lt;T&gt;* pnode = phead-&gt;next;</div><div class="line">    phead-&gt;next = phead-&gt;next-&gt;next;</div><div class="line">    delete pnode;</div><div class="line">    count--;</div><div class="line">    return true;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">//获取队首元素</div><div class="line">template&lt;typename T&gt;</div><div class="line">T LinkQueue&lt;T&gt;::front()</div><div class="line">&#123;</div><div class="line">    return phead-&gt;next-&gt;value;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/DataStruct/">DataStruct</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/数据结构/">数据结构</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/11/11/数据结构-栈/"  title="数据结构|栈">
+ <span>数据结构|栈
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分類</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2017 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
