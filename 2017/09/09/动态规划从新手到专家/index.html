@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>动态规划从新手到专家 | 只为不凡而来</title>
+    <title>动态规划|从新手到专家 | 只为不凡而来</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="wuduozhi">
@@ -13,14 +13,14 @@
     
     <meta name="description" content="前言我们遇到的问题中，有很大一部分可以用动态规划(简称DP)来解。 解决这类问题可以很大地提升你的能力与技巧，我会试着帮助你理解如何使用DP来解题。 这篇文章是基于实例展开来讲的，因为干巴巴的理论实在不好理解。 注意：如果你对于其中某一节已经了解并且不想阅读它，没关系，直接跳过它即可。 简介简介(入门) 什么是动态规划，我们要如何描述它? 动态规划算法通常基于一个递推公式及一个或多个初始状态。 当">
 <meta property="og:type" content="article">
-<meta property="og:title" content="动态规划从新手到专家">
+<meta property="og:title" content="动态规划|从新手到专家">
 <meta property="og:url" content="http://yoursite.com/2017/09/09/动态规划从新手到专家/index.html">
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="前言我们遇到的问题中，有很大一部分可以用动态规划(简称DP)来解。 解决这类问题可以很大地提升你的能力与技巧，我会试着帮助你理解如何使用DP来解题。 这篇文章是基于实例展开来讲的，因为干巴巴的理论实在不好理解。 注意：如果你对于其中某一节已经了解并且不想阅读它，没关系，直接跳过它即可。 简介简介(入门) 什么是动态规划，我们要如何描述它? 动态规划算法通常基于一个递推公式及一个或多个初始状态。 当">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2017-09-10T16:18:53.096Z">
+<meta property="og:updated_time" content="2017-12-08T16:57:12.938Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="动态规划从新手到专家">
+<meta name="twitter:title" content="动态规划|从新手到专家">
 <meta name="twitter:description" content="前言我们遇到的问题中，有很大一部分可以用动态规划(简称DP)来解。 解决这类问题可以很大地提升你的能力与技巧，我会试着帮助你理解如何使用DP来解题。 这篇文章是基于实例展开来讲的，因为干巴巴的理论实在不好理解。 注意：如果你对于其中某一节已经了解并且不想阅读它，没关系，直接跳过它即可。 简介简介(入门) 什么是动态规划，我们要如何描述它? 动态规划算法通常基于一个递推公式及一个或多个初始状态。 当">
 
     
@@ -49,7 +49,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -69,7 +69,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -85,21 +85,21 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/09/09/动态规划从新手到专家/" title="动态规划从新手到专家" itemprop="url">动态规划从新手到专家</a>
+      <a href="/2017/09/09/动态规划从新手到专家/" title="动态规划|从新手到专家" itemprop="url">动态规划|从新手到专家</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2017-09-08T16:00:34.000Z" itemprop="datePublished"> Published 2017-09-09</time>
+    <time datetime="2017-09-08T16:00:34.000Z" itemprop="datePublished"> 發表於 2017-09-09</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
+			<strong class="toc-title">文章目錄</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">2.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#初级"><span class="toc-number">3.</span> <span class="toc-text">初级</span></a></li></ol>
 		
@@ -160,8 +160,8 @@
 
 
 <div class="next">
-<a href="/2017/09/06/动态规划之背包问题/"  title="动态规划之背包问题">
- <span>动态规划之背包问题
+<a href="/2017/09/06/动态规划之背包问题/"  title="动态规划|背包问题">
+ <span>动态规划|背包问题
 </span>
 </a>
 </div>
@@ -171,10 +171,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -202,7 +202,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">Categories</p>
+	<p class="asidetitle">分類</p>
 		<ul>
 		
 		  
@@ -239,7 +239,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">標簽</p>
 		<ul class="clearfix">
 		
 			
@@ -260,6 +260,10 @@
 		
 			
 				<li><a href="/tags/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
 			
 		
 			
@@ -291,7 +295,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
 </div>
 
 </aside>
@@ -478,7 +482,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
