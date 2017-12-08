@@ -19,16 +19,16 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="栈的简介栈的特点栈（Stack）是一种特殊的线性存储结构，它具有一下特点：  栈中的数据元素遵守 “先进后出(First In Last Out)”的yuanze 限定只能在栈顶进行插入和删除操作  栈的相关概念 栈顶与栈底：允许元素插入与删除的一端称为栈顶，另一端称为栈底。 压栈：栈的插入操作，叫做进栈，也称压栈、入栈 弹栈：栈的删除操作，也叫做出栈  例如我们有一个存储整型元素的栈，我们依次压">
 <meta property="og:locale" content="Chinese">
-<meta property="og:image" content="http://yoursite.com/2017/11/11/数据结构-栈/images/610439-20160130013806989-121668995_1.png">
-<meta property="og:image" content="http://yoursite.com/2017/11/11/数据结构-栈/images/610439-20160130013814661-295746330.png">
-<meta property="og:image" content="http://yoursite.com/2017/11/11/数据结构-栈/images/610439-20160130013821489-1542512229.png">
-<meta property="og:image" content="http://yoursite.com/2017/11/11/数据结构-栈/images/610439-20160130013928458-208656397.png">
-<meta property="og:image" content="http://yoursite.com/2017/11/11/数据结构-栈/images/610439-20160130013944943-399164407.png">
-<meta property="og:updated_time" content="2017-11-10T17:20:01.475Z">
+<meta property="og:image" content="http://yoursite.com/images/610439-20160130013806989-121668995.png">
+<meta property="og:image" content="http://yoursite.com/images/610439-20160130013814661-295746330.png">
+<meta property="og:image" content="http://yoursite.com/images/610439-20160130013821489-1542512229.png">
+<meta property="og:image" content="http://yoursite.com/images/610439-20160130013928458-208656397.png">
+<meta property="og:image" content="http://yoursite.com/images/610439-20160130013944943-399164407.png">
+<meta property="og:updated_time" content="2017-12-08T16:45:54.230Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构|栈">
 <meta name="twitter:description" content="栈的简介栈的特点栈（Stack）是一种特殊的线性存储结构，它具有一下特点：  栈中的数据元素遵守 “先进后出(First In Last Out)”的yuanze 限定只能在栈顶进行插入和删除操作  栈的相关概念 栈顶与栈底：允许元素插入与删除的一端称为栈顶，另一端称为栈底。 压栈：栈的插入操作，叫做进栈，也称压栈、入栈 弹栈：栈的删除操作，也叫做出栈  例如我们有一个存储整型元素的栈，我们依次压">
-<meta name="twitter:image" content="http://yoursite.com/2017/11/11/数据结构-栈/images/610439-20160130013806989-121668995_1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/610439-20160130013806989-121668995.png">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -123,13 +123,13 @@
 <li>弹栈：栈的删除操作，也叫做出栈</li>
 </ol>
 <p>例如我们有一个存储整型元素的栈，我们依次压出：｛1，2，3｝</p>
-<p><img src="./images/610439-20160130013806989-121668995_1.png" alt="enter description here" title="610439-20160130013806989-121668995"></p>
+<p><img src="/images/610439-20160130013806989-121668995.png" alt="enter description here" title="610439-20160130013806989-121668995"></p>
 <p>在压栈的过程中，栈顶的位置一直 “向上 ” 移动，而栈底是固定不变的，也就是说我们只在线性表的一端执行操作。</p>
 <p>如果我们要把栈中的元素弹出来：</p>
-<p><img src="./images/610439-20160130013814661-295746330.png" alt="enter description here" title="610439-20160130013814661-295746330"></p>
+<p><img src="/images/610439-20160130013814661-295746330.png" alt="enter description here" title="610439-20160130013814661-295746330"></p>
 <p>出栈的顺序为 3、2、1 ，顺序与入栈时相反，这也就是栈的特点之一：先入后出。弹栈过程中，栈顶的位置一直在“向下移动”，而栈底一直保持不变。</p>
 <p>如果你玩过一种称为汉诺塔的益智玩具，你就会知道游戏中小圆盘的存取就是一种先进后出的顺序，一个圆柱就是一个栈：</p>
-<p><img src="./images/610439-20160130013821489-1542512229.png" alt="enter description here" title="610439-20160130013821489-1542512229"></p>
+<p><img src="/images/610439-20160130013821489-1542512229.png" alt="enter description here" title="610439-20160130013821489-1542512229"></p>
 <h4 id="栈的操作"><a href="#栈的操作" class="headerlink" title="栈的操作"></a>栈的操作</h4><p>栈的常用操作为：</p>
 <ol>
 <li>弹栈，通常命名为 pop()</li>
@@ -141,7 +141,7 @@
 <h4 id="栈的存储结构"><a href="#栈的存储结构" class="headerlink" title="栈的存储结构"></a>栈的存储结构</h4><p>前面有说过，栈是一种特殊的线性表，那栈的存储结构就跟线性表是一样的，可以用数组或链表作为底层实现了。</p>
 <p>本文我们以数组和单链表作为底层数据结构实现栈。</p>
 <h3 id="基于数组的栈实现"><a href="#基于数组的栈实现" class="headerlink" title="基于数组的栈实现"></a>基于数组的栈实现</h3><p>当一数组为底层结构时，通常一数组头作为栈底，数组头数组尾为栈顶的方向：</p>
-<p><img src="./images/610439-20160130013928458-208656397.png" alt="enter description here" title="610439-20160130013928458-208656397"></p>
+<p><img src="/images/610439-20160130013928458-208656397.png" alt="enter description here" title="610439-20160130013928458-208656397"></p>
 <h4 id="栈的抽象数据类型"><a href="#栈的抽象数据类型" class="headerlink" title="栈的抽象数据类型"></a>栈的抽象数据类型</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">template&lt;typename T&gt;</div><div class="line">class ArrayStack</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">    ArrayStack(int s = 10);    //默认的栈容量为10</div><div class="line">    ~ArrayStack();</div><div class="line"> </div><div class="line">public:</div><div class="line">    T top();            //获取栈顶元素</div><div class="line">    void push(T t);        //压栈操作</div><div class="line">    T pop();            //弹栈操作</div><div class="line">    bool isEmpty();        //判空操作</div><div class="line">    int size();            //求栈的大小</div><div class="line"> </div><div class="line">private:</div><div class="line">    int count;            //栈的元素数量</div><div class="line">    int capacity;        //栈的容量</div><div class="line">    T * array;            //底层为数组</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <ol>
 <li>count 为栈的元素数量，capacity为栈的容量，count&lt;=capacity，当栈满的时候，count = capacity。</li>
@@ -149,7 +149,7 @@
 </ol>
 <h4 id="栈的具体实现"><a href="#栈的具体实现" class="headerlink" title="栈的具体实现"></a>栈的具体实现</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"> /*栈的判空操作*/</div><div class="line">template &lt;typename T&gt;</div><div class="line">bool ArrayStack&lt;T&gt;::isEmpty()</div><div class="line">&#123;</div><div class="line">     return count == 0; //栈元素为0时为栈空</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">/*返回栈的大小*/</div><div class="line"> template &lt;typename  T&gt;</div><div class="line">int ArrayStack&lt;T&gt;::size()</div><div class="line">&#123;</div><div class="line">     return count;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">/*插入元素*/</div><div class="line">template &lt;typename T&gt;</div><div class="line">void ArrayStack&lt;T&gt;::push(T t)</div><div class="line">&#123;</div><div class="line">     if (count != capacity)    //先判断是否栈满</div><div class="line">     &#123;</div><div class="line">         array[count++] = t;   </div><div class="line">     &#125;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">/*弹栈*/</div><div class="line">template &lt;typename T&gt;</div><div class="line">T ArrayStack&lt;T&gt;::pop()</div><div class="line">&#123;</div><div class="line">     if (count != 0)    //先判断是否是空栈</div><div class="line">     &#123;</div><div class="line">         return array[--count];</div><div class="line">     &#125;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">/*获取栈顶元素*/</div><div class="line">template &lt;typename T&gt;</div><div class="line">T ArrayStack&lt;T&gt;::top()</div><div class="line">&#123;</div><div class="line">     if (count != 0)</div><div class="line">     &#123;</div><div class="line">         return array[count - 1];</div><div class="line">     &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h3 id="基于单链表的栈"><a href="#基于单链表的栈" class="headerlink" title="基于单链表的栈"></a>基于单链表的栈</h3><p>以链表为底层的数据结构时，以链表头为作为栈顶较为合适，这样方便节点的插入与删除。压栈产生的新节点将一直出现在链表的头部</p>
-<p><img src="./images/610439-20160130013944943-399164407.png" alt="enter description here" title="610439-20160130013944943-399164407"></p>
+<p><img src="/images/610439-20160130013944943-399164407.png" alt="enter description here" title="610439-20160130013944943-399164407"></p>
 <h4 id="链表节点"><a href="#链表节点" class="headerlink" title="链表节点"></a>链表节点</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">/*链表节点结构*/</div><div class="line">template &lt;typename T&gt;</div><div class="line">struct Node</div><div class="line">&#123;</div><div class="line">    Node(T t) :value(t), next(nullptr)&#123;&#125;;</div><div class="line">    Node() :next(nullptr)&#123;&#125;;</div><div class="line"> </div><div class="line">public:</div><div class="line">    T value;</div><div class="line">    Node&lt;T&gt;* next;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <ol>
 <li>value:栈中元素的值</li>
@@ -291,11 +291,11 @@
 			
 		
 			
-				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
 			
 		
 			
@@ -303,11 +303,11 @@
 			
 		
 			
-				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+				<li><a href="/tags/life/" title="life">life<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/life/" title="life">life<sup>1</sup></a></li>
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
 			
 		
 			
