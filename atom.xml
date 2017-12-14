@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-12-08T16:47:59.404Z</updated>
+  <updated>2017-12-14T16:41:24.196Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,31 +16,40 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>大学|记一次比赛</title>
-    <link href="http://yoursite.com/2017/12/09/%E5%A4%A7%E5%AD%A6-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%AF%94%E8%B5%9B/"/>
-    <id>http://yoursite.com/2017/12/09/大学-记一次比赛/</id>
-    <published>2017-12-09T00:10:32.000Z</published>
-    <updated>2017-12-08T16:47:59.404Z</updated>
+    <title>git|踩过的坑</title>
+    <link href="http://yoursite.com/2017/12/15/git-%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91/"/>
+    <id>http://yoursite.com/2017/12/15/git-踩过的坑/</id>
+    <published>2017-12-15T00:03:02.000Z</published>
+    <updated>2017-12-14T16:41:24.196Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="我的第一次比赛"><a href="#我的第一次比赛" class="headerlink" title="我的第一次比赛"></a>我的第一次比赛</h3><p>说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。这是自己在大学第一个参加的比赛，是学校联想俱乐部举办的，比赛内容就是参赛队员想一个产品，有创意的产品。</p>
-<p>然后,我们就开始讨论要搞什么，最初是说搞教育那一块的，但觉得太low了，就换成了旅游出行的个性化推荐，创新点主要是能实时通过天气、景点人流、交通情况等因素，实时为旅客修改旅游计划，为用户提供最佳的旅游路线。</p>
-<p>最开始是初赛，需要做ppt和上台答辩，说白了，这个比赛就是看谁弄得ppt好看和谁的忽悠能力强就能得奖。ppt是黄智威弄的，还需要一个产品的原型，然后自己是弄原型，其实也就是弄个首页，都不是事。还是黄智威拼，弄ppt到半夜。答辩时黄智威和黄卫江上去讲的，毫无悬念，我们进入了决赛。</p>
-<p>初赛后不久是决赛，ppt是用的初赛的，但是原型就不能用初赛的了，需要搞完善一点的，不过这次不是我搞的了，是黄卫江搞的，自己有点惭愧啊，就是个打酱油的。决赛是黄智威自己上去答辩，黄卫江上课去了，我坐在台下给黄智威录像。很幸运，决赛我们的了二等奖。其中，还有一个有趣的环节呢，那就是刷票啊，不知道黄智威怎么搞的，花钱加别人刷票，这小子可以的。</p>
-<p>本以为我们能够进决赛的，我们还为此决定搞个半产品出来呢。我们三个专门去蓝杰向胡哥请教了一番，还想好了下一步的分工了。不曾想，回宿舍后，通知说没有进省赛。</p>
-<p>这就是自己第一次的比赛经历啦，虽然不精彩，但是自己也认识到一个团队需要不同的人才能做成一件事。就像黄智威，能说，会忽悠；黄卫江，能为了完成任务，熬上几夜；我自己呢，可能在技术这一块擅长一点，所以前期也没做什么工作，是要在做产品的时候出力的。</p>
-<p><img src="/images/mmexport1512485485927.jpg" alt="enter description here" title="mmexport1512485485927"></p>
-<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
-<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
+    <content type="html"><![CDATA[<h3 id="记录这些年踩过的坑"><a href="#记录这些年踩过的坑" class="headerlink" title="记录这些年踩过的坑"></a>记录这些年踩过的坑</h3><p>第一次接触 Git 是在大一，刚进弦歌那会。由于Git是命令行操作的，没接触过命令行，就觉得这东西挺高大尚的，自己还专门也研究了好久呢，书都借了好几本。</p>
+<p>刚开始自己也没概念，搞不清楚本地仓库和远程仓库，只有到开发新生宝典时真正使用了才知道是怎么回事，确实啊，这种工具类的东西，是要使用才能真正掌握的，就像后来用的Composer和Maven。</p>
+<h3 id="说说Git"><a href="#说说Git" class="headerlink" title="说说Git"></a>说说Git</h3><h4 id="为什么要用Git"><a href="#为什么要用Git" class="headerlink" title="为什么要用Git"></a>为什么要用Git</h4><p>首先，一定要明确Git就是一个工具，一个可以帮助我们管理我们的文件的工具。特点就是，它能够记录我们的修改，我们可以回退到我们修改之前的版本。想象一下，我正在写一篇文章，我想改一些地方，但又不知道改了好不好，我就可能会复制一份来改，那要是我要改很多了？那岂不是要备份很多份？如果有了Git这个工具，我们就不需要备份了，如果改完之后不满意，可以撤回到改之前的版本，并且不局限于上一个版本，还能返回到之前的各个版本。</p>
+<p>Git还有一个很重要的功能，那就是能把我们本地的文件推送到云端，也就相当与上传到百度云或各种云。这对于我们这种码农来说，就有利与多人合作开发了。毕竟这个工具的初衷就是方便程序开发的，还有其他很多重要的功能，比如开分支啊等等。</p>
+<h4 id="Git是怎么工作的"><a href="#Git是怎么工作的" class="headerlink" title="Git是怎么工作的"></a>Git是怎么工作的</h4><p>俗话说“千行字不如图一张”，来张图说明一切吧：</p>
+<p><img src="/images/git.png" alt="enter description here" title="git"></p>
+<h3 id="一些干货"><a href="#一些干货" class="headerlink" title="一些干货"></a>一些干货</h3><h4 id="添加-gitignore没起作用"><a href="#添加-gitignore没起作用" class="headerlink" title="添加 .gitignore没起作用"></a>添加 .gitignore没起作用</h4><p>此时需要删除本地库里的东西，重新添加。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git rm -r --cached .</div><div class="line">git add .</div><div class="line">git commit -m &quot;.gitignore is now working&quot;</div></pre></td></tr></table></figure>
+<h4 id="提交到远程仓库前"><a href="#提交到远程仓库前" class="headerlink" title="提交到远程仓库前"></a>提交到远程仓库前</h4><ul>
+<li>先git pull 拉下来，看有没有冲突</li>
+<li>如果有，就解决冲突，然后git add，git commit ，git push</li>
+</ul>
+<h4 id="fetch和pull的区别"><a href="#fetch和pull的区别" class="headerlink" title="fetch和pull的区别"></a>fetch和pull的区别</h4><p>pull=fetch+merge，pull的话，下拉远程分支并与本地分支合并。fetch只是下拉远程分支，怎么合并，可以自己再做选择。</p>
+<h4 id="可以参考的资料"><a href="#可以参考的资料" class="headerlink" title="可以参考的资料"></a>可以参考的资料</h4><blockquote>
+<blockquote>
+<p><a href="http://huanglei.me/git-theory.html" target="_blank" rel="external">http://huanglei.me/git-theory.html</a><br><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000</a></p>
+</blockquote>
+</blockquote>
 ]]></content>
     
     <summary type="html">
     
-      &lt;h3 id=&quot;我的第一次比赛&quot;&gt;&lt;a href=&quot;#我的第一次比赛&quot; class=&quot;headerlink&quot; title=&quot;我的第一次比赛&quot;&gt;&lt;/a&gt;我的第一次比赛&lt;/h3&gt;&lt;p&gt;说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。
+      &lt;h3 id=&quot;记录这些年踩过的坑&quot;&gt;&lt;a href=&quot;#记录这些年踩过的坑&quot; class=&quot;headerlink&quot; title=&quot;记录这些年踩过的坑&quot;&gt;&lt;/a&gt;记录这些年踩过的坑&lt;/h3&gt;&lt;p&gt;第一次接触 Git 是在大一，刚进弦歌那会。由于Git是命令行操作的，没接触过命令行
     
     </summary>
     
     
-      <category term="大学" scheme="http://yoursite.com/tags/%E5%A4%A7%E5%AD%A6/"/>
+      <category term="git" scheme="http://yoursite.com/tags/git/"/>
     
   </entry>
   
@@ -119,6 +128,35 @@
     
     
       <category term="动态规划" scheme="http://yoursite.com/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>大学|记一次比赛</title>
+    <link href="http://yoursite.com/2017/12/09/%E5%A4%A7%E5%AD%A6-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%AF%94%E8%B5%9B/"/>
+    <id>http://yoursite.com/2017/12/09/大学-记一次比赛/</id>
+    <published>2017-12-09T00:10:32.000Z</published>
+    <updated>2017-12-08T16:47:59.404Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="我的第一次比赛"><a href="#我的第一次比赛" class="headerlink" title="我的第一次比赛"></a>我的第一次比赛</h3><p>说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。这是自己在大学第一个参加的比赛，是学校联想俱乐部举办的，比赛内容就是参赛队员想一个产品，有创意的产品。</p>
+<p>然后,我们就开始讨论要搞什么，最初是说搞教育那一块的，但觉得太low了，就换成了旅游出行的个性化推荐，创新点主要是能实时通过天气、景点人流、交通情况等因素，实时为旅客修改旅游计划，为用户提供最佳的旅游路线。</p>
+<p>最开始是初赛，需要做ppt和上台答辩，说白了，这个比赛就是看谁弄得ppt好看和谁的忽悠能力强就能得奖。ppt是黄智威弄的，还需要一个产品的原型，然后自己是弄原型，其实也就是弄个首页，都不是事。还是黄智威拼，弄ppt到半夜。答辩时黄智威和黄卫江上去讲的，毫无悬念，我们进入了决赛。</p>
+<p>初赛后不久是决赛，ppt是用的初赛的，但是原型就不能用初赛的了，需要搞完善一点的，不过这次不是我搞的了，是黄卫江搞的，自己有点惭愧啊，就是个打酱油的。决赛是黄智威自己上去答辩，黄卫江上课去了，我坐在台下给黄智威录像。很幸运，决赛我们的了二等奖。其中，还有一个有趣的环节呢，那就是刷票啊，不知道黄智威怎么搞的，花钱加别人刷票，这小子可以的。</p>
+<p>本以为我们能够进决赛的，我们还为此决定搞个半产品出来呢。我们三个专门去蓝杰向胡哥请教了一番，还想好了下一步的分工了。不曾想，回宿舍后，通知说没有进省赛。</p>
+<p>这就是自己第一次的比赛经历啦，虽然不精彩，但是自己也认识到一个团队需要不同的人才能做成一件事。就像黄智威，能说，会忽悠；黄卫江，能为了完成任务，熬上几夜；我自己呢，可能在技术这一块擅长一点，所以前期也没做什么工作，是要在做产品的时候出力的。</p>
+<p><img src="/images/mmexport1512485485927.jpg" alt="enter description here" title="mmexport1512485485927"></p>
+<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
+<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;我的第一次比赛&quot;&gt;&lt;a href=&quot;#我的第一次比赛&quot; class=&quot;headerlink&quot; title=&quot;我的第一次比赛&quot;&gt;&lt;/a&gt;我的第一次比赛&lt;/h3&gt;&lt;p&gt;说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。
+    
+    </summary>
+    
+    
+      <category term="大学" scheme="http://yoursite.com/tags/%E5%A4%A7%E5%AD%A6/"/>
     
   </entry>
   
@@ -801,332 +839,6 @@
     
     </summary>
     
-    
-  </entry>
-  
-  <entry>
-    <title>Hibernate基础</title>
-    <link href="http://yoursite.com/2017/08/12/Hibernate/"/>
-    <id>http://yoursite.com/2017/08/12/Hibernate/</id>
-    <published>2017-08-12T11:11:43.000Z</published>
-    <updated>2017-09-01T16:39:51.022Z</updated>
-    
-    <content type="html"><![CDATA[<p>1.下载hibernate</p>
-<pre><code>需要到hibernate的官网下载一个hibernate。网址是：http://hibernate.org/orm/downloads/
-</code></pre><p>2.解压hibernate</p>
-<pre><code>下载后解压缩，得到一个hibernate-release-4.3.11.Final文件夹（我下载的hibernate版本是4.3.11），在hibernate-release-4.3.11.Final文件夹里有一个lib文件夹，里面放着hibernate的jar包。
-
-例子中使用了lib下的required文件夹中的所有jar包。如图：
-
-
-
-这些包的作用如下（待验证）：
-</code></pre><p>包名<br>说明<br>antlr-2.7.7<br>可以接收词文法语言描述，并能产生识别这些语言的语句的程序，hibernate利用它实现hql到sql的转换。<br>dom4j-1.6.1<br>xml解析器，用来读写xml文件的。<br>hibernate-commons-annotations-4.0.5.Final<br>hibernate中支持注解开发的程序。<br>hibernate-core-4.3.11.Final<br>hibernate的核心程序。<br>hibernate-jpa-2.1-api-1.0.0.Final    hibernate对jap(java persistence API)规范的支持，可以理解为JAP是标准接口，hibernate是实现。<br>jandex-1.1.0.Final    用来检索注解(annotation)索引的程序，识别该对象是注解对象(待验证)？<br>javassist-3.18.1-GA    用来操作字节码的程序，可直接编辑和生成java字节码，以达到对.class文件的动态修改。<br>jboss-logging-3.1.3.GA    提供hibernate日志功能的程序(待验证)?<br>jboss-logging-annotations-1.2.0.Beta1    解析logging的注解模式程序(待验证)?<br>jboss-transaction-api_1.2_spec-1.0.0.Final    事务控制程序(待验证)?<br>3.导入hibernate的jar包</p>
-<pre><code>创建一个JavaProject，引用上面图片中的jar包，这里需要另外一个jar包，由于我连接的是mysql数据库，所以需要在导入一个mysql-connector-java-5.1.7-bin.jar
-</code></pre><p>4.新建一个测试用的java对象</p>
-<p>package cn.net.bysoft.lesson1;</p>
-<p>import java.util.Date;</p>
-<p>public class User {</p>
-<pre><code>public User() {
-}
-
-public User(String name, Date birthday) {
-    this.name = name;
-    this.birthday = birthday;
-}
-
-@Override
-public String toString() {
-    return &quot;User [id=&quot; + id + &quot;, name=&quot; + name + &quot;, birthday=&quot; + birthday
-            + &quot;]&quot;;
-}
-
-public int getId() {
-    return id;
-}
-
-public void setId(int id) {
-    this.id = id;
-}
-
-public String getName() {
-    return name;
-}
-
-public void setName(String name) {
-    this.name = name;
-}
-
-public Date getBirthday() {
-    return birthday;
-}
-
-public void setBirthday(Date birthday) {
-    this.birthday = birthday;
-}
-
-private int id;
-private String name;
-private Date birthday;
-</code></pre><p>}<br>    编写的java对象需要满足如下要素：</p>
-<p>需要有一个无参的构造函数，因为在session.get时需要用到反射创建java对象；</p>
-<p>需要提供一个id属性，对应数据库的主键；</p>
-<p>需要为对象的其他属性提供get/set方法；</p>
-<p>需要定义成非final的类，以便在hibernate进行延迟加载时为类创建代理；</p>
-<p>如有必要保存到集合中，需要重equals方法和hashcode方法；</p>
-<p>5.设置java对象与数据库的映射关系</p>
-<pre><code>需要创建一个User.hbm.xml文件，编辑java对象与数据库的映射关系，格式如下：
-</code></pre><p>&lt;?xml version=”1.0” encoding=”UTF-8”?&gt;<br>&lt;!DOCTYPE hibernate-mapping PUBLIC “-//Hibernate/Hibernate Mapping DTD 3.0//EN”<br>“<a href="http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd&quot;&gt;" target="_blank" rel="external">http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd&quot;&gt;</a></p>
-<p><hibernate-mapping><br>    <class name="cn.net.bysoft.lesson1.User" table="S_USER"><br>        <id name="id" type="integer" column="ID"><br>            <!-- 指定主键的生成方式，native是使用数据库本地的方式 --><br>            <generator class="native"></generator><br>        </id><br>        <property name="name" type="string" column="NAME"></property><br>        <property name="birthday" type="timestamp" column="BIRTHDAY"></property><br>    </class><br></hibernate-mapping><br>    该文件是用来配置java对象与数据表之间的映射关系的，其中需要留意的是id这个属性，generator来指定主键的生成方式，而native则代表是调用数据库本地的方式来生成主键，我使用的mysql数据库就会自动将id列设置成自增。</p>
-<pre><code>主键具体有哪些生成方式，待接下来详细研究。
-</code></pre><p>6.配置hibernate的配置信息</p>
-<p>在src下创建一个hibernate.cfg.xml文件，格式如下：</p>
-<p>&lt;!DOCTYPE hibernate-configuration PUBLIC<br>    “-//Hibernate/Hibernate Configuration DTD 3.0//EN”<br>    “<a href="http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd&quot;&gt;" target="_blank" rel="external">http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd&quot;&gt;</a></p>
-<p><hibernate-configuration><br>    <session-factory><br>        <!-- 连接数据库的基本信息 --><br>        <property name="hibernate.connection.username">root</property><br>        <property name="hibernate.connection.password">root</property><br>        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property><br>        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hibernate4</property></session-factory></hibernate-configuration></p>
-<pre><code>    &lt;!-- hibernate使用的数据库方言
-         如果不知道可以去/hibernate-release-4.3.11.Final/project/etc/hibernate.properties
-         中查找 --&gt;
-    &lt;property name=&quot;hibernate.dialect&quot;&gt;org.hibernate.dialect.MySQL5Dialect&lt;/property&gt;
-    &lt;!-- 是否在控制台显示sql语句 --&gt;
-    &lt;property name=&quot;hibernate.show_sql&quot;&gt;true&lt;/property&gt;
-    &lt;!-- 是否格式化显示的sql语句 --&gt;
-    &lt;property name=&quot;hibernate.format_sql&quot;&gt;true&lt;/property&gt;
-    &lt;!-- 是否自动生成数据表的策略,create代表每次启动程序都重新创建数据表 --&gt;
-    &lt;property name=&quot;hibernate.hbm2ddl.auto&quot;&gt;create&lt;/property&gt;
-
-    &lt;!-- 需要使用到的*.hbm.xml文件 --&gt;
-    &lt;mapping resource=&quot;cn/net/bysoft/lesson1/User.hbm.xml&quot;/&gt;
-&lt;/session-factory&gt;
-</code></pre><p><br>    该文件需要注意的有两个地方，第一个是mapping属性，第二个是hibernate.hbm2ddl.auto这个属性。</p>
-<pre><code>mapping属性用来配置*.hbm.xml的资源文件地址，这里需要注意的是没有用cn.net.bysoft.lession的形式，而是使用的&apos;/&apos;来描述目录位置。
-
-接下来是自动执行ddl语句的设置(也就是hibernate.hbm2ddl.auto)参数有4个，分别是：
-</code></pre><p>create</p>
-<p>create为每次创建sessionfactory时，会根据*.hbm.xml文件中所配置的信息来drop掉数据表，drop后重新create数据表；</p>
-<p>create-drop</p>
-<p>create-drop为每次创建sessionfactory时，会根据*.hbm.xml文件中所配置的信息来create数据表。而每当sessionfactory被close时，会drop掉开始时create的数据表；</p>
-<p>update</p>
-<p>update为每次创建sessionfactory时，如果数据库中没有对应的表，则新建。</p>
-<p>若已经新建过，则会判断*.hbm.xml文件的配置与建立好的数据表的结构是否相同。</p>
-<p>如果相同则不去进行ddl的操作。</p>
-<p>如果不同，则会根据*.hbm.xml文件中有变化的配置项去更新数据表，但不会删除数据表中已创建过的任何信息。</p>
-<p>validate</p>
-<p>validate为每次创建sessionfactory时，将用*.hbm.xml文件中的配置信息与现有的对应的数据表结构进行比较，若发现不同则抛出异常。</p>
-<p>7.编写代码测试</p>
-<p>package cn.net.bysoft.lesson1;</p>
-<p>import java.util.Date;</p>
-<p>import org.hibernate.Session;<br>import org.hibernate.SessionFactory;<br>import org.hibernate.Transaction;<br>import org.hibernate.boot.registry.StandardServiceRegistry;<br>import org.hibernate.boot.registry.StandardServiceRegistryBuilder;<br>import org.hibernate.cfg.Configuration;<br>import org.junit.Test;</p>
-<p>public class UserTest {</p>
-<pre><code>@Test
-public void test() {
-    // 0.创建configuration对象，该对象保存着hibernate的配置信息和对象关系映射的信息。
-    Configuration cfg = new Configuration().configure();
-    // 1.创建sessionfactory对象
-    StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties());
-    StandardServiceRegistry registry =  builder.build();
-    SessionFactory sessionFactory = cfg.buildSessionFactory(registry); 
-    // 2.创建session对象
-    Session session = sessionFactory.openSession();
-    // 3.开始事务
-    Transaction transaction = session.beginTransaction();
-    // 4.保存
-    User user = new User(&quot;Jack&quot;, new Date());
-    session.save(user);
-    // 5.提交事务
-    transaction.commit();
-    // 6.关闭session对象
-    session.close();
-    // 7.关闭sessionfactory对象
-    sessionFactory.close();
-}
-</code></pre><p>}<br>    上面这段代码中configuration对象用来保存则hibernate的配置信息，如hibernate.cfg.xml中的配置信息，和*.hbm.xml的映射信息。</p>
-<pre><code>sessionfactory为创建session的工厂，它是线程安全的。一般建议一个项目中只有一个sessionfactory，因为创建sessionfactory非常费资源。
-
-接下来是session对象，该对象是hibernate的核心，是一个单线程的对象，内部有session缓存。
-
-对需要持久化的java对象的所有操作都用到了session。
-
-常用的方法有get、load、save、update、saveorupdate、delete、begintransaction、isopen、flush、clear、evicto、close等等方法，接下来将会一个一个研究这些方法的使用。
-
-这是执行这段代码后，控制台输出的内容：
-
-
-
-创建了一张名为S_USER的数据表，并insert了一条数据。
-
-
-
-到此位置，一个简单的hibernate环境就搭建好了。工程的目录结构如下：
-</code></pre><p>1.下载hibernate</p>
-<pre><code>需要到hibernate的官网下载一个hibernate。网址是：http://hibernate.org/orm/downloads/
-</code></pre><p>2.解压hibernate</p>
-<pre><code>下载后解压缩，得到一个hibernate-release-4.3.11.Final文件夹（我下载的hibernate版本是4.3.11），在hibernate-release-4.3.11.Final文件夹里有一个lib文件夹，里面放着hibernate的jar包。
-
-例子中使用了lib下的required文件夹中的所有jar包。如图：
-
-
-
-这些包的作用如下（待验证）：
-</code></pre><p>包名<br>说明<br>antlr-2.7.7<br>可以接收词文法语言描述，并能产生识别这些语言的语句的程序，hibernate利用它实现hql到sql的转换。<br>dom4j-1.6.1<br>xml解析器，用来读写xml文件的。<br>hibernate-commons-annotations-4.0.5.Final<br>hibernate中支持注解开发的程序。<br>hibernate-core-4.3.11.Final<br>hibernate的核心程序。<br>hibernate-jpa-2.1-api-1.0.0.Final    hibernate对jap(java persistence API)规范的支持，可以理解为JAP是标准接口，hibernate是实现。<br>jandex-1.1.0.Final    用来检索注解(annotation)索引的程序，识别该对象是注解对象(待验证)？<br>javassist-3.18.1-GA    用来操作字节码的程序，可直接编辑和生成java字节码，以达到对.class文件的动态修改。<br>jboss-logging-3.1.3.GA    提供hibernate日志功能的程序(待验证)?<br>jboss-logging-annotations-1.2.0.Beta1    解析logging的注解模式程序(待验证)?<br>jboss-transaction-api_1.2_spec-1.0.0.Final    事务控制程序(待验证)?<br>3.导入hibernate的jar包</p>
-<pre><code>创建一个JavaProject，引用上面图片中的jar包，这里需要另外一个jar包，由于我连接的是mysql数据库，所以需要在导入一个mysql-connector-java-5.1.7-bin.jar
-</code></pre><p>4.新建一个测试用的java对象</p>
-<p>package cn.net.bysoft.lesson1;</p>
-<p>import java.util.Date;</p>
-<p>public class User {</p>
-<pre><code>public User() {
-}
-
-public User(String name, Date birthday) {
-    this.name = name;
-    this.birthday = birthday;
-}
-
-@Override
-public String toString() {
-    return &quot;User [id=&quot; + id + &quot;, name=&quot; + name + &quot;, birthday=&quot; + birthday
-            + &quot;]&quot;;
-}
-
-public int getId() {
-    return id;
-}
-
-public void setId(int id) {
-    this.id = id;
-}
-
-public String getName() {
-    return name;
-}
-
-public void setName(String name) {
-    this.name = name;
-}
-
-public Date getBirthday() {
-    return birthday;
-}
-
-public void setBirthday(Date birthday) {
-    this.birthday = birthday;
-}
-
-private int id;
-private String name;
-private Date birthday;
-</code></pre><p>}<br>    编写的java对象需要满足如下要素：</p>
-<p>需要有一个无参的构造函数，因为在session.get时需要用到反射创建java对象；</p>
-<p>需要提供一个id属性，对应数据库的主键；</p>
-<p>需要为对象的其他属性提供get/set方法；</p>
-<p>需要定义成非final的类，以便在hibernate进行延迟加载时为类创建代理；</p>
-<p>如有必要保存到集合中，需要重equals方法和hashcode方法；</p>
-<p>5.设置java对象与数据库的映射关系</p>
-<pre><code>需要创建一个User.hbm.xml文件，编辑java对象与数据库的映射关系，格式如下：
-</code></pre><p>&lt;?xml version=”1.0” encoding=”UTF-8”?&gt;<br>&lt;!DOCTYPE hibernate-mapping PUBLIC “-//Hibernate/Hibernate Mapping DTD 3.0//EN”<br>“<a href="http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd&quot;&gt;" target="_blank" rel="external">http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd&quot;&gt;</a></p>
-<p><hibernate-mapping><br>    <class name="cn.net.bysoft.lesson1.User" table="S_USER"><br>        <id name="id" type="integer" column="ID"><br>            <!-- 指定主键的生成方式，native是使用数据库本地的方式 --><br>            <generator class="native"></generator><br>        </id><br>        <property name="name" type="string" column="NAME"></property><br>        <property name="birthday" type="timestamp" column="BIRTHDAY"></property><br>    </class><br></hibernate-mapping><br>    该文件是用来配置java对象与数据表之间的映射关系的，其中需要留意的是id这个属性，generator来指定主键的生成方式，而native则代表是调用数据库本地的方式来生成主键，我使用的mysql数据库就会自动将id列设置成自增。</p>
-<pre><code>主键具体有哪些生成方式，待接下来详细研究。
-</code></pre><p>6.配置hibernate的配置信息</p>
-<p>在src下创建一个hibernate.cfg.xml文件，格式如下：</p>
-<p>&lt;!DOCTYPE hibernate-configuration PUBLIC<br>    “-//Hibernate/Hibernate Configuration DTD 3.0//EN”<br>    “<a href="http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd&quot;&gt;" target="_blank" rel="external">http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd&quot;&gt;</a></p>
-<p><hibernate-configuration><br>    <session-factory><br>        <!-- 连接数据库的基本信息 --><br>        <property name="hibernate.connection.username">root</property><br>        <property name="hibernate.connection.password">root</property><br>        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property><br>        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hibernate4</property></session-factory></hibernate-configuration></p>
-<pre><code>    &lt;!-- hibernate使用的数据库方言
-         如果不知道可以去/hibernate-release-4.3.11.Final/project/etc/hibernate.properties
-         中查找 --&gt;
-    &lt;property name=&quot;hibernate.dialect&quot;&gt;org.hibernate.dialect.MySQL5Dialect&lt;/property&gt;
-    &lt;!-- 是否在控制台显示sql语句 --&gt;
-    &lt;property name=&quot;hibernate.show_sql&quot;&gt;true&lt;/property&gt;
-    &lt;!-- 是否格式化显示的sql语句 --&gt;
-    &lt;property name=&quot;hibernate.format_sql&quot;&gt;true&lt;/property&gt;
-    &lt;!-- 是否自动生成数据表的策略,create代表每次启动程序都重新创建数据表 --&gt;
-    &lt;property name=&quot;hibernate.hbm2ddl.auto&quot;&gt;create&lt;/property&gt;
-
-    &lt;!-- 需要使用到的*.hbm.xml文件 --&gt;
-    &lt;mapping resource=&quot;cn/net/bysoft/lesson1/User.hbm.xml&quot;/&gt;
-&lt;/session-factory&gt;
-</code></pre><p><br>    该文件需要注意的有两个地方，第一个是mapping属性，第二个是hibernate.hbm2ddl.auto这个属性。</p>
-<pre><code>mapping属性用来配置*.hbm.xml的资源文件地址，这里需要注意的是没有用cn.net.bysoft.lession的形式，而是使用的&apos;/&apos;来描述目录位置。
-
-接下来是自动执行ddl语句的设置(也就是hibernate.hbm2ddl.auto)参数有4个，分别是：
-</code></pre><p>create</p>
-<p>create为每次创建sessionfactory时，会根据*.hbm.xml文件中所配置的信息来drop掉数据表，drop后重新create数据表；</p>
-<p>create-drop</p>
-<p>create-drop为每次创建sessionfactory时，会根据*.hbm.xml文件中所配置的信息来create数据表。而每当sessionfactory被close时，会drop掉开始时create的数据表；</p>
-<p>update</p>
-<p>update为每次创建sessionfactory时，如果数据库中没有对应的表，则新建。</p>
-<p>若已经新建过，则会判断*.hbm.xml文件的配置与建立好的数据表的结构是否相同。</p>
-<p>如果相同则不去进行ddl的操作。</p>
-<p>如果不同，则会根据*.hbm.xml文件中有变化的配置项去更新数据表，但不会删除数据表中已创建过的任何信息。</p>
-<p>validate</p>
-<p>validate为每次创建sessionfactory时，将用*.hbm.xml文件中的配置信息与现有的对应的数据表结构进行比较，若发现不同则抛出异常。</p>
-<p>7.编写代码测试</p>
-<p>package cn.net.bysoft.lesson1;</p>
-<p>import java.util.Date;</p>
-<p>import org.hibernate.Session;<br>import org.hibernate.SessionFactory;<br>import org.hibernate.Transaction;<br>import org.hibernate.boot.registry.StandardServiceRegistry;<br>import org.hibernate.boot.registry.StandardServiceRegistryBuilder;<br>import org.hibernate.cfg.Configuration;<br>import org.junit.Test;</p>
-<p>public class UserTest {</p>
-<pre><code>@Test
-public void test() {
-    // 0.创建configuration对象，该对象保存着hibernate的配置信息和对象关系映射的信息。
-    Configuration cfg = new Configuration().configure();
-    // 1.创建sessionfactory对象
-    StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties());
-    StandardServiceRegistry registry =  builder.build();
-    SessionFactory sessionFactory = cfg.buildSessionFactory(registry); 
-    // 2.创建session对象
-    Session session = sessionFactory.openSession();
-    // 3.开始事务
-    Transaction transaction = session.beginTransaction();
-    // 4.保存
-    User user = new User(&quot;Jack&quot;, new Date());
-    session.save(user);
-    // 5.提交事务
-    transaction.commit();
-    // 6.关闭session对象
-    session.close();
-    // 7.关闭sessionfactory对象
-    sessionFactory.close();
-}
-</code></pre><p>}<br>    上面这段代码中configuration对象用来保存则hibernate的配置信息，如hibernate.cfg.xml中的配置信息，和*.hbm.xml的映射信息。</p>
-<pre><code>sessionfactory为创建session的工厂，它是线程安全的。一般建议一个项目中只有一个sessionfactory，因为创建sessionfactory非常费资源。
-
-接下来是session对象，该对象是hibernate的核心，是一个单线程的对象，内部有session缓存。
-
-对需要持久化的java对象的所有操作都用到了session。
-
-常用的方法有get、load、save、update、saveorupdate、delete、begintransaction、isopen、flush、clear、evicto、close等等方法，接下来将会一个一个研究这些方法的使用。
-
-这是执行这段代码后，控制台输出的内容：
-
-
-
-创建了一张名为S_USER的数据表，并insert了一条数据。
-
-
-
-到此位置，一个简单的hibernate环境就搭建好了。工程的目录结构如下：
-</code></pre><p>配置对象<br>配置对象是你在任何 Hibernate 应用程序中创造的第一个 Hibernate 对象，并且经常只在应用程序初始化期间创造。它代表了 Hibernate 所需一个配置或属性文件。配置对象提供了两种基础组件。</p>
-<p>数据库连接：由 Hibernate 支持的一个或多个配置文件处理。这些文件是 hibernate.properties 和 hibernate.cfg.xml。<br>类映射设置：这个组件创造了 Java 类和数据库表格之间的联系。<br>SessionFactory 对象<br>配置对象被用于创造一个 SessionFactory 对象，使用提供的配置文件为应用程序依次配置 Hibernate，并允许实例化一个会话对象。SessionFactory 是一个线程安全对象并由应用程序所有的线程所使用。</p>
-<p>SessionFactory 是一个重量级对象所以通常它都是在应用程序启动时创造然后留存为以后使用。每个数据库需要一个 SessionFactory 对象使用一个单独的配置文件。所以如果你使用多种数据库那么你要创造多种 SessionFactory 对象。</p>
-<p>Session 对象<br>一个会话被用于与数据库的物理连接。Session 对象是轻量级的，并被设计为每次实例化都需要与数据库的交互。持久对象通过 Session 对象保存和检索。</p>
-<p>Session 对象不应该长时间保持开启状态因为它们通常情况下并非线程安全，并且它们应该按照所需创造和销毁。</p>
-<p>Transaction 对象<br>一个事务代表了与数据库工作的一个单元并且大部分 RDBMS 支持事务功能。在 Hibernate 中事务由底层事务管理器和事务（来自 JDBC 或者 JTA）处理。</p>
-<p>这是一个选择性对象，Hibernate 应用程序可能不选择使用这个接口，而是在自己应用程序代码中管理事务。</p>
-<p>Query 对象<br>Query 对象使用 SQL 或者 Hibernate 查询语言（HQL）字符串在数据库中来检索数据并创造对象。一个查询的实例被用于连结查询参数，限制由查询返回的结果数量，并最终执行查询。</p>
-<p>Criteria 对象<br>Criteria 对象被用于创造和执行面向规则查询的对象来检索对象。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;1.下载hibernate&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;需要到hibernate的官网下载一个hibernate。网址是：http://hibernate.org/orm/downloads/
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.解压hibernate&lt;/p&gt;
-&lt;pre&gt;
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
