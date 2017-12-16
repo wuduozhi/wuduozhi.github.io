@@ -1,0 +1,582 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>PHP||文件操作 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="PHP文件操作今天来记录一下PHP的文件操作，由于之前没怎么用过，导致需要用的时候也是需要查看文档，不如就记录下来，不然下次还需要查看文档。 当然，文件的操作，还是一样的步骤：  打开文件 获取数据流 进行操作 关闭文件  文件创建/打开PHP Open File - fopen()  打开文件的更好的方法是通过 fopen() 函数。此函数为您提供比 readfile() 函数更多的选项。ope">
+<meta name="keywords" content="PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP||文件操作">
+<meta property="og:url" content="http://yoursite.com/2017/12/16/PHP-文件操作/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="PHP文件操作今天来记录一下PHP的文件操作，由于之前没怎么用过，导致需要用的时候也是需要查看文档，不如就记录下来，不然下次还需要查看文档。 当然，文件的操作，还是一样的步骤：  打开文件 获取数据流 进行操作 关闭文件  文件创建/打开PHP Open File - fopen()  打开文件的更好的方法是通过 fopen() 函数。此函数为您提供比 readfile() 函数更多的选项。ope">
+<meta property="og:locale" content="Chinese">
+<meta property="og:updated_time" content="2017-12-16T17:14:56.310Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP||文件操作">
+<meta name="twitter:description" content="PHP文件操作今天来记录一下PHP的文件操作，由于之前没怎么用过，导致需要用的时候也是需要查看文档，不如就记录下来，不然下次还需要查看文档。 当然，文件的操作，还是一样的步骤：  打开文件 获取数据流 进行操作 关闭文件  文件创建/打开PHP Open File - fopen()  打开文件的更好的方法是通过 fopen() 函数。此函数为您提供比 readfile() 函数更多的选项。ope">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/12/16/PHP-文件操作/" title="PHP||文件操作" itemprop="url">PHP||文件操作</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2017-12-16T08:29:56.000Z" itemprop="datePublished"> Published 2017-12-16</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP文件操作"><span class="toc-number">1.</span> <span class="toc-text">PHP文件操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#文件创建-打开"><span class="toc-number">1.1.</span> <span class="toc-text">文件创建/打开</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件写入"><span class="toc-number">2.</span> <span class="toc-text">文件写入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件读取"><span class="toc-number">3.</span> <span class="toc-text">文件读取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#检查文件是否存在"><span class="toc-number">4.</span> <span class="toc-text">检查文件是否存在</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#检查文件是否可读写执行"><span class="toc-number">4.1.</span> <span class="toc-text">检查文件是否可读写执行</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件拷贝"><span class="toc-number">5.</span> <span class="toc-text">文件拷贝</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件删除"><span class="toc-number">6.</span> <span class="toc-text">文件删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#取得文件大小、类型、修改时间信息"><span class="toc-number">7.</span> <span class="toc-text">取得文件大小、类型、修改时间信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件指针函数"><span class="toc-number">8.</span> <span class="toc-text">文件指针函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试Demo"><span class="toc-number">9.</span> <span class="toc-text">测试Demo</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="PHP文件操作"><a href="#PHP文件操作" class="headerlink" title="PHP文件操作"></a>PHP文件操作</h3><p>今天来记录一下PHP的文件操作，由于之前没怎么用过，导致需要用的时候也是需要查看文档，不如就记录下来，不然下次还需要查看文档。</p>
+<p>当然，文件的操作，还是一样的步骤：</p>
+<ul>
+<li>打开文件</li>
+<li>获取数据流</li>
+<li>进行操作</li>
+<li>关闭文件</li>
+</ul>
+<h4 id="文件创建-打开"><a href="#文件创建-打开" class="headerlink" title="文件创建/打开"></a>文件创建/打开</h4><p>PHP Open File - fopen() </p>
+<p>打开文件的更好的方法是通过 fopen() 函数。此函数为您提供比 readfile() 函数更多的选项。open() 的第一个参数包含被打开的文件名，第二个参数规定打开文件的模式。如果 fopen() 函数未能打开指定的文件，下面的例子会生成一段消息：</p>
+<p>webdictionary.txt<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">AJAX = Asynchronous JavaScript and XML</div><div class="line">CSS = Cascading Style Sheets</div><div class="line">HTML = Hyper Text Markup Language</div><div class="line">PHP = PHP Hypertext Preprocessor</div><div class="line">SQL = Structured Query Language</div><div class="line">SVG = Scalable Vector Graphics</div><div class="line">XML = EXtensible Markup Language</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$myfile = fopen(&quot;webdictionary.txt&quot;, &quot;r&quot;) or die(&quot;Unable to open file!&quot;);</div><div class="line">echo fread($myfile,filesize(&quot;webdictionary.txt&quot;));</div><div class="line">fclose($myfile);</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AJAX = Asynchronous JavaScript and XML CSS = Cascading Style Sheets HTML = Hyper Text Markup Language PHP = PHP Hypertext Preprocessor SQL = Structured Query Language SVG = Scalable Vector Graphics XML = EXtensible Markup Language</div></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>r</td>
+<td>打开文件为只读。文件指针在文件的开头开始。</td>
+<td></td>
+</tr>
+<tr>
+<td>w</td>
+<td>打开文件为只写。删除文件的内容或创建一个新的文件，如果它不存在。文件指针在文件的开头开始。</td>
+<td></td>
+</tr>
+<tr>
+<td>a</td>
+<td>打开文件为只写。文件中的现有数据会被保留。文件指针在文件结尾开始。创建新的文件，如果文件不存在。</td>
+<td></td>
+</tr>
+<tr>
+<td>x</td>
+<td>创建新文件为只写。返回 FALSE 和错误，如果文件已存在。</td>
+<td></td>
+</tr>
+<tr>
+<td>r+</td>
+<td>打开文件为读/写、文件指针在文件开头开始。</td>
+<td></td>
+</tr>
+<tr>
+<td>w+</td>
+<td>打开文件为读/写。删除文件内容或创建新文件，如果它不存在。文件指针在文件开头开始。</td>
+<td></td>
+</tr>
+<tr>
+<td>a+</td>
+<td>打开文件为读/写。文件中已有的数据会被保留。文件指针在文件结尾开始。创建新文件，如果它不存在。</td>
+<td></td>
+</tr>
+<tr>
+<td>x+</td>
+<td>创建新文件为读/写。返回 FALSE 和错误，如果文件已存在。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="文件写入"><a href="#文件写入" class="headerlink" title="文件写入"></a>文件写入</h3><ul>
+<li>fwrite：向文件写入内容，可安全用于二进制文件 。</li>
+<li>file_put_contents：向文件写入内容，等同依次调用 fopen，fwrite 以及 fclose 函数。</li>
+</ul>
+<h3 id="文件读取"><a href="#文件读取" class="headerlink" title="文件读取"></a>文件读取</h3><ul>
+<li>fread：读取文件，可安全用于二进制文件。</li>
+<li>fgets：从文件中读取 一行 数据，并将文件指针指向下一行。</li>
+<li>feof:函数是用来检测文件是否结束的。该函数唯一参数就是文件指针（即$fp对应打开的文件）</li>
+<li>fgetc：从文件中 逐字 读取文件数据，直到文件结束。</li>
+<li>file_get_contents：把 整个文件 读入一个字符串。</li>
+<li>file：把 整个文件 读入一个数组中，数组中的每个单元都是文件中相应的一行。</li>
+</ul>
+<h3 id="检查文件是否存在"><a href="#检查文件是否存在" class="headerlink" title="检查文件是否存在"></a>检查文件是否存在</h3><ul>
+<li>file_exists：检查文件或目录是否存在。</li>
+</ul>
+<h4 id="检查文件是否可读写执行"><a href="#检查文件是否可读写执行" class="headerlink" title="检查文件是否可读写执行"></a>检查文件是否可读写执行</h4><ul>
+<li>is_readable：检查文件是否可读。</li>
+<li>is_writable：检查文件是否是否可写入。</li>
+<li>is_executable：检查文件是否可执行。</li>
+</ul>
+<h3 id="文件拷贝"><a href="#文件拷贝" class="headerlink" title="文件拷贝"></a>文件拷贝</h3><p>copy：拷贝文件。</p>
+<h3 id="文件删除"><a href="#文件删除" class="headerlink" title="文件删除"></a>文件删除</h3><p>unlink：删除文件。</p>
+<h3 id="取得文件大小、类型、修改时间信息"><a href="#取得文件大小、类型、修改时间信息" class="headerlink" title="取得文件大小、类型、修改时间信息"></a>取得文件大小、类型、修改时间信息</h3><ul>
+<li>filesize：取得文件大小。</li>
+<li>filetype：取得文件类型。</li>
+<li>filemtime：取得文件修改时间。</li>
+</ul>
+<h3 id="文件指针函数"><a href="#文件指针函数" class="headerlink" title="文件指针函数"></a>文件指针函数</h3><ul>
+<li>fclose：关闭文件指针。</li>
+<li>feof：测试文件指针是否到了文件结束的位置。</li>
+<li>fseek：在文件指针中定位。</li>
+<li>rewind：倒回文件指针的位置。</li>
+<li>ftell：返回文件指针读/写的位置</li>
+</ul>
+<h3 id="测试Demo"><a href="#测试Demo" class="headerlink" title="测试Demo"></a>测试Demo</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">const FILE_NAME = &quot;file_info.dat&quot;;</div><div class="line"></div><div class="line">class file_info</div><div class="line">&#123;</div><div class="line">    public $file_name;</div><div class="line">    public $self_count;</div><div class="line">    public $total_count;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//判断文件是否存在</div><div class="line">if (file_exists(FILE_NAME))</div><div class="line">&#123;</div><div class="line">  echo &quot;file existed.\n&quot;;</div><div class="line">  unlink(FILE_NAME);</div><div class="line">&#125;</div><div class="line"></div><div class="line">$fd = NULL;</div><div class="line"></div><div class="line">$fd = fopen(FILE_NAME, &quot;wb&quot;);</div><div class="line"></div><div class="line">if ($fd == NULL || $fd == false)</div><div class="line">&#123;</div><div class="line">  echo &quot;Failed to open file.\n&quot;; </div><div class="line">  return;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$obj = new file_info();</div><div class="line"></div><div class="line">if ($obj == NULL)</div><div class="line">&#123;</div><div class="line">   echo &quot;Failed to create object.\n&quot;;</div><div class="line">   return;</div><div class="line">&#125;</div><div class="line"></div><div class="line">for($i=0; $i&lt;3; $i++)</div><div class="line">&#123;</div><div class="line">   $temp_1 = $i * 10;</div><div class="line">   $temp_2 = $i * 100;</div><div class="line">   /*</div><div class="line">   $obj-&gt;file_name = &quot;file_&quot;.$i.&quot;\n&quot;;</div><div class="line">   $obj-&gt;self_count = $temp_1.&quot;\n&quot;;</div><div class="line">   $obj-&gt;total_count = $temp_2.&quot;\n&quot;;</div><div class="line">   */</div><div class="line">   //构造字符串。filename-0-0\n</div><div class="line">   $row = &quot;file_&quot;.$i.&quot;-&quot;.$temp_1.&quot;-&quot;.$temp_2.&quot;\n&quot;;</div><div class="line">   echo &quot;row: &quot;.$row;</div><div class="line">   fwrite($fd, $row);</div><div class="line">&#125;</div><div class="line"></div><div class="line">if ($fd)</div><div class="line">  fclose($fd); </div><div class="line"></div><div class="line">$fd = fopen(FILE_NAME, &quot;rb&quot;);</div><div class="line">if ($fd == false)</div><div class="line">&#123;</div><div class="line">   echo &quot;Failed to open read file.\n&quot;;</div><div class="line">   return;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$obj_params =  array();</div><div class="line"></div><div class="line">$i = 0;</div><div class="line"></div><div class="line">while (!feof($fd))</div><div class="line">&#123;</div><div class="line">    $tmp_obj = new file_info();</div><div class="line">    $tmp_row = fgets($fd);</div><div class="line">    if ($tmp_row == NULL)</div><div class="line">    break;</div><div class="line">    $pos_1 = strpos($tmp_row, &apos;-&apos;,0);</div><div class="line">    $pos_2 = strpos($tmp_row,&apos;-&apos;,$pos_1 + 1);</div><div class="line">    $tmp_obj-&gt;file_name = substr($tmp_row, 0, $pos_1);</div><div class="line">    $tmp_obj-&gt;self_count = substr($tmp_row, $pos_1 + 1, $pos_2- $pos_1 - 1);</div><div class="line">    $tmp_obj-&gt;total_count = substr($tmp_row, $pos_2 + 1, strlen($tmp_row) - $pos_2 - 2);</div><div class="line">    $obj_params[$i] = $tmp_obj;</div><div class="line">    $i++;</div><div class="line">&#125;</div><div class="line"></div><div class="line">for ($k = 0; $k &lt; count($obj_params); $k++)</div><div class="line">&#123;</div><div class="line">   echo $obj_params[$k]-&gt;file_name.&quot;\n&quot;;</div><div class="line">   echo $obj_params[$k]-&gt;self_count.&quot;\n&quot;;</div><div class="line">   echo $obj_params[$k]-&gt;total_count.&quot;\n&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">if ($fd)</div><div class="line">   fclose($fd);</div></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>参考<a href="http://www.cnblogs.com/Anker/p/3387180.html" target="_blank" rel="external">http://www.cnblogs.com/Anker/p/3387180.html</a></p>
+</blockquote>
+</blockquote>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/PHP/">PHP</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/12/16/游学-一次关于创业的分享/"  title="游学|一次关于创业的分享">
+ <span>游学|一次关于创业的分享
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2017 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-12-15T17:15:40.045Z</updated>
+  <updated>2017-12-16T17:14:56.310Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,128 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PHP||文件操作</title>
+    <link href="http://yoursite.com/2017/12/16/PHP-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/"/>
+    <id>http://yoursite.com/2017/12/16/PHP-文件操作/</id>
+    <published>2017-12-16T08:29:56.000Z</published>
+    <updated>2017-12-16T17:14:56.310Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="PHP文件操作"><a href="#PHP文件操作" class="headerlink" title="PHP文件操作"></a>PHP文件操作</h3><p>今天来记录一下PHP的文件操作，由于之前没怎么用过，导致需要用的时候也是需要查看文档，不如就记录下来，不然下次还需要查看文档。</p>
+<p>当然，文件的操作，还是一样的步骤：</p>
+<ul>
+<li>打开文件</li>
+<li>获取数据流</li>
+<li>进行操作</li>
+<li>关闭文件</li>
+</ul>
+<h4 id="文件创建-打开"><a href="#文件创建-打开" class="headerlink" title="文件创建/打开"></a>文件创建/打开</h4><p>PHP Open File - fopen() </p>
+<p>打开文件的更好的方法是通过 fopen() 函数。此函数为您提供比 readfile() 函数更多的选项。open() 的第一个参数包含被打开的文件名，第二个参数规定打开文件的模式。如果 fopen() 函数未能打开指定的文件，下面的例子会生成一段消息：</p>
+<p>webdictionary.txt<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">AJAX = Asynchronous JavaScript and XML</div><div class="line">CSS = Cascading Style Sheets</div><div class="line">HTML = Hyper Text Markup Language</div><div class="line">PHP = PHP Hypertext Preprocessor</div><div class="line">SQL = Structured Query Language</div><div class="line">SVG = Scalable Vector Graphics</div><div class="line">XML = EXtensible Markup Language</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$myfile = fopen(&quot;webdictionary.txt&quot;, &quot;r&quot;) or die(&quot;Unable to open file!&quot;);</div><div class="line">echo fread($myfile,filesize(&quot;webdictionary.txt&quot;));</div><div class="line">fclose($myfile);</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AJAX = Asynchronous JavaScript and XML CSS = Cascading Style Sheets HTML = Hyper Text Markup Language PHP = PHP Hypertext Preprocessor SQL = Structured Query Language SVG = Scalable Vector Graphics XML = EXtensible Markup Language</div></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>r</td>
+<td>打开文件为只读。文件指针在文件的开头开始。</td>
+<td></td>
+</tr>
+<tr>
+<td>w</td>
+<td>打开文件为只写。删除文件的内容或创建一个新的文件，如果它不存在。文件指针在文件的开头开始。</td>
+<td></td>
+</tr>
+<tr>
+<td>a</td>
+<td>打开文件为只写。文件中的现有数据会被保留。文件指针在文件结尾开始。创建新的文件，如果文件不存在。</td>
+<td></td>
+</tr>
+<tr>
+<td>x</td>
+<td>创建新文件为只写。返回 FALSE 和错误，如果文件已存在。</td>
+<td></td>
+</tr>
+<tr>
+<td>r+</td>
+<td>打开文件为读/写、文件指针在文件开头开始。</td>
+<td></td>
+</tr>
+<tr>
+<td>w+</td>
+<td>打开文件为读/写。删除文件内容或创建新文件，如果它不存在。文件指针在文件开头开始。</td>
+<td></td>
+</tr>
+<tr>
+<td>a+</td>
+<td>打开文件为读/写。文件中已有的数据会被保留。文件指针在文件结尾开始。创建新文件，如果它不存在。</td>
+<td></td>
+</tr>
+<tr>
+<td>x+</td>
+<td>创建新文件为读/写。返回 FALSE 和错误，如果文件已存在。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="文件写入"><a href="#文件写入" class="headerlink" title="文件写入"></a>文件写入</h3><ul>
+<li>fwrite：向文件写入内容，可安全用于二进制文件 。</li>
+<li>file_put_contents：向文件写入内容，等同依次调用 fopen，fwrite 以及 fclose 函数。</li>
+</ul>
+<h3 id="文件读取"><a href="#文件读取" class="headerlink" title="文件读取"></a>文件读取</h3><ul>
+<li>fread：读取文件，可安全用于二进制文件。</li>
+<li>fgets：从文件中读取 一行 数据，并将文件指针指向下一行。</li>
+<li>feof:函数是用来检测文件是否结束的。该函数唯一参数就是文件指针（即$fp对应打开的文件）</li>
+<li>fgetc：从文件中 逐字 读取文件数据，直到文件结束。</li>
+<li>file_get_contents：把 整个文件 读入一个字符串。</li>
+<li>file：把 整个文件 读入一个数组中，数组中的每个单元都是文件中相应的一行。</li>
+</ul>
+<h3 id="检查文件是否存在"><a href="#检查文件是否存在" class="headerlink" title="检查文件是否存在"></a>检查文件是否存在</h3><ul>
+<li>file_exists：检查文件或目录是否存在。</li>
+</ul>
+<h4 id="检查文件是否可读写执行"><a href="#检查文件是否可读写执行" class="headerlink" title="检查文件是否可读写执行"></a>检查文件是否可读写执行</h4><ul>
+<li>is_readable：检查文件是否可读。</li>
+<li>is_writable：检查文件是否是否可写入。</li>
+<li>is_executable：检查文件是否可执行。</li>
+</ul>
+<h3 id="文件拷贝"><a href="#文件拷贝" class="headerlink" title="文件拷贝"></a>文件拷贝</h3><p>copy：拷贝文件。</p>
+<h3 id="文件删除"><a href="#文件删除" class="headerlink" title="文件删除"></a>文件删除</h3><p>unlink：删除文件。</p>
+<h3 id="取得文件大小、类型、修改时间信息"><a href="#取得文件大小、类型、修改时间信息" class="headerlink" title="取得文件大小、类型、修改时间信息"></a>取得文件大小、类型、修改时间信息</h3><ul>
+<li>filesize：取得文件大小。</li>
+<li>filetype：取得文件类型。</li>
+<li>filemtime：取得文件修改时间。</li>
+</ul>
+<h3 id="文件指针函数"><a href="#文件指针函数" class="headerlink" title="文件指针函数"></a>文件指针函数</h3><ul>
+<li>fclose：关闭文件指针。</li>
+<li>feof：测试文件指针是否到了文件结束的位置。</li>
+<li>fseek：在文件指针中定位。</li>
+<li>rewind：倒回文件指针的位置。</li>
+<li>ftell：返回文件指针读/写的位置</li>
+</ul>
+<h3 id="测试Demo"><a href="#测试Demo" class="headerlink" title="测试Demo"></a>测试Demo</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">const FILE_NAME = &quot;file_info.dat&quot;;</div><div class="line"></div><div class="line">class file_info</div><div class="line">&#123;</div><div class="line">    public $file_name;</div><div class="line">    public $self_count;</div><div class="line">    public $total_count;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//判断文件是否存在</div><div class="line">if (file_exists(FILE_NAME))</div><div class="line">&#123;</div><div class="line">  echo &quot;file existed.\n&quot;;</div><div class="line">  unlink(FILE_NAME);</div><div class="line">&#125;</div><div class="line"></div><div class="line">$fd = NULL;</div><div class="line"></div><div class="line">$fd = fopen(FILE_NAME, &quot;wb&quot;);</div><div class="line"></div><div class="line">if ($fd == NULL || $fd == false)</div><div class="line">&#123;</div><div class="line">  echo &quot;Failed to open file.\n&quot;; </div><div class="line">  return;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$obj = new file_info();</div><div class="line"></div><div class="line">if ($obj == NULL)</div><div class="line">&#123;</div><div class="line">   echo &quot;Failed to create object.\n&quot;;</div><div class="line">   return;</div><div class="line">&#125;</div><div class="line"></div><div class="line">for($i=0; $i&lt;3; $i++)</div><div class="line">&#123;</div><div class="line">   $temp_1 = $i * 10;</div><div class="line">   $temp_2 = $i * 100;</div><div class="line">   /*</div><div class="line">   $obj-&gt;file_name = &quot;file_&quot;.$i.&quot;\n&quot;;</div><div class="line">   $obj-&gt;self_count = $temp_1.&quot;\n&quot;;</div><div class="line">   $obj-&gt;total_count = $temp_2.&quot;\n&quot;;</div><div class="line">   */</div><div class="line">   //构造字符串。filename-0-0\n</div><div class="line">   $row = &quot;file_&quot;.$i.&quot;-&quot;.$temp_1.&quot;-&quot;.$temp_2.&quot;\n&quot;;</div><div class="line">   echo &quot;row: &quot;.$row;</div><div class="line">   fwrite($fd, $row);</div><div class="line">&#125;</div><div class="line"></div><div class="line">if ($fd)</div><div class="line">  fclose($fd); </div><div class="line"></div><div class="line">$fd = fopen(FILE_NAME, &quot;rb&quot;);</div><div class="line">if ($fd == false)</div><div class="line">&#123;</div><div class="line">   echo &quot;Failed to open read file.\n&quot;;</div><div class="line">   return;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$obj_params =  array();</div><div class="line"></div><div class="line">$i = 0;</div><div class="line"></div><div class="line">while (!feof($fd))</div><div class="line">&#123;</div><div class="line">    $tmp_obj = new file_info();</div><div class="line">    $tmp_row = fgets($fd);</div><div class="line">    if ($tmp_row == NULL)</div><div class="line">    break;</div><div class="line">    $pos_1 = strpos($tmp_row, &apos;-&apos;,0);</div><div class="line">    $pos_2 = strpos($tmp_row,&apos;-&apos;,$pos_1 + 1);</div><div class="line">    $tmp_obj-&gt;file_name = substr($tmp_row, 0, $pos_1);</div><div class="line">    $tmp_obj-&gt;self_count = substr($tmp_row, $pos_1 + 1, $pos_2- $pos_1 - 1);</div><div class="line">    $tmp_obj-&gt;total_count = substr($tmp_row, $pos_2 + 1, strlen($tmp_row) - $pos_2 - 2);</div><div class="line">    $obj_params[$i] = $tmp_obj;</div><div class="line">    $i++;</div><div class="line">&#125;</div><div class="line"></div><div class="line">for ($k = 0; $k &lt; count($obj_params); $k++)</div><div class="line">&#123;</div><div class="line">   echo $obj_params[$k]-&gt;file_name.&quot;\n&quot;;</div><div class="line">   echo $obj_params[$k]-&gt;self_count.&quot;\n&quot;;</div><div class="line">   echo $obj_params[$k]-&gt;total_count.&quot;\n&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">if ($fd)</div><div class="line">   fclose($fd);</div></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>参考<a href="http://www.cnblogs.com/Anker/p/3387180.html" target="_blank" rel="external">http://www.cnblogs.com/Anker/p/3387180.html</a></p>
+</blockquote>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;PHP文件操作&quot;&gt;&lt;a href=&quot;#PHP文件操作&quot; class=&quot;headerlink&quot; title=&quot;PHP文件操作&quot;&gt;&lt;/a&gt;PHP文件操作&lt;/h3&gt;&lt;p&gt;今天来记录一下PHP的文件操作，由于之前没怎么用过，导致需要用的时候也是需要查看文档，不如就记录下来
+    
+    </summary>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+  </entry>
   
   <entry>
     <title>游学|一次关于创业的分享</title>
@@ -83,6 +205,35 @@
     
     
       <category term="git" scheme="http://yoursite.com/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>大学|记一次比赛</title>
+    <link href="http://yoursite.com/2017/12/09/%E5%A4%A7%E5%AD%A6-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%AF%94%E8%B5%9B/"/>
+    <id>http://yoursite.com/2017/12/09/大学-记一次比赛/</id>
+    <published>2017-12-09T00:10:32.000Z</published>
+    <updated>2017-12-08T16:47:59.404Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="我的第一次比赛"><a href="#我的第一次比赛" class="headerlink" title="我的第一次比赛"></a>我的第一次比赛</h3><p>说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。这是自己在大学第一个参加的比赛，是学校联想俱乐部举办的，比赛内容就是参赛队员想一个产品，有创意的产品。</p>
+<p>然后,我们就开始讨论要搞什么，最初是说搞教育那一块的，但觉得太low了，就换成了旅游出行的个性化推荐，创新点主要是能实时通过天气、景点人流、交通情况等因素，实时为旅客修改旅游计划，为用户提供最佳的旅游路线。</p>
+<p>最开始是初赛，需要做ppt和上台答辩，说白了，这个比赛就是看谁弄得ppt好看和谁的忽悠能力强就能得奖。ppt是黄智威弄的，还需要一个产品的原型，然后自己是弄原型，其实也就是弄个首页，都不是事。还是黄智威拼，弄ppt到半夜。答辩时黄智威和黄卫江上去讲的，毫无悬念，我们进入了决赛。</p>
+<p>初赛后不久是决赛，ppt是用的初赛的，但是原型就不能用初赛的了，需要搞完善一点的，不过这次不是我搞的了，是黄卫江搞的，自己有点惭愧啊，就是个打酱油的。决赛是黄智威自己上去答辩，黄卫江上课去了，我坐在台下给黄智威录像。很幸运，决赛我们的了二等奖。其中，还有一个有趣的环节呢，那就是刷票啊，不知道黄智威怎么搞的，花钱加别人刷票，这小子可以的。</p>
+<p>本以为我们能够进决赛的，我们还为此决定搞个半产品出来呢。我们三个专门去蓝杰向胡哥请教了一番，还想好了下一步的分工了。不曾想，回宿舍后，通知说没有进省赛。</p>
+<p>这就是自己第一次的比赛经历啦，虽然不精彩，但是自己也认识到一个团队需要不同的人才能做成一件事。就像黄智威，能说，会忽悠；黄卫江，能为了完成任务，熬上几夜；我自己呢，可能在技术这一块擅长一点，所以前期也没做什么工作，是要在做产品的时候出力的。</p>
+<p><img src="/images/mmexport1512485485927.jpg" alt="enter description here" title="mmexport1512485485927"></p>
+<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
+<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;我的第一次比赛&quot;&gt;&lt;a href=&quot;#我的第一次比赛&quot; class=&quot;headerlink&quot; title=&quot;我的第一次比赛&quot;&gt;&lt;/a&gt;我的第一次比赛&lt;/h3&gt;&lt;p&gt;说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。
+    
+    </summary>
+    
+    
+      <category term="大学" scheme="http://yoursite.com/tags/%E5%A4%A7%E5%AD%A6/"/>
     
   </entry>
   
@@ -161,35 +312,6 @@
     
     
       <category term="动态规划" scheme="http://yoursite.com/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>大学|记一次比赛</title>
-    <link href="http://yoursite.com/2017/12/09/%E5%A4%A7%E5%AD%A6-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%AF%94%E8%B5%9B/"/>
-    <id>http://yoursite.com/2017/12/09/大学-记一次比赛/</id>
-    <published>2017-12-09T00:10:32.000Z</published>
-    <updated>2017-12-08T16:47:59.404Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="我的第一次比赛"><a href="#我的第一次比赛" class="headerlink" title="我的第一次比赛"></a>我的第一次比赛</h3><p>说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。这是自己在大学第一个参加的比赛，是学校联想俱乐部举办的，比赛内容就是参赛队员想一个产品，有创意的产品。</p>
-<p>然后,我们就开始讨论要搞什么，最初是说搞教育那一块的，但觉得太low了，就换成了旅游出行的个性化推荐，创新点主要是能实时通过天气、景点人流、交通情况等因素，实时为旅客修改旅游计划，为用户提供最佳的旅游路线。</p>
-<p>最开始是初赛，需要做ppt和上台答辩，说白了，这个比赛就是看谁弄得ppt好看和谁的忽悠能力强就能得奖。ppt是黄智威弄的，还需要一个产品的原型，然后自己是弄原型，其实也就是弄个首页，都不是事。还是黄智威拼，弄ppt到半夜。答辩时黄智威和黄卫江上去讲的，毫无悬念，我们进入了决赛。</p>
-<p>初赛后不久是决赛，ppt是用的初赛的，但是原型就不能用初赛的了，需要搞完善一点的，不过这次不是我搞的了，是黄卫江搞的，自己有点惭愧啊，就是个打酱油的。决赛是黄智威自己上去答辩，黄卫江上课去了，我坐在台下给黄智威录像。很幸运，决赛我们的了二等奖。其中，还有一个有趣的环节呢，那就是刷票啊，不知道黄智威怎么搞的，花钱加别人刷票，这小子可以的。</p>
-<p>本以为我们能够进决赛的，我们还为此决定搞个半产品出来呢。我们三个专门去蓝杰向胡哥请教了一番，还想好了下一步的分工了。不曾想，回宿舍后，通知说没有进省赛。</p>
-<p>这就是自己第一次的比赛经历啦，虽然不精彩，但是自己也认识到一个团队需要不同的人才能做成一件事。就像黄智威，能说，会忽悠；黄卫江，能为了完成任务，熬上几夜；我自己呢，可能在技术这一块擅长一点，所以前期也没做什么工作，是要在做产品的时候出力的。</p>
-<p><img src="/images/mmexport1512485485927.jpg" alt="enter description here" title="mmexport1512485485927"></p>
-<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
-<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;我的第一次比赛&quot;&gt;&lt;a href=&quot;#我的第一次比赛&quot; class=&quot;headerlink&quot; title=&quot;我的第一次比赛&quot;&gt;&lt;/a&gt;我的第一次比赛&lt;/h3&gt;&lt;p&gt;说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。
-    
-    </summary>
-    
-    
-      <category term="大学" scheme="http://yoursite.com/tags/%E5%A4%A7%E5%AD%A6/"/>
     
   </entry>
   
@@ -805,42 +927,6 @@
     <summary type="html">
     
       &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;我们遇到的问题中，有很大一部分可以用动态规划(简称DP)来解。 解决这类问题可以很大地提升你的能力与技巧，我会试着帮助你理解如何使用DP来解
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>动态规划|背包问题</title>
-    <link href="http://yoursite.com/2017/09/06/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E4%B9%8B%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/"/>
-    <id>http://yoursite.com/2017/09/06/动态规划之背包问题/</id>
-    <published>2017-09-06T15:44:51.000Z</published>
-    <updated>2017-12-08T16:57:23.105Z</updated>
-    
-    <content type="html"><![CDATA[<p>一切都要从一则故事说起。</p>
-<p>话说有一哥们去森林里玩发现了一堆宝石，他数了数，一共有n个。 但他身上能装宝石的就只有一个背包，背包的容量为C。这哥们把n个宝石排成一排并编上号： 0,1,2,…,n-1。第i个宝石对应的体积和价值分别为V[i]和W[i] 。排好后这哥们开始思考： 背包总共也就只能装下体积为C的东西，那我要装下哪些宝石才能让我获得最大的利益呢？</p>
-<p>OK，如果是你，你会怎么做？你斩钉截铁的说：动态规划啊！恭喜你，答对了。 那么让我们来看看，动态规划中最最最重要的两个概念： 状态和状态转移方程在这个问题中分别是什么。</p>
-<p>我们要怎样去定义状态呢？这个状态总不能是凭空想象或是从天上掉下来的吧。 为了方便说明，让我们先实例化上面的问题。一般遇到n，你就果断地给n赋予一个很小的数， 比如n=3。然后设背包容量C=10，三个宝石的体积为5，4，3，对应的价值为20，10，12。 对于这个例子，我想智商大于0的人都知道正解应该是把体积为5和3的宝石装到背包里， 此时对应的价值是20+12=32。接下来，我们把第三个宝石拿走， 同时背包容量减去第三个宝石的体积（因为它是装入背包的宝石之一）， 于是问题的各参数变为：n=2，C=7，体积｛5，4｝，价值｛20，10｝。好了， 现在这个问题的解是什么？我想智商等于0的也解得出了：把体积为5的宝石放入背包 （然后剩下体积2，装不下第二个宝石，只能眼睁睁看着它溜走），此时价值为20。 这样一来，我们发现，n=3时，放入背包的是0号和2号宝石；当n=2时， 我们放入的是0号宝石。这并不是一个偶然，没错， 这就是传说中的“全局最优解包含局部最优解”（n=2是n=3情况的一个局部子问题）。 绕了那么大的圈子，你可能要问，这都哪跟哪啊？说好的状态呢？说好的状态转移方程呢？ 别急，它们已经呼之欲出了。</p>
-<p>我们再把上面的例子理一下。当n=2时，我们要求的是前2个宝石， 装到体积为7的背包里能达到的最大价值；当n=3时，我们要求的是前3个宝石， 装到体积为10的背包里能达到的最大价值。有没有发现它们其实是一个句式！OK， 让我们形式化地表示一下它们， 定义d(i,j)为前i个宝石装到剩余体积为j的背包里能达到的最大价值。 那么上面两句话即为：d(2, 7)和d(3, 10)。这样看着真是爽多了， 而这两个看着很爽的符号就是我们要找的状态了。 即状态d(i,j)表示前i个宝石装到剩余体积为j的背包里能达到的最大价值。 上面那么多的文字，用一句话概括就是：根据子问题定义状态！你找到子问题， 状态也就浮出水面了。而我们最终要求解的最大价值即为d(n, C)：前n个宝石 （0,1,2…,n-1）装入剩余容量为C的背包中的最大价值。状态好不容易找到了， 状态转移方程呢？顾名思义，状态转移方程就是描述状态是怎么转移的方程（好废话！）。 那么回到例子，d(2, 7)和d(3, 10)是怎么转移的？来，我们来说说2号宝石 （记住宝石编号是从0开始的）。从d(2, 7)到d(3, 10)就隔了这个2号宝石。 它有两种情况，装或者不装入背包。如果装入，在面对前2个宝石时， 背包就只剩下体积7来装它们，而相应的要加上2号宝石的价值12， d(3, 10)=d(2, 10-3)+12=d(2, 7)+12；如果不装入，体积仍为10，价值自然不变了， d(3, 10)=d(2, 10)。记住，d(3, 10)表示的是前3个宝石装入到剩余体积为10 的背包里能达到的最大价值，既然是最大价值，就有d(3, 10)=max{ d(2, 10), d(2, 7)+12 }。好了，这条方程描述了状态d(i, j)的一些关系， 没错，它就是状态转移方程了。把它形式化一下：d(i, j)=max{ d(i-1, j), d(i-1,j-V[i-1]) + W[i-1] }。注意讨论前i个宝石装入背包的时候， 其实是在考查第i-1个宝石装不装入背包（因为宝石是从0开始编号的）。至此， 状态和状态转移方程都已经有了。接下来，直接上代码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">for(int i=0; i&lt;=n; ++i)&#123;</div><div class="line">    for(int j=0; j&lt;=C; ++j)&#123;</div><div class="line">        d[i][j] = i==0 ? 0 : d[i-1][j];</div><div class="line">        if(i&gt;0 &amp;&amp; j&gt;=V[i-1])  d[i][j] &gt;?= d[i-1][j-V[i-1]]+W[i-1];</div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-<p> i=0时，d(i, j)为什么为0呢？因为前0个宝石装入背包就是没东西装入，所以最大价值为0。 if语句里，j&gt;=V[i-1]说明只有当背包剩余体积j大于等于i-1号宝石的体积时， 我才考虑把它装进来的情况，不然d[i][j]就直接等于d[i-1][j]。i&gt;0不用说了吧， 前0个宝石装入背包的情况是边界，直接等于0，只有i&gt;0才有必要讨论， 我是装呢还是不装呢。简单吧，核心算法就这么一丁点，接下来上完整代码knapsack.cpp。<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"> /**0-1 knapsack d(i, j)表示前i个物品装到剩余容量为j的背包中的最大重量**/</div><div class="line">#include&lt;cstdio&gt;</div><div class="line">using namespace std;</div><div class="line">#define MAXN 1000</div><div class="line">#define MAXC 100000</div><div class="line"></div><div class="line">int V[MAXN], W[MAXN];</div><div class="line">int d[MAXN][MAXC];</div><div class="line"></div><div class="line">int main()&#123;</div><div class="line">	freopen(&quot;data.in&quot;, &quot;r&quot;, stdin);//重定向输入流</div><div class="line">	freopen(&quot;data.out&quot;, &quot;w&quot;, stdout);//重定向输出流</div><div class="line">	int n, C;</div><div class="line">	while(scanf(&quot;%d %d&quot;, &amp;n, &amp;C) != EOF)&#123;</div><div class="line">		for(int i=0; i&lt;n; ++i)	scanf(&quot;%d %d&quot;, &amp;V[i], &amp;W[i]);</div><div class="line">		</div><div class="line">		for(int i=0; i&lt;=n; ++i)&#123;</div><div class="line">			for(int j=0; j&lt;=C; ++j)&#123;</div><div class="line">				d[i][j] = i==0 ? 0 : d[i-1][j];</div><div class="line">				if(i&gt;0 &amp;&amp; j&gt;=V[i-1])	d[i][j] &gt;?= d[i-1][j-V[i-1]]+W[i-1];</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		printf(&quot;%d\n&quot;, d[n][C]);//最终求解的最大价值</div><div class="line">	&#125;</div><div class="line">	fclose(stdin);</div><div class="line">	fclose(stdout);</div><div class="line">	return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>其中freopen函数将标准输入流重定向到文件data.in， 这比运行程序时一点点手输要方便许多，将标准输出流重定向到data.out。 data.in中每组输入的第一行为宝石数量n及背包体积C，接下来会有n行的数据， 每行两个数对应的是宝石的体积及价值。本测试用例data.in如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">5 10</div><div class="line">4 9</div><div class="line">3 6</div><div class="line">5 1</div><div class="line">2 4</div><div class="line">5 1</div><div class="line">4 9</div><div class="line">4 20</div><div class="line">3 6</div><div class="line">4 20</div><div class="line">2 4</div><div class="line">5 10</div><div class="line">2 6</div><div class="line">2 3</div><div class="line">6 5</div><div class="line">5 4</div><div class="line">4 6</div></pre></td></tr></table></figure></p>
-<p>data.out为算法输出结果，对应该测试用例，输出结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">19</div><div class="line">40</div><div class="line">15</div></pre></td></tr></table></figure></p>
-<p>好，至此我们解决了背包问题中最基本的0/1背包问题。等等，这时你可能要问， 我现在只知道背包能装入宝石的最大价值，但我还不知道要往背包里装入哪些宝石啊。嗯， 好问题！让我们先定义一个数组x，对于其中的元素为1时表示对应编号的宝石放入背包， 为0则不放入。让我们回到上面的例子，对于体积为5，4，3，价值为20，10，12的3个宝石 ，如何求得其对应的数组x呢？（明显我们目测一下就知道x={1 0 1}， 但程序可目测不出来）OK，让我们还是从状态说起。如果我们把2号宝石放入了背包， 那么是不是也就意味着，前3个宝石放入背包的最大价值要比前2个宝石放入背包的价值大， 即：d(3, 10)&gt;d(2, 10)。再用字母代替具体的数字 （不知不觉中我们就用了不完全归纳法哈），当d(i, j)&gt;d(i-1, j)时，x(i-1)=1;OK， 上代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//输出打印方案</div><div class="line">int j = C;</div><div class="line">for(int i=n; i&gt;0; --i)&#123;</div><div class="line">    if(d[i][j] &gt; d[i-1][j])&#123;</div><div class="line">        x[i-1] = 1;</div><div class="line">        j = j - V[i-1];//装入第i-1个宝石后背包能装入的体积就只剩下j - V[i-1]</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">for(int i=0; i&lt;n; ++i)  printf(&quot;%d &quot;, x[i]);</div></pre></td></tr></table></figure></p>
-<p>好了，加入这部分内容，knapsack.cpp变为如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">/**0-1 knapsack d(i, j)表示前i个物品装到剩余容量为j的背包中的最大重量**/</div><div class="line">#include&lt;cstdio&gt;</div><div class="line">using namespace std;</div><div class="line">#define MAXN 1000</div><div class="line">#define MAXC 100000</div><div class="line"></div><div class="line">int V[MAXN], W[MAXN], x[MAXN];</div><div class="line">int d[MAXN][MAXC];</div><div class="line"></div><div class="line">int main()&#123;</div><div class="line">	freopen(&quot;data.in&quot;, &quot;r&quot;, stdin);</div><div class="line">	freopen(&quot;data.out&quot;, &quot;w&quot;, stdout);</div><div class="line">	int n, C;</div><div class="line">	while(scanf(&quot;%d %d&quot;, &amp;n, &amp;C) != EOF)&#123;</div><div class="line">		for(int i=0; i&lt;n; ++i)	scanf(&quot;%d %d&quot;, &amp;V[i], &amp;W[i]);</div><div class="line">		for(int i=0; i&lt;n; ++i)	x[i] = 0; //初始化打印方案</div><div class="line">		</div><div class="line">		for(int i=0; i&lt;=n; ++i)&#123;</div><div class="line">			for(int j=0; j&lt;=C; ++j)&#123;</div><div class="line">				d[i][j] = i==0 ? 0 : d[i-1][j];</div><div class="line">				if(i&gt;0 &amp;&amp; j&gt;=V[i-1])	d[i][j] &gt;?= d[i-1][j-V[i-1]]+W[i-1];</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		printf(&quot;%d\n&quot;, d[n][C]);</div><div class="line">		</div><div class="line">		//输出打印方案</div><div class="line">		int j = C;</div><div class="line">		for(int i=n; i&gt;0; --i)&#123;</div><div class="line">			if(d[i][j] &gt; d[i-1][j])&#123;</div><div class="line">				x[i-1] = 1;</div><div class="line">				j = j - V[i-1];</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		for(int i=0; i&lt;n; ++i)	printf(&quot;%d &quot;, x[i]);</div><div class="line">		printf(&quot;\n&quot;);</div><div class="line">	&#125;</div><div class="line">	fclose(stdin);</div><div class="line">	fclose(stdout);</div><div class="line">	return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>data.out输出结果变为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">19</div><div class="line">1 1 0 1 0</div><div class="line">40</div><div class="line">1 0 1 0</div><div class="line">15</div><div class="line">1 1 0 0 1</div></pre></td></tr></table></figure></p>
-<p>至此，好像该解决的问题都解决了。当一个问题找到一个放心可靠的解决方案后， 我们往往就要考虑一下是不是有优化方案了。为了保持代码的简洁， 我们暂且把宝石装包方案的求解去掉。该算法的时间复杂度是O(nC)， 即时间都花在两个for循环里了，这个应该是没办法再优化了。再看看空间复杂度， 数组d用来保存每个状态的值，空间复杂度为O(nC)； 数组V和W用来保存每个宝石的体积和价值，空间复杂度为O(n)。程序总的空间复杂度为 O(nC)，这个是可以进一步优化的。首先，我们先把数组V和W去掉， 因为它们没有保存的必要，改为一边读入一边计算：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">int V = 0, W = 0;</div><div class="line">for(int i=0; i&lt;=n; ++i)&#123;</div><div class="line">    if(i&gt;0) scanf(&quot;%d %d&quot;, &amp;V,&amp;W);</div><div class="line">    for(int j=0; j&lt;=C;++j)&#123;</div><div class="line">        d[i][j] = i==0 ? 0 : d[i-1][j];</div><div class="line">        if(j&gt;=V &amp;&amp; i&gt;0) d[i][j] &gt;?= d[i-1][j-V]+W;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>好了，接下来让我们继续压榨空间复杂度。保存状态值我们开了一个二维数组d， 在看过把一维数组V和W变为一个变量后，我们是不是要思考一下， 有没有办法将这个二维数组也压榨一下呢？换言之， 这个二维数组中的每个状态值我们真的有必要都保存么？ 让我们先来看一下以下的一张示意图（参照《算法竞赛入门经典》P169的图画的）<br><img src="./images/pic.png" alt="enter description here" title="pic"></p>
-<p>由上面那一小段优化过后的代码可知，状态转移方程为：d(i, j)=max{ d(i-1, j), d(i-1, j-V)+W }，也就是在计算d(i, j)时我们用到了d(i-1,j)和d(i-1, j-V)的值。 如果我们只用一个一维数组d(0)～d(C)来保存状态值可以么？将i方向的维数去掉， 我们可以将原来二维数组表示为一维数据：d(i-1, j-V)变为d(j-V)， d(i-1, j)变为d(j)。当我们要计算d(i, j)时，只需要比较d(j)和d(j-V)+W的大小， 用较大的数更新d(j)即可。等等，如果我要计算d(i, j+1)，而它恰好要用到d(i-1, j)的值， 那么问题就出来了，因为你刚刚才把它更新为d(i, j)了。那么，怎么办呢？ 按照j递减的顺序即可避免这种问题。比如，你计算完d(i, j)， 接下来要计算的是d(i,j-1)，而它的状态转移方程为d(i, j-1)=max{ d(i-1, j-1), d(i-1, j-1-V)+W }，它不会再用到d(i-1,j)的值！所以， 即使该位置的值被更新了也无所谓。好，上代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">memset(d, 0, sizeof(d));</div><div class="line">for(int i=0; i&lt;=n; ++i)&#123;</div><div class="line">    if(i&gt;0) scanf(&quot;%d %d&quot;, &amp;V,&amp;W);</div><div class="line">    for(int j=C;j&gt;=0; --j)&#123;</div><div class="line">        if(j&gt;=V &amp;&amp; i&gt;0) d[j] &gt;?= d[j-V]+W;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>优化后的完整代码如下，此时空间复杂度仅为O(C)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">/**0-1 knapsack d(i, j)表示前i个物品装到剩余容量为j的背包中的最大重量**/</div><div class="line">#include&lt;cstdio&gt;</div><div class="line">#include&lt;cstdlib&gt;</div><div class="line">#include&lt;cstring&gt;</div><div class="line">using namespace std;</div><div class="line"></div><div class="line">int main()&#123;</div><div class="line">	freopen(&quot;data.in&quot;, &quot;r&quot;, stdin);</div><div class="line">	freopen(&quot;data.out&quot;, &quot;w&quot;, stdout);</div><div class="line">	int n, C, V = 0, W = 0;</div><div class="line">	while(scanf(&quot;%d %d&quot;, &amp;n, &amp;C) != EOF)&#123;</div><div class="line">		int* d = (int*)malloc((C+1)*sizeof(int));</div><div class="line">		memset(d, 0, (C+1)*sizeof(int));</div><div class="line">		</div><div class="line">		for(int i=0; i&lt;=n; ++i)&#123;</div><div class="line">			if(i&gt;0)	scanf(&quot;%d %d&quot;, &amp;V, &amp;W);</div><div class="line">			for(int j=C; j&gt;=0; --j)&#123;</div><div class="line">				if(j&gt;=V &amp;&amp; i&gt;0)	d[j] &gt;?= d[j-V]+W;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		printf(&quot;%d\n&quot;, d[C]);</div><div class="line">		free(d);</div><div class="line">	&#125;</div><div class="line">	fclose(stdin);</div><div class="line">	fclose(stdout);</div><div class="line">	return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>OK，背包问题暂时先讲这么多，以后接着讲。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;一切都要从一则故事说起。&lt;/p&gt;
-&lt;p&gt;话说有一哥们去森林里玩发现了一堆宝石，他数了数，一共有n个。 但他身上能装宝石的就只有一个背包，背包的容量为C。这哥们把n个宝石排成一排并编上号： 0,1,2,…,n-1。第i个宝石对应的体积和价值分别为V[i]和W[i] 。排好后这
     
     </summary>
     
