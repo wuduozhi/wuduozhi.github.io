@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-01-18T06:39:03.699Z</updated>
+  <updated>2018-01-18T06:44:25.848Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,27 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>数据结构|图</title>
+    <link href="http://yoursite.com/2018/01/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%9B%BE/"/>
+    <id>http://yoursite.com/2018/01/18/数据结构-图/</id>
+    <published>2018-01-18T14:43:37.000Z</published>
+    <updated>2018-01-18T06:44:25.848Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+      <category term="数据结构" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
     <title>数据结构|排序算法浅谈</title>
     <link href="http://yoursite.com/2018/01/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%B5%85%E8%B0%88/"/>
     <id>http://yoursite.com/2018/01/18/数据结构-排序算法浅谈/</id>
     <published>2018-01-17T23:13:38.000Z</published>
-    <updated>2018-01-18T06:39:03.699Z</updated>
+    <updated>2018-01-18T06:47:35.661Z</updated>
     
     <content type="html"><![CDATA[<h3 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h3><p>经过大一到大二的洗礼，自己对自己专业的认识也越来越深，从最开始认为自己是学软件工程的，然后认为自己是学计算机的，再到现在认为自己是搞互联网的，可能还会有更深的认识。学习，不仅是要学习专业知识，更要知道行业的发展趋势和发展方向，两者缺一不可。这个行业说到底还是对信息进行处理，那么排序就是最重要的处理方式之一。</p>
 <p>排序算法有很多种，现在我们主要谈谈常见的几种：</p>
@@ -42,7 +58,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line">	A[]  待排序列</div><div class="line">	n    元素个数</div><div class="line">*/</div><div class="line">void choSort(int A[],int n)&#123;</div><div class="line">	for(int i=0;i&lt;n-1;i++)&#123;</div><div class="line">		for(int j=i;j&lt;n;j++)&#123;</div><div class="line">			int index = i;</div><div class="line">			if(A[j]&lt;A[index])&#123;</div><div class="line">				index = j;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		int temp = A[i];</div><div class="line">		A[i] = A[index];</div><div class="line">		A[index] = temp;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h4 id="一点干货"><a href="#一点干货" class="headerlink" title="一点干货"></a>一点干货</h4><p>上面三种排序方法的时间复杂度都是 n2;通过比较我们可以发现它们都有一个共同的瓶颈：都是只比较相邻的两个数，这是个致命的缺点，只到后来人们找到了分组比较的方法，得以让排序算法的复杂度降低了。接下来，咱们讨论更高级的排序算法。</p>
 <h4 id="Shell排序"><a href="#Shell排序" class="headerlink" title="Shell排序"></a>Shell排序</h4><p>Shell排序讲到底还是插入排序，不过它先把待排序列分成了许多组，先分组用插入排序，这样做到目的是先将待排序列变成基本有序，然后在用一次完整的插入排序。我们都知道，如果序列是基本有序的，插入排序的效率还是挺高的。Shell的特点就在于：它的作法不是每次一个元素挨一个元素的比较。而是初期选用大跨步（增量较大）间隔比较，使记录跳跃式接近它的排序位置；然后增量缩小；最后增量为 1 ，这样记录移动次数大大减少，提高了排序效率。</p>
-<p>假设有数组 array = [80, 93, 60, 12, 42, 30, 68, 85, 10]，首先取 d1 = 4，将数组分为 4 组，如下图中相同颜色代表一组：<br><img src="/images/shell-sort-step1.1_2.png" alt="enter description here" title="shell-sort-step1.1"><br>然后分别对 4 个小组进行插入排序，排序后的结果为：<br><img src="/images/shell-sort-step1.2_2.png" alt="enter description here" title="shell-sort-step1.2"><br>然后，取 d2 = 2，将原数组分为 2 小组，如下图：<br><img src="/images/shell-sort-step2.1.png" alt="enter description here" title="shell-sort-step2.1"><br>然后分别对 2 个小组进行插入排序，排序后的结果为：<br><img src="/images/shell-sort-step2.2.png" alt="enter description here" title="shell-sort-step2.2"><br>最后，取 d3 = 1，进行插入排序后得到最终结果：<br><img src="/images/shell-sort-step3.png" alt="enter description here" title="shell-sort-step3"></p>
+<p>假设有数组 array = [80, 93, 60, 12, 42, 30, 68, 85, 10]，首先取 d1 = 4，将数组分为 4 组，如下图中相同颜色代表一组：<br><img src="/images/shell-sort-step1.1.png" alt="enter description here" title="shell-sort-step1.1"><br>然后分别对 4 个小组进行插入排序，排序后的结果为：<br><img src="/images/shell-sort-step1.2.png" alt="enter description here" title="shell-sort-step1.2"><br>然后，取 d2 = 2，将原数组分为 2 小组，如下图：<br><img src="/images/shell-sort-step2.1.png" alt="enter description here" title="shell-sort-step2.1"><br>然后分别对 2 个小组进行插入排序，排序后的结果为：<br><img src="/images/shell-sort-step2.2.png" alt="enter description here" title="shell-sort-step2.2"><br>最后，取 d3 = 1，进行插入排序后得到最终结果：<br><img src="/images/shell-sort-step3.png" alt="enter description here" title="shell-sort-step3"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">void shell_sort(int a[], int n)&#123;</div><div class="line">    int i,j,gap;</div><div class="line">    //gap为步长，每次减为原来的一半</div><div class="line">    for(gap = n/2;gap&gt;0;gap/=2)&#123;</div><div class="line">        // 共gap个组，对每一组都执行直接插入排序</div><div class="line">        for(i = 0;i&lt;gap;i++)&#123;</div><div class="line">            for(j = i+gap;j&lt;n;j+=gap)&#123;</div><div class="line">                // 如果a[j] &lt; a[j-gap]，则寻找a[j]位置，并将后面数据的位置都后移。</div><div class="line">                if (a[j] &lt; a[j - gap]) </div><div class="line">                &#123;</div><div class="line">                    int tmp = a[j];</div><div class="line">                    int k = j - gap;</div><div class="line">                    while (k &gt;= 0 &amp;&amp; a[k] &gt; tmp)</div><div class="line">                    &#123;</div><div class="line">                        a[k + gap] = a[k];</div><div class="line">                        k -= gap;</div><div class="line">                    &#125;</div><div class="line">                    a[k + gap] = tmp;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h4 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h4><p>归并排序是建立在归并操作上的一种有效的排序算法。该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。归并操作(Merge)，也叫归并算法，指的是将两个已经排序的序列合并成一个序列的操作。归并排序算法依赖归并操作。归并排序有多路归并排序、两路归并排序 , 可用于内排序，也可以用于外排序。这里仅对内排序的两路归并方法进行讨论。</p>
 <p>算法思路：</p>
@@ -891,32 +907,6 @@
     <summary type="html">
     
       &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;大一暑假，在蓝杰学习，看到很多学长到外面实习，自己也对外面的时间充满着期待，也想去外面闯荡一番…新学期开始，很多企业来学校校招，自己虽然大二
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>我的第一次笔试</title>
-    <link href="http://yoursite.com/2017/09/20/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%AC%94%E8%AF%95/"/>
-    <id>http://yoursite.com/2017/09/20/我的第一次笔试/</id>
-    <published>2017-09-20T00:19:01.000Z</published>
-    <updated>2017-09-19T16:39:49.694Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="简要"><a href="#简要" class="headerlink" title="简要"></a>简要</h3><p>现在是北京时间 2017年9月20号凌晨零点20分，距我人生第一次笔试已经过去了一天了。我是在18号进行笔试的，Hr 说笔试后第二天会发面试通知，所以整晚我都在满怀期待地等待着，直到过了12点，最后的希望都烟消云散了…</p>
-<h3 id="笔试ing"><a href="#笔试ing" class="headerlink" title="笔试ing"></a>笔试ing</h3><p>总的来说，这次笔试是比较简单的，考的都是一些基础题，比如说第一题就考了指针，第二题考了树的遍历方法，第三题考了排序算法…这些东西自己在大一的时候都有接触过，但并没有深入的了解，只是知道这些东西的存在，所以也导致笔试的时候不能百分百确定答案。这些东西虽然基础，但恰恰就是因为基础，我们才需要真真正正地弄懂，并深入的了解他。这也怪自己大一的时候不懂事，觉得这些东西用不上，就没有深入地去了解，导致笔试的惨败。笔试还考了一些算法，对字符串、数组的操作啊。对于算法这一块，自己也是近期才认识到它的重要性，以前觉得它难，但小学期练了一些CCF的题之后，接触到了一些算法，比如动态规划、最短路径啊，虽然一时难以理解，但花点时间慢慢琢磨，还是能弄懂的。算法当然也不是短时间内就能提高的，需要时间来积累，慢慢钻研，当量足够的时候，才能有质的改变。最后一道题是讲述网络的，就是叫你描述一下从输入网址到显示网页，这一过程中发生了什么。本来呢，自己在网络这一块应该是可以的，但是因为好久没看了，只是知道个大概，细节的一些东西都忘了，自己答得也不是很好。网络这东西，也是需要慢慢研究的啊。</p>
-<h3 id="教训"><a href="#教训" class="headerlink" title="教训"></a>教训</h3><p>通过这一次惨败，自己懂得了许多。</p>
-<ul>
-<li>对于基础的学习，不能小视，需重视，吃透它，深入它</li>
-<li>对于算法啊、网络啊，这些必须的知识，要经常性地复习，做到能描述的清清楚楚</li>
-</ul>
-<p>虽败，但不能服输。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;简要&quot;&gt;&lt;a href=&quot;#简要&quot; class=&quot;headerlink&quot; title=&quot;简要&quot;&gt;&lt;/a&gt;简要&lt;/h3&gt;&lt;p&gt;现在是北京时间 2017年9月20号凌晨零点20分，距我人生第一次笔试已经过去了一天了。我是在18号进行笔试的，Hr 说笔试后第二天会发面试
     
     </summary>
     
