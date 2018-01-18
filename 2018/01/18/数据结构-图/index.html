@@ -23,9 +23,9 @@
 <meta property="og:image" content="http://yoursite.com/images/图2.jpg">
 <meta property="og:image" content="http://yoursite.com/images/图-深度遍历.jpg">
 <meta property="og:image" content="http://yoursite.com/images/图-广度遍历.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/01/18/数据结构-图/images/拓扑排序1.png">
-<meta property="og:image" content="http://yoursite.com/2018/01/18/数据结构-图/images/拓扑排序2.png">
-<meta property="og:updated_time" content="2018-01-18T09:24:51.805Z">
+<meta property="og:image" content="http://yoursite.com/images/拓扑排序1.png">
+<meta property="og:image" content="http://yoursite.com/images/拓扑排序2.png">
+<meta property="og:updated_time" content="2018-01-18T09:30:35.303Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构|图">
 <meta name="twitter:description" content="图图这种数据结构，是对现实中人们常说的地图的一种抽象，在数据结构中，图有点和边构成，每两个点之间如果有关系，就用一条边将这两个点连起来，这样就形成了类似于地图的图。图是个好东西啊，可以用于对现实世界中的很多问题进行抽象建模:  为计算机之间的互联与通信网络之间的互联建立模型 把一张地图表示为一组位置点，以及位置点之间的关系，求两个点之间的最短路径（这不就是导航吗） 为交通网络的流量状态建模 为一个">
@@ -57,7 +57,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -77,7 +77,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -100,14 +100,14 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-01-18T14:43:37.000Z" itemprop="datePublished"> Published 2018-01-18</time>
+    <time datetime="2018-01-18T14:43:37.000Z" itemprop="datePublished"> 發表於 2018-01-18</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
+			<strong class="toc-title">文章目錄</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#图"><span class="toc-number">1.</span> <span class="toc-text">图</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#图的表示"><span class="toc-number">1.1.</span> <span class="toc-text">图的表示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#图的遍历"><span class="toc-number">1.2.</span> <span class="toc-text">图的遍历</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#深度优先遍历"><span class="toc-number">1.2.1.</span> <span class="toc-text">深度优先遍历</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#广度优先遍历"><span class="toc-number">1.3.</span> <span class="toc-text">广度优先遍历</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#拓扑排序"><span class="toc-number">1.4.</span> <span class="toc-text">拓扑排序</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#拓扑排序的应用"><span class="toc-number">1.4.0.1.</span> <span class="toc-text">拓扑排序的应用</span></a></li></ol></li></ol></li></ol></li></ol>
 		
@@ -164,14 +164,14 @@
 <li>每个顶点出现且只出现一次</li>
 <li>若存在一条从顶点 A 到顶点 B 的路径，那么在序列中顶点 A 出现在顶点 B 的前面</li>
 </ul>
-<p><img src="./images/拓扑排序1.png" alt="enter description here" title="拓扑排序1"></p>
+<p><img src="/images/拓扑排序1.png" alt="enter description here" title="拓扑排序1"></p>
 <p>它是一个 DAG 图，那么如何写出它的拓扑排序呢？这里说一种比较常用的方法：</p>
 <ul>
 <li>从 DAG 图中选择一个 没有前驱（即入度为0）的顶点并输出。</li>
 <li>从图中删除该顶点和所有以它为起点的有向边。</li>
 <li>重复 1 和 2 直到当前的 DAG 图为空或当前图中不存在无前驱的顶点为止。后一种情况说明有向图中必然存在环。</li>
 </ul>
-<p><img src="./images/拓扑排序2.png" alt="拓扑排序" title="拓扑排序2"></p>
+<p><img src="/images/拓扑排序2.png" alt="拓扑排序" title="拓扑排序2"></p>
 <p>于是，得到拓扑排序后的结果是 { 1, 2, 4, 3, 5 }。</p>
 <p>值得一提的是，一个有向无环图是可以有一个或多个拓扑排序序列的。</p>
 <h6 id="拓扑排序的应用"><a href="#拓扑排序的应用" class="headerlink" title="拓扑排序的应用"></a>拓扑排序的应用</h6><p>拓扑排序通常用来“排序”具有依赖关系的任务。比如学校对我们的课程安排，一些课程是需要学生先去修特定的课程后才能开课的，所以可以用一个有向图来表示这些课程的关系，然后得到该图的拓扑排序排序，就能得到我们的课程先后关系，进而安排大一修什么课，大二修什么课…还有就是一些生产工艺，有些工序之间也是有关系的，也能用图将其建模，得出它的拓扑排序序列，更好地安排生产顺序。</p>
@@ -210,10 +210,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -241,7 +241,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">Categories</p>
+	<p class="asidetitle">分類</p>
 		<ul>
 		
 		  
@@ -282,7 +282,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">標簽</p>
 		<ul class="clearfix">
 		
 			
@@ -298,19 +298,7 @@
 			
 		
 			
-				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
 			
 		
 			
@@ -318,7 +306,23 @@
 			
 		
 			
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
 			
 		
 			
@@ -326,15 +330,7 @@
 			
 		
 			
-				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
 			
 		
 			
@@ -342,7 +338,11 @@
 			
 		
 			
-				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -350,7 +350,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
 </div>
 
 </aside>
@@ -537,7 +537,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
