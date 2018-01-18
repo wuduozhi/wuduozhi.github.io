@@ -19,13 +19,17 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="图图这种数据结构，是对现实中人们常说的地图的一种抽象，在数据结构中，图有点和边构成，每两个点之间如果有关系，就用一条边将这两个点连起来，这样就形成了类似于地图的图。图是个好东西啊，可以用于对现实世界中的很多问题进行抽象建模:  为计算机之间的互联与通信网络之间的互联建立模型 把一张地图表示为一组位置点，以及位置点之间的关系，求两个点之间的最短路径（这不就是导航吗） 为交通网络的流量状态建模 为一个">
 <meta property="og:locale" content="Chinese">
-<meta property="og:image" content="http://yoursite.com/2018/01/18/数据结构-图/images/图1.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/01/18/数据结构-图/images/图2.jpg">
-<meta property="og:updated_time" content="2018-01-18T08:25:56.523Z">
+<meta property="og:image" content="http://yoursite.com/images/图1.jpg">
+<meta property="og:image" content="http://yoursite.com/images/图2.jpg">
+<meta property="og:image" content="http://yoursite.com/images/图-深度遍历.jpg">
+<meta property="og:image" content="http://yoursite.com/images/图-广度遍历.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/01/18/数据结构-图/images/拓扑排序1.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/18/数据结构-图/images/拓扑排序2.png">
+<meta property="og:updated_time" content="2018-01-18T09:24:51.805Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构|图">
 <meta name="twitter:description" content="图图这种数据结构，是对现实中人们常说的地图的一种抽象，在数据结构中，图有点和边构成，每两个点之间如果有关系，就用一条边将这两个点连起来，这样就形成了类似于地图的图。图是个好东西啊，可以用于对现实世界中的很多问题进行抽象建模:  为计算机之间的互联与通信网络之间的互联建立模型 把一张地图表示为一组位置点，以及位置点之间的关系，求两个点之间的最短路径（这不就是导航吗） 为交通网络的流量状态建模 为一个">
-<meta name="twitter:image" content="http://yoursite.com/2018/01/18/数据结构-图/images/图1.jpg">
+<meta name="twitter:image" content="http://yoursite.com/images/图1.jpg">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -53,7 +57,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -73,7 +77,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -96,16 +100,16 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-01-18T14:43:37.000Z" itemprop="datePublished"> 发表于 2018-01-18</time>
+    <time datetime="2018-01-18T14:43:37.000Z" itemprop="datePublished"> Published 2018-01-18</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
+			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#图"><span class="toc-number">1.</span> <span class="toc-text">图</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#图的表示"><span class="toc-number">1.1.</span> <span class="toc-text">图的表示</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#图"><span class="toc-number">1.</span> <span class="toc-text">图</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#图的表示"><span class="toc-number">1.1.</span> <span class="toc-text">图的表示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#图的遍历"><span class="toc-number">1.2.</span> <span class="toc-text">图的遍历</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#深度优先遍历"><span class="toc-number">1.2.1.</span> <span class="toc-text">深度优先遍历</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#广度优先遍历"><span class="toc-number">1.3.</span> <span class="toc-text">广度优先遍历</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#拓扑排序"><span class="toc-number">1.4.</span> <span class="toc-text">拓扑排序</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#拓扑排序的应用"><span class="toc-number">1.4.0.1.</span> <span class="toc-text">拓扑排序的应用</span></a></li></ol></li></ol></li></ol></li></ol>
 		
 		</div>
 		
@@ -123,8 +127,54 @@
 <li>图中顶点用一个一维数组存储，另外，对于顶点数组中，每个数据元素还需要存储指向第一个邻接点的指针，以便于查找该顶点的边信息。</li>
 <li>图中每个顶点vi的所有邻接点构成一个线性表，由于邻接点的个数不定，所以用单链表存储，无向图称为顶点vi的边表，有向图称为顶点vi作为弧尾的出边表。</li>
 </ul>
-<p><img src="./images/图1.jpg" alt="图的表示" title="图1"></p>
-<p><img src="./images/图2.jpg" alt="图的表示" title="图2"></p>
+<p><img src="/images/图1.jpg" alt="图的表示" title="图1"></p>
+<p><img src="/images/图2.jpg" alt="图的表示" title="图2"></p>
+<p>值得一提的是，这两种表示法的各有各的优缺点，一般来说，如果图的边较少的情况下，我们一般选用邻接表，这样开销较小，因为如果用邻接矩阵的话，整个二维数组里就有很多空间没有用到，浪费空间；如果是边较多的时候，也就是我们所说的稠密图，选用邻接矩阵是个好的选择。</p>
+<h4 id="图的遍历"><a href="#图的遍历" class="headerlink" title="图的遍历"></a>图的遍历</h4><p>确定从一个指定的顶点可以到达其他哪些顶点。这是经常对图执行的操作。我们可能想通过地图了解到从一个城镇到另一个城镇有哪些路，或者从一个机场到其他机场有哪些航班。</p>
+<p>图的遍历方法一般有两种：</p>
+<ul>
+<li>深度遍历</li>
+<li>广度遍历</li>
+</ul>
+<h5 id="深度优先遍历"><a href="#深度优先遍历" class="headerlink" title="深度优先遍历"></a>深度优先遍历</h5><p>深度优先搜索DFS遍历类似于树的前序遍历。其基本思路是：</p>
+<ul>
+<li><p>a) 假设初始状态是图中所有顶点都未曾访问过，则可从图G中任意一顶点v为初始出发点，首先访问出发点v，并将其标记为已访问过。</p>
+</li>
+<li><p>b)然后依次从v出发搜索v的每个邻接点w，若w未曾访问过，则以w作为新的出发点出发，继续进行深度优先遍历，直到图中所有和v有路径相通的顶点都被访问到。</p>
+</li>
+<li><p>c) 若此时图中仍有顶点未被访问，则另选一个未曾访问的顶点作为起点，重复上述步骤，直到图中所有顶点都被访问到为止。</p>
+</li>
+</ul>
+<p>简单的来说，深度优先搜索包括从一条路径的起始点开始追溯，直到到达最后一个顶点，然后回溯，继续追溯下一条路径，直到到达最后的顶点，如此往复，直到没有路径为止。不好听地说，就是先一条路走到黑，只到无路可走，然后退回上一个顶点，在一直走，重复此操作。</p>
+<p><img src="/images/图-深度遍历.jpg" alt="图的深度优先遍历" title="图-深度遍历"></p>
+<p>注：红色数字代表遍历的先后顺序，所以图(e)无向图的深度优先遍历的顶点访问序列为：V0，V1，V2，V5，V4，V6，V3，V7，V8</p>
+<p>深度优先搜索的算法比较简单： 访问一个没有访问过的顶点，将它标记为已访问，再递归地去访问在起始点的邻接表中其他没有访问过的顶点。</p>
+<h4 id="广度优先遍历"><a href="#广度优先遍历" class="headerlink" title="广度优先遍历"></a>广度优先遍历</h4><p>广度优先搜索遍历BFS类似于树的按层次遍历。其基本思路是：</p>
+<ul>
+<li>a) 首先访问出发点Vi</li>
+<li>b) 接着依次访问Vi的所有未被访问过的邻接点Vi1，Vi2，Vi3，…，Vit并均标记为已访问过。</li>
+<li>c) 然后再按照Vi1，Vi2，… ，Vit的次序，访问每一个顶点的所有未曾访问过的顶点并均标记为已访问过，依此类推，直到图中所有和初始出发点Vi有路径相通的顶点都被访问过为止。</li>
+</ul>
+<p><img src="/images/图-广度遍历.jpg" alt="图的广度优先遍历" title="图-广度遍历"></p>
+<p>因此，图(f)采用广义优先搜索遍历以V0为出发点的顶点序列为：V0，V1，V3，V4，V2，V6，V8，V5，V7</p>
+<p>简单的来说，广度优先搜索从一个顶点开始，尝试访问尽可能靠近它的顶点。本质上这种搜索在图上是逐层移动的，首先检查最靠近第一个顶点的层，再逐渐向下移动到离起始顶点最远的层。就想警察进山抓贼一样，层层逼近，逐渐缩小包围圈。</p>
+<p>要实现广度优先搜索，我们自然会想到用队列来存储我们找到过得顶点，当遍历完一个当前顶点的所关联点后，就从队列中弹出一个新的顶点，访问其还没被访问的关联顶点，直到队列为空。</p>
+<h4 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h4><p>在图论中，拓扑排序（Topological Sorting）是一个有向无环图（DAG, Directed Acyclic Graph）的所有顶点的线性序列。<br>该序列必须满足下面两个条件：</p>
+<ul>
+<li>每个顶点出现且只出现一次</li>
+<li>若存在一条从顶点 A 到顶点 B 的路径，那么在序列中顶点 A 出现在顶点 B 的前面</li>
+</ul>
+<p><img src="./images/拓扑排序1.png" alt="enter description here" title="拓扑排序1"></p>
+<p>它是一个 DAG 图，那么如何写出它的拓扑排序呢？这里说一种比较常用的方法：</p>
+<ul>
+<li>从 DAG 图中选择一个 没有前驱（即入度为0）的顶点并输出。</li>
+<li>从图中删除该顶点和所有以它为起点的有向边。</li>
+<li>重复 1 和 2 直到当前的 DAG 图为空或当前图中不存在无前驱的顶点为止。后一种情况说明有向图中必然存在环。</li>
+</ul>
+<p><img src="./images/拓扑排序2.png" alt="拓扑排序" title="拓扑排序2"></p>
+<p>于是，得到拓扑排序后的结果是 { 1, 2, 4, 3, 5 }。</p>
+<p>值得一提的是，一个有向无环图是可以有一个或多个拓扑排序序列的。</p>
+<h6 id="拓扑排序的应用"><a href="#拓扑排序的应用" class="headerlink" title="拓扑排序的应用"></a>拓扑排序的应用</h6><p>拓扑排序通常用来“排序”具有依赖关系的任务。比如学校对我们的课程安排，一些课程是需要学生先去修特定的课程后才能开课的，所以可以用一个有向图来表示这些课程的关系，然后得到该图的拓扑排序排序，就能得到我们的课程先后关系，进而安排大一修什么课，大二修什么课…还有就是一些生产工艺，有些工序之间也是有关系的，也能用图将其建模，得出它的拓扑排序序列，更好地安排生产顺序。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -160,10 +210,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -191,7 +241,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分类</p>
+	<p class="asidetitle">Categories</p>
 		<ul>
 		
 		  
@@ -232,7 +282,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -248,6 +298,22 @@
 			
 		
 			
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
 			
 		
@@ -256,19 +322,19 @@
 			
 		
 			
-				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/life/" title="life">life<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
 			
 		
 			
@@ -279,28 +345,12 @@
 				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
 			
 		
-			
-				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
-			
-		
 		</ul>
 </div>
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -487,7 +537,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
