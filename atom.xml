@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-01-08T15:45:23.748Z</updated>
+  <updated>2018-01-18T06:39:03.699Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,69 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>数据结构|排序算法浅谈</title>
+    <link href="http://yoursite.com/2018/01/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%B5%85%E8%B0%88/"/>
+    <id>http://yoursite.com/2018/01/18/数据结构-排序算法浅谈/</id>
+    <published>2018-01-17T23:13:38.000Z</published>
+    <updated>2018-01-18T06:39:03.699Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h3><p>经过大一到大二的洗礼，自己对自己专业的认识也越来越深，从最开始认为自己是学软件工程的，然后认为自己是学计算机的，再到现在认为自己是搞互联网的，可能还会有更深的认识。学习，不仅是要学习专业知识，更要知道行业的发展趋势和发展方向，两者缺一不可。这个行业说到底还是对信息进行处理，那么排序就是最重要的处理方式之一。</p>
+<p>排序算法有很多种，现在我们主要谈谈常见的几种：</p>
+<ul>
+<li>插入排序</li>
+<li>冒泡排序</li>
+<li>选择排序</li>
+<li>shell排序</li>
+<li>归并排序</li>
+<li>快速排序</li>
+</ul>
+<h4 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h4><p>插入排序，就是我们打扑克是所用的伎俩，我们抽到一张牌，然后从手里的牌中寻找合适的位置插入，这个寻找的过程就是插入排序。</p>
+<p><img src="/images/插入排序.gif" alt="enter description here" title="插入排序"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line">	A[]  待排序列</div><div class="line">	n    元素个数</div><div class="line">*/</div><div class="line">void inssort(int A[],int n)&#123;</div><div class="line">	for(int i=1;i&lt;n;i++)&#123;</div><div class="line">		for(int j=i;j&gt;0;j--)&#123;</div><div class="line">			if(A[j]&lt;A[j-1])&#123;</div><div class="line">				int temp = A[j];</div><div class="line">				A[j] = A[j-1];</div><div class="line">				A[j-1] = temp;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h4><p>冒泡排序也挺好理解，就是没每趟比较相邻的两个数，把小的数往后移，每一趟都把待排序列中最小的数往后移，重复n-1此操作就能让待排序列有序。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line">	A[]  待排序列</div><div class="line">	n    元素个数</div><div class="line">*/</div><div class="line">void bubSort(int A[],int n)&#123;</div><div class="line">	for(int i=1;i&lt;n;i++)&#123;</div><div class="line">		for(int j=0;j&lt;n-i;j++)&#123;</div><div class="line">			if(A[j]&lt;A[j+1])&#123;</div><div class="line">				int temp = A[j];</div><div class="line">				A[j] = A[j+1];</div><div class="line">				A[j+1] = temp;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h4><p>选择排序（Selection Sort）是一种简单直观的排序算法。它的工作原理如下，首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置，然后，再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。以此类推，直到所有元素均排序完毕。</p>
+<p><img src="/images/选择排序.gif" alt="enter description here" title="选择排序"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line">	A[]  待排序列</div><div class="line">	n    元素个数</div><div class="line">*/</div><div class="line">void choSort(int A[],int n)&#123;</div><div class="line">	for(int i=0;i&lt;n-1;i++)&#123;</div><div class="line">		for(int j=i;j&lt;n;j++)&#123;</div><div class="line">			int index = i;</div><div class="line">			if(A[j]&lt;A[index])&#123;</div><div class="line">				index = j;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		int temp = A[i];</div><div class="line">		A[i] = A[index];</div><div class="line">		A[index] = temp;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="一点干货"><a href="#一点干货" class="headerlink" title="一点干货"></a>一点干货</h4><p>上面三种排序方法的时间复杂度都是 n2;通过比较我们可以发现它们都有一个共同的瓶颈：都是只比较相邻的两个数，这是个致命的缺点，只到后来人们找到了分组比较的方法，得以让排序算法的复杂度降低了。接下来，咱们讨论更高级的排序算法。</p>
+<h4 id="Shell排序"><a href="#Shell排序" class="headerlink" title="Shell排序"></a>Shell排序</h4><p>Shell排序讲到底还是插入排序，不过它先把待排序列分成了许多组，先分组用插入排序，这样做到目的是先将待排序列变成基本有序，然后在用一次完整的插入排序。我们都知道，如果序列是基本有序的，插入排序的效率还是挺高的。Shell的特点就在于：它的作法不是每次一个元素挨一个元素的比较。而是初期选用大跨步（增量较大）间隔比较，使记录跳跃式接近它的排序位置；然后增量缩小；最后增量为 1 ，这样记录移动次数大大减少，提高了排序效率。</p>
+<p>假设有数组 array = [80, 93, 60, 12, 42, 30, 68, 85, 10]，首先取 d1 = 4，将数组分为 4 组，如下图中相同颜色代表一组：<br><img src="/images/shell-sort-step1.1_2.png" alt="enter description here" title="shell-sort-step1.1"><br>然后分别对 4 个小组进行插入排序，排序后的结果为：<br><img src="/images/shell-sort-step1.2_2.png" alt="enter description here" title="shell-sort-step1.2"><br>然后，取 d2 = 2，将原数组分为 2 小组，如下图：<br><img src="/images/shell-sort-step2.1.png" alt="enter description here" title="shell-sort-step2.1"><br>然后分别对 2 个小组进行插入排序，排序后的结果为：<br><img src="/images/shell-sort-step2.2.png" alt="enter description here" title="shell-sort-step2.2"><br>最后，取 d3 = 1，进行插入排序后得到最终结果：<br><img src="/images/shell-sort-step3.png" alt="enter description here" title="shell-sort-step3"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">void shell_sort(int a[], int n)&#123;</div><div class="line">    int i,j,gap;</div><div class="line">    //gap为步长，每次减为原来的一半</div><div class="line">    for(gap = n/2;gap&gt;0;gap/=2)&#123;</div><div class="line">        // 共gap个组，对每一组都执行直接插入排序</div><div class="line">        for(i = 0;i&lt;gap;i++)&#123;</div><div class="line">            for(j = i+gap;j&lt;n;j+=gap)&#123;</div><div class="line">                // 如果a[j] &lt; a[j-gap]，则寻找a[j]位置，并将后面数据的位置都后移。</div><div class="line">                if (a[j] &lt; a[j - gap]) </div><div class="line">                &#123;</div><div class="line">                    int tmp = a[j];</div><div class="line">                    int k = j - gap;</div><div class="line">                    while (k &gt;= 0 &amp;&amp; a[k] &gt; tmp)</div><div class="line">                    &#123;</div><div class="line">                        a[k + gap] = a[k];</div><div class="line">                        k -= gap;</div><div class="line">                    &#125;</div><div class="line">                    a[k + gap] = tmp;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h4><p>归并排序是建立在归并操作上的一种有效的排序算法。该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。归并操作(Merge)，也叫归并算法，指的是将两个已经排序的序列合并成一个序列的操作。归并排序算法依赖归并操作。归并排序有多路归并排序、两路归并排序 , 可用于内排序，也可以用于外排序。这里仅对内排序的两路归并方法进行讨论。</p>
+<p>算法思路：</p>
+<ul>
+<li>把 n 个记录看成 n 个长度为 l 的有序子表</li>
+<li>进行两两归并使记录关键字有序，得到 n/2 个长度为 2 的有序子表</li>
+<li>重复第 2 步直到所有记录归并成一个长度为 n 的有序表为止。</li>
+</ul>
+<p>先讲讲归并吧，就是将两个有序个数据合并成一个新的有序数组。看代码吧：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line"> * 将一个数组中的两个相邻有序区间合并成一个</div><div class="line"> *</div><div class="line"> * 参数说明：</div><div class="line"> *     a -- 包含两个有序区间的数组</div><div class="line"> *     start -- 第1个有序区间的起始地址。</div><div class="line"> *     mid   -- 第1个有序区间的结束地址。也是第2个有序区间的起始地址。</div><div class="line"> *     end   -- 第2个有序区间的结束地址。</div><div class="line"> */</div><div class="line">void merge(int* a, int start, int mid, int end)</div><div class="line">&#123;</div><div class="line">    int *tmp = new int[end-start+1];    // tmp是汇总2个有序区的临时区域</div><div class="line">    int i = start;            // 第1个有序区的索引</div><div class="line">    int j = mid + 1;        // 第2个有序区的索引</div><div class="line">    int k = 0;                // 临时区域的索引</div><div class="line"></div><div class="line">    while(i &lt;= mid &amp;&amp; j &lt;= end)</div><div class="line">    &#123;</div><div class="line">        if (a[i] &lt;= a[j])</div><div class="line">            tmp[k++] = a[i++];</div><div class="line">        else</div><div class="line">            tmp[k++] = a[j++];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    while(i &lt;= mid)</div><div class="line">        tmp[k++] = a[i++];</div><div class="line"></div><div class="line">    while(j &lt;= end)</div><div class="line">        tmp[k++] = a[j++];</div><div class="line"></div><div class="line">    // 将排序后的元素，全部都整合到数组a中。</div><div class="line">    for (i = 0; i &lt; k; i++)</div><div class="line">        a[start + i] = tmp[i];</div><div class="line"></div><div class="line">    delete[] tmp;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>接下来就是我们的归并排序算法啦，刚刚讲到是用分而治之的办法，那就是要用到递归了，先看代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line"> * 归并排序(从上往下)</div><div class="line"> *</div><div class="line"> * 参数说明：</div><div class="line"> *     a -- 待排序的数组</div><div class="line"> *     start -- 数组的起始地址</div><div class="line"> *     end -- 数组的结束地址</div><div class="line"> */</div><div class="line"></div><div class="line">void mergeSortUp2Down(int* a, int start, int end)&#123;</div><div class="line">    </div><div class="line">    if(a==NULL || start &gt;= end)</div><div class="line">        return ;</div><div class="line"></div><div class="line">    int mid = (end + start)/2;</div><div class="line">    mergeSortUp2Down(a, start, mid); // 递归排序a[start...mid]</div><div class="line">    mergeSortUp2Down(a, mid+1, end); // 递归排序a[mid+1...end]</div><div class="line"></div><div class="line">    // a[start...mid] 和 a[mid...end]是两个有序空间，</div><div class="line">    // 将它们排序成一个有序空间a[start...end]</div><div class="line">    merge(a, start, mid, end);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="/images/归并排序.gif" alt="归并排序动画演示" title="归并排序"></p>
+<h4 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h4><p>快速排序与归并排序的思想是一致的，都是 采用的分而治之的办法，但这个分的方法不一样，归并算法是相邻的两个分，快速排序是选择一个基准，然后通过比较将小于基准的数放在其左边，大于基准的数放在右边，这个操作叫做分区操作，然后对基准左边和右边的数进行同样的操作。</p>
+<p>利用分治法可将快速排序的分为三步：</p>
+<ul>
+<li>在数据集之中，选择一个元素作为”基准”（pivot）。</li>
+<li>所有小于”基准”的元素，都移到”基准”的左边；所有大于”基准”的元素，都移到”基准”的右边。这个操作称为分区 (partition) 操作，分区操作结束后，基准元素所处的位置就是最终排序后它的位置。</li>
+<li>对”基准”左边和右边的两个子集，不断重复第一步和第二步，直到所有子集只剩下一个元素为止。</li>
+</ul>
+<p><img src="/images/快速排序.gif" alt="快速排序" title="快速排序"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line"> * 快速排序</div><div class="line"> *</div><div class="line"> * 参数说明：</div><div class="line"> *     a -- 待排序的数组</div><div class="line"> *     l -- 数组的左边界(例如，从起始位置开始排序，则l=0)</div><div class="line"> *     r -- 数组的右边界(例如，排序截至到数组末尾，则r=a.length-1)</div><div class="line"> */</div><div class="line"></div><div class="line">void quickSort(int *a ,int l,int r)&#123; </div><div class="line">    if(l&lt;r)&#123;</div><div class="line">        int i,j,x;</div><div class="line">        i=l;</div><div class="line">        j=r;</div><div class="line">        x = a[i];</div><div class="line">        while(i&lt;j)&#123;</div><div class="line">            while(i&lt;j &amp;&amp; a[j]&gt;x)&#123;</div><div class="line">                j--; // 从右向左找第一个小于x的数</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            if(i&lt;j)&#123;</div><div class="line">                a[i] = a[j];</div><div class="line">                i++;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            while(i&lt;j &amp;&amp; a[i]&lt;x)&#123;</div><div class="line">                i++;   // 从左向右找第一个大于x的数</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            if(i&lt;j)&#123;</div><div class="line">                a[j] = a[i];</div><div class="line">                j--;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        a[i] = x;</div><div class="line">        quickSort(a,l,i-1);</div><div class="line">        quickSort(a,i+1,r);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;排序算法&quot;&gt;&lt;a href=&quot;#排序算法&quot; class=&quot;headerlink&quot; title=&quot;排序算法&quot;&gt;&lt;/a&gt;排序算法&lt;/h3&gt;&lt;p&gt;经过大一到大二的洗礼，自己对自己专业的认识也越来越深，从最开始认为自己是学软件工程的，然后认为自己是学计算机的，再到现在认为
+    
+    </summary>
+    
+    
+      <category term="数据结构" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+  </entry>
   
   <entry>
     <title>VHDL与数字逻辑的一些坑</title>
@@ -256,35 +319,6 @@
   </entry>
   
   <entry>
-    <title>大学|记一次比赛</title>
-    <link href="http://yoursite.com/2017/12/09/%E5%A4%A7%E5%AD%A6-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%AF%94%E8%B5%9B/"/>
-    <id>http://yoursite.com/2017/12/09/大学-记一次比赛/</id>
-    <published>2017-12-09T00:10:32.000Z</published>
-    <updated>2017-12-08T16:47:59.404Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="我的第一次比赛"><a href="#我的第一次比赛" class="headerlink" title="我的第一次比赛"></a>我的第一次比赛</h3><p>说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。这是自己在大学第一个参加的比赛，是学校联想俱乐部举办的，比赛内容就是参赛队员想一个产品，有创意的产品。</p>
-<p>然后,我们就开始讨论要搞什么，最初是说搞教育那一块的，但觉得太low了，就换成了旅游出行的个性化推荐，创新点主要是能实时通过天气、景点人流、交通情况等因素，实时为旅客修改旅游计划，为用户提供最佳的旅游路线。</p>
-<p>最开始是初赛，需要做ppt和上台答辩，说白了，这个比赛就是看谁弄得ppt好看和谁的忽悠能力强就能得奖。ppt是黄智威弄的，还需要一个产品的原型，然后自己是弄原型，其实也就是弄个首页，都不是事。还是黄智威拼，弄ppt到半夜。答辩时黄智威和黄卫江上去讲的，毫无悬念，我们进入了决赛。</p>
-<p>初赛后不久是决赛，ppt是用的初赛的，但是原型就不能用初赛的了，需要搞完善一点的，不过这次不是我搞的了，是黄卫江搞的，自己有点惭愧啊，就是个打酱油的。决赛是黄智威自己上去答辩，黄卫江上课去了，我坐在台下给黄智威录像。很幸运，决赛我们的了二等奖。其中，还有一个有趣的环节呢，那就是刷票啊，不知道黄智威怎么搞的，花钱加别人刷票，这小子可以的。</p>
-<p>本以为我们能够进决赛的，我们还为此决定搞个半产品出来呢。我们三个专门去蓝杰向胡哥请教了一番，还想好了下一步的分工了。不曾想，回宿舍后，通知说没有进省赛。</p>
-<p>这就是自己第一次的比赛经历啦，虽然不精彩，但是自己也认识到一个团队需要不同的人才能做成一件事。就像黄智威，能说，会忽悠；黄卫江，能为了完成任务，熬上几夜；我自己呢，可能在技术这一块擅长一点，所以前期也没做什么工作，是要在做产品的时候出力的。</p>
-<p><img src="/images/mmexport1512485485927.jpg" alt="enter description here" title="mmexport1512485485927"></p>
-<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
-<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;我的第一次比赛&quot;&gt;&lt;a href=&quot;#我的第一次比赛&quot; class=&quot;headerlink&quot; title=&quot;我的第一次比赛&quot;&gt;&lt;/a&gt;我的第一次比赛&lt;/h3&gt;&lt;p&gt;说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。
-    
-    </summary>
-    
-    
-      <category term="大学" scheme="http://yoursite.com/tags/%E5%A4%A7%E5%AD%A6/"/>
-    
-  </entry>
-  
-  <entry>
     <title>动态规划——由实践总结经验</title>
     <link href="http://yoursite.com/2017/12/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98/"/>
     <id>http://yoursite.com/2017/12/09/动态规划经典例题/</id>
@@ -359,6 +393,35 @@
     
     
       <category term="动态规划" scheme="http://yoursite.com/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>大学|记一次比赛</title>
+    <link href="http://yoursite.com/2017/12/09/%E5%A4%A7%E5%AD%A6-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%AF%94%E8%B5%9B/"/>
+    <id>http://yoursite.com/2017/12/09/大学-记一次比赛/</id>
+    <published>2017-12-09T00:10:32.000Z</published>
+    <updated>2017-12-08T16:47:59.404Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="我的第一次比赛"><a href="#我的第一次比赛" class="headerlink" title="我的第一次比赛"></a>我的第一次比赛</h3><p>说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。这是自己在大学第一个参加的比赛，是学校联想俱乐部举办的，比赛内容就是参赛队员想一个产品，有创意的产品。</p>
+<p>然后,我们就开始讨论要搞什么，最初是说搞教育那一块的，但觉得太low了，就换成了旅游出行的个性化推荐，创新点主要是能实时通过天气、景点人流、交通情况等因素，实时为旅客修改旅游计划，为用户提供最佳的旅游路线。</p>
+<p>最开始是初赛，需要做ppt和上台答辩，说白了，这个比赛就是看谁弄得ppt好看和谁的忽悠能力强就能得奖。ppt是黄智威弄的，还需要一个产品的原型，然后自己是弄原型，其实也就是弄个首页，都不是事。还是黄智威拼，弄ppt到半夜。答辩时黄智威和黄卫江上去讲的，毫无悬念，我们进入了决赛。</p>
+<p>初赛后不久是决赛，ppt是用的初赛的，但是原型就不能用初赛的了，需要搞完善一点的，不过这次不是我搞的了，是黄卫江搞的，自己有点惭愧啊，就是个打酱油的。决赛是黄智威自己上去答辩，黄卫江上课去了，我坐在台下给黄智威录像。很幸运，决赛我们的了二等奖。其中，还有一个有趣的环节呢，那就是刷票啊，不知道黄智威怎么搞的，花钱加别人刷票，这小子可以的。</p>
+<p>本以为我们能够进决赛的，我们还为此决定搞个半产品出来呢。我们三个专门去蓝杰向胡哥请教了一番，还想好了下一步的分工了。不曾想，回宿舍后，通知说没有进省赛。</p>
+<p>这就是自己第一次的比赛经历啦，虽然不精彩，但是自己也认识到一个团队需要不同的人才能做成一件事。就像黄智威，能说，会忽悠；黄卫江，能为了完成任务，熬上几夜；我自己呢，可能在技术这一块擅长一点，所以前期也没做什么工作，是要在做产品的时候出力的。</p>
+<p><img src="/images/mmexport1512485485927.jpg" alt="enter description here" title="mmexport1512485485927"></p>
+<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
+<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;我的第一次比赛&quot;&gt;&lt;a href=&quot;#我的第一次比赛&quot; class=&quot;headerlink&quot; title=&quot;我的第一次比赛&quot;&gt;&lt;/a&gt;我的第一次比赛&lt;/h3&gt;&lt;p&gt;说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。
+    
+    </summary>
+    
+    
+      <category term="大学" scheme="http://yoursite.com/tags/%E5%A4%A7%E5%AD%A6/"/>
     
   </entry>
   
@@ -856,49 +919,6 @@
       &lt;h3 id=&quot;简要&quot;&gt;&lt;a href=&quot;#简要&quot; class=&quot;headerlink&quot; title=&quot;简要&quot;&gt;&lt;/a&gt;简要&lt;/h3&gt;&lt;p&gt;现在是北京时间 2017年9月20号凌晨零点20分，距我人生第一次笔试已经过去了一天了。我是在18号进行笔试的，Hr 说笔试后第二天会发面试
     
     </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>JDK环境配置</title>
-    <link href="http://yoursite.com/2017/09/13/JDK%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
-    <id>http://yoursite.com/2017/09/13/JDK环境配置/</id>
-    <published>2017-09-13T00:14:54.000Z</published>
-    <updated>2017-09-12T16:55:10.061Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这几天在学习Struts框架，要求的jdk版本不能太高，可恨的是，自己正在使用的是1.8的，无奈之下，只能卸载了重新装 1.7 版本的。</p>
-<h3 id="Begin"><a href="#Begin" class="headerlink" title="Begin"></a>Begin</h3><h4 id="安装JDK开发环境"><a href="#安装JDK开发环境" class="headerlink" title="安装JDK开发环境"></a>安装JDK开发环境</h4><ol>
-<li>下载：<a href="http://www.oracle.com/" target="_blank" rel="external">下载网站</a> 下载就跟我们平时下载软件一样，不过要下载符合自己操作系统的镜像。</li>
-<li>开始安装  安装过程也跟我们安装软件一样，不过建议最好改一下安装的位置，就别放在C盘啦。</li>
-</ol>
-<p>注：当提示安装JRE时，可以选择不要安装。但如果要安装，就不能放在刚刚安装 jdk 同一级目录中。比如 jdk安装在  D:\Program Files\Java\ ；jre就不能安装在 D:\Program Files\Java\了，可以这样安装 ：jdk安装在 D:\Program Files\Java\jdk1.7.0_80 ；jre安装在 D:\Program Files\Java\jre7 。原因是安装jre的时候会覆盖掉jdk中的一些 jre 包，导致缺少tools.jar。</p>
-<h4 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h4><p>对于Java程序开发而言，主要会使用JDK的两个命令：javac.exe、java.exe。路径：C:\Java\jdk 1.7.0 _09\bin。但是这些命令由于不属于windows自己的命令，所以要想使用，就需要进行路径配置。 </p>
-<p>单击“计算机-属性-高级系统设置”，单击“环境变量”。在“系统变量”栏下单击“新建”，创建新的系统环境变量。</p>
-<p>需要创建的环境变量有：</p>
-<ol>
-<li>新建-&gt;变量名”JAVA_HOME”，变量值<strong>“C:\Java\jdk1.8.0_05”（即JDK的安装路径）</strong></li>
-<li>编辑-&gt;变量名”Path”，在原变量值的最后面加上<strong>“;%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin”</strong></li>
-<li>新建-&gt;变量名“CLASSPATH”,变量值<strong>“.;%JAVA_HOME%\lib;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar”</strong>不要忘记 .  。</li>
-</ol>
-<h4 id="确认环境配置是否真确"><a href="#确认环境配置是否真确" class="headerlink" title="确认环境配置是否真确"></a>确认环境配置是否真确</h4><p>在控制台分别输入java，javac，java -version 命令，出现如下所示的JDK的编译器信息，包括修改命令的语法和参数选项等信息。如果都出现了，就说明你成功了。</p>
-<h4 id="HelloWorld"><a href="#HelloWorld" class="headerlink" title="HelloWorld"></a>HelloWorld</h4><p>写下自己的第一个Java程序 ：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public class Test &#123;</div><div class="line">    public static void main(String[] args) &#123;    </div><div class="line">    System.out.println(&quot;Hello Java&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>保存为hello.java , 然后在文件所在目录下打开命令行窗口，依次输入  javac hello.java ,java hello 命令，就会在命令行打印出 “HelloWorld” 了。</p>
-<p>程序解析：</p>
-<p>首先编写java源代码程序，扩展名.java；<br>在命令行模式中，输入命令：javac 源文件名.java，对源代码进行编译，生成class字节码文件；<br>编译完成后，如果没有报错信息，输入命令：java HelloWorld，对class字节码文件进行解释运行,执行时不需要添加.class扩展名。</p>
-<p>注：若在CMD中输入javac test.java命令后，显示’javac’不是内部或外部命令，原因是因为没有提前安装好JDK开发环境或环境变量配置有误。 </p>
-<blockquote>
-<p><a href="http://www.cnblogs.com/smyhvae/p/3788534.html" target="_blank" rel="external">参考资料</a></p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;这几天在学习Struts框架，要求的jdk版本不能太高，可恨的是，自己正在使用的是1.8的，无奈之下，只能卸载了重新装 1.7 版本的。&lt;/
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
     
   </entry>
