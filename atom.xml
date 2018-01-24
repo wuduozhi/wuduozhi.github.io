@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-01-24T07:26:56.383Z</updated>
+  <updated>2018-01-24T07:29:45.725Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,9 +20,13 @@
     <link href="http://yoursite.com/2018/01/24/jquery-Ajax/"/>
     <id>http://yoursite.com/2018/01/24/jquery-Ajax/</id>
     <published>2018-01-24T15:26:56.000Z</published>
-    <updated>2018-01-24T07:26:56.383Z</updated>
+    <updated>2018-01-24T07:29:45.725Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">function getData()&#123;</div><div class="line">		$.ajax(&#123;</div><div class="line">                url:&quot;../api&quot;,</div><div class="line">                type:&quot;GET&quot;,</div><div class="line">                data:&#123;&quot;page&quot;:&quot;1&quot;&#125;,</div><div class="line">                processData:false,</div><div class="line">                contentType:false,</div><div class="line">                dataType:&quot;json&quot;,</div><div class="line">                success:function(data)&#123;</div><div class="line">                	// console.info(data);</div><div class="line">                	$(&quot;#resText&quot;).html(&quot;状态：&quot;+data.status); </div><div class="line">                &#125;,</div><div class="line">                error:function(e)&#123;</div><div class="line">                    $(&quot;#resText&quot;).html(&quot;发生错误了&quot;);</div><div class="line">                &#125;</div><div class="line">            &#125;);    </div><div class="line">	&#125;</div><div class="line"></div><div class="line">	function sendData()&#123;</div><div class="line">		$.ajax(&#123;</div><div class="line">                url:&quot;../api/addFindThing&quot;,</div><div class="line">                type:&quot;post&quot;,</div><div class="line">                data:new FormData($(&quot;#form&quot;)[0]),</div><div class="line">                processData:false,</div><div class="line">                contentType:false,</div><div class="line">                dataType:&quot;json&quot;,</div><div class="line">                success:function(data)&#123;</div><div class="line">                	// console.info(data);</div><div class="line">                	$(&quot;#resText&quot;).html(&quot;状态：&quot;+data.status); </div><div class="line">                &#125;,</div><div class="line">                error:function(e)&#123;</div><div class="line">                    $(&quot;#resText&quot;).html(&quot;发生错误了&quot;);</div><div class="line">                &#125;</div><div class="line">            &#125;);        </div><div class="line">	&#125;</div></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
+    
+      &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/di
     
     </summary>
     
@@ -34,12 +38,23 @@
     <link href="http://yoursite.com/2018/01/24/%E6%80%BB%E7%BB%93-%E6%88%91%E7%9A%84%E5%A4%A7%E4%BA%8C-%E4%B8%8A/"/>
     <id>http://yoursite.com/2018/01/24/总结-我的大二-上/</id>
     <published>2018-01-24T09:33:17.000Z</published>
-    <updated>2018-01-24T01:33:17.219Z</updated>
+    <updated>2018-01-24T07:29:48.333Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="我的大二"><a href="#我的大二" class="headerlink" title="我的大二"></a>我的大二</h3><p>不得不说，大二的上学期一转眼就过了，让人触不及防，可以说大学生活已经过了一半了。现在都流行搞年度总结，像支付宝会出年度账单、网易云音乐会出年度歌单…那我也来个 <strong>小智年度总结吧</strong></p>
+<h4 id="学习数据结构"><a href="#学习数据结构" class="headerlink" title="学习数据结构"></a>学习数据结构</h4><p>学校开了数据结构的这门课，但是自己从来没有认真听过一节课，因为自己总感觉不是自己想要的那种上课形式，但是自己也不知道自己想要的形式是什么。哎，那就靠自己吧。自己就在书上看理论，然后网上找了一些好的博客，看看别人是怎么实现的。编程这东西，理论开起来简单，但是要一步步写代码来实现还是有难度的。不得不说，数据结构这门课还是很重要，借助这个工具，我们能更好更合理地组织数据在内存或硬盘中的存储方式，更好的适应我们的应用场景。</p>
+<h4 id="学习数字逻辑"><a href="#学习数字逻辑" class="headerlink" title="学习数字逻辑"></a>学习数字逻辑</h4><p>之前就听学长说数字逻辑这门课我们搞软件的用不上，我半信半疑，先不说其他的，个人觉得上课的胡红平老师听nice的，有耐心说话又好听，有点像高中的老师。我觉得不管搞什么方向，只要跟计算机相关的，还是要必要知道这些逻辑门的东西，这些底层的东西虽然在开发的时候用不上，但是能帮助我们更好地理解程序的运行，帮助我们写出漂亮的代码。</p>
+<p>这门课还有个大作业，就是用VHDL设计一个模型机，也可以说是一个简单的CPU吧，就是可以完成一些指令，比如说加、减、移位…这些操作。自己弄了一个星期，没成功，借助了某位学霸的杰作去验收，认识学霸还是很有必要的。验收完后，自己又继续搞了两天吧，把自己的完成了，还是很有成就感的。</p>
+<h4 id="近红外数据库开发"><a href="#近红外数据库开发" class="headerlink" title="近红外数据库开发"></a>近红外数据库开发</h4><p>记得是小学期的时候，课挺少的，仕祺学长发了个大数据分享，自己觉得无聊就去了。</p>
+<h4 id="弦歌微湖大公众号的后台开发"><a href="#弦歌微湖大公众号的后台开发" class="headerlink" title="弦歌微湖大公众号的后台开发"></a>弦歌微湖大公众号的后台开发</h4><h4 id="联想比赛"><a href="#联想比赛" class="headerlink" title="联想比赛"></a>联想比赛</h4>]]></content>
     
     <summary type="html">
     
+      &lt;h3 id=&quot;我的大二&quot;&gt;&lt;a href=&quot;#我的大二&quot; class=&quot;headerlink&quot; title=&quot;我的大二&quot;&gt;&lt;/a&gt;我的大二&lt;/h3&gt;&lt;p&gt;不得不说，大二的上学期一转眼就过了，让人触不及防，可以说大学生活已经过了一半了。现在都流行搞年度总结，像支付宝会出年度账单、
+    
     </summary>
     
+    
+      <category term="life" scheme="http://yoursite.com/tags/life/"/>
     
   </entry>
   
@@ -48,9 +63,54 @@
     <link href="http://yoursite.com/2018/01/24/%E5%B7%A5%E5%85%B7-Maven%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
     <id>http://yoursite.com/2018/01/24/工具-Maven工具的使用/</id>
     <published>2018-01-23T21:43:25.000Z</published>
-    <updated>2018-01-23T13:43:25.220Z</updated>
+    <updated>2018-01-24T07:29:50.868Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Maven简介"><a href="#Maven简介" class="headerlink" title="Maven简介"></a>Maven简介</h3><p>Apache Maven 是一种用作软件项目管理和理解工具。它基于项目对象模型（POM）的概念，可以管理一个项目的构建、报告以及从项目核心信息中生成文档。</p>
+<p>Maven是一种项目管理和理解工具。Maven向开发者提供了一个完整的构建生命周期框架。开发团队几乎不用花时间就可以使用自动化构建项目的基础框架，因为 Maven使用了一套标准的目录结构和默认的构建生命周期。</p>
+<p>Maven提供给开发者管理如下过程的方法：</p>
+<ul>
+<li>项目构建(Builds)</li>
+<li>文档(Documentation)</li>
+<li>报告(Reporting)</li>
+<li>项目依赖(Dependencies)</li>
+<li>软件配置管理(SCMs)</li>
+<li>发布(Releases)</li>
+<li>分发(Distribution)</li>
+<li>邮件列表(mailing list)</li>
+</ul>
+<p>总的来说，Maven简化和统一了项目构建的过程。它无缝地处理项目编译，分发，文档，团队合作和其他任务，增加了任务处理的重用性，并可以处理大多数构建相关的任务。</p>
+<h3 id="常见命令"><a href="#常见命令" class="headerlink" title="常见命令"></a>常见命令</h3><ul>
+<li>mvn -v //查看版本  </li>
+<li>mvn archetype:create //创建 Maven 项目  </li>
+<li>mvn compile //编译源代码  </li>
+<li>mvn test-compile //编译测试代码  </li>
+<li>mvn test //运行应用程序中的单元测试  </li>
+<li>mvn site //生成项目相关信息的网站  </li>
+<li>mvn package //依据项目生成 jar 文件  </li>
+<li>mvn install //在本地 Repository 中安装 jar  </li>
+<li>mvn -Dmaven.test.skip=true //忽略测试文档编译  </li>
+<li>mvn clean //清除目标目录中的生成结果  </li>
+<li>mvn clean compile //将.java类编译为.class文件  </li>
+<li>mvn clean package //进行打包  </li>
+<li>mvn clean test //执行单元测试  </li>
+<li>mvn clean deploy //部署到版本仓库  </li>
+<li>mvn clean install</li>
+<li>//使其他项目使用这个jar,会安装到maven本地仓库中  </li>
+<li>mvn archetype:generate //创建项目架构  </li>
+<li>mvn dependency:list //查看已解析依赖  </li>
+<li>mvn dependency:tree //看到依赖树  </li>
+<li>mvn dependency:analyze //查看依赖的工具  </li>
+<li>mvn help:system //从中央仓库下载文件至本地仓库  </li>
+<li>mvn help:active-profiles //查看当前激活的profiles  </li>
+<li>mvn help:all-profiles //查看所有profiles  </li>
+<li>mvn help:effective -pom //查看完整的pom信息  </li>
+</ul>
+<h3 id="修改默认jdk库"><a href="#修改默认jdk库" class="headerlink" title="修改默认jdk库"></a>修改默认jdk库</h3><p>修改maven的setting.xml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;profile&gt;</div><div class="line">      &lt;id&gt;jdk-1.8&lt;/id&gt;</div><div class="line"></div><div class="line">      &lt;activation&gt;</div><div class="line">          &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;</div><div class="line">        &lt;jdk&gt;1.8&lt;/jdk&gt;</div><div class="line">      &lt;/activation&gt;</div><div class="line"></div><div class="line">      &lt;repositories&gt;</div><div class="line">          &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;</div><div class="line">        &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;</div><div class="line">        &lt;maven.compiler.compilerVersion&gt;1.8&lt;/maven.compiler.compilerVersion&gt;</div><div class="line">      &lt;/repositories&gt;</div><div class="line">    &lt;/profile&gt;</div></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
+    
+      &lt;h3 id=&quot;Maven简介&quot;&gt;&lt;a href=&quot;#Maven简介&quot; class=&quot;headerlink&quot; title=&quot;Maven简介&quot;&gt;&lt;/a&gt;Maven简介&lt;/h3&gt;&lt;p&gt;Apache Maven 是一种用作软件项目管理和理解工具。它基于项目对象模型（POM）的概念，可以
     
     </summary>
     
@@ -587,6 +647,35 @@
   </entry>
   
   <entry>
+    <title>大学|记一次比赛</title>
+    <link href="http://yoursite.com/2017/12/09/%E5%A4%A7%E5%AD%A6-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%AF%94%E8%B5%9B/"/>
+    <id>http://yoursite.com/2017/12/09/大学-记一次比赛/</id>
+    <published>2017-12-09T00:10:32.000Z</published>
+    <updated>2017-12-08T16:47:59.404Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="我的第一次比赛"><a href="#我的第一次比赛" class="headerlink" title="我的第一次比赛"></a>我的第一次比赛</h3><p>说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。这是自己在大学第一个参加的比赛，是学校联想俱乐部举办的，比赛内容就是参赛队员想一个产品，有创意的产品。</p>
+<p>然后,我们就开始讨论要搞什么，最初是说搞教育那一块的，但觉得太low了，就换成了旅游出行的个性化推荐，创新点主要是能实时通过天气、景点人流、交通情况等因素，实时为旅客修改旅游计划，为用户提供最佳的旅游路线。</p>
+<p>最开始是初赛，需要做ppt和上台答辩，说白了，这个比赛就是看谁弄得ppt好看和谁的忽悠能力强就能得奖。ppt是黄智威弄的，还需要一个产品的原型，然后自己是弄原型，其实也就是弄个首页，都不是事。还是黄智威拼，弄ppt到半夜。答辩时黄智威和黄卫江上去讲的，毫无悬念，我们进入了决赛。</p>
+<p>初赛后不久是决赛，ppt是用的初赛的，但是原型就不能用初赛的了，需要搞完善一点的，不过这次不是我搞的了，是黄卫江搞的，自己有点惭愧啊，就是个打酱油的。决赛是黄智威自己上去答辩，黄卫江上课去了，我坐在台下给黄智威录像。很幸运，决赛我们的了二等奖。其中，还有一个有趣的环节呢，那就是刷票啊，不知道黄智威怎么搞的，花钱加别人刷票，这小子可以的。</p>
+<p>本以为我们能够进决赛的，我们还为此决定搞个半产品出来呢。我们三个专门去蓝杰向胡哥请教了一番，还想好了下一步的分工了。不曾想，回宿舍后，通知说没有进省赛。</p>
+<p>这就是自己第一次的比赛经历啦，虽然不精彩，但是自己也认识到一个团队需要不同的人才能做成一件事。就像黄智威，能说，会忽悠；黄卫江，能为了完成任务，熬上几夜；我自己呢，可能在技术这一块擅长一点，所以前期也没做什么工作，是要在做产品的时候出力的。</p>
+<p><img src="/images/mmexport1512485485927.jpg" alt="enter description here" title="mmexport1512485485927"></p>
+<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
+<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;我的第一次比赛&quot;&gt;&lt;a href=&quot;#我的第一次比赛&quot; class=&quot;headerlink&quot; title=&quot;我的第一次比赛&quot;&gt;&lt;/a&gt;我的第一次比赛&lt;/h3&gt;&lt;p&gt;说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。
+    
+    </summary>
+    
+    
+      <category term="大学" scheme="http://yoursite.com/tags/%E5%A4%A7%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
     <title>动态规划——由实践总结经验</title>
     <link href="http://yoursite.com/2017/12/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98/"/>
     <id>http://yoursite.com/2017/12/09/动态规划经典例题/</id>
@@ -661,35 +750,6 @@
     
     
       <category term="动态规划" scheme="http://yoursite.com/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>大学|记一次比赛</title>
-    <link href="http://yoursite.com/2017/12/09/%E5%A4%A7%E5%AD%A6-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%AF%94%E8%B5%9B/"/>
-    <id>http://yoursite.com/2017/12/09/大学-记一次比赛/</id>
-    <published>2017-12-09T00:10:32.000Z</published>
-    <updated>2017-12-08T16:47:59.404Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="我的第一次比赛"><a href="#我的第一次比赛" class="headerlink" title="我的第一次比赛"></a>我的第一次比赛</h3><p>说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。这是自己在大学第一个参加的比赛，是学校联想俱乐部举办的，比赛内容就是参赛队员想一个产品，有创意的产品。</p>
-<p>然后,我们就开始讨论要搞什么，最初是说搞教育那一块的，但觉得太low了，就换成了旅游出行的个性化推荐，创新点主要是能实时通过天气、景点人流、交通情况等因素，实时为旅客修改旅游计划，为用户提供最佳的旅游路线。</p>
-<p>最开始是初赛，需要做ppt和上台答辩，说白了，这个比赛就是看谁弄得ppt好看和谁的忽悠能力强就能得奖。ppt是黄智威弄的，还需要一个产品的原型，然后自己是弄原型，其实也就是弄个首页，都不是事。还是黄智威拼，弄ppt到半夜。答辩时黄智威和黄卫江上去讲的，毫无悬念，我们进入了决赛。</p>
-<p>初赛后不久是决赛，ppt是用的初赛的，但是原型就不能用初赛的了，需要搞完善一点的，不过这次不是我搞的了，是黄卫江搞的，自己有点惭愧啊，就是个打酱油的。决赛是黄智威自己上去答辩，黄卫江上课去了，我坐在台下给黄智威录像。很幸运，决赛我们的了二等奖。其中，还有一个有趣的环节呢，那就是刷票啊，不知道黄智威怎么搞的，花钱加别人刷票，这小子可以的。</p>
-<p>本以为我们能够进决赛的，我们还为此决定搞个半产品出来呢。我们三个专门去蓝杰向胡哥请教了一番，还想好了下一步的分工了。不曾想，回宿舍后，通知说没有进省赛。</p>
-<p>这就是自己第一次的比赛经历啦，虽然不精彩，但是自己也认识到一个团队需要不同的人才能做成一件事。就像黄智威，能说，会忽悠；黄卫江，能为了完成任务，熬上几夜；我自己呢，可能在技术这一块擅长一点，所以前期也没做什么工作，是要在做产品的时候出力的。</p>
-<p><img src="/images/mmexport1512485485927.jpg" alt="enter description here" title="mmexport1512485485927"></p>
-<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
-<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;我的第一次比赛&quot;&gt;&lt;a href=&quot;#我的第一次比赛&quot; class=&quot;headerlink&quot; title=&quot;我的第一次比赛&quot;&gt;&lt;/a&gt;我的第一次比赛&lt;/h3&gt;&lt;p&gt;说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。
-    
-    </summary>
-    
-    
-      <category term="大学" scheme="http://yoursite.com/tags/%E5%A4%A7%E5%AD%A6/"/>
     
   </entry>
   
