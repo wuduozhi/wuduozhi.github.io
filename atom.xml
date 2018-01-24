@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-01-22T17:06:58.577Z</updated>
+  <updated>2018-01-24T01:33:17.219Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>总结|我的大二.上</title>
+    <link href="http://yoursite.com/2018/01/24/%E6%80%BB%E7%BB%93-%E6%88%91%E7%9A%84%E5%A4%A7%E4%BA%8C-%E4%B8%8A/"/>
+    <id>http://yoursite.com/2018/01/24/总结-我的大二-上/</id>
+    <published>2018-01-24T09:33:17.000Z</published>
+    <updated>2018-01-24T01:33:17.219Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>工具|Maven工具的使用</title>
+    <link href="http://yoursite.com/2018/01/24/%E5%B7%A5%E5%85%B7-Maven%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <id>http://yoursite.com/2018/01/24/工具-Maven工具的使用/</id>
+    <published>2018-01-23T21:43:25.000Z</published>
+    <updated>2018-01-23T13:43:25.220Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Java|POI的简单用</title>
@@ -445,10 +473,10 @@
   
   <entry>
     <title>git|踩过的坑</title>
-    <link href="http://yoursite.com/2017/12/15/git-%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91/"/>
-    <id>http://yoursite.com/2017/12/15/git-踩过的坑/</id>
+    <link href="http://yoursite.com/2017/12/15/%E5%B7%A5%E5%85%B7-git-%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91/"/>
+    <id>http://yoursite.com/2017/12/15/工具-git-踩过的坑/</id>
     <published>2017-12-15T00:03:02.000Z</published>
-    <updated>2017-12-14T16:41:24.196Z</updated>
+    <updated>2018-01-23T10:36:16.322Z</updated>
     
     <content type="html"><![CDATA[<h3 id="记录这些年踩过的坑"><a href="#记录这些年踩过的坑" class="headerlink" title="记录这些年踩过的坑"></a>记录这些年踩过的坑</h3><p>第一次接触 Git 是在大一，刚进弦歌那会。由于Git是命令行操作的，没接触过命令行，就觉得这东西挺高大尚的，自己还专门也研究了好久呢，书都借了好几本。</p>
 <p>刚开始自己也没概念，搞不清楚本地仓库和远程仓库，只有到开发新生宝典时真正使用了才知道是怎么回事，确实啊，这种工具类的东西，是要使用才能真正掌握的，就像后来用的Composer和Maven。</p>
@@ -463,6 +491,69 @@
 <li>如果有，就解决冲突，然后git add，git commit ，git push</li>
 </ul>
 <h4 id="fetch和pull的区别"><a href="#fetch和pull的区别" class="headerlink" title="fetch和pull的区别"></a>fetch和pull的区别</h4><p>pull=fetch+merge，pull的话，下拉远程分支并与本地分支合并。fetch只是下拉远程分支，怎么合并，可以自己再做选择。</p>
+<h4 id="git-diff-的用法"><a href="#git-diff-的用法" class="headerlink" title="git diff 的用法"></a>git diff 的用法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">git diff                                       查看尚未暂存的文件更新了哪些部分</div><div class="line"></div><div class="line">git diff filename 查看尚未暂存的某个文件更新了哪些</div><div class="line"></div><div class="line">git diff –cached                    查看已经暂存起来的文件和上次提交的版本之间的差异</div><div class="line"></div><div class="line">git diff –cached filename 查看已经暂存起来的某个文件和上次提交的版本之间的差异</div><div class="line"></div><div class="line">git diff ffd98b291e0caa6c33575c1ef465eae661ce40c9 b8e7b00c02b95b320f14b625663fdecf2d63e74c 查看某两个版本之间的差异</div><div class="line"></div><div class="line">git diff ffd98b291e0caa6c33575c1ef465eae661ce40c9:filename b8e7b00c02b95b320f14b625663fdecf2d63e74c:filename 查看某两个版本的某个文件之间的差异</div></pre></td></tr></table></figure>
+<h4 id="git-clean"><a href="#git-clean" class="headerlink" title="git clean"></a>git clean</h4><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>git clean -n</td>
+<td>是一次clean的演习, 告诉你哪些文件会被删除. 记住他不会真正的删除文件, 只是一个提醒</td>
+</tr>
+<tr>
+<td>git clean -f</td>
+<td>删除当前目录下所有没有track过的文件. 他不会删除.gitignore文件里面指定的文件夹和文件, 不管这些文件有没有被track过.</td>
+</tr>
+<tr>
+<td>git clean -f <path></path></td>
+<td>删除指定路径下的没有被track过的文件.</td>
+</tr>
+<tr>
+<td>git clean -df</td>
+<td>删除当前目录下所有没有track过的文件. 不管他是否是.gitignore文件里面指定的文件夹和文件.</td>
+</tr>
+</tbody>
+</table>
+<p>git reset –hard和git clean -f是一对好基友. 结合使用他们能让你的工作目录完全回退到最近一次commit的时候. </p>
+<p>git clean对于刚编译过的项目也非常有用. 如, 他能轻易删除掉编译后生成的.o和.exe等文件.  这个在打包要发布一个release的时候非常有用. </p>
+<h5 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h5><p>下面的例子要删除所有工作目录下面的修改, 包括新添加的文件. 假设你已经提交了一些快照了, 而且做了一些新的开发.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># Edit some existing files</div><div class="line"># Add some new files</div><div class="line"># Realize you have no idea what you&apos;re doing</div><div class="line"> </div><div class="line"># Undo changes in tracked files</div><div class="line">git reset --hard</div><div class="line"> </div><div class="line"># Remove untracked files</div><div class="line">git clean -df</div></pre></td></tr></table></figure>
+<p>运行后, 工作目录和缓存区回到最近一次commit时候一摸一样的状态, git status会告诉你这是一个干净的工作目录, 又是一个新的开始了.</p>
+<h4 id="关于公钥-秘钥"><a href="#关于公钥-秘钥" class="headerlink" title="关于公钥|秘钥"></a>关于公钥|秘钥</h4><h5 id="如何创建公钥"><a href="#如何创建公钥" class="headerlink" title="如何创建公钥"></a>如何创建公钥</h5><ul>
+<li><p>1、首先启动一个Git Bash窗口（非Windows用户直接打开终端）</p>
+</li>
+<li><p>2、执行：</p>
+</li>
+</ul>
+<blockquote>
+<p>cd ~/.ssh</p>
+</blockquote>
+<p>如果返回“… No such file or directory”，说明没有生成过SSH Key，直接进入第4步。否则进入第3步备份!</p>
+<ul>
+<li>3、备份：</li>
+</ul>
+<p>mkdir key_backup mv id_isa* key_backup</p>
+<ul>
+<li>4、生成新的Key：（引号内的内容替换为你自己的邮箱）</li>
+</ul>
+<p>ssh-keygen -t rsa -C “your_email@youremail.com”</p>
+<p>输出显示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt;Generating public/private rsa key pair. Enter file in which to save the key </div><div class="line">(/Users/your_user_directory/.ssh/id_rsa):&lt;press enter&gt;</div></pre></td></tr></table></figure>
+<p>直接回车，不要修改默认路劲。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt;Enter passphrase (empty for no passphrase):&lt;enter a passphrase&gt;</div><div class="line">Enter same passphrase again:&lt;enter passphrase again&gt;</div></pre></td></tr></table></figure></p>
+<p>设置一个密码短语，在每次远程操作之前会要求输入密码短语！闲麻烦可以直接回车，不设置。</p>
+<ul>
+<li><p>5、成功：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Your identification has been saved in /Users/your_user_directory/.ssh/id_rsa. Your public key has been saved in /Users/your_user_directory/.ssh/id_rsa.pub. The key fingerprint is: ... ...</div></pre></td></tr></table></figure>
+</li>
+<li><p>6、提交公钥：</p>
+</li>
+</ul>
+<p>6.1 找到.ssh文件夹，用文本编辑器打开“id_rsa.pub”文件，复制内容到剪贴板。</p>
+<p>6.2 打开 <a href="https://github.com/settings/ssh" target="_blank" rel="external">https://github.com/settings/ssh</a> ，点击 Add SSH Key 按钮，粘贴进去保存即可。</p>
 <h4 id="可以参考的资料"><a href="#可以参考的资料" class="headerlink" title="可以参考的资料"></a>可以参考的资料</h4><blockquote>
 <blockquote>
 <p><a href="http://huanglei.me/git-theory.html" target="_blank" rel="external">http://huanglei.me/git-theory.html</a><br><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000</a></p>
@@ -964,76 +1055,6 @@
     
     
       <category term="求职" scheme="http://yoursite.com/tags/%E6%B1%82%E8%81%8C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>数据结构|什么是数据结构</title>
-    <link href="http://yoursite.com/2017/09/28/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    <id>http://yoursite.com/2017/09/28/数据结构-什么是数据结构/</id>
-    <published>2017-09-27T20:29:18.000Z</published>
-    <updated>2017-09-27T13:32:58.379Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="开场白"><a href="#开场白" class="headerlink" title="开场白"></a>开场白</h3><p>自己在大一时，就从学长口中得知数据结构的重要性，自己也买书琢磨了一波，但对此的理解也仅限与表面，没有了解到其的奥秘。不过，随着一年多的编程，自己逐渐了解数据结构的重要性，也逐渐揭开他的面纱…</p>
-<p>作为 一名计算机专业的学生，写的代码不能仅限于实现功能，我们应该有更高的追求，比如说尽量使用较少的空间啊、让程序能运行的更快啊…这些都是我们需要注意的。数据结构作为计算机专业的基本课程，个人觉得就是教我们怎么更合理地使用内存及硬盘，简单间就是怎么最大化利用我们的存储空间；还有就是怎么来存放我们的数据，以便我们能更好更快的操作数据，比如说查找、删除、添加…</p>
-<h3 id="什么数据结构"><a href="#什么数据结构" class="headerlink" title="什么数据结构"></a>什么数据结构</h3><p>对于数据结构的定义，我们应该分开来看：一个是数据，另一个数结构。首先，我们先说说什么是数据：</p>
-<h4 id="什么是数据"><a href="#什么是数据" class="headerlink" title="什么是数据"></a>什么是数据</h4><p>数据：是描述客观事物的符号，是计算机中可以操作的对象，是能被计算机识别，并输入给计算机处理的符号集合。这个官方定义不是很容易理解，用我们自己的话说，数据就是计算机能处理的东西，比如说整型、实数型，当然，还包括字符、声音、图像…比如说我们常用的搜索引擎，一般会有网页、MP3、图片、视频等分类。其中，MP3是声音数据，图片是图像数据。说白了，我们所说的数据就是符号，但其必须具有两个属性：</p>
-<ul>
-<li>可以输入到计算机中</li>
-<li>能被计算机处理</li>
-</ul>
-<p>对于整型、实数型等数值数据，计算机可以进行数值计算；对于字符数据类型，需要进行非数值处理。而声音、图像、视频等其实可以通过编码的手段编程字符数据来处理。</p>
-<h4 id="什么是结构"><a href="#什么是结构" class="headerlink" title="什么是结构"></a>什么是结构</h4><p>结构，简单来说就是数据之间的关系。我们都知道，在现实中，不同数据之间不是独立的，而是存在某种特定的关系，我们称这些关系为结构。那么在计算机中也是如此，计算机中的数据并不是孤立的、杂乱无章的，而是具有内在联系的数据集合。我们要写一个好的程序，就要分析处理对象的特性及各处理对象之间存在的关系。我们知道了结构就是关系，那么都有那些具体的关系呢？</p>
-<p>按照视点的不同，我们把数据结构分为逻辑结构和物理结构。</p>
-<h5 id="逻辑结构"><a href="#逻辑结构" class="headerlink" title="逻辑结构"></a>逻辑结构</h5><p>逻辑结构：是指数据对象中数据元素之间的相互关系。</p>
-<p>集合关系：集合结构中的数据元素除了同属于一个集合外，它们之间没有其他关系。就是类似与我们数学中所说的集合，各元素之间没有关系，彼此平等。</p>
-<p>线性结构：线性结构中的数据元素之间是一对一的关系。就像排队一样，我们只和我们前面的人有关系，和其他人没有关系。</p>
-<p>树形结构：树形结构中的元素之间存在一种一对多的层次关系。就像我们所见的数一样，从下往上，枝叶逐渐增多，但下一层只和上一层有关系。</p>
-<p>图形结构：图形结构的数据元素是多对多的关系，就像地图一样，不同的节点之间都会有关系。</p>
-<p>逻辑结构是针对具体问题的，是为了解决某个问题，在对问题理解的基础上，选择一个合适的数据结构表示数据之间的逻辑关系，我们要懂得根据实际的问题来选择合适的结构来组织我们的数据。</p>
-<h5 id="物理结构"><a href="#物理结构" class="headerlink" title="物理结构"></a>物理结构</h5><p>物理结构：是指数据的逻辑结构在计算机中的存储形式。说白了，选定了具体的逻辑结构后，我们要怎么样把数据存在计算机中。数据的物理结构应该正确反映数据元素之间的逻辑关系。如何在计算机中存储元素之间的逻辑关系，是实现物理结构的重点和难点。</p>
-<p>顺序存储结构：把数据元素存放在地址连续的存储单元中。这种存储结构很简单，就类似与我们开的数组，大家按顺序排好队，每个人占一端空间，大家都不插队。这种方式存储数据，最大的好处是易于遍历，大家都在一起，当然容易遍历啦，但是删除操作就很麻烦，需要把要删除的数字后面的数都往上移位。</p>
-<p>链式存储结构：是把数据元素存放在任意的存储单元里，这组存储单元不一定是要连续的。哪要怎么从找到下一个位置呢？这时候就需要指针上场了。这种存储方式比较灵活，数据存放在那不重要，只要一个指针存放了相应的地址就能找到。但查找就很困难了，因为每一次查找都必须从头开始查找。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;开场白&quot;&gt;&lt;a href=&quot;#开场白&quot; class=&quot;headerlink&quot; title=&quot;开场白&quot;&gt;&lt;/a&gt;开场白&lt;/h3&gt;&lt;p&gt;自己在大一时，就从学长口中得知数据结构的重要性，自己也买书琢磨了一波，但对此的理解也仅限与表面，没有了解到其的奥秘。不过，随着一年多
-    
-    </summary>
-    
-      <category term="DataStruct" scheme="http://yoursite.com/categories/DataStruct/"/>
-    
-    
-      <category term="数据结构" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>生活|记一周的求职经历</title>
-    <link href="http://yoursite.com/2017/09/25/%E7%94%9F%E6%B4%BB-%E8%AE%B0%E4%B8%80%E5%91%A8%E7%9A%84%E6%B1%82%E8%81%8C%E7%BB%8F%E5%8E%86/"/>
-    <id>http://yoursite.com/2017/09/25/生活-记一周的求职经历/</id>
-    <published>2017-09-25T00:03:54.000Z</published>
-    <updated>2017-09-24T16:49:29.401Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="小记"><a href="#小记" class="headerlink" title="小记"></a>小记</h3><p>大二开学第一周，自己就尝试着扮演大三或者大四的角色，加入到找实习找工作的行列中，体验生活。在这一周的折腾中，自己也有所感悟。</p>
-<h3 id="历程"><a href="#历程" class="headerlink" title="历程"></a>历程</h3><h4 id="猎豹移动"><a href="#猎豹移动" class="headerlink" title="猎豹移动"></a>猎豹移动</h4><p>自己在宣讲会的前一天就在蓝杰见到 Hr 小姐姐了，听小姐姐讲了猎豹移动的一些信息，比如员工宿舍啊、食堂啊、培养计划啊…说实话，自己当时是很被吸引的，也很希望自己能有机会到这样的公司里学习。第二天晚上（周一），自己约上几个学长，就一起听了宣讲会，然后参加笔试。当然，笔试的结果是惨败（在前前一篇文章就讲过了），这里就不细讲了。</p>
-<h4 id="深信服"><a href="#深信服" class="headerlink" title="深信服"></a>深信服</h4><p>深信服的笔试是在网上弄的。自己也不知到怎么滴就投了PHP岗位的，虽然也学过并用PHP开发了新生宝典，但熟练程度还不至于背出来一些常见函数啊，基本上都是现用现查的，所以结果可想而知。除了PHP，笔试还设计了服务器、linux、数据库方面的知识，也就是关于网站的方方面面都有了，并且都是一些很深入的问题，比如说怎么Apache和Nginx的差别啊，Nginx还有什么其他的作用啊；怎么优化Mysql数据库啊；怎么防止sql注入攻击啊；各种数据库引擎的不同啊…哇，我天，我只能说自己要走的路还很长呢…</p>
-<h4 id="恒生"><a href="#恒生" class="headerlink" title="恒生"></a>恒生</h4><p>恒生的笔试是在今天（周六）进行的。自己本来不想去的，但仔细想想反正周六也没什么事，就去玩玩嘛，就在学校。笔试的题目感觉还可以，不算难，就是一些基础的东西，但自己还是不是很懂，可能好久没有看了吧，记忆有点模糊了。笔试中考了一些简单的数据库操作，就是给你一些表，让你写SQL语句找出需要的数据，说实话，这是很容易的，但自己基本都是用客户端操作数据库的，并且用到的都是一些简单的增删改查，总之，就是自己不懂做。</p>
-<h4 id="博登信息"><a href="#博登信息" class="headerlink" title="博登信息"></a>博登信息</h4><p>这是唯一一家不需要笔试的，投简历就直接通知面试了。周五下午去面试，更可恶的是并不是一个懂技术的人来面试而是Hr小姐姐来跟我聊，聊的就是自己的一些情况：在学校学了什么 核心课，自己有学了什么，做过什么，并没有问用到什么技术。好吧，我也无话可说啊。虽然不是技术面试，但也算是面试，自己感觉自己表现还是可以的，不是很紧张，也表达出来了自己想要表达的东西。如果放在中学，自己肯定会吞吞吐吐的，不懂怎么组织语言，讲话没主次.。 </p>
-<h3 id="自己的一些感悟"><a href="#自己的一些感悟" class="headerlink" title="自己的一些感悟"></a>自己的一些感悟</h3><p>经过这一周的折腾，自己还是有点收获的，也明确了自己今后的学习重点，折腾是值得的。同时，也意识到笔试是个很重要的东西，笔试也确实能看出一个人的水平。同时，笔试考的知识，也同样是面试的时候，面试官要问你的问题，比如说上面提到的Mysql数据库的优化啊、怎么防止SQL注入攻击啊…如果你用笔都不能写下你想要表达的东西，你怎么能用言语讲述出来呢？此外，如果你真的有水平，笔试也是你展示自己的一个很好的机会。如果你的答案与别人与众不同且正确，那么肯定会得到面试官的青睐。</p>
-<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>小伙子，还是要一步一个脚印踏踏实实来，打好基础，并多思考技术背后的原理…</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;小记&quot;&gt;&lt;a href=&quot;#小记&quot; class=&quot;headerlink&quot; title=&quot;小记&quot;&gt;&lt;/a&gt;小记&lt;/h3&gt;&lt;p&gt;大二开学第一周，自己就尝试着扮演大三或者大四的角色，加入到找实习找工作的行列中，体验生活。在这一周的折腾中，自己也有所感悟。&lt;/p&gt;
-&lt;h3
-    
-    </summary>
-    
-      <category term="life" scheme="http://yoursite.com/categories/life/"/>
-    
     
   </entry>
   
