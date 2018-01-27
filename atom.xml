@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-01-24T07:46:20.265Z</updated>
+  <updated>2018-01-27T08:22:13.348Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,9 +20,28 @@
     <link href="http://yoursite.com/2018/01/24/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91/"/>
     <id>http://yoursite.com/2018/01/24/数据结构-树/</id>
     <published>2018-01-24T15:46:20.000Z</published>
-    <updated>2018-01-24T07:46:20.265Z</updated>
+    <updated>2018-01-27T08:22:13.348Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="树的简介"><a href="#树的简介" class="headerlink" title="树的简介"></a>树的简介</h3><p>树是一种数据结构，它是n(n&gt;=0)个节点的有限集。n=0时称为空树。n&gt;0时，有限集的元素构成一个具有层次感的数据结构。树是一种典型的一对多的数据结构，类比我们现实生活中的公司分工结构。</p>
+<p>区别于线性表一对一的元素关系，树中的节点是一对多的关系。树具有以下特点：</p>
+<ul>
+<li>n&gt;0时，根节点是唯一的，不可能存在多个根节点。</li>
+<li>每个节点有零个至多个子节点；除了根节点外，每个节点有且仅有一个父节点。根节点没有父节点。</li>
+</ul>
+<p><img src="/images/树-1.png" alt="树" title="树-1"></p>
+<p>树有许多相关的术语与概念，在学习树的结构之前，我们要熟悉这些概念。<br>|概念|解释|<br>|—-|—-|<br>|子树|除了根节点外，每个子节点都可以分为多个不相交的子树。|<br>|孩子与双亲|若一个结点有子树，那么该结点称为子树根的”双亲”，子树的根是该结点的”孩子”。|<br>|兄弟|具有相同双亲的节点互为兄弟，例如B与H互为兄弟。|<br>|节点的度|一个节点拥有子树的数目。例如A的度为2，B的度为1，C的度为3.|<br>|叶子|没有子树，也即是度为0的节点。|<br>|分支节点|除了叶子节点之外的节点，也即是度不为0的节点。|<br>|内部节点|除了根节点之外的分支节点。|<br>|层次|根节点为第一层，其余节点的层次等于其双亲节点的层次加1.|<br>|树的高度|也称为树的深度，树中节点的最大层次。|<br>|有序树|树中节点各子树之间的次序是重要的，不可以随意交换位置。|<br>|无序树|树种节点各子树之间的次序是不重要的。可以随意交换位置。|<br>|森林|0或多棵互不相交的树的集合。例如图二中的两棵树为森林。|</p>
+<h3 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h3><p>在树中，我们经常用的一般是二叉树这种特殊的树。二叉树或者为空集，或者由一个根节点和两棵互不相交的、分别称为左子树和右子树的二叉树组成。从定义可以看出一棵二叉树：</p>
+<ul>
+<li>二叉树是有序树，区分左子树与右子树，不可以随意交换子树位置。</li>
+<li>一个节点的子树数量取值范围为0，1，2。0代表该节点是叶子节点，1代表该节点只有左子树或只有右子树，2代表该节点有左右子树。</li>
+</ul>
+<p>根据定义，一棵二叉树有5中基本形态：</p>
+<p><img src="/images/树-2.png" alt="enter description here" title="树-2"></p>
+]]></content>
     
     <summary type="html">
+    
+      &lt;h3 id=&quot;树的简介&quot;&gt;&lt;a href=&quot;#树的简介&quot; class=&quot;headerlink&quot; title=&quot;树的简介&quot;&gt;&lt;/a&gt;树的简介&lt;/h3&gt;&lt;p&gt;树是一种数据结构，它是n(n&amp;gt;=0)个节点的有限集。n=0时称为空树。n&amp;gt;0时，有限集的元素构成一个具有层次感的
     
     </summary>
     
@@ -34,7 +53,7 @@
     <link href="http://yoursite.com/2018/01/24/jquery-Ajax/"/>
     <id>http://yoursite.com/2018/01/24/jquery-Ajax/</id>
     <published>2018-01-24T15:26:56.000Z</published>
-    <updated>2018-01-24T07:29:45.725Z</updated>
+    <updated>2018-01-27T08:22:15.016Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">function getData()&#123;</div><div class="line">		$.ajax(&#123;</div><div class="line">                url:&quot;../api&quot;,</div><div class="line">                type:&quot;GET&quot;,</div><div class="line">                data:&#123;&quot;page&quot;:&quot;1&quot;&#125;,</div><div class="line">                processData:false,</div><div class="line">                contentType:false,</div><div class="line">                dataType:&quot;json&quot;,</div><div class="line">                success:function(data)&#123;</div><div class="line">                	// console.info(data);</div><div class="line">                	$(&quot;#resText&quot;).html(&quot;状态：&quot;+data.status); </div><div class="line">                &#125;,</div><div class="line">                error:function(e)&#123;</div><div class="line">                    $(&quot;#resText&quot;).html(&quot;发生错误了&quot;);</div><div class="line">                &#125;</div><div class="line">            &#125;);    </div><div class="line">	&#125;</div><div class="line"></div><div class="line">	function sendData()&#123;</div><div class="line">		$.ajax(&#123;</div><div class="line">                url:&quot;../api/addFindThing&quot;,</div><div class="line">                type:&quot;post&quot;,</div><div class="line">                data:new FormData($(&quot;#form&quot;)[0]),</div><div class="line">                processData:false,</div><div class="line">                contentType:false,</div><div class="line">                dataType:&quot;json&quot;,</div><div class="line">                success:function(data)&#123;</div><div class="line">                	// console.info(data);</div><div class="line">                	$(&quot;#resText&quot;).html(&quot;状态：&quot;+data.status); </div><div class="line">                &#125;,</div><div class="line">                error:function(e)&#123;</div><div class="line">                    $(&quot;#resText&quot;).html(&quot;发生错误了&quot;);</div><div class="line">                &#125;</div><div class="line">            &#125;);        </div><div class="line">	&#125;</div></pre></td></tr></table></figure>]]></content>
     
@@ -52,14 +71,37 @@
     <link href="http://yoursite.com/2018/01/24/%E6%80%BB%E7%BB%93-%E6%88%91%E7%9A%84%E5%A4%A7%E4%BA%8C-%E4%B8%8A/"/>
     <id>http://yoursite.com/2018/01/24/总结-我的大二-上/</id>
     <published>2018-01-24T09:33:17.000Z</published>
-    <updated>2018-01-24T07:29:48.333Z</updated>
+    <updated>2018-01-27T08:22:06.460Z</updated>
     
     <content type="html"><![CDATA[<h3 id="我的大二"><a href="#我的大二" class="headerlink" title="我的大二"></a>我的大二</h3><p>不得不说，大二的上学期一转眼就过了，让人触不及防，可以说大学生活已经过了一半了。现在都流行搞年度总结，像支付宝会出年度账单、网易云音乐会出年度歌单…那我也来个 <strong>小智年度总结吧</strong></p>
+<h4 id="加入找实习的大军"><a href="#加入找实习的大军" class="headerlink" title="加入找实习的大军"></a>加入找实习的大军</h4><p>这是在刚开学那会，弄着玩的，但自己还真的有想过要找份实习的。在写了自己的第一份简历后，有学长学长的推荐，或者看到一些招聘信息，就一股脑的投了简历了。当时也没多想，毕竟年轻嘛，目的性也不是很强，成是最好，不成就当是练手了。当时也参加了一些笔试，可能自己还没认真钻研过数据结构和算法这些很基础的内容吧，只是知道个大概，所以笔试的时候并不能发挥的很好，因此往往总是在笔试后就止步不前了。不过，这一段经历还是挺好玩的，毕竟是以一种试一试与学习的心态去参加的，没有那么多压力，很轻松。同时，也发现了自己的很多问题吧。</p>
 <h4 id="学习数据结构"><a href="#学习数据结构" class="headerlink" title="学习数据结构"></a>学习数据结构</h4><p>学校开了数据结构的这门课，但是自己从来没有认真听过一节课，因为自己总感觉不是自己想要的那种上课形式，但是自己也不知道自己想要的形式是什么。哎，那就靠自己吧。自己就在书上看理论，然后网上找了一些好的博客，看看别人是怎么实现的。编程这东西，理论开起来简单，但是要一步步写代码来实现还是有难度的。不得不说，数据结构这门课还是很重要，借助这个工具，我们能更好更合理地组织数据在内存或硬盘中的存储方式，更好的适应我们的应用场景。</p>
 <h4 id="学习数字逻辑"><a href="#学习数字逻辑" class="headerlink" title="学习数字逻辑"></a>学习数字逻辑</h4><p>之前就听学长说数字逻辑这门课我们搞软件的用不上，我半信半疑，先不说其他的，个人觉得上课的胡红平老师听nice的，有耐心说话又好听，有点像高中的老师。我觉得不管搞什么方向，只要跟计算机相关的，还是要必要知道这些逻辑门的东西，这些底层的东西虽然在开发的时候用不上，但是能帮助我们更好地理解程序的运行，帮助我们写出漂亮的代码。</p>
 <p>这门课还有个大作业，就是用VHDL设计一个模型机，也可以说是一个简单的CPU吧，就是可以完成一些指令，比如说加、减、移位…这些操作。自己弄了一个星期，没成功，借助了某位学霸的杰作去验收，认识学霸还是很有必要的。验收完后，自己又继续搞了两天吧，把自己的完成了，还是很有成就感的。</p>
-<h4 id="近红外数据库开发"><a href="#近红外数据库开发" class="headerlink" title="近红外数据库开发"></a>近红外数据库开发</h4><p>记得是小学期的时候，课挺少的，仕祺学长发了个大数据分享，自己觉得无聊就去了。</p>
-<h4 id="弦歌微湖大公众号的后台开发"><a href="#弦歌微湖大公众号的后台开发" class="headerlink" title="弦歌微湖大公众号的后台开发"></a>弦歌微湖大公众号的后台开发</h4><h4 id="联想比赛"><a href="#联想比赛" class="headerlink" title="联想比赛"></a>联想比赛</h4>]]></content>
+<h4 id="近红外数据库开发"><a href="#近红外数据库开发" class="headerlink" title="近红外数据库开发"></a>近红外数据库开发</h4><p>记得是小学期的时候，课挺少的，仕祺学长发了个大数据分享，自己觉得无聊就去了。到哪之后，勇哥(咖啡厅老板)就问我做过项目没有呀？有没有实习的打算啊？当时自己也有这个打算，就说有，然后也简单了解了他那边的情况，说是陈浩老师手下的团队，就加入了，简单点说就是如果有什么项目，自己可以加入开发，然后增加自己的项目经历。</p>
+<p>大概过了一两个月吧，就有项目来了。项目是要搞一个方便农大的实验室进行的近红外的研究，给他们一个存储数据的平台，然后方便进行大数据分析。这个项目还是很好玩的，跟陈浩老师的研究生和两个大三的学长一起组成一个团队，我能得到的只有需求，剩下的一切都要我们自己完成。</p>
+<p>我们就一起讨论需求，然后确定需求，接着画项目的流程图，然后是原型图。再接着就是根据原型图设计数据库，等数据库设计好后就是开发了。这中间自己只参与了需求的讨论、数据库的设计以及后台的开发，当然，其他的一些部分自己也了解了一下，知道这个步骤是要干什么。在这过程中，自己也学到了一些东西吧。技术上就是了解了Java的SpringMVC框架，但更受益的是团队管理与团队协作中的一些知识：</p>
+<ul>
+<li>每个人要有周报，汇总自己解决的问题与遇到的问题</li>
+<li>团队之间的沟通与重要通知推荐用邮件啊</li>
+<li>开会要有会议记录啊</li>
+<li>要有项目计划表来推动项目的推进啊</li>
+</ul>
+<h4 id="弦歌微湖大公众号的后台开发"><a href="#弦歌微湖大公众号的后台开发" class="headerlink" title="弦歌微湖大公众号的后台开发"></a>弦歌微湖大公众号的后台开发</h4><p>经过暑假新生宝典的洗礼，自己可以说是入门Web开发了，知道前后端的数据交互以及各自的工作流程了。这学期就接了一些实际的锅：</p>
+<h5 id="知湖3-0的改版-微湖大的内部接口"><a href="#知湖3-0的改版-微湖大的内部接口" class="headerlink" title="知湖3.0的改版|微湖大的内部接口"></a>知湖3.0的改版|微湖大的内部接口</h5><p>这相当与重写了之前用户版的知湖了。之前是用基本的PHP和纯过程思想来写的，很难维护与扩展。过程中，也没需要什么难题，但是总是在加需求，想到什么好的点子就加，然后还不是很确定最终版本，进度就一直拖，所以到现在还不上线。不过自己倒是琢磨了一波微信公众号的一些接口规则，可以说基本掌握了微信的那一套吧。</p>
+<h5 id="失物招领"><a href="#失物招领" class="headerlink" title="失物招领"></a>失物招领</h5><p>这应该是老大的一个硬需求吧。然后张惟丰就让我负责这个项目的进行，刚开始是我们自己想的很简单的实现，但是后来产品经理李畅加了加了匹配的功能。确实，这个功能是很有必要的，毕竟我们有学生的一些基本信息，要让这些信息发生价值，不然这些信息就全都是摆设了。</p>
+<p>说到信息，自己也深有体会。记得有问过胡哥，为什么敲代码的叫做码农，胡哥说因为信息就向土壤，搞IT的就是在信息的基础上做加工，然后对外提供服务，所以码农就出现了。信息也被马云爸爸称做资源，也是很对的。</p>
+<h4 id="联想比赛"><a href="#联想比赛" class="headerlink" title="联想比赛"></a>联想比赛</h4><p>这是联想俱乐部举办的一个比赛，主要看创新，看Idea怎么样。自己和队友（黄卫江、黄智威）想的是一个可以全方位为旅游出行者提供方便，提供实时的天气、景区信息等…同时能根据预算、兴趣等标签进行个性化推荐。想法应该还可以吧，接着就是怎么把这个想法在答辩的时候完美呈现给举办方。我们分工做PPT和进行答辩前的练习，但是在做PPT和上台答辩这两方面都是自己的短处，自己也没帮上什么忙。自己唯一出力的就是决赛的那个原型设计了。最卖力的还是黄智威吧，ppt大部分都是他搞得，上台答辩也是他，他确实是能说，这一点自己真的比不上。一个团队确实是需要不同的人才，需要有技术上的、管理上的…缺一不可。</p>
+<h4 id="未来畅想"><a href="#未来畅想" class="headerlink" title="未来畅想"></a>未来畅想</h4><p>这一学期，自己感觉过得好快，一眨眼的功夫就期末考试了，就要回家过年了。这学期感觉自己也挺忙的，但仔细想想也没做什么实际性的东西出来，都是在弄一些增删改查的东西。这些是不需要动脑，有点基础都能完成的工作，完全没有挑战。自己也在想自己的竞争力在哪？对哇，自己还是要选择一个方向，机器学习？区块链？…然后深究的，这有这些东西才是所谓的竞争力。</p>
+<p>下学期还是要学习一下新的东西，不能在原地踏步了，现在想想可以弄一下这些事：</p>
+<ul>
+<li>爬虫</li>
+<li>机器学习</li>
+<li>区块链</li>
+<li>……</li>
+</ul>
+<p>总之，要学习一些别人不懂的东西。</p>
+]]></content>
     
     <summary type="html">
     
@@ -77,7 +119,7 @@
     <link href="http://yoursite.com/2018/01/24/%E5%B7%A5%E5%85%B7-Maven%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
     <id>http://yoursite.com/2018/01/24/工具-Maven工具的使用/</id>
     <published>2018-01-23T21:43:25.000Z</published>
-    <updated>2018-01-24T07:29:50.868Z</updated>
+    <updated>2018-01-27T08:22:16.698Z</updated>
     
     <content type="html"><![CDATA[<h3 id="Maven简介"><a href="#Maven简介" class="headerlink" title="Maven简介"></a>Maven简介</h3><p>Apache Maven 是一种用作软件项目管理和理解工具。它基于项目对象模型（POM）的概念，可以管理一个项目的构建、报告以及从项目核心信息中生成文档。</p>
 <p>Maven是一种项目管理和理解工具。Maven向开发者提供了一个完整的构建生命周期框架。开发团队几乎不用花时间就可以使用自动化构建项目的基础框架，因为 Maven使用了一套标准的目录结构和默认的构建生命周期。</p>
@@ -661,6 +703,35 @@
   </entry>
   
   <entry>
+    <title>大学|记一次比赛</title>
+    <link href="http://yoursite.com/2017/12/09/%E5%A4%A7%E5%AD%A6-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%AF%94%E8%B5%9B/"/>
+    <id>http://yoursite.com/2017/12/09/大学-记一次比赛/</id>
+    <published>2017-12-09T00:10:32.000Z</published>
+    <updated>2017-12-08T16:47:59.404Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="我的第一次比赛"><a href="#我的第一次比赛" class="headerlink" title="我的第一次比赛"></a>我的第一次比赛</h3><p>说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。这是自己在大学第一个参加的比赛，是学校联想俱乐部举办的，比赛内容就是参赛队员想一个产品，有创意的产品。</p>
+<p>然后,我们就开始讨论要搞什么，最初是说搞教育那一块的，但觉得太low了，就换成了旅游出行的个性化推荐，创新点主要是能实时通过天气、景点人流、交通情况等因素，实时为旅客修改旅游计划，为用户提供最佳的旅游路线。</p>
+<p>最开始是初赛，需要做ppt和上台答辩，说白了，这个比赛就是看谁弄得ppt好看和谁的忽悠能力强就能得奖。ppt是黄智威弄的，还需要一个产品的原型，然后自己是弄原型，其实也就是弄个首页，都不是事。还是黄智威拼，弄ppt到半夜。答辩时黄智威和黄卫江上去讲的，毫无悬念，我们进入了决赛。</p>
+<p>初赛后不久是决赛，ppt是用的初赛的，但是原型就不能用初赛的了，需要搞完善一点的，不过这次不是我搞的了，是黄卫江搞的，自己有点惭愧啊，就是个打酱油的。决赛是黄智威自己上去答辩，黄卫江上课去了，我坐在台下给黄智威录像。很幸运，决赛我们的了二等奖。其中，还有一个有趣的环节呢，那就是刷票啊，不知道黄智威怎么搞的，花钱加别人刷票，这小子可以的。</p>
+<p>本以为我们能够进决赛的，我们还为此决定搞个半产品出来呢。我们三个专门去蓝杰向胡哥请教了一番，还想好了下一步的分工了。不曾想，回宿舍后，通知说没有进省赛。</p>
+<p>这就是自己第一次的比赛经历啦，虽然不精彩，但是自己也认识到一个团队需要不同的人才能做成一件事。就像黄智威，能说，会忽悠；黄卫江，能为了完成任务，熬上几夜；我自己呢，可能在技术这一块擅长一点，所以前期也没做什么工作，是要在做产品的时候出力的。</p>
+<p><img src="/images/mmexport1512485485927.jpg" alt="enter description here" title="mmexport1512485485927"></p>
+<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
+<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;我的第一次比赛&quot;&gt;&lt;a href=&quot;#我的第一次比赛&quot; class=&quot;headerlink&quot; title=&quot;我的第一次比赛&quot;&gt;&lt;/a&gt;我的第一次比赛&lt;/h3&gt;&lt;p&gt;说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。
+    
+    </summary>
+    
+    
+      <category term="大学" scheme="http://yoursite.com/tags/%E5%A4%A7%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
     <title>动态规划——由实践总结经验</title>
     <link href="http://yoursite.com/2017/12/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98/"/>
     <id>http://yoursite.com/2017/12/09/动态规划经典例题/</id>
@@ -735,35 +806,6 @@
     
     
       <category term="动态规划" scheme="http://yoursite.com/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>大学|记一次比赛</title>
-    <link href="http://yoursite.com/2017/12/09/%E5%A4%A7%E5%AD%A6-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%AF%94%E8%B5%9B/"/>
-    <id>http://yoursite.com/2017/12/09/大学-记一次比赛/</id>
-    <published>2017-12-09T00:10:32.000Z</published>
-    <updated>2017-12-08T16:47:59.404Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="我的第一次比赛"><a href="#我的第一次比赛" class="headerlink" title="我的第一次比赛"></a>我的第一次比赛</h3><p>说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。这是自己在大学第一个参加的比赛，是学校联想俱乐部举办的，比赛内容就是参赛队员想一个产品，有创意的产品。</p>
-<p>然后,我们就开始讨论要搞什么，最初是说搞教育那一块的，但觉得太low了，就换成了旅游出行的个性化推荐，创新点主要是能实时通过天气、景点人流、交通情况等因素，实时为旅客修改旅游计划，为用户提供最佳的旅游路线。</p>
-<p>最开始是初赛，需要做ppt和上台答辩，说白了，这个比赛就是看谁弄得ppt好看和谁的忽悠能力强就能得奖。ppt是黄智威弄的，还需要一个产品的原型，然后自己是弄原型，其实也就是弄个首页，都不是事。还是黄智威拼，弄ppt到半夜。答辩时黄智威和黄卫江上去讲的，毫无悬念，我们进入了决赛。</p>
-<p>初赛后不久是决赛，ppt是用的初赛的，但是原型就不能用初赛的了，需要搞完善一点的，不过这次不是我搞的了，是黄卫江搞的，自己有点惭愧啊，就是个打酱油的。决赛是黄智威自己上去答辩，黄卫江上课去了，我坐在台下给黄智威录像。很幸运，决赛我们的了二等奖。其中，还有一个有趣的环节呢，那就是刷票啊，不知道黄智威怎么搞的，花钱加别人刷票，这小子可以的。</p>
-<p>本以为我们能够进决赛的，我们还为此决定搞个半产品出来呢。我们三个专门去蓝杰向胡哥请教了一番，还想好了下一步的分工了。不曾想，回宿舍后，通知说没有进省赛。</p>
-<p>这就是自己第一次的比赛经历啦，虽然不精彩，但是自己也认识到一个团队需要不同的人才能做成一件事。就像黄智威，能说，会忽悠；黄卫江，能为了完成任务，熬上几夜；我自己呢，可能在技术这一块擅长一点，所以前期也没做什么工作，是要在做产品的时候出力的。</p>
-<p><img src="/images/mmexport1512485485927.jpg" alt="enter description here" title="mmexport1512485485927"></p>
-<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
-<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;我的第一次比赛&quot;&gt;&lt;a href=&quot;#我的第一次比赛&quot; class=&quot;headerlink&quot; title=&quot;我的第一次比赛&quot;&gt;&lt;/a&gt;我的第一次比赛&lt;/h3&gt;&lt;p&gt;说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。
-    
-    </summary>
-    
-    
-      <category term="大学" scheme="http://yoursite.com/tags/%E5%A4%A7%E5%AD%A6/"/>
     
   </entry>
   
