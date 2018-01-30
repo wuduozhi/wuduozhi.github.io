@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-01-27T08:22:13.348Z</updated>
+  <updated>2018-01-30T02:11:57.880Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>架构|RESTful API设计</title>
+    <link href="http://yoursite.com/2018/01/30/%E6%9E%B6%E6%9E%84-RESTful-API%E8%AE%BE%E8%AE%A1/"/>
+    <id>http://yoursite.com/2018/01/30/架构-RESTful-API设计/</id>
+    <published>2018-01-30T10:11:57.000Z</published>
+    <updated>2018-01-30T02:11:57.880Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Java|Restful 和 Jersey介绍</title>
+    <link href="http://yoursite.com/2018/01/28/Java-Restful-%E5%92%8C-Jersey%E4%BB%8B%E7%BB%8D/"/>
+    <id>http://yoursite.com/2018/01/28/Java-Restful-和-Jersey介绍/</id>
+    <published>2018-01-27T20:38:21.000Z</published>
+    <updated>2018-01-27T12:38:21.716Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>数据结构|树</title>
@@ -703,35 +731,6 @@
   </entry>
   
   <entry>
-    <title>大学|记一次比赛</title>
-    <link href="http://yoursite.com/2017/12/09/%E5%A4%A7%E5%AD%A6-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%AF%94%E8%B5%9B/"/>
-    <id>http://yoursite.com/2017/12/09/大学-记一次比赛/</id>
-    <published>2017-12-09T00:10:32.000Z</published>
-    <updated>2017-12-08T16:47:59.404Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="我的第一次比赛"><a href="#我的第一次比赛" class="headerlink" title="我的第一次比赛"></a>我的第一次比赛</h3><p>说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。这是自己在大学第一个参加的比赛，是学校联想俱乐部举办的，比赛内容就是参赛队员想一个产品，有创意的产品。</p>
-<p>然后,我们就开始讨论要搞什么，最初是说搞教育那一块的，但觉得太low了，就换成了旅游出行的个性化推荐，创新点主要是能实时通过天气、景点人流、交通情况等因素，实时为旅客修改旅游计划，为用户提供最佳的旅游路线。</p>
-<p>最开始是初赛，需要做ppt和上台答辩，说白了，这个比赛就是看谁弄得ppt好看和谁的忽悠能力强就能得奖。ppt是黄智威弄的，还需要一个产品的原型，然后自己是弄原型，其实也就是弄个首页，都不是事。还是黄智威拼，弄ppt到半夜。答辩时黄智威和黄卫江上去讲的，毫无悬念，我们进入了决赛。</p>
-<p>初赛后不久是决赛，ppt是用的初赛的，但是原型就不能用初赛的了，需要搞完善一点的，不过这次不是我搞的了，是黄卫江搞的，自己有点惭愧啊，就是个打酱油的。决赛是黄智威自己上去答辩，黄卫江上课去了，我坐在台下给黄智威录像。很幸运，决赛我们的了二等奖。其中，还有一个有趣的环节呢，那就是刷票啊，不知道黄智威怎么搞的，花钱加别人刷票，这小子可以的。</p>
-<p>本以为我们能够进决赛的，我们还为此决定搞个半产品出来呢。我们三个专门去蓝杰向胡哥请教了一番，还想好了下一步的分工了。不曾想，回宿舍后，通知说没有进省赛。</p>
-<p>这就是自己第一次的比赛经历啦，虽然不精彩，但是自己也认识到一个团队需要不同的人才能做成一件事。就像黄智威，能说，会忽悠；黄卫江，能为了完成任务，熬上几夜；我自己呢，可能在技术这一块擅长一点，所以前期也没做什么工作，是要在做产品的时候出力的。</p>
-<p><img src="/images/mmexport1512485485927.jpg" alt="enter description here" title="mmexport1512485485927"></p>
-<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
-<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;我的第一次比赛&quot;&gt;&lt;a href=&quot;#我的第一次比赛&quot; class=&quot;headerlink&quot; title=&quot;我的第一次比赛&quot;&gt;&lt;/a&gt;我的第一次比赛&lt;/h3&gt;&lt;p&gt;说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。
-    
-    </summary>
-    
-    
-      <category term="大学" scheme="http://yoursite.com/tags/%E5%A4%A7%E5%AD%A6/"/>
-    
-  </entry>
-  
-  <entry>
     <title>动态规划——由实践总结经验</title>
     <link href="http://yoursite.com/2017/12/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98/"/>
     <id>http://yoursite.com/2017/12/09/动态规划经典例题/</id>
@@ -806,6 +805,35 @@
     
     
       <category term="动态规划" scheme="http://yoursite.com/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>大学|记一次比赛</title>
+    <link href="http://yoursite.com/2017/12/09/%E5%A4%A7%E5%AD%A6-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%AF%94%E8%B5%9B/"/>
+    <id>http://yoursite.com/2017/12/09/大学-记一次比赛/</id>
+    <published>2017-12-09T00:10:32.000Z</published>
+    <updated>2017-12-08T16:47:59.404Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="我的第一次比赛"><a href="#我的第一次比赛" class="headerlink" title="我的第一次比赛"></a>我的第一次比赛</h3><p>说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。这是自己在大学第一个参加的比赛，是学校联想俱乐部举办的，比赛内容就是参赛队员想一个产品，有创意的产品。</p>
+<p>然后,我们就开始讨论要搞什么，最初是说搞教育那一块的，但觉得太low了，就换成了旅游出行的个性化推荐，创新点主要是能实时通过天气、景点人流、交通情况等因素，实时为旅客修改旅游计划，为用户提供最佳的旅游路线。</p>
+<p>最开始是初赛，需要做ppt和上台答辩，说白了，这个比赛就是看谁弄得ppt好看和谁的忽悠能力强就能得奖。ppt是黄智威弄的，还需要一个产品的原型，然后自己是弄原型，其实也就是弄个首页，都不是事。还是黄智威拼，弄ppt到半夜。答辩时黄智威和黄卫江上去讲的，毫无悬念，我们进入了决赛。</p>
+<p>初赛后不久是决赛，ppt是用的初赛的，但是原型就不能用初赛的了，需要搞完善一点的，不过这次不是我搞的了，是黄卫江搞的，自己有点惭愧啊，就是个打酱油的。决赛是黄智威自己上去答辩，黄卫江上课去了，我坐在台下给黄智威录像。很幸运，决赛我们的了二等奖。其中，还有一个有趣的环节呢，那就是刷票啊，不知道黄智威怎么搞的，花钱加别人刷票，这小子可以的。</p>
+<p>本以为我们能够进决赛的，我们还为此决定搞个半产品出来呢。我们三个专门去蓝杰向胡哥请教了一番，还想好了下一步的分工了。不曾想，回宿舍后，通知说没有进省赛。</p>
+<p>这就是自己第一次的比赛经历啦，虽然不精彩，但是自己也认识到一个团队需要不同的人才能做成一件事。就像黄智威，能说，会忽悠；黄卫江，能为了完成任务，熬上几夜；我自己呢，可能在技术这一块擅长一点，所以前期也没做什么工作，是要在做产品的时候出力的。</p>
+<p><img src="/images/mmexport1512485485927.jpg" alt="enter description here" title="mmexport1512485485927"></p>
+<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
+<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;我的第一次比赛&quot;&gt;&lt;a href=&quot;#我的第一次比赛&quot; class=&quot;headerlink&quot; title=&quot;我的第一次比赛&quot;&gt;&lt;/a&gt;我的第一次比赛&lt;/h3&gt;&lt;p&gt;说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。
+    
+    </summary>
+    
+    
+      <category term="大学" scheme="http://yoursite.com/tags/%E5%A4%A7%E5%AD%A6/"/>
     
   </entry>
   
@@ -1042,90 +1070,6 @@
     
     
       <category term="数据结构" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>生活|58到家面试</title>
-    <link href="http://yoursite.com/2017/10/24/%E7%94%9F%E6%B4%BB-58%E5%88%B0%E5%AE%B6%E9%9D%A2%E8%AF%95/"/>
-    <id>http://yoursite.com/2017/10/24/生活-58到家面试/</id>
-    <published>2017-10-24T00:14:57.000Z</published>
-    <updated>2017-10-26T14:24:23.062Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p> 在上周，学长（王自琰）回校宣讲，我就自告奋勇把简历给他了，说实话，效率挺高啊，第二天就叫去面试了。说是周五，但自己有课，就跟Hr说换时间，就订在周一了。</p>
-<h3 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h3><p> 58到家在一个软件园里，门卫叔叔说里面有二十栋楼，每一栋都是一个公司基本。这是自己到这种地方，有点小激动啊。然后摸索着找到了17栋，58所在地。然后填表，开始面试。</p>
-<p> 来的可能是一个Leader。然后我们两个就坐在等待区，开始 “交谈” 。面试官看起来挺好的，看了一下我的简历，然后看我做过的项目，看到一个专业名词就问一下。比如说看到 Ajax ,就会问你 Ajax 的实现原理，还叫我画了数据交互的过程；看到 MVC 就叫你说一下对 MVC 的理解；看到数据库，就会问你数据库的操作，原理…；还有就是如果看到比较难的功能点，也会停下来问你这个功能点是如何实现的。<strong>总的说，你写的简历，就是你自己给自己挖的坑。</strong></p>
-<p>在这次简历中，自己就给自己挖了一个大坑：写了一个照书上一步步来完成的成绩管理系统。然后还说自己学到了如何分析系统功能、怎么设计系统架构及数据库，这个坑足够大啊。面试官就在这里开始发问了，然后才发现自己并不是真正的懂，答非所问了，哎，自己挖的坑还是要自己跳啊。好不容易混过系统这一关了，接着是数据库，先叫你画 ER 图，然后简单描述下各表关系，再接着就是一些数据库的操作，什么排序啊、多表连接啊… 由于多表连接这个自己不是经常用，也栽了。最后，由于这个项目是用Java弄的，面试官又开始问你一些 Java 的东西了，然后问int，double…的范围，说真心话，自己对这些基础的东西真的不是很不不上心，又栽了。</p>
-<p>最后是JavaWeb方面的东西，看到了 JSP和Servlet，然后问你这两者的关系、Servlet有那些方法，怪自己没学透啦，再一次栽了。然后，我们说了一些框架的学习方面的东西，这时候是一起交流的阶段，就像是老师和学生那样，在学习的过程中遇到的问题，可以问面试官，大家一起交流，感觉挺好。</p>
-<p>然后，面试就结束了，估计这一次是没希望啦，但自己要的就是面试的这一个过程，加油。遗憾的是，最后没有问面试官觉得自己怎么样。</p>
-<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>这可以说是自己真正意义上的技术面试，加油，小智。<br><img src="/images/IMG_20171023_154930.jpg" alt="在软件园" title="IMG_20171023_154930"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt; 在上周，学长（王自琰）回校宣讲，我就自告奋勇把简历给他了，说实话，效率挺高啊，第二天就叫去面试了。说是周五，但自己有课，就跟Hr说换时间，
-    
-    </summary>
-    
-      <category term="college" scheme="http://yoursite.com/categories/college/"/>
-    
-    
-      <category term="生活" scheme="http://yoursite.com/tags/%E7%94%9F%E6%B4%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP|Slim入门demo</title>
-    <link href="http://yoursite.com/2017/10/12/PHP-Slim%E5%85%A5%E9%97%A8demo/"/>
-    <id>http://yoursite.com/2017/10/12/PHP-Slim入门demo/</id>
-    <published>2017-10-12T08:44:11.000Z</published>
-    <updated>2017-10-12T01:43:52.993Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>暑假在弦歌开发新生宝典的时候，就接触到Slim这个框架，但当时自己并没有深入了解，因为环境这些都是学长们搭的，我自己只需要写好自己的业务逻辑部分就好了，所以不深入理解也不影响工作。新学期开始，学长要求继续晚上新生宝典，也就是说重构，既然这样，那就需要深入了解Slim了。在一次读源码，感觉还是有很多问题需要解决,比如说：Slim是怎么实现路由转发的？Slim是怎么实现数据库连接的？Slim的作用是什么？给我们带来了什么样的方便之处？</p>
-<h3 id="什么是Slim"><a href="#什么是Slim" class="headerlink" title="什么是Slim"></a>什么是Slim</h3><p>官方解释：Slim是一款 PHP 微框架，可以帮助你快速编写简单但功能强大的 web 应用和 API 。在它的核心，Slim 是一个调度程序，它接收一个 HTTP 请求，调用一个适当的回调例程，然后返回一个 HTTP 响应。我个人的理解是这样的：Slim帮我们把客户端的请求与响应封装起来，让我们不用去关心请求与响应，只需要关心业务逻辑部分，简单点说，就只需要处理好数据的响应。一个 Slim 应用包含多个响应特定 HTTP 请求的路由。每个路由调用一个回调并返回一个 HTTP 响应。</p>
-<h3 id="怎么安装Slim"><a href="#怎么安装Slim" class="headerlink" title="怎么安装Slim"></a>怎么安装Slim</h3><p>官方推荐使用composer安装，自己也是因此而接触到composer，不用不知道，觉得这个工具挺好的，值得推荐。Slim的安装非常简单，只需要在我们的项目根目录中，运行以下 bash 命令，就可以将最新的稳定版安装到项目的 vendor/ 目录中。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">composer require slim/slim &quot;^3.0&quot;</div></pre></td></tr></table></figure>
-<p>举个例子，比如说我们的项目是SlimDemo，我们就只需要在SlimDemo的目录下运行上述命令，就能下载安装Slim了，同时你会发现SlimDemo目录下会出现vendor文件夹、composer.json文件和composer.lock文件。此时，恭喜你安装成功了。</p>
-<h3 id="运行Slim"><a href="#运行Slim" class="headerlink" title="运行Slim"></a>运行Slim</h3><p>就用我自己的例子给大家讲解一下吧：</p>
-<h4 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h4><p>项目的文件目录推荐如下：#表示一级目录，##表示二级目录</p>
-<p>#app    —-项目主要目录</p>
-<p>##routes.php    —-定义路由</p>
-<p>##function.php  —-功能函数</p>
-<p>#public    —-用户可以访问的目录</p>
-<p>##index.php    —-index页面</p>
-<p>#vendor    —-使用composer自动生成的目录</p>
-<p>##composer.json    —-composer配置文件</p>
-<p>##composer.lock    —-composer文件不需要管</p>
-<h4 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h4><p>按照上面的目录结构创建文件的目录app和public，vendor目录使用composer命令自动生成，所以不需要我们创建。</p>
-<h5 id="编辑index-php文件"><a href="#编辑index-php文件" class="headerlink" title="编辑index.php文件"></a>编辑index.php文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">use \Psr\Http\Message\ServerRequestInterface as Request;</div><div class="line">use \Psr\Http\Message\ResponseInterface as Response;</div><div class="line"></div><div class="line">require &apos;../vendor/autoload.php&apos;;   //添加Slim</div><div class="line">require &apos;../app/function.php&apos; ;        //添加功能函数</div><div class="line"></div><div class="line">$app = new \Slim\App;</div><div class="line"></div><div class="line">require &apos;../app/routes.php&apos;;            //添加路由管理</div><div class="line"></div><div class="line">$app-&gt;run();                            //执行</div></pre></td></tr></table></figure>
-<h5 id="添加路由管理文件"><a href="#添加路由管理文件" class="headerlink" title="添加路由管理文件"></a>添加路由管理文件</h5><p>在app文件夹里面创建routes.php文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$app-&gt;get(&apos;/hello&apos;,&apos;sayHello&apos;);//get方法路由，并回调sayHello方法</div></pre></td></tr></table></figure>
-<h5 id="添加function-php"><a href="#添加function-php" class="headerlink" title="添加function.php"></a>添加function.php</h5><p>我们设置了路由调用 sayHello 函数，所以我们现在在function.php 文件中添加 sayHello函数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function syaHello($request, $response, $args)&#123;</div><div class="line">   echo &quot;Hello World&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>到这里，我们的小demo就好啦，打开服务器，在浏览器中输入： <a href="http://127.0.0.1/SlimDemo/public/index.php/hello" target="_blank" rel="external">http://127.0.0.1/SlimDemo/public/index.php/hello</a> ;就能输出 Hello World啦。</p>
-<h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><h3 id="安装Composer"><a href="#安装Composer" class="headerlink" title="安装Composer"></a>安装Composer</h3><ul>
-<li><p>下载<br>在终端执行curl -sS <a href="https://getcomposer.org/installer" target="_blank" rel="external">https://getcomposer.org/installer</a> | php下载composer</p>
-</li>
-<li><p>设置</p>
-</li>
-</ul>
-<p>将Composer设置为全局运行程序方便使用,执行mv composer.phar /usr/local/bin/composer</p>
-<ul>
-<li>测试</li>
-</ul>
-<p>执行composer -v,如果能查看到版本信息，则说明安装成功。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;暑假在弦歌开发新生宝典的时候，就接触到Slim这个框架，但当时自己并没有深入了解，因为环境这些都是学长们搭的，我自己只需要写好自己的业务逻辑
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
-    
-    
-      <category term="Slim" scheme="http://yoursite.com/tags/Slim/"/>
     
   </entry>
   
