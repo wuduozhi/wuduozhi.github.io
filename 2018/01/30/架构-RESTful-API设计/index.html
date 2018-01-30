@@ -11,17 +11,17 @@
     
 
     
-    <meta name="description" content="My Blog">
+    <meta name="description" content="RESTful简介REST(Representation State Transfer)翻译为表达性状态转移。REST是一种架构风格。在这种架构风格中，对象被视为一种资源（resource)。表达性状态是指资源数据在某个瞬间的状态快照。资源可以有多种表述，表述状态具有描述性，包括资源数据的内容、表述格式（XML、Json…)等信息。 REST的资源是可寻址的，通过HTTP协议的通用动词方法（如GE">
 <meta property="og:type" content="article">
 <meta property="og:title" content="架构|RESTful API设计">
 <meta property="og:url" content="http://yoursite.com/2018/01/30/架构-RESTful-API设计/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="My Blog">
+<meta property="og:description" content="RESTful简介REST(Representation State Transfer)翻译为表达性状态转移。REST是一种架构风格。在这种架构风格中，对象被视为一种资源（resource)。表达性状态是指资源数据在某个瞬间的状态快照。资源可以有多种表述，表述状态具有描述性，包括资源数据的内容、表述格式（XML、Json…)等信息。 REST的资源是可寻址的，通过HTTP协议的通用动词方法（如GE">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-01-30T02:11:57.880Z">
+<meta property="og:updated_time" content="2018-01-30T03:18:54.843Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="架构|RESTful API设计">
-<meta name="twitter:description" content="My Blog">
+<meta name="twitter:description" content="RESTful简介REST(Representation State Transfer)翻译为表达性状态转移。REST是一种架构风格。在这种架构风格中，对象被视为一种资源（resource)。表达性状态是指资源数据在某个瞬间的状态快照。资源可以有多种表述，表述状态具有描述性，包括资源数据的内容、表述格式（XML、Json…)等信息。 REST的资源是可寻址的，通过HTTP协议的通用动词方法（如GE">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -101,11 +101,84 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#RESTful简介"><span class="toc-number">1.</span> <span class="toc-text">RESTful简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP动词"><span class="toc-number">2.</span> <span class="toc-text">HTTP动词</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Example"><span class="toc-number">2.1.</span> <span class="toc-text">Example</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#状态码"><span class="toc-number">3.</span> <span class="toc-text">状态码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#综述"><span class="toc-number">4.</span> <span class="toc-text">综述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些误区"><span class="toc-number">5.</span> <span class="toc-text">一些误区</span></a></li></ol>
 		
 		</div>
 		
-		  
+		<h3 id="RESTful简介"><a href="#RESTful简介" class="headerlink" title="RESTful简介"></a>RESTful简介</h3><p>REST(Representation State Transfer)翻译为表达性状态转移。REST是一种架构风格。在这种架构风格中，对象被视为一种资源（resource)。表达性状态是指资源数据在某个瞬间的状态快照。资源可以有多种表述，表述状态具有描述性，包括资源数据的内容、表述格式（XML、Json…)等信息。</p>
+<p>REST的资源是可寻址的，通过HTTP协议的通用动词方法（如GET、PUT、DELETE、POST），同时通过URI协议来唯一标识某一个资源公布出来的接口。</p>
+<p>请求一个资源的过程可以理解为访问一个具有指定性和描述性的URI，通过HTTP协议，将资源的表述性从服务器“转移”到客户端或者相反的方向。</p>
+<h3 id="HTTP动词"><a href="#HTTP动词" class="headerlink" title="HTTP动词"></a>HTTP动词</h3><p>对于资源的具体操作，由HTTP动词表示。</p>
+<p>常用的HTTP动词有下面五个（括号里是对应的SQL命令）。</p>
+<table>
+<thead>
+<tr>
+<th>动词</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET（SELECT）</td>
+<td>从服务器取出资源（一项或多项）。</td>
+</tr>
+<tr>
+<td>POST（CREATE）</td>
+<td>在服务器新建一个资源。</td>
+</tr>
+<tr>
+<td>PUT（UPDATE）</td>
+<td>在服务器更新资源（客户端提供改变后的完整资源）。</td>
+</tr>
+<tr>
+<td>PATCH（UPDATE）</td>
+<td>在服务器更新资源（客户端提供改变的属性）。</td>
+</tr>
+<tr>
+<td>DELETE（DELETE）</td>
+<td>从服务器删除资源。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><ul>
+<li>GET /zoos：列出所有动物园</li>
+<li>POST /zoos：新建一个动物园</li>
+<li>GET /zoos/ID：获取某个指定动物园的信息</li>
+<li>PUT /zoos/ID：更新某个指定动物园的信息（提供该动物园的全部信息）</li>
+<li>PATCH /zoos/ID：更新某个指定动物园的信息（提供该动物园的部分信息）</li>
+<li>DELETE /zoos/ID：删除某个动物园</li>
+<li>GET /zoos/ID/animals：列出某个指定动物园的所有动物</li>
+<li>DELETE /zoos/ID/animals/ID：删除某个指定动物园的指定动物</li>
+</ul>
+<h3 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h3><ul>
+<li>200 OK - [GET]：服务器成功返回用户请求的数据，该操作是幂等的（* Idempotent）。</li>
+<li>201 CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功。</li>
+<li>202 Accepted - [*]：表示一个请求已经进入后台排队（异步任务）</li>
+<li>204 NO CONTENT - [DELETE]：用户删除数据成功。</li>
+<li>400 INVALID REQUEST - [POST/PUT/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作，该操作是幂等的。</li>
+<li>401 Unauthorized - [*]：表示用户没有权限（令牌、用户名、密码错误）。</li>
+<li>403 Forbidden - [*] 表示用户得到授权（与401错误相对），但是访问是被禁止的。</li>
+<li>404 NOT FOUND - [*]：用户发出的请求针对的是不存在的记录，服务器没有进行操作，该操作是幂等的。</li>
+<li>406 Not Acceptable - [GET]：用户请求的格式不可得（比如用户请求JSON格式，但是只有XML格式）。</li>
+<li>410 Gone -[GET]：用户请求的资源被永久删除，且不会再得到的。</li>
+<li>422 Unprocesable entity - [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误。</li>
+<li>500 INTERNAL SERVER ERROR - [*]：服务器发生错误，用户将无法判断发出的请求是否成功。<br>状态码的完全列表参见这里。</li>
+</ul>
+<h3 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h3><p>综合上面的解释，我们总结一下什么是RESTful架构：</p>
+<p>　　（1）每一个URI代表一种资源；</p>
+<p>　　（2）客户端和服务器之间，传递这种资源的某种表现层；</p>
+<p>　　（3）客户端通过四个HTTP动词，对服务器端资源进行操作，实现”表现层状态转化”。</p>
+<h3 id="一些误区"><a href="#一些误区" class="headerlink" title="一些误区"></a>一些误区</h3><p>RESTful架构有一些典型的设计误区。</p>
+<p>最常见的一种设计错误，就是URI包含动词。因为”资源”表示一种实体，所以应该是名词，URI不应该有动词，动词应该放在HTTP协议中。</p>
+<p>举例来说，某个URI是/posts/show/1，其中show是动词，这个URI就设计错了，正确的写法应该是/posts/1，然后用GET方法表示show。</p>
+<p>如果某些动作是HTTP动词表示不了的，你就应该把动作做成一种资源。比如网上汇款，从账户1向账户2汇款500元，错误的URI是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">　　POST /accounts/1/transfer/500/to/2</div></pre></td></tr></table></figure>
+<p>正确的写法是把动词transfer改成名词transaction，资源不能是动词，但是可以是一种服务：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">　　POST /transaction HTTP/1.1</div><div class="line">　　Host: 127.0.0.1</div><div class="line">　　</div><div class="line">　　from=1&amp;to=2&amp;amount=500.00</div></pre></td></tr></table></figure>
+<p>另一个设计误区，就是在URI中加入版本号：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">　　http://www.example.com/app/1.0/foo</div><div class="line"></div><div class="line">　　http://www.example.com/app/1.1/foo</div><div class="line"></div><div class="line">　　http://www.example.com/app/2.0/foo</div></pre></td></tr></table></figure>
+<p>因为不同的版本，可以理解成同一种资源的不同表现形式，所以应该采用同一个URI。版本号可以在HTTP请求头信息的Accept字段中进行区分。</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -124,8 +197,8 @@
  
 
 <div class="next">
-<a href="/2018/01/28/Java-Restful-和-Jersey介绍/"  title="Java|Restful 和 Jersey介绍">
- <span>Java|Restful 和 Jersey介绍
+<a href="/2018/01/28/Java-Restful-和-Jersey介绍/"  title="Java|Restful和Jersey介绍">
+ <span>Java|Restful和Jersey介绍
 </span>
 </a>
 </div>
@@ -227,7 +300,7 @@
 			
 		
 			
-				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
 			
 		
 			
@@ -239,11 +312,11 @@
 			
 		
 			
-				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
 			
 		
 			
@@ -251,15 +324,11 @@
 			
 		
 			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
 			
 		
 			
@@ -267,7 +336,11 @@
 			
 		
 			
-				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
 			
 		
 		</ul>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-01-30T02:11:57.880Z</updated>
+  <updated>2018-01-30T03:18:54.843Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,9 +20,86 @@
     <link href="http://yoursite.com/2018/01/30/%E6%9E%B6%E6%9E%84-RESTful-API%E8%AE%BE%E8%AE%A1/"/>
     <id>http://yoursite.com/2018/01/30/架构-RESTful-API设计/</id>
     <published>2018-01-30T10:11:57.000Z</published>
-    <updated>2018-01-30T02:11:57.880Z</updated>
+    <updated>2018-01-30T03:18:54.843Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="RESTful简介"><a href="#RESTful简介" class="headerlink" title="RESTful简介"></a>RESTful简介</h3><p>REST(Representation State Transfer)翻译为表达性状态转移。REST是一种架构风格。在这种架构风格中，对象被视为一种资源（resource)。表达性状态是指资源数据在某个瞬间的状态快照。资源可以有多种表述，表述状态具有描述性，包括资源数据的内容、表述格式（XML、Json…)等信息。</p>
+<p>REST的资源是可寻址的，通过HTTP协议的通用动词方法（如GET、PUT、DELETE、POST），同时通过URI协议来唯一标识某一个资源公布出来的接口。</p>
+<p>请求一个资源的过程可以理解为访问一个具有指定性和描述性的URI，通过HTTP协议，将资源的表述性从服务器“转移”到客户端或者相反的方向。</p>
+<h3 id="HTTP动词"><a href="#HTTP动词" class="headerlink" title="HTTP动词"></a>HTTP动词</h3><p>对于资源的具体操作，由HTTP动词表示。</p>
+<p>常用的HTTP动词有下面五个（括号里是对应的SQL命令）。</p>
+<table>
+<thead>
+<tr>
+<th>动词</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET（SELECT）</td>
+<td>从服务器取出资源（一项或多项）。</td>
+</tr>
+<tr>
+<td>POST（CREATE）</td>
+<td>在服务器新建一个资源。</td>
+</tr>
+<tr>
+<td>PUT（UPDATE）</td>
+<td>在服务器更新资源（客户端提供改变后的完整资源）。</td>
+</tr>
+<tr>
+<td>PATCH（UPDATE）</td>
+<td>在服务器更新资源（客户端提供改变的属性）。</td>
+</tr>
+<tr>
+<td>DELETE（DELETE）</td>
+<td>从服务器删除资源。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><ul>
+<li>GET /zoos：列出所有动物园</li>
+<li>POST /zoos：新建一个动物园</li>
+<li>GET /zoos/ID：获取某个指定动物园的信息</li>
+<li>PUT /zoos/ID：更新某个指定动物园的信息（提供该动物园的全部信息）</li>
+<li>PATCH /zoos/ID：更新某个指定动物园的信息（提供该动物园的部分信息）</li>
+<li>DELETE /zoos/ID：删除某个动物园</li>
+<li>GET /zoos/ID/animals：列出某个指定动物园的所有动物</li>
+<li>DELETE /zoos/ID/animals/ID：删除某个指定动物园的指定动物</li>
+</ul>
+<h3 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h3><ul>
+<li>200 OK - [GET]：服务器成功返回用户请求的数据，该操作是幂等的（* Idempotent）。</li>
+<li>201 CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功。</li>
+<li>202 Accepted - [*]：表示一个请求已经进入后台排队（异步任务）</li>
+<li>204 NO CONTENT - [DELETE]：用户删除数据成功。</li>
+<li>400 INVALID REQUEST - [POST/PUT/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作，该操作是幂等的。</li>
+<li>401 Unauthorized - [*]：表示用户没有权限（令牌、用户名、密码错误）。</li>
+<li>403 Forbidden - [*] 表示用户得到授权（与401错误相对），但是访问是被禁止的。</li>
+<li>404 NOT FOUND - [*]：用户发出的请求针对的是不存在的记录，服务器没有进行操作，该操作是幂等的。</li>
+<li>406 Not Acceptable - [GET]：用户请求的格式不可得（比如用户请求JSON格式，但是只有XML格式）。</li>
+<li>410 Gone -[GET]：用户请求的资源被永久删除，且不会再得到的。</li>
+<li>422 Unprocesable entity - [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误。</li>
+<li>500 INTERNAL SERVER ERROR - [*]：服务器发生错误，用户将无法判断发出的请求是否成功。<br>状态码的完全列表参见这里。</li>
+</ul>
+<h3 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h3><p>综合上面的解释，我们总结一下什么是RESTful架构：</p>
+<p>　　（1）每一个URI代表一种资源；</p>
+<p>　　（2）客户端和服务器之间，传递这种资源的某种表现层；</p>
+<p>　　（3）客户端通过四个HTTP动词，对服务器端资源进行操作，实现”表现层状态转化”。</p>
+<h3 id="一些误区"><a href="#一些误区" class="headerlink" title="一些误区"></a>一些误区</h3><p>RESTful架构有一些典型的设计误区。</p>
+<p>最常见的一种设计错误，就是URI包含动词。因为”资源”表示一种实体，所以应该是名词，URI不应该有动词，动词应该放在HTTP协议中。</p>
+<p>举例来说，某个URI是/posts/show/1，其中show是动词，这个URI就设计错了，正确的写法应该是/posts/1，然后用GET方法表示show。</p>
+<p>如果某些动作是HTTP动词表示不了的，你就应该把动作做成一种资源。比如网上汇款，从账户1向账户2汇款500元，错误的URI是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">　　POST /accounts/1/transfer/500/to/2</div></pre></td></tr></table></figure>
+<p>正确的写法是把动词transfer改成名词transaction，资源不能是动词，但是可以是一种服务：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">　　POST /transaction HTTP/1.1</div><div class="line">　　Host: 127.0.0.1</div><div class="line">　　</div><div class="line">　　from=1&amp;to=2&amp;amount=500.00</div></pre></td></tr></table></figure>
+<p>另一个设计误区，就是在URI中加入版本号：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">　　http://www.example.com/app/1.0/foo</div><div class="line"></div><div class="line">　　http://www.example.com/app/1.1/foo</div><div class="line"></div><div class="line">　　http://www.example.com/app/2.0/foo</div></pre></td></tr></table></figure>
+<p>因为不同的版本，可以理解成同一种资源的不同表现形式，所以应该采用同一个URI。版本号可以在HTTP请求头信息的Accept字段中进行区分。</p>
+]]></content>
     
     <summary type="html">
+    
+      &lt;h3 id=&quot;RESTful简介&quot;&gt;&lt;a href=&quot;#RESTful简介&quot; class=&quot;headerlink&quot; title=&quot;RESTful简介&quot;&gt;&lt;/a&gt;RESTful简介&lt;/h3&gt;&lt;p&gt;REST(Representation State Transfer)翻译为表达性状
     
     </summary>
     
@@ -30,13 +107,43 @@
   </entry>
   
   <entry>
-    <title>Java|Restful 和 Jersey介绍</title>
+    <title>Java|Restful和Jersey介绍</title>
     <link href="http://yoursite.com/2018/01/28/Java-Restful-%E5%92%8C-Jersey%E4%BB%8B%E7%BB%8D/"/>
     <id>http://yoursite.com/2018/01/28/Java-Restful-和-Jersey介绍/</id>
     <published>2018-01-27T20:38:21.000Z</published>
-    <updated>2018-01-27T12:38:21.716Z</updated>
+    <updated>2018-01-30T03:18:58.793Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>REST 中最重要的概念是资源（resources） ，使用全球 ID（通常使用 URI）标识。client应用程序使用 HTTP 方法（GET/ POST/ PUT/ DELETE ）操作资源或资源集。</p>
+<p>RESTful Web 服务是使用 HTTP 和 REST 原理实现的 Web 服务。通常。RESTful Web 服务应该定义下面方面：Web 服务的基/根 URI。比方 <a href="http://host/" target="_blank" rel="external">http://host/</a><appcontext>/resources。支持 MIME 类型的响应数据，包含JSON/XML/ATOM等等。服务支持的操作集合（比如 POST、GET、PUT 或  DELETE)</appcontext></p>
+<h3 id="REST-与-JSR（jersey"><a href="#REST-与-JSR（jersey" class="headerlink" title="REST 与 JSR（jersey)"></a>REST 与 JSR（jersey)</h3><p>JSR－311  Java API for RESTful Web Services (JAX-RS) 1.0 and 1.1</p>
+<p>JAX-RS是将在JavaEE 6引起的一种新技术。 JAX-RS即Java API for RESTful Web Services。是一个Java编程语言的应用程序接口，支持依照表述性状态转移（REST）架构风格创建Web服务。</p>
+<p>JAX-RS使用了Java SE5引入的Java标注来简化Web服务的client和服务端 的开发和部署。包含：</p>
+<p>@Path。标注资源类或者方法的相对路径 　　<br>@GET。@PUT。@POST。@DELETE，标注方法是HTTP请求的类型。</p>
+<p>　　<br>@Produces，标注返回的MIME媒体类型 　　<br>@Consumes。标注可接受请求的MIME媒体类型<br>@PathParam。@QueryParam。@HeaderParam。@CookieParam，@MatrixParam。@FormParam,分别标注方法的參数来自于HTTP请求的不同位置。比如@PathParam来自于URL的路径，@QueryParam来自于URL的查询參数，@HeaderParam来自于HTTP请求的头信息，@CookieParam来自于HTTP请求的Cookie,@FormParam来自于HTTP请求的post的form格式。</p>
+<h3 id="Jersey-jar包简单介绍"><a href="#Jersey-jar包简单介绍" class="headerlink" title="Jersey jar包简单介绍"></a>Jersey jar包简单介绍</h3><p>Jersey 是 JAX-RS 的參考实现，它包括三个主要部分。</p>
+<ul>
+<li>核心server（CoreServer）：通过提供JSR311中标准化的凝视和API标准化，您能够用直观的方式开发 RESTful Web 服务。</li>
+<li>核心client（CoreClient）：JerseyclientAPI帮助您与REST服务轻松通信</li>
+<li>集成（Integration）：Jersey 还提供能够轻松集成 Spring、Guice、Apache Abdera 的库。</li>
+</ul>
+<h3 id="Jersey配置"><a href="#Jersey配置" class="headerlink" title="Jersey配置"></a>Jersey配置</h3><p>从 Jersey 开发包中下面的库为必须：</p>
+<ul>
+<li>核心服务器：jersey-core.jar。jersey-server.jar。jsr311-api.jar。asm.jar</li>
+<li>核心客户端：（用于測试）jersey-client.jar</li>
+<li>JAXB 支持：（在高级例子中使用）jaxb-impl.jar，jaxb-api.jar。activation.jar，stax-api.jar，wstx-asl.jar</li>
+<li>JSON 支持：（在高级例子中使用）jersey-json.jar</li>
+</ul>
+<p>(JSON是类似于xml的一种通用。在不同project/语言/平台间传递数据的格式，其比xml更精炼更优良，差点儿全部的语言和框架已经支持了，传递过来的数据再用JSON解码就可以，就像c++struct结构体一样，直接json.xxx就可以訪问。多层的话就json.xxx.xxx)</p>
+<p>您须要将全部的 REST 请求发送到 Jersey 容器 —— 在应用程序的 web.xml 文件里定义 servlet 调度程序（參见清单 1）。</p>
+<p>除了声明 Jersey servlet 外，它还定义一个初始化參数，指示包括资源的 Java 包。</p>
+<p>Web.xml: Xml代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;servlet&gt;  </div><div class="line">    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;  </div><div class="line">    &lt;servlet-class&gt;  </div><div class="line">      com.sun.jersey.spi.container.servlet.ServletContainer  </div><div class="line">    &lt;/servlet-class&gt;  </div><div class="line">    &lt;init-param&gt;  </div><div class="line">      &lt;param-name&gt;com.sun.jersey.config.property.packages&lt;/param-name&gt;  </div><div class="line">      &lt;param-value&gt;sh.cmbchina.pension.resources&lt;/param-value&gt;  </div><div class="line">    &lt;/init-param&gt;  </div><div class="line">    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;  </div><div class="line">&lt;/servlet&gt;  </div><div class="line">&lt;servlet-mapping&gt;  </div><div class="line">    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;  </div><div class="line">    &lt;url-pattern&gt;/rest/*&lt;/url-pattern&gt;  </div><div class="line">&lt;/servlet-mapping&gt;</div></pre></td></tr></table></figure></p>
+<p>这样，全部在包sh.cmbchina.pension.resources以下的resource类都会被注冊为Restful url的响应处理类。</p>
+<h3 id="添加Json支持"><a href="#添加Json支持" class="headerlink" title="添加Json支持"></a>添加Json支持</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;com.sun.jersey&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;jersey-json&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;1.18&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+]]></content>
     
     <summary type="html">
+    
+      &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;REST 中最重要的概念是资源（resources） ，使用全球 ID（通常使用 URI）标识。client应用程序使用 HTTP 方法（G
     
     </summary>
     
@@ -48,7 +155,7 @@
     <link href="http://yoursite.com/2018/01/24/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91/"/>
     <id>http://yoursite.com/2018/01/24/数据结构-树/</id>
     <published>2018-01-24T15:46:20.000Z</published>
-    <updated>2018-01-27T08:22:13.348Z</updated>
+    <updated>2018-01-30T03:19:03.667Z</updated>
     
     <content type="html"><![CDATA[<h3 id="树的简介"><a href="#树的简介" class="headerlink" title="树的简介"></a>树的简介</h3><p>树是一种数据结构，它是n(n&gt;=0)个节点的有限集。n=0时称为空树。n&gt;0时，有限集的元素构成一个具有层次感的数据结构。树是一种典型的一对多的数据结构，类比我们现实生活中的公司分工结构。</p>
 <p>区别于线性表一对一的元素关系，树中的节点是一对多的关系。树具有以下特点：</p>
@@ -99,7 +206,7 @@
     <link href="http://yoursite.com/2018/01/24/%E6%80%BB%E7%BB%93-%E6%88%91%E7%9A%84%E5%A4%A7%E4%BA%8C-%E4%B8%8A/"/>
     <id>http://yoursite.com/2018/01/24/总结-我的大二-上/</id>
     <published>2018-01-24T09:33:17.000Z</published>
-    <updated>2018-01-27T08:22:06.460Z</updated>
+    <updated>2018-01-30T03:19:07.766Z</updated>
     
     <content type="html"><![CDATA[<h3 id="我的大二"><a href="#我的大二" class="headerlink" title="我的大二"></a>我的大二</h3><p>不得不说，大二的上学期一转眼就过了，让人触不及防，可以说大学生活已经过了一半了。现在都流行搞年度总结，像支付宝会出年度账单、网易云音乐会出年度歌单…那我也来个 <strong>小智年度总结吧</strong></p>
 <h4 id="加入找实习的大军"><a href="#加入找实习的大军" class="headerlink" title="加入找实习的大军"></a>加入找实习的大军</h4><p>这是在刚开学那会，弄着玩的，但自己还真的有想过要找份实习的。在写了自己的第一份简历后，有学长学长的推荐，或者看到一些招聘信息，就一股脑的投了简历了。当时也没多想，毕竟年轻嘛，目的性也不是很强，成是最好，不成就当是练手了。当时也参加了一些笔试，可能自己还没认真钻研过数据结构和算法这些很基础的内容吧，只是知道个大概，所以笔试的时候并不能发挥的很好，因此往往总是在笔试后就止步不前了。不过，这一段经历还是挺好玩的，毕竟是以一种试一试与学习的心态去参加的，没有那么多压力，很轻松。同时，也发现了自己的很多问题吧。</p>
@@ -731,6 +838,35 @@
   </entry>
   
   <entry>
+    <title>大学|记一次比赛</title>
+    <link href="http://yoursite.com/2017/12/09/%E5%A4%A7%E5%AD%A6-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%AF%94%E8%B5%9B/"/>
+    <id>http://yoursite.com/2017/12/09/大学-记一次比赛/</id>
+    <published>2017-12-09T00:10:32.000Z</published>
+    <updated>2017-12-08T16:47:59.404Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="我的第一次比赛"><a href="#我的第一次比赛" class="headerlink" title="我的第一次比赛"></a>我的第一次比赛</h3><p>说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。这是自己在大学第一个参加的比赛，是学校联想俱乐部举办的，比赛内容就是参赛队员想一个产品，有创意的产品。</p>
+<p>然后,我们就开始讨论要搞什么，最初是说搞教育那一块的，但觉得太low了，就换成了旅游出行的个性化推荐，创新点主要是能实时通过天气、景点人流、交通情况等因素，实时为旅客修改旅游计划，为用户提供最佳的旅游路线。</p>
+<p>最开始是初赛，需要做ppt和上台答辩，说白了，这个比赛就是看谁弄得ppt好看和谁的忽悠能力强就能得奖。ppt是黄智威弄的，还需要一个产品的原型，然后自己是弄原型，其实也就是弄个首页，都不是事。还是黄智威拼，弄ppt到半夜。答辩时黄智威和黄卫江上去讲的，毫无悬念，我们进入了决赛。</p>
+<p>初赛后不久是决赛，ppt是用的初赛的，但是原型就不能用初赛的了，需要搞完善一点的，不过这次不是我搞的了，是黄卫江搞的，自己有点惭愧啊，就是个打酱油的。决赛是黄智威自己上去答辩，黄卫江上课去了，我坐在台下给黄智威录像。很幸运，决赛我们的了二等奖。其中，还有一个有趣的环节呢，那就是刷票啊，不知道黄智威怎么搞的，花钱加别人刷票，这小子可以的。</p>
+<p>本以为我们能够进决赛的，我们还为此决定搞个半产品出来呢。我们三个专门去蓝杰向胡哥请教了一番，还想好了下一步的分工了。不曾想，回宿舍后，通知说没有进省赛。</p>
+<p>这就是自己第一次的比赛经历啦，虽然不精彩，但是自己也认识到一个团队需要不同的人才能做成一件事。就像黄智威，能说，会忽悠；黄卫江，能为了完成任务，熬上几夜；我自己呢，可能在技术这一块擅长一点，所以前期也没做什么工作，是要在做产品的时候出力的。</p>
+<p><img src="/images/mmexport1512485485927.jpg" alt="enter description here" title="mmexport1512485485927"></p>
+<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
+<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;我的第一次比赛&quot;&gt;&lt;a href=&quot;#我的第一次比赛&quot; class=&quot;headerlink&quot; title=&quot;我的第一次比赛&quot;&gt;&lt;/a&gt;我的第一次比赛&lt;/h3&gt;&lt;p&gt;说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。
+    
+    </summary>
+    
+    
+      <category term="大学" scheme="http://yoursite.com/tags/%E5%A4%A7%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
     <title>动态规划——由实践总结经验</title>
     <link href="http://yoursite.com/2017/12/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98/"/>
     <id>http://yoursite.com/2017/12/09/动态规划经典例题/</id>
@@ -805,35 +941,6 @@
     
     
       <category term="动态规划" scheme="http://yoursite.com/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>大学|记一次比赛</title>
-    <link href="http://yoursite.com/2017/12/09/%E5%A4%A7%E5%AD%A6-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%AF%94%E8%B5%9B/"/>
-    <id>http://yoursite.com/2017/12/09/大学-记一次比赛/</id>
-    <published>2017-12-09T00:10:32.000Z</published>
-    <updated>2017-12-08T16:47:59.404Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="我的第一次比赛"><a href="#我的第一次比赛" class="headerlink" title="我的第一次比赛"></a>我的第一次比赛</h3><p>说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。这是自己在大学第一个参加的比赛，是学校联想俱乐部举办的，比赛内容就是参赛队员想一个产品，有创意的产品。</p>
-<p>然后,我们就开始讨论要搞什么，最初是说搞教育那一块的，但觉得太low了，就换成了旅游出行的个性化推荐，创新点主要是能实时通过天气、景点人流、交通情况等因素，实时为旅客修改旅游计划，为用户提供最佳的旅游路线。</p>
-<p>最开始是初赛，需要做ppt和上台答辩，说白了，这个比赛就是看谁弄得ppt好看和谁的忽悠能力强就能得奖。ppt是黄智威弄的，还需要一个产品的原型，然后自己是弄原型，其实也就是弄个首页，都不是事。还是黄智威拼，弄ppt到半夜。答辩时黄智威和黄卫江上去讲的，毫无悬念，我们进入了决赛。</p>
-<p>初赛后不久是决赛，ppt是用的初赛的，但是原型就不能用初赛的了，需要搞完善一点的，不过这次不是我搞的了，是黄卫江搞的，自己有点惭愧啊，就是个打酱油的。决赛是黄智威自己上去答辩，黄卫江上课去了，我坐在台下给黄智威录像。很幸运，决赛我们的了二等奖。其中，还有一个有趣的环节呢，那就是刷票啊，不知道黄智威怎么搞的，花钱加别人刷票，这小子可以的。</p>
-<p>本以为我们能够进决赛的，我们还为此决定搞个半产品出来呢。我们三个专门去蓝杰向胡哥请教了一番，还想好了下一步的分工了。不曾想，回宿舍后，通知说没有进省赛。</p>
-<p>这就是自己第一次的比赛经历啦，虽然不精彩，但是自己也认识到一个团队需要不同的人才能做成一件事。就像黄智威，能说，会忽悠；黄卫江，能为了完成任务，熬上几夜；我自己呢，可能在技术这一块擅长一点，所以前期也没做什么工作，是要在做产品的时候出力的。</p>
-<p><img src="/images/mmexport1512485485927.jpg" alt="enter description here" title="mmexport1512485485927"></p>
-<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
-<p><img src="/images/mmexport1512658490870.jpg" alt="enter description here" title="mmexport1512658490870"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;我的第一次比赛&quot;&gt;&lt;a href=&quot;#我的第一次比赛&quot; class=&quot;headerlink&quot; title=&quot;我的第一次比赛&quot;&gt;&lt;/a&gt;我的第一次比赛&lt;/h3&gt;&lt;p&gt;说起这次比赛，也挺好玩，自己先前根本不知道是怎么回事，江哥先找到我说想一起组队参加比赛，我也答应了。
-    
-    </summary>
-    
-    
-      <category term="大学" scheme="http://yoursite.com/tags/%E5%A4%A7%E5%AD%A6/"/>
     
   </entry>
   

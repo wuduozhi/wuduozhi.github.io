@@ -4,24 +4,24 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Java|Restful 和 Jersey介绍 | 只为不凡而来</title>
+    <title>Java|Restful和Jersey介绍 | 只为不凡而来</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="wuduozhi">
     
 
     
-    <meta name="description" content="My Blog">
+    <meta name="description" content="简介REST 中最重要的概念是资源（resources） ，使用全球 ID（通常使用 URI）标识。client应用程序使用 HTTP 方法（GET/ POST/ PUT/ DELETE ）操作资源或资源集。 RESTful Web 服务是使用 HTTP 和 REST 原理实现的 Web 服务。通常。RESTful Web 服务应该定义下面方面：Web 服务的基/根 URI。比方 http://h">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java|Restful 和 Jersey介绍">
+<meta property="og:title" content="Java|Restful和Jersey介绍">
 <meta property="og:url" content="http://yoursite.com/2018/01/28/Java-Restful-和-Jersey介绍/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="My Blog">
+<meta property="og:description" content="简介REST 中最重要的概念是资源（resources） ，使用全球 ID（通常使用 URI）标识。client应用程序使用 HTTP 方法（GET/ POST/ PUT/ DELETE ）操作资源或资源集。 RESTful Web 服务是使用 HTTP 和 REST 原理实现的 Web 服务。通常。RESTful Web 服务应该定义下面方面：Web 服务的基/根 URI。比方 http://h">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-01-27T12:38:21.716Z">
+<meta property="og:updated_time" content="2018-01-30T03:18:58.793Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java|Restful 和 Jersey介绍">
-<meta name="twitter:description" content="My Blog">
+<meta name="twitter:title" content="Java|Restful和Jersey介绍">
+<meta name="twitter:description" content="简介REST 中最重要的概念是资源（resources） ，使用全球 ID（通常使用 URI）标识。client应用程序使用 HTTP 方法（GET/ POST/ PUT/ DELETE ）操作资源或资源集。 RESTful Web 服务是使用 HTTP 和 REST 原理实现的 Web 服务。通常。RESTful Web 服务应该定义下面方面：Web 服务的基/根 URI。比方 http://h">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -85,7 +85,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2018/01/28/Java-Restful-和-Jersey介绍/" title="Java|Restful 和 Jersey介绍" itemprop="url">Java|Restful 和 Jersey介绍</a>
+      <a href="/2018/01/28/Java-Restful-和-Jersey介绍/" title="Java|Restful和Jersey介绍" itemprop="url">Java|Restful和Jersey介绍</a>
   </h1>
   <p class="article-author">By
        
@@ -101,11 +101,37 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#REST-与-JSR（jersey"><span class="toc-number">1.1.</span> <span class="toc-text">REST 与 JSR（jersey)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jersey-jar包简单介绍"><span class="toc-number">1.2.</span> <span class="toc-text">Jersey jar包简单介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jersey配置"><span class="toc-number">1.3.</span> <span class="toc-text">Jersey配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加Json支持"><span class="toc-number">1.4.</span> <span class="toc-text">添加Json支持</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		  
+		<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>REST 中最重要的概念是资源（resources） ，使用全球 ID（通常使用 URI）标识。client应用程序使用 HTTP 方法（GET/ POST/ PUT/ DELETE ）操作资源或资源集。</p>
+<p>RESTful Web 服务是使用 HTTP 和 REST 原理实现的 Web 服务。通常。RESTful Web 服务应该定义下面方面：Web 服务的基/根 URI。比方 <a href="http://host/" target="_blank" rel="external">http://host/</a><appcontext>/resources。支持 MIME 类型的响应数据，包含JSON/XML/ATOM等等。服务支持的操作集合（比如 POST、GET、PUT 或  DELETE)</appcontext></p>
+<h3 id="REST-与-JSR（jersey"><a href="#REST-与-JSR（jersey" class="headerlink" title="REST 与 JSR（jersey)"></a>REST 与 JSR（jersey)</h3><p>JSR－311  Java API for RESTful Web Services (JAX-RS) 1.0 and 1.1</p>
+<p>JAX-RS是将在JavaEE 6引起的一种新技术。 JAX-RS即Java API for RESTful Web Services。是一个Java编程语言的应用程序接口，支持依照表述性状态转移（REST）架构风格创建Web服务。</p>
+<p>JAX-RS使用了Java SE5引入的Java标注来简化Web服务的client和服务端 的开发和部署。包含：</p>
+<p>@Path。标注资源类或者方法的相对路径 　　<br>@GET。@PUT。@POST。@DELETE，标注方法是HTTP请求的类型。</p>
+<p>　　<br>@Produces，标注返回的MIME媒体类型 　　<br>@Consumes。标注可接受请求的MIME媒体类型<br>@PathParam。@QueryParam。@HeaderParam。@CookieParam，@MatrixParam。@FormParam,分别标注方法的參数来自于HTTP请求的不同位置。比如@PathParam来自于URL的路径，@QueryParam来自于URL的查询參数，@HeaderParam来自于HTTP请求的头信息，@CookieParam来自于HTTP请求的Cookie,@FormParam来自于HTTP请求的post的form格式。</p>
+<h3 id="Jersey-jar包简单介绍"><a href="#Jersey-jar包简单介绍" class="headerlink" title="Jersey jar包简单介绍"></a>Jersey jar包简单介绍</h3><p>Jersey 是 JAX-RS 的參考实现，它包括三个主要部分。</p>
+<ul>
+<li>核心server（CoreServer）：通过提供JSR311中标准化的凝视和API标准化，您能够用直观的方式开发 RESTful Web 服务。</li>
+<li>核心client（CoreClient）：JerseyclientAPI帮助您与REST服务轻松通信</li>
+<li>集成（Integration）：Jersey 还提供能够轻松集成 Spring、Guice、Apache Abdera 的库。</li>
+</ul>
+<h3 id="Jersey配置"><a href="#Jersey配置" class="headerlink" title="Jersey配置"></a>Jersey配置</h3><p>从 Jersey 开发包中下面的库为必须：</p>
+<ul>
+<li>核心服务器：jersey-core.jar。jersey-server.jar。jsr311-api.jar。asm.jar</li>
+<li>核心客户端：（用于測试）jersey-client.jar</li>
+<li>JAXB 支持：（在高级例子中使用）jaxb-impl.jar，jaxb-api.jar。activation.jar，stax-api.jar，wstx-asl.jar</li>
+<li>JSON 支持：（在高级例子中使用）jersey-json.jar</li>
+</ul>
+<p>(JSON是类似于xml的一种通用。在不同project/语言/平台间传递数据的格式，其比xml更精炼更优良，差点儿全部的语言和框架已经支持了，传递过来的数据再用JSON解码就可以，就像c++struct结构体一样，直接json.xxx就可以訪问。多层的话就json.xxx.xxx)</p>
+<p>您须要将全部的 REST 请求发送到 Jersey 容器 —— 在应用程序的 web.xml 文件里定义 servlet 调度程序（參见清单 1）。</p>
+<p>除了声明 Jersey servlet 外，它还定义一个初始化參数，指示包括资源的 Java 包。</p>
+<p>Web.xml: Xml代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;servlet&gt;  </div><div class="line">    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;  </div><div class="line">    &lt;servlet-class&gt;  </div><div class="line">      com.sun.jersey.spi.container.servlet.ServletContainer  </div><div class="line">    &lt;/servlet-class&gt;  </div><div class="line">    &lt;init-param&gt;  </div><div class="line">      &lt;param-name&gt;com.sun.jersey.config.property.packages&lt;/param-name&gt;  </div><div class="line">      &lt;param-value&gt;sh.cmbchina.pension.resources&lt;/param-value&gt;  </div><div class="line">    &lt;/init-param&gt;  </div><div class="line">    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;  </div><div class="line">&lt;/servlet&gt;  </div><div class="line">&lt;servlet-mapping&gt;  </div><div class="line">    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;  </div><div class="line">    &lt;url-pattern&gt;/rest/*&lt;/url-pattern&gt;  </div><div class="line">&lt;/servlet-mapping&gt;</div></pre></td></tr></table></figure></p>
+<p>这样，全部在包sh.cmbchina.pension.resources以下的resource类都会被注冊为Restful url的响应处理类。</p>
+<h3 id="添加Json支持"><a href="#添加Json支持" class="headerlink" title="添加Json支持"></a>添加Json支持</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;com.sun.jersey&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;jersey-json&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;1.18&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -234,7 +260,7 @@
 			
 		
 			
-				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
 			
 		
 			
@@ -246,11 +272,11 @@
 			
 		
 			
-				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
 			
 		
 			
@@ -258,15 +284,11 @@
 			
 		
 			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
 			
 		
 			
@@ -274,7 +296,11 @@
 			
 		
 			
-				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
 			
 		
 		</ul>
