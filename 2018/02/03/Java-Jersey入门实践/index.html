@@ -19,13 +19,13 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="Jersey简介Jersey是JAX-RS（JSR311）开源参考实现用于构建RESTful Web service，它包含三个部分：  核心服务器（Core Server）：通过提供JSR 311中标准化的注释和API标准化，可以用直观的方式开发RESTful Web服务。  核心客户端(Core Client)：Jersey客户端API能够帮助开发者与RESTful服务轻松通信；  集成（In">
 <meta property="og:locale" content="Chinese">
-<meta property="og:image" content="http://yoursite.com/2018/02/03/Java-Jersey入门实践/images/Jersey-get.png">
-<meta property="og:image" content="http://yoursite.com/2018/02/03/Java-Jersey入门实践/images/Jsersey-Post.png">
-<meta property="og:updated_time" content="2018-02-03T03:22:15.608Z">
+<meta property="og:image" content="http://yoursite.com/images/Jersey-get.png">
+<meta property="og:image" content="http://yoursite.com/images/Jsersey-Post.png">
+<meta property="og:updated_time" content="2018-02-03T03:25:32.878Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java|Jersey入门实践">
 <meta name="twitter:description" content="Jersey简介Jersey是JAX-RS（JSR311）开源参考实现用于构建RESTful Web service，它包含三个部分：  核心服务器（Core Server）：通过提供JSR 311中标准化的注释和API标准化，可以用直观的方式开发RESTful Web服务。  核心客户端(Core Client)：Jersey客户端API能够帮助开发者与RESTful服务轻松通信；  集成（In">
-<meta name="twitter:image" content="http://yoursite.com/2018/02/03/Java-Jersey入门实践/images/Jersey-get.png">
+<meta name="twitter:image" content="http://yoursite.com/images/Jersey-get.png">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -135,9 +135,9 @@
 <h4 id="写APIApplication"><a href="#写APIApplication" class="headerlink" title="写APIApplication"></a>写APIApplication</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class APIApplication extends ResourceConfig &#123;</div><div class="line">    public APIApplication() &#123;</div><div class="line"></div><div class="line">        //资源包|提供服务的包   即UserServce所在的包名</div><div class="line">        packages(true, &quot;jersey.rest&quot;);</div><div class="line"></div><div class="line">        //注册数据转换器</div><div class="line">        register(JacksonJsonProvider.class);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h4 id="最后一步-写web-xml"><a href="#最后一步-写web-xml" class="headerlink" title="最后一步 写web.xml"></a>最后一步 写web.xml</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;web-app xmlns=&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</div><div class="line">         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">         xsi:schemaLocation=&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd&quot;</div><div class="line">         version=&quot;3.1&quot;&gt;</div><div class="line">    &lt;welcome-file-list&gt;</div><div class="line">        &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;</div><div class="line">        &lt;welcome-file&gt;index.htm&lt;/welcome-file&gt;</div><div class="line">        &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;</div><div class="line">        &lt;welcome-file&gt;default.html&lt;/welcome-file&gt;</div><div class="line">        &lt;welcome-file&gt;default.htm&lt;/welcome-file&gt;</div><div class="line">        &lt;welcome-file&gt;default.jsp&lt;/welcome-file&gt;</div><div class="line">    &lt;/welcome-file-list&gt;</div><div class="line">    &lt;servlet&gt;</div><div class="line">        &lt;servlet-name&gt;JerseyServlet&lt;/servlet-name&gt;</div><div class="line">        &lt;servlet-class&gt;org.glassfish.jersey.servlet.ServletContainer&lt;/servlet-class&gt;</div><div class="line">        &lt;init-param&gt;</div><div class="line">            &lt;param-name&gt;javax.ws.rs.Application&lt;/param-name&gt;</div><div class="line">            &lt;param-value&gt;jersey.rest.APIApplication&lt;/param-value&gt;</div><div class="line">        &lt;/init-param&gt;</div><div class="line"></div><div class="line">        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;</div><div class="line">    &lt;/servlet&gt;</div><div class="line">    &lt;servlet-mapping&gt;</div><div class="line">        &lt;servlet-name&gt;JerseyServlet&lt;/servlet-name&gt;</div><div class="line">        &lt;url-pattern&gt;/rest/*&lt;/url-pattern&gt;</div><div class="line">    &lt;/servlet-mapping&gt;</div><div class="line">&lt;/web-app&gt;</div></pre></td></tr></table></figure>
 <h4 id="测试运行"><a href="#测试运行" class="headerlink" title="测试运行"></a>测试运行</h4><p>测试get方法</p>
-<p><img src="./images/Jersey-get.png" alt="用postman测试" title="Jersey-get"></p>
+<p><img src="/images/Jersey-get.png" alt="用postman测试" title="Jersey-get"></p>
 <p>测试post方法</p>
-<p><img src="./images/Jsersey-Post.png" alt="用postman测试" title="Jsersey-Post"></p>
+<p><img src="/images/Jsersey-Post.png" alt="用postman测试" title="Jsersey-Post"></p>
 <p>这里需要注意的是，我们用的是@BeanParam的注解来注入参数，User模板类要改成这样:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">public class User &#123;</div><div class="line">    @FormParam(&quot;id&quot;)</div><div class="line">    String id;</div><div class="line">    @FormParam(&quot;name&quot;)</div><div class="line">    String name;</div><div class="line">    @FormParam(&quot;school&quot;)</div><div class="line">    String school;</div><div class="line"></div><div class="line">    public String getId() &#123;</div><div class="line">        return id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setId(String id) &#123;</div><div class="line">        this.id = id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getName() &#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setName(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getSchool() &#123;</div><div class="line">        return school;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setSchool(String school) &#123;</div><div class="line">        this.school = school;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>同时，发送过来的数据格式应该是 x-www-form-urlencoded 的格式。至于为什么要用@BeanParam 来接收前端数据，个人觉得这样挺方便，映射成了Java世界里的对象，更好更方便地处理数据。</p>
@@ -273,10 +273,6 @@
 			
 		
 			
-				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
 			
 		
@@ -285,11 +281,11 @@
 			
 		
 			
-				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
 			
 		
 			
@@ -305,7 +301,7 @@
 			
 		
 			
-				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
 			
 		
 			
@@ -318,6 +314,10 @@
 		
 			
 				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
 			
 		
 		</ul>
