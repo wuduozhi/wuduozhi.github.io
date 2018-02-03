@@ -1,0 +1,532 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Java|Jersey入门实践 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="Jersey简介Jersey是JAX-RS（JSR311）开源参考实现用于构建RESTful Web service，它包含三个部分：  核心服务器（Core Server）：通过提供JSR 311中标准化的注释和API标准化，可以用直观的方式开发RESTful Web服务。  核心客户端(Core Client)：Jersey客户端API能够帮助开发者与RESTful服务轻松通信；  集成（In">
+<meta name="keywords" content="Jersey">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java|Jersey入门实践">
+<meta property="og:url" content="http://yoursite.com/2018/02/03/Java-Jersey入门实践/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="Jersey简介Jersey是JAX-RS（JSR311）开源参考实现用于构建RESTful Web service，它包含三个部分：  核心服务器（Core Server）：通过提供JSR 311中标准化的注释和API标准化，可以用直观的方式开发RESTful Web服务。  核心客户端(Core Client)：Jersey客户端API能够帮助开发者与RESTful服务轻松通信；  集成（In">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/2018/02/03/Java-Jersey入门实践/images/Jersey-get.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/03/Java-Jersey入门实践/images/Jsersey-Post.png">
+<meta property="og:updated_time" content="2018-02-03T03:22:15.608Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java|Jersey入门实践">
+<meta name="twitter:description" content="Jersey简介Jersey是JAX-RS（JSR311）开源参考实现用于构建RESTful Web service，它包含三个部分：  核心服务器（Core Server）：通过提供JSR 311中标准化的注释和API标准化，可以用直观的方式开发RESTful Web服务。  核心客户端(Core Client)：Jersey客户端API能够帮助开发者与RESTful服务轻松通信；  集成（In">
+<meta name="twitter:image" content="http://yoursite.com/2018/02/03/Java-Jersey入门实践/images/Jersey-get.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/02/03/Java-Jersey入门实践/" title="Java|Jersey入门实践" itemprop="url">Java|Jersey入门实践</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-02-03T10:34:34.000Z" itemprop="datePublished"> Published 2018-02-03</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jersey简介"><span class="toc-number">1.</span> <span class="toc-text">Jersey简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#来个小demo"><span class="toc-number">2.</span> <span class="toc-text">来个小demo</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#pom-xml"><span class="toc-number">2.1.</span> <span class="toc-text">pom.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#写一个Model"><span class="toc-number">2.2.</span> <span class="toc-text">写一个Model</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建服务UserService"><span class="toc-number">2.3.</span> <span class="toc-text">创建服务UserService</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#写APIApplication"><span class="toc-number">2.4.</span> <span class="toc-text">写APIApplication</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#最后一步-写web-xml"><span class="toc-number">2.5.</span> <span class="toc-text">最后一步 写web.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#测试运行"><span class="toc-number">2.6.</span> <span class="toc-text">测试运行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#加入Hibernate处理数据层"><span class="toc-number">2.7.</span> <span class="toc-text">加入Hibernate处理数据层</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h3 id="Jersey简介"><a href="#Jersey简介" class="headerlink" title="Jersey简介"></a>Jersey简介</h3><p>Jersey是JAX-RS（JSR311）开源参考实现用于构建RESTful Web service，它包含三个部分：</p>
+<ul>
+<li><p>核心服务器（Core Server）：通过提供JSR 311中标准化的注释和API标准化，可以用直观的方式开发RESTful Web服务。</p>
+</li>
+<li><p>核心客户端(Core Client)：Jersey客户端API能够帮助开发者与RESTful服务轻松通信；</p>
+</li>
+<li><p>集成（Integration)：Jersey还提供可以轻松继承Spring、Guice、Apache Abdera的库。</p>
+</li>
+</ul>
+<h3 id="来个小demo"><a href="#来个小demo" class="headerlink" title="来个小demo"></a>来个小demo</h3><p>学习技术嘛，看多少理论书籍，都不如来个小Demo学的快。在这里，我们主要介绍如何使用Jersey创建Web  Service：</p>
+<p>环境：</p>
+<ul>
+<li>Maven 3.2.1</li>
+<li>Idea</li>
+<li>Java  JDK 1.8</li>
+<li>Tomcat 7.0</li>
+</ul>
+<h4 id="pom-xml"><a href="#pom-xml" class="headerlink" title="pom.xml"></a>pom.xml</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;</div><div class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line">    &lt;groupId&gt;net.jianxi.tutorials.jerseyws&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;jerseyDemo&lt;/artifactId&gt;</div><div class="line">    &lt;packaging&gt;war&lt;/packaging&gt;</div><div class="line">    &lt;version&gt;1.0&lt;/version&gt;</div><div class="line">    &lt;name&gt;jerseywstest Maven Webapp&lt;/name&gt;</div><div class="line">    &lt;url&gt;http://maven.apache.org&lt;/url&gt;</div><div class="line"></div><div class="line"></div><div class="line">    &lt;dependencies&gt;</div><div class="line">        &lt;!--jersey--&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.glassfish.jersey.containers&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;jersey-container-servlet-core&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;2.0&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;!--JAXB API--&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;javax.xml.ws&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;jaxws-api&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;2.1&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;!-- Json支持 --&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.codehaus.jackson&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;jackson-core-asl&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;1.9.12&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.codehaus.jackson&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;jackson-mapper-asl&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;1.9.12&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.codehaus.jackson&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;jackson-jaxrs&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;1.9.12&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">    &lt;/dependencies&gt;</div><div class="line"></div><div class="line"></div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure>
+<p>在pom.xml中，我们引入了Jersey的依赖包，同时也引入了Json的依赖包，因为在这里主要用Json的格式来传输数据。</p>
+<h4 id="写一个Model"><a href="#写一个Model" class="headerlink" title="写一个Model"></a>写一个Model</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">public class User &#123;</div><div class="line">    </div><div class="line">    String id;</div><div class="line">    </div><div class="line">    String name;</div><div class="line">   </div><div class="line">    String school;</div><div class="line"></div><div class="line">    public String getId() &#123;</div><div class="line">        return id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setId(String id) &#123;</div><div class="line">        this.id = id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getName() &#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setName(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getSchool() &#123;</div><div class="line">        return school;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setSchool(String school) &#123;</div><div class="line">        this.school = school;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>写过Java应用的，都知道这个类是干嘛的，在这里就不多说了。</p>
+<h4 id="创建服务UserService"><a href="#创建服务UserService" class="headerlink" title="创建服务UserService"></a>创建服务UserService</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">@Path(&quot;User&quot;)</div><div class="line">public class UserService &#123;</div><div class="line"></div><div class="line">    @GET</div><div class="line">    @Produces(MediaType.APPLICATION_JSON)</div><div class="line">    public User getUser()&#123;</div><div class="line">        User u = new User();</div><div class="line">        u.setId(&quot;1234556&quot;);</div><div class="line">        u.setName(&quot;小智e&quot;);</div><div class="line">        u.setSchool(&quot;湖南大学&quot;);</div><div class="line"></div><div class="line">        return u;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @POST</div><div class="line">    @Produces(&#123; MediaType.APPLICATION_JSON + &quot;;charset=UTF-8&quot; &#125;)</div><div class="line">    public User addUser(@BeanParam User user) &#123;</div><div class="line">        return user;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上述代码稍后讲解。</p>
+<h4 id="写APIApplication"><a href="#写APIApplication" class="headerlink" title="写APIApplication"></a>写APIApplication</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class APIApplication extends ResourceConfig &#123;</div><div class="line">    public APIApplication() &#123;</div><div class="line"></div><div class="line">        //资源包|提供服务的包   即UserServce所在的包名</div><div class="line">        packages(true, &quot;jersey.rest&quot;);</div><div class="line"></div><div class="line">        //注册数据转换器</div><div class="line">        register(JacksonJsonProvider.class);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="最后一步-写web-xml"><a href="#最后一步-写web-xml" class="headerlink" title="最后一步 写web.xml"></a>最后一步 写web.xml</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;web-app xmlns=&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</div><div class="line">         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">         xsi:schemaLocation=&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd&quot;</div><div class="line">         version=&quot;3.1&quot;&gt;</div><div class="line">    &lt;welcome-file-list&gt;</div><div class="line">        &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;</div><div class="line">        &lt;welcome-file&gt;index.htm&lt;/welcome-file&gt;</div><div class="line">        &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;</div><div class="line">        &lt;welcome-file&gt;default.html&lt;/welcome-file&gt;</div><div class="line">        &lt;welcome-file&gt;default.htm&lt;/welcome-file&gt;</div><div class="line">        &lt;welcome-file&gt;default.jsp&lt;/welcome-file&gt;</div><div class="line">    &lt;/welcome-file-list&gt;</div><div class="line">    &lt;servlet&gt;</div><div class="line">        &lt;servlet-name&gt;JerseyServlet&lt;/servlet-name&gt;</div><div class="line">        &lt;servlet-class&gt;org.glassfish.jersey.servlet.ServletContainer&lt;/servlet-class&gt;</div><div class="line">        &lt;init-param&gt;</div><div class="line">            &lt;param-name&gt;javax.ws.rs.Application&lt;/param-name&gt;</div><div class="line">            &lt;param-value&gt;jersey.rest.APIApplication&lt;/param-value&gt;</div><div class="line">        &lt;/init-param&gt;</div><div class="line"></div><div class="line">        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;</div><div class="line">    &lt;/servlet&gt;</div><div class="line">    &lt;servlet-mapping&gt;</div><div class="line">        &lt;servlet-name&gt;JerseyServlet&lt;/servlet-name&gt;</div><div class="line">        &lt;url-pattern&gt;/rest/*&lt;/url-pattern&gt;</div><div class="line">    &lt;/servlet-mapping&gt;</div><div class="line">&lt;/web-app&gt;</div></pre></td></tr></table></figure>
+<h4 id="测试运行"><a href="#测试运行" class="headerlink" title="测试运行"></a>测试运行</h4><p>测试get方法</p>
+<p><img src="./images/Jersey-get.png" alt="用postman测试" title="Jersey-get"></p>
+<p>测试post方法</p>
+<p><img src="./images/Jsersey-Post.png" alt="用postman测试" title="Jsersey-Post"></p>
+<p>这里需要注意的是，我们用的是@BeanParam的注解来注入参数，User模板类要改成这样:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">public class User &#123;</div><div class="line">    @FormParam(&quot;id&quot;)</div><div class="line">    String id;</div><div class="line">    @FormParam(&quot;name&quot;)</div><div class="line">    String name;</div><div class="line">    @FormParam(&quot;school&quot;)</div><div class="line">    String school;</div><div class="line"></div><div class="line">    public String getId() &#123;</div><div class="line">        return id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setId(String id) &#123;</div><div class="line">        this.id = id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getName() &#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setName(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getSchool() &#123;</div><div class="line">        return school;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setSchool(String school) &#123;</div><div class="line">        this.school = school;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>同时，发送过来的数据格式应该是 x-www-form-urlencoded 的格式。至于为什么要用@BeanParam 来接收前端数据，个人觉得这样挺方便，映射成了Java世界里的对象，更好更方便地处理数据。</p>
+<p>现在回过头来看 UserService,就不难理解了。@Path(“User”)指的是路径，@GET、@POST指的是方法，(对于HTTP动词，可查看相关资料)。@Produces(MediaType.APPLICATION_JSON) 表示的是返回的数据格式。更多注解方式可查看官方文档。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">@Path(&quot;User&quot;)</div><div class="line">public class UserService &#123;</div><div class="line"></div><div class="line">    @GET</div><div class="line">    @Produces(MediaType.APPLICATION_JSON)</div><div class="line">    public User getUser()&#123;</div><div class="line">        User u = new User();</div><div class="line">        u.setId(&quot;1234556&quot;);</div><div class="line">        u.setName(&quot;小智e&quot;);</div><div class="line">        u.setSchool(&quot;湖南大学&quot;);</div><div class="line"></div><div class="line">        return u;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @POST</div><div class="line">    @Produces(&#123; MediaType.APPLICATION_JSON + &quot;;charset=UTF-8&quot; &#125;)</div><div class="line">    public User addUser(@BeanParam User user) &#123;</div><div class="line">        return user;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>至此，入门教程就结束了。</p>
+<h4 id="加入Hibernate处理数据层"><a href="#加入Hibernate处理数据层" class="headerlink" title="加入Hibernate处理数据层"></a>加入Hibernate处理数据层</h4><p>需要加入的依赖包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">&lt;!-- MySQL database driver --&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;mysql&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;5.1.9&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line"></div><div class="line">&lt;!-- hibernate 4.3.0 start --&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.hibernate&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;hibernate-core&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;4.3.0.Final&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.hibernate.javax.persistence&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;hibernate-jpa-2.0-api&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;1.0.1.Final&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.hibernate&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;hibernate-ehcache&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;4.3.0.Final&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.hibernate&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;hibernate-validator&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;5.1.0.Alpha1&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.hibernate.common&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;hibernate-commons-annotations&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;4.0.4.Final&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;!-- hibernate 4.3.0 end --&gt;</div></pre></td></tr></table></figure>
+<p>加入Hibernate来处理对象持久化，开发Wervice就方便多了。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Jersey/">Jersey</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/01/30/架构-RESTful-API设计/"  title="架构|RESTful API设计">
+ <span>架构|RESTful API设计
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
