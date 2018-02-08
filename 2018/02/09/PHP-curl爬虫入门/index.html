@@ -1,0 +1,567 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>PHP|curl爬虫入门 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="What is curl PHP supports libcurl, a library created by Daniel Stenberg, that allows you to connect and communicate to many different types of servers with many different types of protocols. libcurl c">
+<meta name="keywords" content="PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP|curl爬虫入门">
+<meta property="og:url" content="http://yoursite.com/2018/02/09/PHP-curl爬虫入门/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="What is curl PHP supports libcurl, a library created by Daniel Stenberg, that allows you to connect and communicate to many different types of servers with many different types of protocols. libcurl c">
+<meta property="og:locale" content="Chinese">
+<meta property="og:updated_time" content="2018-02-08T13:16:25.730Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP|curl爬虫入门">
+<meta name="twitter:description" content="What is curl PHP supports libcurl, a library created by Daniel Stenberg, that allows you to connect and communicate to many different types of servers with many different types of protocols. libcurl c">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/02/09/PHP-curl爬虫入门/" title="PHP|curl爬虫入门" itemprop="url">PHP|curl爬虫入门</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-02-08T19:29:59.000Z" itemprop="datePublished"> 发表于 2018-02-09</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-curl"><span class="toc-number">1.</span> <span class="toc-text">What is curl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#初始牛刀"><span class="toc-number">2.</span> <span class="toc-text">初始牛刀</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#打个招呼——GET和POST请求以及HTTPS协议处理"><span class="toc-number">3.</span> <span class="toc-text">打个招呼——GET和POST请求以及HTTPS协议处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#GET请求"><span class="toc-number">3.1.</span> <span class="toc-text">GET请求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#POST请求"><span class="toc-number">3.2.</span> <span class="toc-text">POST请求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对于json数据呢，又怎么进行POST请求呢？"><span class="toc-number">3.3.</span> <span class="toc-text">对于json数据呢，又怎么进行POST请求呢？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何上传和下载文件"><span class="toc-number">4.</span> <span class="toc-text">如何上传和下载文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#传一张自己的照片过去表表诚意-——-POST上传文件"><span class="toc-number">4.1.</span> <span class="toc-text">传一张自己的照片过去表表诚意 —— POST上传文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获取远程服务器妹子的照片-——-抓取图片"><span class="toc-number">4.2.</span> <span class="toc-text">获取远程服务器妹子的照片 —— 抓取图片</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP认证怎么搞"><span class="toc-number">5.</span> <span class="toc-text">HTTP认证怎么搞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#利用cookie模拟登陆"><span class="toc-number">6.</span> <span class="toc-text">利用cookie模拟登陆</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="What-is-curl"><a href="#What-is-curl" class="headerlink" title="What is curl"></a>What is curl</h3><blockquote>
+<p>PHP supports libcurl, a library created by Daniel Stenberg, that allows you to connect and communicate to many different types of servers with many different types of protocols. libcurl currently supports the http, https, ftp, gopher, telnet, dict, file, and ldap protocols. libcurl also supports HTTPS certificates, HTTP POST, HTTP PUT, FTP uploading (this can also be done with PHP’s ftp extension), HTTP form based upload, proxies, cookies, and user+password authentication.</p>
+</blockquote>
+<p>这是PHP对于curl的一个解释，简单地说就是，curl是一个库，能让你通过URL和许多不同种的服务器进行勾搭、搭讪和深入交流，并且还支持许多协议。并且人家还说了curl可以支持https认证、http post、ftp上传、代理、cookies、简单口令认证等等功能啦。</p>
+<p>说了那么多其实没什么感觉吧，在应用中才有感觉，我起初也是需要在服务器端向另一个服务器发起一个POST请求才开始接触curl的，然后才有了感觉。</p>
+<p>在正式讲怎么用之前啊，先提一句，你得先在你的PHP环境中安装和启用curl模块，具体方式我就不讲了，不同系统不同安装方式，可以google查一下，或者查阅PHP官方的文档，还挺简单的。</p>
+<h3 id="初始牛刀"><a href="#初始牛刀" class="headerlink" title="初始牛刀"></a>初始牛刀</h3><blockquote>
+<p>工具到手，先要把玩，试试顺不顺手，不然一拿来就用，把你自己的代码搞得乌烟瘴气还怎么去撩服务器呢？</p>
+</blockquote>
+<p>比如我们以著名的“测试网络是否连接”的网站——百度为例，来尝试下curl</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;?php </div><div class="line">    // create curl resource </div><div class="line">   $ch = curl_init(); </div><div class="line"></div><div class="line">   // set url </div><div class="line">   curl_setopt($ch, CURLOPT_URL, &quot;baidu.com&quot;); </div><div class="line"></div><div class="line">   //return the transfer as a string </div><div class="line">   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); </div><div class="line"></div><div class="line">   // $output contains the output string </div><div class="line">   $output = curl_exec($ch); </div><div class="line"></div><div class="line">    //echo output</div><div class="line">    echo $output;</div><div class="line"></div><div class="line">   // close curl resource to free up system resources </div><div class="line">   curl_close($ch);      </div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>当你在本地环境浏览器打开这个php文件时，页面出现的是百度的首页，特么我刚才输入的“localhost”呢？</p>
+<p>上面的代码和注释已经充分说明了这段代码在干啥。</p>
+<p>$ch = curl_init()，创建了一个curl会话资源，成功返回一个句柄；<br>curl_setopt($ch, CURLOPT_URL, “baidu.com”)，设置URL，不用说；</p>
+<p>上面两句可以合起来变一句$ch = curl_init(“baidu.com”)；</p>
+<p>curl_setopt($ch, CURLOPT_RETURNTRANSFER, 0)这是设置是否将响应结果存入变量，1是存入，0是直接echo出；</p>
+<p>$output = curl_exec($ch)执行，然后将响应结果存入$output变量，供下面echo；</p>
+<p>curl_close($ch)关闭这个curl会话资源。</p>
+<p>PHP中使用curl大致就是这么一个形式，其中第二步，通过curl_setopt方法来设置参数是最复杂也是最重要的，感兴趣可以去看官方的关于可设置参数的详细参考，长地让你看得想吐，还是根据需要熟能生巧吧。</p>
+<p>小结一下，php中curl用法就是：创建curl会话 -&gt; 配置参数 -&gt; 执行 -&gt; 关闭会话。</p>
+<p>下面我们来看一些常用的情景，我们需要如何“打扮自己”（配置参数）才能正确“撩妹”（正确撩到服务器）。</p>
+<h3 id="打个招呼——GET和POST请求以及HTTPS协议处理"><a href="#打个招呼——GET和POST请求以及HTTPS协议处理" class="headerlink" title="打个招呼——GET和POST请求以及HTTPS协议处理"></a>打个招呼——GET和POST请求以及HTTPS协议处理</h3><p>先和服务器打个招呼吧，给服务器发个Hello看她怎么回，这里最方便的方式就是向服务器发出GET请求，当然POST这种小纸条也OK咯。</p>
+<h4 id="GET请求"><a href="#GET请求" class="headerlink" title="GET请求"></a>GET请求</h4><p>我们以“在某著名同性交友网站github中搜索关键词”为例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">//通过curl进行GET请求的案例</div><div class="line">&lt;?php </div><div class="line">    // create curl resource </div><div class="line">   $ch = curl_init(); </div><div class="line"></div><div class="line">   // set url </div><div class="line">   curl_setopt($ch, CURLOPT_URL, &quot;https://github.com/search?q=react&quot;); </div><div class="line"></div><div class="line">   //return the transfer as a string </div><div class="line">   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); </div><div class="line"></div><div class="line">   // $output contains the output string </div><div class="line">   $output = curl_exec($ch); </div><div class="line"></div><div class="line">   //echo output</div><div class="line">   echo $output;</div><div class="line"></div><div class="line">   // close curl resource to free up system resources </div><div class="line">   curl_close($ch);      </div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>好像和之前那个例子没啥差别，但这里有2个可以提的点： </p>
+<ul>
+<li>默认请求方式是GET，所以不需要显式指定GET方式； </li>
+<li>https请求，非http请求，可能有人在各个地方看到过HTTPS请求需要加几行代码绕过SSL证书的检查等方式来成功请求到资源，但是这里好像并不需要，原因是什么？</li>
+</ul>
+<blockquote>
+<p>The two Curl options are defined as:<br>CURLOPT_SSL_VERIFYPEER - verify the peer’s SSL certificate<br>CURLOPT_SSL_VERIFYHOST - verify the certificate’s name against host</p>
+<p>They both default to true in Curl, and shouldn’t be disabled unless you’ve got a good reason. Disabling them is generally only needed if you’re sending requests to servers with invalid or self-signed certificates, which is only usually an issue in development. Any publicly-facing site should be presenting a valid certificate, and by disabling these options you’re potentially opening yourself up to security issues.</p>
+</blockquote>
+<p>即，除非用了非法或者自制的证书，这大多数出现在开发环境中，你才将这两行设置为false以避开ssl证书检查，否者不需要这么做，这么做是不安全的做法。</p>
+<h4 id="POST请求"><a href="#POST请求" class="headerlink" title="POST请求"></a>POST请求</h4><p>那如何进行POST请求呢？为了测试，先在某个测试服务器传了一个接收POST的脚本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//testRespond.php</div><div class="line">&lt;?php  </div><div class="line">    $phpInput=file_get_contents(&apos;php://input&apos;);</div><div class="line">    echo urldecode($phpInput);</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>发送普通数据<br>然后在本地写一个请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;?php </div><div class="line">    $data=array(</div><div class="line">    &quot;name&quot; =&gt; &quot;Lei&quot;,</div><div class="line">    &quot;msg&quot; =&gt; &quot;Are you OK?&quot;</div><div class="line">    );</div><div class="line"></div><div class="line">    $ch = curl_init(); </div><div class="line"></div><div class="line">    curl_setopt($ch, CURLOPT_URL, &quot;http://测试服务器的IP马赛克/testRespond.php&quot;); </div><div class="line">    curl_setopt($ch, CURLOPT_POST, 1);</div><div class="line">    //The number of seconds to wait while trying to connect. Use 0 to wait indefinitely.</div><div class="line">    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60); </div><div class="line">    curl_setopt($ch, CURLOPT_POSTFIELDS , http_build_query($data));</div><div class="line">    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); </div><div class="line"></div><div class="line">    $output = curl_exec($ch); </div><div class="line"></div><div class="line">    echo $output;</div><div class="line"></div><div class="line">    curl_close($ch);      </div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>浏览器运行结果是：</p>
+<blockquote>
+<p>name=Lei&amp;msg=Are you OK?</p>
+</blockquote>
+<p>这里我们是构造了一个数组作为POST数据传给服务器：</p>
+<p>curl_setopt($ch, CURLOPT_POST, 1)表明是POST请求；</p>
+<p>curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60)设置一个最长的可忍受的连接时间，秒为单位，总不能一直等下去变成木乃伊吧；</p>
+<p>curl_setopt($ch, CURLOPT_POSTFIELDS , http_build_query($data))设置POST的数据域，因为这里是数组数据形式的（等会来讲json格式），所以用http_build_query处理一下。</p>
+<h4 id="对于json数据呢，又怎么进行POST请求呢？"><a href="#对于json数据呢，又怎么进行POST请求呢？" class="headerlink" title="对于json数据呢，又怎么进行POST请求呢？"></a>对于json数据呢，又怎么进行POST请求呢？</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;?php </div><div class="line">    $data=&apos;&#123;&quot;name&quot;:&quot;Lei&quot;,&quot;msg&quot;:&quot;Are you OK?&quot;&#125;&apos;;</div><div class="line"></div><div class="line">    $ch = curl_init(); </div><div class="line"></div><div class="line">    curl_setopt($ch, CURLOPT_URL, &quot;http://测试服务器的IP马赛克/testRespond.php&quot;); </div><div class="line">    curl_setopt($ch, CURLOPT_POST, 1);</div><div class="line">    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60); </div><div class="line">    curl_setopt($ch, CURLOPT_HTTPHEADER, array(&apos;Content-Type: application/json&apos;, &apos;Content-Length:&apos; . strlen($data)));</div><div class="line">    curl_setopt($ch, CURLOPT_POSTFIELDS , $data);</div><div class="line">    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); </div><div class="line"></div><div class="line">    $output = curl_exec($ch); </div><div class="line"></div><div class="line">    echo $output;</div><div class="line"></div><div class="line">    curl_close($ch);      </div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>浏览器执行，显示：</p>
+<blockquote>
+<p>{“name”:”Lei”,”msg”:”Are you OK?”}</p>
+</blockquote>
+<h3 id="如何上传和下载文件"><a href="#如何上传和下载文件" class="headerlink" title="如何上传和下载文件"></a>如何上传和下载文件</h3><p>已经和服务器勾搭上了，这时候得要个照片来看一看了吧，你也得把自己的照片发上去让人看一看了，虽然两个人在一起外貌不重要，但是男俊女靓总是最棒的。</p>
+<h4 id="传一张自己的照片过去表表诚意-——-POST上传文件"><a href="#传一张自己的照片过去表表诚意-——-POST上传文件" class="headerlink" title="传一张自己的照片过去表表诚意 —— POST上传文件"></a>传一张自己的照片过去表表诚意 —— POST上传文件</h4><p>同样远程服务器端我们先传好一个接收脚本,接收图片并且保存到本地，注意文件和文件夹权限问题，需要有写入权限：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">    if($_FILES)&#123;</div><div class="line">        $filename = $_FILES[&apos;upload&apos;][&apos;name&apos;];</div><div class="line">          $tmpname = $_FILES[&apos;upload&apos;][&apos;tmp_name&apos;];</div><div class="line">          //保存图片到当前脚本所在目录</div><div class="line">          if(move_uploaded_file($tmpname,dirname(__FILE__).&apos;/&apos;.$filename))&#123;</div><div class="line">            echo (&apos;上传成功&apos;);</div><div class="line">          &#125;</div><div class="line">    &#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>然后我们再来写我们本地服务器的php curl部分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;?php </div><div class="line">    $data = array(&apos;name&apos;=&gt;&apos;boy&apos;, &quot;upload&quot;=&gt;&quot;@boy.png&quot;);</div><div class="line"></div><div class="line">    $ch = curl_init(); </div><div class="line"></div><div class="line">    curl_setopt($ch, CURLOPT_URL, &quot;http://远程服务器地址马赛克/testRespond.php&quot;); </div><div class="line">    curl_setopt($ch, CURLOPT_POST, 1);</div><div class="line">    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60); </div><div class="line">    curl_setopt($ch, CURLOPT_POSTFIELDS , $data);</div><div class="line">    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); </div><div class="line"></div><div class="line">    $output = curl_exec($ch); </div><div class="line"></div><div class="line">    echo $output;</div><div class="line"></div><div class="line">    curl_close($ch);         </div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>浏览器中运行一下，什么都米有，去看一眼远程的服务器，还是什么都没有，并没有上传成功。</p>
+<p>为什么会这样呢？上面的代码应该是大家搜索curl php POST图片最常见的代码，这是因为我现在用的是PHP5.6以上版本，@符号在PHP5.6之后就弃用了，PHP5.3依旧可以用，所以有些同学发现能执行啊，有些发现不能执行，大抵是因为PHP版本的不同，而且curl在这两版本中实现是不兼容的，上面是PHP5.3的实现。</p>
+<p>下面来讲PHP5.6及以后的实现，：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;?php </div><div class="line">    $data = array(&apos;name&apos;=&gt;&apos;boy&apos;, &quot;upload&quot;=&gt;&quot;&quot;);</div><div class="line">    $ch = curl_init(); </div><div class="line"></div><div class="line">    $data[&apos;upload&apos;]=new CURLFile(realpath(getcwd().&apos;/boy.png&apos;));</div><div class="line"></div><div class="line">    curl_setopt($ch, CURLOPT_URL, &quot;http://115.29.247.189/test/testRespond.php&quot;);</div><div class="line">    curl_setopt($ch, CURLOPT_POST, 1);</div><div class="line">    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60); </div><div class="line">    curl_setopt($ch, CURLOPT_POSTFIELDS , $data);</div><div class="line">    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); </div><div class="line"></div><div class="line">    $output = curl_exec($ch); </div><div class="line"></div><div class="line">    echo $output;</div><div class="line"></div><div class="line">    curl_close($ch);         </div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>这里引入了一个CURLFile对象进行实现，关于此的具体可查阅文档进行了解。这时候再去远程服务器目录下看看，发现有了一张图片了，而且确实是我们刚才上传的图片。</p>
+<h4 id="获取远程服务器妹子的照片-——-抓取图片"><a href="#获取远程服务器妹子的照片-——-抓取图片" class="headerlink" title="获取远程服务器妹子的照片 —— 抓取图片"></a>获取远程服务器妹子的照片 —— 抓取图片</h4><p>服务器妹子也挺实诚的，看了照骗觉得我长得挺慈眉善目的，就大方得拿出了她自己的照片，但是有点害羞的是，她不愿意主动拿过来，得我们自己去取。</p>
+<p>远程服务器在她自己的目录下存放了一个图片叫girl.jpg，地址是她的web服务器根目录/girl.jpg，现在我要去获取这张照片。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;?php </div><div class="line">    $ch = curl_init(); </div><div class="line"></div><div class="line">    $fp=fopen(&apos;./girl.jpg&apos;, &apos;w&apos;);</div><div class="line"></div><div class="line">    curl_setopt($ch, CURLOPT_URL, &quot;http://远程服务器地址马赛克/girl.jpg&quot;); </div><div class="line">    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60); </div><div class="line">    curl_setopt($ch, CURLOPT_FILE, $fp); </div><div class="line"></div><div class="line">    $output = curl_exec($ch); </div><div class="line">    $info = curl_getinfo($ch);</div><div class="line"></div><div class="line">    fclose($fp);</div><div class="line"></div><div class="line">    $size = filesize(&quot;./girl.jpg&quot;);</div><div class="line">    if ($size != $info[&apos;size_download&apos;]) &#123;</div><div class="line">        echo &quot;下载的数据不完整，请重新下载&quot;;</div><div class="line">    &#125; else &#123;</div><div class="line">        echo &quot;下载数据完整&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    curl_close($ch);    </div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>现在，在我们当前目录下就有了一张刚拿到的照片啦，是不是很激动呢！</p>
+<p>这里值得一说的是curl_getinfo方法，这是一个获取本次请求相关信息的方法，对于调试很有帮助，要善用。</p>
+<h3 id="HTTP认证怎么搞"><a href="#HTTP认证怎么搞" class="headerlink" title="HTTP认证怎么搞"></a>HTTP认证怎么搞</h3><p>这个时候呢，服务器的家长说这个我们女儿还太小，不能找对象，就将她女儿关了起来，并且上了一个密码锁，所谓的HTTP认证，服务器呢偷偷托信鸽将HTTP认证的用户名和密码给了你，要你去见她，带她私奔。</p>
+<p>那么拿到了用户名和密码，我们怎么通过PHP CURL搞定HTTP认证呢？</p>
+<p>PS:这里偷懒就不去搭HTTP认证去试了，直接放一段代码，我们分析下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">function curl_auth($url,$user,$passwd)&#123;</div><div class="line">    $ch = curl_init();</div><div class="line">    curl_setopt_array($ch, [</div><div class="line">        CURLOPT_USERPWD =&gt; $user.&apos;:&apos;.$passwd,</div><div class="line">        CURLOPT_URL     =&gt; $url,</div><div class="line">        CURLOPT_RETURNTRANSFER =&gt; true</div><div class="line">    ]);</div><div class="line">    $result = curl_exec($ch);</div><div class="line">    curl_close($ch);</div><div class="line">    return $result;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$authurl = &apos;http://要请求HTTP认证的地址&apos;;</div><div class="line"></div><div class="line">echo curl_auth($authurl,&apos;vace&apos;,&apos;passwd&apos;);</div></pre></td></tr></table></figure>
+<p>这里有一个地方比较有意思： </p>
+<blockquote>
+<p>curl_setopt_array </p>
+</blockquote>
+<p>这个方法可以通过数组一次性地设置多个参数，防止有些需要多处设置的出现密密麻麻的curl_setopt方法。</p>
+<h3 id="利用cookie模拟登陆"><a href="#利用cookie模拟登陆" class="headerlink" title="利用cookie模拟登陆"></a>利用cookie模拟登陆</h3><p>这时你成功见到了服务器妹子，想带她私奔，但是无奈没有盘缠走不远，服务器妹子说，她妈服务器上有金库，可以登陆上去搞一点下来。</p>
+<p>首先我们先来分析一下，这个事情分两步，一是去登陆界面通过账号密码登陆，然后获取cookie，二是去利用cookie模拟登陆到信息页面获取信息，大致的框架是这样的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;?php </div><div class="line">  //设置post的数据  </div><div class="line">  $post = array ( </div><div class="line">    &apos;email&apos; =&gt; &apos;账户&apos;, </div><div class="line">    &apos;pwd&apos; =&gt; &apos;密码&apos;</div><div class="line">  ); </div><div class="line">  //登录地址  </div><div class="line">  $url = &quot;登陆地址&quot;;  </div><div class="line">  //设置cookie保存路径  </div><div class="line">  $cookie = dirname(__FILE__) . &apos;/cookie.txt&apos;;  </div><div class="line">  //登录后要获取信息的地址  </div><div class="line">  $url2 = &quot;登陆后要获取信息的地址&quot;;  </div><div class="line">  //模拟登录 </div><div class="line">  login_post($url, $cookie, $post);  </div><div class="line">  //获取登录页的信息  </div><div class="line">  $content = get_content($url2, $cookie);  </div><div class="line">  //删除cookie文件 </div><div class="line">  @ unlink($cookie);</div><div class="line">     </div><div class="line">  var_dump($content);    </div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>然后我们思考下下面两个方法的实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">login_post($url, $cookie, $post)</div><div class="line"></div><div class="line">get_content($url2, $cookie)</div><div class="line"></div><div class="line">//模拟登录  </div><div class="line">function login_post($url, $cookie, $post) &#123; </div><div class="line">    $curl = curl_init();</div><div class="line">    curl_setopt($curl, CURLOPT_URL, $url);</div><div class="line">    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 0);</div><div class="line">    curl_setopt($curl, CURLOPT_COOKIEJAR, $cookie);</div><div class="line">    curl_setopt($curl, CURLOPT_POST, 1);</div><div class="line">    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($post));</div><div class="line">    curl_exec($curl); </div><div class="line">    curl_close($curl);</div><div class="line">&#125; </div><div class="line">//登录成功后获取数据  </div><div class="line">function get_content($url, $cookie) &#123; </div><div class="line">    $ch = curl_init(); </div><div class="line">    curl_setopt($ch, CURLOPT_URL, $url); </div><div class="line">    curl_setopt($ch, CURLOPT_HEADER, 0); </div><div class="line">    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); </div><div class="line">    curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie); </div><div class="line">    $rs = curl_exec($ch); </div><div class="line">    curl_close($ch); </div><div class="line">    return $rs; </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>至此，总算是模拟登陆成功，一切顺利啦，通过php CURL“撩”服务器就是这么简单。</p>
+<p>当然，CURL的能力远不止于此，本文仅希望就后端PHP开发中最常用的几种场景做一个整理和归纳。最后一句话，具体问题具体分析。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/PHP/">PHP</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/02/03/Java-Jersey入门实践/"  title="Java|Jersey入门实践">
+ <span>Java|Jersey入门实践
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

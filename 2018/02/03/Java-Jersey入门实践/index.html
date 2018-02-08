@@ -21,9 +21,9 @@
 <meta property="og:locale" content="Chinese">
 <meta property="og:image" content="http://yoursite.com/images/Jersey-get.png">
 <meta property="og:image" content="http://yoursite.com/images/Jsersey-Post.png">
-<meta property="og:image" content="http://yoursite.com/2018/02/03/Java-Jersey入门实践/images/jersey-file.png">
-<meta property="og:image" content="http://yoursite.com/2018/02/03/Java-Jersey入门实践/images/jersey-file-2_1.png">
-<meta property="og:updated_time" content="2018-02-04T09:57:19.056Z">
+<meta property="og:image" content="http://yoursite.com/images/jersey-file.png">
+<meta property="og:image" content="http://yoursite.com/images/jersey-file-2_1.png">
+<meta property="og:updated_time" content="2018-02-04T14:49:56.232Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java|Jersey入门实践">
 <meta name="twitter:description" content="Jersey简介Jersey是JAX-RS（JSR311）开源参考实现用于构建RESTful Web service，它包含三个部分：  核心服务器（Core Server）：通过提供JSR 311中标准化的注释和API标准化，可以用直观的方式开发RESTful Web服务。  核心客户端(Core Client)：Jersey客户端API能够帮助开发者与RESTful服务轻松通信；  集成（In">
@@ -191,10 +191,10 @@
 <h5 id="下载客户端"><a href="#下载客户端" class="headerlink" title="下载客户端"></a>下载客户端</h5><p>在 index.jsp 里面添加</p>
 <p></p><p><a href="webapi/files/download">Download</a></p>
 <h5 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h5><p>好了，代码写完，我们启动项目测试下。在浏览器中打开localhost:8888/rest/file/download ,此时发现文件名称不见了。</p>
-<p><img src="./images/jersey-file.png" alt="测试" title="jersey-file"></p>
+<p><img src="/images/jersey-file.png" alt="测试" title="jersey-file"></p>
 <p>这是因为系统解析不了编码导致的。需要将文件名称编码做下转化即可：<br>//处理文件名称编码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fileName = new String(fileName.getBytes(&quot;utf-8&quot;),&quot;ISO8859-1&quot;);</div></pre></td></tr></table></figure></p>
 <p>再次启动测试：</p>
-<p><img src="./images/jersey-file-2_1.png" alt="测试2" title="jersey-file-2"></p>
+<p><img src="/images/jersey-file-2_1.png" alt="测试2" title="jersey-file-2"></p>
 <p>OK ，下载程序写完。</p>
 <h4 id="处理大数量传参下载的问题"><a href="#处理大数量传参下载的问题" class="headerlink" title="处理大数量传参下载的问题"></a>处理大数量传参下载的问题</h4><p>有时难免要传递的参数较大，GET 请求难以胜任，只能用 POST 来请求下载。<br>下面例子就是用一个隐藏的 Form 表单来传参进行文件的下载：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">var exportUrl = &apos;rest/files/excel/easyui-datagird&apos;</div><div class="line">var form=$(&quot;&lt;form&gt;&quot;);//定义一个form表单</div><div class="line">form.attr(&quot;style&quot;,&quot;display:none&quot;);</div><div class="line">form.attr(&quot;target&quot;,&quot;&quot;);</div><div class="line">form.attr(&quot;method&quot;,&quot;post&quot;);</div><div class="line">form.attr(&quot;action&quot;,exportUrl);</div><div class="line">var input1=$(&quot;&lt;input&gt;&quot;);</div><div class="line">input1.attr(&quot;type&quot;,&quot;hidden&quot;);</div><div class="line">input1.attr(&quot;name&quot;,&quot;fileName&quot;);</div><div class="line">input1.attr(&quot;value&quot;,fileName);</div><div class="line">var input2=$(&quot;&lt;input&gt;&quot;);</div><div class="line">input2.attr(&quot;type&quot;,&quot;hidden&quot;);</div><div class="line">input2.attr(&quot;name&quot;,&quot;columns&quot;);</div><div class="line">input2.attr(&quot;value&quot;,JSON.stringify(columns));</div><div class="line">var input3=$(&quot;&lt;input&gt;&quot;);</div><div class="line">input3.attr(&quot;type&quot;,&quot;hidden&quot;);</div><div class="line">input3.attr(&quot;name&quot;,&quot;rowsData&quot;);</div><div class="line">input3.attr(&quot;value&quot;,JSON.stringify(rows));</div><div class="line">$(&quot;body&quot;).append(form);//将表单放置在页面中</div><div class="line">form.append(input1);</div><div class="line">form.append(input2);</div><div class="line">form.append(input3);</div><div class="line">form.submit().remove();;//表单提交并</div></pre></td></tr></table></figure>
@@ -226,6 +226,13 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2018/02/09/PHP-curl爬虫入门/" title="PHP|curl爬虫入门">
+  <span>
+  PHP|curl爬虫入门</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2018/01/30/架构-RESTful-API设计/"  title="架构|RESTful API设计">
@@ -323,7 +330,7 @@
 			
 		
 			
-				<li><a href="/tags/PHP/" title="PHP">PHP<sup>2</sup></a></li>
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>3</sup></a></li>
 			
 		
 			
@@ -331,11 +338,11 @@
 			
 		
 			
-				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
 			
 		
 			
@@ -351,15 +358,7 @@
 			
 		
 			
-				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
 			
 		
 			
@@ -367,11 +366,19 @@
 			
 		
 			
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
 			
 		
 			
