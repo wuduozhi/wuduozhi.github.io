@@ -1,0 +1,574 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Java|徒手撸框架--实现Aop | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="Spring框架有两大特性，一个是IOC,另一个是AOP.对于Spring Aop的实现讲解的都不太透彻，大部分文章介绍了Spring Aop的底层技术使用了动态代理，至于Spring Aop的具体实现都语焉不详。这类文章看以后以后，我脑子里浮现的就是这样一个画面：  我的想法就是，带领大家，首先梳理 Spring Aop的实现，然后屏蔽细节，自己实现一个Aop框架。加深对Spring Aop的理">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java|徒手撸框架--实现Aop">
+<meta property="og:url" content="http://yoursite.com/2018/02/10/Java-徒手撸框架-实现Aop/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="Spring框架有两大特性，一个是IOC,另一个是AOP.对于Spring Aop的实现讲解的都不太透彻，大部分文章介绍了Spring Aop的底层技术使用了动态代理，至于Spring Aop的具体实现都语焉不详。这类文章看以后以后，我脑子里浮现的就是这样一个画面：  我的想法就是，带领大家，首先梳理 Spring Aop的实现，然后屏蔽细节，自己实现一个Aop框架。加深对Spring Aop的理">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/images/徒手鲁框架--04.jpg">
+<meta property="og:image" content="http://yoursite.com/images/徒手鲁框架--05.jpg">
+<meta property="og:updated_time" content="2018-02-10T08:16:38.179Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java|徒手撸框架--实现Aop">
+<meta name="twitter:description" content="Spring框架有两大特性，一个是IOC,另一个是AOP.对于Spring Aop的实现讲解的都不太透彻，大部分文章介绍了Spring Aop的底层技术使用了动态代理，至于Spring Aop的具体实现都语焉不详。这类文章看以后以后，我脑子里浮现的就是这样一个画面：  我的想法就是，带领大家，首先梳理 Spring Aop的实现，然后屏蔽细节，自己实现一个Aop框架。加深对Spring Aop的理">
+<meta name="twitter:image" content="http://yoursite.com/images/徒手鲁框架--04.jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/02/10/Java-徒手撸框架-实现Aop/" title="Java|徒手撸框架--实现Aop" itemprop="url">Java|徒手撸框架--实现Aop</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-02-10T15:50:24.000Z" itemprop="datePublished"> 发表于 2018-02-10</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Aop-是什么？"><span class="toc-number">1.</span> <span class="toc-text">Aop 是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要使用Aop？"><span class="toc-number">2.</span> <span class="toc-text">为什么需要使用Aop？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-Aop-是怎么实现的？"><span class="toc-number">3.</span> <span class="toc-text">Spring Aop 是怎么实现的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自己实现一个-Aop-框架"><span class="toc-number">4.</span> <span class="toc-text">自己实现一个 Aop 框架</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#invcation"><span class="toc-number">4.1.</span> <span class="toc-text">invcation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#interceptor"><span class="toc-number">4.2.</span> <span class="toc-text">interceptor</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#advisor"><span class="toc-number">5.</span> <span class="toc-text">advisor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#core"><span class="toc-number">6.</span> <span class="toc-text">core</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#写个方法测试一下"><span class="toc-number">7.</span> <span class="toc-text">写个方法测试一下</span></a></li></ol>
+		
+		</div>
+		
+		<p>Spring框架有两大特性，一个是IOC,另一个是AOP.对于Spring Aop的实现讲解的都不太透彻，大部分文章介绍了Spring Aop的底层技术使用了动态代理，至于Spring Aop的具体实现都语焉不详。这类文章看以后以后，我脑子里浮现的就是这样一个画面：</p>
+<p><img src="/images/徒手鲁框架--04.jpg" alt="徒手鲁框架--04" title="徒手鲁框架--04"></p>
+<p>我的想法就是，带领大家，首先梳理 Spring Aop的实现，然后屏蔽细节，自己实现一个Aop框架。加深对Spring Aop的理解。在了解上图1-4步骤的同时，补充 4 到 5 步骤之间的其他细节。</p>
+<p>读完这篇文章你将会了解：</p>
+<ul>
+<li>Aop是什么？</li>
+<li>为什么要使用Aop？</li>
+<li>Spirng 实现Aop的思路是什么</li>
+<li>自己根据Spring 思想实现一个 Aop框架</li>
+</ul>
+<h3 id="Aop-是什么？"><a href="#Aop-是什么？" class="headerlink" title="Aop 是什么？"></a>Aop 是什么？</h3><p>面向切面的程序设计（aspect-oriented programming，AOP）。通过预编译方式和运行期动态代理实现程序功能统一维护的一种技术。</p>
+<h3 id="为什么需要使用Aop？"><a href="#为什么需要使用Aop？" class="headerlink" title="为什么需要使用Aop？"></a>为什么需要使用Aop？</h3><p>面向切面编程，实际上就是通过预编译或者动态代理技术在不修改源代码的情况下给原来的程序统一添加功能的一种技术。我们看几个关键词，第一个是“动态代理技术”，这个就是Spring Aop实现底层技术。第二个“不修改源代码”，这个就是Aop最关键的地方，也就是我们平时所说的非入侵性。。第三个“添加功能”，不改变原有的源代码，为程序添加功能。</p>
+<p>举个例子：如果某天你需要统计若干方法的执行时间，如果不是用Aop技术，你要做的就是为每一个方法开始的时候获取一个开始时间，在方法结束的时候获取结束时间。二者之差就是方法的执行时间。如果对每一个需要统计的方法都做如上的操作，那代码简直就是灾难。如果我们使用Aop技术，在不修改代码的情况下，添加一个统计方法执行时间的切面。代码就变得十分优雅。具体这个切面怎么实现？看完下面的文章你一定就会知道。</p>
+<h3 id="Spring-Aop-是怎么实现的？"><a href="#Spring-Aop-是怎么实现的？" class="headerlink" title="Spring Aop 是怎么实现的？"></a>Spring Aop 是怎么实现的？</h3><p>所谓：</p>
+<blockquote>
+<p>计算机程序 = 数据结构 + 算法</p>
+</blockquote>
+<p>在阅读过Spring源码之后，你就会对这个说法理解更深入了。</p>
+<p>Spring Aop实现的代码非常非常的绕。也就是说 Spring 为了灵活做了非常深层次的抽象。同时 Spring为了兼容 @AspectJ 的Aop协议，使用了很多 Adapter （适配器）模式又进一步的增加了代码的复杂程度。</p>
+<p>Spring 的 Aop 实现主要以下几个步骤：</p>
+<ul>
+<li>初始化 Aop 容器。</li>
+<li>读取配置文件。</li>
+<li>将配置文件装换为 Aop 能够识别的数据结构 – Advisor。这里展开讲一讲这个advisor。Advisor对象中包又含了两个重要的数据结构，一个是 Advice，一个是 Pointcut。Advice的作用就是描述一个切面的行为，pointcut描述的是切面的位置。两个数据结的组合就是”在哪里，干什么“。这样 Advisor 就包含了”在哪里干什么“的信息，就能够全面的描述切面了。</li>
+<li>Spring 将这个 Advisor 转换成自己能够识别的数据结构 – AdvicedSupport。Spirng 动态的将这些方法拦截器织入到对应的方法。</li>
+<li>生成动态代理代理。</li>
+<li>提供调用，在使用的时候，调用方调用的就是代理方法。也就是已经织入了增强方法的方法。</li>
+</ul>
+<h3 id="自己实现一个-Aop-框架"><a href="#自己实现一个-Aop-框架" class="headerlink" title="自己实现一个 Aop 框架"></a>自己实现一个 Aop 框架</h3><p>同样，我也是参考了Aop的设计。只实现了基于方法的拦截器。去除了很多的实现细节。</p>
+<p>使用上一讲的 IoC 框架管理对象。使用 Cglib 作为动态代理的基础类。使用 maven 管理 jar 包和 module。所以上一讲的 IoC 框架会作为一个 modules 引入项目。</p>
+<p>下面我们就来实现我们的Aop 框架吧。</p>
+<p>首先来看看代码的基本结构。</p>
+<p><img src="/images/徒手鲁框架--05.jpg" alt="徒手鲁框架--05" title="徒手鲁框架--05"></p>
+<p>我们首先对包每个包都干了什么做一个简单介绍。</p>
+<ul>
+<li>invocation 描述的就是一个方法的调用。注意这里指的是“方法的调用”，而不是调用这个动作。</li>
+<li>interceptor 大家最熟悉的拦截器，拦截器拦截的目标就是 invcation 包里面的调用。</li>
+<li>advisor 这个包里的对象，都是用来描述切面的数据结构。</li>
+<li>adapter 这个包里面是一些适配器方法。对于”适配器”不了解的同学可以去看看”设计模式”里面的”适配模式”。他的作用就是将 advice 包里的对象适配为 interceptor。</li>
+<li>bean 描述我们 json 配置文件的对象。</li>
+<li>core 我们框架的核心逻辑。</li>
+</ul>
+<p>这个时候宏观的看我们大概梳理出了一条路线， adaper 将 advisor 适配为 interceptor 去拦截 invoction。</p>
+<p>下面我们从这个链条的最末端讲起：</p>
+<h4 id="invcation"><a href="#invcation" class="headerlink" title="invcation"></a>invcation</h4><p>首先 MethodInvocation 作为所有方法调用的接口。要描述一个方法的调用包含三个方法，获取方法本身getMethod,获取方法的参数getArguments，还有执行方法本身proceed()。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public interface MethodInvocation &#123;</div><div class="line">    Method getMethod();</div><div class="line">    Object[] getArguments();</div><div class="line">    Object proceed() throws Throwable;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>ProxyMethodInvocation 看名字就知道，是代理方法的调用，增加了一个获取代理的方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface ProxyMethodInvocation extends MethodInvocation &#123;</div><div class="line">    Object getProxy();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="interceptor"><a href="#interceptor" class="headerlink" title="interceptor"></a>interceptor</h4><p>AopMethodInterceptor 是 Aop 容器所有拦截器都要实现的接口：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface AopMethodInterceptor &#123;</div><div class="line">    Object invoke(MethodInvocation mi) throws Throwable;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>同时我们实现了两种拦截器BeforeMethodAdviceInterceptor和AfterRunningAdviceInterceptor,顾名思义前者就是在方法执行以前拦截，后者就在方法运行结束以后拦截：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">public class BeforeMethodAdviceInterceptor implements AopMethodInterceptor &#123;</div><div class="line">    private BeforeMethodAdvice advice;</div><div class="line">    public BeforeMethodAdviceInterceptor(BeforeMethodAdvice advice) &#123;</div><div class="line">        this.advice = advice;</div><div class="line">    &#125;</div><div class="line">    @Override</div><div class="line">    public Object invoke(MethodInvocation mi) throws Throwable &#123;</div><div class="line">        advice.before(mi.getMethod(),mi.getArguments(),mi);</div><div class="line">        return mi.proceed();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">public class AfterRunningAdviceInterceptor implements AopMethodInterceptor &#123;</div><div class="line">    private AfterRunningAdvice advice;</div><div class="line"></div><div class="line">    public AfterRunningAdviceInterceptor(AfterRunningAdvice advice) &#123;</div><div class="line">        this.advice = advice;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Object invoke(MethodInvocation mi) throws Throwable &#123;</div><div class="line">        Object returnVal = mi.proceed();</div><div class="line">        advice.after(returnVal,mi.getMethod(),mi.getArguments(),mi);</div><div class="line">        return returnVal;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>看了上面的代码我们发现，实际上 mi.proceed()才是执行原有的方法。而advice我们上文就说过，是描述增强的方法”干什么“的数据结构，所以对于这个before拦截器，我们就把advice对应的增强方法放在了真正执行的方法前面。而对于after拦截器而言，就放在了真正执行的方法后面。</p>
+<p>这个时候我们过头来看最关键的 ReflectioveMethodeInvocation<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">public class ReflectioveMethodeInvocation implements ProxyMethodInvocation &#123;</div><div class="line">    public ReflectioveMethodeInvocation(Object proxy, Object target, Method method, Object[] arguments, List&lt;AopMethodInterceptor&gt; interceptorList) &#123;</div><div class="line">        this.proxy = proxy;</div><div class="line">        this.target = target;</div><div class="line">        this.method = method;</div><div class="line">        this.arguments = arguments;</div><div class="line">        this.interceptorList = interceptorList;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    protected final Object proxy;</div><div class="line"></div><div class="line">    protected final Object target;</div><div class="line"></div><div class="line">    protected final Method method;</div><div class="line"></div><div class="line">    protected Object[] arguments = new Object[0];</div><div class="line"></div><div class="line">    //存储所有的拦截器</div><div class="line">    protected final List&lt;AopMethodInterceptor&gt; interceptorList;</div><div class="line"></div><div class="line">    private int currentInterceptorIndex = -1;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Object getProxy() &#123;</div><div class="line">        return proxy;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Method getMethod() &#123;</div><div class="line">        return method;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Object[] getArguments() &#123;</div><div class="line">        return arguments;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Object proceed() throws Throwable &#123;</div><div class="line"></div><div class="line">        //执行完所有的拦截器后，执行目标方法</div><div class="line">        if(currentInterceptorIndex == this.interceptorList.size() - 1) &#123;</div><div class="line">            return invokeOriginal();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        //迭代的执行拦截器。回顾上面的讲解，我们实现的拦击都会执行 im.proceed() 实际上又会调用这个方法。实现了一个递归的调用，直到执行完所有的拦截器。</div><div class="line">        AopMethodInterceptor interceptor = interceptorList.get(++currentInterceptorIndex);</div><div class="line">        return interceptor.invoke(this);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    protected Object invokeOriginal() throws Throwable&#123;</div><div class="line">        return ReflectionUtils.invokeMethodUseReflection(target,method,arguments);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在实际的运用中，我们的方法很可能被多个方法的拦截器所增强。所以我们，使用了一个list来保存所有的拦截器。所以我们需要递归的去增加拦截器。当处理完了所有的拦截器之后，才会真正调用调用被增强的方法。我们可以认为，前文所述的动态的织入代码就发生在这里。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class CglibMethodInvocation extends ReflectioveMethodeInvocation &#123;</div><div class="line"></div><div class="line">    private MethodProxy methodProxy;</div><div class="line"></div><div class="line">    public CglibMethodInvocation(Object proxy, Object target, Method method, Object[] arguments, List&lt;AopMethodInterceptor&gt; interceptorList, MethodProxy methodProxy) &#123;</div><div class="line">        super(proxy, target, method, arguments, interceptorList);</div><div class="line">        this.methodProxy = methodProxy;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected Object invokeOriginal() throws Throwable &#123;</div><div class="line">        return methodProxy.invoke(target,arguments);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>CglibMethodInvocation 只是重写了 invokeOriginal 方法。使用代理类来调用被增强的方法。</p>
+<h3 id="advisor"><a href="#advisor" class="headerlink" title="advisor"></a>advisor</h3><p>这个包里面都是一些描述切面的数据结构，我们讲解两个重要的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@Data</div><div class="line">public class Advisor &#123;</div><div class="line">    //干什么</div><div class="line">    private Advice advice;</div><div class="line">    //在哪里</div><div class="line">    private Pointcut pointcut;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如上文所说，advisor 描述了在哪里，干什么。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">@Data</div><div class="line">public class AdvisedSupport extends Advisor &#123;</div><div class="line">    //目标对象</div><div class="line">    private TargetSource targetSource;</div><div class="line">    //拦截器列表</div><div class="line">    private List&lt;AopMethodInterceptor&gt; list = new LinkedList&lt;&gt;();</div><div class="line"></div><div class="line">    public void addAopMethodInterceptor(AopMethodInterceptor interceptor)&#123;</div><div class="line">        list.add(interceptor);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void addAopMethodInterceptors(List&lt;AopMethodInterceptor&gt; interceptors)&#123;</div><div class="line">        list.addAll(interceptors);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个AdvisedSupport就是 我们Aop框架能够理解的数据结构，这个时候问题就变成了–对于哪个目标，增加哪些拦截器。</p>
+<h3 id="core"><a href="#core" class="headerlink" title="core"></a>core</h3><p>有了上面的准备，我们就开始讲解核心逻辑了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">@Data</div><div class="line">public class CglibAopProxy implements AopProxy&#123;</div><div class="line">    private AdvisedSupport advised;</div><div class="line">    private Object[] constructorArgs;</div><div class="line">    private Class&lt;?&gt;[] constructorArgTypes;</div><div class="line">    public CglibAopProxy(AdvisedSupport config)&#123;</div><div class="line">        this.advised = config;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Object getProxy() &#123;</div><div class="line">        return getProxy(null);</div><div class="line">    &#125;</div><div class="line">    @Override</div><div class="line">    public Object getProxy(ClassLoader classLoader) &#123;</div><div class="line">        Class&lt;?&gt; rootClass = advised.getTargetSource().getTagetClass();</div><div class="line">        if(classLoader == null)&#123;</div><div class="line">            classLoader = ClassUtils.getDefultClassLoader();</div><div class="line">        &#125;</div><div class="line">        Enhancer enhancer = new Enhancer();</div><div class="line">        enhancer.setSuperclass(rootClass.getSuperclass());</div><div class="line">        //增加拦截器的核心方法</div><div class="line">        Callback callbacks = getCallBack(advised);</div><div class="line">        enhancer.setCallback(callbacks);</div><div class="line">        enhancer.setClassLoader(classLoader);</div><div class="line">        if(constructorArgs != null &amp;&amp; constructorArgs.length &gt; 0)&#123;</div><div class="line">            return enhancer.create(constructorArgTypes,constructorArgs);</div><div class="line">        &#125;</div><div class="line">        return enhancer.create();</div><div class="line">    &#125;</div><div class="line">    private Callback getCallBack(AdvisedSupport advised) &#123;</div><div class="line">        return new DynamicAdvisedIcnterceptor(advised.getList(),advised.getTargetSource());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>CglibAopProxy就是我们代理对象生成的核心方法。使用 cglib 生成代理类。我们可以与之前ioc框架的代码。比较发现区别就在于：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Callback callbacks = getCallBack(advised);</div><div class="line">enhancer.setCallback(callbacks);</div></pre></td></tr></table></figure></p>
+<p>callback与之前不同了，而是写了一个getCallback()的方法，我们就来看看 getCallback 里面的 DynamicAdvisedIcnterceptor到底干了啥。</p>
+<p>篇幅问题，这里不会介绍 cglib 的使用，对于callback的作用，不理解的同学需要自行学习。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public class DynamicAdvisedInterceptor implements MethodInterceptor&#123;</div><div class="line"></div><div class="line">    protected final List&lt;AopMethodInterceptor&gt; interceptorList;</div><div class="line">    protected final TargetSource targetSource;</div><div class="line"></div><div class="line">    public DynamicAdvisedInterceptor(List&lt;AopMethodInterceptor&gt; interceptorList, TargetSource targetSource) &#123;</div><div class="line">        this.interceptorList = interceptorList;</div><div class="line">        this.targetSource = targetSource;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable &#123;</div><div class="line">        MethodInvocation invocation = new CglibMethodInvocation(obj,targetSource.getTagetObject(),method, args,interceptorList,proxy);</div><div class="line">        return invocation.proceed();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里需要注意，DynamicAdvisedInterceptor这个类实现的 MethodInterceptor 是 gclib的接口，并非我们之前的 AopMethodInterceptor。</p>
+<p>我们近距离观察 intercept 这个方法我们看到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">MethodInvocation invocation = new CglibMethodInvocation(obj,targetSource.getTagetObject(),method, args,interceptorList,proxy);</div></pre></td></tr></table></figure></p>
+<p>通过这行代码，我们的整个逻辑终于连起来了。也就是这个动态的拦截器，把我们通过 CglibMethodInvocation 织入了增强代码的方法，委托给了 cglib 来生成代理对象。</p>
+<p>至此我们的 Aop 的核心功能就实现了。</p>
+<p><strong>AopBeanFactoryImpl</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line">public class AopBeanFactoryImpl extends BeanFactoryImpl&#123;</div><div class="line"></div><div class="line">    private static final ConcurrentHashMap&lt;String,AopBeanDefinition&gt; aopBeanDefinitionMap = new ConcurrentHashMap&lt;&gt;();</div><div class="line"></div><div class="line">    private static final ConcurrentHashMap&lt;String,Object&gt; aopBeanMap = new ConcurrentHashMap&lt;&gt;();</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Object getBean(String name) throws Exception &#123;</div><div class="line">        Object aopBean = aopBeanMap.get(name);</div><div class="line"></div><div class="line">        if(aopBean != null)&#123;</div><div class="line">            return aopBean;</div><div class="line">        &#125;</div><div class="line">        if(aopBeanDefinitionMap.containsKey(name))&#123;</div><div class="line">            AopBeanDefinition aopBeanDefinition = aopBeanDefinitionMap.get(name);</div><div class="line">            AdvisedSupport advisedSupport = getAdvisedSupport(aopBeanDefinition);</div><div class="line">            aopBean = new CglibAopProxy(advisedSupport).getProxy();</div><div class="line">            aopBeanMap.put(name,aopBean);</div><div class="line">            return aopBean;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return super.getBean(name);</div><div class="line">    &#125;</div><div class="line">    protected void registerBean(String name, AopBeanDefinition aopBeanDefinition)&#123;</div><div class="line">        aopBeanDefinitionMap.put(name,aopBeanDefinition);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private AdvisedSupport getAdvisedSupport(AopBeanDefinition aopBeanDefinition) throws Exception &#123;</div><div class="line"></div><div class="line">        AdvisedSupport advisedSupport = new AdvisedSupport();</div><div class="line">        List&lt;String&gt; interceptorNames = aopBeanDefinition.getInterceptorNames();</div><div class="line">        if(interceptorNames != null &amp;&amp; !interceptorNames.isEmpty())&#123;</div><div class="line">            for (String interceptorName : interceptorNames) &#123;</div><div class="line"></div><div class="line">                Advice advice = (Advice) getBean(interceptorName);</div><div class="line"></div><div class="line">                Advisor advisor = new Advisor();</div><div class="line">                advisor.setAdvice(advice);</div><div class="line"></div><div class="line">                if(advice instanceof BeforeMethodAdvice)&#123;</div><div class="line">                    AopMethodInterceptor interceptor = BeforeMethodAdviceAdapter.getInstants().getInterceptor(advisor);</div><div class="line">                    advisedSupport.addAopMethodInterceptor(interceptor);</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                if(advice instanceof AfterRunningAdvice)&#123;</div><div class="line">                    AopMethodInterceptor interceptor = AfterRunningAdviceAdapter.getInstants().getInterceptor(advisor);</div><div class="line">                    advisedSupport.addAopMethodInterceptor(interceptor);</div><div class="line">                &#125;</div><div class="line"></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        TargetSource targetSource = new TargetSource();</div><div class="line">        Object object = getBean(aopBeanDefinition.getTarget());</div><div class="line">        targetSource.setTagetClass(object.getClass());</div><div class="line">        targetSource.setTagetObject(object);</div><div class="line">        advisedSupport.setTargetSource(targetSource);</div><div class="line">        return advisedSupport;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>AopBeanFactoryImpl是我们产生代理对象的工厂类，继承了上一讲我们实现的 IoC 容器的BeanFactoryImpl。重写了 getBean方法，如果是一个切面代理类，我们使用Aop框架生成代理类，如果是普通的对象，我们就用原来的IoC容器进行依赖注入。<br>getAdvisedSupport就是获取 Aop 框架认识的数据结构。</p>
+<p>剩下没有讲到的类都比较简单，大家看源码就行。与核心逻辑无关。</p>
+<h3 id="写个方法测试一下"><a href="#写个方法测试一下" class="headerlink" title="写个方法测试一下"></a>写个方法测试一下</h3><p>我们需要统计一个方法的执行时间。面对这个需求我们怎么做？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public class StartTimeBeforeMethod implements BeforeMethodAdvice&#123;</div><div class="line">    @Override</div><div class="line">    public void before(Method method, Object[] args, Object target) &#123;</div><div class="line">        long startTime = System.currentTimeMillis();</div><div class="line">        System.out.println(&quot;开始计时&quot;);</div><div class="line">        ThreadLocalUtils.set(startTime);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">public class EndTimeAfterMethod implements AfterRunningAdvice &#123;</div><div class="line">    @Override</div><div class="line">    public Object after(Object returnVal, Method method, Object[] args, Object target) &#123;</div><div class="line">        long endTime = System.currentTimeMillis();</div><div class="line">        long startTime = ThreadLocalUtils.get();</div><div class="line">        ThreadLocalUtils.remove();</div><div class="line">        System.out.println(&quot;方法耗时：&quot; + (endTime - startTime) + &quot;ms&quot;);</div><div class="line">        return returnVal;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>方法开始前，记录时间，保存到 ThredLocal里面，方法结束记录时间，打印时间差。完成统计。</p>
+<p>目标类：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class TestService &#123;</div><div class="line">    public void testMethod() throws InterruptedException &#123;</div><div class="line">        System.out.println(&quot;this is a test method&quot;);</div><div class="line">        Thread.sleep(1000);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>配置文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  &#123;</div><div class="line">    &quot;name&quot;:&quot;beforeMethod&quot;,</div><div class="line">    &quot;className&quot;:&quot;com.xilidou.framework.aop.test.StartTimeBeforeMethod&quot;</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    &quot;name&quot;:&quot;afterMethod&quot;,</div><div class="line">    &quot;className&quot;:&quot;com.xilidou.framework.aop.test.EndTimeAfterMethod&quot;</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    &quot;name&quot;:&quot;testService&quot;,</div><div class="line">    &quot;className&quot;:&quot;com.xilidou.framework.aop.test.TestService&quot;</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    &quot;name&quot;:&quot;testServiceProxy&quot;,</div><div class="line">    &quot;className&quot;:&quot;com.xilidou.framework.aop.core.ProxyFactoryBean&quot;,</div><div class="line">    &quot;target&quot;:&quot;testService&quot;,</div><div class="line">    &quot;interceptorNames&quot;:[</div><div class="line">      &quot;beforeMethod&quot;,</div><div class="line">      &quot;afterMethod&quot;</div><div class="line">    ]</div><div class="line">  &#125;</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<p>测试类：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public class MainTest &#123;</div><div class="line">    public static void main(String[] args) throws Exception &#123;</div><div class="line">        AopApplictionContext aopApplictionContext = new AopApplictionContext(&quot;application.json&quot;);</div><div class="line">        aopApplictionContext.init();</div><div class="line">        TestService testService = (TestService) aopApplictionContext.getBean(&quot;testServiceProxy&quot;);</div><div class="line">        testService.testMethod();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>最终我们的执行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">开始计时</div><div class="line">this is a test method</div><div class="line">方法耗时：1015ms</div><div class="line"></div><div class="line">Process finished with exit code 0</div></pre></td></tr></table></figure></p>
+<p>至此 Aop 框架完成。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Java/">Java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Java/">Java</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/02/10/Java-徒手撸框架-实现IoC/"  title="Java|徒手撸框架--实现IoC">
+ <span>Java|徒手撸框架--实现IoC
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>14</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

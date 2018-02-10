@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://yoursite.com/images/徒手鲁框架--01.jpg">
 <meta property="og:image" content="http://yoursite.com/images/徒手鲁框架--02.jpg">
 <meta property="og:image" content="http://yoursite.com/images/徒手鲁框架--03.jpg">
-<meta property="og:updated_time" content="2018-02-10T07:32:53.093Z">
+<meta property="og:updated_time" content="2018-02-10T07:53:23.777Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java|徒手撸框架--实现IoC">
 <meta name="twitter:description" content="写在开头Spring 作为 J2ee 开发事实上的标准，是每个Java开发人员都需要了解的框架。但是Spring 的 IoC 和 Aop 的特性，对于初级的Java开发人员来说还是比较难于理解的。所以我就想写一系列的文章给大家讲解这些特性。从而能够进一步深入了解 Spring 框架。 读完这篇文章，你将会了解：  什么是依赖注入和控制反转 Ioc有什么用 Spring的 Ioc 是怎么实现的 按照">
@@ -54,7 +54,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -74,7 +74,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -97,14 +97,14 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-02-10T14:45:42.000Z" itemprop="datePublished"> Published 2018-02-10</time>
+    <time datetime="2018-02-10T14:45:42.000Z" itemprop="datePublished"> 发表于 2018-02-10</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
+			<strong class="toc-title">文章目录</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#写在开头"><span class="toc-number">1.</span> <span class="toc-text">写在开头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IoC-是什么？"><span class="toc-number">2.</span> <span class="toc-text">IoC 是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ioc-有什么用？"><span class="toc-number">3.</span> <span class="toc-text">Ioc 有什么用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-的-IoC-是怎么实现的"><span class="toc-number">4.</span> <span class="toc-text">Spring 的 IoC 是怎么实现的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自己实现一个IoC框架"><span class="toc-number">5.</span> <span class="toc-text">自己实现一个IoC框架</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-bean-定义了框架的数据结构"><span class="toc-number">5.1.</span> <span class="toc-text">1. bean 定义了框架的数据结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-再看看我们的工具类包里面的对象："><span class="toc-number">5.2.</span> <span class="toc-text">2. 再看看我们的工具类包里面的对象：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-核心逻辑"><span class="toc-number">5.3.</span> <span class="toc-text">3. 核心逻辑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-容器"><span class="toc-number">5.4.</span> <span class="toc-text">4. 容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-框架的使用"><span class="toc-number">5.5.</span> <span class="toc-text">5. 框架的使用</span></a></li></ol></li></ol>
 		
@@ -219,6 +219,13 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2018/02/10/Java-徒手撸框架-实现Aop/" title="Java|徒手撸框架--实现Aop">
+  <span>
+  Java|徒手撸框架--实现Aop</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2018/02/10/PHP-正则表达式/"  title="PHP|正则表达式">
@@ -232,10 +239,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -263,7 +270,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">Categories</p>
+	<p class="asidetitle">分类</p>
 		<ul>
 		
 		  
@@ -271,7 +278,7 @@
 		  
 		
 		  
-			<li><a href="/categories/Java/" title="Java">Java<sup>13</sup></a></li>
+			<li><a href="/categories/Java/" title="Java">Java<sup>14</sup></a></li>
 		  
 		
 		  
@@ -304,11 +311,11 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Java/" title="Java">Java<sup>14</sup></a></li>
+				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
 			
 		
 			
@@ -324,38 +331,6 @@
 			
 		
 			
-				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
 			
 		
@@ -364,11 +339,43 @@
 			
 		
 			
-				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -376,7 +383,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
 </aside>
@@ -563,7 +570,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
