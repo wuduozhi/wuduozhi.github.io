@@ -1,0 +1,583 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Java|徒手撸框架--实现IoC | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="写在开头Spring 作为 J2ee 开发事实上的标准，是每个Java开发人员都需要了解的框架。但是Spring 的 IoC 和 Aop 的特性，对于初级的Java开发人员来说还是比较难于理解的。所以我就想写一系列的文章给大家讲解这些特性。从而能够进一步深入了解 Spring 框架。 读完这篇文章，你将会了解：  什么是依赖注入和控制反转 Ioc有什么用 Spring的 Ioc 是怎么实现的 按照">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java|徒手撸框架--实现IoC">
+<meta property="og:url" content="http://yoursite.com/2018/02/10/Java-徒手撸框架-实现IoC/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="写在开头Spring 作为 J2ee 开发事实上的标准，是每个Java开发人员都需要了解的框架。但是Spring 的 IoC 和 Aop 的特性，对于初级的Java开发人员来说还是比较难于理解的。所以我就想写一系列的文章给大家讲解这些特性。从而能够进一步深入了解 Spring 框架。 读完这篇文章，你将会了解：  什么是依赖注入和控制反转 Ioc有什么用 Spring的 Ioc 是怎么实现的 按照">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/images/徒手鲁框架--01.jpg">
+<meta property="og:image" content="http://yoursite.com/images/徒手鲁框架--02.jpg">
+<meta property="og:image" content="http://yoursite.com/images/徒手鲁框架--03.jpg">
+<meta property="og:updated_time" content="2018-02-10T07:32:53.093Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java|徒手撸框架--实现IoC">
+<meta name="twitter:description" content="写在开头Spring 作为 J2ee 开发事实上的标准，是每个Java开发人员都需要了解的框架。但是Spring 的 IoC 和 Aop 的特性，对于初级的Java开发人员来说还是比较难于理解的。所以我就想写一系列的文章给大家讲解这些特性。从而能够进一步深入了解 Spring 框架。 读完这篇文章，你将会了解：  什么是依赖注入和控制反转 Ioc有什么用 Spring的 Ioc 是怎么实现的 按照">
+<meta name="twitter:image" content="http://yoursite.com/images/徒手鲁框架--01.jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/02/10/Java-徒手撸框架-实现IoC/" title="Java|徒手撸框架--实现IoC" itemprop="url">Java|徒手撸框架--实现IoC</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-02-10T14:45:42.000Z" itemprop="datePublished"> Published 2018-02-10</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#写在开头"><span class="toc-number">1.</span> <span class="toc-text">写在开头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IoC-是什么？"><span class="toc-number">2.</span> <span class="toc-text">IoC 是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ioc-有什么用？"><span class="toc-number">3.</span> <span class="toc-text">Ioc 有什么用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-的-IoC-是怎么实现的"><span class="toc-number">4.</span> <span class="toc-text">Spring 的 IoC 是怎么实现的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自己实现一个IoC框架"><span class="toc-number">5.</span> <span class="toc-text">自己实现一个IoC框架</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-bean-定义了框架的数据结构"><span class="toc-number">5.1.</span> <span class="toc-text">1. bean 定义了框架的数据结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-再看看我们的工具类包里面的对象："><span class="toc-number">5.2.</span> <span class="toc-text">2. 再看看我们的工具类包里面的对象：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-核心逻辑"><span class="toc-number">5.3.</span> <span class="toc-text">3. 核心逻辑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-容器"><span class="toc-number">5.4.</span> <span class="toc-text">4. 容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-框架的使用"><span class="toc-number">5.5.</span> <span class="toc-text">5. 框架的使用</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h3 id="写在开头"><a href="#写在开头" class="headerlink" title="写在开头"></a>写在开头</h3><p>Spring 作为 J2ee 开发事实上的标准，是每个Java开发人员都需要了解的框架。但是Spring 的 IoC 和 Aop 的特性，对于初级的Java开发人员来说还是比较难于理解的。所以我就想写一系列的文章给大家讲解这些特性。从而能够进一步深入了解 Spring 框架。</p>
+<p>读完这篇文章，你将会了解：</p>
+<ul>
+<li>什么是依赖注入和控制反转</li>
+<li>Ioc有什么用</li>
+<li>Spring的 Ioc 是怎么实现的</li>
+<li>按照Spring的思路开发一个简单的Ioc框架</li>
+</ul>
+<h3 id="IoC-是什么？"><a href="#IoC-是什么？" class="headerlink" title="IoC 是什么？"></a>IoC 是什么？</h3><p>wiki百科的解释是：</p>
+<blockquote>
+<p>控制反转（Inversion of Control，缩写为IoC），是面向对象编程中的一种设计原则，可以用来减低计算机代码之间的耦合度。其中最常见的方式叫做依赖注入（Dependency Injection，简称DI）。通过控制反转，对象在被创建的时候，由一个调控系统内所有对象的外界实体，将其所依赖的对象的引用传递给它。也可以说，依赖被注入到对象中。</p>
+</blockquote>
+<h3 id="Ioc-有什么用？"><a href="#Ioc-有什么用？" class="headerlink" title="Ioc 有什么用？"></a>Ioc 有什么用？</h3><p>看完上面的解释你一定没有理解什么是 Ioc，因为是第一次看见上面的话也觉得云里雾里。</p>
+<p>不过通过上面的描述我们可以大概的了解到，使用IoC的目的是为了解耦。也就是说IoC 是解耦的一种方法。</p>
+<p>我们知道Java 是一门面向对象的语言，在 Java 中 Everything is Object，我们的程序就是由若干对象组成的。当我们的项目越来越大，合作的开发者越来越多的时候，我们的类就会越来越多，类与类之间的引用就会成指数级的增长。如下图所示：</p>
+<p><img src="/images/徒手鲁框架--01.jpg" alt="徒手鲁框架--01" title="徒手鲁框架--01"></p>
+<p>这样的工程简直就是灾难，如果我们引入 Ioc 框架。由框架来维护类的生命周期和类之间的引用。我们的系统就会变成这样：</p>
+<p><img src="/images/徒手鲁框架--02.jpg" alt="徒手鲁框架--02" title="徒手鲁框架--02"></p>
+<p>这个时候我们发现，我们类之间的关系都由 IoC 框架负责维护类，同时将类注入到需要的类中。也就是类的使用者只负责使用，而不负责维护。把专业的事情交给专业的框架来完成。大大的减少开发的复杂度。</p>
+<p>用一个类比来理解这个问题。Ioc框架就是我们生活中的房屋中介，首先中介会收集市场上的房源，分别和各个房源的房东建立联系。当我们需要租房的时候，并不需要我们四处寻找各类租房信息。我们直接找房屋中介，中介就会根据你的需求提供相应的房屋信息。大大提升了租房的效率，减少了你与各类房东之间的沟通次数。</p>
+<h3 id="Spring-的-IoC-是怎么实现的"><a href="#Spring-的-IoC-是怎么实现的" class="headerlink" title="Spring 的 IoC 是怎么实现的"></a>Spring 的 IoC 是怎么实现的</h3><p>了解Spring框架最直接的方法就阅读Spring的源码。但是Spring的代码抽象的层次很高，且处理的细节很高。对于大多数人来说不是太容易理解。我读了Spirng的源码以后以我的理解做一个总结,Spirng IoC 主要是以下几个步骤。</p>
+<ul>
+<li><ol>
+<li>初始化 IoC 容器。</li>
+</ol>
+</li>
+<li><ol>
+<li>读取配置文件。</li>
+</ol>
+</li>
+<li><ol>
+<li>将配置文件转换为容器识别对的数据结构（这个数据结构在Spring中叫做 BeanDefinition</li>
+</ol>
+</li>
+<li><ol>
+<li>利用数据结构依次实例化相应的对象</li>
+</ol>
+</li>
+<li><ol>
+<li>注入对象之间的依赖关系</li>
+</ol>
+</li>
+</ul>
+<h3 id="自己实现一个IoC框架"><a href="#自己实现一个IoC框架" class="headerlink" title="自己实现一个IoC框架"></a>自己实现一个IoC框架</h3><p>为了方便，我们参考Spirng的IoC实现，去除所有与核心原理无关的逻辑。极简的实现 IoC 的框架。 项目使用 json 作为配置文件。使用 maven 管理 jar 包的依赖。</p>
+<p>在这个框架中我们的对象都是单例的，并不支持Spirng的多种作用域。框架的实现使用了cglib和Java的反射。项目中我还使用了lombok用来简化代码。</p>
+<p>下面我们就来编写 IoC 框架吧。</p>
+<p>首先我们看看这个框架的基本结构：</p>
+<p><img src="/images/徒手鲁框架--03.jpg" alt="徒手鲁框架--03" title="徒手鲁框架--03"></p>
+<p>从宏观上观察一下这个框架，包含了2个package、在包 bean 中定义了我们框架的数据结构。core 是我们框架的核心逻辑所在。utils 是一些通用工具类。接下来我们就逐一讲解一下：</p>
+<h4 id="1-bean-定义了框架的数据结构"><a href="#1-bean-定义了框架的数据结构" class="headerlink" title="1. bean 定义了框架的数据结构"></a>1. bean 定义了框架的数据结构</h4><p>BeanDefinition 是我们项目的核心数据结构。用于描述我们需要 IoC 框架管理的对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">@Data</div><div class="line">@ToString</div><div class="line">public class BeanDefinition &#123;</div><div class="line"></div><div class="line">    private String name;</div><div class="line"></div><div class="line">    private String className;</div><div class="line"></div><div class="line">    private String interfaceName;</div><div class="line"></div><div class="line">    private List&lt;ConstructorArg&gt; constructorArgs;</div><div class="line"></div><div class="line">    private List&lt;PropertyArg&gt; propertyArgs;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>包含了对象的 name，class的名称。如果是接口的实现，还有该对象实现的接口。以及构造函数的传参的列表 constructorArgs 和需要注入的参数列表 propertyArgList。</p>
+<h4 id="2-再看看我们的工具类包里面的对象："><a href="#2-再看看我们的工具类包里面的对象：" class="headerlink" title="2. 再看看我们的工具类包里面的对象："></a>2. 再看看我们的工具类包里面的对象：</h4><p>ClassUtils 负责处理 Java 类的加载,代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class ClassUtils &#123;</div><div class="line">    public static ClassLoader getDefultClassLoader()&#123;</div><div class="line">        return Thread.currentThread().getContextClassLoader();</div><div class="line">    &#125;</div><div class="line">    public static Class loadClass(String className)&#123;</div><div class="line">        try &#123;</div><div class="line">            return getDefultClassLoader().loadClass(className);</div><div class="line">        &#125; catch (ClassNotFoundException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们只写了一个方法，就是通过 className 这个参数获取对象的 Class。</p>
+<p>BeanUtils 负责处理对象的实例化，这里我们使用了 cglib 这个工具包，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class BeanUtils &#123;</div><div class="line">    public static &lt;T&gt; T instanceByCglib(Class&lt;T&gt; clz,Constructor ctr,Object[] args) &#123;</div><div class="line">        Enhancer enhancer = new Enhancer();</div><div class="line">        enhancer.setSuperclass(clz);</div><div class="line">        enhancer.setCallback(NoOp.INSTANCE);</div><div class="line">        if(ctr == null)&#123;</div><div class="line">            return (T) enhancer.create();</div><div class="line">        &#125;else &#123;</div><div class="line">            return (T) enhancer.create(ctr.getParameterTypes(),args);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>ReflectionUtils 主要通过 Java 的反射原理来完成对象的依赖注入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class ReflectionUtils &#123;</div><div class="line"></div><div class="line">    public static void injectField(Field field,Object obj,Object value) throws IllegalAccessException &#123;</div><div class="line">        if(field != null) &#123;</div><div class="line">            field.setAccessible(true);</div><div class="line">            field.set(obj, value);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>injectField(Field field,Object obj,Object value) 这个方法的作用就是，设置 obj 的 field 为 value。</p>
+<p>JsonUtils 的作用就是为了解析我们的json配置文件。代码比较长，与我们的 IoC 原理关系不大，感兴趣的同学可以自行从github上下载代码看看。</p>
+<p>有了这几个趁手的工具，我们就可以开始完成 Ioc 框架的核心代码了。</p>
+<h4 id="3-核心逻辑"><a href="#3-核心逻辑" class="headerlink" title="3. 核心逻辑"></a>3. 核心逻辑</h4><p>我的 IoC 框架，目前只支持一种 ByName 的注入。所以我们的 BeanFactory 就只有一个方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface BeanFactory &#123;</div><div class="line">    Object getBean(String name) throws Exception;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>然后我们实现了这个方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">public class BeanFactoryImpl implements BeanFactory&#123;</div><div class="line"></div><div class="line">    private static final ConcurrentHashMap&lt;String,Object&gt; beanMap = new ConcurrentHashMap&lt;&gt;();</div><div class="line"></div><div class="line">    private static final ConcurrentHashMap&lt;String,BeanDefinition&gt; beanDefineMap= new ConcurrentHashMap&lt;&gt;();</div><div class="line"></div><div class="line">    private static final Set&lt;String&gt; beanNameSet = Collections.synchronizedSet(new HashSet&lt;&gt;());</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Object getBean(String name) throws Exception &#123;</div><div class="line">        //查找对象是否已经实例化过</div><div class="line">        Object bean = beanMap.get(name);</div><div class="line">        if(bean != null)&#123;</div><div class="line">            return bean;</div><div class="line">        &#125;</div><div class="line">        //如果没有实例化，那就需要调用createBean来创建对象</div><div class="line">        bean =  createBean(beanDefineMap.get(name));</div><div class="line">        </div><div class="line">        if(bean != null) &#123;</div><div class="line"></div><div class="line">            //对象创建成功以后，注入对象需要的参数</div><div class="line">            populatebean(bean);</div><div class="line">            </div><div class="line">            //再吧对象存入Map中方便下次使用。</div><div class="line">            beanMap.put(name,bean;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        //结束返回</div><div class="line">        return bean;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    protected void registerBean(String name, BeanDefinition bd)&#123;</div><div class="line">        beanDefineMap.put(name,bd);</div><div class="line">        beanNameSet.add(name);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private Object createBean(BeanDefinition beanDefinition) throws Exception &#123;</div><div class="line">        String beanName = beanDefinition.getClassName();</div><div class="line">        Class clz = ClassUtils.loadClass(beanName);</div><div class="line">        if(clz == null) &#123;</div><div class="line">            throw new Exception(&quot;can not find bean by beanName&quot;);</div><div class="line">        &#125;</div><div class="line">        List&lt;ConstructorArg&gt; constructorArgs = beanDefinition.getConstructorArgs();</div><div class="line">        if(constructorArgs != null &amp;&amp; !constructorArgs.isEmpty())&#123;</div><div class="line">            List&lt;Object&gt; objects = new ArrayList&lt;&gt;();</div><div class="line">            for (ConstructorArg constructorArg : constructorArgs) &#123;</div><div class="line">                objects.add(getBean(constructorArg.getRef()));</div><div class="line">            &#125;</div><div class="line">            return BeanUtils.instanceByCglib(clz,clz.getConstructor(),objects.toArray());</div><div class="line">        &#125;else &#123;</div><div class="line">            return BeanUtils.instanceByCglib(clz,null,null);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void populatebean(Object bean) throws Exception &#123;</div><div class="line">        Field[] fields = bean.getClass().getSuperclass().getDeclaredFields();</div><div class="line">        if (fields != null &amp;&amp; fields.length &gt; 0) &#123;</div><div class="line">            for (Field field : fields) &#123;</div><div class="line">                String beanName = field.getName();</div><div class="line">                beanName = StringUtils.uncapitalize(beanName);</div><div class="line">                if (beanNameSet.contains(field.getName())) &#123;</div><div class="line">                    Object fieldBean = getBean(beanName);</div><div class="line">                    if (fieldBean != null) &#123;</div><div class="line">                        ReflectionUtils.injectField(field,bean,fieldBean);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>首先我们看到在 BeanFactory 的实现中。我们有两 HashMap，beanMap 和 beanDefineMap。 beanDefineMap 存储的是对象的名称和对象对应的数据结构的映射。</p>
+<p>容器初始化的时候，会调用 BeanFactoryImpl.registerBean 方法。把 对象的 BeanDefination 数据结构，存储起来。</p>
+<p>当我们调用 getBean() 的方法的时候。会先到 beanMap 里面查找，有没有实例化好的对象。如果没有，就会qubeanDefineMap查找这个对象对应的 BeanDefination。再利用DeanDefination去实例化一个对象。</p>
+<p>对象实例化成功以后，我们还需要注入相应的参数，调用 populatebean()这个方法。在 populateBean 这个方法中，会扫描对象里面的Field，如果对象中的 Field 是我们IoC容器管理的对象，那就会调用 我们上文实现的 ReflectionUtils.injectField来注入对象。</p>
+<p>一切准备妥当之后，我们对象就完成了整个 IoC 流程。最后这个对象放入 beanMap 中,方便下一次使用。</p>
+<p>所以我们可以知道 BeanFactory 是管理和生成对象的地方。</p>
+<h4 id="4-容器"><a href="#4-容器" class="headerlink" title="4. 容器"></a>4. 容器</h4><p>我们所谓的容器，就是对BeanFactory的扩展，负责管理 BeanFactory。我们的这个IoC 框架使用 Json 作为配置文件，所以我们容器就命名为 JsonApplicationContext。当然之后你愿意实现 XML 作为配置文件的容器你就可以自己写一个 XmlApplicationContext，如果基于注解的容器就可以叫AnnotationApplcationContext。这些实现留个大家去完成。</p>
+<p>我们看看 ApplicationContext 的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public class JsonApplicationContext extends BeanFactoryImpl&#123;</div><div class="line">    private String fileName;</div><div class="line">    public JsonApplicationContext(String fileName) &#123;</div><div class="line">        this.fileName = fileName;</div><div class="line">    &#125;</div><div class="line">    public void init()&#123;</div><div class="line">        loadFile();</div><div class="line">    &#125;</div><div class="line">    private void loadFile()&#123;</div><div class="line">        InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);</div><div class="line">        List&lt;BeanDefinition&gt; beanDefinitions = JsonUtils.readValue(is,new TypeReference&lt;List&lt;BeanDefinition&gt;&gt;()&#123;&#125;);</div><div class="line">        if(beanDefinitions != null &amp;&amp; !beanDefinitions.isEmpty()) &#123;</div><div class="line">            for (BeanDefinition beanDefinition : beanDefinitions) &#123;</div><div class="line">                registerBean(beanDefinition.getName(), beanDefinition);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个容器的作用就是 读取配置文件。将配置文件转换为容器能够理解的 BeanDefination。然后使用 registerBean 方法。注册这个对象。</p>
+<p>至此，一个简单版的 IoC 框架就完成。</p>
+<h4 id="5-框架的使用"><a href="#5-框架的使用" class="headerlink" title="5. 框架的使用"></a>5. 框架的使用</h4><p>我们写一个测试类来看看我们这个框架怎么使用：</p>
+<p>首先我们有三个对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public class Hand &#123;</div><div class="line">    public void waveHand()&#123;</div><div class="line">        System.out.println(&quot;挥一挥手&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class Mouth &#123;</div><div class="line">    public void speak()&#123;</div><div class="line">        System.out.println(&quot;say hello world&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class Robot &#123;</div><div class="line">    //需要注入 hand 和 mouth </div><div class="line">    private Hand hand;</div><div class="line">    private Mouth mouth;</div><div class="line"></div><div class="line">    public void show()&#123;</div><div class="line">        hand.waveHand();</div><div class="line">        mouth.speak();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们需要为我们的 Robot 机器人注入 hand 和 mouth。</p>
+<p>配置文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  &#123;</div><div class="line">    &quot;name&quot;:&quot;robot&quot;,</div><div class="line">    &quot;className&quot;:&quot;com.xilidou.framework.ioc.entity.Robot&quot;</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    &quot;name&quot;:&quot;hand&quot;,</div><div class="line">    &quot;className&quot;:&quot;com.xilidou.framework.ioc.entity.Hand&quot;</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    &quot;name&quot;:&quot;mouth&quot;,</div><div class="line">    &quot;className&quot;:&quot;com.xilidou.framework.ioc.entity.Mouth&quot;</div><div class="line">  &#125;</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<p>这个时候写一个测试类：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public class Test &#123;</div><div class="line">    public static void main(String[] args) throws Exception &#123;</div><div class="line">        JsonApplicationContext applicationContext = new JsonApplicationContext(&quot;application.json&quot;);</div><div class="line">        applicationContext.init();</div><div class="line">        Robot aiRobot = (Robot) applicationContext.getBean(&quot;robot&quot;);</div><div class="line">        aiRobot.show();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>运行以后输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">挥一挥手</div><div class="line">say hello world</div><div class="line"></div><div class="line">Process finished with exit code 0</div></pre></td></tr></table></figure></p>
+<p>可以看到我们成功的给我的 aiRobot 注入了 hand 和 mouth。</p>
+<p>至此我们 Ioc 框架开发完成。</p>
+<blockquote>
+<p>引用<a href="https://www.xilidou.com/2018/01/08/spring-ioc/" target="_blank" rel="external">https://www.xilidou.com/2018/01/08/spring-ioc/</a></p>
+</blockquote>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Java/">Java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Java/">Java</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/02/10/PHP-正则表达式/"  title="PHP|正则表达式">
+ <span>PHP|正则表达式
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>13</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>14</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
