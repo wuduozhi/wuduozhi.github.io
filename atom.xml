@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-11T04:17:04.397Z</updated>
+  <updated>2018-02-11T04:17:43.561Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/02/11/%E8%BF%90%E7%BB%B4-CentOS%E6%90%AD%E5%BB%BAJavaWeb%E7%8E%AF%E5%A2%83/"/>
     <id>http://yoursite.com/2018/02/11/运维-CentOS搭建JavaWeb环境/</id>
     <published>2018-02-11T11:59:39.000Z</published>
-    <updated>2018-02-11T04:17:04.397Z</updated>
+    <updated>2018-02-11T04:17:43.561Z</updated>
     
     <content type="html"><![CDATA[<h3 id="配置要求"><a href="#配置要求" class="headerlink" title="配置要求"></a>配置要求</h3><p>这里列出的软件版本仅代表写作本文档使用的版本。操作时，请您以实际软件版本为准。</p>
 <p>操作系统：CentOS 7.4<br>Tomcat 版本：Tomcat 8.0.49<br>JDK 版本：JDK 1.8.0_141</p>
@@ -105,7 +105,7 @@
 <p>service tomcat start</p>
 </blockquote>
 <p>6.在浏览器地址栏中输入 <a href="http://ip:8080" target="_blank" rel="external">http://ip:8080</a> 进行访问。出现如图所示页面时表示安装成功。</p>
-<p><img src="./images/搭建JavaWeb服务器.png" alt="enter description here" title="搭建JavaWeb服务器"></p>
+<p><img src="/images/搭建JavaWeb服务器.png" alt="enter description here" title="搭建JavaWeb服务器"></p>
 ]]></content>
     
     <summary type="html">
