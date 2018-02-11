@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-11T04:17:43.561Z</updated>
+  <updated>2018-02-11T04:30:47.001Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/02/11/%E8%BF%90%E7%BB%B4-CentOS%E6%90%AD%E5%BB%BAJavaWeb%E7%8E%AF%E5%A2%83/"/>
     <id>http://yoursite.com/2018/02/11/运维-CentOS搭建JavaWeb环境/</id>
     <published>2018-02-11T11:59:39.000Z</published>
-    <updated>2018-02-11T04:17:43.561Z</updated>
+    <updated>2018-02-11T04:30:47.001Z</updated>
     
     <content type="html"><![CDATA[<h3 id="配置要求"><a href="#配置要求" class="headerlink" title="配置要求"></a>配置要求</h3><p>这里列出的软件版本仅代表写作本文档使用的版本。操作时，请您以实际软件版本为准。</p>
 <p>操作系统：CentOS 7.4<br>Tomcat 版本：Tomcat 8.0.49<br>JDK 版本：JDK 1.8.0_141</p>
@@ -94,6 +94,7 @@
 <p>设置 JVM 内存参数：</p>
 <p>运行命令 <strong>vi /usr/local/tomcat/bin/setenv.sh</strong>， 创建 /usr/local/tomcat/bin/setenv.sh。<br>按 i 键进入编辑模式。<br>添加以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">JAVA_OPTS=’-Djava.security.egd=file:/dev/./urandom -server -Xms256m -Xmx496m -Dfile.encoding=UTF-8’</div></pre></td></tr></table></figure></p>
 <p>按 Esc 键退出编辑模式，输入 :wq 保存并退出文件。</p>
+<p>-server:一定要作为第一个参数，在多个CPU时性能佳<br>-Xms：初始Heap大小，使用的最小内存,cpu性能高时此值应设的大一些<br>-Xmx：java heap最大值，使用的最大内存<br>上面两个值是分配JVM的最小和最大内存，取决于硬件物理内存的大小，建议均设为物理内存的一半。<br>-XX:PermSize:设定内存的永久保存区域<br>-XX:MaxPermSize:设定最大内存的永久保存区域<br>-XX:MaxNewSize:<br>-Xss 15120 这使得JBoss每增加一个线程（thread)就会立即消耗15M内存，而最佳值应该是128K,默认值好像是512k.<br>+XX:AggressiveHeap 会使得 Xms没有意义。这个参数让jvm忽略Xmx参数,疯狂地吃完一个G物理内存,再吃尽一个G的swap。<br>-Xss：每个线程的Stack大小<br>-verbose:gc 现实垃圾收集信息<br>-Xloggc:gc.log 指定垃圾收集日志文件<br>-Xmn：young generation的heap大小，一般设置为Xmx的3、4分之一<br>-XX:+UseParNewGC ：缩短minor收集的时间<br>-XX:+UseConcMarkSweepGC ：缩短major收集的时间</p>
 <p>3.设置 Tomcat 自启动脚本。</p>
 <p>下载脚本：<strong>wget <a href="https://github.com/lj2007331/oneinstack/raw/master/init.d/Tomcat-init" target="_blank" rel="external">https://github.com/lj2007331/oneinstack/raw/master/init.d/Tomcat-init</a></strong></p>
 <p>重命名 Tomcat-init。<strong>mv Tomcat-init /etc/init.d/tomcat</strong></p>
@@ -106,6 +107,9 @@
 </blockquote>
 <p>6.在浏览器地址栏中输入 <a href="http://ip:8080" target="_blank" rel="external">http://ip:8080</a> 进行访问。出现如图所示页面时表示安装成功。</p>
 <p><img src="/images/搭建JavaWeb服务器.png" alt="enter description here" title="搭建JavaWeb服务器"></p>
+<blockquote>
+<p>引用 <a href="https://help.aliyun.com/document_detail/51376.html?spm=a2c4g.11186623.2.6.f7qoYA" target="_blank" rel="external">https://help.aliyun.com/document_detail/51376.html?spm=a2c4g.11186623.2.6.f7qoYA</a></p>
+</blockquote>
 ]]></content>
     
     <summary type="html">
