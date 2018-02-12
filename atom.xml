@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-12T07:44:58.924Z</updated>
+  <updated>2018-02-12T08:20:06.118Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,9 +16,122 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>爬虫|解读http的秘密&lt;进阶篇&gt;</title>
+    <link href="http://yoursite.com/2018/02/12/%E7%88%AC%E8%99%AB-%E8%A7%A3%E8%AF%BBhttp%E7%9A%84%E7%A7%98%E5%AF%86-%E8%BF%9B%E9%98%B6%E7%AF%87/"/>
+    <id>http://yoursite.com/2018/02/12/爬虫-解读http的秘密-进阶篇/</id>
+    <published>2018-02-12T15:47:52.000Z</published>
+    <updated>2018-02-12T08:20:06.118Z</updated>
+    
+    <content type="html"><![CDATA[<p>上一篇我们介绍了爬虫中HTTP的基础内容，相信看过的朋友们应该对HTTP已经有个初步的认识了。本篇博主将分享一些HTTP的高级内容，以及在爬虫中的应用，让大家更深入理解。这些内容包括：</p>
+<ul>
+<li>Cookie解读</li>
+<li>Session解读</li>
+<li>HTTPs解读</li>
+</ul>
+<h3 id="Cookie解读"><a href="#Cookie解读" class="headerlink" title="Cookie解读"></a>Cookie解读</h3><h4 id="什么是Cookie？"><a href="#什么是Cookie？" class="headerlink" title="什么是Cookie？"></a>什么是Cookie？</h4><p>==Cookie==原意是”小甜点”的意思，但是在互联网上被用作储存在用户本地终端上的数据。</p>
+<p>百度百科是这么解释的：</p>
+<blockquote>
+<p>Cookie，有时也用其复数形式 Cookies，指某些网站为了辨别用户身份、进行 session<br>跟踪而储存在用户本地终端上的数据（通常经过加密）。定义于 RFC2109 和 2965 中的都已废弃，最新取代的规范是<br>RFC6265。（可以叫做浏览器缓存）</p>
+</blockquote>
+<h4 id="为什么要使用Cookie？"><a href="#为什么要使用Cookie？" class="headerlink" title="为什么要使用Cookie？"></a>为什么要使用Cookie？</h4><p>首先，需要明确一个很重要的概念：HTTP是一个无状态的协议。</p>
+<p>什么意思呢？举一个简单的例子来理解一下。</p>
+<h5 id="lt-应用一-gt"><a href="#lt-应用一-gt" class="headerlink" title="&lt;应用一&gt;"></a>&lt;应用一&gt;</h5><p>比如，我们网上购物的时候，浏览了几个网页，选了几样商品放入了购物车。但是由于HTTP的无状态特点，当我们结账的时候服务器并不知道操作的用户是谁，即无法记录上下文的信息，这严重的妨碍了web应用程序交互式的操作。</p>
+<p>为了解决HTTP的无状态的问题，Cookie就应运而生了。Cookie绕开了HTTP的无状态性，提供了一种”额外手段”维护了用户跟服务器会话中的状态。<strong>说白了，Cookie就是一小段数据储存在本地，记录并标识了用户身份，以便服务器辨认。</strong>这其实相当于让一个失忆的人从此有了记忆。因此，无论当我们购买几次商品，退货，结账等，服务器都能通过这个标识来判断出你是谁。</p>
+<p>还有一个常见的例子，就是==登录==。</p>
+<h4 id="lt-应用二-gt"><a href="#lt-应用二-gt" class="headerlink" title="&lt;应用二&gt;"></a>&lt;应用二&gt;</h4><p>当我们登录某个网站输入用户名和密码后，一般浏览器会提示是”是否保存密码”。我们通常会勾选保存，那么这样带来的好处就是在以后的一段时间我们访问该网站都会自动登录而不必每次都去敲用户名和密码了。</p>
+<p>也正是这个原因，简化了爬虫中模拟登录的问题，每次登录只要post一个Cookie信息就可以了，而避免了每次都post登录信息。当然，这只针对一部分网站而言，一些复杂的网站会定期的变换一些算法，使得Cookie频繁的失效，这时候就需要post登录信息了或者模拟找到算法的规律。</p>
+<p>关于==爬虫模拟登录==的详细内容后续后专门开一篇和大家分享。</p>
+<h3 id="Cookie的分类"><a href="#Cookie的分类" class="headerlink" title="Cookie的分类"></a>Cookie的分类</h3><p>Cookie有两种类型：持久化Cookie，非持久化Cookie。</p>
+<ul>
+<li>持久化Cookie：表示Cookie会保存到本地磁盘上，关闭浏览器再次打开，Cookie依然有效直到设置的expire时间。</li>
+<li>非持久化Cookie：表示Cookie会在本地内存中，生命周期会受浏览器开关状态影响，只要浏览器关闭，Cookie则失效。</li>
+</ul>
+<h3 id="HTTP-Cookie的交互过程"><a href="#HTTP-Cookie的交互过程" class="headerlink" title="HTTP+Cookie的交互过程"></a>HTTP+Cookie的交互过程</h3><p>下面是HTTP请求中使用Cookie所实现的整个web交互过程。</p>
+<p><img src="/images/爬虫-http-07.jpg" alt="爬虫--cookie" title="爬虫-http-07"></p>
+<p>博主以一个==访问豆瓣==的实际例子作为上述过程的具体说明和描述。</p>
+<h4 id="步骤1的请求头"><a href="#步骤1的请求头" class="headerlink" title="步骤1的请求头"></a>步骤1的请求头</h4><p><img src="/images/爬虫-http-08.jpg" alt="爬虫--cookie" title="爬虫-http-08"></p>
+<p>看到请求头里面没有Cookie，只是常规的头域字段信息。</p>
+<h4 id="步骤2-gt-3的响应头"><a href="#步骤2-gt-3的响应头" class="headerlink" title="步骤2-&gt;3的响应头"></a>步骤2-&gt;3的响应头</h4><p><img src="/images/爬虫-http-09.jpg" alt="爬虫--cookie" title="爬虫-http-09"></p>
+<p>服务器根据==POST请求==（用户名密码等）生成一个Cookie，并通过响应头的==set-Cookie字段==返回此Cookie信息。</p>
+<h4 id="步骤5的请求头"><a href="#步骤5的请求头" class="headerlink" title="步骤5的请求头"></a>步骤5的请求头</h4><p><img src="/images/爬虫-http-10.jpg" alt="爬虫--cookie" title="爬虫-http-10"></p>
+<p>再一次刷新页面的请求头中就有了获取Cookie信息。</p>
+<h4 id="步骤7的响应头"><a href="#步骤7的响应头" class="headerlink" title="步骤7的响应头"></a>步骤7的响应头</h4><p><img src="/images/爬虫-http-11.jpg" alt="爬虫--cookie" title="爬虫-http-11"></p>
+<p>第二次的响应头==无set-Cookie==字段信息，因为服务器已经辨别了这个用户刚刚提交的Cookie信息。</p>
+<h3 id="5-Cookie的格式和属性"><a href="#5-Cookie的格式和属性" class="headerlink" title="5.Cookie的格式和属性"></a>5.Cookie的格式和属性</h3><p>==格式==</p>
+<ul>
+<li>客户端发送Cookie（键值对）：Cookie：key1=value1; key2=value2; key3=value3</li>
+<li>服务器响应Cookie：Set-Cookie: name=value；expires=date；path=path；domain=domain_name；secure</li>
+</ul>
+<p>==属性==</p>
+<ul>
+<li>name：为一个Cookie的名称。</li>
+<li>domain：为可以访问此Cookie的域名，该域名可以使多个web服务器共享Cookie。</li>
+<li>path：表示Cookie所在目录，“/”表示根目录。</li>
+<li>expires/max-age：为Cookie的生命周期。若设置该值，则到此时间Cookie会失效。若没有设置该值，默认与session一起失效。浏览器关闭，Cookie失效。</li>
+<li>secure：布尔值，指定Cookie的传输方式，默认是不安全的HTTP连接。</li>
+<li>http：Cookie的httponly属性，若此属性为true，则只能在http的请求头中携带Cookie信息。</li>
+</ul>
+<h3 id="Session解读"><a href="#Session解读" class="headerlink" title="Session解读"></a>Session解读</h3><h4 id="什么是Session？"><a href="#什么是Session？" class="headerlink" title="什么是Session？"></a>什么是Session？</h4><p>百度百科是这么解释的：</p>
+<blockquote>
+<p>Session: 在计算机中，尤其是在网络应用中，称为“会话控制”。Session对象存储特定用户会话所需的属性及配置信息。这样，当用户在应用程序的 Web 页之间跳转时，存储在 Session对象中的变量将不会丢失，而是在整个用户会话中一直存在下去。当用户请求来自应用程序的 Web 页时，如果该用户还没有会话，则 Web服务器将自动创建一个 Session 对象。当会话过期或被放弃后，服务器将终止该会话。</p>
+</blockquote>
+<h4 id="为什么要使用Session？"><a href="#为什么要使用Session？" class="headerlink" title="为什么要使用Session？"></a>为什么要使用Session？</h4><p>同样是因为HTTP是一个无状态协议。Session和Cookie的存在都是为了解决这个问题的。</p>
+<p>由于服务器本身并不会维持用户的上下文，因此为了实现会话的跟踪，不得不想出一种办法。<br>==Session正是一种保存上下文的机制==，对于每一个用户来讲，用户所产生的变量值都保存在了服务器端，这样就使得整个会话都衔接的上，而每个用户有自己独一无二的ID，我们叫做==SessionID==。</p>
+<h4 id="Session和Cookie有什么联系？"><a href="#Session和Cookie有什么联系？" class="headerlink" title="Session和Cookie有什么联系？"></a>Session和Cookie有什么联系？</h4><p>这个要从SessionID说起。我们上面提到服务器会每个用户创建一个SessionID，那么我们该如何使用它呢?</p>
+<h5 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h5><p>这是我们最常用的方式，Cookie相当于一个SessionID的高级应用，是SessionID的载体或者容器。我们说Cookie可以用来识别用户身份，也是因为SessionID的缘故。</p>
+<p><strong>因此，可以说Session是服务端的解决方案，实现了web的会话跟踪，而Cookie是客户端的解决方案，实现了跟踪过程的用户识别。</strong></p>
+<p>Session是真正解决HTTP无状态的方案，而Cookie只是实现了Session过程中的SessionID方式。</p>
+<h5 id="URL重写"><a href="#URL重写" class="headerlink" title="URL重写"></a>URL重写</h5><p>Cookie的使用给用户带来了极大的方便，以及很好的用户体验。但是Cookie存在着一些安全问题，Cookie储存在本地会很大程度暴露用户信息。因此，用户可以选择禁用Cookie。</p>
+<p>那么另一种实现SessionID的方式就是URL重写。URL重写就是把SessionID附加在URL里，可以作为URL路径附加信息或者查询字符串附加在URL后面。</p>
+<p><strong>就是说用户所有的请求的URL中都要有==sesssionID==这个东西，否则无法保持会话的持久状态。</strong></p>
+<h5 id="表单隐藏字段"><a href="#表单隐藏字段" class="headerlink" title="表单隐藏字段"></a>表单隐藏字段</h5><p>服务器会修改表单，设置一个SessionID的隐藏字段，用户需要将SessionID填写到隐藏字段中提交表单，以让服务器知道用户身份。</p>
+<p><strong>隐藏字段也是爬虫中的反爬策略之一</strong>，如果我们爬虫提交的表单没有填写隐藏字段，那么服务器会认为这是一种爬虫行为而禁掉，或者提交的内容不正确也可能造成同样的后果。因此，每次爬取前有必要查看一下是否存在隐藏字段。当然，关于隐藏字段还有更复杂的玩法这里就不详细介绍了。</p>
+<h4 id="Session的关闭"><a href="#Session的关闭" class="headerlink" title="Session的关闭"></a>Session的关闭</h4><h5 id="关闭浏览器"><a href="#关闭浏览器" class="headerlink" title="关闭浏览器"></a>关闭浏览器</h5><p>有时候我们可能会误以为关闭了浏览器，Session就消失了。其实，Session并没有消失（session存储在服务器中），如果消失，消失的也是Cookie（如果储存在内存的话）。</p>
+<p><strong>Session是储存在服务端的，注意是服务端</strong>。而服务端是不会知道浏览器什么时候关闭了的，但是服务端又不能一直开着Session，那样会损耗服务器资源。因此，为了解决这个问题，服务端一般会设置Session超时，通过检测用户活动状态来判断是否超时。如果超时，那么整个会话Session才真正消失，不然还是会开着直到超时。</p>
+<p>如果Cookie是本地储存在磁盘上的，在我们关闭浏览器的很短一段时间内再次打开浏览器，还是会回到刚才那个Session会话。但是如果Cookie储存在内存中，再次打开时浏览器已经忘记了Cookie，那么就无法和刚才的会话连接上了。</p>
+<p>结论是：==关闭浏览器并不会使服务端Session对象消失。==</p>
+<h5 id="注销"><a href="#注销" class="headerlink" title="注销"></a>注销</h5><p>注销和关闭浏览器有着本质的区别，注销实际上会使Session对象消失。就比如我们在网页上点击注销一样，用户信息就都被清空了。如果需要连接Session，需要重新创建Session。</p>
+<p>结论是：==注销会使服务端Session对象消失。==</p>
+<h3 id="HTTPs解读"><a href="#HTTPs解读" class="headerlink" title="HTTPs解读"></a>HTTPs解读</h3><h4 id="什么是HTTPs"><a href="#什么是HTTPs" class="headerlink" title="什么是HTTPs?"></a>什么是HTTPs?</h4><blockquote>
+<p>HTTPS（全称：Hyper Text Transfer Protocol over Secure SocketLayer），是以安全为目标的HTTP通道，简单讲是HTTP的安全版。即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL。<br>它是一个URIscheme（抽象标识符体系），句法类同http:体系。用于安全的HTTP数据传输。https:URL表明它使用了HTTP，但HTTPS存在不同于HTTP的默认端口及一个加密/身份验证层（在HTTP与TCP之间）。这个系统的最初研发由网景公司(Netscape)进行，并内置于其浏览器NetscapeNavigator中，提供了身份验证与加密通讯方法。现在它被广泛用于万维网上安全敏感的通讯，例如交易支付方面。</p>
+</blockquote>
+<h4 id="HTTPs与HTTP的区别"><a href="#HTTPs与HTTP的区别" class="headerlink" title="HTTPs与HTTP的区别"></a>HTTPs与HTTP的区别</h4><blockquote>
+<p>超文本传输协议HTTP协议被用于在Web浏览器和网站服务器之间传递信息。HTTP协议以明文方式发送内容，不提供任何方式的数据加密，如果攻击者截取了Web浏览器和网站服务器之间的传输报文，就可以直接读懂其中的信息，因此HTTP协议不适合传输一些敏感信息，比如信用卡号、密码等。<br>为了解决HTTP协议的这一缺陷，需要使用另一种协议：安全套接字层超文本传输协议HTTPS。为了数据传输的安全，HTTPS在HTTP的基础上加入了SSL协议，SSL依靠证书来验证服务器的身份，并为浏览器和服务器之间的通信加密。<br>HTTPS和HTTP的区别主要为以下四点：</p>
+<ul>
+<li>一、https协议需要到ca申请证书，一般免费证书很少，需要交费。</li>
+<li>二、http是超文本传输协议，信息是明文传输，https 则是具有安全性的ssl加密传输协议。</li>
+<li>三、http和https使用的是完全不同的连接方式，用的端口也不一样，前者是80，后者是443。</li>
+<li>四、http的连接很简单，是无状态的；HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，比http协议安全。</li>
+</ul>
+</blockquote>
+<h4 id="HTTPs对爬虫的影响"><a href="#HTTPs对爬虫的影响" class="headerlink" title="HTTPs对爬虫的影响"></a>HTTPs对爬虫的影响</h4><p>乍一看感觉HTTPs有点像反爬的手段，通过上面的了解，我们发现HTTPs是对服务器端的验证，通过CA证书保证了我们访问的网站是有身份的，而非其他假网站。相反，我们爬虫模拟的是客户端，并不受HTTPs的限制。</p>
+<p><strong>因此，HTTPs不影响我们爬虫</strong>。</p>
+<p>但是，我们在爬虫的过程仍然也会遇到过类似SSL不通过之类的错误。比如，博主以前用requests访问HTTPs的时候遇到过这样的坑，但最后究其原因是同时打开了fiddler造成的。</p>
+<blockquote>
+<p>转载 <a href="https://segmentfault.com/a/1190000013074959" target="_blank" rel="external">https://segmentfault.com/a/1190000013074959</a></p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;上一篇我们介绍了爬虫中HTTP的基础内容，相信看过的朋友们应该对HTTP已经有个初步的认识了。本篇博主将分享一些HTTP的高级内容，以及在爬虫中的应用，让大家更深入理解。这些内容包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cookie解读&lt;/li&gt;
+&lt;li&gt;Session解读&lt;/li
+    
+    </summary>
+    
+      <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
+    
+  </entry>
+  
+  <entry>
     <title>爬虫|解读http的秘密&lt;基础篇&gt;</title>
-    <link href="http://yoursite.com/2018/02/12/%E7%88%AC%E8%99%AB-%E8%A7%A3%E8%AF%BBhttp%E7%9A%84%E7%A7%98%E5%AF%86/"/>
-    <id>http://yoursite.com/2018/02/12/爬虫-解读http的秘密/</id>
+    <link href="http://yoursite.com/2018/02/12/%E7%88%AC%E8%99%AB-%E8%A7%A3%E8%AF%BBhttp%E7%9A%84%E7%A7%98%E5%AF%86-%E5%9F%BA%E7%A1%80%E7%AF%87/"/>
+    <id>http://yoursite.com/2018/02/12/爬虫-解读http的秘密-基础篇/</id>
     <published>2018-02-12T14:57:36.000Z</published>
     <updated>2018-02-12T07:44:58.924Z</updated>
     
@@ -1667,39 +1780,6 @@
     
     
       <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>游学|一次关于创业的分享</title>
-    <link href="http://yoursite.com/2017/12/16/%E6%B8%B8%E5%AD%A6-%E4%B8%80%E6%AC%A1%E5%85%B3%E4%BA%8E%E5%88%9B%E4%B8%9A%E7%9A%84%E5%88%86%E4%BA%AB/"/>
-    <id>http://yoursite.com/2017/12/16/游学-一次关于创业的分享/</id>
-    <published>2017-12-16T00:20:23.000Z</published>
-    <updated>2017-12-15T17:15:40.045Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>胡哥前几天就说带人去外面的公司参观一波，自己有事去不了，但这次是在周五下午，自己还是有空去的，就报名参加了。之前暑假的时候就说要去微信参观学习了，但由于种种原因还没去，就先看长沙的吧。</p>
-<h3 id="参观"><a href="#参观" class="headerlink" title="参观"></a>参观</h3><p>坐大巴车一个小时左右就到了。刚开始是来到百度孵化中心，这里有很多入驻的项目。我们参观了一下，感觉好大啊，接着是一些分享。</p>
-<p>首先是一名在百度待过，现在出来创业的—-磊哥（记得是这名字）。磊哥说了自己的经历，首先创业失败了，然后去百度工作，然后出来创业，现在在搞大数据方面的工作，梦想是运用大数据，帮长沙的公司更好的确定目标用户，更精准的推广。真的是这样的，自己都是在象牙塔里面闭门造车，并不知道学的这些技术有什么作用，也不知道现在流行的机器学习、大数据、云计算能运用到什么方面。听了磊哥的分享，有了一点理解了，这些所谓的技术，最重要的还是要用到实处，帮助人们解决一些实际的问题，这样才能发挥价值。</p>
-<p>磊哥还跟我们谈到未来的发展趋势，农业啊、文化产业啊、服务业啊，都会是将来可能发展的方向，互联网在这些方面都会有很大的应用。磊哥还提到的就是人生五年计划，每个五年内专心做一件事，做到极致，五年后在选择下一个五年要做什么。五年，我们的一声没多少个五年，黄金年龄段20~40岁之间也就4个五年，在这四个五年里也仅仅能在这四个五年里，我们能通过自己的努力来提升自己的社会阶层，有一定的财富积累。然而发现，自己已经20岁了，已经到了奋斗的年龄了，但还不知道自己今后要干嘛，实在是悲剧。</p>
-<p><img src="/images/磊哥.jpg" alt="磊哥" title="磊哥"></p>
-<p>接着是也在蓝杰待过的学长，刘楷强，专业三次，失败两次，一次还没失败。学长在大学就开始创业，毕业后也是一直在创业。学长分享了自己失败的经历，说创业的艰辛，但也说创业是一个在折腾自己的过程。创业初期，很多事情需要亲事亲为，要做调研、跑市场、谈客户、做报表….每一个环节都时不容易的，都需要有一定的专业知识的，所以创业就要不断的学习，不断的折腾自己。</p>
-<p><img src="/images/刘楷强.jpg" alt="enter description here" title="刘楷强"></p>
-<p>再接着也是我们湖大的学长， 刘叶焕 ，在读研究生，研三，但已经是以为公司的创始人了，公司年营业额一千多万，真是人比人气死人啊。学长高中毕业后就开始创业，搞培训公司。大一大二也在折腾，搞网站。大四保研后开始继续折腾，用公众号弄订单系统。自己挺佩服学长的，大学里能边创业，还能搞好学习，还成绩保研了，莫非是在出生那一刻，自己就已经输了。学长现在搞得是公众号，一个有一千万关注的公众号，主要营业靠广告，还有线下的打印店，经营理念就是服务于千万大学生。打印店只是他们公司的一个起步，是为自己赢得信赖的第一步，是让广大学生相信他们是真心实意地为学生服务的一个公司，之后就能有很大的创新了，能搞驾校啊、水果店啊…只要有人相信他了，做什么不行呢？</p>
-<p><img src="/images/刘叶焕.jpg" alt="刘叶焕" title="刘叶焕"></p>
-<h3 id="留给自己的"><a href="#留给自己的" class="headerlink" title="留给自己的"></a>留给自己的</h3><p>创业，是很多有梦想的人都想去干的事情，但并不是人人都能做成功的事情。自己也想过创业，但并没有付出过行动，除了高二暑假卖石榴、卖报纸那档子事，也并不能体验其中的艰辛，自己这一生还是要经历一次才算完美。在这里，为正在努力奋斗的创业者加油打气啦。</p>
-<h3 id="来一次打击"><a href="#来一次打击" class="headerlink" title="来一次打击"></a>来一次打击</h3><p>晚上回来参加了今日头条的宣讲会和笔试。三道题，两道算法题，一个是求最长子数列，另一个是求最大矩形，最后一个是附加题，设计数据结构，解决群聊消息通知的问题。自己是真心不懂，想了半个小时就放弃了，溜了。仔细想想，算法这个东西还真是不能偷懒啊，还是要刷一些题的，只写一些增删改查的代码，不会有多大进步的。</p>
-<p>只能下次再战了。</p>
-<p><img src="/images/12.15.jpg" alt="enter description here" title="12.15"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;写在前面&quot;&gt;&lt;a href=&quot;#写在前面&quot; class=&quot;headerlink&quot; title=&quot;写在前面&quot;&gt;&lt;/a&gt;写在前面&lt;/h3&gt;&lt;p&gt;胡哥前几天就说带人去外面的公司参观一波，自己有事去不了，但这次是在周五下午，自己还是有空去的，就报名参加了。之前暑假的时候就
-    
-    </summary>
-    
-    
-      <category term="游学" scheme="http://yoursite.com/tags/%E6%B8%B8%E5%AD%A6/"/>
     
   </entry>
   

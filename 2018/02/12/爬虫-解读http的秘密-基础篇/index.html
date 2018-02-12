@@ -1,0 +1,596 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>爬虫|解读http的秘密&lt;基础篇&gt; | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="写在前面在学习爬虫的过程中，相信大家对HTTP这个词已经不陌生了，它好像从未离开过我们的视线。被迫所需，我们每次都要使用开发者工具去查看请求头，响应头，以及头中的各个字段，使用别人封装好的模块填入信息，敲几行代码就解决了。面对简单的爬取任务，我们也许根本不用管它是什么，但可能等我们真正遇到问题的时候，却无从下手。 认识并深刻理解HTTP对于爬虫的实现过程是非常有帮助的。为了更好的让大家理解爬虫中的">
+<meta name="keywords" content="爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫|解读http的秘密&lt;基础篇&gt;">
+<meta property="og:url" content="http://yoursite.com/2018/02/12/爬虫-解读http的秘密-基础篇/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="写在前面在学习爬虫的过程中，相信大家对HTTP这个词已经不陌生了，它好像从未离开过我们的视线。被迫所需，我们每次都要使用开发者工具去查看请求头，响应头，以及头中的各个字段，使用别人封装好的模块填入信息，敲几行代码就解决了。面对简单的爬取任务，我们也许根本不用管它是什么，但可能等我们真正遇到问题的时候，却无从下手。 认识并深刻理解HTTP对于爬虫的实现过程是非常有帮助的。为了更好的让大家理解爬虫中的">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/images/爬虫-http-01.jpg">
+<meta property="og:image" content="http://yoursite.com/images/爬虫-http-02.jpg">
+<meta property="og:image" content="http://yoursite.com/images/爬虫-http-03.jpg">
+<meta property="og:image" content="http://yoursite.com/images/爬虫-http-04.jpg">
+<meta property="og:image" content="http://yoursite.com/images/爬虫-http-05.jpg">
+<meta property="og:image" content="http://yoursite.com/images/爬虫-http-06.jpg">
+<meta property="og:updated_time" content="2018-02-12T07:44:58.924Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="爬虫|解读http的秘密&lt;基础篇&gt;">
+<meta name="twitter:description" content="写在前面在学习爬虫的过程中，相信大家对HTTP这个词已经不陌生了，它好像从未离开过我们的视线。被迫所需，我们每次都要使用开发者工具去查看请求头，响应头，以及头中的各个字段，使用别人封装好的模块填入信息，敲几行代码就解决了。面对简单的爬取任务，我们也许根本不用管它是什么，但可能等我们真正遇到问题的时候，却无从下手。 认识并深刻理解HTTP对于爬虫的实现过程是非常有帮助的。为了更好的让大家理解爬虫中的">
+<meta name="twitter:image" content="http://yoursite.com/images/爬虫-http-01.jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/02/12/爬虫-解读http的秘密-基础篇/" title="爬虫|解读http的秘密&lt;基础篇&gt;" itemprop="url">爬虫|解读http的秘密&lt;基础篇&gt;</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-02-12T14:57:36.000Z" itemprop="datePublished"> 發表於 2018-02-12</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是HTTP？"><span class="toc-number">2.</span> <span class="toc-text">什么是HTTP？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#"><span class="toc-number">2.1.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-1"><span class="toc-number">2.2.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-2"><span class="toc-number">2.3.</span> <span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一个完整的HTTP请求过程"><span class="toc-number">3.</span> <span class="toc-text">一个完整的HTTP请求过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP请求报文"><span class="toc-number">4.</span> <span class="toc-text">HTTP请求报文</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#请求行"><span class="toc-number">4.1.</span> <span class="toc-text">请求行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#请求头"><span class="toc-number">4.2.</span> <span class="toc-text">请求头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Accept"><span class="toc-number">4.3.</span> <span class="toc-text">==Accept==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Accept-Encoding"><span class="toc-number">4.4.</span> <span class="toc-text">==Accept-Encoding==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Accept-Lanague"><span class="toc-number">4.5.</span> <span class="toc-text">==Accept-Lanague==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Connection"><span class="toc-number">4.6.</span> <span class="toc-text">==Connection==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Host"><span class="toc-number">4.7.</span> <span class="toc-text">==Host==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cache-control"><span class="toc-number">4.8.</span> <span class="toc-text">==Cache-control==</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#max-age-lt-0"><span class="toc-number">4.8.1.</span> <span class="toc-text">max-age<=0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#max-age-gt-0"><span class="toc-number">4.8.2.</span> <span class="toc-text">max-age>0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#no-cache"><span class="toc-number">4.8.3.</span> <span class="toc-text">no-cache</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#no-store"><span class="toc-number">4.8.4.</span> <span class="toc-text">no-store</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Upgrade-Insecure-Requests"><span class="toc-number">4.9.</span> <span class="toc-text">==Upgrade-Insecure-Requests==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#User-Agent"><span class="toc-number">4.10.</span> <span class="toc-text">==User-Agent==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cookies"><span class="toc-number">4.11.</span> <span class="toc-text">==Cookies==</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其它请求头字段信息"><span class="toc-number">5.</span> <span class="toc-text">其它请求头字段信息</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Referer"><span class="toc-number">5.1.</span> <span class="toc-text">==Referer==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Accept-Charset"><span class="toc-number">5.2.</span> <span class="toc-text">==Accept-Charset==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#If-Modified-Since"><span class="toc-number">5.3.</span> <span class="toc-text">==If-Modified-Since==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pragma"><span class="toc-number">5.4.</span> <span class="toc-text">==Pragma==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Range"><span class="toc-number">5.5.</span> <span class="toc-text">==Range==</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>在学习爬虫的过程中，相信大家对HTTP这个词已经不陌生了，它好像从未离开过我们的视线。被迫所需，我们每次都要使用开发者工具去查看请求头，响应头，以及头中的各个字段，使用别人封装好的模块填入信息，敲几行代码就解决了。面对简单的爬取任务，我们也许根本不用管它是什么，但可能等我们真正遇到问题的时候，却无从下手。</p>
+<p>认识并深刻理解HTTP对于爬虫的实现过程是非常有帮助的。为了更好的让大家理解爬虫中的HTTP，博主将分为两篇对HTTP进行讲述，&lt;基础篇&gt; 和 &lt;高阶篇&gt;。本篇为基础篇，将从以下几个部分进行阐述。</p>
+<ul>
+<li>什么是HTTP</li>
+<li>一个完整的HTTP请求过程</li>
+<li>HTTP请求报文</li>
+</ul>
+<h3 id="什么是HTTP？"><a href="#什么是HTTP？" class="headerlink" title="什么是HTTP？"></a>什么是HTTP？</h3><h4 id=""><a href="#" class="headerlink" title=""></a><http的介绍></http的介绍></h4><p>引自百度百科的权威回答：</p>
+<blockquote>
+<p>超文本传输协议（HTTP，HyperText Transfer Protocol)<br>是互联网上应用最为广泛的一种网络协议。所有WWW文件都必须遵守这个标准。设计HTTP最初的目的是为了提供一种发布和接收HTML页面的方法。<br>1960年美国人TedNelson构思了一种通过计算机处理文本信息的方法，并称之为超文本（hypertext）,这成为了HTTP超文本传输协议标准架构的发展根基。TedNelson组织协调万维网协会（World Wide Web Consortium）和互联网工程工作小组（InternetEngineering Task Force ）共同合作研究，最终发布了一系列的RFC，其中著名的RFC 2616定义了HTTP 1.1。<br><strong>HTTP协议是用于从WWW服务器传输超文本到本地浏览器的传输协议</strong>。它可以使浏览器更加高效，使网络传输减少。它不仅保证计算机正确快速地传输超文本文档，还确定传输文档中的哪一部分，以及哪部分内容首先显示(如文本先于图形)等。</p>
+</blockquote>
+<h4 id="-1"><a href="#-1" class="headerlink" title=""></a><http的模型></http的模型></h4><p>HTTP采用了浏览器/服务器这种请求/响应模型，浏览器永远是HTTP请求的发起者，服务器为响应者。</p>
+<p><img src="/images/爬虫-http-01.jpg" alt="爬虫-http-01" title="爬虫-http-01"></p>
+<p>这样在浏览器客户端没有发起请求的情况下，服务器是不能主动推送消息给客户端的。这也可以说是http协议的一个缺点吧。</p>
+<h4 id="-2"><a href="#-2" class="headerlink" title=""></a><http的定位></http的定位></h4><p>HTTP是一个<strong>应用层协议</strong>，是我们想从服务器端获取信息的最直观的请求。比如，在爬虫中使用的<strong><urllib模块></urllib模块></strong>，<strong><requests模块></requests模块></strong>等都是封装了HTTP协议，作为一个HTTP客户端实现了博文，图片，视频等信息源的下载。</p>
+<p>但是HTTP也不是直接就可以用的，它的请求是建立在一些底层协议的基础上完成的。如<strong>TCP/IP</strong>协议栈中，HTTP需要TCP的三次握手连接成功后才能向服务器发起请求。当然，如果是<strong>HTTPS</strong>的话，还需要<strong>TSL</strong>和<strong>SSL</strong>安全层。</p>
+<p><img src="/images/爬虫-http-02.jpg" alt="爬虫-http-02" title="爬虫-http-02"></p>
+<h3 id="一个完整的HTTP请求过程"><a href="#一个完整的HTTP请求过程" class="headerlink" title="一个完整的HTTP请求过程"></a>一个完整的HTTP请求过程</h3><p>既然==HTTP==协议需要建立在其它底层协议基础上，我们来看看一个完整的HTTP请求是什么样的。</p>
+<p>当我们点击一个链接或者输入一个链接的时候，整个HTTP的请求过程就开始了，然后经过以下步骤得到最后的信息，我们这里简单介绍一下前四个步骤，旨在了解HTTP。</p>
+<p><img src="/images/爬虫-http-03.jpg" alt="爬虫-http-03" title="爬虫-http-03"></p>
+<ul>
+<li><strong>域名解析</strong>：首先会搜索各种本地DNS缓存，如果没有就会向DNS服务器（互联网提供商）发起域名解析，以获取IP地址。</li>
+<li><strong>建立TCP连接</strong>：当获取IP后，将创建套接字socket连接，也就是TCP的3次握手连接，默认端口号80。</li>
+<li><strong>HTTP请求</strong>：一旦TCP连接成功后，浏览器/爬虫就可以向服务器发起HTTP请求报文了，报文内容包含请求行、请求头部、请求主体。</li>
+<li><strong>服务器响应</strong>：服务器响应，并返回一个HTTP响应包（如果成功会返回状态码200）和请求的HTML代码。</li>
+</ul>
+<p>上面的步骤<3>和<4>可以简单的示意如下，更方便大家理解。其中，请求和响应都包含特定格式的信息，具体我们接下来会继续解读。</4></3></p>
+<p><img src="/images/爬虫-http-04.jpg" alt="爬虫-http-04" title="爬虫-http-04"></p>
+<p>响应HTTP请求会返回响应状态码，根据状态码可以知道返回信息的状态。状态码规定如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">1xx: 信息响应类，表示接收到请求并且继续处理 </div><div class="line">100——必须继续发出请求 </div><div class="line">101——要求服务器根据请求转换HTTP协议版本</div><div class="line">2xx: 处理成功响应类，表示动作被成功接收、理解和接受 </div><div class="line">200——交易成功</div><div class="line">201——提示知道新文件的URL</div><div class="line">202——接受和处理、但处理未完成</div><div class="line">203——返回信息不确定或不完整</div><div class="line">204——请求收到，但返回信息为空</div><div class="line">205——服务器完成了请求，用户代理必须复位当前已经浏览过的文件</div><div class="line">206——服务器已经完成了部分用户的GET请求</div><div class="line"></div><div class="line">3xx: 重定向响应类，为了完成指定的动作，必须接受进一步处理</div><div class="line">300——请求的资源可在多处得到</div><div class="line">301——删除请求数据</div><div class="line">302——在其他地址发现了请求数据</div><div class="line">303——建议客户访问其他URL或访问方式</div><div class="line">304——客户端已经执行了GET，但文件未变化</div><div class="line">305——请求的资源必须从服务器指定的地址得到</div><div class="line">306——前一版本HTTP中使用的代码，现行版本中不再使用</div><div class="line">307——申明请求的资源临时性删除</div><div class="line"></div><div class="line">4xx: 客户端错误，客户请求包含语法错误或者是不能正确执行</div><div class="line">400——错误请求，如语法错误</div><div class="line">401——未授权</div><div class="line">402——保留有效ChargeTo头响应</div><div class="line">403——禁止访问</div><div class="line">404——没有发现文件、查询或URl</div><div class="line">405——在Request-Line字段定义的方法不允许</div><div class="line">406——根据发送的Accept，请求资源不可访问</div><div class="line">407——用户必须首先在代理服务器上得到授权</div><div class="line">408——客户端没有在指定的时间内完成请求</div><div class="line">409——对当前资源状态，请求不能完成</div><div class="line">410——服务器不再有此资源且无进一步地址</div><div class="line">411——服务器拒绝用户定义的Content-Length</div><div class="line">412——一个或多个请求头字段在当前请求中错误</div><div class="line">413——请求的资源大于服务器允许的大小</div><div class="line">414——请求的资源URL长于服务器允许的长度</div><div class="line">415——请求资源不支持请求项目格式</div><div class="line">416——请求中包含Range请求头字段，在当前请求资源范围内没有range指示值，请求也不包含If-Range请求头字段</div><div class="line">417——服务器不满足请求Expect头字段指定的期望值，如果是代理服务器，可能是下一级服务器不能满足请求长。</div><div class="line">5xx: 服务端错误，服务器不能正确执行一个正确的请求</div><div class="line">500——内部服务器错误</div><div class="line">501——未实现</div><div class="line">502——网关错误</div></pre></td></tr></table></figure>
+<h3 id="HTTP请求报文"><a href="#HTTP请求报文" class="headerlink" title="HTTP请求报文"></a>HTTP请求报文</h3><p>相信你已经对HTTP的请求过程有了大致的了解了，下面我们来详细介绍HTTP请求的==报文信息==。<br>报文内容包含==请求行==、==请求头部==、==请求主体==</p>
+<p><img src="/images/爬虫-http-05.jpg" alt="爬虫--http-05" title="爬虫-http-05"></p>
+<p>下面我们来看一下通过开发者工具请求网址<a href="https://www.baidu.com/截取下来的HTTP请求报文内容，对比一下上面的标准格式。" target="_blank" rel="external">https://www.baidu.com/截取下来的HTTP请求报文内容，对比一下上面的标准格式。</a></p>
+<p><img src="/images/爬虫-http-06.jpg" alt="爬虫-http-06" title="爬虫-http-06"></p>
+<p>我们发现请求报文的格式与上面基本一致，正式我们想要的。那么，接下来我们将要逐个的介绍以上各个信息</p>
+<h4 id="请求行"><a href="#请求行" class="headerlink" title="请求行"></a>请求行</h4><p>==GET==是HTTP的请求方式之一，HTTP/1.1协议中共定义了8种方法与服务器交互，有 GET、POST、HEAD、PUT、DELETE、OPTIONS、TRACE、CONNECT，其中比较常用的是==GET==和==POST==方法了。</p>
+<ul>
+<li>HEAD: 从服务器得到除了请求体与GET请求一样的响应</li>
+<li>GET：通过URL获取查询资源信息（爬虫特定URL爬取）</li>
+<li>POST：提交表单（爬虫中的模拟登录）</li>
+<li>PUT：上传文件（浏览器不支持）</li>
+<li>DELETE：删除</li>
+<li>OPTIONS：返回服务器对特定资源支持的HTTP请求方法</li>
+<li>TRACE：返回服务器收到的请求，用于测试或诊断 </li>
+<li>CONNECT：预留给管道连接方式的代理服务</li>
+</ul>
+<p>==GET==请求方法后URL（这里是/）和版本1.1，别忘了空格。</p>
+<h4 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h4><p>HTTP的头域包括==通用头==、==请求头==、==响应头==和==实体头==四部分。因为在爬虫过程中，我们经常会提交headers请求头信息用于伪装，所以我们这里对请求头着重讲解一下。</p>
+<p>请求头是请求报文特有的，它向服务器提交了一些额外的信息，例如通过Accept字段信息，我们客户端可以告诉服务器我们接受一些什么类型的数据。而我们其实可以把这些字段信息就当成==键值对==对待。</p>
+<p>下面我们看看这些字段都代表了什么意思？</p>
+<h4 id="Accept"><a href="#Accept" class="headerlink" title="==Accept=="></a>==Accept==</h4><p>内容：text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,/;q=0.8<br>含义：告诉浏览器我们接受MIME的类型</p>
+<h4 id="Accept-Encoding"><a href="#Accept-Encoding" class="headerlink" title="==Accept-Encoding=="></a>==Accept-Encoding==</h4><p>内容：gzip, deflate, br<br>含义：如果有这个字段，则代表客户端支持压缩将内容编码，去掉后会支持任意编码。<br>注意：爬虫时一般不要把它加上，博主最开始就是不懂全都复制过来，结果因为这个就是不好使卡住好长时间。</p>
+<h4 id="Accept-Lanague"><a href="#Accept-Lanague" class="headerlink" title="==Accept-Lanague=="></a>==Accept-Lanague==</h4><p>内容：zh-CN,zh;q=0.9<br>含义：告诉服务器能够接受的语言，没有则代表任何语言</p>
+<h4 id="Connection"><a href="#Connection" class="headerlink" title="==Connection=="></a>==Connection==</h4><p>内容：keep-alive<br>含义：告诉服务器需要持久有效的连接状态（HTTP1.1默认会进行持久连接）</p>
+<h4 id="Host"><a href="#Host" class="headerlink" title="==Host=="></a>==Host==</h4><p>内容：www.baidu.com<br>含义：客户端指定自己想访问的web服务器域名/IP地址和端口号</p>
+<h4 id="Cache-control"><a href="#Cache-control" class="headerlink" title="==Cache-control=="></a>==Cache-control==</h4><p>内容：max-age=0<br>含义：(引自百度百科)</p>
+<blockquote>
+<p>Cache-Control<br>是最重要的规则。这个字段用于指定所有缓存机制在整个请求/响应链中必须服从的指令。这些指令指定用于阻止缓存对请求或响应造成不利干扰的行为。这些指令通常覆盖默认缓存算法。缓存指令是单向的，即请求中存在一个指令并不意味着响应中将存在同一个指令。<br>网页的缓存是由HTTP消息头中的“Cache-control”来控制的，常见的取值有private、no-cache、max-age、must-revalidate等，默认为private。</p>
+</blockquote>
+<p>但是HTTP请求和响应的Cache-Control是不完全一样的。<br>常见的请求Cache-Control取值有==no-cache==, ==no-store==, ==max-age==, ==max-stale==, ==min-fresh==, ==only-if-cached==。</p>
+<p>响应的Cache-Control取值有==public==, ==private==,==no-cache==, ==no- store==, ==no-transform==, ==must-revalidate==, ==proxy-revalidate==, ==max-age==。</p>
+<p>我们这里主要介绍请求时的常见Cache-Control取值。</p>
+<h5 id="max-age-lt-0"><a href="#max-age-lt-0" class="headerlink" title="max-age&lt;=0"></a><1>max-age&lt;=0</1></h5><p>本例中使用max-age=0，表示每次请求会访问服务器，通过Last-Modified来判断文件是否被修改，如果被修改，返回状态码200并得到最新文件，否则将返回304状态码并读取缓存文件。</p>
+<h5 id="max-age-gt-0"><a href="#max-age-gt-0" class="headerlink" title="max-age&gt;0"></a><2>max-age&gt;0</2></h5><p>表示会直接从浏览器提取缓存。</p>
+<h5 id="no-cache"><a href="#no-cache" class="headerlink" title="no-cache"></a><3>no-cache</3></h5><p>表示不会在浏览器缓存进行提取，而是强制的向服务器发出请求，这样可以保证客户端能够收到最权威的回应。</p>
+<h5 id="no-store"><a href="#no-store" class="headerlink" title="no-store"></a><4>no-store</4></h5><p>所有内容都不会被缓存到缓存或Internet临时文件中。</p>
+<h4 id="Upgrade-Insecure-Requests"><a href="#Upgrade-Insecure-Requests" class="headerlink" title="==Upgrade-Insecure-Requests=="></a>==Upgrade-Insecure-Requests==</h4><p>内容：1<br>含义：表示浏览器/爬虫可以处理HTTPS协议，并能自动升级请求从HTTP到HTTPS。</p>
+<h4 id="User-Agent"><a href="#User-Agent" class="headerlink" title="==User-Agent=="></a>==User-Agent==</h4><p>内容：Mozilla/5.0 (Windows NT 6.1; WOW64) ..Safari/537.36<br>含义：（这个是爬虫中最常用了）用于伪装成浏览器身份请求网页。它的意思自然就是表示浏览器的身份，说明是用的哪种浏览器进行的操作。</p>
+<h4 id="Cookies"><a href="#Cookies" class="headerlink" title="==Cookies=="></a>==Cookies==</h4><p>含义：（这个也是爬虫中很重要的了，通常用于模拟登录）<br>Cookies是用于维持服务端的会话状态，由服务器端写入，然后在后续请求中，供服务器读取使用。</p>
+<p><em>以上就是本例中出现的所有字段信息内容。当然，还有其它一些常用字段信息，这里也一起说明一下。</em></p>
+<h3 id="其它请求头字段信息"><a href="#其它请求头字段信息" class="headerlink" title="其它请求头字段信息"></a>其它请求头字段信息</h3><h4 id="Referer"><a href="#Referer" class="headerlink" title="==Referer=="></a>==Referer==</h4><p>含义：（这个也是爬虫常用到的 ==防盗链==）<br>客户端通过当前URL代表的页面出发访问我们请求的页面。爬虫中，一般我们只要把它设置成请求的网页链接就好了。</p>
+<h4 id="Accept-Charset"><a href="#Accept-Charset" class="headerlink" title="==Accept-Charset=="></a>==Accept-Charset==</h4><p>含义：（这个也是爬虫常用到的）<br>表示浏览器可接受的字符集，可以是utf-8，gbk等</p>
+<h4 id="If-Modified-Since"><a href="#If-Modified-Since" class="headerlink" title="==If-Modified-Since=="></a>==If-Modified-Since==</h4><p>内容：Thu, 10 Apr 2008 09:14:42 GMT<br>含义：请求的内容在指定日期以后一旦被修改就被返回对象内容，否则返回“Not Modified”</p>
+<h4 id="Pragma"><a href="#Pragma" class="headerlink" title="==Pragma=="></a>==Pragma==</h4><blockquote>
+<p>Pragma头域用来包含实现特定的指令，最常用的是Pragma:no-cache。在HTTP/1.1协议中，它的含义和Cache-Control:no-cache相同。</p>
+</blockquote>
+<h4 id="Range"><a href="#Range" class="headerlink" title="==Range=="></a>==Range==</h4><p>含义：告诉浏览器自己想取对象的哪个部分。例如，Range: bytes=1173546</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/爬虫/">爬虫</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/爬虫/">爬虫</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/02/12/爬虫-解读http的秘密-进阶篇/" title="爬虫|解读http的秘密&lt;进阶篇&gt;">
+  <span>
+  爬虫|解读http的秘密&lt;进阶篇&gt;</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/02/11/运维-CentOS搭建JavaWeb环境/"  title="运维|CentOS搭建JavaWeb环境">
+ <span>运维|CentOS搭建JavaWeb环境
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分類</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>14</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
