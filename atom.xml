@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-11T04:30:47.001Z</updated>
+  <updated>2018-02-12T06:36:15.786Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/02/11/%E8%BF%90%E7%BB%B4-CentOS%E6%90%AD%E5%BB%BAJavaWeb%E7%8E%AF%E5%A2%83/"/>
     <id>http://yoursite.com/2018/02/11/运维-CentOS搭建JavaWeb环境/</id>
     <published>2018-02-11T11:59:39.000Z</published>
-    <updated>2018-02-11T04:30:47.001Z</updated>
+    <updated>2018-02-12T06:36:15.786Z</updated>
     
     <content type="html"><![CDATA[<h3 id="配置要求"><a href="#配置要求" class="headerlink" title="配置要求"></a>配置要求</h3><p>这里列出的软件版本仅代表写作本文档使用的版本。操作时，请您以实际软件版本为准。</p>
 <p>操作系统：CentOS 7.4<br>Tomcat 版本：Tomcat 8.0.49<br>JDK 版本：JDK 1.8.0_141</p>
@@ -73,7 +73,7 @@
 <p>查看 jdk 版本。当出现 jdk 版本信息时，表示 JDK 已经安装成功。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">java -version</div><div class="line">java version &quot;1.8.0_141&quot;</div><div class="line">Java(TM) SE Runtime Environment (build 1.8.0_141-b15)</div><div class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.141-b15, mixed mode)</div></pre></td></tr></table></figure></p>
 <h3 id="安装-Tomcat"><a href="#安装-Tomcat" class="headerlink" title="安装 Tomcat"></a>安装 Tomcat</h3><p>按以下步骤安装 Tomcat。</p>
 <ol>
-<li>依次运行以下命令解压 apache-tomcat-8.5.23.tar.gz，重命名 Tomcat 目录，并设置用户权限。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">tar xzf apache-tomcat-8.5.23.tar.gz</div><div class="line">mv apache-tomcat-8.5.23 /usr/local/tomcat/</div><div class="line">chown -R www.www /usr/local/tomcat/</div></pre></td></tr></table></figure>
+<li>依次运行以下命令解压 apache-tomcat-8.5.23.tar.gz，重命名 Tomcat 目录，并设置用户权限。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">tar xzf apache-tomcat-8.0.49.tar.gz</div><div class="line">mv apache-tomcat-8.0.49 /usr/local/tomcat/</div><div class="line">chown -R www.www /usr/local/tomcat/</div></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>说明：</p>
@@ -99,7 +99,7 @@
 <p>下载脚本：<strong>wget <a href="https://github.com/lj2007331/oneinstack/raw/master/init.d/Tomcat-init" target="_blank" rel="external">https://github.com/lj2007331/oneinstack/raw/master/init.d/Tomcat-init</a></strong></p>
 <p>重命名 Tomcat-init。<strong>mv Tomcat-init /etc/init.d/tomcat</strong></p>
 <p>添加执行权限：<strong>chmod +x /etc/init.d/tomcat</strong></p>
-<p>设置启动脚本 <strong>JAVA_HOME：sed -i ‘s@^export JAVA_HOME=.*@export JAVA_HOME=/usr/java/jdk1.8.0_141@’ /etc/init.d/tomcat</strong></p>
+<p>设置启动脚本 JAVA_HOME：<strong>sed -i ‘s@^export JAVA_HOME=.*@export JAVA_HOME=/usr/java/jdk1.8.0_141@’ /etc/init.d/tomcat</strong></p>
 <p>4.设置自启动。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">chkconfig --add tomcat</div><div class="line">chkconfig tomcat on</div></pre></td></tr></table></figure></p>
 <p>5.启动 Tomcat。</p>
 <blockquote>
@@ -107,6 +107,52 @@
 </blockquote>
 <p>6.在浏览器地址栏中输入 <a href="http://ip:8080" target="_blank" rel="external">http://ip:8080</a> 进行访问。出现如图所示页面时表示安装成功。</p>
 <p><img src="/images/搭建JavaWeb服务器.png" alt="enter description here" title="搭建JavaWeb服务器"></p>
+<h3 id="安装Mysql"><a href="#安装Mysql" class="headerlink" title="安装Mysql"></a>安装Mysql</h3><h4 id="卸载老版本MySQL"><a href="#卸载老版本MySQL" class="headerlink" title="卸载老版本MySQL"></a>卸载老版本MySQL</h4><p>查找并删除mysql有关的文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">find / -name mysql</div><div class="line">rm -rf 上边查找到的路径，多个路径用空格隔开</div><div class="line">#或者下边一条命令即可</div><div class="line">find / -name mysql|xargs rm -rf</div></pre></td></tr></table></figure></p>
+<h4 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h4><blockquote>
+<p>wget <a href="http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz" target="_blank" rel="external">http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz</a></p>
+</blockquote>
+<h4 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h4><blockquote>
+<p>tar -zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz</p>
+</blockquote>
+<h4 id="移动文件"><a href="#移动文件" class="headerlink" title="移动文件"></a>移动文件</h4><blockquote>
+<p>mv mysql-5.6.33-linux-glibc2.5-x86_64/  /usr/local/mysql</p>
+</blockquote>
+<h4 id="添加mysql用户组和mysql用户"><a href="#添加mysql用户组和mysql用户" class="headerlink" title="添加mysql用户组和mysql用户"></a>添加mysql用户组和mysql用户</h4><p>先检查是否有mysql用户组和mysql用户</p>
+<blockquote>
+<p>groups mysql</p>
+</blockquote>
+<p>若无，则添加；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">groupadd mysql</div><div class="line">useradd -r -g mysql mysql</div></pre></td></tr></table></figure></p>
+<h4 id="进入mysql目录更改权限"><a href="#进入mysql目录更改权限" class="headerlink" title="进入mysql目录更改权限"></a>进入mysql目录更改权限</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/mysql</div><div class="line">chown -R mysql:mysql ./</div></pre></td></tr></table></figure>
+<h4 id="执行安装脚本"><a href="#执行安装脚本" class="headerlink" title="执行安装脚本"></a>执行安装脚本</h4><blockquote>
+<p>./scripts/mysql_install_db –user=mysql</p>
+</blockquote>
+<p>安装完之后修改当前目录拥有者为root用户，修改data目录拥有者为mysql</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">chown -R root:root ./</div><div class="line">chown -R mysql:mysql data</div></pre></td></tr></table></figure>
+<h4 id="更改mysql密码"><a href="#更改mysql密码" class="headerlink" title="更改mysql密码"></a>更改mysql密码</h4><p>上一步安装脚本执行输出的日志中告诉我们如何更改密码了</p>
+<p><img src="/images/搭建JavaWeb服务器-mysql.png" alt="搭建JavaWeb服务器--mysql" title="搭建JavaWeb服务器-mysql"></p>
+<p>但是如果直接执行这两条命令就会报错<br><img src="/images/搭建JavaWeb服务器--mysql.png" alt="搭建JavaWeb服务器--mysql" title="搭建JavaWeb服务器--mysql"></p>
+<p>因为这时还没有启动mysql，这算是一个坑。启动方法如下：</p>
+<blockquote>
+<p>./support-files/mysql.server start</p>
+</blockquote>
+<p><img src="/images/搭建JavaWeb服务器---mysql.png" alt="搭建JavaWeb服务器---mysql" title="搭建JavaWeb服务器---mysql"></p>
+<p>如果MySQL启动报错，则可能是已经存在MySQL进程，杀掉即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ps aux|grep mysql</div><div class="line">kill -9 上边的进程号</div><div class="line">#或者下边一条命令即可杀掉所有MySQL进程</div><div class="line">ps aux|grep mysql|awk &apos;&#123;print $2&#125;&apos;|xargs kill -9</div></pre></td></tr></table></figure></p>
+<p>MySQL启动之后再执行如下命令更改密码：</p>
+<blockquote>
+<p>./bin/mysqladmin -u root -h localhost.localdomain password ‘root’</p>
+</blockquote>
+<p>密码更改后即可登录MySQL</p>
+<blockquote>
+<p>./bin/mysql -h127.0.0.1 -uroot -proot</p>
+</blockquote>
+<p><img src="/images/搭建JavaWeb服务器----mysql.png" alt="搭建JavaWeb服务器----mysql" title="搭建JavaWeb服务器----mysql"></p>
+<p>登录之后将其他用户的密码也可改为root<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">update mysql.user set password=password(&apos;root&apos;) where user=&apos;root&apos;;</div><div class="line">flush privileges;</div></pre></td></tr></table></figure></p>
+<h4 id="增加远程登录权限"><a href="#增加远程登录权限" class="headerlink" title="增加远程登录权限"></a>增加远程登录权限</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">grant all privileges on *.* to root@&apos;%&apos; identified by &apos;root&apos;;</div><div class="line">flush privileges;</div></pre></td></tr></table></figure>
+<h4 id="将MySQL加入Service系统服务"><a href="#将MySQL加入Service系统服务" class="headerlink" title="将MySQL加入Service系统服务"></a>将MySQL加入Service系统服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cp support-files/mysql.server /etc/init.d/mysqld</div><div class="line">chkconfig --add mysqld</div><div class="line">chkconfig mysqld on</div><div class="line">service mysqld restart</div><div class="line">service mysqld status</div></pre></td></tr></table></figure>
+<p><img src="/images/搭建JavaWeb服务器-----mysql.png" alt="搭建JavaWeb服务器-----mysql" title="搭建JavaWeb服务器-----mysql"></p>
+<h4 id="配置my-cnf-配置可能会出错-这一步可以忽"><a href="#配置my-cnf-配置可能会出错-这一步可以忽" class="headerlink" title="配置my.cnf[配置可能会出错|这一步可以忽]"></a>配置my.cnf[配置可能会出错|这一步可以忽]</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">vim my.cnf</div><div class="line">#添加以下两条语句并保存退出</div><div class="line">default-character-set=utf8</div><div class="line">lower_case_table_names=1</div><div class="line">max_allowed_packet=100M</div></pre></td></tr></table></figure>
+<p>配置好之后，重启mysqld服务</p>
+<p><img src="/images/搭建JavaWeb服务器#mysql.png" alt="搭建JavaWeb服务器#mysql" title="搭建JavaWeb服务器#mysql"></p>
 <blockquote>
 <p>引用 <a href="https://help.aliyun.com/document_detail/51376.html?spm=a2c4g.11186623.2.6.f7qoYA" target="_blank" rel="external">https://help.aliyun.com/document_detail/51376.html?spm=a2c4g.11186623.2.6.f7qoYA</a></p>
 </blockquote>
@@ -226,7 +272,7 @@
     <link href="http://yoursite.com/2018/02/10/Java-%E5%BE%92%E6%89%8B%E6%92%B8%E6%A1%86%E6%9E%B6-%E5%AE%9E%E7%8E%B0IoC/"/>
     <id>http://yoursite.com/2018/02/10/Java-徒手撸框架-实现IoC/</id>
     <published>2018-02-10T14:45:42.000Z</published>
-    <updated>2018-02-10T07:53:23.777Z</updated>
+    <updated>2018-02-11T15:15:00.338Z</updated>
     
     <content type="html"><![CDATA[<h3 id="写在开头"><a href="#写在开头" class="headerlink" title="写在开头"></a>写在开头</h3><p>Spring 作为 J2ee 开发事实上的标准，是每个Java开发人员都需要了解的框架。但是Spring 的 IoC 和 Aop 的特性，对于初级的Java开发人员来说还是比较难于理解的。所以我就想写一系列的文章给大家讲解这些特性。从而能够进一步深入了解 Spring 框架。</p>
 <p>读完这篇文章，你将会了解：</p>
@@ -564,7 +610,7 @@
     <link href="http://yoursite.com/2018/02/03/Java-Jersey%E5%85%A5%E9%97%A8%E5%AE%9E%E8%B7%B5/"/>
     <id>http://yoursite.com/2018/02/03/Java-Jersey入门实践/</id>
     <published>2018-02-03T10:34:34.000Z</published>
-    <updated>2018-02-04T14:49:56.232Z</updated>
+    <updated>2018-02-12T01:44:39.602Z</updated>
     
     <content type="html"><![CDATA[<h3 id="Jersey简介"><a href="#Jersey简介" class="headerlink" title="Jersey简介"></a>Jersey简介</h3><p>Jersey是JAX-RS（JSR311）开源参考实现用于构建RESTful Web service，它包含三个部分：</p>
 <ul>
@@ -625,7 +671,9 @@
 <p>最终，RestApplication 在 web.xml 配置是这样的：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;init-param&gt;</div><div class="line">    &lt;param-name&gt;javax.ws.rs.Application&lt;/param-name&gt;</div><div class="line">    &lt;param-value&gt;com.waylau.rest.RestApplication&lt;/param-value&gt;</div><div class="line">&lt;/init-param&gt;</div></pre></td></tr></table></figure>
 <h3 id="Encoding-Format-处理编码问题"><a href="#Encoding-Format-处理编码问题" class="headerlink" title="Encoding Format 处理编码问题"></a>Encoding Format 处理编码问题</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">private final static String CHARSET_UTF_8 = &quot;charset=utf-8&quot;;</div><div class="line"></div><div class="line">@GET</div><div class="line">@Path(&quot;pojoxml&quot;)</div><div class="line">@Produces(MediaType.APPLICATION_XML + &quot;;&quot; + CHARSET_UTF_8)</div><div class="line">public MyBean getPojoXml() &#123;</div><div class="line">    MyBean pojo = new MyBean();</div><div class="line">    pojo.setName(&quot;欢迎光临：waylau.com&quot;);</div><div class="line">    pojo.setAge(28);</div><div class="line">    return pojo;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@GET</div><div class="line">@Path(&quot;pojojson&quot;)</div><div class="line">@Produces(MediaType.APPLICATION_JSON + &quot;;&quot; + CHARSET_UTF_8)</div><div class="line">public MyBean getPojoJson() &#123;</div><div class="line">    MyBean pojo = new MyBean();</div><div class="line">    pojo.setName(&quot;欢迎光临：waylau.com&quot;);</div><div class="line">    pojo.setAge(28);</div><div class="line">    return pojo;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="Parameter-Annotations-常用参数注解"><a href="#Parameter-Annotations-常用参数注解" class="headerlink" title="Parameter Annotations 常用参数注解"></a>Parameter Annotations 常用参数注解</h3><h4 id="QueryParam"><a href="#QueryParam" class="headerlink" title="@QueryParam"></a>@QueryParam</h4><p>@QueryParam 用于从请求 URL 的查询组件中提取查询参数。我们在 MyResource 里面添加下面的方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">@PUT</div><div class="line">@Path(&quot;pojo&quot;)</div><div class="line">@Consumes(MediaType.APPLICATION_JSON)  </div><div class="line">@Produces(MediaType.APPLICATION_JSON)</div><div class="line">public MyBean putPojo(@QueryParam(&quot;age&quot;) int age, </div><div class="line">        @QueryParam(&quot;name&quot;) String name) &#123;</div><div class="line">    MyBean pojo = new MyBean();</div><div class="line">    pojo.setName(name);</div><div class="line">    pojo.setAge(age);</div><div class="line">    return pojo;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="Parameter-Annotations-常用参数注解"><a href="#Parameter-Annotations-常用参数注解" class="headerlink" title="Parameter Annotations 常用参数注解"></a>Parameter Annotations 常用参数注解</h3><h4 id="PathParam"><a href="#PathParam" class="headerlink" title="@PathParam"></a>@PathParam</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@GET  </div><div class="line">@Path(&quot;&#123;username&quot;&#125;)  </div><div class="line">@Produces(MediaType.APPLICATION_JSON)  </div><div class="line">public User getUser(@PathParam(&quot;username&quot;) String userName) &#123;  </div><div class="line">    ...  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>请求url:<a href="http://localhost/user/jack时，userName值为jack" target="_blank" rel="external">http://localhost/user/jack时，userName值为jack</a> </p>
+<h4 id="QueryParam"><a href="#QueryParam" class="headerlink" title="@QueryParam"></a>@QueryParam</h4><p>@QueryParam 用于从请求 URL 的查询组件中提取查询参数。我们在 MyResource 里面添加下面的方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">@PUT</div><div class="line">@Path(&quot;pojo&quot;)</div><div class="line">@Consumes(MediaType.APPLICATION_JSON)  </div><div class="line">@Produces(MediaType.APPLICATION_JSON)</div><div class="line">public MyBean putPojo(@QueryParam(&quot;age&quot;) int age, </div><div class="line">        @QueryParam(&quot;name&quot;) String name) &#123;</div><div class="line">    MyBean pojo = new MyBean();</div><div class="line">    pojo.setName(name);</div><div class="line">    pojo.setAge(age);</div><div class="line">    return pojo;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>这个 PUT 方法，将会接收从URL 传递过来的参数 age,name ，而后将这些参数赋给对象 MyBean ，并且返回。<br>启动服务，在 RESTClient 里面发送 PUT 请求 <a href="http://localhost:8080/webapi/myresource/pojo?age=28&amp;name=waylau" target="_blank" rel="external">http://localhost:8080/webapi/myresource/pojo?age=28&amp;name=waylau</a> 。成功后就能接收到一个 JSON 数据对象。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">   &quot;age&quot;: 28,</div><div class="line">   &quot;name&quot;: &quot;waylau&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h4 id="DefaultValue"><a href="#DefaultValue" class="headerlink" title="@DefaultValue"></a>@DefaultValue</h4><p>如果需要为参数设置默认值，可以使用 @DefaultValue，如：<br>我们在 MyResource 里面添加下面的方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">@POST</div><div class="line">@Path(&quot;pojo&quot;)</div><div class="line">@Consumes(MediaType.APPLICATION_JSON)  </div><div class="line">@Produces(MediaType.APPLICATION_JSON)</div><div class="line">public MyBean postPojoDefault(@DefaultValue(&quot;21&quot;) @QueryParam(&quot;age&quot;) int age, </div><div class="line">        @DefaultValue(&quot;www.waylau.com&quot;)@QueryParam(&quot;name&quot;) String name) &#123;</div><div class="line">    MyBean pojo = new MyBean();</div><div class="line">    pojo.setName(name);</div><div class="line">    pojo.setAge(age);</div><div class="line">    return pojo;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>启动服务，在 RESTClient 里面发送 POST 请求调用 <a href="http://localhost:8080/webapi/myresource/pojo" target="_blank" rel="external">http://localhost:8080/webapi/myresource/pojo</a> 接口，如果该请求包含参数，则将参数值以对象形式放回，否则，将默认值以对象形式放回<br>例如，当我们的请求是<a href="http://localhost:8080/webapi/myresource/pojo?age=26&amp;name=waylau" target="_blank" rel="external">http://localhost:8080/webapi/myresource/pojo?age=26&amp;name=waylau</a><br>则返回<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">   &quot;age&quot;: 26,</div><div class="line">   &quot;name&quot;: &quot;waylau&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
