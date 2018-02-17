@@ -20,7 +20,10 @@
 <meta property="og:description" content="记录这些年踩过的坑第一次接触 Git 是在大一，刚进弦歌那会。由于Git是命令行操作的，没接触过命令行，就觉得这东西挺高大尚的，自己还专门也研究了好久呢，书都借了好几本。 刚开始自己也没概念，搞不清楚本地仓库和远程仓库，只有到开发新生宝典时真正使用了才知道是怎么回事，确实啊，这种工具类的东西，是要使用才能真正掌握的，就像后来用的Composer和Maven。 说说Git为什么要用Git首先，一定要">
 <meta property="og:locale" content="Chinese">
 <meta property="og:image" content="http://yoursite.com/images/git.png">
-<meta property="og:updated_time" content="2018-01-23T10:36:16.322Z">
+<meta property="og:image" content="http://yoursite.com/images/git--项目分支管理-01.png">
+<meta property="og:image" content="http://yoursite.com/images/git--项目分支管理-02.png">
+<meta property="og:image" content="http://yoursite.com/images/git--项目分支管理-03.png">
+<meta property="og:updated_time" content="2018-02-17T12:06:36.355Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git|踩过的坑">
 <meta name="twitter:description" content="记录这些年踩过的坑第一次接触 Git 是在大一，刚进弦歌那会。由于Git是命令行操作的，没接触过命令行，就觉得这东西挺高大尚的，自己还专门也研究了好久呢，书都借了好几本。 刚开始自己也没概念，搞不清楚本地仓库和远程仓库，只有到开发新生宝典时真正使用了才知道是怎么回事，确实啊，这种工具类的东西，是要使用才能真正掌握的，就像后来用的Composer和Maven。 说说Git为什么要用Git首先，一定要">
@@ -52,7 +55,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -95,16 +98,16 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2017-12-15T00:03:02.000Z" itemprop="datePublished"> 發表於 2017-12-15</time>
+    <time datetime="2017-12-15T00:03:02.000Z" itemprop="datePublished"> 发表于 2017-12-15</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目錄</strong>
+			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#记录这些年踩过的坑"><span class="toc-number">1.</span> <span class="toc-text">记录这些年踩过的坑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#说说Git"><span class="toc-number">2.</span> <span class="toc-text">说说Git</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么要用Git"><span class="toc-number">2.1.</span> <span class="toc-text">为什么要用Git</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Git是怎么工作的"><span class="toc-number">2.2.</span> <span class="toc-text">Git是怎么工作的</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些干货"><span class="toc-number">3.</span> <span class="toc-text">一些干货</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#添加-gitignore没起作用"><span class="toc-number">3.1.</span> <span class="toc-text">添加 .gitignore没起作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#提交到远程仓库前"><span class="toc-number">3.2.</span> <span class="toc-text">提交到远程仓库前</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fetch和pull的区别"><span class="toc-number">3.3.</span> <span class="toc-text">fetch和pull的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-diff-的用法"><span class="toc-number">3.4.</span> <span class="toc-text">git diff 的用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-clean"><span class="toc-number">3.5.</span> <span class="toc-text">git clean</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#举个例子"><span class="toc-number">3.5.1.</span> <span class="toc-text">举个例子</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于公钥-秘钥"><span class="toc-number">3.6.</span> <span class="toc-text">关于公钥|秘钥</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#如何创建公钥"><span class="toc-number">3.6.1.</span> <span class="toc-text">如何创建公钥</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#可以参考的资料"><span class="toc-number">3.7.</span> <span class="toc-text">可以参考的资料</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#记录这些年踩过的坑"><span class="toc-number">1.</span> <span class="toc-text">记录这些年踩过的坑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#说说Git"><span class="toc-number">2.</span> <span class="toc-text">说说Git</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么要用Git"><span class="toc-number">2.1.</span> <span class="toc-text">为什么要用Git</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Git是怎么工作的"><span class="toc-number">2.2.</span> <span class="toc-text">Git是怎么工作的</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些干货"><span class="toc-number">3.</span> <span class="toc-text">一些干货</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#添加-gitignore没起作用"><span class="toc-number">3.1.</span> <span class="toc-text">添加 .gitignore没起作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#提交到远程仓库前"><span class="toc-number">3.2.</span> <span class="toc-text">提交到远程仓库前</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fetch和pull的区别"><span class="toc-number">3.3.</span> <span class="toc-text">fetch和pull的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-diff-的用法"><span class="toc-number">3.4.</span> <span class="toc-text">git diff 的用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-clean"><span class="toc-number">3.5.</span> <span class="toc-text">git clean</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#举个例子"><span class="toc-number">3.5.1.</span> <span class="toc-text">举个例子</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于公钥-秘钥"><span class="toc-number">3.6.</span> <span class="toc-text">关于公钥|秘钥</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#如何创建公钥"><span class="toc-number">3.6.1.</span> <span class="toc-text">如何创建公钥</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#可以参考的资料"><span class="toc-number">3.7.</span> <span class="toc-text">可以参考的资料</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#项目分支管理"><span class="toc-number">4.</span> <span class="toc-text">项目分支管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分支说明"><span class="toc-number">4.1.</span> <span class="toc-text">分支说明</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -184,7 +187,48 @@
 </ul>
 <p>6.1 找到.ssh文件夹，用文本编辑器打开“id_rsa.pub”文件，复制内容到剪贴板。</p>
 <p>6.2 打开 <a href="https://github.com/settings/ssh" target="_blank" rel="external">https://github.com/settings/ssh</a> ，点击 Add SSH Key 按钮，粘贴进去保存即可。</p>
-<h4 id="可以参考的资料"><a href="#可以参考的资料" class="headerlink" title="可以参考的资料"></a>可以参考的资料</h4><blockquote>
+<h4 id="可以参考的资料"><a href="#可以参考的资料" class="headerlink" title="可以参考的资料"></a>可以参考的资料</h4><h3 id="项目分支管理"><a href="#项目分支管理" class="headerlink" title="项目分支管理"></a>项目分支管理</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">master</div><div class="line">   + -----&gt; release/1.0                                     (1)</div><div class="line">   |            + ------------&gt; issue/1                     (2)</div><div class="line">   |            |                  | </div><div class="line">   |            | &lt;----- MR ------ +                        (3)</div><div class="line">   |            |                                           (4)</div><div class="line">   + &lt;--- MR ---+                                           (5)</div><div class="line">   |  &lt;tag:v1.0&gt;                                            (6)</div></pre></td></tr></table></figure>
+<ul>
+<li>项目 Owner 负责创建当前待发布的分支，如master&gt; git checkout -b release/1.0，</li>
+<li>项目 Developer 根据已提交的 issue 创建对应的开发分支，如 release/1.0&gt; git checkout -b issue/1，</li>
+<li>项目 Developer 完成开发后，发起由issue/1到release/1.0的Merge Request给项目 Owner，<ul>
+<li>可并行开发 issue， 同样执行步骤 2 ~3</li>
+</ul>
+</li>
+<li>项目 Owner 审查过代码后，合并代码才可提交测试， 若出现 Bug，则执行执行步骤 2 ~3，</li>
+<li>项目 Tester 测试全部通过后，发起由release/1.0到master的Merge Request给项目 Owner，</li>
+<li>项目 Owner 合并代码并打标签v1.0，如master&gt; git tag v1.0，而后才可发布上线。</li>
+</ul>
+<blockquote>
+<p>无测试参与的项目<br>比如开发公共库或中间服务的项目，这种情况下，可以不拉 release分支，而直接在 master上拉 issue分支，但Merge Request的步骤不能缺少。<br>注意<br>合并后的分支应删除掉。</p>
+</blockquote>
+<h4 id="分支说明"><a href="#分支说明" class="headerlink" title="分支说明"></a>分支说明</h4><table>
+<thead>
+<tr>
+<th>分支</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>master</td>
+<td>最新的提交版本应该与线上版本保持一致，且必须是 Protected， 仅限项目 Owner 提交或合并</td>
+</tr>
+<tr>
+<td>release/{version}</td>
+<td>当前开发分支，version是版本号,同时最新提交版本应该与测试环境保持一致</td>
+</tr>
+<tr>
+<td>issue/{id}</td>
+<td>对应 issue 的开发分支</td>
+</tr>
+</tbody>
+</table>
+<p>最后，上几张图：</p>
+<p><img src="/images/git--项目分支管理-01.png" alt="项目分支管理" title="git--项目分支管理-01"></p>
+<p><img src="/images/git--项目分支管理-02.png" alt="项目分支管理" title="git--项目分支管理-02"></p>
+<p><img src="/images/git--项目分支管理-03.png" alt="项目分支管理" title="git--项目分支管理-03"></p>
+<blockquote>
 <blockquote>
 <p><a href="http://huanglei.me/git-theory.html" target="_blank" rel="external">http://huanglei.me/git-theory.html</a><br><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000</a></p>
 </blockquote>
@@ -231,10 +275,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -262,7 +306,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分類</p>
+	<p class="asidetitle">分类</p>
 		<ul>
 		
 		  
@@ -307,7 +351,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
 			
@@ -331,6 +375,10 @@
 			
 		
 			
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
 			
 		
@@ -339,15 +387,7 @@
 			
 		
 			
-				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
 			
 		
 			
@@ -355,7 +395,11 @@
 			
 		
 			
-				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
 			
 		
 			
@@ -363,19 +407,19 @@
 			
 		
 			
-				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -383,7 +427,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
 </aside>
@@ -570,7 +614,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
