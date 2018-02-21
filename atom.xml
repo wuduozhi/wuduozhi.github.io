@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-12T08:20:06.118Z</updated>
+  <updated>2018-02-21T03:59:35.699Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,117 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PHP|PHP安全性开发</title>
+    <link href="http://yoursite.com/2018/02/21/PHP-PHP%E5%AE%89%E5%85%A8%E6%80%A7%E5%BC%80%E5%8F%91/"/>
+    <id>http://yoursite.com/2018/02/21/PHP-PHP安全性开发/</id>
+    <published>2018-02-21T11:28:02.000Z</published>
+    <updated>2018-02-21T03:59:35.699Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><blockquote>
+<p>“php给了开发者极大的灵活性，但是这也为安全问题带来了潜在的隐患，近期需要总结一下以往的问题，在这里借翻译一篇文章同时加上自己开发的一些感触总结一下。”</p>
+</blockquote>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>当开发一个互联网服务的时候，必须时刻牢记==安全观念==，并在开发的代码中体现。PHP脚本语言对安全问题并不关心，特别是对大多数没有经验的开发者来说。每当你讲任何涉及到钱财事务等交易问题时，需要特别注意安全问题的考虑，例如开发一个论坛或者是一个购物车等。</p>
+<h3 id="安全保护一般性要点"><a href="#安全保护一般性要点" class="headerlink" title="安全保护一般性要点"></a>安全保护一般性要点</h3><h4 id="不相信表单"><a href="#不相信表单" class="headerlink" title="不相信表单"></a>不相信表单</h4><p>对于一般的Javascript前台验证，由于无法得知用户的行为，例如关闭了浏览器的javascript引擎，这样通过POST恶意数据到服务器。需要在服务器端进行验证，对每个php脚本验证传递到的数据，防止XSS攻击和SQL注入</p>
+<h4 id="不相信用户"><a href="#不相信用户" class="headerlink" title="不相信用户"></a>不相信用户</h4><p>要假设你的网站接收的每一条数据都是存在恶意代码的，存在隐藏的威胁，要对每一条数据都进行清理</p>
+<h4 id="关闭全局变量"><a href="#关闭全局变量" class="headerlink" title="关闭全局变量"></a>关闭全局变量</h4><p>在php.ini文件中进行以下配置：</p>
+<blockquote>
+<p>register_globals = Off</p>
+</blockquote>
+<p>如果这个配置选项打开之后，会出现很大的安全隐患。例如有一个process.php的脚本文件，会将接收到的数据插入到数据库，接收用户输入数据的表单可能如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;input name=&quot;username&quot; type=&quot;text&quot; size=&quot;15&quot; maxlength=&quot;64&quot;&gt;</div></pre></td></tr></table></figure></p>
+<p>这样，当提交数据到==process.php==之后，php会注册一个$<strong>username</strong>变量，将这个变量数据提交到process.php，同时对于任何POST或GET请求参数，都会设置这样的变量。如果不是显示进行初始化那么就会出现下面的问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">// Define $authorized = true only if user is authenticated</div><div class="line">if (authenticated_user()) &#123;</div><div class="line">    $authorized = true;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>处，假设authenticated_user函数就是判断$authorized变量的值，如果开启了register_globals配置，那么任何用户都可以发送一个请求，来设置$authorized变量的值为任意值从而就能绕过这个验证。</p>
+<p>所有的这些提交数据都应该通过PHP预定义内置的全局数组来获取，包括$_POST、$_GET、$_FILES、$_SERVER、$_REQUEST等，其中$_REQUEST是一个$_GET/$_POST/$_COOKIE三个数组的联合变量，默认的顺序是$_COOKIE、$_POST、$_GET。</p>
+<h5 id="推荐的安全配置选项"><a href="#推荐的安全配置选项" class="headerlink" title="推荐的安全配置选项"></a>推荐的安全配置选项</h5><ul>
+<li>error_reporting设置为Off：不要暴露错误信息给用户，开发的时候可以设置为ON</li>
+<li>safe_mode设置为Off</li>
+<li>register_globals设置为Off</li>
+<li>将以下函数禁用：system、exec、passthru、shell_exec、proc_open、popen</li>
+<li>open_basedir设置为 /tmp ，这样可以让session信息有存储权限，同时设置单独的网站根目录</li>
+<li>expose_php设置为Off</li>
+<li>allow_url_fopen设置为Off</li>
+<li>allow_url_include设置为Off</li>
+</ul>
+<h4 id="SQL注入攻击"><a href="#SQL注入攻击" class="headerlink" title="SQL注入攻击"></a>SQL注入攻击</h4><p>对于操作数据库的SQL语句，需要特别注意安全性，因为用户可能输入特定语句使得原有的SQL语句改变了功能。类似下面的例子：</p>
+<blockquote>
+<p>$sql = “select * from pinfo where product = ‘$product’”;</p>
+</blockquote>
+<p>此时如果用户输入的$product参数为：</p>
+<blockquote>
+<p>39’; DROP pinfo; SELECT ‘FOO</p>
+</blockquote>
+<p>那么最终SQL语句就变成了如下的样子：</p>
+<blockquote>
+<p>select product from pinfo where product = ‘39’; DROP pinfo; SELECT ‘FOO’</p>
+</blockquote>
+<p>这样就会变成三条SQL语句，会造成pinfo表被删除，这样会造成严重的后果。</p>
+<p>这个问题可以简单的使用PHP的内置函数解决：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$sql = &apos;Select * from pinfo where product = &apos;&quot;&apos;</div><div class="line">mysql_real_escape_string($product) . &apos;&quot;&apos;;</div></pre></td></tr></table></figure></p>
+<p><strong>防止SQL注入攻击需要做好两件事：</strong></p>
+<p>==对输入的参数总是进行类型验证==</p>
+<p>==对单引号、双引号、反引号等特殊字符总是使用mysql_real_escape_string函数进行转义==</p>
+<p>但是，这里根据开发经验，不要开启php的Magic Quotes，这个特性在php6中已经废除，总是自己在需要的时候进行转义。</p>
+<h4 id="防止基本的XSS攻击"><a href="#防止基本的XSS攻击" class="headerlink" title="防止基本的XSS攻击"></a>防止基本的XSS攻击</h4><p>XSS攻击不像其他攻击，这种攻击在客户端进行，最基本的XSS工具就是<strong>防止一段javascript脚本在用户待提交的表单页面，将用户提交的数据和cookie偷取过来</strong>。</p>
+<p>XSS工具比SQL注入更加难以防护，各大公司网站都被XSS攻击过，虽然这种攻击与php语言无关，但可以使用php来筛选用户数据达到保护用户数据的目的，这里主要使用的是对用户的数据进行过滤，一般过滤掉HTML标签，特别是a标签。下面是一个普通的过滤方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">function transform_HTML($string, $length = null) &#123;</div><div class="line">    // Helps prevent XSS attacks</div><div class="line">    // Remove dead space.</div><div class="line">    $string = trim($string);</div><div class="line">    // Prevent potential Unicode codec problems.</div><div class="line">    $string = utf8_decode($string);</div><div class="line">    // HTMLize HTML-specific characters.</div><div class="line">    $string = htmlentities($string, ENT_NOQUOTES);</div><div class="line">    $string = str_replace(&quot;#&quot;, &quot;#&quot;, $string);</div><div class="line">    $string = str_replace(&quot;%&quot;, &quot;%&quot;, $string);</div><div class="line">    $length = intval($length);</div><div class="line">    if ($length &gt; 0) &#123;</div><div class="line">        $string = substr($string, 0, $length);</div><div class="line">    &#125;</div><div class="line">    return $string;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个函数将HTML的特殊字符转换为了HTML实体，浏览器在渲染这段文本的时候以纯文本形式显示。如bold会被显示为：</p>
+<strong>BoldText</strong>
+
+<p>上述函数的核心就是==htmlentities函数==，这个函数将html特殊标签转换为html实体字符，这样可以过滤大部分的XSS攻击。</p>
+<p>但是对于有经验的XSS攻击者，有更加巧妙的办法进行攻击：将他们的恶意代码使用十六进制或者utf-8编码，而不是普通的ASCII文本，例如可以使用下面的方式进行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a href=&quot;http://host/a.php?variable=%22%3e %3c%53%43%52%49%50%54%3e%44%6f%73%6f%6d%65%74%68%69%6e%67%6d%61%6c%69%63%69%6f%75%73%3c%2f%53%43%52%49%50%54%3e&quot;&gt;</div></pre></td></tr></table></figure></p>
+<p>这样浏览器渲染的结果其实是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;a href=&quot;http://host/a.php?variable=&quot;&gt;                   &lt;SCRIPT&gt;Dosomethingmalicious&lt;/SCRIPT&gt;</div><div class="line">&lt;/a&gt;</div></pre></td></tr></table></figure>
+<p>这样就达到了攻击的目的。为了防止这种情况，需要在transform_HTML函数的基础上再将#和%转换为他们对应的实体符号，同时加上了$length参数来限制提交的数据的最大长度。</p>
+<h4 id="使用SafeHTML防止XSS攻击"><a href="#使用SafeHTML防止XSS攻击" class="headerlink" title="使用SafeHTML防止XSS攻击"></a>使用SafeHTML防止XSS攻击</h4><p>上述关于XSS攻击的防护非常简单，但是不包含用户的所有标记，同时有上百种绕过过滤函数提交javascript代码的方法，也没有办法能完全阻止这个情况。</p>
+<p>目前，没有一个单一的脚本能保证不被攻击突破，但是总有相对来说防护程度更好的。一共有两个安全防护的方式：白名单和黑名单。其中白名单更加简单和有效。</p>
+<p>一种白名单解决方案就是SafeHTML，它足够智能能够识别有效的HTML，然后就可以去除任何危险的标签。这个需要基于HTMLSax包来进行解析。</p>
+<blockquote>
+<p>安装使用SafeHTML的方法：<br>1、前往<a href="http://pixel-apes.com/safehtml/?page=safehtml" target="_blank" rel="external">http://pixel-apes.com/safehtml/?page=safehtml</a> 下载最新的SafeHTML<br>2、将文件放入服务器的classes 目录，这个目录包含所有的SafeHTML和HTMLSax库<br>3、在自己的脚本中包含SafeHTML类文件<br>4、建立一个SafeHTML对象<br>5、使用parse方法进行过滤</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">    /* If you&apos;re storing the HTMLSax3.php in the /classes directory, along</div><div class="line">    with the safehtml.php script, define XML_HTMLSAX3 as a null string. */</div><div class="line">    define(XML_HTMLSAX3, &apos;&apos;);</div><div class="line">    // Include the class file.</div><div class="line">    require_once(&apos;classes/safehtml.php&apos;);</div><div class="line">    // Define some sample bad code.</div><div class="line">    $data = &quot;This data would raise an alert &lt;script&gt;alert(&apos;XSS Attack&apos;)&lt;/script&gt;&quot;;</div><div class="line">    // Create a safehtml object.</div><div class="line">    $safehtml = new safehtml();</div><div class="line">    // Parse and sanitize the data.</div><div class="line">    $safe_data = $safehtml-&gt;parse($data);</div><div class="line">    // Display result.</div><div class="line">    echo &apos;The sanitized data is &lt;br /&gt;&apos; . $safe_data;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>SafeHTML并不能完全防止XSS攻击，只是一个相对复杂的脚本来检验的方式。</p>
+<p>使用单向HASH加密方式来保护数据</p>
+<p>单向hash加密保证对每个用户的密码都是唯一的，而且不能被破译的，只有最终用户知道密码，系统也是不知道原始密码的。这样的一个好处是在系统被攻击后攻击者也无法知道原始密码数据。</p>
+<p>加密和Hash是不同的两个过程。与加密不同，Hash是无法被解密的，是单向的；同时两个不同的字符串可能会得到同一个hash值，并不能保证hash值的唯一性。</p>
+<p>MD5函数处理过的hash值基本不能被破解，但是总是有可能性的，而且网上也有MD5的hash字典。</p>
+<h4 id="使用mcrypt加密数据"><a href="#使用mcrypt加密数据" class="headerlink" title="使用mcrypt加密数据"></a>使用mcrypt加密数据</h4><p>MD5 hash函数可以在可读的表单中显示数据，但是对于存储用户的信用卡信息的时候，需要进行加密处理后存储，并且需要之后进行解密。</p>
+<p>最好的方法是使用mcrypt模块，这个模块包含了超过30中加密方式来保证只有加密者才能解密数据。</p>
+<blockquote>
+<p>mcrypt函数需要以下信息：<br>1、待加密数据<br>2、用来加密和解密数据的key<br>3、用户选择的加密数据的特定算法（cipher：如 MCRYPT_TWOFISH192,MCRYPT_SERPENT_256， MCRYPT_RC2, MCRYPT_DES, and MCRYPT_LOKI97）<br>4、用来加密的模式<br>5、加密的种子，用来起始加密过程的数据，是一个额外的二进制数据用来初始化加密算法<br>6、加密key和种子的长度，使用mcrypt_get_key_size函数和mcrypt_get_block_size函数可以获取</p>
+</blockquote>
+<p>如果数据和key都被盗取，那么攻击者可以遍历ciphers寻找开行的方式即可，因此我们需要将加密的key进行MD5一次后保证安全性。同时由于mcrypt函数返回的加密数据是一个二进制数据，这样保存到数据库字段中会引起其他错误，使用了base64encode将这些数据转换为了十六进制数方便保存。</p>
+<blockquote>
+<p>引用 <a href="https://www.daijiale.cn/back-end-dev/【php】php安全性开发.html" target="_blank" rel="external">https://www.daijiale.cn/back-end-dev/【php】php安全性开发.html</a></p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;“php给了开发者极大的灵活性，但是这也为安全问题带来了潜在的隐患，近期需要总结一下以往的问题，在这里借翻译一篇文
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>展望|2018</title>
+    <link href="http://yoursite.com/2018/02/20/%E5%B1%95%E6%9C%9B-2018/"/>
+    <id>http://yoursite.com/2018/02/20/展望-2018/</id>
+    <published>2018-02-19T23:18:19.000Z</published>
+    <updated>2018-02-19T15:18:19.513Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>爬虫|解读http的秘密&lt;进阶篇&gt;</title>
@@ -1556,7 +1667,7 @@
     <link href="http://yoursite.com/2018/01/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%B5%85%E8%B0%88/"/>
     <id>http://yoursite.com/2018/01/18/数据结构-排序算法浅谈/</id>
     <published>2018-01-17T23:13:38.000Z</published>
-    <updated>2018-01-18T06:47:35.661Z</updated>
+    <updated>2018-02-20T15:28:10.420Z</updated>
     
     <content type="html"><![CDATA[<h3 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h3><p>经过大一到大二的洗礼，自己对自己专业的认识也越来越深，从最开始认为自己是学软件工程的，然后认为自己是学计算机的，再到现在认为自己是搞互联网的，可能还会有更深的认识。学习，不仅是要学习专业知识，更要知道行业的发展趋势和发展方向，两者缺一不可。这个行业说到底还是对信息进行处理，那么排序就是最重要的处理方式之一。</p>
 <p>排序算法有很多种，现在我们主要谈谈常见的几种：</p>
@@ -1601,6 +1712,9 @@
 </ul>
 <p><img src="/images/快速排序.gif" alt="快速排序" title="快速排序"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line"> * 快速排序</div><div class="line"> *</div><div class="line"> * 参数说明：</div><div class="line"> *     a -- 待排序的数组</div><div class="line"> *     l -- 数组的左边界(例如，从起始位置开始排序，则l=0)</div><div class="line"> *     r -- 数组的右边界(例如，排序截至到数组末尾，则r=a.length-1)</div><div class="line"> */</div><div class="line"></div><div class="line">void quickSort(int *a ,int l,int r)&#123; </div><div class="line">    if(l&lt;r)&#123;</div><div class="line">        int i,j,x;</div><div class="line">        i=l;</div><div class="line">        j=r;</div><div class="line">        x = a[i];</div><div class="line">        while(i&lt;j)&#123;</div><div class="line">            while(i&lt;j &amp;&amp; a[j]&gt;x)&#123;</div><div class="line">                j--; // 从右向左找第一个小于x的数</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            if(i&lt;j)&#123;</div><div class="line">                a[i] = a[j];</div><div class="line">                i++;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            while(i&lt;j &amp;&amp; a[i]&lt;x)&#123;</div><div class="line">                i++;   // 从左向右找第一个大于x的数</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            if(i&lt;j)&#123;</div><div class="line">                a[j] = a[i];</div><div class="line">                j--;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        a[i] = x;</div><div class="line">        quickSort(a,l,i-1);</div><div class="line">        quickSort(a,i+1,r);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>排序算法动画 <a href="http://coolshell.cn/articles/3933.html" target="_blank" rel="external">http://coolshell.cn/articles/3933.html</a></p>
+</blockquote>
 ]]></content>
     
     <summary type="html">
@@ -1635,151 +1749,6 @@
     
     
       <category term="VHDL" scheme="http://yoursite.com/tags/VHDL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java|Hibernate入门</title>
-    <link href="http://yoursite.com/2017/12/24/Java-Hibernate%E5%85%A5%E9%97%A8/"/>
-    <id>http://yoursite.com/2017/12/24/Java-Hibernate入门/</id>
-    <published>2017-12-24T09:39:28.000Z</published>
-    <updated>2017-12-24T01:54:11.065Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="Hibernate简介"><a href="#Hibernate简介" class="headerlink" title="Hibernate简介"></a>Hibernate简介</h3><h4 id="为什么要有Hiernate"><a href="#为什么要有Hiernate" class="headerlink" title="为什么要有Hiernate"></a>为什么要有Hiernate</h4><p>我们都知道，现在主流的编程语言大多是面向对象的，如Java、C++，但是现在的主流数据库产品又是关系型的数据，在面向对象的世界里，对关系型数据库的访问与操作都是相当麻烦的。这时候ORM（Object/Relation Mapping,对象/关系数据库映射)出现了，可以说它是一种规范，完成了面向对象编程语言到关系数据库的映射。</p>
-<p><img src="./images/ORM.gif" alt="ORM工具作用示意图" title="ORM"></p>
-<p>Hibernate是ORM框架的一种，也是目前最流行的ORM框架。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;Hibernate简介&quot;&gt;&lt;a href=&quot;#Hibernate简介&quot; class=&quot;headerlink&quot; title=&quot;Hibernate简介&quot;&gt;&lt;/a&gt;Hibernate简介&lt;/h3&gt;&lt;h4 id=&quot;为什么要有Hiernate&quot;&gt;&lt;a href=&quot;#为什么要
-    
-    </summary>
-    
-    
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP||文件操作</title>
-    <link href="http://yoursite.com/2017/12/16/PHP-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/"/>
-    <id>http://yoursite.com/2017/12/16/PHP-文件操作/</id>
-    <published>2017-12-16T08:29:56.000Z</published>
-    <updated>2017-12-16T17:18:58.161Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="PHP文件操作"><a href="#PHP文件操作" class="headerlink" title="PHP文件操作"></a>PHP文件操作</h3><p>今天来记录一下PHP的文件操作，由于之前没怎么用过，导致需要用的时候也是需要查看文档，不如就记录下来，不然下次还需要查看文档。</p>
-<p>当然，文件的操作，还是一样的步骤：</p>
-<ul>
-<li>打开文件</li>
-<li>获取数据流</li>
-<li>进行操作</li>
-<li>关闭文件</li>
-</ul>
-<h4 id="文件创建-打开"><a href="#文件创建-打开" class="headerlink" title="文件创建/打开"></a>文件创建/打开</h4><p>PHP Open File - fopen() </p>
-<p>打开文件的更好的方法是通过 fopen() 函数。此函数为您提供比 readfile() 函数更多的选项。open() 的第一个参数包含被打开的文件名，第二个参数规定打开文件的模式。如果 fopen() 函数未能打开指定的文件，下面的例子会生成一段消息：</p>
-<p>webdictionary.txt<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">AJAX = Asynchronous JavaScript and XML</div><div class="line">CSS = Cascading Style Sheets</div><div class="line">HTML = Hyper Text Markup Language</div><div class="line">PHP = PHP Hypertext Preprocessor</div><div class="line">SQL = Structured Query Language</div><div class="line">SVG = Scalable Vector Graphics</div><div class="line">XML = EXtensible Markup Language</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$myfile = fopen(&quot;webdictionary.txt&quot;, &quot;r&quot;) or die(&quot;Unable to open file!&quot;);</div><div class="line">echo fread($myfile,filesize(&quot;webdictionary.txt&quot;));</div><div class="line">fclose($myfile);</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
-<p>输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AJAX = Asynchronous JavaScript and XML CSS = Cascading Style Sheets HTML = Hyper Text Markup Language PHP = PHP Hypertext Preprocessor SQL = Structured Query Language SVG = Scalable Vector Graphics XML = EXtensible Markup Language</div></pre></td></tr></table></figure></p>
-<table>
-<thead>
-<tr>
-<th>模式</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>r</td>
-<td>打开文件为只读。文件指针在文件的开头开始。</td>
-<td></td>
-</tr>
-<tr>
-<td>w</td>
-<td>打开文件为只写。删除文件的内容或创建一个新的文件，如果它不存在。文件指针在文件的开头开始。</td>
-<td></td>
-</tr>
-<tr>
-<td>a</td>
-<td>打开文件为只写。文件中的现有数据会被保留。文件指针在文件结尾开始。创建新的文件，如果文件不存在。</td>
-<td></td>
-</tr>
-<tr>
-<td>x</td>
-<td>创建新文件为只写。返回 FALSE 和错误，如果文件已存在。</td>
-<td></td>
-</tr>
-<tr>
-<td>r+</td>
-<td>打开文件为读/写、文件指针在文件开头开始。</td>
-<td></td>
-</tr>
-<tr>
-<td>w+</td>
-<td>打开文件为读/写。删除文件内容或创建新文件，如果它不存在。文件指针在文件开头开始。</td>
-<td></td>
-</tr>
-<tr>
-<td>a+</td>
-<td>打开文件为读/写。文件中已有的数据会被保留。文件指针在文件结尾开始。创建新文件，如果它不存在。</td>
-<td></td>
-</tr>
-<tr>
-<td>x+</td>
-<td>创建新文件为读/写。返回 FALSE 和错误，如果文件已存在。</td>
-</tr>
-</tbody>
-</table>
-<h3 id="文件写入"><a href="#文件写入" class="headerlink" title="文件写入"></a>文件写入</h3><ul>
-<li>fwrite：向文件写入内容，可安全用于二进制文件 。</li>
-<li>file_put_contents：向文件写入内容，等同依次调用 fopen，fwrite 以及 fclose 函数。</li>
-</ul>
-<h3 id="文件读取"><a href="#文件读取" class="headerlink" title="文件读取"></a>文件读取</h3><ul>
-<li>fread：读取文件，可安全用于二进制文件。</li>
-<li>fgets：从文件中读取 一行 数据，并将文件指针指向下一行。</li>
-<li>feof:函数是用来检测文件是否结束的。该函数唯一参数就是文件指针（即$fp对应打开的文件）</li>
-<li>fgetc：从文件中 逐字 读取文件数据，直到文件结束。</li>
-<li>file_get_contents：把 整个文件 读入一个字符串。</li>
-<li>file：把 整个文件 读入一个数组中，数组中的每个单元都是文件中相应的一行。</li>
-</ul>
-<h3 id="检查文件是否存在"><a href="#检查文件是否存在" class="headerlink" title="检查文件是否存在"></a>检查文件是否存在</h3><ul>
-<li>file_exists：检查文件或目录是否存在。</li>
-</ul>
-<h4 id="检查文件是否可读写执行"><a href="#检查文件是否可读写执行" class="headerlink" title="检查文件是否可读写执行"></a>检查文件是否可读写执行</h4><ul>
-<li>is_readable：检查文件是否可读。</li>
-<li>is_writable：检查文件是否是否可写入。</li>
-<li>is_executable：检查文件是否可执行。</li>
-</ul>
-<h3 id="文件拷贝"><a href="#文件拷贝" class="headerlink" title="文件拷贝"></a>文件拷贝</h3><p>copy：拷贝文件。</p>
-<h3 id="文件删除"><a href="#文件删除" class="headerlink" title="文件删除"></a>文件删除</h3><p>unlink：删除文件。</p>
-<h3 id="取得文件大小、类型、修改时间信息"><a href="#取得文件大小、类型、修改时间信息" class="headerlink" title="取得文件大小、类型、修改时间信息"></a>取得文件大小、类型、修改时间信息</h3><ul>
-<li>filesize：取得文件大小。</li>
-<li>filetype：取得文件类型。</li>
-<li>filemtime：取得文件修改时间。</li>
-</ul>
-<h3 id="文件指针函数"><a href="#文件指针函数" class="headerlink" title="文件指针函数"></a>文件指针函数</h3><ul>
-<li>fclose：关闭文件指针。</li>
-<li>feof：测试文件指针是否到了文件结束的位置。</li>
-<li>fseek：在文件指针中定位。</li>
-<li>rewind：倒回文件指针的位置。</li>
-<li>ftell：返回文件指针读/写的位置</li>
-</ul>
-<h3 id="测试Demo"><a href="#测试Demo" class="headerlink" title="测试Demo"></a>测试Demo</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">const FILE_NAME = &quot;file_info.dat&quot;;</div><div class="line"></div><div class="line">class file_info</div><div class="line">&#123;</div><div class="line">    public $file_name;</div><div class="line">    public $self_count;</div><div class="line">    public $total_count;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//判断文件是否存在</div><div class="line">if (file_exists(FILE_NAME))</div><div class="line">&#123;</div><div class="line">  echo &quot;file existed.\n&quot;;</div><div class="line">  unlink(FILE_NAME);</div><div class="line">&#125;</div><div class="line"></div><div class="line">$fd = NULL;</div><div class="line"></div><div class="line">$fd = fopen(FILE_NAME, &quot;wb&quot;);</div><div class="line"></div><div class="line">if ($fd == NULL || $fd == false)</div><div class="line">&#123;</div><div class="line">  echo &quot;Failed to open file.\n&quot;; </div><div class="line">  return;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$obj = new file_info();</div><div class="line"></div><div class="line">if ($obj == NULL)</div><div class="line">&#123;</div><div class="line">   echo &quot;Failed to create object.\n&quot;;</div><div class="line">   return;</div><div class="line">&#125;</div><div class="line"></div><div class="line">for($i=0; $i&lt;3; $i++)</div><div class="line">&#123;</div><div class="line">   $temp_1 = $i * 10;</div><div class="line">   $temp_2 = $i * 100;</div><div class="line">   /*</div><div class="line">   $obj-&gt;file_name = &quot;file_&quot;.$i.&quot;\n&quot;;</div><div class="line">   $obj-&gt;self_count = $temp_1.&quot;\n&quot;;</div><div class="line">   $obj-&gt;total_count = $temp_2.&quot;\n&quot;;</div><div class="line">   */</div><div class="line">   //构造字符串。filename-0-0\n</div><div class="line">   $row = &quot;file_&quot;.$i.&quot;-&quot;.$temp_1.&quot;-&quot;.$temp_2.&quot;\n&quot;;</div><div class="line">   echo &quot;row: &quot;.$row;</div><div class="line">   fwrite($fd, $row);</div><div class="line">&#125;</div><div class="line"></div><div class="line">if ($fd)</div><div class="line">  fclose($fd); </div><div class="line"></div><div class="line">$fd = fopen(FILE_NAME, &quot;rb&quot;);</div><div class="line">if ($fd == false)</div><div class="line">&#123;</div><div class="line">   echo &quot;Failed to open read file.\n&quot;;</div><div class="line">   return;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$obj_params =  array();</div><div class="line"></div><div class="line">$i = 0;</div><div class="line"></div><div class="line">while (!feof($fd))</div><div class="line">&#123;</div><div class="line">    $tmp_obj = new file_info();</div><div class="line">    $tmp_row = fgets($fd);</div><div class="line">    if ($tmp_row == NULL)</div><div class="line">    break;</div><div class="line">    $pos_1 = strpos($tmp_row, &apos;-&apos;,0);</div><div class="line">    $pos_2 = strpos($tmp_row,&apos;-&apos;,$pos_1 + 1);</div><div class="line">    $tmp_obj-&gt;file_name = substr($tmp_row, 0, $pos_1);</div><div class="line">    $tmp_obj-&gt;self_count = substr($tmp_row, $pos_1 + 1, $pos_2- $pos_1 - 1);</div><div class="line">    $tmp_obj-&gt;total_count = substr($tmp_row, $pos_2 + 1, strlen($tmp_row) - $pos_2 - 2);</div><div class="line">    $obj_params[$i] = $tmp_obj;</div><div class="line">    $i++;</div><div class="line">&#125;</div><div class="line"></div><div class="line">for ($k = 0; $k &lt; count($obj_params); $k++)</div><div class="line">&#123;</div><div class="line">   echo $obj_params[$k]-&gt;file_name.&quot;\n&quot;;</div><div class="line">   echo $obj_params[$k]-&gt;self_count.&quot;\n&quot;;</div><div class="line">   echo $obj_params[$k]-&gt;total_count.&quot;\n&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">if ($fd)</div><div class="line">   fclose($fd);</div></pre></td></tr></table></figure>
-<blockquote>
-<blockquote>
-<p>参考<a href="http://www.cnblogs.com/Anker/p/3387180.html" target="_blank" rel="external">http://www.cnblogs.com/Anker/p/3387180.html</a></p>
-</blockquote>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;PHP文件操作&quot;&gt;&lt;a href=&quot;#PHP文件操作&quot; class=&quot;headerlink&quot; title=&quot;PHP文件操作&quot;&gt;&lt;/a&gt;PHP文件操作&lt;/h3&gt;&lt;p&gt;今天来记录一下PHP的文件操作，由于之前没怎么用过，导致需要用的时候也是需要查看文档，不如就记录下来
-    
-    </summary>
-    
-    
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
   </entry>
   
