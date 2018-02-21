@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://yoursite.com/images/git--项目分支管理-01.png">
 <meta property="og:image" content="http://yoursite.com/images/git--项目分支管理-02.png">
 <meta property="og:image" content="http://yoursite.com/images/git--项目分支管理-03.png">
-<meta property="og:updated_time" content="2018-02-17T12:49:26.002Z">
+<meta property="og:updated_time" content="2018-02-21T10:50:53.359Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git|踩过的坑">
 <meta name="twitter:description" content="记录这些年踩过的坑第一次接触 Git 是在大一，刚进弦歌那会。由于Git是命令行操作的，没接触过命令行，就觉得这东西挺高大尚的，自己还专门也研究了好久呢，书都借了好几本。 刚开始自己也没概念，搞不清楚本地仓库和远程仓库，只有到开发新生宝典时真正使用了才知道是怎么回事，确实啊，这种工具类的东西，是要使用才能真正掌握的，就像后来用的Composer和Maven。 说说Git为什么要用Git首先，一定要">
@@ -107,7 +107,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#记录这些年踩过的坑"><span class="toc-number">1.</span> <span class="toc-text">记录这些年踩过的坑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#说说Git"><span class="toc-number">2.</span> <span class="toc-text">说说Git</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么要用Git"><span class="toc-number">2.1.</span> <span class="toc-text">为什么要用Git</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Git是怎么工作的"><span class="toc-number">2.2.</span> <span class="toc-text">Git是怎么工作的</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些干货"><span class="toc-number">3.</span> <span class="toc-text">一些干货</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#添加-gitignore没起作用"><span class="toc-number">3.1.</span> <span class="toc-text">添加 .gitignore没起作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#提交到远程仓库前"><span class="toc-number">3.2.</span> <span class="toc-text">提交到远程仓库前</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fetch和pull的区别"><span class="toc-number">3.3.</span> <span class="toc-text">fetch和pull的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-diff-的用法"><span class="toc-number">3.4.</span> <span class="toc-text">git diff 的用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-clean"><span class="toc-number">3.5.</span> <span class="toc-text">git clean</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#举个例子"><span class="toc-number">3.5.1.</span> <span class="toc-text">举个例子</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于公钥-秘钥"><span class="toc-number">3.6.</span> <span class="toc-text">关于公钥|秘钥</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#如何创建公钥"><span class="toc-number">3.6.1.</span> <span class="toc-text">如何创建公钥</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#可以参考的资料"><span class="toc-number">3.7.</span> <span class="toc-text">可以参考的资料</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#项目分支管理"><span class="toc-number">4.</span> <span class="toc-text">项目分支管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分支策略"><span class="toc-number">4.1.</span> <span class="toc-text">分支策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分支说明"><span class="toc-number">4.2.</span> <span class="toc-text">分支说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分支常用命令"><span class="toc-number">4.3.</span> <span class="toc-text">分支常用命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#合并分支策略"><span class="toc-number">4.4.</span> <span class="toc-text">合并分支策略</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#记录这些年踩过的坑"><span class="toc-number">1.</span> <span class="toc-text">记录这些年踩过的坑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#说说Git"><span class="toc-number">2.</span> <span class="toc-text">说说Git</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么要用Git"><span class="toc-number">2.1.</span> <span class="toc-text">为什么要用Git</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Git是怎么工作的"><span class="toc-number">2.2.</span> <span class="toc-text">Git是怎么工作的</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些干货"><span class="toc-number">3.</span> <span class="toc-text">一些干货</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#添加-gitignore没起作用"><span class="toc-number">3.1.</span> <span class="toc-text">添加 .gitignore没起作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#提交到远程仓库前"><span class="toc-number">3.2.</span> <span class="toc-text">提交到远程仓库前</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fetch和pull的区别"><span class="toc-number">3.3.</span> <span class="toc-text">fetch和pull的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#git-fetch"><span class="toc-number">3.3.1.</span> <span class="toc-text">git fetch</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#git-pull"><span class="toc-number">3.3.2.</span> <span class="toc-text">git pull</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-diff-的用法"><span class="toc-number">3.4.</span> <span class="toc-text">git diff 的用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-clean"><span class="toc-number">3.5.</span> <span class="toc-text">git clean</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#举个例子"><span class="toc-number">3.5.1.</span> <span class="toc-text">举个例子</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于公钥-秘钥"><span class="toc-number">3.6.</span> <span class="toc-text">关于公钥|秘钥</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#如何创建公钥"><span class="toc-number">3.6.1.</span> <span class="toc-text">如何创建公钥</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#可以参考的资料"><span class="toc-number">3.7.</span> <span class="toc-text">可以参考的资料</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#项目分支管理"><span class="toc-number">4.</span> <span class="toc-text">项目分支管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分支策略"><span class="toc-number">4.1.</span> <span class="toc-text">分支策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分支说明"><span class="toc-number">4.2.</span> <span class="toc-text">分支说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分支常用命令"><span class="toc-number">4.3.</span> <span class="toc-text">分支常用命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#合并分支策略"><span class="toc-number">4.4.</span> <span class="toc-text">合并分支策略</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -124,6 +124,68 @@
 <li>如果有，就解决冲突，然后git add，git commit ，git push</li>
 </ul>
 <h4 id="fetch和pull的区别"><a href="#fetch和pull的区别" class="headerlink" title="fetch和pull的区别"></a>fetch和pull的区别</h4><p>pull=fetch+merge，pull的话，下拉远程分支并与本地分支合并。fetch只是下拉远程分支，怎么合并，可以自己再做选择。</p>
+<h5 id="git-fetch"><a href="#git-fetch" class="headerlink" title="git fetch"></a>git fetch</h5><p>一旦远程主机的版本库有了更新（Git术语叫做commit），需要将这些更新取回本地，这时就要用到==git fetch==命令。</p>
+<blockquote>
+<p>$ git fetch &lt;远程主机名&gt;</p>
+</blockquote>
+<p>上面命令将某个远程主机的更新，全部取回本地。</p>
+<p>==git fetch==命令通常用来查看其他人的进程，因为它取回的代码对你本地的开发代码没有影响。</p>
+<p>默认情况下，git fetch取回所有分支（branch）的更新。如果只想取回特定分支的更新，可以指定分支名。</p>
+<blockquote>
+<p>$ git fetch &lt;远程主机名&gt; &lt;分支名&gt;</p>
+</blockquote>
+<p>比如，取回origin主机的master分支。</p>
+<blockquote>
+<p>$ git fetch origin master</p>
+</blockquote>
+<p>所取回的更新，在本地主机上要用”远程主机名/分支名”的形式读取。比如origin主机的master，就要用origin/master读取。</p>
+<p>git branch命令的-r选项，可以用来查看远程分支，-a选项查看所有分支.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ git branch -r</div><div class="line">origin/master</div><div class="line"></div><div class="line">$ git branch -a</div><div class="line">* master</div><div class="line">  remotes/origin/master</div></pre></td></tr></table></figure>
+<p>上面命令表示，本地主机的当前分支是master，远程分支是origin/master。</p>
+<p>取回远程主机的更新以后，可以在它的基础上，使用git checkout命令创建一个新的分支。</p>
+<blockquote>
+<p>$ git checkout -b newBrach origin/master</p>
+</blockquote>
+<p>上面命令表示，在origin/master的基础上，创建一个新分支。</p>
+<p>此外，也可以使用git merge命令或者git rebase命令，在本地分支上合并远程分支。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ git merge origin/master</div><div class="line"># 或者</div><div class="line">$ git rebase origin/master</div></pre></td></tr></table></figure>
+<p>上面命令表示在当前分支上，合并origin/master。</p>
+<h5 id="git-pull"><a href="#git-pull" class="headerlink" title="git pull"></a>git pull</h5><p>==git pull==命令的作用是，取回远程主机某个分支的更新，再与本地的指定分支合并。它的完整格式稍稍有点复杂。</p>
+<blockquote>
+<p>$ git pull &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;</p>
+</blockquote>
+<p>比如，取回origin主机的next分支，与本地的master分支合并，需要写成下面这样。</p>
+<blockquote>
+<p>$ git pull origin next:master</p>
+</blockquote>
+<p>如果远程分支是与当前分支合并，则冒号后面的部分可以省略。</p>
+<p>上面命令表示，取回origin/next分支，再与当前分支合并。实质上，这等同于先做git fetch，再做git merge。</p>
+<blockquote>
+<p>$ git fetch origin<br>$ git merge origin/next</p>
+</blockquote>
+<p>在某些场合，Git会自动在本地分支与远程分支之间，建立一种追踪关系（tracking）。比如，在git clone的时候，所有本地分支默认与远程主机的同名分支，建立追踪关系，也就是说，本地的master分支自动”追踪”origin/master分支。</p>
+<p>Git也允许手动建立追踪关系。</p>
+<blockquote>
+<p>git branch –set-upstream master origin/next</p>
+</blockquote>
+<p>上面命令指定master分支追踪origin/next分支。</p>
+<p>如果当前分支与远程分支存在追踪关系，git pull就可以省略远程分支名。</p>
+<blockquote>
+<p>$ git pull origin</p>
+</blockquote>
+<p>上面命令表示，本地的当前分支自动与对应的origin主机”追踪分支”（remote-tracking branch）进行合并。</p>
+<p>如果当前分支只有一个追踪分支，连远程主机名都可以省略。</p>
+<blockquote>
+<p>$ git pull</p>
+</blockquote>
+<p>上面命令表示，当前分支自动与唯一一个追踪分支进行合并。</p>
+<p>如果合并需要采用rebase模式，可以使用–rebase选项。</p>
+<blockquote>
+<p>$ git pull –rebase &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;</p>
+</blockquote>
+<p>如果远程主机删除了某个分支，默认情况下，git pull 不会在拉取远程分支的时候，删除对应的本地分支。这是为了防止，由于其他人操作了远程主机，导致git pull不知不觉删除了本地分支。</p>
+<p>但是，你可以改变这个行为，加上参数 -p 就会在本地删除远程已经删除的分支。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ git pull -p</div><div class="line"># 等同于下面的命令</div><div class="line">$ git fetch --prune origin </div><div class="line">$ git fetch -p</div></pre></td></tr></table></figure>
 <h4 id="git-diff-的用法"><a href="#git-diff-的用法" class="headerlink" title="git diff 的用法"></a>git diff 的用法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">git diff                                       查看尚未暂存的文件更新了哪些部分</div><div class="line"></div><div class="line">git diff filename 查看尚未暂存的某个文件更新了哪些</div><div class="line"></div><div class="line">git diff –cached                    查看已经暂存起来的文件和上次提交的版本之间的差异</div><div class="line"></div><div class="line">git diff –cached filename 查看已经暂存起来的某个文件和上次提交的版本之间的差异</div><div class="line"></div><div class="line">git diff ffd98b291e0caa6c33575c1ef465eae661ce40c9 b8e7b00c02b95b320f14b625663fdecf2d63e74c 查看某两个版本之间的差异</div><div class="line"></div><div class="line">git diff ffd98b291e0caa6c33575c1ef465eae661ce40c9:filename b8e7b00c02b95b320f14b625663fdecf2d63e74c:filename 查看某两个版本的某个文件之间的差异</div></pre></td></tr></table></figure>
 <h4 id="git-clean"><a href="#git-clean" class="headerlink" title="git clean"></a>git clean</h4><table>
 <thead>
