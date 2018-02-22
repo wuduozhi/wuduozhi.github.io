@@ -1,0 +1,540 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>斯坦福机器学习课程|第一周(1)认识机器学习 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="生活中机器学习的影子在生活中，每天你都可能在不知不觉中使用了各种各样的机器学习算法。比如，当你每一次使用像诸如谷歌 (Google)或必应 (Bing) 的搜索引擎时，它们运作得如此之好的原因之一便是，由Google或微软实现的一种学习算法可以“学会”如何对网页进行排名；每当你使用脸书 (Facebook)或苹果 (Apple) 的照片处理应用时，它们都能自动识别出你朋友的照片，这也是机器学习的一">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="斯坦福机器学习课程|第一周(1)认识机器学习">
+<meta property="og:url" content="http://yoursite.com/2018/02/22/斯坦福机器学习课程-第一周-1-认识机器学习/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="生活中机器学习的影子在生活中，每天你都可能在不知不觉中使用了各种各样的机器学习算法。比如，当你每一次使用像诸如谷歌 (Google)或必应 (Bing) 的搜索引擎时，它们运作得如此之好的原因之一便是，由Google或微软实现的一种学习算法可以“学会”如何对网页进行排名；每当你使用脸书 (Facebook)或苹果 (Apple) 的照片处理应用时，它们都能自动识别出你朋友的照片，这也是机器学习的一">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/2018/02/22/斯坦福机器学习课程-第一周-1-认识机器学习/images/机器学习-监督学习-01.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/22/斯坦福机器学习课程-第一周-1-认识机器学习/images/机器学习-监督学习-02.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/22/斯坦福机器学习课程-第一周-1-认识机器学习/images/机器学习-监督学习-03.png">
+<meta property="og:updated_time" content="2018-02-22T03:47:02.694Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="斯坦福机器学习课程|第一周(1)认识机器学习">
+<meta name="twitter:description" content="生活中机器学习的影子在生活中，每天你都可能在不知不觉中使用了各种各样的机器学习算法。比如，当你每一次使用像诸如谷歌 (Google)或必应 (Bing) 的搜索引擎时，它们运作得如此之好的原因之一便是，由Google或微软实现的一种学习算法可以“学会”如何对网页进行排名；每当你使用脸书 (Facebook)或苹果 (Apple) 的照片处理应用时，它们都能自动识别出你朋友的照片，这也是机器学习的一">
+<meta name="twitter:image" content="http://yoursite.com/2018/02/22/斯坦福机器学习课程-第一周-1-认识机器学习/images/机器学习-监督学习-01.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.jpg" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/02/22/斯坦福机器学习课程-第一周-1-认识机器学习/" title="斯坦福机器学习课程|第一周(1)认识机器学习" itemprop="url">斯坦福机器学习课程|第一周(1)认识机器学习</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-02-22T11:08:52.000Z" itemprop="datePublished"> Published 2018-02-22</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#生活中机器学习的影子"><span class="toc-number">1.</span> <span class="toc-text">生活中机器学习的影子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习的分类"><span class="toc-number">2.</span> <span class="toc-text">机器学习的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#监督学习"><span class="toc-number">2.1.</span> <span class="toc-text">监督学习</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#无监督学习"><span class="toc-number">2.2.</span> <span class="toc-text">无监督学习</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h3 id="生活中机器学习的影子"><a href="#生活中机器学习的影子" class="headerlink" title="生活中机器学习的影子"></a>生活中机器学习的影子</h3><p>在生活中，每天你都可能在不知不觉中使用了各种各样的机器学习算法。比如，当你每一次使用像诸如谷歌 (Google)或必应 (Bing) 的搜索引擎时，它们运作得如此之好的原因之一便是，由Google或微软实现的一种学习算法可以“学会”如何对网页进行排名；每当你使用脸书 (Facebook)或苹果 (Apple) 的照片处理应用时，它们都能自动识别出你朋友的照片，这也是机器学习的一种；每当你阅读电子邮件时，你的垃圾邮件过滤器帮你免受大量垃圾邮件的困扰，这也是通过一种学习算法实现的。还有一个让我兴奋的理由，是一个关于人工智能的梦想：有朝一日，我们能创造出像你我一样聪明的机器，尽管我们离这个目标仍有很长的距离，但许多的人工智能专家相信，实现这一目标最好的途径是通过学习算法，来模拟人类大脑的学习方式。</p>
+<p>话说，为什么机器学习在当今如此流行呢？ 机器学习发源于人工智能领域 我们希望能够创造出具有智慧的机器。我们通过编程来让机器完成一些基础的工作，比如如何找到从A到B的最短路径，但在大多数情况下，我们并不知道如何显式地编写人工智能程序，来做一些更有趣的任务。比如网页搜索，标记照片和拦截垃圾邮件等。人们意识到唯一能够达成这些目标的方法，就是让机器自己学会如何去做。因而，机器学习已经发展成为计算机的一项新能力，并且与工业界和基础科学界有着紧密的联系。</p>
+<p>身处机器学习领域。我常常会在短短一周中与形形色色的人打交道 如直升机飞行员、生物学家、还有许多计算机系统专家。比如我在斯坦福的同事们，同时平均每周我还会数次收到来自硅谷的业界人士的email，咨询我是否有兴趣将机器学习算法应用到他们所遇到的实际问题中，以上的例子都彰显了机器学习所能处理的问题范围之广。在硅谷，机器学习引导着大量的课题。如自主机器人、计算生物学等。机器学习的实例还有很多，比如数据库挖掘。机器学习变得如此流行的原因之一，便是网络和自动化算法的爆炸性增长，这意味着我们掌握了比以往多得多的数据集。举例来说，当今有数不胜数的硅谷企业，在收集有关网络点击的数据 (Clickstream Data) 并试图在这些数据上运用机器学习的算法来更好的理解和服务用户，这在硅谷已经成为了一项巨大的产业。随着电子自动化的发展，我们现在拥有了电子医疗记录，如果我们能够将这些记录转变为医学知识，那我们就能对各种疾病了解的更深入，同时，计算生物学也在电子自动化的辅助下快速发展。生物学家收集了大量有关基因序列以及DNA序列的数据，通过对其应用机器学习的算法来帮助我们跟深入地理解人类基因组，及其对我们人类的意义，几乎工程界的所有领域，都在使用机器学习算法来分析日益增长的海量数据集。有些机器应用我们并不能够通过手工编程来实现，比如说，我个人对自动直升机有着许多年的研究，想要写出一个能让直升机自主飞行的程序几乎是不可能的任务。唯一可行的解决方案就是让一台计算机能够自主地学会如何让直升机飞行。再比如手写识别，如今将大量的邮件，按地址分类寄送到全美甚至全球的代价大大降低，其中重要的理由之一便是每当你写下这样一封信时 一个机器学习的算法已经学会如何读懂你的笔迹并自动地将你的信件发往它的目的地.所以邮寄跨越上万里的信件的费用也很低。你也许曾经接触过自然语言处理和计算机视觉，事实上，这些领域都是试图通过人工智能来理解人类的语言和图像，如今大多数的自然语言处理和计算机视觉都是对机器学习的一种应用。</p>
+<p><strong>机器学习算法也在用户自定制化程序(self-customizing program)中有着广泛的应用</strong>，每当你使用亚马逊、Netflix或iTunes Genius的服务时，都会收到它们为你量身推荐的电影或产品。这就是通过学习算法来实现的。可以相信，这些应用都有着上千万的用户，而针对这些海量的用户编写千万个不同的程序显然是不可能的。唯一有效的解决方案就是开发出能够自我学习，定制出符合你喜好的并据此进行推荐的软件，最后，机器学习算法已经被应用于探究人类的学习方式，并试图理解人类的大脑。我们也将会了解到研究者是如何运用机器学习的工具，来一步步实现人工智能的梦想。</p>
+<h3 id="机器学习的分类"><a href="#机器学习的分类" class="headerlink" title="机器学习的分类"></a>机器学习的分类</h3><h4 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h4><p>来个例子：</p>
+<p>假设你想预测房价（无比需要啊！)，之前，某学生已经从某地收集了数据集（不是中国的，囧） 其中一个数据集是这样的。</p>
+<p><img src="./images/机器学习-监督学习-01.png" alt="机器学习-监督学习-01" title="机器学习-监督学习-01"></p>
+<p>这是横坐标，即不同房子的面积，单位平方脚（^-^） 纵轴上是房价，单位 千美元。 根据给定数据，假设你朋友有栋房子，750平尺（70平米） 想知道这房子能卖多少，好卖掉。 那么，学习算法怎么帮你呢？学习算法可以： 绘出一条直线，让直线尽可能匹配到所有数据。</p>
+<p><img src="./images/机器学习-监督学习-02.png" alt="机器学习-监督学习-02" title="机器学习-监督学习-02"></p>
+<p>于此，看上去，那个房子应该、可能、也许、大概 卖到15万美元（一平米两千刀！）。但这不是唯一的学习算法。可能还有更好的。比如不用直线了，可能平方函数会更好，即二次多项式更符合数据集。如果你这样做，预测结果就应该是20万刀（一平三千刀，涨价好快）。</p>
+<p><img src="./images/机器学习-监督学习-03.png" alt="机器学习-监督学习-03" title="机器学习-监督学习-03"></p>
+<p>对于应该选择直线还是曲线，不是我们现在关心的问题。我们需要知道的是这是一个监督学习得例子。术语监督学习，意指给出一个算法，需要部分数据集已经有正确答案。比如给定房价数据集， 对于里面每个数据，算法都知道对应的正确房价，即这房子实际卖出的价格。算法的结果就是算出更多的正确价格，比如那个新房子，你朋友想卖的那个。</p>
+<p>用更术语的方式来定义，监督学习又叫回归问题，（应该是回归属于监督中的一种）意指要预测一个连续值的输出，比如房价。虽然从技术上，一般把房价记到美分单位。所以实际还是个离散值，但通常把它看作实际数字，是一个标量值，一个连续值的数，而术语回归，意味着要预测这类连续值属性的种类。</p>
+<h4 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h4><p>在监督学习中，我们用到的例子中的数据集，每个样本，都已经被标明为正样本或者负样本，即良性或恶性肿瘤。</p>
+<p>因此，对于监督学习中的每一个样本，我们已经被清楚地告知了什么是所谓的正确答案，即它们是良性还是恶性。在无监督学习中，我们用的数据会和监督学习里的看起来有些不一样。在无监督学习中，没有属性或标签这一概念，也就是说所有的数据都是一样的，没有区别。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/machine/">机器学习</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/02/22/运维-安装Octave/"  title="运维|安装Octave">
+ <span>运维|安装Octave
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>14</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/运维/" title="运维">运维<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Octave/" title="Octave">Octave<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

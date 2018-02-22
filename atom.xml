@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-22T02:54:01.830Z</updated>
+  <updated>2018-02-22T03:47:02.694Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,48 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>斯坦福机器学习课程|第一周(1)认识机器学习</title>
+    <link href="http://yoursite.com/2018/02/22/%E6%96%AF%E5%9D%A6%E7%A6%8F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E5%91%A8-1-%E8%AE%A4%E8%AF%86%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://yoursite.com/2018/02/22/斯坦福机器学习课程-第一周-1-认识机器学习/</id>
+    <published>2018-02-22T11:08:52.000Z</published>
+    <updated>2018-02-22T03:47:02.694Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="生活中机器学习的影子"><a href="#生活中机器学习的影子" class="headerlink" title="生活中机器学习的影子"></a>生活中机器学习的影子</h3><p>在生活中，每天你都可能在不知不觉中使用了各种各样的机器学习算法。比如，当你每一次使用像诸如谷歌 (Google)或必应 (Bing) 的搜索引擎时，它们运作得如此之好的原因之一便是，由Google或微软实现的一种学习算法可以“学会”如何对网页进行排名；每当你使用脸书 (Facebook)或苹果 (Apple) 的照片处理应用时，它们都能自动识别出你朋友的照片，这也是机器学习的一种；每当你阅读电子邮件时，你的垃圾邮件过滤器帮你免受大量垃圾邮件的困扰，这也是通过一种学习算法实现的。还有一个让我兴奋的理由，是一个关于人工智能的梦想：有朝一日，我们能创造出像你我一样聪明的机器，尽管我们离这个目标仍有很长的距离，但许多的人工智能专家相信，实现这一目标最好的途径是通过学习算法，来模拟人类大脑的学习方式。</p>
+<p>话说，为什么机器学习在当今如此流行呢？ 机器学习发源于人工智能领域 我们希望能够创造出具有智慧的机器。我们通过编程来让机器完成一些基础的工作，比如如何找到从A到B的最短路径，但在大多数情况下，我们并不知道如何显式地编写人工智能程序，来做一些更有趣的任务。比如网页搜索，标记照片和拦截垃圾邮件等。人们意识到唯一能够达成这些目标的方法，就是让机器自己学会如何去做。因而，机器学习已经发展成为计算机的一项新能力，并且与工业界和基础科学界有着紧密的联系。</p>
+<p>身处机器学习领域。我常常会在短短一周中与形形色色的人打交道 如直升机飞行员、生物学家、还有许多计算机系统专家。比如我在斯坦福的同事们，同时平均每周我还会数次收到来自硅谷的业界人士的email，咨询我是否有兴趣将机器学习算法应用到他们所遇到的实际问题中，以上的例子都彰显了机器学习所能处理的问题范围之广。在硅谷，机器学习引导着大量的课题。如自主机器人、计算生物学等。机器学习的实例还有很多，比如数据库挖掘。机器学习变得如此流行的原因之一，便是网络和自动化算法的爆炸性增长，这意味着我们掌握了比以往多得多的数据集。举例来说，当今有数不胜数的硅谷企业，在收集有关网络点击的数据 (Clickstream Data) 并试图在这些数据上运用机器学习的算法来更好的理解和服务用户，这在硅谷已经成为了一项巨大的产业。随着电子自动化的发展，我们现在拥有了电子医疗记录，如果我们能够将这些记录转变为医学知识，那我们就能对各种疾病了解的更深入，同时，计算生物学也在电子自动化的辅助下快速发展。生物学家收集了大量有关基因序列以及DNA序列的数据，通过对其应用机器学习的算法来帮助我们跟深入地理解人类基因组，及其对我们人类的意义，几乎工程界的所有领域，都在使用机器学习算法来分析日益增长的海量数据集。有些机器应用我们并不能够通过手工编程来实现，比如说，我个人对自动直升机有着许多年的研究，想要写出一个能让直升机自主飞行的程序几乎是不可能的任务。唯一可行的解决方案就是让一台计算机能够自主地学会如何让直升机飞行。再比如手写识别，如今将大量的邮件，按地址分类寄送到全美甚至全球的代价大大降低，其中重要的理由之一便是每当你写下这样一封信时 一个机器学习的算法已经学会如何读懂你的笔迹并自动地将你的信件发往它的目的地.所以邮寄跨越上万里的信件的费用也很低。你也许曾经接触过自然语言处理和计算机视觉，事实上，这些领域都是试图通过人工智能来理解人类的语言和图像，如今大多数的自然语言处理和计算机视觉都是对机器学习的一种应用。</p>
+<p><strong>机器学习算法也在用户自定制化程序(self-customizing program)中有着广泛的应用</strong>，每当你使用亚马逊、Netflix或iTunes Genius的服务时，都会收到它们为你量身推荐的电影或产品。这就是通过学习算法来实现的。可以相信，这些应用都有着上千万的用户，而针对这些海量的用户编写千万个不同的程序显然是不可能的。唯一有效的解决方案就是开发出能够自我学习，定制出符合你喜好的并据此进行推荐的软件，最后，机器学习算法已经被应用于探究人类的学习方式，并试图理解人类的大脑。我们也将会了解到研究者是如何运用机器学习的工具，来一步步实现人工智能的梦想。</p>
+<h3 id="机器学习的分类"><a href="#机器学习的分类" class="headerlink" title="机器学习的分类"></a>机器学习的分类</h3><h4 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h4><p>来个例子：</p>
+<p>假设你想预测房价（无比需要啊！)，之前，某学生已经从某地收集了数据集（不是中国的，囧） 其中一个数据集是这样的。</p>
+<p><img src="./images/机器学习-监督学习-01.png" alt="机器学习-监督学习-01" title="机器学习-监督学习-01"></p>
+<p>这是横坐标，即不同房子的面积，单位平方脚（^-^） 纵轴上是房价，单位 千美元。 根据给定数据，假设你朋友有栋房子，750平尺（70平米） 想知道这房子能卖多少，好卖掉。 那么，学习算法怎么帮你呢？学习算法可以： 绘出一条直线，让直线尽可能匹配到所有数据。</p>
+<p><img src="./images/机器学习-监督学习-02.png" alt="机器学习-监督学习-02" title="机器学习-监督学习-02"></p>
+<p>于此，看上去，那个房子应该、可能、也许、大概 卖到15万美元（一平米两千刀！）。但这不是唯一的学习算法。可能还有更好的。比如不用直线了，可能平方函数会更好，即二次多项式更符合数据集。如果你这样做，预测结果就应该是20万刀（一平三千刀，涨价好快）。</p>
+<p><img src="./images/机器学习-监督学习-03.png" alt="机器学习-监督学习-03" title="机器学习-监督学习-03"></p>
+<p>对于应该选择直线还是曲线，不是我们现在关心的问题。我们需要知道的是这是一个监督学习得例子。术语监督学习，意指给出一个算法，需要部分数据集已经有正确答案。比如给定房价数据集， 对于里面每个数据，算法都知道对应的正确房价，即这房子实际卖出的价格。算法的结果就是算出更多的正确价格，比如那个新房子，你朋友想卖的那个。</p>
+<p>用更术语的方式来定义，监督学习又叫回归问题，（应该是回归属于监督中的一种）意指要预测一个连续值的输出，比如房价。虽然从技术上，一般把房价记到美分单位。所以实际还是个离散值，但通常把它看作实际数字，是一个标量值，一个连续值的数，而术语回归，意味着要预测这类连续值属性的种类。</p>
+<h4 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h4><p>在监督学习中，我们用到的例子中的数据集，每个样本，都已经被标明为正样本或者负样本，即良性或恶性肿瘤。</p>
+<p>因此，对于监督学习中的每一个样本，我们已经被清楚地告知了什么是所谓的正确答案，即它们是良性还是恶性。在无监督学习中，我们用的数据会和监督学习里的看起来有些不一样。在无监督学习中，没有属性或标签这一概念，也就是说所有的数据都是一样的，没有区别。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;生活中机器学习的影子&quot;&gt;&lt;a href=&quot;#生活中机器学习的影子&quot; class=&quot;headerlink&quot; title=&quot;生活中机器学习的影子&quot;&gt;&lt;/a&gt;生活中机器学习的影子&lt;/h3&gt;&lt;p&gt;在生活中，每天你都可能在不知不觉中使用了各种各样的机器学习算法。比如，当你每
+    
+    </summary>
+    
+      <category term="机器学习" scheme="http://yoursite.com/categories/machine/"/>
+    
+    
+      <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>运维|安装Octave</title>
     <link href="http://yoursite.com/2018/02/22/%E8%BF%90%E7%BB%B4-%E5%AE%89%E8%A3%85Octave/"/>
     <id>http://yoursite.com/2018/02/22/运维-安装Octave/</id>
     <published>2018-02-22T10:42:45.000Z</published>
-    <updated>2018-02-22T02:54:01.830Z</updated>
+    <updated>2018-02-22T03:47:05.440Z</updated>
     
     <content type="html"><![CDATA[<h3 id="What-is-Octave"><a href="#What-is-Octave" class="headerlink" title="What is Octave"></a>What is Octave</h3><p>Octave是一个旨在提供与Matlab语法兼容的开放源代码科学计算及数值分析的工具。Octave是在GNU协议下被开放的，这意味着它一直是可以免费下载的。</p>
 <h3 id="在Windows下安装Octave"><a href="#在Windows下安装Octave" class="headerlink" title="在Windows下安装Octave"></a>在Windows下安装Octave</h3><p>使用这个链接来在Windows安装Octave:</p>
@@ -1713,72 +1750,6 @@
     <summary type="html">
     
       &lt;h3 id=&quot;图&quot;&gt;&lt;a href=&quot;#图&quot; class=&quot;headerlink&quot; title=&quot;图&quot;&gt;&lt;/a&gt;图&lt;/h3&gt;&lt;p&gt;图这种数据结构，是对现实中人们常说的地图的一种抽象，在数据结构中，图有点和边构成，每两个点之间如果有关系，就用一条边将这两个点连起来，这样就形成了类
-    
-    </summary>
-    
-    
-      <category term="数据结构" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>数据结构|排序算法浅谈</title>
-    <link href="http://yoursite.com/2018/01/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%B5%85%E8%B0%88/"/>
-    <id>http://yoursite.com/2018/01/18/数据结构-排序算法浅谈/</id>
-    <published>2018-01-17T23:13:38.000Z</published>
-    <updated>2018-02-20T15:28:10.420Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h3><p>经过大一到大二的洗礼，自己对自己专业的认识也越来越深，从最开始认为自己是学软件工程的，然后认为自己是学计算机的，再到现在认为自己是搞互联网的，可能还会有更深的认识。学习，不仅是要学习专业知识，更要知道行业的发展趋势和发展方向，两者缺一不可。这个行业说到底还是对信息进行处理，那么排序就是最重要的处理方式之一。</p>
-<p>排序算法有很多种，现在我们主要谈谈常见的几种：</p>
-<ul>
-<li>插入排序</li>
-<li>冒泡排序</li>
-<li>选择排序</li>
-<li>shell排序</li>
-<li>归并排序</li>
-<li>快速排序</li>
-</ul>
-<h4 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h4><p>插入排序，就是我们打扑克是所用的伎俩，我们抽到一张牌，然后从手里的牌中寻找合适的位置插入，这个寻找的过程就是插入排序。</p>
-<p><img src="/images/插入排序.gif" alt="enter description here" title="插入排序"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line">	A[]  待排序列</div><div class="line">	n    元素个数</div><div class="line">*/</div><div class="line">void inssort(int A[],int n)&#123;</div><div class="line">	for(int i=1;i&lt;n;i++)&#123;</div><div class="line">		for(int j=i;j&gt;0;j--)&#123;</div><div class="line">			if(A[j]&lt;A[j-1])&#123;</div><div class="line">				int temp = A[j];</div><div class="line">				A[j] = A[j-1];</div><div class="line">				A[j-1] = temp;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h4><p>冒泡排序也挺好理解，就是没每趟比较相邻的两个数，把小的数往后移，每一趟都把待排序列中最小的数往后移，重复n-1此操作就能让待排序列有序。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line">	A[]  待排序列</div><div class="line">	n    元素个数</div><div class="line">*/</div><div class="line">void bubSort(int A[],int n)&#123;</div><div class="line">	for(int i=1;i&lt;n;i++)&#123;</div><div class="line">		for(int j=0;j&lt;n-i;j++)&#123;</div><div class="line">			if(A[j]&lt;A[j+1])&#123;</div><div class="line">				int temp = A[j];</div><div class="line">				A[j] = A[j+1];</div><div class="line">				A[j+1] = temp;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h4><p>选择排序（Selection Sort）是一种简单直观的排序算法。它的工作原理如下，首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置，然后，再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。以此类推，直到所有元素均排序完毕。</p>
-<p><img src="/images/选择排序.gif" alt="enter description here" title="选择排序"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line">	A[]  待排序列</div><div class="line">	n    元素个数</div><div class="line">*/</div><div class="line">void choSort(int A[],int n)&#123;</div><div class="line">	for(int i=0;i&lt;n-1;i++)&#123;</div><div class="line">		for(int j=i;j&lt;n;j++)&#123;</div><div class="line">			int index = i;</div><div class="line">			if(A[j]&lt;A[index])&#123;</div><div class="line">				index = j;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		int temp = A[i];</div><div class="line">		A[i] = A[index];</div><div class="line">		A[index] = temp;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="一点干货"><a href="#一点干货" class="headerlink" title="一点干货"></a>一点干货</h4><p>上面三种排序方法的时间复杂度都是 n2;通过比较我们可以发现它们都有一个共同的瓶颈：都是只比较相邻的两个数，这是个致命的缺点，只到后来人们找到了分组比较的方法，得以让排序算法的复杂度降低了。接下来，咱们讨论更高级的排序算法。</p>
-<h4 id="Shell排序"><a href="#Shell排序" class="headerlink" title="Shell排序"></a>Shell排序</h4><p>Shell排序讲到底还是插入排序，不过它先把待排序列分成了许多组，先分组用插入排序，这样做到目的是先将待排序列变成基本有序，然后在用一次完整的插入排序。我们都知道，如果序列是基本有序的，插入排序的效率还是挺高的。Shell的特点就在于：它的作法不是每次一个元素挨一个元素的比较。而是初期选用大跨步（增量较大）间隔比较，使记录跳跃式接近它的排序位置；然后增量缩小；最后增量为 1 ，这样记录移动次数大大减少，提高了排序效率。</p>
-<p>假设有数组 array = [80, 93, 60, 12, 42, 30, 68, 85, 10]，首先取 d1 = 4，将数组分为 4 组，如下图中相同颜色代表一组：<br><img src="/images/shell-sort-step1.1.png" alt="enter description here" title="shell-sort-step1.1"><br>然后分别对 4 个小组进行插入排序，排序后的结果为：<br><img src="/images/shell-sort-step1.2.png" alt="enter description here" title="shell-sort-step1.2"><br>然后，取 d2 = 2，将原数组分为 2 小组，如下图：<br><img src="/images/shell-sort-step2.1.png" alt="enter description here" title="shell-sort-step2.1"><br>然后分别对 2 个小组进行插入排序，排序后的结果为：<br><img src="/images/shell-sort-step2.2.png" alt="enter description here" title="shell-sort-step2.2"><br>最后，取 d3 = 1，进行插入排序后得到最终结果：<br><img src="/images/shell-sort-step3.png" alt="enter description here" title="shell-sort-step3"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">void shell_sort(int a[], int n)&#123;</div><div class="line">    int i,j,gap;</div><div class="line">    //gap为步长，每次减为原来的一半</div><div class="line">    for(gap = n/2;gap&gt;0;gap/=2)&#123;</div><div class="line">        // 共gap个组，对每一组都执行直接插入排序</div><div class="line">        for(i = 0;i&lt;gap;i++)&#123;</div><div class="line">            for(j = i+gap;j&lt;n;j+=gap)&#123;</div><div class="line">                // 如果a[j] &lt; a[j-gap]，则寻找a[j]位置，并将后面数据的位置都后移。</div><div class="line">                if (a[j] &lt; a[j - gap]) </div><div class="line">                &#123;</div><div class="line">                    int tmp = a[j];</div><div class="line">                    int k = j - gap;</div><div class="line">                    while (k &gt;= 0 &amp;&amp; a[k] &gt; tmp)</div><div class="line">                    &#123;</div><div class="line">                        a[k + gap] = a[k];</div><div class="line">                        k -= gap;</div><div class="line">                    &#125;</div><div class="line">                    a[k + gap] = tmp;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h4><p>归并排序是建立在归并操作上的一种有效的排序算法。该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。归并操作(Merge)，也叫归并算法，指的是将两个已经排序的序列合并成一个序列的操作。归并排序算法依赖归并操作。归并排序有多路归并排序、两路归并排序 , 可用于内排序，也可以用于外排序。这里仅对内排序的两路归并方法进行讨论。</p>
-<p>算法思路：</p>
-<ul>
-<li>把 n 个记录看成 n 个长度为 l 的有序子表</li>
-<li>进行两两归并使记录关键字有序，得到 n/2 个长度为 2 的有序子表</li>
-<li>重复第 2 步直到所有记录归并成一个长度为 n 的有序表为止。</li>
-</ul>
-<p>先讲讲归并吧，就是将两个有序个数据合并成一个新的有序数组。看代码吧：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line"> * 将一个数组中的两个相邻有序区间合并成一个</div><div class="line"> *</div><div class="line"> * 参数说明：</div><div class="line"> *     a -- 包含两个有序区间的数组</div><div class="line"> *     start -- 第1个有序区间的起始地址。</div><div class="line"> *     mid   -- 第1个有序区间的结束地址。也是第2个有序区间的起始地址。</div><div class="line"> *     end   -- 第2个有序区间的结束地址。</div><div class="line"> */</div><div class="line">void merge(int* a, int start, int mid, int end)</div><div class="line">&#123;</div><div class="line">    int *tmp = new int[end-start+1];    // tmp是汇总2个有序区的临时区域</div><div class="line">    int i = start;            // 第1个有序区的索引</div><div class="line">    int j = mid + 1;        // 第2个有序区的索引</div><div class="line">    int k = 0;                // 临时区域的索引</div><div class="line"></div><div class="line">    while(i &lt;= mid &amp;&amp; j &lt;= end)</div><div class="line">    &#123;</div><div class="line">        if (a[i] &lt;= a[j])</div><div class="line">            tmp[k++] = a[i++];</div><div class="line">        else</div><div class="line">            tmp[k++] = a[j++];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    while(i &lt;= mid)</div><div class="line">        tmp[k++] = a[i++];</div><div class="line"></div><div class="line">    while(j &lt;= end)</div><div class="line">        tmp[k++] = a[j++];</div><div class="line"></div><div class="line">    // 将排序后的元素，全部都整合到数组a中。</div><div class="line">    for (i = 0; i &lt; k; i++)</div><div class="line">        a[start + i] = tmp[i];</div><div class="line"></div><div class="line">    delete[] tmp;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>接下来就是我们的归并排序算法啦，刚刚讲到是用分而治之的办法，那就是要用到递归了，先看代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line"> * 归并排序(从上往下)</div><div class="line"> *</div><div class="line"> * 参数说明：</div><div class="line"> *     a -- 待排序的数组</div><div class="line"> *     start -- 数组的起始地址</div><div class="line"> *     end -- 数组的结束地址</div><div class="line"> */</div><div class="line"></div><div class="line">void mergeSortUp2Down(int* a, int start, int end)&#123;</div><div class="line">    </div><div class="line">    if(a==NULL || start &gt;= end)</div><div class="line">        return ;</div><div class="line"></div><div class="line">    int mid = (end + start)/2;</div><div class="line">    mergeSortUp2Down(a, start, mid); // 递归排序a[start...mid]</div><div class="line">    mergeSortUp2Down(a, mid+1, end); // 递归排序a[mid+1...end]</div><div class="line"></div><div class="line">    // a[start...mid] 和 a[mid...end]是两个有序空间，</div><div class="line">    // 将它们排序成一个有序空间a[start...end]</div><div class="line">    merge(a, start, mid, end);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><img src="/images/归并排序.gif" alt="归并排序动画演示" title="归并排序"></p>
-<h4 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h4><p>快速排序与归并排序的思想是一致的，都是 采用的分而治之的办法，但这个分的方法不一样，归并算法是相邻的两个分，快速排序是选择一个基准，然后通过比较将小于基准的数放在其左边，大于基准的数放在右边，这个操作叫做分区操作，然后对基准左边和右边的数进行同样的操作。</p>
-<p>利用分治法可将快速排序的分为三步：</p>
-<ul>
-<li>在数据集之中，选择一个元素作为”基准”（pivot）。</li>
-<li>所有小于”基准”的元素，都移到”基准”的左边；所有大于”基准”的元素，都移到”基准”的右边。这个操作称为分区 (partition) 操作，分区操作结束后，基准元素所处的位置就是最终排序后它的位置。</li>
-<li>对”基准”左边和右边的两个子集，不断重复第一步和第二步，直到所有子集只剩下一个元素为止。</li>
-</ul>
-<p><img src="/images/快速排序.gif" alt="快速排序" title="快速排序"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line"> * 快速排序</div><div class="line"> *</div><div class="line"> * 参数说明：</div><div class="line"> *     a -- 待排序的数组</div><div class="line"> *     l -- 数组的左边界(例如，从起始位置开始排序，则l=0)</div><div class="line"> *     r -- 数组的右边界(例如，排序截至到数组末尾，则r=a.length-1)</div><div class="line"> */</div><div class="line"></div><div class="line">void quickSort(int *a ,int l,int r)&#123; </div><div class="line">    if(l&lt;r)&#123;</div><div class="line">        int i,j,x;</div><div class="line">        i=l;</div><div class="line">        j=r;</div><div class="line">        x = a[i];</div><div class="line">        while(i&lt;j)&#123;</div><div class="line">            while(i&lt;j &amp;&amp; a[j]&gt;x)&#123;</div><div class="line">                j--; // 从右向左找第一个小于x的数</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            if(i&lt;j)&#123;</div><div class="line">                a[i] = a[j];</div><div class="line">                i++;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            while(i&lt;j &amp;&amp; a[i]&lt;x)&#123;</div><div class="line">                i++;   // 从左向右找第一个大于x的数</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            if(i&lt;j)&#123;</div><div class="line">                a[j] = a[i];</div><div class="line">                j--;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        a[i] = x;</div><div class="line">        quickSort(a,l,i-1);</div><div class="line">        quickSort(a,i+1,r);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>排序算法动画 <a href="http://coolshell.cn/articles/3933.html" target="_blank" rel="external">http://coolshell.cn/articles/3933.html</a></p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;排序算法&quot;&gt;&lt;a href=&quot;#排序算法&quot; class=&quot;headerlink&quot; title=&quot;排序算法&quot;&gt;&lt;/a&gt;排序算法&lt;/h3&gt;&lt;p&gt;经过大一到大二的洗礼，自己对自己专业的认识也越来越深，从最开始认为自己是学软件工程的，然后认为自己是学计算机的，再到现在认为
     
     </summary>
     
