@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-21T03:59:35.699Z</updated>
+  <updated>2018-02-22T02:54:01.830Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,65 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>运维|安装Octave</title>
+    <link href="http://yoursite.com/2018/02/22/%E8%BF%90%E7%BB%B4-%E5%AE%89%E8%A3%85Octave/"/>
+    <id>http://yoursite.com/2018/02/22/运维-安装Octave/</id>
+    <published>2018-02-22T10:42:45.000Z</published>
+    <updated>2018-02-22T02:54:01.830Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="What-is-Octave"><a href="#What-is-Octave" class="headerlink" title="What is Octave"></a>What is Octave</h3><p>Octave是一个旨在提供与Matlab语法兼容的开放源代码科学计算及数值分析的工具。Octave是在GNU协议下被开放的，这意味着它一直是可以免费下载的。</p>
+<h3 id="在Windows下安装Octave"><a href="#在Windows下安装Octave" class="headerlink" title="在Windows下安装Octave"></a>在Windows下安装Octave</h3><p>使用这个链接来在Windows安装Octave:</p>
+<blockquote>
+<p><a href="http://wiki.octave.org/Octave_for_Microsoft_Windows" target="_blank" rel="external">http://wiki.octave.org/Octave_for_Microsoft_Windows</a></p>
+</blockquote>
+<h3 id="在GNU-Linux上安装Octave"><a href="#在GNU-Linux上安装Octave" class="headerlink" title="在GNU/Linux上安装Octave"></a>在GNU/Linux上安装Octave</h3><ul>
+<li>在Ubuntu上，你可以使用：<ul>
+<li>sudo apt-get update &amp;&amp; sudo apt-get install octave</li>
+</ul>
+</li>
+<li>在Fedora上，你可以使用：<ul>
+<li>sudo yum install octave-forge</li>
+</ul>
+</li>
+<li>在Red Hat Enterprise/CentOS上，你可以使用：<ul>
+<li>Method One:<ul>
+<li><blockquote>
+<p>yum install epel-release<br>  yum install octave</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>Method Two:<ul>
+<li><blockquote>
+<p>wget <a href="http://url/to/latest/epel-release-6-7.noarch.rpm" target="_blank" rel="external">http://url/to/latest/epel-release-6-7.noarch.rpm</a><br> yum localinstall epel-release-6-7.noarch.rpm </p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>在CentOS上，可以到 <a href="https://fedoraproject.org/wiki/EPEL" target="_blank" rel="external">https://fedoraproject.org/wiki/EPEL</a> 中选择自己需要的Octave版本。</p>
+<p>Octave is available for Red Hat Enterprise Linux distributions through the <a href="https://fedoraproject.org/wiki/EPEL" target="_blank" rel="external">EPEL</a> repository. This section applies to CentOS, Scientific Linux, and other Red Hat Enterprise rebuild distributions as well.</p>
+<blockquote>
+<p>参考 <a href="http://wiki.octave.org/Octave_for_GNU/Linux" target="_blank" rel="external">http://wiki.octave.org/Octave_for_GNU/Linux</a></p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;What-is-Octave&quot;&gt;&lt;a href=&quot;#What-is-Octave&quot; class=&quot;headerlink&quot; title=&quot;What is Octave&quot;&gt;&lt;/a&gt;What is Octave&lt;/h3&gt;&lt;p&gt;Octave是一个旨在提供与Matlab语法
+    
+    </summary>
+    
+      <category term="运维" scheme="http://yoursite.com/categories/%E8%BF%90%E7%BB%B4/"/>
+    
+    
+      <category term="Octave" scheme="http://yoursite.com/tags/Octave/"/>
+    
+  </entry>
   
   <entry>
     <title>PHP|PHP安全性开发</title>
@@ -1725,30 +1784,6 @@
     
     
       <category term="数据结构" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>VHDL与数字逻辑的一些坑</title>
-    <link href="http://yoursite.com/2018/01/09/VHDL%E4%B8%8E%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/"/>
-    <id>http://yoursite.com/2018/01/09/VHDL与数字逻辑的一些坑/</id>
-    <published>2018-01-08T23:24:03.000Z</published>
-    <updated>2018-01-08T15:45:23.748Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="关于VHDL"><a href="#关于VHDL" class="headerlink" title="关于VHDL"></a>关于VHDL</h3><p>来了大二，学习数字逻辑电路后才知道VHDL的，用来写数字逻辑的实验。刚开始接触的时候，也并不知道它是用来干什么的，经过一个学期的琢磨，才搞清楚它是用来干嘛的。简单点说，就是用来描述电路的，就像我们常说的芯片，它都有自己的功能，这些功能的实现都是内部封装好了的，只留下一些外部接口给我们，VHDL这门语言呢，就是用来描述这些芯片的内部功能的。用代码设计电路，想不到吧。更不可思议的是，IDE工具还能根据写的代码，帮我们把电路实现。</p>
-<h3 id="怎么用"><a href="#怎么用" class="headerlink" title="怎么用"></a>怎么用</h3><p>VHDL跟我们所学习的C语言这些差不多，也有if、else这些逻辑语句，但毕竟是描述电路的，还是有一些区别的。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;关于VHDL&quot;&gt;&lt;a href=&quot;#关于VHDL&quot; class=&quot;headerlink&quot; title=&quot;关于VHDL&quot;&gt;&lt;/a&gt;关于VHDL&lt;/h3&gt;&lt;p&gt;来了大二，学习数字逻辑电路后才知道VHDL的，用来写数字逻辑的实验。刚开始接触的时候，也并不知道它是用来干什
-    
-    </summary>
-    
-      <category term="VHDL" scheme="http://yoursite.com/categories/VHDL/"/>
-    
-    
-      <category term="VHDL" scheme="http://yoursite.com/tags/VHDL/"/>
     
   </entry>
   
