@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-26T11:18:20.000Z</updated>
+  <updated>2018-02-26T11:25:17.491Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/02/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-1-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/"/>
     <id>http://yoursite.com/2018/02/27/机器学习-1-线性回归/</id>
     <published>2018-02-26T18:37:58.000Z</published>
-    <updated>2018-02-26T11:18:20.000Z</updated>
+    <updated>2018-02-26T11:25:17.491Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>机器学习(Machine Learning, ML)是一门多领域交叉学科，涉及概率论、统计学、逼近论、凸分析、算法复杂度理论等多门学科。专门研究计算机怎样模拟或实现人类的学习行为，以获取新的知识或技能，重新组织已有的知识结构使之不断改善自身的性能。</p>
@@ -42,7 +42,10 @@
 </ul>
 <h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>这篇博客主要讲的是线性回归(Linear regression)，经过前言后大家也知道了，回归里面用到的函数有多种多样的，这个需要开发者自己去选择，这次先介绍最简单的线性回归(Linear regression)。</p>
 <h4 id="线性回归LR-Linear-Regression"><a href="#线性回归LR-Linear-Regression" class="headerlink" title="线性回归LR(Linear Regression)"></a>线性回归LR(Linear Regression)</h4><p>从数学上来说，给定由d个属性描述的示例x=(x1;x2;…;xd),其中xi是x在第i个属性上的取值，线性模型试图学得一个通过属性的线性组合来进行预测的函数，即</p>
-<p>$$ a ^ 2 + b ^ 2 = c ^ 2 $$<br>$$ \sqrt{2} $$<br>$$ evidence_{i}=\sum _{j}W_{ij}x_{j}+b_{i} $$</p>
+<p>$$ evidence_{i}=\sum _{j}W_{ij}x_{j}+b_{i} $$</p>
+<span>$$\begin{aligned}
+evidence_{i}=\sum _{j}W_{ij}x_{j}+b_{i}
+\end{aligned}$$</span><!-- Has MathJax -->
 ]]></content>
     
     <summary type="html">
