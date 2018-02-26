@@ -4,24 +4,27 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>a+b=c | 只为不凡而来</title>
+    <title>机器学习|1-线性回归 | 只为不凡而来</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="wuduozhi">
     
 
     
-    <meta name="description" content="见林见森小时候，常听大人们讲”看问题要看本质”，那是还小，不太懂这句话的意思，也没有进行深入的思考。慢慢的长大，经历的许多事情后，再次听到这句话，觉得自己有了一点理解。 就拿我们小时候学的算术来举个例子，我们都知道2+3=5，6+8=10…在小学，我们学了很多这样的例子；等我们到了初中的时候，接触到代数，有了这样的表达式  a+b=c ，人们所说的代数。一个简单的表达式就涵盖了我们小学6年所学的算">
+    <meta name="description" content="机器学习(Machine Learning, ML)是一门多领域交叉学科，涉及概率论、统计学、逼近论、凸分析、算法复杂度理论等多门学科。专门研究计算机怎样模拟或实现人类的学习行为，以获取新的知识或技能，重新组织已有的知识结构使之不断改善自身的性能。  自己作为计算机专业的一员，在写了几个只要增删改查的项目后，发现自己对写代码这个活动不是很有兴趣了，有点厌倦了。现在业内人都在说人工智能、机器学习等">
+<meta name="keywords" content="机器学习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="a+b=c">
-<meta property="og:url" content="http://yoursite.com/2017/07/28/a-b-c/index.html">
+<meta property="og:title" content="机器学习|1-线性回归">
+<meta property="og:url" content="http://yoursite.com/2018/02/27/机器学习-1-线性回归/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="见林见森小时候，常听大人们讲”看问题要看本质”，那是还小，不太懂这句话的意思，也没有进行深入的思考。慢慢的长大，经历的许多事情后，再次听到这句话，觉得自己有了一点理解。 就拿我们小时候学的算术来举个例子，我们都知道2+3=5，6+8=10…在小学，我们学了很多这样的例子；等我们到了初中的时候，接触到代数，有了这样的表达式  a+b=c ，人们所说的代数。一个简单的表达式就涵盖了我们小学6年所学的算">
+<meta property="og:description" content="机器学习(Machine Learning, ML)是一门多领域交叉学科，涉及概率论、统计学、逼近论、凸分析、算法复杂度理论等多门学科。专门研究计算机怎样模拟或实现人类的学习行为，以获取新的知识或技能，重新组织已有的知识结构使之不断改善自身的性能。  自己作为计算机专业的一员，在写了几个只要增删改查的项目后，发现自己对写代码这个活动不是很有兴趣了，有点厌倦了。现在业内人都在说人工智能、机器学习等">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2017-07-27T14:39:52.285Z">
+<meta property="og:image" content="http://yoursite.com/2018/02/27/机器学习-1-线性回归/images/机器学习-线性回归-01.png">
+<meta property="og:updated_time" content="2018-02-26T11:18:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="a+b=c">
-<meta name="twitter:description" content="见林见森小时候，常听大人们讲”看问题要看本质”，那是还小，不太懂这句话的意思，也没有进行深入的思考。慢慢的长大，经历的许多事情后，再次听到这句话，觉得自己有了一点理解。 就拿我们小时候学的算术来举个例子，我们都知道2+3=5，6+8=10…在小学，我们学了很多这样的例子；等我们到了初中的时候，接触到代数，有了这样的表达式  a+b=c ，人们所说的代数。一个简单的表达式就涵盖了我们小学6年所学的算">
+<meta name="twitter:title" content="机器学习|1-线性回归">
+<meta name="twitter:description" content="机器学习(Machine Learning, ML)是一门多领域交叉学科，涉及概率论、统计学、逼近论、凸分析、算法复杂度理论等多门学科。专门研究计算机怎样模拟或实现人类的学习行为，以获取新的知识或技能，重新组织已有的知识结构使之不断改善自身的性能。  自己作为计算机专业的一员，在写了几个只要增删改查的项目后，发现自己对写代码这个活动不是很有兴趣了，有点厌倦了。现在业内人都在说人工智能、机器学习等">
+<meta name="twitter:image" content="http://yoursite.com/2018/02/27/机器学习-1-线性回归/images/机器学习-线性回归-01.png">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -85,14 +88,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/07/28/a-b-c/" title="a+b=c" itemprop="url">a+b=c</a>
+      <a href="/2018/02/27/机器学习-1-线性回归/" title="机器学习|1-线性回归" itemprop="url">机器学习|1-线性回归</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-27T16:53:27.000Z" itemprop="datePublished"> 发表于 2017-07-28</time>
+    <time datetime="2018-02-26T18:37:58.000Z" itemprop="datePublished"> 发表于 2018-02-27</time>
     
   </p>
 </header>
@@ -101,20 +104,46 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#见林见森"><span class="toc-number">1.</span> <span class="toc-text">见林见森</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#回归问题相关概念"><span class="toc-number">1.1.</span> <span class="toc-text">回归问题相关概念</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正文"><span class="toc-number">2.</span> <span class="toc-text">正文</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#线性回归LR-Linear-Regression"><span class="toc-number">2.1.</span> <span class="toc-text">线性回归LR(Linear Regression)</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<h3 id="见林见森"><a href="#见林见森" class="headerlink" title="见林见森"></a>见林见森</h3><p>小时候，常听大人们讲”看问题要看本质”，那是还小，不太懂这句话的意思，也没有进行深入的思考。慢慢的长大，经历的许多事情后，再次听到这句话，觉得自己有了一点理解。</p>
-<p>就拿我们小时候学的算术来举个例子，我们都知道2+3=5，6+8=10…在小学，我们学了很多这样的例子；等我们到了初中的时候，接触到代数，有了这样的表达式  a+b=c ，人们所说的代数。一个简单的表达式就涵盖了我们小学6年所学的算术，说到底，我们在小学学的无穷的算术，就是为了在初中能更好地理解为什么 a+b=c 是可以成立的。换句话来说a+b=c就是我们在学了无穷的算术后，所真正需要掌握的东西,如果小学毕业后我们不能理解为什么a+b=c ，那就是我们的不对了。a+b=c的背后，是一种思考方法…</p>
-<p>我们长大了，需要学习的东西也变多了，也没有多少个六年让我们去掌握一件东西了。所以在学习的时候，我们就需要从表面的东西看到最深层的东西，这不容易，需要平常多思考，多与人交流。</p>
-<p>拿自己来说吧，一个以后极其可能走上码农道路上的人来说，有无数中高级语言需要我们去学习，因为我们并不知道客户的需求是什么样的。那是不是说如果客户要求使用的语言我没学过，那这工作我是不是就不能接了呢？如果是这样，那码农这个职业的存在就是不合理的。要解决这种问题，需要我们有学过一本语言，就能知道怎么使用其他语言的能力，那怎么做到呢？是的，这时候我们就需要找到这些编程语言的共性。如果我们有学过一本编程语言，就应该知道用这门语言完成一些操作时的步骤，比如说用来操作文件，一般都是先找到文件、建立通道、操作文件…再比如说数据库操作，一般步骤为怎么连接数据库、怎么发送SQL语句…是的，能够发现这些基本的步骤，才是我们学习一门语言的目的，也只有这样，我们才能更快的学习另一门语言，满足客户的要求。</p>
-<p>在唠叨一下，如果我们今天自己完成了一个可以复制、加密文件的小程序，第二天，有一个叫做“学生信息管理系统”的项目需要你来完成，你的反应是什么呢？第一反应极大可能是我不会呀，我只会最基本的文件复制、加密，怎么完成你的这个学生信息管理系统呀。这是正常的，我们接触到新的事物时，正常反应都是这样的。但如果我们仔细想想，管理系统说到底也就是信息处理呀，就是把把填写的学生信息存起来或者能把学生的信息读取出来，跟我们完成的文件复制、加密程序，不是一样的功能吗？还是那句话，见到树，就要想到森林。</p>
+		<blockquote>
+<p>机器学习(Machine Learning, ML)是一门多领域交叉学科，涉及概率论、统计学、逼近论、凸分析、算法复杂度理论等多门学科。专门研究计算机怎样模拟或实现人类的学习行为，以获取新的知识或技能，重新组织已有的知识结构使之不断改善自身的性能。</p>
+</blockquote>
+<p>自己作为计算机专业的一员，在写了几个只要增删改查的项目后，发现自己对写代码这个活动不是很有兴趣了，有点厌倦了。现在业内人都在说人工智能、机器学习等高大尚的东西，起初自己认为这些东西不是本科生能掌握的东西，但接触后发现自己错了，也就是那么一回事。</p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这篇文章的主角是线性回归，也就是LR(Linear Regression)，是机器学习得基础算法。</p>
+<p>回归(Regression)问题是机器学习里面很大的一块。</p>
+<blockquote>
+<p>统计学中，回归分析（regression analysis)指的是确定两种或两种以上变量间相互依赖的定量关系的一种统计分析方法。回归分析按照涉及的变量的多少，分为一元回归和多元回归分析；按照因变量的多少，可分为简单回归分析和多重回归分析；按照自变量和因变量之间的关系类型，可分为线性回归分析和非线性回归分析。</p>
+</blockquote>
+<p>不玩定义，直接上例子，设想一下这样的场景： 如果我现在有了一组(身高, 体重)的数据集，可以令身高为x值，体重为y值将其画在纸上，就和下图一样。</p>
+<p><img src="./images/机器学习-线性回归-01.png" alt="机器学习-线性回归" title="机器学习-线性回归-01"></p>
+<p>那么现在问题来了，假设我身高为1.8m，能不能预测出我的体重？这就是回归要解决的问题，我希望得到一个函数，我输入我的身高之后他能够帮我预测出我的体重。<br>在这个例子里，我假设身高和体重的关系是线性关系，所以假设模型是y=kx+b这种一次函数，为了确定变量k和b，我需要利用之前的数据去学习出这两个参数。<br>尽管上面的例子误差很大。因为体重的函数肯定不单单由身高这一个特征(feature)决定，而且即使只有身高一个特征，最佳函数也很可能不是一次函数。</p>
+<h4 id="回归问题相关概念"><a href="#回归问题相关概念" class="headerlink" title="回归问题相关概念"></a>回归问题相关概念</h4><p>通常，这类预测问题可以用回归(regression)模型进行解决，回归模型定义了输入与输出的关系，输入即现有知识，而输出则为预测。<br>一个预测问题在回归模型下的解决步骤为：</p>
+<ul>
+<li>积累知识： 我们将储备的知识称之为训练集(Training Set)，毕竟预测是需要过去的数据作为参考的，这个很好理解。</li>
+<li>学习：当我们有了数据的时候，我们就需要去学习这些数据，为什么说机器学习智能？因为当我告诉计算机我的模型是线性(一次函数)或其他类型的函数然后把数据直接倒进去之后它就能返回给我最后的函数(参数都训练好了)。</li>
+<li>预测：学习完成后，当接受了新的数据（输入）后，我们就能通过学习阶段获得的对应关系来预测输出。</li>
+</ul>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>这篇博客主要讲的是线性回归(Linear regression)，经过前言后大家也知道了，回归里面用到的函数有多种多样的，这个需要开发者自己去选择，这次先介绍最简单的线性回归(Linear regression)。</p>
+<h4 id="线性回归LR-Linear-Regression"><a href="#线性回归LR-Linear-Regression" class="headerlink" title="线性回归LR(Linear Regression)"></a>线性回归LR(Linear Regression)</h4><p>从数学上来说，给定由d个属性描述的示例x=(x1;x2;…;xd),其中xi是x在第i个属性上的取值，线性模型试图学得一个通过属性的线性组合来进行预测的函数，即</p>
+<p>$$ a ^ 2 + b ^ 2 = c ^ 2 $$<br>$$ \sqrt{2} $$<br>$$ evidence_{i}=\sum _{j}W_{ij}x_{j}+b_{i} $$</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/machine/">机器学习</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
+  </div>
 
 </div>
 
@@ -127,17 +156,10 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/07/28/jxl操作excel/" title="jxl操作excel">
-  <span>
-  jxl操作excel</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/07/27/Java加密系统/"  title="Java加密系统">
- <span>Java加密系统
+<a href="/2018/02/25/Java-徒手撸框架-实现SpringMVC框架/"  title="Java|自己撸一个SpringMVC框架">
+ <span>Java|自己撸一个SpringMVC框架
 </span>
 </a>
 </div>
