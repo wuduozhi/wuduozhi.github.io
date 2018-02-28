@@ -1,0 +1,648 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>机器学习|2-逻辑回归 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="分类(Classification)和回归(Regression)一样，分类(Classification)问题也是机器学习里面很大的一块。  分类问题是机器学习非常重要的一个组成部分，它的目标是根据已知样本的某些特征，判断一个新的样本属于哪种已知的样本类。  其实常见的例子很多，判断一个邮件是否是垃圾邮件之类的，预测一个用户是否对我的商品感兴趣，以及图像处理里面对图像进行的分类。  分类问题有简">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习|2-逻辑回归">
+<meta property="og:url" content="http://yoursite.com/2018/02/28/机器学习-2-逻辑回归/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="分类(Classification)和回归(Regression)一样，分类(Classification)问题也是机器学习里面很大的一块。  分类问题是机器学习非常重要的一个组成部分，它的目标是根据已知样本的某些特征，判断一个新的样本属于哪种已知的样本类。  其实常见的例子很多，判断一个邮件是否是垃圾邮件之类的，预测一个用户是否对我的商品感兴趣，以及图像处理里面对图像进行的分类。  分类问题有简">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/images/机器学习-逻辑回归-01.jpg">
+<meta property="og:image" content="http://yoursite.com/images/机器学习-逻辑回归-02.jpg">
+<meta property="og:image" content="http://yoursite.com/images/机器学习-逻辑回归-03.jpg">
+<meta property="og:image" content="http://yoursite.com/images/机器学习-逻辑回归-04.jpg">
+<meta property="og:image" content="http://yoursite.com/images/机器学习-逻辑回归-05.jpg">
+<meta property="og:image" content="http://yoursite.com/images/机器学习-逻辑回归-06.jpg">
+<meta property="og:image" content="http://yoursite.com/images/机器学习-逻辑回归-07.jpg">
+<meta property="og:image" content="http://yoursite.com/images/机器学习-逻辑回归-08.jpg">
+<meta property="og:image" content="http://yoursite.com/images/机器学习-逻辑回归-09.jpg">
+<meta property="og:image" content="http://yoursite.com/images/机器学习-逻辑回归-10.jpg">
+<meta property="og:image" content="http://yoursite.com/images/机器学习-逻辑回归-11.jpg">
+<meta property="og:image" content="http://yoursite.com/images/机器学习-逻辑回归-12.jpg">
+<meta property="og:image" content="http://yoursite.com/images/机器学习-逻辑回归-13.jpg">
+<meta property="og:image" content="http://yoursite.com/images/机器学习-逻辑回归-14.jpg">
+<meta property="og:image" content="http://yoursite.com/images/机器学习-逻辑回归-15.jpg">
+<meta property="og:image" content="http://yoursite.com/images/机器学习-逻辑回归-16.jpg">
+<meta property="og:image" content="http://yoursite.com/images/机器学习-逻辑回归-17.jpg">
+<meta property="og:image" content="http://yoursite.com/images/机器学习-逻辑回归-18.jpg">
+<meta property="og:updated_time" content="2018-02-28T03:24:11.308Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习|2-逻辑回归">
+<meta name="twitter:description" content="分类(Classification)和回归(Regression)一样，分类(Classification)问题也是机器学习里面很大的一块。  分类问题是机器学习非常重要的一个组成部分，它的目标是根据已知样本的某些特征，判断一个新的样本属于哪种已知的样本类。  其实常见的例子很多，判断一个邮件是否是垃圾邮件之类的，预测一个用户是否对我的商品感兴趣，以及图像处理里面对图像进行的分类。  分类问题有简">
+<meta name="twitter:image" content="http://yoursite.com/images/机器学习-逻辑回归-01.jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.jpg" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/02/28/机器学习-2-逻辑回归/" title="机器学习|2-逻辑回归" itemprop="url">机器学习|2-逻辑回归</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-02-28T10:54:56.000Z" itemprop="datePublished"> Published 2018-02-28</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#分类-Classification"><span class="toc-number">1.</span> <span class="toc-text">分类(Classification)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#逻辑回归LR-Logistic-Regression"><span class="toc-number">2.</span> <span class="toc-text">逻辑回归LR(Logistic Regression)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Sigmoid函数"><span class="toc-number">2.1.</span> <span class="toc-text">Sigmoid函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#损失函数-Loss-Function"><span class="toc-number">2.2.</span> <span class="toc-text">损失函数(Loss Function)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#矢量化编程"><span class="toc-number">2.3.</span> <span class="toc-text">矢量化编程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#逻辑回归的梯度下降法-Gradient-Descent"><span class="toc-number">2.4.</span> <span class="toc-text">逻辑回归的梯度下降法(Gradient Descent)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#损失函数偏导数求解过程-选修"><span class="toc-number">2.4.1.</span> <span class="toc-text">损失函数偏导数求解过程(选修)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#过拟合问题"><span class="toc-number">3.</span> <span class="toc-text">过拟合问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#正则化项-regularizer"><span class="toc-number">3.1.</span> <span class="toc-text">正则化项(regularizer)</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h3 id="分类-Classification"><a href="#分类-Classification" class="headerlink" title="分类(Classification)"></a>分类(Classification)</h3><p>和回归(Regression)一样，分类(Classification)问题也是机器学习里面很大的一块。</p>
+<blockquote>
+<p>分类问题是机器学习非常重要的一个组成部分，它的目标是根据已知样本的某些特征，判断一个新的样本属于哪种已知的样本类。</p>
+</blockquote>
+<p>其实常见的例子很多，判断一个邮件是否是垃圾邮件之类的，预测一个用户是否对我的商品感兴趣，以及图像处理里面对图像进行的分类。</p>
+<p><img src="/images/机器学习-逻辑回归-01.jpg" alt="机器学习-逻辑回归" title="机器学习-逻辑回归-01"></p>
+<p>分类问题有简单的二分类也有多分类。</p>
+<h3 id="逻辑回归LR-Logistic-Regression"><a href="#逻辑回归LR-Logistic-Regression" class="headerlink" title="逻辑回归LR(Logistic Regression)"></a>逻辑回归LR(Logistic Regression)</h3><p>看到名字的时候你可能会有一些奇怪，为什么明明叫逻辑“回归”却用在分类问题上。虽然这个名字似乎指示着什么，但是逻辑回归实际上是分类算法。我猜它之所以这样命名是因为在它的学习方法上和线性回归相似，但是损失(loss)和梯度(gradient)函数的表达不同。特别的，逻辑回归使用 S型函数(sigmoid)而不是线性回归的连续输出。当我们深入到实现中去，我们会了解到更多。</p>
+<p>首先我们先把逻辑回归放到一边，之前也说了逻辑回归是用来解决分类问题的，对于分类问题，我们实际上是希望得到一个分类器(Classifier)，当输入数据之后，这个分类器能给我预测这个数据属于某一类的概率，也就是说我们需要的是一个<strong>概率</strong>。</p>
+<p>上一节我们介绍的线性回归，其输出的是预测值，其假设函数(Hypothesis Function)也就是输出预测值的函数是这样的。</p>
+<p><img src="/images/机器学习-逻辑回归-02.jpg" alt="机器学习-逻辑回归" title="机器学习-逻辑回归-02"></p>
+<p>而逻辑回归则是预测属于某一类的概率，所以我们让其假设函数是下面这个：</p>
+<p><img src="/images/机器学习-逻辑回归-03.jpg" alt="机器学习-逻辑回归" title="机器学习-逻辑回归-03"></p>
+<p>这个函数的意义其实是<strong>当输入为x时，输出y=1的概率</strong>，其实就是二分类问题里面是某个东西的概率。读者现在可能会对这个函数有所疑问，比如为什么是这个函数，这个留在后面会讨论。</p>
+<p><img src="/images/机器学习-逻辑回归-04.jpg" alt="机器学习-逻辑回归" title="机器学习-逻辑回归-04"></p>
+<blockquote>
+<p>这里出现了条件概率，实际上就是指事件A在另外一个事件B已经发生条件下的发生概率。</p>
+</blockquote>
+<p>我们把这个函数g(z)叫做sigmoid函数，很明显这个函数的值域是0到1的开区间。接下来我们会详细介绍一下这个函数。</p>
+<h4 id="Sigmoid函数"><a href="#Sigmoid函数" class="headerlink" title="Sigmoid函数"></a>Sigmoid函数</h4><p>Sigmoid函数的函数表达式如下:</p>
+<p><img src="/images/机器学习-逻辑回归-05.jpg" alt="Sigmoid函数" title="机器学习-逻辑回归-05"></p>
+<p><img src="/images/机器学习-逻辑回归-06.jpg" alt="Sigmoid函数图像" title="机器学习-逻辑回归-06"></p>
+<h4 id="损失函数-Loss-Function"><a href="#损失函数-Loss-Function" class="headerlink" title="损失函数(Loss Function)"></a>损失函数(Loss Function)</h4><p>上一小节我们也说过，为了修正参数Θ我们需要有个手段来衡量当前参数Θ的优秀程度。损失函数(Loss Function)就是用来衡量假设函数(hypothesis function)的准确性。</p>
+<p>对于逻辑回归来说，我们希望的是当预测概率约接近实际情况(0或1)的时候误差最小，而且不希望曲线是一条直线，而是对于越接近的地方变化越小，约远离的地方变化越大的函数。</p>
+<p>下面就是逻辑回归的损失函数。</p>
+<p><img src="/images/机器学习-逻辑回归-07.jpg" alt="损失函数" title="机器学习-逻辑回归-07"></p>
+<p><img src="/images/机器学习-逻辑回归-08.jpg" alt="损失函数" title="机器学习-逻辑回归-08"></p>
+<p>我们可以将函数合并一下，毕竟这种分段函数处理起来不是很舒服，其实就是下图这样，也很好理解，毕竟二分类训练数据y只有0和1两个值。</p>
+<p><img src="/images/机器学习-逻辑回归-09.jpg" alt="enter description here" title="机器学习-逻辑回归-09"></p>
+<p>这样我们就可以算出在一个训练集中基于当前参数Θ得到结果的误差了。</p>
+<p><img src="/images/机器学习-逻辑回归-10.jpg" alt="enter description here" title="机器学习-逻辑回归-10"></p>
+<h4 id="矢量化编程"><a href="#矢量化编程" class="headerlink" title="矢量化编程"></a>矢量化编程</h4><p>矢量化编程是提高算法速度的一种有效方法。为了提升特定数值运算操作（如矩阵相乘、矩阵相加、矩阵-向量乘法等）的速度，数值计算和并行计算的研究人员已经努力了几十年。矢量化编程的思想就是尽量使用这些被高度优化的数值运算操作来实现我们的学习算法。</p>
+<p>换句话说就是尽量避免使用for循环，毕竟矩阵相乘这种场景非常适合并行计算，在巨量的数据面前性能收益非常明显。</p>
+<p>如果刚刚的损失函数用矢量化编程的思想来表示的话</p>
+<p><img src="/images/机器学习-逻辑回归-11.jpg" alt="矢量化编程" title="机器学习-逻辑回归-11"></p>
+<p>如果一时不理解的话我先解释一下，我们先假设共m个数据，而这个模型中变量有n个。则矩阵h就是(m, n) X (n, 1)也就是(m,1)矩阵，矩阵h的意义就是这m个数据的预测值。<br>损失函数中y的转置为(1, m)，相乘后得到(1, 1)也就是一个值，这两个矩阵相乘的意义则是对应的预测值取对数乘以对应的实际值，最后加在一起。</p>
+<blockquote>
+<p>(m,n)表示维度为m行n列的矩阵，如果学过矩阵的乘法应该知道矩阵相乘(m, n) X (n, k)得到的矩阵是(m, k)</p>
+</blockquote>
+<h4 id="逻辑回归的梯度下降法-Gradient-Descent"><a href="#逻辑回归的梯度下降法-Gradient-Descent" class="headerlink" title="逻辑回归的梯度下降法(Gradient Descent)"></a>逻辑回归的梯度下降法(Gradient Descent)</h4><p>我们刚刚知道了怎么评价当前参数Θ的好坏，现在我们需要做的是使用梯度下降法来调整参数。</p>
+<p><img src="/images/机器学习-逻辑回归-12.jpg" alt="" title="机器学习-逻辑回归-12"></p>
+<p>依旧是对损失函数求偏导数，别忘记α是学习速率的意思。</p>
+<p><img src="/images/机器学习-逻辑回归-13.jpg" alt="" title="机器学习-逻辑回归-13"></p>
+<p>矢量化表示为</p>
+<p><img src="/images/机器学习-逻辑回归-14.jpg" alt="" title="机器学习-逻辑回归-14"></p>
+<h5 id="损失函数偏导数求解过程-选修"><a href="#损失函数偏导数求解过程-选修" class="headerlink" title="损失函数偏导数求解过程(选修)"></a>损失函数偏导数求解过程(选修)</h5><p><img src="/images/机器学习-逻辑回归-15.jpg" alt="损失函数偏导数求解过程" title="机器学习-逻辑回归-15"></p>
+<h3 id="过拟合问题"><a href="#过拟合问题" class="headerlink" title="过拟合问题"></a>过拟合问题</h3><p>对于一个训练数据集，可视化后如下图所示。</p>
+<p><img src="/images/机器学习-逻辑回归-16.jpg" alt="" title="机器学习-逻辑回归-16"></p>
+<p>对于三个不同的分类器划分出的边界的三种情况，我们对其有不同的称呼.</p>
+<p><img src="/images/机器学习-逻辑回归-17.jpg" alt="" title="机器学习-逻辑回归-17"></p>
+<p>第一种，分类非常不准，这种我们叫欠拟合(underfitting)<br>第二种，分类得恰到好处，这种其实没有特别的称呼。<br>第三种，分类太过于契合训练数据了。这种我们称为过拟合(overfitting)<br>过拟合所产生的问题也很明显，它实在太过于契合训练集了，对于我们来说，第二个曲线才是我们想要的，过拟合的结果太过于契合训练数据，实用性可想而知的低。</p>
+<p>而解决过拟合的方法主要有两种</p>
+<ul>
+<li>减少特征的数量，这个很好理解，更多的特征意味着划分出来的函数曲线可以越复杂。这个可以扩展到以后会讲的特征工程(Feature Engineering)</li>
+<li>使用正则化项， 保持所有的特征，但是保证参数θj不会变得巨大。正则化项非常适合在我们拥有很多稍微有点用的特征的时候。</li>
+</ul>
+<h4 id="正则化项-regularizer"><a href="#正则化项-regularizer" class="headerlink" title="正则化项(regularizer)"></a>正则化项(regularizer)</h4><p>正则化项其实也叫惩罚项(penalty term)，其作用是减缓过拟合问题，其实就是在损失函数后面加一个含有各个Θ的项，这样做的目的是让Θ也参与损失函数的计算，这样由于我们需要求的是损失函数的最小值，这个项就会限制Θ的大小。</p>
+<p>这个正则化项的目的其实是一个权衡，我们即希望参数Θ能在训练数据集上表现得比较好，又不希望参数Θ训练出来的值非常大而产生一些奇葩的划分曲线，就像下图这样的。</p>
+<p><img src="/images/机器学习-逻辑回归-18.jpg" alt="过拟合" title="机器学习-逻辑回归-18"></p>
+<blockquote>
+<p>转载 <a href="https://juejin.im/post/5a40e8e46fb9a0450671dd2f" target="_blank" rel="external">https://juejin.im/post/5a40e8e46fb9a0450671dd2f</a></p>
+</blockquote>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/machine/">机器学习</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/02/27/机器学习-1-线性回归/"  title="机器学习|1-线性回归">
+ <span>机器学习|1-线性回归
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>15</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/运维/" title="运维">运维<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Octave/" title="Octave">Octave<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>

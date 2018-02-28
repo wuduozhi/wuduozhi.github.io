@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="MathJax.Hub.Config({ tex2jax: {inlineMath: [[&apos;$&apos;,&apos;$&apos;], [&apos;\\(&apos;,&apos;\\)&apos;]]} });      My First Hexo Blog  Hexo，一个博客框架，之前听学长讲过，今天跟着教程弄了一下，不是很难，如果之前有接触过git，那就更简单了，跟装个软件差不多。  史上最详细的Hexo博客搭建图文教程  系列教程  如何在Hexo">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-02-26T15:06:47.783Z">
+<meta property="og:updated_time" content="2018-02-26T15:32:42.657Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
 <meta name="twitter:description" content="MathJax.Hub.Config({ tex2jax: {inlineMath: [[&apos;$&apos;,&apos;$&apos;], [&apos;\\(&apos;,&apos;\\)&apos;]]} });      My First Hexo Blog  Hexo，一个博客框架，之前听学长讲过，今天跟着教程弄了一下，不是很难，如果之前有接触过git，那就更简单了，跟装个软件差不多。  史上最详细的Hexo博客搭建图文教程  系列教程  如何在Hexo">
@@ -50,7 +50,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -70,7 +70,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -93,14 +93,14 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-25T01:05:19.000Z" itemprop="datePublished"> 發表於 2017-07-25</time>
+    <time datetime="2017-07-25T01:05:19.000Z" itemprop="datePublished"> Published 2017-07-25</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目錄</strong>
+			<strong class="toc-title">Contents</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#My-First-Hexo-Blog"><span class="toc-number">1.</span> <span class="toc-text">My First Hexo Blog</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何在Hexo博客中插入数学公式"><span class="toc-number">2.</span> <span class="toc-text">如何在Hexo博客中插入数学公式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法一-安装hexo-math插件"><span class="toc-number">2.1.</span> <span class="toc-text">方法一 安装hexo-math插件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方法二-MathJax"><span class="toc-number">2.2.</span> <span class="toc-text">方法二 MathJax</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo常用命令"><span class="toc-number">3.</span> <span class="toc-text">Hexo常用命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置自己的域名"><span class="toc-number">4.</span> <span class="toc-text">配置自己的域名</span></a></li></ol>
 		
@@ -141,7 +141,8 @@ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 </ul>
 <p>这里先不管格式是怎样的，先看一下如何把这个特定格式显示成可读的数学公式。举一个最简单的例子:f(x)=x^2就是一个特定格式。只不过这个例子非常简单，一看就知道是什么含义。 想要把它显示成数学公式有两种办法，分别对应两种显示方式。一种是单独显示，另一种是在文字中显示。</p>
 <ul>
-<li>单独显示，只需要在两边分别加上$$即可。例如$$f(x)=x^2$$,对应数学公式:<br>$$f(x)=x^2$$</li>
+<li>单独显示，只需要在两边分别加上$$即可。例如$$f(x)=x^2$$,对应数学公式:<pre><code>$$f(x)=x^2$$
+</code></pre></li>
 <li>在文字中显示，只需要在两边分别加上$即可。例如$f(x)=x^2$, 请问$f(x)=x^2$的导数为?咦？看到这里你是不是想说这**博主，说好的在文字中显示呢？？！！这里要解释一下，因为$这个符号在其他上下文中有不同的意义，比如它可以当作美元符号等等，所以默认情况下$…$是不支持的。那如何解决呢？只需要在第一步添加的代码之前再添加如下:<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;script type=&quot;text/x-mathjax-config&quot;&gt;</div><div class="line">MathJax.Hub.Config(&#123;</div><div class="line">tex2jax: &#123;inlineMath: [[&apos;$&apos;,&apos;$&apos;], [&apos;\\(&apos;,&apos;\\)&apos;]]&#125;</div><div class="line">&#125;);</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
 </li>
 </ul>
@@ -188,10 +189,10 @@ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -219,7 +220,7 @@ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分類</p>
+	<p class="asidetitle">Categories</p>
 		<ul>
 		
 		  
@@ -255,7 +256,7 @@ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 		  
 		
 		  
-			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>2</sup></a></li>
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
 		  
 		
 		  
@@ -272,7 +273,7 @@ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -288,11 +289,7 @@ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 			
 		
 			
-				<li><a href="/tags/life/" title="life">life<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>2</sup></a></li>
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
 			
 		
 			
@@ -300,11 +297,15 @@ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 			
 		
 			
-				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+				<li><a href="/tags/life/" title="life">life<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
 			
 		
 			
@@ -316,19 +317,19 @@ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 			
 		
 			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Octave/" title="Octave">Octave<sup>1</sup></a></li>
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
 			
 		
 			
@@ -336,15 +337,15 @@ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 			
 		
 			
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+				<li><a href="/tags/Octave/" title="Octave">Octave<sup>1</sup></a></li>
 			
 		
 			
@@ -356,7 +357,7 @@ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -543,7 +544,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
