@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="What这里有三个概念，监听的事件源，监听者，事件，举个栗子来说是这样的，警察抓小偷，警察是监听者，小偷是被监听的事件源，抓小偷这个动作就是事件，什么时候会抓小偷呢？在小偷偷东西的时候。这个概念在前端开发中比较常用，但是在Java服务器端用的相对比较少，比如你在浏览网页的过程中，第一次进入并不会全部加载页面的信息，而是加载一部分，你向下浏览网页，网页才会加载，这也是监听的一种体现形式，你向下滑动网">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-02-28T15:59:46.185Z">
+<meta property="og:updated_time" content="2018-02-28T16:21:07.768Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java|监听器基础">
 <meta name="twitter:description" content="What这里有三个概念，监听的事件源，监听者，事件，举个栗子来说是这样的，警察抓小偷，警察是监听者，小偷是被监听的事件源，抓小偷这个动作就是事件，什么时候会抓小偷呢？在小偷偷东西的时候。这个概念在前端开发中比较常用，但是在Java服务器端用的相对比较少，比如你在浏览网页的过程中，第一次进入并不会全部加载页面的信息，而是加载一部分，你向下浏览网页，网页才会加载，这也是监听的一种体现形式，你向下滑动网">
@@ -50,7 +50,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -70,7 +70,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -93,25 +93,54 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-02-28T23:36:30.000Z" itemprop="datePublished"> Published 2018-03-01</time>
+    <time datetime="2018-02-28T23:36:30.000Z" itemprop="datePublished"> 發表於 2018-03-01</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
+			<strong class="toc-title">文章目錄</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#What"><span class="toc-number">1.</span> <span class="toc-text">What</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Example"><span class="toc-number">2.</span> <span class="toc-text">Example</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#What"><span class="toc-number">1.</span> <span class="toc-text">What</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ServletContext"><span class="toc-number">1.1.</span> <span class="toc-text">ServletContext</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HttpSession"><span class="toc-number">1.2.</span> <span class="toc-text">HttpSession</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ServletRequest"><span class="toc-number">1.3.</span> <span class="toc-text">ServletRequest</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Example"><span class="toc-number">2.</span> <span class="toc-text">Example</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Where"><span class="toc-number">3.</span> <span class="toc-text">Where</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Listener应用实例"><span class="toc-number">3.1.</span> <span class="toc-text">Listener应用实例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Spring使用ContextLoaderListener加载ApplicationContext配置信息"><span class="toc-number">3.2.</span> <span class="toc-text">Spring使用ContextLoaderListener加载ApplicationContext配置信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Spring使用Log4jConfigListener配置Log4j日志"><span class="toc-number">3.3.</span> <span class="toc-text">Spring使用Log4jConfigListener配置Log4j日志</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Spring使用IntrospectorCleanupListener清理缓存"><span class="toc-number">3.4.</span> <span class="toc-text">Spring使用IntrospectorCleanupListener清理缓存</span></a></li></ol></li></ol>
 		
 		</div>
 		
 		<h3 id="What"><a href="#What" class="headerlink" title="What"></a>What</h3><p>这里有三个概念，<strong>监听的事件源</strong>，<strong>监听者</strong>，<strong>事件</strong>，举个栗子来说是这样的，警察抓小偷，警察是监听者，小偷是被监听的事件源，抓小偷这个动作就是事件，什么时候会抓小偷呢？在小偷偷东西的时候。<br>这个概念在前端开发中比较常用，但是在Java服务器端用的相对比较少，比如你在浏览网页的过程中，第一次进入并不会全部加载页面的信息，而是加载一部分，你向下浏览网页，网页才会加载，这也是监听的一种体现形式，你向下滑动网页的过程就是监听的事件源，加载网页就是事件，监听者就是服务器程序咯，可能这些用词不是太准确，但是也算是表达了这个意思。</p>
 <p>JavaWeb中，监听的事件源有三个：</p>
+<h4 id="ServletContext"><a href="#ServletContext" class="headerlink" title="ServletContext"></a>ServletContext</h4><ul>
+<li><p>ServletContextListener：用于对Servlet整个上下文进行监听（创建、销毁）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//上下文初始化</div><div class="line">public void contextInitialized(ServletContextEvent sce);</div><div class="line">//上下文销毁</div><div class="line">public void contextDestroyed(ServletContextEvent sce);</div><div class="line">//ServletContextEvent事件：取得一个ServletContext（application）对象</div><div class="line">public ServletContext getServletContext();</div></pre></td></tr></table></figure>
+</li>
+<li><p>ServletContextAttributeListener：对Servlet上下文属性的监听（增删改属性）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//增加属性</div><div class="line">public void attributeAdded(ServletContextAttributeEvent scab);</div><div class="line">//属性删除</div><div class="line">public void attributeRemoved(ServletContextAttributeEvent scab);</div><div class="line">//属性替换（第二次设置同一属性）</div><div class="line">public void attributeRepalced(ServletContextAttributeEvent scab);</div><div class="line">//ServletContextAttributeEvent事件：能取得设置属性的名称与内容</div><div class="line">//得到属性名称</div><div class="line">public String getName();</div><div class="line">//取得属性的值</div><div class="line">public Object getValue();</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="HttpSession"><a href="#HttpSession" class="headerlink" title="HttpSession"></a>HttpSession</h4><p>Session属于http协议下的内容，接口位于javax.servlet.http.*包下。</p>
 <ul>
-<li>ServletContext</li>
-<li>HttpSession</li>
-<li>ServletRequest</li>
+<li><p>HttpSessionListener接口：对Session的整体状态的监听。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//session创建</div><div class="line">public void sessionCreated(HttpSessionEvent se);</div><div class="line">//session销毁</div><div class="line">public void sessionDestroyed(HttpSessionEvent se);</div><div class="line">//HttpSessionEvent事件：</div><div class="line">//取得当前操作的session</div><div class="line">public HttpSession getSession();</div></pre></td></tr></table></figure>
+</li>
+<li><p>HttpSessionAttributeListener接口：对session的属性监听。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public void attributeAdded(HttpSessionBindingEvent se);//增加属性</div><div class="line">public void attributeRemoved(HttpSessionBindingEvent se);//删除属性</div><div class="line">public void attributeReplaced(HttpSessionBindingEvent se);//替换属性</div><div class="line">//HttpSessionBindingEvent事件：</div><div class="line">public String getName();//取得属性的名称</div><div class="line">public Object getValue();//取得属性的值</div><div class="line">public HttpSession getSession();//取得当前的session</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>session的销毁有两种情况：</p>
+<ul>
+<li><p>session超时，web.xml配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;session-config&gt;</div><div class="line">    &lt;session-timeout&gt;120&lt;/session-timeout&gt;&lt;!--session120分钟后超时销毁--&gt;</div><div class="line">&lt;/session-config&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>手工使session失效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//使session失效方法。session.invalidate();</div><div class="line">public void invalidate();</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="ServletRequest"><a href="#ServletRequest" class="headerlink" title="ServletRequest"></a>ServletRequest</h4><ul>
+<li><p>ServletRequestListener：用于对Request请求进行监听（创建、销毁）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public void requestInitialized(ServletRequestEvent sre);//request初始化</div><div class="line">public void requestDestroyed(ServletRequestEvent sre);//request销毁</div><div class="line">//ServletRequestEvent事件：</div><div class="line">public ServletRequest getServletRequest();//取得一个ServletRequest对象</div><div class="line">public ServletContext getServletContext();//取得一个ServletContext（application）对象</div></pre></td></tr></table></figure>
+</li>
+<li><p>ServletRequestAttributeListener：对Request属性的监听（增删改属性）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public void attributeAdded(ServletRequestAttributeEvent srae);//增加属性</div><div class="line">public void attributeRemoved(ServletRequestAttributeEvent srae);//属性删除</div><div class="line">public void attributeReplaced(ServletRequestAttributeEvent srae);//属性替换（第二次设置同一属性）</div><div class="line">//ServletRequestAttributeEvent事件：能取得设置属性的名称与内容</div><div class="line">public String getName();//得到属性名称</div><div class="line">public Object getValue();//取得属性的值</div></pre></td></tr></table></figure>
+</li>
 </ul>
 <p>它都会监听什么呢？</p>
 <ul>
@@ -122,13 +151,41 @@
 <h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line"> * ServletContextListener实现类</div><div class="line"> * contextDestroyed() -- 在ServletContext对象被销毁前调用</div><div class="line"> * contextInitialized() --  -- 在ServletContext对象被创建后调用</div><div class="line"> * ServletContextEvent -- 事件类对象</div><div class="line"> *     该类有getServletContext()，用来获取ServletContext对象，即获取事件源对象</div><div class="line"> */</div><div class="line">public class MyServletContextListener implements ServletContextListener &#123;</div><div class="line">    public void contextDestroyed(ServletContextEvent evt) &#123;</div><div class="line">        System.out.println(&quot;销毁ServletContext对象&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void contextInitialized(ServletContextEvent evt) &#123;</div><div class="line">        System.out.println(&quot;创建ServletContext对象&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>同时，需要在web.xml中部署：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;listener&gt;</div><div class="line">    &lt;listener-class&gt;net.sailfish.listener.MyServletContextListener&lt;/listener-class&gt;</div><div class="line">&lt;/listener&gt;</div></pre></td></tr></table></figure>
+<p><strong>需要注意的是</strong>：Listener配置信息必须在Filter和Servlet配置之前，Listener的初始化（ServletContentListener初始化）比Servlet和Filter都优先，而销毁比Servlet和Filter都慢。</p>
 <p>总结一下：</p>
 <ul>
 <li>监听器要在web.xml中进行配置</li>
 <li>监听器的方法都是类似的，这里列出的是域对象的创建和销毁的监听器</li>
 <li>ServletContextListener在tomcat启动时创建，在tomcat关闭的时候销毁</li>
 </ul>
-  
+<h3 id="Where"><a href="#Where" class="headerlink" title="Where"></a>Where</h3><p>Listener的应用实例</p>
+<ul>
+<li>利用HttpSessionListener统计最多在线用户人数</li>
+<li>Spring使用ContextLoaderListener加载ApplicationContext配置信息</li>
+<li>Spring使用Log4jConfigListener配置Log4j日志</li>
+<li>Spring使用IntrospectorCleanupListener清理缓存</li>
+</ul>
+<h4 id="Listener应用实例"><a href="#Listener应用实例" class="headerlink" title="Listener应用实例"></a>Listener应用实例</h4><p>利用HttpSessionListener统计最多在线用户人数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">import java.text.DateFormat;</div><div class="line">import java.text.SimpleDateFormat;</div><div class="line">import java.util.Date;</div><div class="line">import javax.servlet.ServletContext;</div><div class="line">import javax.servlet.http.HttpSessionEvent;</div><div class="line">import javax.servlet.http.HttpSessionListener;</div><div class="line">public class HttpSessionListenerImpl implements HttpSessionListener &#123;</div><div class="line">    public void sessionCreated(HttpSessionEvent event) &#123;</div><div class="line">        ServletContext app = event.getSession().getServletContext();</div><div class="line">        int count = Integer.parseInt(app.getAttribute(&quot;onLineCount&quot;).toString());</div><div class="line">        count++;</div><div class="line">        app.setAttribute(&quot;onLineCount&quot;, count);</div><div class="line">        int maxOnLineCount = Integer.parseInt(app.getAttribute(&quot;maxOnLineCount&quot;).toString());</div><div class="line">        if (count &gt; maxOnLineCount) &#123;</div><div class="line">            //记录最多人数是多少</div><div class="line">            app.setAttribute(&quot;maxOnLineCount&quot;, count);</div><div class="line">            DateFormat df = new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);</div><div class="line">            //记录在那个时刻达到上限</div><div class="line">            app.setAttribute(&quot;date&quot;, df.format(new Date()));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    //session注销、超时时候调用，停止tomcat不会调用</div><div class="line">    public void sessionDestroyed(HttpSessionEvent event) &#123;</div><div class="line">        ServletContext app = event.getSession().getServletContext();</div><div class="line">        int count = Integer.parseInt(app.getAttribute(&quot;onLineCount&quot;).toString());</div><div class="line">        count--;</div><div class="line">        app.setAttribute(&quot;onLineCount&quot;, count);    </div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Spring使用ContextLoaderListener加载ApplicationContext配置信息"><a href="#Spring使用ContextLoaderListener加载ApplicationContext配置信息" class="headerlink" title="Spring使用ContextLoaderListener加载ApplicationContext配置信息"></a>Spring使用ContextLoaderListener加载ApplicationContext配置信息</h4><p>ContextLoaderListener的作用就是启动Web容器时，自动装配ApplicationContext的配置信息。因为它实现了ServletContextListener这个接口，在web.xml配置这个监听器，启动容器时，就会默认执行它实现的方法。</p>
+<p>ContextLoaderListener如何查找ApplicationContext.xml的配置位置以及配置多个xml：如果在web.xml中不写任何参数配置信息，默认的路径是”/WEB-INF/applicationContext.xml”，在WEB-INF目录下创建的xml文件的名称必须是applicationContext.xml（在MyEclipse中把xml文件放置在src目录下）。如果是要自定义文件名可以在web.xml里加入contextConfigLocation这个context参数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;context-param&gt;</div><div class="line">    &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;</div><div class="line">    &lt;param-value&gt;classpath:spring/applicationContext-*.xml&lt;/param-value&gt;</div><div class="line">    &lt;!-- 采用的是通配符方式，查找WEB-INF/spring目录下xml文件。如有多个xml文件，以“,”分隔。 --&gt;</div><div class="line">&lt;/context-param&gt;</div><div class="line">&lt;listener&gt;</div><div class="line">    &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;</div><div class="line">&lt;/listener&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="Spring使用Log4jConfigListener配置Log4j日志"><a href="#Spring使用Log4jConfigListener配置Log4j日志" class="headerlink" title="Spring使用Log4jConfigListener配置Log4j日志"></a>Spring使用Log4jConfigListener配置Log4j日志</h4><p>Spring使用Log4jConfigListener的好处：</p>
+<ul>
+<li>动态的改变记录级别和策略，不需要重启Web应用。</li>
+<li>把log文件定在 /WEB-INF/logs/ 而不需要写绝对路径。因为系统把web目录的路径压入一个叫webapp.root的系统变量。这样写log文件路径时不用写绝对路径了。</li>
+<li>可以把log4j.properties和其他properties一起放在/WEB-INF/ ，而不是Class-Path。</li>
+<li>设置log4jRefreshInterval时间，开一条watchdog线程每隔段时间扫描一下配置文件的变化。</li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;context-param&gt;</div><div class="line">    &lt;param-name&gt;webAppRootKey&lt;/param-name&gt;</div><div class="line">    &lt;param-value&gt;project.root&lt;/param-value&gt;&lt;!-- 用于定位log文件输出位置在web应用根目录下，log4j配置文件中写输出位置：log4j.appender.FILE.File=$&#123;project.root&#125;/logs/project.log --&gt;</div><div class="line">&lt;/context-param&gt;</div><div class="line">&lt;context-param&gt;</div><div class="line">    &lt;param-name&gt;log4jConfigLocation&lt;/param-name&gt;</div><div class="line">    &lt;param-value&gt;classpath:log4j.properties&lt;/param-value&gt;&lt;!-- 载入log4j配置文件 --&gt;</div><div class="line">&lt;/context-param&gt;</div><div class="line">&lt;context-param&gt;</div><div class="line">    &lt;param-name&gt;log4jRefreshInterval&lt;/param-name&gt;</div><div class="line">    &lt;param-value&gt;60000&lt;/param-value&gt;&lt;!--Spring刷新Log4j配置文件的间隔60秒,单位为millisecond--&gt;</div><div class="line">&lt;/context-param&gt;</div><div class="line">&lt;listener&gt;</div><div class="line">    &lt;listener-class&gt;org.springframework.web.util.Log4jConfigListener&lt;/listener-class&gt;</div><div class="line">&lt;/listener&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="Spring使用IntrospectorCleanupListener清理缓存"><a href="#Spring使用IntrospectorCleanupListener清理缓存" class="headerlink" title="Spring使用IntrospectorCleanupListener清理缓存"></a>Spring使用IntrospectorCleanupListener清理缓存</h4><p>这个监听器的作用是在web应用关闭时刷新JDK的JavaBeans的Introspector缓存，以确保Web应用程序的类加载器以及其加载的类正确的释放资源。</p>
+<p>如果JavaBeans的Introspector已被用来分析应用程序类，系统级的Introspector缓存将持有这些类的一个硬引用。因此，这些类和Web应用程序的类加载器在Web应用程序关闭时将不会被垃圾收集器回收！而IntrospectorCleanupListener则会对其进行适当的清理，已使其能够被垃圾收集器回收。</p>
+<p>唯一能够清理Introspector的方法是刷新整个Introspector缓存，没有其他办法来确切指定应用程序所引用的类。这将删除所有其他应用程序在服务器的缓存的Introspector结果。</p>
+<p>在使用Spring内部的bean机制时，不需要使用此监听器，因为Spring自己的introspection results cache将会立即刷新被分析过的JavaBeans Introspector cache，而仅仅会在应用程序自己的ClassLoader里面持有一个cache。虽然Spring本身不产生泄漏，注意，即使在Spring框架的类本身驻留在一个“共同”类加载器（如系统的ClassLoader）的情况下，也仍然应该使用使用IntrospectorCleanupListener。在这种情况下，这个IntrospectorCleanupListener将会妥善清理Spring的introspection cache。</p>
+<p>应用程序类，几乎不需要直接使用JavaBeans Introspector，所以，通常都不是Introspector resource造成内存泄露。相反，许多库和框架，不清理Introspector，例如： Struts和Quartz。</p>
+<p>需要注意的是一个简单Introspector泄漏将会导致整个Web应用程序的类加载器不会被回收！这样做的结果，将会是在web应用程序关闭时，该应用程序所有的静态类资源（比如：单实例对象）都没有得到释放。而导致内存泄露的根本原因其实并不是这些未被回收的类！</p>
+<p>注意：IntrospectorCleanupListener应该注册为web.xml中的第一个Listener，在任何其他Listener之前注册，比如在Spring’s ContextLoaderListener注册之前，才能确保IntrospectorCleanupListener在Web应用的生命周期适当时机生效。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;listener&gt;&lt;!-- memory clean --&gt;</div><div class="line">    &lt;listener-class&gt;org.springframework.web.util.IntrospectorCleanupListener&lt;/listener-class&gt;</div><div class="line">&lt;/listener&gt;</div></pre></td></tr></table></figure>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -168,10 +225,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -199,7 +256,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">Categories</p>
+	<p class="asidetitle">分類</p>
 		<ul>
 		
 		  
@@ -252,7 +309,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">標簽</p>
 		<ul class="clearfix">
 		
 			
@@ -336,7 +393,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
 </div>
 
 </aside>
@@ -523,7 +580,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
