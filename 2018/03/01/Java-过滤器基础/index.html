@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://yoursite.com/images/Java-过滤-02.png">
 <meta property="og:image" content="http://yoursite.com/images/Java-过滤-03.png">
 <meta property="og:image" content="http://yoursite.com/images/Java-过滤-04.png">
-<meta property="og:updated_time" content="2018-02-28T14:20:24.327Z">
+<meta property="og:updated_time" content="2018-02-28T14:23:50.139Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java|过滤器基础">
 <meta name="twitter:description" content="What is it?过滤器是Servlet的高级特性之一，也别把它想得那么高深，只不过是实现Filter接口的Java类罢了！ 首先，我们来看看过滤器究竟Web容器的哪处:  上面的图我们可以发现，当浏览器发送请求给服务器的时候，先执行过滤器，然后才访问Web的资源。服务器响应Response，从Web资源抵达浏览器之前，也会途径过滤器。。我们很容易发现，过滤器可以比喻成一张滤网。我们想想现实中">
@@ -55,7 +55,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -75,7 +75,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -98,14 +98,14 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-02-28T21:54:21.000Z" itemprop="datePublished"> Published 2018-03-01</time>
+    <time datetime="2018-02-28T21:54:21.000Z" itemprop="datePublished"> 發表於 2018-03-01</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
+			<strong class="toc-title">文章目錄</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-it"><span class="toc-number">1.</span> <span class="toc-text">What is it?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Why"><span class="toc-number">2.</span> <span class="toc-text">Why</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#解决中文乱码问题"><span class="toc-number">2.1.</span> <span class="toc-text">解决中文乱码问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#How"><span class="toc-number">3.</span> <span class="toc-text">How</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Example"><span class="toc-number">4.</span> <span class="toc-text">Example</span></a></li></ol>
 		
@@ -147,23 +147,21 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;filter-mapping&gt;</div><div class="line">    &lt;filter-name&gt;FilterDemo1&lt;/filter-name&gt;</div><div class="line">    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;</div><div class="line">&lt;/filter-mapping&gt;</div><div class="line">&lt;filter-name&gt;子元素用于设置filter的注册名称。该值必须是在元素中声明过的过滤器的名字</div><div class="line">&lt;url-pattern&gt;设置 filter 所拦截的请求路径(过滤器关联的URL样式)</div><div class="line">&lt;servlet-name&gt;指定过滤器所拦截的Servlet名称。</div><div class="line">&lt;dispatcher&gt;指定过滤器所拦截的资源被 Servlet 容器调用的方式，可以是REQUEST,INCLUDE,FORWARD和ERROR之一，默认REQUEST。用户可以设置多个&lt;dispatcher&gt; 子元素用来指定 Filter 对资源的多种调用方式进行拦截。</div></pre></td></tr></table></figure>
 </li>
 <li><p>dispatcher<br>子元素可以设置的值及其意义：</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
 <ul>
 <li>REQUEST：当用户直接访问页面时，Web容器将会调用过滤器。如果目标资源是通过RequestDispatcher的include()或forward()方法访问时，那么该过滤器就不会被调用。</li>
 <li>INCLUDE：如果目标资源是通过RequestDispatcher的include()方法访问时，那么该过滤器将被调用。除此之外，该过滤器不会被调用。</li>
 <li>FORWARD：如果目标资源是通过RequestDispatcher的forward()方法访问时，那么该过滤器将被调用，除此之外，该过滤器不会被调用。</li>
-<li><p>ERROR：如果目标资源是通过声明式异常处理机制调用时，那么该过滤器将被调用。除此之外，过滤器不会被调用。</p>
-<ul>
-<li>第二种方式：通过注解配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@WebFilter(filterName = &quot;FilterDemo1&quot;,urlPatterns = &quot;/*&quot;)</div></pre></td></tr></table></figure>
-</li>
+<li>ERROR：如果目标资源是通过声明式异常处理机制调用时，那么该过滤器将被调用。除此之外，过滤器不会被调用。</li>
 </ul>
 </li>
 </ul>
+</li>
+<li><p>第二种方式：通过注解配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@WebFilter(filterName = &quot;FilterDemo1&quot;,urlPatterns = &quot;/*&quot;)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
 <p>上面的配置是“/*”，所有的Web资源都需要途径过滤器</p>
 <p>如果想要部分的Web资源进行过滤器过滤则需要指定Web资源的名称即可！</p>
   
@@ -206,10 +204,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -237,7 +235,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">Categories</p>
+	<p class="asidetitle">分類</p>
 		<ul>
 		
 		  
@@ -290,7 +288,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">標簽</p>
 		<ul class="clearfix">
 		
 			
@@ -374,7 +372,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
 </div>
 
 </aside>
@@ -561,7 +559,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
