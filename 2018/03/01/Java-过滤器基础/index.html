@@ -11,23 +11,23 @@
     
 
     
-    <meta name="description" content="What is it?过滤器是Servlet的高级特性之一，也别把它想得那么高深，只不过是实现Filter接口的Java类罢了！ 首先，我们来看看过滤器究竟Web容器的哪处:  上面的图我们可以发现，当浏览器发送请求给服务器的时候，先执行过滤器，然后才访问Web的资源。服务器响应Response，从Web资源抵达浏览器之前，也会途径过滤器。。我们很容易发现，过滤器可以比喻成一张滤网。我们想想现实中">
+    <meta name="description" content="What is it?过滤器是Servlet的高级特性之一，也别把它想得那么高深，只不过是实现Filter接口的Java类罢了！ 首先，我们来看看过滤器究竟Web容器的哪处:  上面的图我们可以发现，当浏览器发送请求给服务器的时候，先执行过滤器，然后才访问Web的资源。服务器响应Response，从Web资源抵达浏览器之前，也会途径过滤器。。 我们很容易发现，过滤器可以比喻成一张滤网。我们想想现实">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java|过滤器基础">
 <meta property="og:url" content="http://yoursite.com/2018/03/01/Java-过滤器基础/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="What is it?过滤器是Servlet的高级特性之一，也别把它想得那么高深，只不过是实现Filter接口的Java类罢了！ 首先，我们来看看过滤器究竟Web容器的哪处:  上面的图我们可以发现，当浏览器发送请求给服务器的时候，先执行过滤器，然后才访问Web的资源。服务器响应Response，从Web资源抵达浏览器之前，也会途径过滤器。。我们很容易发现，过滤器可以比喻成一张滤网。我们想想现实中">
+<meta property="og:description" content="What is it?过滤器是Servlet的高级特性之一，也别把它想得那么高深，只不过是实现Filter接口的Java类罢了！ 首先，我们来看看过滤器究竟Web容器的哪处:  上面的图我们可以发现，当浏览器发送请求给服务器的时候，先执行过滤器，然后才访问Web的资源。服务器响应Response，从Web资源抵达浏览器之前，也会途径过滤器。。 我们很容易发现，过滤器可以比喻成一张滤网。我们想想现实">
 <meta property="og:locale" content="Chinese">
-<meta property="og:image" content="http://yoursite.com/images/Java-过滤-01.png">
-<meta property="og:image" content="http://yoursite.com/images/Java-过滤-02.png">
-<meta property="og:image" content="http://yoursite.com/images/Java-过滤-03.png">
-<meta property="og:image" content="http://yoursite.com/images/Java-过滤-04.png">
-<meta property="og:updated_time" content="2018-02-28T14:23:50.139Z">
+<meta property="og:image" content="http://yoursite.com/images/Java-过滤器-01.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-过滤器-02.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-过滤器-03.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-过滤器-04.png">
+<meta property="og:updated_time" content="2018-02-28T14:30:29.716Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java|过滤器基础">
-<meta name="twitter:description" content="What is it?过滤器是Servlet的高级特性之一，也别把它想得那么高深，只不过是实现Filter接口的Java类罢了！ 首先，我们来看看过滤器究竟Web容器的哪处:  上面的图我们可以发现，当浏览器发送请求给服务器的时候，先执行过滤器，然后才访问Web的资源。服务器响应Response，从Web资源抵达浏览器之前，也会途径过滤器。。我们很容易发现，过滤器可以比喻成一张滤网。我们想想现实中">
-<meta name="twitter:image" content="http://yoursite.com/images/Java-过滤-01.png">
+<meta name="twitter:description" content="What is it?过滤器是Servlet的高级特性之一，也别把它想得那么高深，只不过是实现Filter接口的Java类罢了！ 首先，我们来看看过滤器究竟Web容器的哪处:  上面的图我们可以发现，当浏览器发送请求给服务器的时候，先执行过滤器，然后才访问Web的资源。服务器响应Response，从Web资源抵达浏览器之前，也会途径过滤器。。 我们很容易发现，过滤器可以比喻成一张滤网。我们想想现实">
+<meta name="twitter:image" content="http://yoursite.com/images/Java-过滤器-01.png">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -55,7 +55,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -75,7 +75,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -98,14 +98,14 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-02-28T21:54:21.000Z" itemprop="datePublished"> 發表於 2018-03-01</time>
+    <time datetime="2018-02-28T21:54:21.000Z" itemprop="datePublished"> Published 2018-03-01</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目錄</strong>
+			<strong class="toc-title">Contents</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-it"><span class="toc-number">1.</span> <span class="toc-text">What is it?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Why"><span class="toc-number">2.</span> <span class="toc-text">Why</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#解决中文乱码问题"><span class="toc-number">2.1.</span> <span class="toc-text">解决中文乱码问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#How"><span class="toc-number">3.</span> <span class="toc-text">How</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Example"><span class="toc-number">4.</span> <span class="toc-text">Example</span></a></li></ol>
 		
@@ -113,21 +113,24 @@
 		
 		<h3 id="What-is-it"><a href="#What-is-it" class="headerlink" title="What is it?"></a>What is it?</h3><p>过滤器是Servlet的高级特性之一，也别把它想得那么高深，只不过是实现Filter接口的Java类罢了！</p>
 <p>首先，我们来看看过滤器究竟Web容器的哪处:</p>
-<p><img src="/images/Java-过滤-01.png" alt="Java 过滤器" title="Java-过滤器-01"></p>
-<p>上面的图我们可以发现，当浏览器发送请求给服务器的时候，先执行过滤器，然后才访问Web的资源。服务器响应Response，从Web资源抵达浏览器之前，也会途径过滤器。。<br>我们很容易发现，过滤器可以比喻成一张滤网。我们想想现实中的滤网可以做什么：在泡茶的时候，过滤掉茶叶。那滤网是怎么过滤茶叶的呢？规定大小的网孔，只要网孔比茶叶小，就可以实现过滤了！<br>引申在Web容器中，过滤器可以做：过滤一些敏感的字符串【规定不能出现敏感字符串】、避免中文乱码【规定Web资源都使用UTF-8编码】、权限验证【规定只有带Session或Cookie的浏览器，才能访问web资源】等等等，过滤器的作用非常大，只要发挥想象就可以有意想不到的效果<br>也就是说：当需要限制用户访问某些资源时、在处理请求时提前处理某些资源、服务器响应的内容对其进行处理再返回、我们就是用过滤器来完成的！</p>
+<p><img src="/images/Java-过滤器-01.png" alt="Java 过滤器" title="Java-过滤器-01"></p>
+<p>上面的图我们可以发现，当浏览器发送请求给服务器的时候，先执行过滤器，然后才访问Web的资源。服务器响应Response，从Web资源抵达浏览器之前，也会途径过滤器。。</p>
+<p>我们很容易发现，过滤器可以比喻成一张滤网。我们想想现实中的滤网可以做什么：在泡茶的时候，过滤掉茶叶。那滤网是怎么过滤茶叶的呢？规定大小的网孔，只要网孔比茶叶小，就可以实现过滤了！</p>
+<p>引申在Web容器中，过滤器可以做：过滤一些敏感的字符串【规定不能出现敏感字符串】、避免中文乱码【规定Web资源都使用UTF-8编码】、权限验证【规定只有带Session或Cookie的浏览器，才能访问web资源】等等等，过滤器的作用非常大，只要发挥想象就可以有意想不到的效果</p>
+<p>也就是说：当需要限制用户访问某些资源时、在处理请求时提前处理某些资源、服务器响应的内容对其进行处理再返回、我们就是用过滤器来完成的！</p>
 <h3 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h3><p>直接举例子来说明吧：</p>
 <h4 id="解决中文乱码问题"><a href="#解决中文乱码问题" class="headerlink" title="解决中文乱码问题"></a>解决中文乱码问题</h4><p><strong>方法一</strong>：如果我没有用到过滤器：浏览器通过http请求发送数据给Servlet，如果存在中文，就必须指定编码，否则就会乱码！</p>
 <p>jsp页面提交中文数据给Servlet处理：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;form action=&quot;$&#123;pageContext.request.contextPath&#125;/Demo1&quot; method=&quot;post&quot;&gt;</div><div class="line"></div><div class="line">    &lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;</div><div class="line"></div><div class="line">    &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;</div><div class="line"></div><div class="line">&lt;/form&gt;</div></pre></td></tr></table></figure></p>
 <p>Servlet没有指定编码的情况下，获取得到的是乱码：</p>
-<p><img src="/images/Java-过滤-02.png" alt="中文乱码" title="Java-过滤器-02"></p>
+<p><img src="/images/Java-过滤器-02.png" alt="中文乱码" title="Java-过滤器-02"></p>
 <p>也就是说：如果我每次接受客户端带过来的中文数据，在Serlvet中都要设定编码。这样代码的重复率太高了！！！！</p>
 <p><strong>方法二</strong>：用过滤器解决中文乱码问题。有过滤器的情况就不一样了：只要我在过滤器中指定了编码，可以使全站的Web资源都是使用该编码，并且重用性是非常理想的！还有一个好处是：如果需要换另一种编码，只需要改变一处。</p>
 <h3 id="How"><a href="#How" class="headerlink" title="How"></a>How</h3><p>要使用过滤器，只要Java类实现了Filter接口就可以称为过滤器！Filter接口的方法也十分简单：</p>
-<p><img src="/images/Java-过滤-03.png" alt="实现接口" title="Java-过滤器-03"></p>
+<p><img src="/images/Java-过滤器-03.png" alt="实现接口" title="Java-过滤器-03"></p>
 <p>其中init()和destory()方法就不用多说了，他俩跟Servlet是一样的。只有在Web服务器加载和销毁的时候被执行，只会被执行一次！</p>
 <p>值得注意的是doFilter()方法,它有三个参数(ServletRequest,ServletResponse,FilterChain),从前两个参数我们可以发现：过滤器可以完成任何协议的过滤操作！</p>
 <p>那FilterChain是什么东西呢？我们看看：</p>
-<p><img src="/images/Java-过滤-04.png" alt="enter description here" title="Java-过滤器-04"></p>
+<p><img src="/images/Java-过滤器-04.png" alt="enter description here" title="Java-过滤器-04"></p>
 <p>FilterChain是一个接口，里面又定义了doFilter()方法。这究竟是怎么回事啊？？？？？？</p>
 <p>我们可以这样理解：过滤器不单单只有一个，那么我们怎么管理这些过滤器呢？在Java中就使用了链式结构。把所有的过滤器都放在FilterChain里边，如果符合条件，就执行下一个过滤器（如果没有过滤器了，就执行目标资源）。</p>
 <p>上面的话好像有点拗口，我们可以想象生活的例子：现在我想在茶杯上能过滤出石头和茶叶出来。石头在一层，茶叶在一层。所以茶杯的过滤装置应该有两层滤网。这个过滤装置就是FilterChain，过滤石头的滤网和过滤茶叶的滤网就是Filter。在石头滤网中，茶叶是属于下一层的，就把茶叶放行，让茶叶的滤网过滤茶叶。过滤完茶叶了，剩下的就是茶（茶就可以比喻成我们的目标资源）</p>
@@ -204,10 +207,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -235,7 +238,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分類</p>
+	<p class="asidetitle">Categories</p>
 		<ul>
 		
 		  
@@ -288,7 +291,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -372,7 +375,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -559,7 +562,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
