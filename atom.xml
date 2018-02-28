@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-28T15:06:09.356Z</updated>
+  <updated>2018-02-28T15:59:46.185Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,55 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Java|监听器基础</title>
+    <link href="http://yoursite.com/2018/03/01/Java-%E7%9B%91%E5%90%AC%E5%99%A8%E5%9F%BA%E7%A1%80/"/>
+    <id>http://yoursite.com/2018/03/01/Java-监听器基础/</id>
+    <published>2018-02-28T23:36:30.000Z</published>
+    <updated>2018-02-28T15:59:46.185Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="What"><a href="#What" class="headerlink" title="What"></a>What</h3><p>这里有三个概念，<strong>监听的事件源</strong>，<strong>监听者</strong>，<strong>事件</strong>，举个栗子来说是这样的，警察抓小偷，警察是监听者，小偷是被监听的事件源，抓小偷这个动作就是事件，什么时候会抓小偷呢？在小偷偷东西的时候。<br>这个概念在前端开发中比较常用，但是在Java服务器端用的相对比较少，比如你在浏览网页的过程中，第一次进入并不会全部加载页面的信息，而是加载一部分，你向下浏览网页，网页才会加载，这也是监听的一种体现形式，你向下滑动网页的过程就是监听的事件源，加载网页就是事件，监听者就是服务器程序咯，可能这些用词不是太准确，但是也算是表达了这个意思。</p>
+<p>JavaWeb中，监听的事件源有三个：</p>
+<ul>
+<li>ServletContext</li>
+<li>HttpSession</li>
+<li>ServletRequest</li>
+</ul>
+<p>它都会监听什么呢？</p>
+<ul>
+<li>监听域对象的创建和销毁的监听器</li>
+<li>监听域对象操作域属性的监听器</li>
+<li>监听HttpSession的监听器</li>
+</ul>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line"> * ServletContextListener实现类</div><div class="line"> * contextDestroyed() -- 在ServletContext对象被销毁前调用</div><div class="line"> * contextInitialized() --  -- 在ServletContext对象被创建后调用</div><div class="line"> * ServletContextEvent -- 事件类对象</div><div class="line"> *     该类有getServletContext()，用来获取ServletContext对象，即获取事件源对象</div><div class="line"> */</div><div class="line">public class MyServletContextListener implements ServletContextListener &#123;</div><div class="line">    public void contextDestroyed(ServletContextEvent evt) &#123;</div><div class="line">        System.out.println(&quot;销毁ServletContext对象&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void contextInitialized(ServletContextEvent evt) &#123;</div><div class="line">        System.out.println(&quot;创建ServletContext对象&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>同时，需要在web.xml中部署：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;listener&gt;</div><div class="line">    &lt;listener-class&gt;net.sailfish.listener.MyServletContextListener&lt;/listener-class&gt;</div><div class="line">&lt;/listener&gt;</div></pre></td></tr></table></figure>
+<p>总结一下：</p>
+<ul>
+<li>监听器要在web.xml中进行配置</li>
+<li>监听器的方法都是类似的，这里列出的是域对象的创建和销毁的监听器</li>
+<li>ServletContextListener在tomcat启动时创建，在tomcat关闭的时候销毁</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;What&quot;&gt;&lt;a href=&quot;#What&quot; class=&quot;headerlink&quot; title=&quot;What&quot;&gt;&lt;/a&gt;What&lt;/h3&gt;&lt;p&gt;这里有三个概念，&lt;strong&gt;监听的事件源&lt;/strong&gt;，&lt;strong&gt;监听者&lt;/strong&gt;，&lt;strong&gt;事
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Java|过滤器基础</title>
     <link href="http://yoursite.com/2018/03/01/Java-%E8%BF%87%E6%BB%A4%E5%99%A8%E5%9F%BA%E7%A1%80/"/>
     <id>http://yoursite.com/2018/03/01/Java-过滤器基础/</id>
     <published>2018-02-28T21:54:21.000Z</published>
-    <updated>2018-02-28T15:06:09.356Z</updated>
+    <updated>2018-02-28T15:28:00.569Z</updated>
     
     <content type="html"><![CDATA[<h3 id="What-is-it"><a href="#What-is-it" class="headerlink" title="What is it?"></a>What is it?</h3><p>过滤器是Servlet的高级特性之一，也别把它想得那么高深，只不过是实现Filter接口的Java类罢了！</p>
 <p>首先，我们来看看过滤器究竟Web容器的哪处:</p>
@@ -44,6 +88,7 @@
 <p>那FilterChain是什么东西呢？我们看看：</p>
 <p><img src="/images/Java-过滤器-04.png" alt="enter description here" title="Java-过滤器-04"></p>
 <p>FilterChain是一个接口，里面又定义了doFilter()方法。这究竟是怎么回事啊？？？？？？</p>
+<p>FilterChain接口you容器实现，容器将其实例作为参数传入过滤器对象的doFilter()方法中。过滤器对象使用FilterChain对象调用过滤器链中的下一个过滤器，如果该过滤器是链中的最后一个过滤器，那么将调用目标资源。</p>
 <p>我们可以这样理解：过滤器不单单只有一个，那么我们怎么管理这些过滤器呢？在Java中就使用了链式结构。把所有的过滤器都放在FilterChain里边，如果符合条件，就执行下一个过滤器（如果没有过滤器了，就执行目标资源）。</p>
 <p>上面的话好像有点拗口，我们可以想象生活的例子：现在我想在茶杯上能过滤出石头和茶叶出来。石头在一层，茶叶在一层。所以茶杯的过滤装置应该有两层滤网。这个过滤装置就是FilterChain，过滤石头的滤网和过滤茶叶的滤网就是Filter。在石头滤网中，茶叶是属于下一层的，就把茶叶放行，让茶叶的滤网过滤茶叶。过滤完茶叶了，剩下的就是茶（茶就可以比喻成我们的目标资源）</p>
 <h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p>写一个简单的过滤器。</p>
@@ -59,7 +104,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;filter&gt;</div><div class="line">      &lt;filter-name&gt;FilterDemo1&lt;/filter-name&gt;</div><div class="line">     &lt;filter-class&gt;FilterDemo1&lt;/filter-class&gt;</div><div class="line">     &lt;init-param&gt;</div><div class="line">	 &lt;param-name&gt;word_file&lt;/param-name&gt;	</div><div class="line">	 &lt;param-value&gt;/WEB-INF/word.txt&lt;/param-value&gt;</div><div class="line">     &lt;/init-param&gt;</div><div class="line">&lt;/filter&gt;</div><div class="line"></div><div class="line">&lt;filter-name&gt;用于为过滤器指定一个名字，该元素的内容不能为空。</div><div class="line">&lt;filter-class&gt;元素用于指定过滤器的完整的限定类名。</div><div class="line">&lt;init-param&gt;元素用于为过滤器指定初始化参数，它的子元素指定参数的名字，&lt;param-value&gt;指定参数的值。在过滤器中，可以使用FilterConfig接口对象来访问初始化参数。</div></pre></td></tr></table></figure>
 </li>
 <li><p>filter-mapping<br><filter-mapping>元素用于设置一个Filter 所负责拦截的资源。<br>一个Filter拦截的资源可通过两种方式来指定：Servlet 名称和资源访问的请求路径。</filter-mapping></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;filter-mapping&gt;</div><div class="line">    &lt;filter-name&gt;FilterDemo1&lt;/filter-name&gt;</div><div class="line">    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;</div><div class="line">&lt;/filter-mapping&gt;</div><div class="line">&lt;filter-name&gt;子元素用于设置filter的注册名称。该值必须是在元素中声明过的过滤器的名字</div><div class="line">&lt;url-pattern&gt;设置 filter 所拦截的请求路径(过滤器关联的URL样式)</div><div class="line">&lt;servlet-name&gt;指定过滤器所拦截的Servlet名称。</div><div class="line">&lt;dispatcher&gt;指定过滤器所拦截的资源被 Servlet 容器调用的方式，可以是REQUEST,INCLUDE,FORWARD和ERROR之一，默认REQUEST。用户可以设置多个&lt;dispatcher&gt; 子元素用来指定 Filter 对资源的多种调用方式进行拦截。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;filter-mapping&gt;</div><div class="line">    &lt;filter-name&gt;FilterDemo1&lt;/filter-name&gt;</div><div class="line">    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;</div><div class="line">    &lt;dispatcher&gt;REQUEST&lt;dispatcher&gt;</div><div class="line">&lt;/filter-mapping&gt;</div><div class="line"></div><div class="line">&lt;filter-name&gt;子元素用于设置filter的注册名称。该值必须是在元素中声明过的过滤器的名字</div><div class="line">&lt;url-pattern&gt;设置 filter 所拦截的请求路径(过滤器关联的URL样式)</div><div class="line">&lt;servlet-name&gt;指定过滤器所拦截的Servlet名称。</div><div class="line">&lt;dispatcher&gt;指定过滤器所拦截的资源被 Servlet 容器调用的方式，可以是REQUEST,INCLUDE,FORWARD和ERROR之一，默认REQUEST。用户可以设置多个&lt;dispatcher&gt; 子元素用来指定 Filter 对资源的多种调用方式进行拦截。</div></pre></td></tr></table></figure>
 </li>
 <li><p>dispatcher<br>子元素可以设置的值及其意义：</p>
 <ul>
@@ -1847,24 +1892,6 @@ tex2jax: {inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]]
     
     
       <category term="数据结构" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>jquery|Ajax</title>
-    <link href="http://yoursite.com/2018/01/24/jquery-Ajax/"/>
-    <id>http://yoursite.com/2018/01/24/jquery-Ajax/</id>
-    <published>2018-01-24T15:26:56.000Z</published>
-    <updated>2018-01-27T08:22:15.016Z</updated>
-    
-    <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">function getData()&#123;</div><div class="line">		$.ajax(&#123;</div><div class="line">                url:&quot;../api&quot;,</div><div class="line">                type:&quot;GET&quot;,</div><div class="line">                data:&#123;&quot;page&quot;:&quot;1&quot;&#125;,</div><div class="line">                processData:false,</div><div class="line">                contentType:false,</div><div class="line">                dataType:&quot;json&quot;,</div><div class="line">                success:function(data)&#123;</div><div class="line">                	// console.info(data);</div><div class="line">                	$(&quot;#resText&quot;).html(&quot;状态：&quot;+data.status); </div><div class="line">                &#125;,</div><div class="line">                error:function(e)&#123;</div><div class="line">                    $(&quot;#resText&quot;).html(&quot;发生错误了&quot;);</div><div class="line">                &#125;</div><div class="line">            &#125;);    </div><div class="line">	&#125;</div><div class="line"></div><div class="line">	function sendData()&#123;</div><div class="line">		$.ajax(&#123;</div><div class="line">                url:&quot;../api/addFindThing&quot;,</div><div class="line">                type:&quot;post&quot;,</div><div class="line">                data:new FormData($(&quot;#form&quot;)[0]),</div><div class="line">                processData:false,</div><div class="line">                contentType:false,</div><div class="line">                dataType:&quot;json&quot;,</div><div class="line">                success:function(data)&#123;</div><div class="line">                	// console.info(data);</div><div class="line">                	$(&quot;#resText&quot;).html(&quot;状态：&quot;+data.status); </div><div class="line">                &#125;,</div><div class="line">                error:function(e)&#123;</div><div class="line">                    $(&quot;#resText&quot;).html(&quot;发生错误了&quot;);</div><div class="line">                &#125;</div><div class="line">            &#125;);        </div><div class="line">	&#125;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/di
-    
-    </summary>
-    
     
   </entry>
   

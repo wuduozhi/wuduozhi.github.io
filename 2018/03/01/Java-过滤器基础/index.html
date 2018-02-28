@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://yoursite.com/images/Java-过滤器-02.png">
 <meta property="og:image" content="http://yoursite.com/images/Java-过滤器-03.png">
 <meta property="og:image" content="http://yoursite.com/images/Java-过滤器-04.png">
-<meta property="og:updated_time" content="2018-02-28T15:06:09.356Z">
+<meta property="og:updated_time" content="2018-02-28T15:28:00.569Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java|过滤器基础">
 <meta name="twitter:description" content="What is it?过滤器是Servlet的高级特性之一，也别把它想得那么高深，只不过是实现Filter接口的Java类罢了！ 首先，我们来看看过滤器究竟Web容器的哪处:  上面的图我们可以发现，当浏览器发送请求给服务器的时候，先执行过滤器，然后才访问Web的资源。服务器响应Response，从Web资源抵达浏览器之前，也会途径过滤器。。  我们很容易发现，过滤器可以比喻成一张滤网。我们想想现">
@@ -134,6 +134,7 @@
 <p>那FilterChain是什么东西呢？我们看看：</p>
 <p><img src="/images/Java-过滤器-04.png" alt="enter description here" title="Java-过滤器-04"></p>
 <p>FilterChain是一个接口，里面又定义了doFilter()方法。这究竟是怎么回事啊？？？？？？</p>
+<p>FilterChain接口you容器实现，容器将其实例作为参数传入过滤器对象的doFilter()方法中。过滤器对象使用FilterChain对象调用过滤器链中的下一个过滤器，如果该过滤器是链中的最后一个过滤器，那么将调用目标资源。</p>
 <p>我们可以这样理解：过滤器不单单只有一个，那么我们怎么管理这些过滤器呢？在Java中就使用了链式结构。把所有的过滤器都放在FilterChain里边，如果符合条件，就执行下一个过滤器（如果没有过滤器了，就执行目标资源）。</p>
 <p>上面的话好像有点拗口，我们可以想象生活的例子：现在我想在茶杯上能过滤出石头和茶叶出来。石头在一层，茶叶在一层。所以茶杯的过滤装置应该有两层滤网。这个过滤装置就是FilterChain，过滤石头的滤网和过滤茶叶的滤网就是Filter。在石头滤网中，茶叶是属于下一层的，就把茶叶放行，让茶叶的滤网过滤茶叶。过滤完茶叶了，剩下的就是茶（茶就可以比喻成我们的目标资源）</p>
 <h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p>写一个简单的过滤器。</p>
@@ -149,7 +150,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;filter&gt;</div><div class="line">      &lt;filter-name&gt;FilterDemo1&lt;/filter-name&gt;</div><div class="line">     &lt;filter-class&gt;FilterDemo1&lt;/filter-class&gt;</div><div class="line">     &lt;init-param&gt;</div><div class="line">	 &lt;param-name&gt;word_file&lt;/param-name&gt;	</div><div class="line">	 &lt;param-value&gt;/WEB-INF/word.txt&lt;/param-value&gt;</div><div class="line">     &lt;/init-param&gt;</div><div class="line">&lt;/filter&gt;</div><div class="line"></div><div class="line">&lt;filter-name&gt;用于为过滤器指定一个名字，该元素的内容不能为空。</div><div class="line">&lt;filter-class&gt;元素用于指定过滤器的完整的限定类名。</div><div class="line">&lt;init-param&gt;元素用于为过滤器指定初始化参数，它的子元素指定参数的名字，&lt;param-value&gt;指定参数的值。在过滤器中，可以使用FilterConfig接口对象来访问初始化参数。</div></pre></td></tr></table></figure>
 </li>
 <li><p>filter-mapping<br><filter-mapping>元素用于设置一个Filter 所负责拦截的资源。<br>一个Filter拦截的资源可通过两种方式来指定：Servlet 名称和资源访问的请求路径。</filter-mapping></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;filter-mapping&gt;</div><div class="line">    &lt;filter-name&gt;FilterDemo1&lt;/filter-name&gt;</div><div class="line">    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;</div><div class="line">&lt;/filter-mapping&gt;</div><div class="line">&lt;filter-name&gt;子元素用于设置filter的注册名称。该值必须是在元素中声明过的过滤器的名字</div><div class="line">&lt;url-pattern&gt;设置 filter 所拦截的请求路径(过滤器关联的URL样式)</div><div class="line">&lt;servlet-name&gt;指定过滤器所拦截的Servlet名称。</div><div class="line">&lt;dispatcher&gt;指定过滤器所拦截的资源被 Servlet 容器调用的方式，可以是REQUEST,INCLUDE,FORWARD和ERROR之一，默认REQUEST。用户可以设置多个&lt;dispatcher&gt; 子元素用来指定 Filter 对资源的多种调用方式进行拦截。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;filter-mapping&gt;</div><div class="line">    &lt;filter-name&gt;FilterDemo1&lt;/filter-name&gt;</div><div class="line">    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;</div><div class="line">    &lt;dispatcher&gt;REQUEST&lt;dispatcher&gt;</div><div class="line">&lt;/filter-mapping&gt;</div><div class="line"></div><div class="line">&lt;filter-name&gt;子元素用于设置filter的注册名称。该值必须是在元素中声明过的过滤器的名字</div><div class="line">&lt;url-pattern&gt;设置 filter 所拦截的请求路径(过滤器关联的URL样式)</div><div class="line">&lt;servlet-name&gt;指定过滤器所拦截的Servlet名称。</div><div class="line">&lt;dispatcher&gt;指定过滤器所拦截的资源被 Servlet 容器调用的方式，可以是REQUEST,INCLUDE,FORWARD和ERROR之一，默认REQUEST。用户可以设置多个&lt;dispatcher&gt; 子元素用来指定 Filter 对资源的多种调用方式进行拦截。</div></pre></td></tr></table></figure>
 </li>
 <li><p>dispatcher<br>子元素可以设置的值及其意义：</p>
 <ul>
@@ -224,6 +225,13 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2018/03/01/Java-监听器基础/" title="Java|监听器基础">
+  <span>
+  Java|监听器基础</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2018/02/28/机器学习-2-逻辑回归/"  title="机器学习|2-逻辑回归">
@@ -276,7 +284,7 @@
 		  
 		
 		  
-			<li><a href="/categories/Java/" title="Java">Java<sup>16</sup></a></li>
+			<li><a href="/categories/Java/" title="Java">Java<sup>17</sup></a></li>
 		  
 		
 		  
@@ -325,7 +333,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Java/" title="Java">Java<sup>17</sup></a></li>
+				<li><a href="/tags/Java/" title="Java">Java<sup>18</sup></a></li>
 			
 		
 			
@@ -341,11 +349,11 @@
 			
 		
 			
-				<li><a href="/tags/life/" title="life">life<sup>2</sup></a></li>
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+				<li><a href="/tags/life/" title="life">life<sup>2</sup></a></li>
 			
 		
 			
@@ -365,19 +373,15 @@
 			
 		
 			
-				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
 			
 		
 			
@@ -385,7 +389,7 @@
 			
 		
 			
-				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
 			
 		
 			
@@ -393,11 +397,15 @@
 			
 		
 			
-				<li><a href="/tags/Octave/" title="Octave">Octave<sup>1</sup></a></li>
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Octave/" title="Octave">Octave<sup>1</sup></a></li>
 			
 		
 		</ul>

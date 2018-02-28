@@ -4,24 +4,25 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>My-Plan | 只为不凡而来</title>
+    <title>Java|监听器基础 | 只为不凡而来</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="wuduozhi">
     
 
     
-    <meta name="description" content="前言在大一的这个小学期，课不是很多，技术这一块也遇到了一些瓶颈，感觉自己都懂又感觉自己都不懂，看网上的教程，觉得自己掌握了，但要实际运用起来却又不是很遂心应手，自己也不知道自己现在是个什么情况。这跟自己当初学吉他有点相识之处啊，网上能看到的吉他教材啊、视频呀，自己看也能明白，但只要自己拿起吉他，就不知道要弹什么了，就是一种眼高手低的状态吧，跟现在学习的状态是一样一样的。 自己这几天也不做什么事，没">
+    <meta name="description" content="What这里有三个概念，监听的事件源，监听者，事件，举个栗子来说是这样的，警察抓小偷，警察是监听者，小偷是被监听的事件源，抓小偷这个动作就是事件，什么时候会抓小偷呢？在小偷偷东西的时候。这个概念在前端开发中比较常用，但是在Java服务器端用的相对比较少，比如你在浏览网页的过程中，第一次进入并不会全部加载页面的信息，而是加载一部分，你向下浏览网页，网页才会加载，这也是监听的一种体现形式，你向下滑动网">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="My-Plan">
-<meta property="og:url" content="http://yoursite.com/2017/09/11/My-Plan/index.html">
+<meta property="og:title" content="Java|监听器基础">
+<meta property="og:url" content="http://yoursite.com/2018/03/01/Java-监听器基础/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="前言在大一的这个小学期，课不是很多，技术这一块也遇到了一些瓶颈，感觉自己都懂又感觉自己都不懂，看网上的教程，觉得自己掌握了，但要实际运用起来却又不是很遂心应手，自己也不知道自己现在是个什么情况。这跟自己当初学吉他有点相识之处啊，网上能看到的吉他教材啊、视频呀，自己看也能明白，但只要自己拿起吉他，就不知道要弹什么了，就是一种眼高手低的状态吧，跟现在学习的状态是一样一样的。 自己这几天也不做什么事，没">
+<meta property="og:description" content="What这里有三个概念，监听的事件源，监听者，事件，举个栗子来说是这样的，警察抓小偷，警察是监听者，小偷是被监听的事件源，抓小偷这个动作就是事件，什么时候会抓小偷呢？在小偷偷东西的时候。这个概念在前端开发中比较常用，但是在Java服务器端用的相对比较少，比如你在浏览网页的过程中，第一次进入并不会全部加载页面的信息，而是加载一部分，你向下浏览网页，网页才会加载，这也是监听的一种体现形式，你向下滑动网">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2017-09-10T16:11:48.932Z">
+<meta property="og:updated_time" content="2018-02-28T15:59:46.185Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="My-Plan">
-<meta name="twitter:description" content="前言在大一的这个小学期，课不是很多，技术这一块也遇到了一些瓶颈，感觉自己都懂又感觉自己都不懂，看网上的教程，觉得自己掌握了，但要实际运用起来却又不是很遂心应手，自己也不知道自己现在是个什么情况。这跟自己当初学吉他有点相识之处啊，网上能看到的吉他教材啊、视频呀，自己看也能明白，但只要自己拿起吉他，就不知道要弹什么了，就是一种眼高手低的状态吧，跟现在学习的状态是一样一样的。 自己这几天也不做什么事，没">
+<meta name="twitter:title" content="Java|监听器基础">
+<meta name="twitter:description" content="What这里有三个概念，监听的事件源，监听者，事件，举个栗子来说是这样的，警察抓小偷，警察是监听者，小偷是被监听的事件源，抓小偷这个动作就是事件，什么时候会抓小偷呢？在小偷偷东西的时候。这个概念在前端开发中比较常用，但是在Java服务器端用的相对比较少，比如你在浏览网页的过程中，第一次进入并不会全部加载页面的信息，而是加载一部分，你向下浏览网页，网页才会加载，这也是监听的一种体现形式，你向下滑动网">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -85,14 +86,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/09/11/My-Plan/" title="My-Plan" itemprop="url">My-Plan</a>
+      <a href="/2018/03/01/Java-监听器基础/" title="Java|监听器基础" itemprop="url">Java|监听器基础</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2017-09-10T23:26:42.000Z" itemprop="datePublished"> Published 2017-09-11</time>
+    <time datetime="2018-02-28T23:36:30.000Z" itemprop="datePublished"> Published 2018-03-01</time>
     
   </p>
 </header>
@@ -101,27 +102,47 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#My-Plan"><span class="toc-number">2.</span> <span class="toc-text">My Plan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Other"><span class="toc-number">3.</span> <span class="toc-text">Other</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#What"><span class="toc-number">1.</span> <span class="toc-text">What</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Example"><span class="toc-number">2.</span> <span class="toc-text">Example</span></a></li></ol>
 		
 		</div>
 		
-		<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在大一的这个小学期，课不是很多，技术这一块也遇到了一些瓶颈，感觉自己都懂又感觉自己都不懂，看网上的教程，觉得自己掌握了，但要实际运用起来却又不是很遂心应手，自己也不知道自己现在是个什么情况。这跟自己当初学吉他有点相识之处啊，网上能看到的吉他教材啊、视频呀，自己看也能明白，但只要自己拿起吉他，就不知道要弹什么了，就是一种眼高手低的状态吧，跟现在学习的状态是一样一样的。</p>
-<p>自己这几天也不做什么事，没课就跟老乡骑小黄车四处逛，长沙的公园都快被我们逛完了。自己也利用这几天也想了许多，总觉得自己走进了死胡同—-一直在学习，但从未使用学的东西。在高中学吉他那会，自己自以为是的觉得只要学会了所有的技巧，就能弹奏所有的曲子了，但事实证明这是错的，自己虽然懂得了所有的技巧，但并不懂得怎么在正确的时间使用，这也无济于事，就相当于没学过一样。所以，自己不能在犯同样的错误了，学了，还有使用，懂得去运用自己所学的东西也是学习的一部分…</p>
-<p>So，这学期也不要学太多新的东西啦，重点要放在怎么使用自己学过的东西，在使用的过程中学习。</p>
-<h3 id="My-Plan"><a href="#My-Plan" class="headerlink" title="My Plan"></a>My Plan</h3><ul>
-<li>自己完成一些Java、JavaWeb项目 （参照亮剑Java（JavaWeb） 项目开发案例导航）</li>
-<li>学习Linux，对服务器进行管理</li>
-<li>学习数据结构，对算法的积累</li>
-<li>…</li>
+		<h3 id="What"><a href="#What" class="headerlink" title="What"></a>What</h3><p>这里有三个概念，<strong>监听的事件源</strong>，<strong>监听者</strong>，<strong>事件</strong>，举个栗子来说是这样的，警察抓小偷，警察是监听者，小偷是被监听的事件源，抓小偷这个动作就是事件，什么时候会抓小偷呢？在小偷偷东西的时候。<br>这个概念在前端开发中比较常用，但是在Java服务器端用的相对比较少，比如你在浏览网页的过程中，第一次进入并不会全部加载页面的信息，而是加载一部分，你向下浏览网页，网页才会加载，这也是监听的一种体现形式，你向下滑动网页的过程就是监听的事件源，加载网页就是事件，监听者就是服务器程序咯，可能这些用词不是太准确，但是也算是表达了这个意思。</p>
+<p>JavaWeb中，监听的事件源有三个：</p>
+<ul>
+<li>ServletContext</li>
+<li>HttpSession</li>
+<li>ServletRequest</li>
 </ul>
-<h3 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h3><p>大一整整一年，自己几乎把所有的时间都放在了技术的学习上，天真的以为只要技术牛逼就万事大吉了。经过这一年的摸索，发现自己真的很傻，事情并非如此。自己虽然是计算机专业，但并不是说自己的生活里就只能是代码，也不能就只把自己定义为码农、程序员，这不是自己的唯一的道路。坦白点，学程序无非就是为了赚钱。赚钱不只有写程序这一个办法，还有很多办法呢，自己的眼界要开阔，比如说可以炒炒股呀、卖点东西呀…</p>
-<p>此外，程序不能是自己生活的全部，自己不能把自己的爱好丢了，虽然不能天天玩吉他了，但这并不代表每天都不玩了；虽然不能天天去打球、运动了，但并不代表每天都不去了…</p>
-<p>以后要想有更多的机会，并不是会写程序就可以的，还要有其他的一些辅助技能，比如说语言啦、沟通能力啦、管理能力啦…这些都是很重要的东西，也是自己要提高的东西。</p>
+<p>它都会监听什么呢？</p>
+<ul>
+<li>监听域对象的创建和销毁的监听器</li>
+<li>监听域对象操作域属性的监听器</li>
+<li>监听HttpSession的监听器</li>
+</ul>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line"> * ServletContextListener实现类</div><div class="line"> * contextDestroyed() -- 在ServletContext对象被销毁前调用</div><div class="line"> * contextInitialized() --  -- 在ServletContext对象被创建后调用</div><div class="line"> * ServletContextEvent -- 事件类对象</div><div class="line"> *     该类有getServletContext()，用来获取ServletContext对象，即获取事件源对象</div><div class="line"> */</div><div class="line">public class MyServletContextListener implements ServletContextListener &#123;</div><div class="line">    public void contextDestroyed(ServletContextEvent evt) &#123;</div><div class="line">        System.out.println(&quot;销毁ServletContext对象&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void contextInitialized(ServletContextEvent evt) &#123;</div><div class="line">        System.out.println(&quot;创建ServletContext对象&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>同时，需要在web.xml中部署：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;listener&gt;</div><div class="line">    &lt;listener-class&gt;net.sailfish.listener.MyServletContextListener&lt;/listener-class&gt;</div><div class="line">&lt;/listener&gt;</div></pre></td></tr></table></figure>
+<p>总结一下：</p>
+<ul>
+<li>监听器要在web.xml中进行配置</li>
+<li>监听器的方法都是类似的，这里列出的是域对象的创建和销毁的监听器</li>
+<li>ServletContextListener在tomcat启动时创建，在tomcat关闭的时候销毁</li>
+</ul>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Java/">Java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Java/">Java</a>
+  </div>
 
 </div>
 
@@ -134,17 +155,10 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/09/13/JDK环境配置/" title="JDK环境配置">
-  <span>
-  JDK环境配置</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/09/09/动态规划从新手到专家/"  title="动态规划|从新手到专家">
- <span>动态规划|从新手到专家
+<a href="/2018/03/01/Java-过滤器基础/"  title="Java|过滤器基础">
+ <span>Java|过滤器基础
 </span>
 </a>
 </div>
