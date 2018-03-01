@@ -1,0 +1,681 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>Java|Tomcat基础知识 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="WhatTomcat简单的说就是一个运行JAVA的网络服务器，底层是Socket的一个程序，它也是JSP和Serlvet的一个容器。 Why如果你学过html，css，你会知道你写的页面只能自己访问，别人不能远程访问你写的页面，Tomcat就是提供能够让别人访问自己写的页面的一个程序。   Tomcat结构目录 目录的简单介绍  bin：启动和关闭tomcat的bat文件   conf：配置文件">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java|Tomcat基础知识">
+<meta property="og:url" content="http://yoursite.com/2018/03/01/Java-Tomcat基础知识/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="WhatTomcat简单的说就是一个运行JAVA的网络服务器，底层是Socket的一个程序，它也是JSP和Serlvet的一个容器。 Why如果你学过html，css，你会知道你写的页面只能自己访问，别人不能远程访问你写的页面，Tomcat就是提供能够让别人访问自己写的页面的一个程序。   Tomcat结构目录 目录的简单介绍  bin：启动和关闭tomcat的bat文件   conf：配置文件">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/images/Java-Tomcat-01.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Tomcat-02.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Tomcat-03.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Tomcat-04.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Tomcat-05.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Tomcat-06.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Tomcat-07.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Tomcat-08.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Tomcat-09.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Tomcat-10.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Tomcat-11.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Tomcat-12.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Tomcat-13.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Tomcat-14.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Tomcat-15.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Tomcat-16.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Tomcat-17.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Tomcat-18.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Tomcat-19.png">
+<meta property="og:updated_time" content="2018-03-01T03:22:36.970Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java|Tomcat基础知识">
+<meta name="twitter:description" content="WhatTomcat简单的说就是一个运行JAVA的网络服务器，底层是Socket的一个程序，它也是JSP和Serlvet的一个容器。 Why如果你学过html，css，你会知道你写的页面只能自己访问，别人不能远程访问你写的页面，Tomcat就是提供能够让别人访问自己写的页面的一个程序。   Tomcat结构目录 目录的简单介绍  bin：启动和关闭tomcat的bat文件   conf：配置文件">
+<meta name="twitter:image" content="http://yoursite.com/images/Java-Tomcat-01.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.jpg" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/03/01/Java-Tomcat基础知识/" title="Java|Tomcat基础知识" itemprop="url">Java|Tomcat基础知识</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-03-01T10:54:42.000Z" itemprop="datePublished"> 发表于 2018-03-01</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#What"><span class="toc-number">1.</span> <span class="toc-text">What</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Why"><span class="toc-number">2.</span> <span class="toc-text">Why</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tomcat结构目录"><span class="toc-number">3.</span> <span class="toc-text">Tomcat结构目录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#webapps目录的详细说明"><span class="toc-number">3.1.</span> <span class="toc-text">webapps目录的详细说明</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置虚拟目录"><span class="toc-number">4.</span> <span class="toc-text">配置虚拟目录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么需要配置虚拟目录"><span class="toc-number">4.1.</span> <span class="toc-text">为什么需要配置虚拟目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Method-One"><span class="toc-number">4.2.</span> <span class="toc-text">Method One</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Method-Two"><span class="toc-number">4.3.</span> <span class="toc-text">Method Two</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置虚拟主机"><span class="toc-number">5.</span> <span class="toc-text">设置虚拟主机</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是虚拟主机？"><span class="toc-number">5.1.</span> <span class="toc-text">什么是虚拟主机？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么需要用到虚拟主机？"><span class="toc-number">5.2.</span> <span class="toc-text">为什么需要用到虚拟主机？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置虚拟主机的步骤"><span class="toc-number">5.3.</span> <span class="toc-text">配置虚拟主机的步骤</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tomcat体系结构"><span class="toc-number">6.</span> <span class="toc-text">Tomcat体系结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#浏览器访问WEB资源的流程图"><span class="toc-number">7.</span> <span class="toc-text">浏览器访问WEB资源的流程图</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="What"><a href="#What" class="headerlink" title="What"></a>What</h3><p>Tomcat简单的说就是一个运行JAVA的网络服务器，底层是Socket的一个程序，它也是JSP和Serlvet的一个容器。</p>
+<h3 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h3><p>如果你学过html，css，你会知道你写的页面只能自己访问，别人不能远程访问你写的页面，Tomcat就是提供能够让别人访问自己写的页面的一个程序。</p>
+<p><img src="/images/Java-Tomcat-01.png" alt="Tomcat工作方式" title="Java-Tomcat-01"></p>
+<p><img src="/images/Java-Tomcat-02.png" alt="URL" title="Java-Tomcat-02"></p>
+<h3 id="Tomcat结构目录"><a href="#Tomcat结构目录" class="headerlink" title="Tomcat结构目录"></a>Tomcat结构目录</h3><p><img src="/images/Java-Tomcat-03.png" alt="目录结构" title="Java-Tomcat-03"></p>
+<p>目录的简单介绍</p>
+<ul>
+<li>bin：启动和关闭tomcat的bat文件</li>
+</ul>
+<ul>
+<li>conf：配置文件<ul>
+<li>server.xml该文件用于配置server相关的信息，比如tomcat启动的端口号，配置主机(Host)</li>
+<li>web.xml文件配置与web应用（web应用相当于一个web站点）</li>
+<li>tomcat-user.xml配置用户名密码和相关权限.</li>
+</ul>
+</li>
+<li>lib：该目录放置运行tomcat运行需要的jar包</li>
+<li>logs：存放日志，当我们需要查看日志的时候，可以查询信息</li>
+<li>webapps：放置我们的web应用</li>
+<li>work工作目录：该目录用于存放jsp被访问后生成对应的server文件和.class文件</li>
+</ul>
+<h4 id="webapps目录的详细说明"><a href="#webapps目录的详细说明" class="headerlink" title="webapps目录的详细说明"></a>webapps目录的详细说明</h4><p>在webapps中建立了web1目录，下面放置我们的html文件，jsp文件，图片等等，则web1就被当做web应用管理起来。</p>
+<p>例子：在webapps下创建一个web站点，在web站点下创建一个html文件，访问html文件</p>
+<p><img src="/images/Java-Tomcat-04.png" alt="Hello World" title="Java-Tomcat-04"></p>
+<p>web站点的目录是有规范的</p>
+<p><img src="/images/Java-Tomcat-05.png" alt="Web目录规范" title="Java-Tomcat-05"></p>
+<p>为什么要这样设置web站点目录呢？</p>
+<ul>
+<li>需求：我有多个html文件，想把其中的一个html文件作为我web站点的首页。</li>
+<li>如果没有WEB-INF目录下的web.xml文件支持，是无法解决我的需求的</li>
+<li>这个规范是约定熟成的。</li>
+</ul>
+<p>下面将web站点下的helloword2.xml文件作为站点的首页</p>
+<ol>
+<li>新建一个WEB-INF目录</li>
+</ol>
+<p><img src="/images/Java-Tomcat-06.png" alt="目录结构" title="Java-Tomcat-06"></p>
+<ol>
+<li>在WEB-INF目录下创建一个web.xml</li>
+</ol>
+<p><img src="/images/Java-Tomcat-07.png" alt="目录结构" title="Java-Tomcat-07"></p>
+<ol>
+<li>web.xml我们不可能会写，所以可以在webapps目录下其他的站点中抄一份过来【复制ROOT/WEB-INF/web.xml的文件到自己的站点中】</li>
+<li>在web.xml中添加以下代码<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;welcome-file-list&gt;</div><div class="line">      &lt;welcome-file&gt;helloword2.html&lt;/welcome-file&gt;</div><div class="line">&lt;/welcome-file-list&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="/images/Java-Tomcat-08.png" alt="web.xml文件" title="Java-Tomcat-08"></p>
+<ol>
+<li>访问web站点【helloword2.html已经是web站点的首页了，所以不需要指定资源访问了】</li>
+</ol>
+<p><img src="/images/Java-Tomcat-09.png" alt="Hello World" title="Java-Tomcat-09"></p>
+<h3 id="配置虚拟目录"><a href="#配置虚拟目录" class="headerlink" title="配置虚拟目录"></a>配置虚拟目录</h3><h4 id="为什么需要配置虚拟目录"><a href="#为什么需要配置虚拟目录" class="headerlink" title="为什么需要配置虚拟目录"></a>为什么需要配置虚拟目录</h4><ul>
+<li>如果把所有web站点的目录都放在webapps下，可能导致磁盘空间不够用，也不利于对web站点目录的管理【如果存在非常多的web站点目录】</li>
+<li>把web站点的目录分散到其他磁盘管理就需要配置虚拟目录【默认情况下，只有webapps下的目录才能被Tomcat自动管理成一个web站点】</li>
+<li>把web应用所在目录交给web服务器管理，这个过程称之为虚拟目录的映射</li>
+</ul>
+<h4 id="Method-One"><a href="#Method-One" class="headerlink" title="Method One"></a>Method One</h4><ol>
+<li>在其他盘符下创建一个web站点目录，并创建WEB-INF目录和一个html文件。<br><img src="/images/Java-Tomcat-10.png" alt="Method One" title="Java-Tomcat-10"></li>
+<li>找到Tomcat目录下/conf/server.xml文件<br><img src="/images/Java-Tomcat-11.png" alt="Method One" title="Java-Tomcat-11"></li>
+<li>在server.xml中的节点下添加如下代码。path表示的是访问时输入的web项目名，docBase表示的是站点目录的绝对路径<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;Context path=&quot;/web1&quot; docBase=&quot;D:\web1&quot;/&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="/images/Java-Tomcat-12.png" alt="Method One" title="Java-Tomcat-12"></p>
+<ol>
+<li>访问配置好的web站点<br><img src="/images/Java-Tomcat-13.png" alt="Method One" title="Java-Tomcat-13"></li>
+</ol>
+<h4 id="Method-Two"><a href="#Method-Two" class="headerlink" title="Method Two"></a>Method Two</h4><ol>
+<li>进入到conf\Catalina\localhost文件下，创建一个xml文件，该文件的名字就是站点的名字。</li>
+</ol>
+<p><img src="/images/Java-Tomcat-14.png" alt="Method Two" title="Java-Tomcat-14"></p>
+<ol>
+<li><p>xml文件的代码如下，docBase是你web站点的绝对路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; </div><div class="line">&lt;Context </div><div class="line">    docBase=&quot;D:\web1&quot; </div><div class="line">    reloadable=&quot;true&quot;&gt; </div><div class="line">&lt;/Context&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>访问web站点下的html资源</p>
+</li>
+</ol>
+<p><img src="/images/Java-Tomcat-15.png" alt="Method Two" title="Java-Tomcat-15"></p>
+<h3 id="设置虚拟主机"><a href="#设置虚拟主机" class="headerlink" title="设置虚拟主机"></a>设置虚拟主机</h3><h4 id="什么是虚拟主机？"><a href="#什么是虚拟主机？" class="headerlink" title="什么是虚拟主机？"></a>什么是虚拟主机？</h4><p>多个不同域名的网站共存于一个Tomcat中</p>
+<h4 id="为什么需要用到虚拟主机？"><a href="#为什么需要用到虚拟主机？" class="headerlink" title="为什么需要用到虚拟主机？"></a>为什么需要用到虚拟主机？</h4><p>例子：我现在开发了4个网站，有4个域名。如果我不配置虚拟主机，一个Tomcat服务器运行一个网站，我就需要4台电脑才能把4个网站运行起来。</p>
+<h4 id="配置虚拟主机的步骤"><a href="#配置虚拟主机的步骤" class="headerlink" title="配置虚拟主机的步骤"></a>配置虚拟主机的步骤</h4><ol>
+<li>在tomcat的server.xml文件中添加主机名<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;Host name=&quot;zhongfucheng&quot; appBase=&quot;D:\web1&quot;&gt;</div><div class="line">		&lt;Context path=&quot;/web1&quot; docBase=&quot;D:\web1&quot;/&gt;</div><div class="line">&lt;/Host&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="/images/Java-Tomcat-16.png" alt="配置虚拟主机" title="Java-Tomcat-16"></p>
+<ol>
+<li>访问虚拟主机下的web站点</li>
+</ol>
+<p><img src="/images/Java-Tomcat-17.png" alt="配置虚拟主机" title="Java-Tomcat-17"></p>
+<h3 id="Tomcat体系结构"><a href="#Tomcat体系结构" class="headerlink" title="Tomcat体系结构"></a>Tomcat体系结构</h3><p><img src="/images/Java-Tomcat-18.png" alt="Tomcat体系结构" title="Java-Tomcat-18"></p>
+<h3 id="浏览器访问WEB资源的流程图"><a href="#浏览器访问WEB资源的流程图" class="headerlink" title="浏览器访问WEB资源的流程图"></a>浏览器访问WEB资源的流程图</h3><p><img src="/images/Java-Tomcat-19.png" alt="工作流程" title="Java-Tomcat-19"></p>
+<blockquote>
+<p>参考<br><a href="https://juejin.im/post/5a75b0be5188254e761781d7" target="_blank" rel="external">Tomcat就是这么简单</a></p>
+</blockquote>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Java/">Java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Java/">Java</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/03/01/Java-Servlet基础知识/"  title="Java|Servlet基础知识">
+ <span>Java|Servlet基础知识
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/运维/" title="运维">运维<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>20</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Octave/" title="Octave">Octave<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>

@@ -19,14 +19,17 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="WhatServlet实际上是ServerApplet–小服务程序或服务连接器，用Java编写的服务器端程序，主要功能在于交互式地浏览和修改数据，生成动态Web内容。与常用的协议，如DNS，TCP/IP，HTTP类似，Servlet是作为一整套规范存在的；同时作为J2EE标准的一部分，定义了javaweb开发的标准。Servlet制定了java处理WEB请求的一系列标准，我们只需要按照标准规定的去">
 <meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/images/Java-Servlet-05.png">
 <meta property="og:image" content="http://yoursite.com/images/Java-Servlet-01.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Servlet-06.png">
 <meta property="og:image" content="http://yoursite.com/images/Java-Servlet-02.png">
+<meta property="og:image" content="http://yoursite.com/images/Java-Servlet-04.png">
 <meta property="og:image" content="http://yoursite.com/images/Java-Servlet-03.png">
-<meta property="og:updated_time" content="2018-03-01T02:37:38.197Z">
+<meta property="og:updated_time" content="2018-03-01T02:48:02.490Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java|Servlet基础知识">
 <meta name="twitter:description" content="WhatServlet实际上是ServerApplet–小服务程序或服务连接器，用Java编写的服务器端程序，主要功能在于交互式地浏览和修改数据，生成动态Web内容。与常用的协议，如DNS，TCP/IP，HTTP类似，Servlet是作为一整套规范存在的；同时作为J2EE标准的一部分，定义了javaweb开发的标准。Servlet制定了java处理WEB请求的一系列标准，我们只需要按照标准规定的去">
-<meta name="twitter:image" content="http://yoursite.com/images/Java-Servlet-01.png">
+<meta name="twitter:image" content="http://yoursite.com/images/Java-Servlet-05.png">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -106,7 +109,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#What"><span class="toc-number">1.</span> <span class="toc-text">What</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#How-it-work"><span class="toc-number">2.</span> <span class="toc-text">How it work?</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ServletContext"><span class="toc-number">2.1.</span> <span class="toc-text">ServletContext</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HttpServletRequest-与-HttpServletResponse"><span class="toc-number">2.2.</span> <span class="toc-text">HttpServletRequest 与 HttpServletResponse</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HttpSession"><span class="toc-number">2.3.</span> <span class="toc-text">HttpSession</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#总结一下"><span class="toc-number">2.4.</span> <span class="toc-text">总结一下</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#线程安全"><span class="toc-number">2.5.</span> <span class="toc-text">线程安全</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Example"><span class="toc-number">3.</span> <span class="toc-text">Example</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Servlet的创建和初始化"><span class="toc-number">3.1.</span> <span class="toc-text">Servlet的创建和初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#生命周期"><span class="toc-number">3.2.</span> <span class="toc-text">生命周期</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Servlet的继承体系"><span class="toc-number">4.</span> <span class="toc-text">Servlet的继承体系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP相关API"><span class="toc-number">5.</span> <span class="toc-text">HTTP相关API</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP请求的API"><span class="toc-number">5.1.</span> <span class="toc-text">HTTP请求的API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP响应的API"><span class="toc-number">5.2.</span> <span class="toc-text">HTTP响应的API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#重定向和请求派发"><span class="toc-number">5.3.</span> <span class="toc-text">重定向和请求派发</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取初始化参数"><span class="toc-number">6.</span> <span class="toc-text">获取初始化参数</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#What"><span class="toc-number">1.</span> <span class="toc-text">What</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#How-it-work"><span class="toc-number">2.</span> <span class="toc-text">How it work?</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ServletContext"><span class="toc-number">2.1.</span> <span class="toc-text">ServletContext</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HttpServletRequest-与-HttpServletResponse"><span class="toc-number">2.2.</span> <span class="toc-text">HttpServletRequest 与 HttpServletResponse</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HttpSession"><span class="toc-number">2.3.</span> <span class="toc-text">HttpSession</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#总结一下"><span class="toc-number">2.4.</span> <span class="toc-text">总结一下</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#线程安全"><span class="toc-number">2.5.</span> <span class="toc-text">线程安全</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Example"><span class="toc-number">3.</span> <span class="toc-text">Example</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Servlet的创建和初始化"><span class="toc-number">3.1.</span> <span class="toc-text">Servlet的创建和初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#生命周期"><span class="toc-number">3.2.</span> <span class="toc-text">生命周期</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Servlet的继承体系"><span class="toc-number">4.</span> <span class="toc-text">Servlet的继承体系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP相关API"><span class="toc-number">5.</span> <span class="toc-text">HTTP相关API</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP请求的API"><span class="toc-number">5.1.</span> <span class="toc-text">HTTP请求的API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP响应的API"><span class="toc-number">5.2.</span> <span class="toc-text">HTTP响应的API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#重定向和请求派发"><span class="toc-number">5.3.</span> <span class="toc-text">重定向和请求派发</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取初始化参数"><span class="toc-number">6.</span> <span class="toc-text">获取初始化参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#随便讲讲Filter和Listener"><span class="toc-number">7.</span> <span class="toc-text">随便讲讲Filter和Listener</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#fliter-过滤器"><span class="toc-number">7.1.</span> <span class="toc-text">fliter(过滤器)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Listener-监听器"><span class="toc-number">7.2.</span> <span class="toc-text">Listener(监听器)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Servlet-、Filter、Listerer-执行顺序"><span class="toc-number">7.3.</span> <span class="toc-text">Servlet 、Filter、Listerer 执行顺序</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -114,6 +117,7 @@
 <p>实际上，无论是Struts2的FilterDispatcher还是SpringMvc的DispatcherServlet,其底层都是通过实现Sevlet或者Servlet类型的扩展【如：GenericServlet】来实现的。</p>
 <p>Java Web服务器处理用户请求的基本过程：用户在客户端点击一个链接，浏览器会向Web应用服务器发送一个URL请求，该URL会指向一个servlet；Web容器看出这个请求指向某个servlet A，就会创建两个对象（HttpServletRequest和HttpServletResponse），并分配或创建一个线程，调用servlet A对应的service方法（上述请求和响应对象作为参数）；service根据HTTP请求区分出客户端发来的是GET还是POST请求，并调用对应的doGet()或doPost()方法；在doGet()或doPost()方法中进行业务逻辑的处理，处理完成后的结果通过响应对象返回写回给客户端。</p>
 <p>而Servlet容器又是什么呢？各个请求总要找到对应的servlet吧？每个请求总有一些状态需要管理吧？好了，servlet容器就是干这个的，它负责初始化并创建这些servlet，将请求解析成具体的类等一系列操作。比如我们常见的tomcat就是使用范围最广的servlet容器，其他的还有Jetty、jboss等。</p>
+<p><img src="/images/Java-Servlet-05.png" alt="Tomcat与Servlet的关系" title="Java-Servlet-05"></p>
 <h3 id="How-it-work"><a href="#How-it-work" class="headerlink" title="How it work?"></a>How it work?</h3><p>要想更好地理解Servlet是怎工作的，我们需要问自己这些问题：<strong>Servlet是如何工作的？Servlet 如何实例化、共享变量、并进行多线程处理</strong>？</p>
 <p>假设我有一个运行了大量 Servlet 的 web 服务器。通过 Servlet 之间传输信息得到 Servlet 上下文，并设置 session 变量。</p>
 <p>现在，如果有两名或更多使用者向这个服务发送请求，接下来 session 变量会发生什么变化？究竟是所有用户都是用共同的变量？还是不同的用户使用的变量都不一样？如果是后者，服务器如何区分不同用户？</p>
@@ -159,6 +163,7 @@
 </li>
 </ol>
 <p><strong>简而言之就是，web.xml是项目和servlet容器（服务器）关联的桥梁。通过在web.xml注册servlet、filter、listener等，使得项目具有处理特定请求的功能。</strong></p>
+<p><img src="/images/Java-Servlet-06.png" alt="生命周期" title="Java-Servlet-06"></p>
 <h4 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h4><p>在容器启动时，XXXServlet在JVM的管理下被实例化为一个对象，这时候它还不是servlet，需要在容器的管理下调用init()方法进行初始化，获得ServletConfig和ServletContext对象的引用后，才称为一个真正的Servlet。</p>
 <p><img src="/images/Java-Servlet-02.png" alt="生命周期" title="Java-Servlet-02"></p>
 <ol>
@@ -182,6 +187,7 @@
 </li>
 </ol>
 <p><strong>关键点：每个请求都在一个单独的线程中运行！</strong></p>
+<p><img src="/images/Java-Servlet-04.png" alt="工作方式" title="Java-Servlet-04"></p>
 <h3 id="Servlet的继承体系"><a href="#Servlet的继承体系" class="headerlink" title="Servlet的继承体系"></a>Servlet的继承体系</h3><ul>
 <li>servlet接口：javax.servlet.Servlet，表示所有的Servlet都有这5个方法，其中init、service和destroy三个方法和servlet的生命周期有关</li>
 <li>GenericServlet：javax.servlet.GenericServlet，这是一个抽象类，它实现了开发者需要的大部分基本servlet方法，大多数servlet的“servlet行为”都来自这个类；</li>
@@ -314,6 +320,31 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;web-app version=&quot;2.5&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot;</div><div class="line">    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">    xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee </div><div class="line">    http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot;&gt;</div><div class="line">    &lt;display-name&gt;&lt;/display-name&gt;</div><div class="line">    &lt;welcome-file-list&gt;</div><div class="line">        &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;</div><div class="line">    &lt;/welcome-file-list&gt;</div><div class="line"></div><div class="line"></div><div class="line">    &lt;context-param&gt;</div><div class="line">        &lt;param-name&gt;haha&lt;/param-name&gt;</div><div class="line">        &lt;param-value&gt;xixi&lt;/param-value&gt;</div><div class="line">    &lt;/context-param&gt;</div><div class="line">    </div><div class="line">&lt;/web-app&gt;</div></pre></td></tr></table></figure>
 <pre><code>+ 获取方式：servlet中通过getServletContext()获取servletContext对象，使用ServletContext的getInitParameter()方法获取制定参数名来获取参数。
 </code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ServletContext servletContext=getServletConfig().getServletContext();</div><div class="line">String str=servletContext.getInitParameter(&quot;haha&quot;);</div><div class="line">System.out.println(str);</div></pre></td></tr></table></figure>
+<h3 id="随便讲讲Filter和Listener"><a href="#随便讲讲Filter和Listener" class="headerlink" title="随便讲讲Filter和Listener"></a>随便讲讲Filter和Listener</h3><p>在有关web servlet的配置中，常能在web.xml看到filter、listener的配置。实际上，filter是过滤器，listener是监听器。这两项配置都是servlet中的重要部分。我们一一来看。</p>
+<h4 id="fliter-过滤器"><a href="#fliter-过滤器" class="headerlink" title="fliter(过滤器)"></a>fliter(过滤器)</h4><p>先来个例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public class MyFilter implements Filter &#123;</div><div class="line"></div><div class="line">    private String param; </div><div class="line">     </div><div class="line">    //初始化方法，在容器启动时调用</div><div class="line">    public void init(FilterConfig filterConfig) throws ServletException &#123;</div><div class="line">        //做一些初始化操作</div><div class="line">        param = filterConfig.getInitParameter(&quot;myParam&quot;);</div><div class="line">        System.out.println(&quot;filter:&quot;+param);</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)</div><div class="line">            throws IOException, ServletException &#123;</div><div class="line">        //处理请求</div><div class="line">        chain.doFilter(request,response); //调用下一个过滤器</div><div class="line">        //处理响应</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void destroy() &#123;</div><div class="line">      //在servlet销毁后销毁</div><div class="line">      //做一些销毁后的善后工作</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在 web.xml中添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"> &lt;filter&gt;</div><div class="line">    &lt;filter-name&gt;myFilter&lt;/filter-name&gt;</div><div class="line">    &lt;filter-class&gt;com.wthfeng.mymvc.filter.MyFilter&lt;/filter-class&gt;</div><div class="line">    &lt;init-param&gt;</div><div class="line">        &lt;param-name&gt;myParam&lt;/param-name&gt;</div><div class="line">        &lt;param-value&gt;myValue&lt;/param-value&gt;</div><div class="line">    &lt;/init-param&gt;</div><div class="line">&lt;/filter&gt;</div><div class="line">&lt;filter-mapping&gt;</div><div class="line">    &lt;filter-name&gt;myFilter&lt;/filter-name&gt;</div><div class="line">    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;</div><div class="line">&lt;/filter-mapping&gt;</div></pre></td></tr></table></figure></p>
+<p>配置后filter就会拦截所有servlet请求，需注意：</p>
+<p>所有的filter在容器启动时即初始化。<br>filter的调用顺序为在web.xml中的定义顺序。若多余一个会形成过滤链依次处理。</p>
+<h4 id="Listener-监听器"><a href="#Listener-监听器" class="headerlink" title="Listener(监听器)"></a>Listener(监听器)</h4><p>servlet 监听器用于监听servlet容器中事件变化，当指定事件变化时，会触发注册该事件的监听器。监听器基于观察者模式。</p>
+<p>Servlet监听器分为3类，分别用于监听ServletContent（Servlet上下文）、HttpSession（Session）,HttpRequest(Request)。</p>
+<p>主要有以下几个类：</p>
+<ul>
+<li><p>ServletContextListener //监听Servlet容器创建销毁<br>ServletContextAttributeListener  //监听Servlet容器级别属性的添加及删除</p>
+</li>
+<li><p>HttpSessionListener  //监听Session创建销毁<br>HttpSessionAttributeListener //监听Session属性创建删除</p>
+</li>
+<li><p>ServletRequestListener  //监听请求创建及销毁<br>ServletRequestAttributeListener  //监听请求属性变化</p>
+</li>
+</ul>
+<p>如我们常见的Spring项目中的如下片段，就是Spring的监听器。其实现了ServletContextListener，用于监听Servlet上下文，以便在项目初始化时加载Spring的必要配置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"> &lt;listener&gt;</div><div class="line">       &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;</div><div class="line">&lt;/listener&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="Servlet-、Filter、Listerer-执行顺序"><a href="#Servlet-、Filter、Listerer-执行顺序" class="headerlink" title="Servlet 、Filter、Listerer 执行顺序"></a>Servlet 、Filter、Listerer 执行顺序</h4><p>分别了解了servlet、filter、listener后，来确定一下他们之间的执行顺序。我们已经知道，filter在servlet之前，那listener呢？</p>
+<p>应该想到，监听器负责监听事件变化，应该有最先执行的权限，测试一下，我把上述三种都加了日志，打印结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//开启服务器并请求</div><div class="line">listener 容器初始化开始  //servletContent 监听器 contextInitialized()</div><div class="line">filter初始化        //filter init()</div><div class="line">初始化servlet       //servlet init()</div><div class="line">listener request初始化  // request 监听器requestInitialized()</div><div class="line">开始filter            //fiter doFilter() chain.doFilter前</div><div class="line">执行servlet        //servlet service()</div><div class="line">结束filter          //fiter doFilter() chain.doFilter后</div><div class="line">listener request销毁  //request 监听器 requestInitialized()</div><div class="line"></div><div class="line">//关闭服务器</div><div class="line">servlet销毁</div><div class="line">filter销毁</div><div class="line">listener 容器销毁</div></pre></td></tr></table></figure></p>
+<p>从此我们可以得出结论：</p>
+<ul>
+<li>对于涉及3者的部分，顺序为 listener - filter - servlet</li>
+<li>filter和servlet的初始化部分，先filter后servlet</li>
+<li>销毁或结束顺序为加载顺序的反序</li>
+</ul>
 <blockquote>
 <p>参考 </p>
 <ul>
@@ -349,6 +380,13 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2018/03/01/Java-Tomcat基础知识/" title="Java|Tomcat基础知识">
+  <span>
+  Java|Tomcat基础知识</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2018/03/01/Java-监听器基础/"  title="Java|监听器基础">
@@ -401,7 +439,7 @@
 		  
 		
 		  
-			<li><a href="/categories/Java/" title="Java">Java<sup>18</sup></a></li>
+			<li><a href="/categories/Java/" title="Java">Java<sup>19</sup></a></li>
 		  
 		
 		  
@@ -450,7 +488,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Java/" title="Java">Java<sup>19</sup></a></li>
+				<li><a href="/tags/Java/" title="Java">Java<sup>20</sup></a></li>
 			
 		
 			
@@ -474,7 +512,11 @@
 			
 		
 			
-				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
 			
 		
 			
@@ -482,11 +524,15 @@
 			
 		
 			
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
 			
 		
 			
@@ -498,10 +544,6 @@
 			
 		
 			
-				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
 			
 		
@@ -510,11 +552,7 @@
 			
 		
 			
-				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
 			
 		
 			
@@ -522,7 +560,7 @@
 			
 		
 			
-				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
 			
 		
 		</ul>
