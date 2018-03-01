@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-28T16:21:07.768Z</updated>
+  <updated>2018-03-01T02:37:38.197Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,240 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Java|Servlet基础知识</title>
+    <link href="http://yoursite.com/2018/03/01/Java-Servlet%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    <id>http://yoursite.com/2018/03/01/Java-Servlet基础知识/</id>
+    <published>2018-03-01T09:07:13.000Z</published>
+    <updated>2018-03-01T02:37:38.197Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="What"><a href="#What" class="headerlink" title="What"></a>What</h3><p>Servlet实际上是ServerApplet–小服务程序或服务连接器，用Java编写的服务器端程序，主要功能在于交互式地浏览和修改数据，生成动态Web内容。与常用的协议，如DNS，TCP/IP，HTTP类似，Servlet是作为一整套规范存在的；同时作为J2EE标准的一部分，定义了javaweb开发的标准。Servlet制定了java处理WEB请求的一系列标准，我们只需要按照标准规定的去做就可以了。</p>
+<p>实际上，无论是Struts2的FilterDispatcher还是SpringMvc的DispatcherServlet,其底层都是通过实现Sevlet或者Servlet类型的扩展【如：GenericServlet】来实现的。</p>
+<p>Java Web服务器处理用户请求的基本过程：用户在客户端点击一个链接，浏览器会向Web应用服务器发送一个URL请求，该URL会指向一个servlet；Web容器看出这个请求指向某个servlet A，就会创建两个对象（HttpServletRequest和HttpServletResponse），并分配或创建一个线程，调用servlet A对应的service方法（上述请求和响应对象作为参数）；service根据HTTP请求区分出客户端发来的是GET还是POST请求，并调用对应的doGet()或doPost()方法；在doGet()或doPost()方法中进行业务逻辑的处理，处理完成后的结果通过响应对象返回写回给客户端。</p>
+<p>而Servlet容器又是什么呢？各个请求总要找到对应的servlet吧？每个请求总有一些状态需要管理吧？好了，servlet容器就是干这个的，它负责初始化并创建这些servlet，将请求解析成具体的类等一系列操作。比如我们常见的tomcat就是使用范围最广的servlet容器，其他的还有Jetty、jboss等。</p>
+<h3 id="How-it-work"><a href="#How-it-work" class="headerlink" title="How it work?"></a>How it work?</h3><p>要想更好地理解Servlet是怎工作的，我们需要问自己这些问题：<strong>Servlet是如何工作的？Servlet 如何实例化、共享变量、并进行多线程处理</strong>？</p>
+<p>假设我有一个运行了大量 Servlet 的 web 服务器。通过 Servlet 之间传输信息得到 Servlet 上下文，并设置 session 变量。</p>
+<p>现在，如果有两名或更多使用者向这个服务发送请求，接下来 session 变量会发生什么变化？究竟是所有用户都是用共同的变量？还是不同的用户使用的变量都不一样？如果是后者，服务器如何区分不同用户？</p>
+<p>另一个相似的问题，如果有 <em>n</em> 名用户访问一个特定的 Servlet，那么该 Servlet 是仅在第一个用户首次访问的时候实例化，还是分别为每个用户实例化？</p>
+<p>当然，要回答上面的问题，我们首先要知道一下的内容：</p>
+<h4 id="ServletContext"><a href="#ServletContext" class="headerlink" title="ServletContext"></a>ServletContext</h4><p>当 Servlet 容器（比如 Apache Tomcat）启动后，会部署和加载所有 web 应用。当web 应用被加载，Servlet 容器会创建一次 ServletContext，然后将其保存在服务器的内存中。web 应用的 web.xml 被解析，找到其中所有 servlet、filter 和 Listener 或 @WebServlet、@WebFilter 和 @WebListener 注解的内容，创建一次并保存到服务器的内存中。<strong>对于所有过滤器会立即调用 init()</strong>。当 Servlet 容器停止，将卸载所有 web 应用，调用所有初始化的 Servlet 和过滤器的 destroy() 方法，最后回收 ServletContext 和所有 Servlet、Filter 与 Listener 实例。</p>
+<p>当问题中的 Servlet 配置的 load-on-startup 或者 @WebServlet(loadOnStartup) 设置了一个大于 0 的值，则同样会在启动的时候立即调用 init() 方法。“load-on-startup”中的值表示那些 Servlet 会以相同顺序初始化。如果配置的值相同，会遵循 web.xml 中指定的顺序或 @WebServlet 类加载的顺序。另外，如果不设置 “load-on-startup” 值，init() 方法只在第一次 HTTP 请求命中问题中的 Servlet 时才被调用。</p>
+<h4 id="HttpServletRequest-与-HttpServletResponse"><a href="#HttpServletRequest-与-HttpServletResponse" class="headerlink" title="HttpServletRequest 与 HttpServletResponse"></a>HttpServletRequest 与 HttpServletResponse</h4><p>Servlet 容器附加在一个 web 服务上，这个 web 服务会在某个端口号上监听 HTTP 请求，在开发环境中这个端口通常为 8080，生产环境中通常为 80。当客户端（web 浏览器）发送了一个 HTTP 请求，Servlet 容器会创建新的 HttpServletRequest 和 HttpServletResponse 对象，传递给已创建好并且请求的 URL 匹配 url-pattern 的 Filter 和 Servlet 实例中的方法，所有工作都在同一个线程中处理。</p>
+<p>request 对象可以访问所有该 HTTP 请求中的信息，例如 request header 和 request body。response 对象为你提供需要的控制和发送 HTTP 响应方法，例如设置 header 和 body（通常会带有 JSP 文件中的 HTML 内容）。提交并完成HTTP 响应后，将回收 request 和 response 对象。</p>
+<h4 id="HttpSession"><a href="#HttpSession" class="headerlink" title="HttpSession"></a>HttpSession</h4><p>当用户第一次访问该 web 应用时，会通过 request.getSession() 第一次获得 HttpSession。之后 Servlet 容器将会创建 HttpSession，生成一个唯一的 ID（可以通过 session.getId() 获取）并储存在<strong>服务器内存</strong>中。然后 Servlet 容器在该次 HTTP 响应的 Set-Cookie 头部设置一个 Cookie，以 JSESSIONID 作为 Cookie 名字，那个唯一的 session ID 作为 Cookie 的值。</p>
+<p>按照 HTTP cookie 规则（正常 web 浏览器和 web 服务端必须遵循的标准），当 cookie 有效时，要求客户端（浏览器）在后续请求的 Cookie 头中返回这个 cookie。使用浏览器内置的 HTTP 流量监控器，你可以查看它们（在 Chrome、Firefox23+、IE9+ 中按 F12，然后查看 Net/Network 标签）。Servlet 容器将会确定每个进入的 HTTP 请求的 Cookie 头中是否存在名为JSESSIONID 的 cookie，然后用它的值（session ID）从服务端内存中找到关联的 HttpSession。</p>
+<p>你可以在 web.xml 中设置 session-timeout ，默认值为 30 分钟。超时到达之前 HttpSession 会一直存活。所以当客户端不再访问该 web 应用超过 30 分钟后，Servlet 容器就会回收这个 session。后续每个请求，即使指定 cookie 名称也不能再访问到相同的 session。Servlet 容器会创建一个新的 Cookie。</p>
+<p>另一方面，客户端上的 session cookie 有一个默认存活时间，该事件和该浏览器实例运行时间一样长。所以，当客户端关闭该浏览器实例（所有标签和窗口）后，这个 session 就会被客户端回收。新浏览器实例不再发送与该 session 关联的 cookie。一个新的 request.getSession() 将会返回新的 HttpSession 并设置一个拥有新 session ID 的 cookie。</p>
+<h4 id="总结一下"><a href="#总结一下" class="headerlink" title="总结一下"></a>总结一下</h4><ul>
+<li>ServletContext 与 web 应用存活时间一样长。它被所有 session 中的所有请求共享。</li>
+<li>只要客户端一直与相同浏览器实例的web应用交互并且没有超时，HttpSession就会存在。</li>
+<li>HttpServletRequest 和 HttpServletResponse 的存活时间为客户端发送完成到完整的响应（web 页面）到达的这段时间。不会被其他地方共享。</li>
+<li>所有 Servlet、Filter 和 Listener 对象在 web 应用运行时都是活跃的。它们被所有 session 中的请求共享。</li>
+<li>你设置在 HttpServletRequest、HttpServletResponse 和 HttpSession 中的所有属性在问题中的对象存活时都会一直保持存活。</li>
+</ul>
+<h4 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h4><p>通过上述内容，我们知道Servlet 和 filter 被所有请求共享。那是 Java 的一个优点，使得多个不同线程（读取 HTTP 请求）可以使用同一个实例。否则为每个请求重新创建线程的开销实在过于昂贵。</p>
+<p>但你应该也意识到永远不要将任何 request 或 session 域中的数据赋值给 servlet 或 filter 的实例变量。它将会被所有其他 session 中的所有请求共享。<strong>那是非线程安全的！</strong></p>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p>我们先看一段简单的servlet请求响应的代码片段:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//HelloServlet类</div><div class="line">public class HelloServlet extends HttpServlet&#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;</div><div class="line">        String name  = req.getParameter(&quot;name&quot;);</div><div class="line">        resp.setContentType(&quot;text/html;charset=UTF-8&quot;);</div><div class="line">        PrintWriter printWriter = resp.getWriter();</div><div class="line">        printWriter.write(&quot;&lt;html&gt;&lt;head&gt;&lt;head&gt;&lt;body&gt;&lt;h1&gt;&quot;);</div><div class="line">        printWriter.write(&quot;Hello &quot;+name);</div><div class="line">        printWriter.write(&quot;&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&quot;);</div><div class="line">        printWriter.close();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后在web.xml注册此servlet</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;web-app version=&quot;3.0&quot;</div><div class="line">        xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot;</div><div class="line">        xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">        xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot;&gt;</div><div class="line"></div><div class="line">    &lt;display-name&gt;wthfeng 的mvc练习项目&lt;/display-name&gt;</div><div class="line">    &lt;servlet&gt;</div><div class="line">        &lt;servlet-name&gt;hello&lt;/servlet-name&gt;</div><div class="line">        &lt;servlet-class&gt;com.wthfeng.mymvc.servlet.HelloServlet&lt;/servlet-class&gt;</div><div class="line">        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;</div><div class="line">    &lt;/servlet&gt;</div><div class="line">  &lt;servlet-mapping&gt;</div><div class="line">      &lt;servlet-name&gt;hello&lt;/servlet-name&gt;</div><div class="line">      &lt;url-pattern&gt;/hello&lt;/url-pattern&gt;</div><div class="line">  &lt;/servlet-mapping&gt;</div><div class="line">&lt;/web-app&gt;</div></pre></td></tr></table></figure>
+<p>启动项目，效果如下图所示：</p>
+<p><img src="/images/Java-Servlet-01.png" alt="效果" title="Java-Servlet-01"></p>
+<p>这样我们就写完了一个简单的servlet，有关这个例子，我们需要知道：</p>
+<ol>
+<li>编写Servlet必须继承HttpServlet或GenericServlet或直接实现Servlet接口。HttpServlet已经为我们封装了有关http请求的相关参数，一般情况下我们直接继承此类即可。</li>
+<li>此servlet重写了doGet方法，也就是它可以响应/myprojectName/hello?name=xxx 的请求，并在页面打印xxx的内容。</li>
+</ol>
+<h4 id="Servlet的创建和初始化"><a href="#Servlet的创建和初始化" class="headerlink" title="Servlet的创建和初始化"></a>Servlet的创建和初始化</h4><p>好了，这些逻辑符合上面所说的，浏览器发出请求/hello，一个名为hello的 servlet被命中，接受请求处理后返回。这里我们再深入一些，为什么要把servlet的定义在web.xml中？web.xml又和servlet容器有什么关系？</p>
+<p><strong>web.xml是web项目的入口文件。在项目启动过程中，servlet容器（如tomcat）会读取web.xml并进行相应配置以初始化该项目</strong>。</p>
+<p>具体容器启动流程如下（以tomcat为例）：</p>
+<ol>
+<li><p>先解析tomcat路径下的conf/web.xml等web.xml文件,它们是全局web配置文件，做一些基本配置工作。如注册了default、jsp等servlet。</p>
+</li>
+<li><p>解析web.xml，将其各个配置项（包括servlet、filter、listener)经处理包装后设在Tomcat的Context容器中，一个 Web 应用对应一个 Context 容器。</p>
+</li>
+<li><p>创建servlet并初始化。load-on-startup大于1的servlet会在此时初始化。初始化servlet就是调用servlet的init方法。注意：若不设置 此 值，init() 方法只在第一次 HTTP 请求命中时才被调用。此时servlet容器就算启动了。</p>
+</li>
+</ol>
+<p><strong>简而言之就是，web.xml是项目和servlet容器（服务器）关联的桥梁。通过在web.xml注册servlet、filter、listener等，使得项目具有处理特定请求的功能。</strong></p>
+<h4 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h4><p>在容器启动时，XXXServlet在JVM的管理下被实例化为一个对象，这时候它还不是servlet，需要在容器的管理下调用init()方法进行初始化，获得ServletConfig和ServletContext对象的引用后，才称为一个真正的Servlet。</p>
+<p><img src="/images/Java-Servlet-02.png" alt="生命周期" title="Java-Servlet-02"></p>
+<ol>
+<li>init()<ul>
+<li>何时调用？servlet实例创建后，并在servlet能为客户请求提供服务之前，容器需要通过init方法初始化servlet。</li>
+<li>作用？初始化servlet实例，使之获得web容器的相关信息</li>
+<li>是否会被覆盖？有可能</li>
+</ul>
+</li>
+<li>service()<ul>
+<li>何时调用？当一个客户请求到来时，容器会创建（或从线程池分配一个线程），并调用servlet的service方法</li>
+<li>作用？这个方法会确定HTTP方法（GET or POST），并调用对应的servlet方法——doGet或doPost；</li>
+<li>是否会被覆盖？可以，但是不会</li>
+</ul>
+</li>
+<li>doGet()或doPost()<ul>
+<li>何时调用？</li>
+<li>作用？具体的业务逻辑</li>
+<li>是否会被覆盖？至少要覆盖其中之一</li>
+</ul>
+</li>
+</ol>
+<p><strong>关键点：每个请求都在一个单独的线程中运行！</strong></p>
+<h3 id="Servlet的继承体系"><a href="#Servlet的继承体系" class="headerlink" title="Servlet的继承体系"></a>Servlet的继承体系</h3><ul>
+<li>servlet接口：javax.servlet.Servlet，表示所有的Servlet都有这5个方法，其中init、service和destroy三个方法和servlet的生命周期有关</li>
+<li>GenericServlet：javax.servlet.GenericServlet，这是一个抽象类，它实现了开发者需要的大部分基本servlet方法，大多数servlet的“servlet行为”都来自这个类；</li>
+<li>HttpServlet：javax.servlet.http.HttpServlet，这也是一个抽象类，它实现了自己的service()方法，处理servlet的HTTP特性（service方法不仅仅只处理HTTP请求）。</li>
+<li>MyTestServlet：这是开发者自己编写的处理类，一般只需要实现doGet()和doPost()方法。</li>
+</ul>
+<p><img src="/images/Java-Servlet-03.png" alt="继承体系" title="Java-Servlet-03"></p>
+<h3 id="HTTP相关API"><a href="#HTTP相关API" class="headerlink" title="HTTP相关API"></a>HTTP相关API</h3><h4 id="HTTP请求的API"><a href="#HTTP请求的API" class="headerlink" title="HTTP请求的API"></a>HTTP请求的API</h4><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>getHeader()</td>
+<td>可以获取首部信息，例如request.getHeader(“User-Agent”)可以获取客户端的平台和浏览器信息</td>
+</tr>
+<tr>
+<td>getIntHeader()</td>
+<td>如果首部信息中的“key/value”对中的value是int类型的，可以使用这个方法直接获取值而不需要显式类型转换</td>
+</tr>
+<tr>
+<td>getCookies()</td>
+<td>可以获取与请求相关的cookie</td>
+</tr>
+<tr>
+<td>getSession()</td>
+<td>可以获取与请求相关的会话</td>
+</tr>
+<tr>
+<td>getMethod()</td>
+<td>可以获取http方法</td>
+</tr>
+<tr>
+<td>getInputStream()</td>
+<td>可以获取请求的输入流</td>
+</tr>
+<tr>
+<td>getParameter(String name)</td>
+<td>可以获取HTTP请求的请求参数，对于GET请求，可以获取查询字符串中的数据、对于POST请求，可以获取请求体中的数据</td>
+</tr>
+<tr>
+<td>getRemotePort()</td>
+<td>获取客户端的端口号</td>
+</tr>
+<tr>
+<td>getServerPort()</td>
+<td>获取服务端接受请求的端口号（请求一开始发送服务端的哪个端口？）</td>
+</tr>
+<tr>
+<td>getLocalPort()</td>
+<td>获取服务端处理请求的端口号（请求最后是发送到服务端的哪个端口？）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="HTTP响应的API"><a href="#HTTP响应的API" class="headerlink" title="HTTP响应的API"></a>HTTP响应的API</h4><p>大多数情况下，使用响应只是为了向客户发回数据。会对响应调用两个方法：setContentType()和getWriter()。在此之后，可以将HTML或其他内容写入到流。不过，你也可以使用响应设置首部、发送错误或增加Cookie。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>setContentType()</td>
+<td>设置响应返回的MIME类型</td>
+</tr>
+<tr>
+<td>getOutputStream()</td>
+<td>获取HTTP输出字节流</td>
+</tr>
+<tr>
+<td>getWriter()</td>
+<td>获取HTTP输出字符流</td>
+</tr>
+<tr>
+<td>addCookie(Cookie cookie)</td>
+<td>给响应首部中增加cookie对象，注意这里不是增加“key/value”对</td>
+</tr>
+<tr>
+<td>addHeader()</td>
+<td>在响应首部中添加一个“key/value”对</td>
+</tr>
+<tr>
+<td>setHeader()</td>
+<td>在响应首部中设置一个“key/value”对；<strong>和addHeader()的区别是，如果响应首部中已经有对应的key存在，setHeader()会覆盖现有的值，而addHeder()会新增一个“key/value”对，使用时需要注意</strong>；</td>
+</tr>
+<tr>
+<td>encodeRedirectURL()</td>
+<td>对包含session ID的URL进行编码。<strong>使用场景：在浏览器不支持使用cookie跟踪会话时，可以使用URL重写（即将URL重定向到另一个URL，而这个URL的后面会带上session id传给客户端，这个URL在返回给客户端之前需要经过编码）</strong></td>
+</tr>
+<tr>
+<td>sendError()</td>
+<td>给客户端返回错误的响应（错误码、错误信息），在该方法被调用之后，就意味着响应已经被返回给客户端，也就不能再调用response的任何方法，否则会报IllegalStateException。</td>
+</tr>
+<tr>
+<td>setStatus()</td>
+<td>设置响应的状态码</td>
+</tr>
+<tr>
+<td>sendRedirect()</td>
+<td>用于URL重定向，告诉客户端去访问另一个URL来完成需求，如果location没有以“/”开头，则它是相对路径，容器会负责将这个相对路径转化成该web应用的绝对路径；否则容器会把它当做绝对路径处理。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="重定向和请求派发"><a href="#重定向和请求派发" class="headerlink" title="重定向和请求派发"></a>重定向和请求派发</h4><ul>
+<li>重定向是让浏览器访问新的URL完成工作，用户会在浏览器地址栏看到新的URL,通过httpServlet的sendDirect(String location)方法。</li>
+<li>请求派发是服务端的工作，是当前servlet委托另外的servlet完成请求，并给客户端发回响应，用户的浏览器地址栏的URL没有改变,是通过requestDispatcher对象的forward(httpServletRequest req,HttpServletResponse res)方法来实现的。其中getRequestDispatcher方法的参数，必须以“／”开头，表示web的根目录，比如要<br>跳转：　“<a href="http://locahost:8080/servlet/servet/LifeCycleServlet" target="_blank" rel="external">http://locahost:8080/servlet/servet/LifeCycleServlet</a>“, 则参数为”/servlet/LifeCycleServlet”.</li>
+</ul>
+<h3 id="获取初始化参数"><a href="#获取初始化参数" class="headerlink" title="获取初始化参数"></a>获取初始化参数</h3><ol>
+<li><p>在 web.xml中配置servlet时，可以配置一些初始化参数，在servlet可以通过servletConfig接口提供的接口获取这些参数。</p>
+<ul>
+<li><p>在web.xml中配置init-param 参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;servlet&gt;</div><div class="line">        </div><div class="line">        &lt;servlet-name&gt;HelloServlet&lt;/servlet-name&gt;&lt;!-- servlet的名字 --&gt;</div><div class="line">        &lt;servlet-class&gt;servlet.HelloServlet&lt;/servlet-class&gt;&lt;!-- servlet的具体类型，需要带包名 --&gt;</div><div class="line">        &lt;init-param&gt;</div><div class="line">            &lt;param-name&gt;username&lt;/param-name&gt;</div><div class="line">            &lt;param-value&gt;forezp&lt;/param-value&gt;</div><div class="line">        &lt;/init-param&gt;</div><div class="line">    &lt;/servlet&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>在servlet中获取</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class HelloServlet extends HttpServlet &#123;</div><div class="line">    </div><div class="line">    @Override</div><div class="line">    public void init() throws ServletException &#123;</div><div class="line">        // TODO Auto-generated method stub</div><div class="line">        super.init();</div><div class="line">        String name=this.getInitParameter(&quot;username&quot;);</div><div class="line">        System.out.println(name);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre><code>+ 部署项目，访问helloServlet就可以看见在控制台打印了forezp
+</code></pre><ol>
+<li>也可以配置一些全局的参数:context-param.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;web-app version=&quot;2.5&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot;</div><div class="line">    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">    xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee </div><div class="line">    http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot;&gt;</div><div class="line">    &lt;display-name&gt;&lt;/display-name&gt;</div><div class="line">    &lt;welcome-file-list&gt;</div><div class="line">        &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;</div><div class="line">    &lt;/welcome-file-list&gt;</div><div class="line"></div><div class="line"></div><div class="line">    &lt;context-param&gt;</div><div class="line">        &lt;param-name&gt;haha&lt;/param-name&gt;</div><div class="line">        &lt;param-value&gt;xixi&lt;/param-value&gt;</div><div class="line">    &lt;/context-param&gt;</div><div class="line">    </div><div class="line">&lt;/web-app&gt;</div></pre></td></tr></table></figure>
+<pre><code>+ 获取方式：servlet中通过getServletContext()获取servletContext对象，使用ServletContext的getInitParameter()方法获取制定参数名来获取参数。
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ServletContext servletContext=getServletConfig().getServletContext();</div><div class="line">String str=servletContext.getInitParameter(&quot;haha&quot;);</div><div class="line">System.out.println(str);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>参考 </p>
+<ul>
+<li><a href="http://blog.wthfeng.com/javaweb/servlet/2017/04/30/Servlet%E5%92%8CServlet%E5%AE%B9%E5%99%A8/" target="_blank" rel="external">Servlet工作机制解析</a></li>
+<li><a href="https://www.jianshu.com/p/fc7f31b664d5" target="_blank" rel="external">Servlet请求和响应</a></li>
+<li><a href="https://www.jianshu.com/p/4d71ec3e1b99" target="_blank" rel="external">当Java遇见了Html–Servlet篇</a></li>
+</ul>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;What&quot;&gt;&lt;a href=&quot;#What&quot; class=&quot;headerlink&quot; title=&quot;What&quot;&gt;&lt;/a&gt;What&lt;/h3&gt;&lt;p&gt;Servlet实际上是ServerApplet–小服务程序或服务连接器，用Java编写的服务器端程序，主要功能在于交互式地浏
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+  </entry>
   
   <entry>
     <title>Java|监听器基础</title>
@@ -121,7 +355,7 @@
     <link href="http://yoursite.com/2018/03/01/Java-%E8%BF%87%E6%BB%A4%E5%99%A8%E5%9F%BA%E7%A1%80/"/>
     <id>http://yoursite.com/2018/03/01/Java-过滤器基础/</id>
     <published>2018-02-28T21:54:21.000Z</published>
-    <updated>2018-02-28T16:27:35.096Z</updated>
+    <updated>2018-02-28T16:32:17.561Z</updated>
     
     <content type="html"><![CDATA[<h3 id="What-is-it"><a href="#What-is-it" class="headerlink" title="What is it?"></a>What is it?</h3><p>过滤器是Servlet的高级特性之一，也别把它想得那么高深，只不过是实现Filter接口的Java类罢了！</p>
 <p>首先，我们来看看过滤器究竟Web容器的哪处:</p>
@@ -1775,202 +2009,6 @@ tex2jax: {inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]]
     
     </summary>
     
-    
-  </entry>
-  
-  <entry>
-    <title>数据结构|树</title>
-    <link href="http://yoursite.com/2018/01/24/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91/"/>
-    <id>http://yoursite.com/2018/01/24/数据结构-树/</id>
-    <published>2018-01-24T15:46:20.000Z</published>
-    <updated>2018-02-04T03:26:20.859Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="树的简介"><a href="#树的简介" class="headerlink" title="树的简介"></a>树的简介</h3><p>树是一种数据结构，它是n(n&gt;=0)个节点的有限集。n=0时称为空树。n&gt;0时，有限集的元素构成一个具有层次感的数据结构。树是一种典型的一对多的数据结构，类比我们现实生活中的公司分工结构。</p>
-<p>区别于线性表一对一的元素关系，树中的节点是一对多的关系。树具有以下特点：</p>
-<ul>
-<li>n&gt;0时，根节点是唯一的，不可能存在多个根节点。</li>
-<li>每个节点有零个至多个子节点；除了根节点外，每个节点有且仅有一个父节点。根节点没有父节点。</li>
-</ul>
-<p><img src="/images/树-1.png" alt="树" title="树-1"></p>
-<p>树有许多相关的术语与概念，在学习树的结构之前，我们要熟悉这些概念。</p>
-<table>
-<thead>
-<tr>
-<th>概念</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>子树</td>
-<td>除了根节点外，每个子节点都可以分为多个不相交的子树。</td>
-</tr>
-<tr>
-<td>孩子与双亲</td>
-<td>若一个结点有子树，那么该结点称为子树根的”双亲”，子树的根是该结点的”孩子”。</td>
-</tr>
-<tr>
-<td>兄弟</td>
-<td>具有相同双亲的节点互为兄弟，例如B与H互为兄弟。</td>
-</tr>
-<tr>
-<td>节点的度</td>
-<td>一个节点拥有子树的数目。例如A的度为2，B的度为1，C的度为3.</td>
-</tr>
-<tr>
-<td>叶子</td>
-<td>没有子树，也即是度为0的节点。</td>
-</tr>
-<tr>
-<td>分支节点</td>
-<td>除了叶子节点之外的节点，也即是度不为0的节点。</td>
-</tr>
-<tr>
-<td>内部节点</td>
-<td>除了根节点之外的分支节点。</td>
-</tr>
-<tr>
-<td>层次</td>
-<td>根节点为第一层，其余节点的层次等于其双亲节点的层次加1.</td>
-</tr>
-<tr>
-<td>树的高度</td>
-<td>也称为树的深度，树中节点的最大层次。</td>
-</tr>
-<tr>
-<td>有序树</td>
-<td>树中节点各子树之间的次序是重要的，不可以随意交换位置。</td>
-</tr>
-<tr>
-<td>无序树</td>
-<td>树种节点各子树之间的次序是不重要的。可以随意交换位置。</td>
-</tr>
-<tr>
-<td>森林</td>
-<td>0或多棵互不相交的树的集合。例如图二中的两棵树为森林。</td>
-</tr>
-</tbody>
-</table>
-<p><img src="/images/树-2.png" alt="enter description here" title="树-2"></p>
-<h3 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h3><p>在树中，我们经常用的一般是二叉树这种特殊的树。二叉树或者为空集，或者由一个根节点和两棵互不相交的、分别称为左子树和右子树的二叉树组成。从定义可以看出一棵二叉树：</p>
-<ul>
-<li>二叉树是有序树，区分左子树与右子树，不可以随意交换子树位置。</li>
-<li>一个节点的子树数量取值范围为0，1，2。0代表该节点是叶子节点，1代表该节点只有左子树或只有右子树，2代表该节点有左右子树。</li>
-</ul>
-<p>根据定义，一棵二叉树有5中基本形态：</p>
-<p><img src="/images/树-3.png" alt="enter description here" title="树-3"></p>
-<h4 id="斜树"><a href="#斜树" class="headerlink" title="斜树"></a>斜树</h4><p>所有节点都只有左子树的二叉树叫做左斜树，所有节点都只有右子树的二叉树叫做右斜树。左斜树和右子树统称为斜树。<br>斜树已经退化成线性结构，二叉树在查找上表现出来优异性能在斜树得不到体现。</p>
-<p><img src="/images/树-4.png" alt="斜树" title="树-4"></p>
-<h4 id="满二叉树"><a href="#满二叉树" class="headerlink" title="满二叉树"></a>满二叉树</h4><p>满二叉树要满足两个条件：</p>
-<ul>
-<li>所有的节点都同时具有左子树和右子树。</li>
-<li>所有的叶子节点都在同一层上。</li>
-</ul>
-<p>在同样深度的二叉树中，满二叉树的节点数目是最多的，叶子数也是最多的。</p>
-<p><img src="/images/树-5.png" alt="满二叉树" title="树-5"></p>
-<h4 id="完全二叉树"><a href="#完全二叉树" class="headerlink" title="完全二叉树"></a>完全二叉树</h4><p>在一棵二叉树中，只有最下两层的度可以小于2，并且最下一层的叶子节点集中出现在靠左的若干位置上。</p>
-<p>或者这样定义：对一棵具有n个节点的二叉树按层序从左到右编序，二叉树树某个节点的编序与同样位置的满二叉树节点的编序相同如果所有节点都满足这个条件，则二叉树为完全二叉树。</p>
-<p>从定义可以看出： 满二叉树一定是完全二叉树；完全二叉树不一定是满二叉树。</p>
-<p><img src="/images/树-6.png" alt="完全二叉树" title="树-6"></p>
-<h4 id="二叉查找树"><a href="#二叉查找树" class="headerlink" title="二叉查找树"></a>二叉查找树</h4><p>二叉排序树也称为二叉搜索树或二叉排序树。二叉排序树的节点包含键值key。二叉排序树或者是一棵空树，否则要求：</p>
-<ul>
-<li>若它的左子树不为空，那么左子树上所有节点的key都小于根节点的key</li>
-<li>若它的右子树不为空，那么右子树上所有节点的key都大于根节点的key</li>
-<li>它的左右子树也分别为二叉排序树</li>
-</ul>
-<p>根据定义，二叉查找树中没有重复key的节点，为一个集合。</p>
-<p><img src="/images/树-7.png" alt="二叉查找树" title="树-7"></p>
-<h3 id="二叉树的性质"><a href="#二叉树的性质" class="headerlink" title="二叉树的性质"></a>二叉树的性质</h3><h4 id="性质一：在二叉树的第i层上至多有2-i-1-个节点-i-gt-1"><a href="#性质一：在二叉树的第i层上至多有2-i-1-个节点-i-gt-1" class="headerlink" title="性质一：在二叉树的第i层上至多有2^(i-1)个节点(i&gt;=1)"></a>性质一：在二叉树的第i层上至多有2^(i-1)个节点(i&gt;=1)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">证明：利用数学归纳法进行证明</div><div class="line"></div><div class="line">当i==1时，第1层节点数目为2^(i-1) = 2^(1-1) = 2^0 = 1。显然成立，此时二叉树只有根节点。</div><div class="line">假设i&gt;1时，第i层的节点数目为2^(i-1)。</div><div class="line">根据假设，只需证明第i+1层节点数为2^i 即可。</div><div class="line">由于二叉树每个节点最多有两个孩子，故第(i+1)层上的节点数最多是第i层的两倍。</div><div class="line">即：第i+1层上节点数最多为: 2* 2^(i-1) = 2 ^ i</div><div class="line">故假设成立，命题得证。</div></pre></td></tr></table></figure>
-<h4 id="性质二：深度为k的二叉树至多有2-k-1个节点"><a href="#性质二：深度为k的二叉树至多有2-k-1个节点" class="headerlink" title="性质二：深度为k的二叉树至多有2^k-1个节点"></a>性质二：深度为k的二叉树至多有2^k-1个节点</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">证明：二叉树节点数最多时，每层的节点树都必须最多。</div><div class="line">根据性质一，深度为k的二叉树的节点数最多为: 2^0 + 2^1 +....+2^(k-1) = 2 ^ k -1</div></pre></td></tr></table></figure>
-<h4 id="性质三：对任何一棵二叉树T，如果终端节点数为n0，度为2的节点数为n2-，那么-n0-n2-1"><a href="#性质三：对任何一棵二叉树T，如果终端节点数为n0，度为2的节点数为n2-，那么-n0-n2-1" class="headerlink" title="性质三：对任何一棵二叉树T，如果终端节点数为n0，度为2的节点数为n2 ，那么 n0 = n2 +1"></a>性质三：对任何一棵二叉树T，如果终端节点数为n0，度为2的节点数为n2 ，那么 n0 = n2 +1</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">证明：二叉树节点度数最大为2，则 ： n = n0 + n1 + n2 (等式一)</div><div class="line">从孩子个数角度出发： 度为0的节点没有孩子， 度为1的节点没有1个孩子，度为2的节点有2个孩子，孩子总数为 n00 + n11 +n2 2 = n1+2n2；树的所有节点中，只有根不是任何节点的孩 子，因此有 n -1 = n1 + 2* n2 ,即 n = n1 + 2* n2 + 1. （等式二）</div><div class="line">由等式一等式而可以推出 n0 = n2 +1</div></pre></td></tr></table></figure>
-<h4 id="性质四：-具有n个节点的完全二叉树的高度为至少为log2-n-1"><a href="#性质四：-具有n个节点的完全二叉树的高度为至少为log2-n-1" class="headerlink" title="性质四： 具有n个节点的完全二叉树的高度为至少为log2(n+1)"></a>性质四： 具有n个节点的完全二叉树的高度为至少为log2(n+1)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">证明：高度为h的二叉树最多有2&#123;h&#125;–1个结点。反之，对于包含n个节点的二叉树的高度至少为log2(n+1)。</div></pre></td></tr></table></figure>
-<h4 id="性质五：如果对一棵有n个节点的完全二叉树的节点按层序编号（从第一层开始到最下一层，每一层从左到右编号），对任一节点i有："><a href="#性质五：如果对一棵有n个节点的完全二叉树的节点按层序编号（从第一层开始到最下一层，每一层从左到右编号），对任一节点i有：" class="headerlink" title="性质五：如果对一棵有n个节点的完全二叉树的节点按层序编号（从第一层开始到最下一层，每一层从左到右编号），对任一节点i有："></a>性质五：如果对一棵有n个节点的完全二叉树的节点按层序编号（从第一层开始到最下一层，每一层从左到右编号），对任一节点i有：</h4><ul>
-<li>如果i=1 ，则节点为根节点，没有双亲。</li>
-<li>如果2 <em> i &gt; n ，则节点i没有左孩子 ；否则其左孩子节点为2</em>i . （n为节点总数）</li>
-<li>如果2 <em> i+1&gt;n ，则节点i没有右孩子；否则其右孩子节点为2</em>1+1</li>
-</ul>
-<h3 id="二叉查找树-1"><a href="#二叉查找树-1" class="headerlink" title="二叉查找树"></a>二叉查找树</h3><p>二叉查找树的定义我们已经知道。要维护二叉查找树的特性，比较复杂的是删除节点操作，我们将进行重点的解析。不过我们先来看看二叉查找树的节点结构定义与类定义。</p>
-<h4 id="节点结构"><a href="#节点结构" class="headerlink" title="节点结构"></a>节点结构</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">//二叉查找树的节点结构</div><div class="line">template &lt;typename T&gt;</div><div class="line">struct BSNode</div><div class="line">&#123;</div><div class="line">    BSNode(T t)</div><div class="line">    : value(t), lchild(nullptr), rchild(nullptr)&#123;&#125;</div><div class="line"> </div><div class="line">    BSNode() = default;</div><div class="line"> </div><div class="line">    T value;</div><div class="line">    BSNode&lt;T&gt;* lchild;</div><div class="line">    BSNode&lt;T&gt;* rchild;</div><div class="line">    BSNode&lt;T&gt;* parent;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">value:节点的值，也即是上文的key，类型由模板参数决定</div><div class="line">lchild :指向节点的左孩子</div><div class="line">rchild:指向节点的右孩子</div><div class="line">parent: 指向节点的双亲</div></pre></td></tr></table></figure>
-<h4 id="二叉查找树的抽象数据结构"><a href="#二叉查找树的抽象数据结构" class="headerlink" title="二叉查找树的抽象数据结构"></a>二叉查找树的抽象数据结构</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">//二叉查找树类</div><div class="line">template &lt;typename T&gt;</div><div class="line">class BSTree</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">    BSTree();</div><div class="line">    ~BSTree();</div><div class="line"> </div><div class="line">    void preOrder();    //前序遍历二叉树</div><div class="line">    void inOrder();        //中序遍历二叉树</div><div class="line">    void postOrder();    //后序遍历二叉树</div><div class="line">    void layerOrder();    //层次遍历二叉树</div><div class="line"> </div><div class="line">    BSNode&lt;T&gt;* search_recursion(T key);        //递归地进行查找</div><div class="line">    BSNode&lt;T&gt;* search_Iterator(T key);        //迭代地进行查找</div><div class="line"> </div><div class="line">    T search_minimun(); //查找最小元素</div><div class="line">    T search_maximum(); //查找最大元素</div><div class="line"> </div><div class="line">    BSNode&lt;T&gt;* successor  (BSNode&lt;T&gt;* x);    //查找指定节点的后继节点</div><div class="line">    BSNode&lt;T&gt;* predecessor(BSNode&lt;T&gt;* x);    //查找指定节点的前驱节点</div><div class="line"> </div><div class="line">    void insert(T key);    //插入指定值节点</div><div class="line">    void remove(T key);    //删除指定值节点</div><div class="line">    void destory();        //销毁二叉树</div><div class="line">    void print();        //打印二叉树</div><div class="line"> </div><div class="line"> </div><div class="line">private:</div><div class="line">    BSNode&lt;T&gt;* root; //根节点</div><div class="line">private:</div><div class="line">    BSNode&lt;T&gt;* search(BSNode&lt;T&gt;* &amp; p, T key);</div><div class="line">    void remove(BSNode&lt;T&gt;*  p, T key);         </div><div class="line">    void preOrder(BSNode&lt;T&gt;* p);</div><div class="line">    void inOrder(BSNode&lt;T&gt;* p);</div><div class="line">    void postOrder(BSNode&lt;T&gt;* p);</div><div class="line">    T search_minimun(BSNode&lt;T&gt;* p);</div><div class="line">    T search_maximum(BSNode&lt;T&gt;* p);</div><div class="line">    void destory(BSNode&lt;T&gt;* &amp;p);       </div><div class="line"> </div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>这里我们定义了二叉排序树的类型BSTree。它包含了：</p>
-<p>BSTree的根节点root，这是唯一的数据成员操作的外部接口与内部实现接口。例如 preOrder()为提供给用户使用的接口，接口声明为public；而preOrder(AVLTreeNode* pnode)是类内部为了递归操作所使用的接口，接口声明为private。提供的其他接口都有相应的备注说明。</p>
-<h4 id="插入新节点"><a href="#插入新节点" class="headerlink" title="插入新节点"></a>插入新节点</h4><p>假设我们要为数组 a[] = {10 ， 5 ， 15 ， 6 ， 4 ， 16 }构建一个二叉排序树，我们按顺序逐个插入元素。</p>
-<p><img src="/images/树-8.png" alt="插入新节点" title="树-8"></p>
-<p>插入过程是这样的：</p>
-<ul>
-<li>如果是空树，则创建一个新节点，新节点作为根，因此以元素10构建的* 节点为该二叉查找树的根。</li>
-<li>插入5，5比10小，与10的左孩子节点进行比较，10的左孩子节点为空，进行插入。</li>
-<li>插入15，15比10大，与10的右孩子节点进行比较，10的右孩子节点为空，进行插入。</li>
-<li>插入6，6比10小，与10的左孩子节点5比较；6比5大，与5的右孩子节点进行比较，5的右孩子为空，进行插入。</li>
-<li>插入4，4比10小，与10的左孩子节点5比较；4比5小，与5的左孩子节点进行比较，5的左孩子为空，进行插入。</li>
-<li>插入16，16比10大，与10的右孩子节点15比较；16比15大，与15的右孩子节点进行比较，15的右孩子为空，进行插入。</li>
-</ul>
-<p>从这个过程我们可以总结出插入新元素的步骤：</p>
-<p>寻找元素合适的插入位置：新元素与当前结点进行比较，若值大于当前结点，则从右子树进行寻找；否则从左子树进行寻找.<br>找到插入位置之后，以元素的值构建新节点，插入二叉排序树中<br>该过程的实现代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">/*插入函数*/</div><div class="line">template &lt;typename T&gt;</div><div class="line">void BSTree&lt;T&gt;::insert(T key)</div><div class="line">&#123;</div><div class="line">    BSNode&lt;T&gt;* pparent = nullptr;</div><div class="line">    BSNode&lt;T&gt;* pnode = root;</div><div class="line"> </div><div class="line">    while (pnode != nullptr)        //寻找合适的插入位置</div><div class="line">    &#123;</div><div class="line">        pparent = pnode;</div><div class="line">        if (key &gt; pnode-&gt;value)</div><div class="line">            pnode = pnode-&gt;rchild;</div><div class="line">        else if (key &lt; pnode-&gt;value)</div><div class="line">            pnode = pnode-&gt;lchild;</div><div class="line">        else</div><div class="line">            break;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    pnode = new BSNode&lt;T&gt;(key); //以元素的值构建新节点</div><div class="line"></div><div class="line">    if (pparent == nullptr)            //如果是空树</div><div class="line">    &#123;</div><div class="line">        root = pnode;                  //则新节点为根</div><div class="line">    &#125;</div><div class="line">    else                            </div><div class="line">    &#123;</div><div class="line">        if (key  &gt; pparent-&gt;value)   </div><div class="line">        &#123;</div><div class="line">            pparent-&gt;rchild = pnode;//否则新节点为其父节点的左孩</div><div class="line">        &#125;</div><div class="line">        else</div><div class="line">            pparent-&gt;lchild = pnode; //或右孩</div><div class="line">    &#125;</div><div class="line">    pnode-&gt;parent = pparent;        //指明新节点的父节点 </div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>将构建出来的新节点插入二叉排序树时，需要修改链接指针的指向。</p>
-<h4 id="遍历平衡二叉树"><a href="#遍历平衡二叉树" class="headerlink" title="遍历平衡二叉树"></a>遍历平衡二叉树</h4><p>遍历平衡二叉树，就是以某种方式逐个“访问”二叉树的每一个节点。“访问”是指对节点的进行某种操作，例如输出节点的值。<br>平衡二叉树是有序树，严格区分左子树与右子树，如果规定左子树先于右子树的次序，我们有三种方式遍历二叉树：</p>
-<ul>
-<li>前序遍历</li>
-<li>中序遍历</li>
-<li>后序遍历</li>
-</ul>
-<p>我们以如图的两棵二叉排序树进行遍历的算法演示。</p>
-<p><img src="/images/树-9.png" alt="enter description here" title="树-9"></p>
-<h5 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h5><p>若二叉树为空，则空操作返回，否则先访问根节点，然后前序遍历左子树，再前序遍历右子树。（简记为：VLR）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">/*前序遍历算法*/</div><div class="line">template &lt;typename T&gt;</div><div class="line">void BSTree&lt;T&gt;::preOrder()</div><div class="line">&#123;</div><div class="line">    preOrder(root);</div><div class="line">&#125;;</div><div class="line">template &lt;typename T&gt;</div><div class="line">void BSTree&lt;T&gt;::preOrder(BSNode&lt;T&gt; *p)</div><div class="line">&#123;</div><div class="line">    if (p != nullptr)</div><div class="line">    &#123;</div><div class="line">        cout &lt;&lt; p-&gt;value &lt;&lt; endl;</div><div class="line">        preOrder(p-&gt;lchild);</div><div class="line">        preOrder(p-&gt;rchild);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>前序遍历树a：10 5 4 3 6 15 16<br>前序遍历树b：5 3 2 4 8 7 9</p>
-<h5 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h5><p>若二叉树为空，则空操作返回，否则从根节点开始，中序遍历根节点的左子树，然后访问根节点，最后中序遍历右子树。（简记为：LVR）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">/*中序遍历算法*/</div><div class="line">template &lt;typename T&gt;</div><div class="line">void BSTree&lt;T&gt;::inOrder()</div><div class="line">&#123;</div><div class="line">    inOrder(root);</div><div class="line">&#125;;</div><div class="line">template&lt;typename T&gt;</div><div class="line">void BSTree&lt;T&gt;::inOrder(BSNode&lt;T&gt;* p)</div><div class="line">&#123;</div><div class="line">    if (p != nullptr)</div><div class="line">    &#123;</div><div class="line">        inOrder(p-&gt;lchild);</div><div class="line">        cout &lt;&lt; p-&gt;value &lt;&lt; endl;</div><div class="line">        inOrder(p-&gt;rchild);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>中序遍历树a：3 4 5 6 10 15 16<br>中序遍历树b：2 3 4 5 7 8 9</p>
-<p>二叉排序树的中序遍历刚好输出一个非递减的有序序列。</p>
-<h5 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h5><p>若树为空，则返回空操作，否则从左到右先叶子后节点的方式遍历访问左右子树，左右子树都访问结束，才访问根节点。（简称LRV）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">/*后序遍历算法*/</div><div class="line">template &lt;typename T&gt;</div><div class="line">void BSTree&lt;T&gt;::postOrder()</div><div class="line">&#123;</div><div class="line">    postOrder(root);</div><div class="line">&#125;;</div><div class="line">template &lt;typename T&gt;</div><div class="line">void BSTree&lt;T&gt;::postOrder(BSNode&lt;T&gt;* p)</div><div class="line">&#123;</div><div class="line">    if (p != nullptr)</div><div class="line">    &#123;</div><div class="line">        postOrder(p-&gt;lchild);</div><div class="line">        postOrder(p-&gt;rchild);</div><div class="line">        cout &lt;&lt; p-&gt;value&lt;&lt;endl;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>后序遍历树a：3 4 6 5 16 15 10<br>后序遍历树b：2 4 3 7 9 8 5</p>
-<h4 id="前驱与后继"><a href="#前驱与后继" class="headerlink" title="前驱与后继"></a>前驱与后继</h4><p>对于一棵二叉排序树，中序遍历时刚好可以输出一个非递减的序列。例如前序遍历图九树a：3 4 5 6 10 15 16，则可称：</p>
-<ul>
-<li>4是5 前驱节点，6是5的后继节点</li>
-<li>6是10的前驱节点，15是10的后继节点</li>
-</ul>
-<p>一个节点的前驱节点有3种情况：</p>
-<ul>
-<li>它有左子树，则左子树根节点为其前驱节点</li>
-<li>它没有左子树，且它本身为右子树，则其父节点为其前驱节点</li>
-<li>它没有左子树，且它本身为左子树，则它的前驱节点为“第一个拥有右子树的父节点”</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">/*寻找其前驱节点*/</div><div class="line">template &lt;typename T&gt;</div><div class="line">BSNode&lt;T&gt;* BSTree&lt;T&gt;::predecessor(BSNode&lt;T&gt;* pnode)</div><div class="line">&#123;</div><div class="line">if (pnode-&gt;lchild != nullptr)</div><div class="line">&#123;</div><div class="line">    pnode = pnode-&gt;lchild;</div><div class="line">    while (pnode-&gt;rchild != nullptr)</div><div class="line">    &#123;</div><div class="line">        pnode = pnode-&gt;rchild;</div><div class="line">    &#125;</div><div class="line">    return pnode;</div><div class="line">&#125;</div><div class="line"></div><div class="line">BSNode&lt;T&gt;* pparent = pnode-&gt;parent;</div><div class="line">while (pparent != nullptr &amp;&amp; pparent-&gt;lchild == pnode)//如果进入循环，则是第三种情况；否则为第二种情况</div><div class="line">&#123;</div><div class="line">    pnode = pparent;</div><div class="line">    pparent = pparent-&gt;parent;</div><div class="line">&#125;</div><div class="line">return pparent;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>同样的，一个节点的后继节点也有三种情况：</p>
-<ul>
-<li>它有右子树；则其后继节点为其右子树的最左节点</li>
-<li>它没有右子树，但它本身是一个左孩子，则后继节点为它的双亲</li>
-<li>它没有右子树，但它本身是一个右孩子，则其后继节点为“具有左孩子的最近父节点”<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">/*寻找其后继节点*/</div><div class="line">template &lt;typename T&gt;</div><div class="line">BSNode&lt;T&gt;* BSTree&lt;T&gt;::successor(BSNode&lt;T&gt;* pnode)</div><div class="line">&#123;</div><div class="line">    if (pnode-&gt;rchild != nullptr)</div><div class="line">    &#123;</div><div class="line">        pnode = pnode-&gt;rchild;</div><div class="line">        while (pnode-&gt;lchild != nullptr)</div><div class="line">        &#123;</div><div class="line">            pnode = pnode-&gt;lchild;</div><div class="line">        &#125;</div><div class="line">        return pnode;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    BSNode&lt;T&gt;* pparent = pnode-&gt;parent;</div><div class="line">    while (pparent!=nullptr&amp;&amp; pparent-&gt;rchild == pnode)</div><div class="line">    &#123;</div><div class="line">        pnode = pparent;</div><div class="line">        pparent = pparent-&gt;parent;</div><div class="line">    &#125;</div><div class="line">    return pparent;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h4><p>删除二叉排序树的某个节点有三种情况：</p>
-<ul>
-<li>被删除节点同时有左子树与右子树。</li>
-<li>被删除节点只有左子树或只有右子树。</li>
-<li>被删除节点没有子树。</li>
-</ul>
-<p>对于第一种情况，我们的处理方式是将前驱节点的值保存在当前结点，继而删除前驱节点。<br>对于第二种情况，我们直接用子树替换被删节点。<br>对于第三种情况，我们可以直接删除节点。</p>
-<p><img src="/images/树-10.png" alt="删除节点" title="树-10"></p>
-<p>删除节点的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">/*删除指定节点*/</div><div class="line">template &lt;typename T&gt;</div><div class="line">void BSTree&lt;T&gt;::remove(T key)</div><div class="line">&#123;</div><div class="line">    remove(root, key);</div><div class="line">&#125;;</div><div class="line">/*删除指定节点*/</div><div class="line">/*内部使用函数*/</div><div class="line">template &lt;typename T&gt;</div><div class="line">void BSTree&lt;T&gt;::remove(BSNode&lt;T&gt;* pnode, T key)</div><div class="line">&#123;</div><div class="line">    if (pnode != nullptr)</div><div class="line">    &#123;</div><div class="line">        if (pnode-&gt;value == key)</div><div class="line">        &#123;</div><div class="line">            BSNode&lt;T&gt;* pdel=nullptr;</div><div class="line"> </div><div class="line">            if (pnode-&gt;lchild == nullptr || pnode-&gt;rchild == nullptr)</div><div class="line">                pdel = pnode;                    //情况二、三：被删节点只有左子树或右子树，或没有孩子</div><div class="line">            else</div><div class="line">                pdel = predecessor(pnode);      //情况一：被删节点同时有左右子树，则删除该节点的前驱</div><div class="line"> </div><div class="line">            //此时，被删节点只有一个孩子（或没有孩子）.保存该孩子指针</div><div class="line">            BSNode&lt;T&gt;* pchild=nullptr;</div><div class="line">            if (pdel-&gt;lchild != nullptr)</div><div class="line">                pchild = pdel-&gt;lchild;</div><div class="line">            else</div><div class="line">                pchild = pdel-&gt;rchild;</div><div class="line"> </div><div class="line">            //让孩子指向被删除节点的父节点</div><div class="line">            if (pchild != nullptr)</div><div class="line">                pchild-&gt;parent = pdel-&gt;parent;</div><div class="line"> </div><div class="line">            //如果要删除的节点是头节点，注意更改root的值</div><div class="line">            if (pdel-&gt;parent == nullptr)</div><div class="line">                root = pchild;           </div><div class="line"> </div><div class="line">            //如果要删除的节点不是头节点，要注意更改它的双亲节点指向新的孩子节点</div><div class="line">            else if (pdel-&gt;parent-&gt;lchild==pdel)</div><div class="line">            &#123;</div><div class="line">                pdel-&gt;parent-&gt;lchild = pchild;</div><div class="line">            &#125;</div><div class="line">            else</div><div class="line">            &#123;</div><div class="line">                pdel-&gt;parent-&gt;rchild = pchild;</div><div class="line">            &#125;</div><div class="line"> </div><div class="line">            if (pnode-&gt;value != pdel-&gt;value)</div><div class="line">                pnode-&gt;value = pdel-&gt;value;</div><div class="line">            delete pdel;</div><div class="line">        &#125;</div><div class="line">        //进行递归删除</div><div class="line">        else if (key &gt; pnode-&gt;value)</div><div class="line">        &#123;</div><div class="line">            remove(pnode-&gt;rchild, key);</div><div class="line">        &#125;</div><div class="line">        else remove(pnode-&gt;lchild, key);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<h4 id="查找元素"><a href="#查找元素" class="headerlink" title="查找元素"></a>查找元素</h4><p>我们可以递归或非递归地进行元素的查找。元素的查找过程与元素的插入过程一致，也是在不断地与当前结点进行比较，若值比当前节点的值大，则在右子树进行查找，若值比当前节点的值小，则在左子树进行查找，可以看到这是一个很适合递归操作的过程。而由于二叉排序树这种左小右大的节点特征，也很容易进行非递归查找。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">/*查找指定元素的节点（非递归）*/</div><div class="line">template &lt;typename T&gt;</div><div class="line">BSNode&lt;T&gt;* BSTree&lt;T&gt;::search_Iterator(T key)</div><div class="line">&#123;</div><div class="line">    BSNode&lt;T&gt; * pnode = root;</div><div class="line">    while (pnode != nullptr)</div><div class="line">    &#123;</div><div class="line">        if (key == pnode-&gt;value)    //找到</div><div class="line">            return pnode;</div><div class="line">        if (key &gt; pnode-&gt;value)        //关键字比节点值大，在节点右子树查找</div><div class="line">            pnode = pnode-&gt;rchild;</div><div class="line">        else</div><div class="line">            pnode = pnode-&gt;lchild; //关键字比节点值小，在节点左子树查找</div><div class="line">    &#125;</div><div class="line">    return nullptr;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">/*查找指定元素的节点（递归）*/</div><div class="line">template &lt;typename T&gt;</div><div class="line">BSNode&lt;T&gt;* BSTree&lt;T&gt;::search_recursion(T key)</div><div class="line">&#123;</div><div class="line">    return search(root, key);       </div><div class="line">&#125;;</div><div class="line"> </div><div class="line">/*private:search()*/</div><div class="line">/*递归查找的类内部实现*/</div><div class="line">template &lt;typename T&gt;</div><div class="line">BSNode&lt;T&gt;* BSTree&lt;T&gt;::search(BSNode&lt;T&gt;* &amp; pnode, T key)</div><div class="line">&#123;</div><div class="line">    if (pnode == nullptr)</div><div class="line">        return nullptr;</div><div class="line">    if (pnode-&gt;value == key)</div><div class="line">        return pnode;</div><div class="line">    //cout &lt;&lt; &quot;--&gt;&quot; &lt;&lt; pnode-&gt;value &lt;&lt; endl; //可以输出查找路径</div><div class="line">    if (key &gt; pnode-&gt;value)</div><div class="line">        return search(pnode-&gt;rchild, key);</div><div class="line">    return search(pnode-&gt;lchild, key);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<h4 id="查找最值元素"><a href="#查找最值元素" class="headerlink" title="查找最值元素"></a>查找最值元素</h4><p>二叉排序树的最小值位于其最左节点上；最大值位于其最右节点上：</p>
-<p><img src="/images/树-11.png" alt="最值元素" title="树-11"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">/*寻找最小元素*/</div><div class="line">template &lt;typename T&gt;</div><div class="line">T BSTree&lt;T&gt;::search_minimun()</div><div class="line">&#123;</div><div class="line">    return search_minimun(root);</div><div class="line">&#125;;</div><div class="line">template &lt;typename T&gt;</div><div class="line">T BSTree&lt;T&gt;::search_minimun(BSNode&lt;T&gt;* p)</div><div class="line">&#123;</div><div class="line">    if (p-&gt;lchild != nullptr)</div><div class="line">        return search_minimun(p-&gt;lchild);</div><div class="line">    return p-&gt;value;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line">/*寻找最大元素*/</div><div class="line">template &lt;typename T&gt;</div><div class="line">T BSTree&lt;T&gt;::search_maximum()</div><div class="line">&#123;</div><div class="line">    return search_maximum(root);</div><div class="line">&#125;;</div><div class="line">template &lt;typename T&gt;</div><div class="line">T BSTree&lt;T&gt;::search_maximum(BSNode&lt;T&gt;*p)</div><div class="line">&#123;</div><div class="line">    if (p-&gt;rchild != nullptr)</div><div class="line">        return search_maximum(p-&gt;rchild);</div><div class="line">    return p-&gt;value;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<h4 id="销毁二叉树"><a href="#销毁二叉树" class="headerlink" title="销毁二叉树"></a>销毁二叉树</h4><p>使用后序遍历递归销毁二叉树<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">/*销毁二叉树*/</div><div class="line">template&lt;typename T&gt;</div><div class="line">void BSTree&lt;T&gt;::destory()</div><div class="line">&#123;</div><div class="line">    destory(root);</div><div class="line">&#125;;</div><div class="line">template &lt;typename T&gt;</div><div class="line">void BSTree&lt;T&gt;::destory(BSNode&lt;T&gt;* &amp;p)</div><div class="line">&#123;</div><div class="line">    if (p != nullptr)</div><div class="line">    &#123;</div><div class="line">        if (p-&gt;lchild != nullptr)</div><div class="line">            destory(p-&gt;lchild);</div><div class="line">        if (p-&gt;rchild != nullptr)</div><div class="line">            destory(p-&gt;rchild);</div><div class="line">        delete p;</div><div class="line">        p = nullptr;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<h4 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">int main()</div><div class="line">&#123;</div><div class="line">    BSTree&lt;int&gt; t;</div><div class="line">    t.insert(62);</div><div class="line">    t.insert(58);</div><div class="line">    t.insert(47);</div><div class="line">    t.insert(51);</div><div class="line">    t.insert(35);</div><div class="line">    t.insert(37);</div><div class="line">    t.insert(88);</div><div class="line">    t.insert(73);</div><div class="line">    t.insert(99);</div><div class="line">    t.insert(93);</div><div class="line">    t.insert(95);</div><div class="line"> </div><div class="line">    cout &lt;&lt; endl &lt;&lt; &quot;中序遍历：&quot; &lt;&lt; endl;</div><div class="line">    t.inOrder();</div><div class="line"> </div><div class="line">    cout &lt;&lt; &quot;最大元素:&quot; &lt;&lt; t.search_maximum() &lt;&lt; endl;</div><div class="line">    cout &lt;&lt; &quot;最小元素:&quot; &lt;&lt; t.search_minimun() &lt;&lt; endl;</div><div class="line"> </div><div class="line">    cout &lt;&lt; &quot;删除元素99&quot; &lt;&lt; endl;</div><div class="line">    t.remove(99);</div><div class="line"> </div><div class="line">    cout &lt;&lt; &quot;最大元素:&quot; &lt;&lt; t.search_maximum() &lt;&lt; endl;</div><div class="line"> </div><div class="line">    t.destory();</div><div class="line"> </div><div class="line">    getchar();</div><div class="line">    return 0;</div><div class="line">&#125;</div><div class="line">运行结果：</div><div class="line"></div><div class="line"> </div><div class="line">中序遍历：</div><div class="line">35</div><div class="line">37</div><div class="line">47</div><div class="line">51</div><div class="line">58</div><div class="line">62</div><div class="line">73</div><div class="line">88</div><div class="line">93</div><div class="line">95</div><div class="line">99</div><div class="line">最大元素:99</div><div class="line">最小元素:35</div><div class="line">删除元素99</div><div class="line">最大元素:95</div></pre></td></tr></table></figure>
-<blockquote>
-<p>转载<a href="http://www.cnblogs.com/QG-whz/p/5168620.html#_label0" target="_blank" rel="external">http://www.cnblogs.com/QG-whz/p/5168620.html#_label0</a></p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;树的简介&quot;&gt;&lt;a href=&quot;#树的简介&quot; class=&quot;headerlink&quot; title=&quot;树的简介&quot;&gt;&lt;/a&gt;树的简介&lt;/h3&gt;&lt;p&gt;树是一种数据结构，它是n(n&amp;gt;=0)个节点的有限集。n=0时称为空树。n&amp;gt;0时，有限集的元素构成一个具有层次感的
-    
-    </summary>
-    
-    
-      <category term="数据结构" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     
   </entry>
   
