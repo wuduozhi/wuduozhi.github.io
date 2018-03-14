@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-14T15:58:11.895Z</updated>
+  <updated>2018-03-14T16:03:12.548Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/03/15/%E9%9D%A2%E8%AF%95-SpringMVC%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
     <id>http://yoursite.com/2018/03/15/面试-SpringMVC常见面试题/</id>
     <published>2018-03-14T19:15:46.000Z</published>
-    <updated>2018-03-14T15:58:11.895Z</updated>
+    <updated>2018-03-14T16:03:12.548Z</updated>
     
     <content type="html"><![CDATA[<h3 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h3><h4 id="什么是Spring框架？Spring框架有哪些主要模块？"><a href="#什么是Spring框架？Spring框架有哪些主要模块？" class="headerlink" title="什么是Spring框架？Spring框架有哪些主要模块？"></a>什么是Spring框架？Spring框架有哪些主要模块？</h4><p>Spring框架是一个为Java应用程序的开发提供了综合、广泛的基础性支持的Java平台。Spring帮助开发者解决了开发中基础性的问题，使得开发人员可以专注于应用程序的开发。Spring框架本身亦是按照设计模式精心打造，这使得我们可以在开发环境中安心的集成Spring框架，不必担心Spring是如何在后台进行工作的。</p>
 <p>Spring框架至今已集成了20多个模块。这些模块主要被分如下图所示的核心容器、数据访问/集成,、Web、AOP（面向切面编程）、工具、消息和测试模块。</p>
@@ -44,7 +44,7 @@
 <li>Setter方法注入</li>
 <li>接口注入</li>
 </ol>
-<h4 id="请解释下Spring框架中的IoC？"><a href="#请解释下Spring框架中的IoC？" class="headerlink" title="请解释下Spring框架中的IoC？"></a>请解释下Spring框架中的IoC？</h4><p>ring中的 org.springframework.beans 包和 org.springframework.context包构成了Spring框架IoC容器的基础。</p>
+<h4 id="请解释下Spring框架中的IoC？"><a href="#请解释下Spring框架中的IoC？" class="headerlink" title="请解释下Spring框架中的IoC？"></a>请解释下Spring框架中的IoC？</h4><p>Spring中的 org.springframework.beans 包和 org.springframework.context包构成了Spring框架IoC容器的基础。</p>
 <p>BeanFactory 接口提供了一个先进的配置机制，使得任何类型的对象的配置成为可能。ApplicationContex接口对BeanFactory（是一个子接口）进行了扩展，在BeanFactory的基础上添加了其他功能，比如与Spring的AOP更容易集成，也提供了处理message resource的机制（用于国际化）、事件传播以及应用层的特别配置，比如针对Web应用的WebApplicationContext。</p>
 <p>org.springframework.beans.factory.BeanFactory 是Spring IoC容器的具体实现，用来包装和管理前面提到的各种bean。BeanFactory接口是Spring IoC 容器的核心接口。</p>
 <h4 id="谈谈你对spring-IOC和DI的理解，它们有什么区别？"><a href="#谈谈你对spring-IOC和DI的理解，它们有什么区别？" class="headerlink" title="谈谈你对spring IOC和DI的理解，它们有什么区别？"></a>谈谈你对spring IOC和DI的理解，它们有什么区别？</h4><p>IoC Inverse of Control 反转控制的概念，就是将原本在程序中手动创建UserService对象的控制权，交由Spring框架管理，简单说，就是创建UserService对象控制权被反转到了Spring框架</p>
