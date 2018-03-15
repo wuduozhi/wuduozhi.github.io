@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-14T16:03:12.548Z</updated>
+  <updated>2018-03-15T15:56:45.250Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,75 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>工具|gcc的一些坑</title>
+    <link href="http://yoursite.com/2018/03/16/%E5%B7%A5%E5%85%B7-gcc%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/"/>
+    <id>http://yoursite.com/2018/03/16/工具-gcc的一些坑/</id>
+    <published>2018-03-15T23:44:27.000Z</published>
+    <updated>2018-03-15T15:56:45.250Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>GCC 的意思也只是 GNU C Compiler 而已。经过了这么多年的发展，GCC 已经不仅仅能支持 C 语言；它现在还支持 Ada 语言、C++ 语言、Java 语言、Objective C 语言、Pascal 语言、COBOL语言，以及支持函数式编程和逻辑编程的 Mercury 语言，等等。而 GCC 也不再单只是 GNU C 语言编译器的意思了，而是变成了 GNU Compiler Collection 也即是 GNU 编译器家族的意思了。另一方面，说到 GCC 对于操作系统平台及硬件平台支持，概括起来就是一句话：无所不在</p>
+<h3 id="How-to-use"><a href="#How-to-use" class="headerlink" title="How to use?"></a>How to use?</h3><p>gcc说到底也就是一个工具，知道怎么用才是硬功夫。</p>
+<h4 id="简单编译"><a href="#简单编译" class="headerlink" title="简单编译"></a>简单编译</h4><p>示例程序如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//test.c</div><div class="line">#include &lt;stdio.h&gt;</div><div class="line">int main(void)</div><div class="line">&#123;</div><div class="line">    printf(&quot;Hello World!\n&quot;);</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个程序，一步到位的编译指令是:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc test.c -o test</div></pre></td></tr></table></figure></p>
+<p>实质上，上述编译过程是分为四个阶段进行的，即预处理(也称预编译，Preprocessing)、编译(Compilation)、汇编 (Assembly)和连接(Linking)。</p>
+<h5 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -E test.c -o test.i 或 gcc -E test.c</div></pre></td></tr></table></figure>
+<p>可以输出test.i文件中存放着test.c经预处理之后的代码。打开test.i文件，看一看，就明白了。后面那条指令，是直接在命令行窗口中输出预处理后的代码.</p>
+<p>gcc的-E选项，可以让编译器在预处理后停止，并输出预处理结果。在本例中，预处理结果就是将stdio.h 文件中的内容插入到test.c中了。</p>
+<h5 id="编译为汇编代码-Compilation"><a href="#编译为汇编代码-Compilation" class="headerlink" title="编译为汇编代码(Compilation)"></a>编译为汇编代码(Compilation)</h5><p>预处理之后，可直接对生成的test.i文件编译，生成汇编代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -S test.i -o test.s</div></pre></td></tr></table></figure></p>
+<p>gcc的-S选项，表示在程序编译期间，在生成汇编代码后，停止，-o输出汇编代码文件。</p>
+<h5 id="汇编-Assembly"><a href="#汇编-Assembly" class="headerlink" title="汇编(Assembly)"></a>汇编(Assembly)</h5><p>对于上一小节中生成的汇编代码文件test.s，gas汇编器负责将其编译为目标文件，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -c test.s -o test.o</div></pre></td></tr></table></figure></p>
+<h5 id="连接-Linking"><a href="#连接-Linking" class="headerlink" title="连接(Linking)"></a>连接(Linking)</h5><p>gcc连接器是gas提供的，负责将程序的目标文件与所需的所有附加的目标文件连接起来，最终生成可执行文件。附加的目标文件包括静态连接库和动态连接库。</p>
+<p>对于上一小节中生成的test.o，将其与Ｃ标准输入输出库进行连接，最终生成程序test<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc test.o -o test</div></pre></td></tr></table></figure></p>
+<p>最后，在命令行窗口中，执行./test, 让它说HelloWorld吧！</p>
+<h4 id="多个程序文件的编译"><a href="#多个程序文件的编译" class="headerlink" title="多个程序文件的编译"></a>多个程序文件的编译</h4><p>通常整个程序是由多个源文件组成的，相应地也就形成了多个编译单元，使用GCC能够很好地管理这些编译单元。假设有一个由test1.c和 test2.c两个源文件组成的程序，为了对它们进行编译，并最终生成可执行程序test，可以使用下面这条命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc test1.c test2.c -o test</div></pre></td></tr></table></figure></p>
+<p>如果同时处理的文件不止一个，GCC仍然会按照预处理、编译和链接的过程依次进行。如果深究起来，上面这条命令大致相当于依次执行如下三条命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">gcc -c test1.c -o test1.o</div><div class="line">gcc -c test2.c -o test2.o</div><div class="line">gcc test1.o test2.o -o test</div></pre></td></tr></table></figure></p>
+<h4 id="检错"><a href="#检错" class="headerlink" title="检错"></a>检错</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -pedantic illcode.c -o illcode</div></pre></td></tr></table></figure>
+<p><strong>-pedantic</strong>编译选项并不能保证被编译程序与ANSI/ISO C标准的完全兼容，它仅仅只能用来帮助Linux程序员离这个目标越来越近。或者换句话说，<strong>-pedantic</strong>选项能够帮助程序员发现一些不符合 ANSI/ISO C标准的代码，但不是全部，事实上只有ANSI/ISO C语言标准中要求进行编译器诊断的那些情况，才有可能被GCC发现并提出警告。</p>
+<p>除了-pedantic之外，GCC还有一些其它编译选项也能够产生有用的警告信息。这些选项大多以-W开头，其中最有价值的当数-Wall了，使用它能够使GCC产生尽可能多的警告信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -Wall illcode.c -o illcode</div></pre></td></tr></table></figure></p>
+<p>GCC给出的警告信息虽然从严格意义上说不能算作错误，但却很可能成为错误的栖身之所。一个优秀的Linux程序员应该尽量避免产生警告信息，使自己的代码始终保持标准、健壮的特性。所以将警告信息当成编码错误来对待，是一种值得赞扬的行为！所以，在编译程序时带上-Werror选项，那么GCC会在所有产生警告的地方停止编译，迫使程序员对自己的代码进行修改，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -Werror test.c -o test</div></pre></td></tr></table></figure></p>
+<h4 id="库文件连接"><a href="#库文件连接" class="headerlink" title="库文件连接"></a>库文件连接</h4><p>开发软件时，完全不使用第三方函数库的情况是比较少见的，通常来讲都需要借助许多函数库的支持才能够完成相应的功能。从程序员的角度看，函数库实际上就是一些头文件（.h）和库文件（so、或lib、dll）的集合。。虽然Linux下的大多数函数都默认将头文件放到/usr/include/目录下，而库文件则放到/usr/lib/目录下；Windows所使用的库文件主要放在Visual Stido的目录下的include和lib，以及系统文件夹下。但也有的时候，我们要用的库不再这些目录下，所以GCC在编译时必须用自己的办法来查找所需要的头文件和库文件。</p>
+<p>例如我们的程序test.c是在linux上使用c连接mysql，这个时候我们需要去mysql官网下载MySQL Connectors的C库，下载下来解压之后，有一个include文件夹，里面包含mysql connectors的头文件，还有一个lib文件夹，里面包含二进制so文件libmysqlclient.so</p>
+<p>其中inclulde文件夹的路径是/usr/dev/mysql/include,lib文件夹是/usr/dev/mysql/lib</p>
+<h5 id="编译成可执行文件"><a href="#编译成可执行文件" class="headerlink" title="编译成可执行文件"></a>编译成可执行文件</h5><p>首先我们要进行编译test.c为目标文件，这个时候需要执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc –c –I /usr/dev/mysql/include test.c –o test.o</div></pre></td></tr></table></figure></p>
+<h5 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h5><p>最后我们把所有目标文件链接成可执行文件:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc –L /usr/dev/mysql/lib –lmysqlclient test.o –o test</div></pre></td></tr></table></figure></p>
+<p>Linux下的库文件分为两大类分别是动态链接库（通常以.so结尾）和静态链接库（通常以.a结尾），二者的区别仅在于程序执行时所需的代码是在运行时动态加载的，还是在编译时静态加载的。</p>
+<h5 id="强制链接时使用静态链接库"><a href="#强制链接时使用静态链接库" class="headerlink" title="强制链接时使用静态链接库"></a>强制链接时使用静态链接库</h5><p>默认情况下， GCC在链接时优先使用动态链接库，只有当动态链接库不存在时才考虑使用静态链接库，如果需要的话可以在编译时加上-static选项，强制使用静态链接库。</p>
+<p>在/usr/dev/mysql/lib目录下有链接时所需要的库文件libmysqlclient.so和libmysqlclient.a，为了让GCC在链接时只用到静态链接库，可以使用下面的命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc –L /usr/dev/mysql/lib –static –lmysqlclient test.o –o test</div></pre></td></tr></table></figure></p>
+<p>静态库链接时搜索路径顺序：</p>
+<ol>
+<li>ld会去找GCC命令中的参数-L</li>
+<li>再找gcc的环境变量LIBRARY_PATH</li>
+<li>再找内定目录 /lib /usr/lib /usr/local/lib 这是当初compile gcc时写在程序内的</li>
+</ol>
+<p>动态链接时、执行时搜索路径顺序:</p>
+<ol>
+<li>编译目标代码时指定的动态库搜索路径</li>
+<li>环境变量LD_LIBRARY_PATH指定的动态库搜索路径</li>
+<li>配置文件/etc/ld.so.conf中指定的动态库搜索路径</li>
+<li>默认的动态库搜索路径/lib</li>
+<li>默认的动态库搜索路径/usr/lib</li>
+</ol>
+<p>有关环境变量：<br>LIBRARY_PATH环境变量：指定程序静态链接库文件搜索路径<br>LD_LIBRARY_PATH环境变量：指定程序动态链接库文件搜索路径</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;p&gt;GCC 的意思也只是 GNU C Compiler 而已。经过了这么多年的发展，GCC 已经不仅仅能支持 C 语言；它现在还支持 Ada 语
+    
+    </summary>
+    
+      <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>面试|SpringMVC常见面试题</title>
     <link href="http://yoursite.com/2018/03/15/%E9%9D%A2%E8%AF%95-SpringMVC%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
     <id>http://yoursite.com/2018/03/15/面试-SpringMVC常见面试题/</id>
     <published>2018-03-14T19:15:46.000Z</published>
-    <updated>2018-03-14T16:03:12.548Z</updated>
+    <updated>2018-03-15T15:56:49.562Z</updated>
     
     <content type="html"><![CDATA[<h3 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h3><h4 id="什么是Spring框架？Spring框架有哪些主要模块？"><a href="#什么是Spring框架？Spring框架有哪些主要模块？" class="headerlink" title="什么是Spring框架？Spring框架有哪些主要模块？"></a>什么是Spring框架？Spring框架有哪些主要模块？</h4><p>Spring框架是一个为Java应用程序的开发提供了综合、广泛的基础性支持的Java平台。Spring帮助开发者解决了开发中基础性的问题，使得开发人员可以专注于应用程序的开发。Spring框架本身亦是按照设计模式精心打造，这使得我们可以在开发环境中安心的集成Spring框架，不必担心Spring是如何在后台进行工作的。</p>
 <p>Spring框架至今已集成了20多个模块。这些模块主要被分如下图所示的核心容器、数据访问/集成,、Web、AOP（面向切面编程）、工具、消息和测试模块。</p>
@@ -2013,142 +2077,6 @@ tex2jax: {inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]]
     
     
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP|正则表达式</title>
-    <link href="http://yoursite.com/2018/02/10/PHP-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
-    <id>http://yoursite.com/2018/02/10/PHP-正则表达式/</id>
-    <published>2018-02-10T09:46:44.000Z</published>
-    <updated>2018-02-10T02:42:20.391Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="（基础篇）正则表达式的语法汇总与详细介绍"><a href="#（基础篇）正则表达式的语法汇总与详细介绍" class="headerlink" title="（基础篇）正则表达式的语法汇总与详细介绍"></a>（基础篇）正则表达式的语法汇总与详细介绍</h3><p>正则表达式是个好东西啊，可以让我们在一堆数据中找到我们需要的数据，这一点在爬虫中能很好的体现，还有就是能帮助我们检查数据。用好正则表达式往往会起到事半功倍的效果，以下是对PHP正则表达式的语法汇总和详细介绍。</p>
-<p>首先，让我们看看两个特别的字符：<strong>‘^’ 和 ‘$’</strong> 他们是分别用来匹配字符串的开始和结束，一下分别举例说明</p>
-<ul>
-<li>“^The”: 匹配以 “The”开头的字符串;</li>
-<li>“of despair$”: 匹配以 “of despair” 结尾的字符串;</li>
-<li>“^abc$”: 匹配以abc开头和以abc结尾的字符串，实际上是只有abc与之匹配</li>
-<li>“notice”: 匹配包含notice的字符串</li>
-</ul>
-<p>你可以看见如果你没有用我们提到的两个字符（最后一个例子），就是说 模式（正则表达式） 可以出现在被检验字符串的任何地方，你没有把他锁定到两边</p>
-<p><strong>这里还有几个字符 ‘*’, ‘+’,和 ‘?’,</strong></p>
-<p>他们用来表示一个字符可以出现的次数或者顺序. 他们分别表示：”zero or more”, “one or more”, and “zero or one.” 这里是一些例子:</p>
-<ul>
-<li>“ab*”: 匹配字符串a和0个或者更多b组成的字符串(“a”, “ab”, “abbb”, etc.);</li>
-<li>“ab+”: 和上面一样，但最少有一个b (“ab”, “abbb”, etc.);</li>
-<li>“ab?”:匹配0个或者一个b;</li>
-<li>“a?b+$”: 匹配以一个或者0个a再加上一个以上的b结尾的字符串.</li>
-</ul>
-<p><strong>你也可以在大括号里面限制字符出现的个数，比如</strong></p>
-<ul>
-<li>“ab{2}”: 匹配一个a后面跟两个b（一个也不能少）(“abb”);</li>
-<li>“ab{2,}”: 最少更两个b(“abb”, “abbbb”, etc.);</li>
-<li>“ab{3,5}”: 3－5个b(“abbb”, “abbbb”, or “abbbbb”).</li>
-</ul>
-<p>你还要注意到你必须总是指定 (i.e, “{0,2}”, not “{,2}”.同样，你必须注意到, ‘*’, ‘+’, 和’?’ 分别和一下三个范围标注是一样的，”{0,}”, “{1,}”, 和 “{0,1}”。</p>
-<p><strong>现在把一定数量的字符放到小括号里，比如:</strong></p>
-<ul>
-<li>“a(bc)*”: 匹配 a 后面跟0个或者一个”bc”;</li>
-<li>“a(bc){1,5}”: 一个到5个 “bc.”</li>
-</ul>
-<p><strong>还有一个字符 ‘│’, 相当于OR 操作:</strong></p>
-<ul>
-<li>“hi│hello”: 匹配含有”hi” 或者 “hello” 的 字符串;</li>
-<li>“(b│cd)ef”: 匹配含有 “bef” 或者 “cdef”的字符串;</li>
-<li>“(a│b)*c”: 匹配含有这样 - 多个（包括0个）a或b，后面跟一个c</li>
-</ul>
-<p>的字符串 的字符串;</p>
-<p><strong>一个点(‘.’)可以代表所有的 单一字符:</strong></p>
-<ul>
-<li>“a.[0-9]”: 一个a跟一个字符再跟一个数字的 （含有这样一个字符串的字符串将被匹配，以后省略此括号）</li>
-<li>“^.{3}$”: 以三个字符结尾 .</li>
-</ul>
-<p><strong>中括号括住的内容只匹配一个 单一的字符</strong></p>
-<ul>
-<li>“[ab]”: 匹配单个的 a 或者 b ( 和 “a│b” 一样);</li>
-<li>“[a-d]”: 匹配’a’ 到’d’的单个字符 (和”a│b│c│d” 还有 “[abcd]”效果一样);</li>
-<li>“^[a-zA-Z]”: 匹配以字母开头的字符串</li>
-<li>“[0-9]%”: 匹配含有 形如 x％ 的字符串</li>
-<li>“,[a-zA-Z0-9]$”: 匹配以逗号在加一个数字或字母结尾的字符串</li>
-</ul>
-<p>你也可以把你不想要得字符列在中括号里，你只需要在总括号里面使用’^’ 作为开头 (i.e., “%[^a-zA-Z]%” 匹配含有 两个百分号里面有一个非字母 的字符串).</p>
-<p>为了能够解释，但”^.[$()│*+?{/“作为有特殊意义的字符的时候，你必须在这些字符面前加’’, 还有在php3中你应该避免在模式的最前面使用/, 比如说,正则表达式 “(/$│?[0-9]+” 应该这样调用 ereg(“(//$│?[0-9]+”, $str) (不知道php4是不是一样)</p>
-<p>不要忘记在中括号里面的字符是这条规路的例外—在中括号里面, 所有的特殊字符，包括(‘’), 都将失去他们的特殊性质(i.e., “[*/+?{}.]”匹配含有这些字符的字符串). 还有,正如regx的手册告诉我们: “如果列表里含有 ‘]’, 最好把它作为列表里的第一个字符(可能跟在’^’后面). 如果含有’-‘, 最好把它放在最前面或者最后面, or 或者一个范围的第二个结束点(i.e. [a-d-0-9]中间的‘-‘将有效.</p>
-<p>为了完整, 我应该涉及到 collating sequences, character classes, 同埋 equivalence classes. 但我在这些方面不想讲的太详细, 这些在下面的文章仲都不需要涉及到. 你们可以在regex man pages 那里得到更多消息.</p>
-<h3 id="如何构建一个模式来匹配-货币数量-的输入"><a href="#如何构建一个模式来匹配-货币数量-的输入" class="headerlink" title="如何构建一个模式来匹配 货币数量 的输入"></a>如何构建一个模式来匹配 货币数量 的输入</h3><p>好了，现在我们要用我们所学的来干一些有用的事：构建一个匹配模式去检查输入的信息是否为一个表示money的数字。我们认为一个表示money的数量有四种方式： “10000.00” 和 “10,000.00”,或者没有小数部分, “10000” and “10,000”. 现在让我们开始构建这个匹配模式:</p>
-<p>^[1-9][0-9]*$</p>
-<p>这是所变量必须以非0的数字开头.但这也意味着 单一的 “0” 也不能通过测试. 以下是解决的方法:</p>
-<p>^(0│[1-9][0-9]*)$</p>
-<p>“只有0和不以0开头的数字与之匹配”，我们也可以允许一个负号再数字之前:</p>
-<p>^(0│-?[1-9][0-9]*)$</p>
-<p>这就是: “0 或者 一个以0开头可能有一个负号在前面的数字.” 好了, 好了现在让我们别那么严谨，允许以0开头.现在让我们放弃负号, 因为我们在表示钱币的时候并不需要用到. 我们现在指定模式 用来匹配小数部分:</p>
-<p>^[0-9]+(/.[0-9]+)?$</p>
-<p>这暗示匹配的字符串必须最少以一个阿拉伯数字开头. 但是注意，在上面模式中 “10.” 是不匹配的, 只有 “10” 和 “10.2” 才可以. （你知道为什么吗）</p>
-<p>^[0-9]+(/.[0-9]{2})?$</p>
-<p>我们上面指定小数点后面必须有两位小数.如果你认为这样太苛刻,你可以改成:</p>
-<p>^[0-9]+(/.[0-9]{1,2})?$</p>
-<p>这将允许小数点后面有一到两个字符. 现在我们加上用来增加可读性的逗号（每隔三位）, 我们可以这样表示:</p>
-<p>^[0-9]{1,3}(,[0-9]{3})*(/.[0-9]{1,2})?$</p>
-<p>不要忘记加号 ‘+’ 可以被乘号 ‘*’ 替代如果你想允许空白字符串被输入话 (为什么?). 也不要忘记反斜杆 ‘/‘ 在php字符串中可能会出现错误 (很普遍的错误). 现在，我们已经可以确认字符串了, 我们现在把所有逗号都去掉 str_replace(“,”, “”, $money) 然后在把类型看成 double然后我们就可以通过他做数学计算了.</p>
-<h3 id="构造检查email的正则表达式"><a href="#构造检查email的正则表达式" class="headerlink" title="构造检查email的正则表达式"></a>构造检查email的正则表达式</h3><p>好,让我们继续讨论怎么验证一个email地址. 在一个完整的email地址中有三个部分: POP3 用户名 (在 ‘@’ 左边的一切), ‘@’, 服务器名(就是剩下那部分). 用户名可以含有大小写字母阿拉伯数字,句号 (‘.’), 减号(‘-‘), and 下划线 (‘_’). 服务器名字也是符合这个规则,当然下划线除外.</p>
-<p>现在, 用户名的开始和结束都不能是句点. 服务器也是这样. 还有你不能有两个连续的句点他们之间至少存在一个字符，好现在我们来看一下怎么为用户名写一个匹配模式:</p>
-<p>^[_a-zA-Z0-9-]+$</p>
-<p>现在还不能允许句号的存在. 我们把它加上:</p>
-<p>^[_a-zA-Z0-9-]+(/.[_a-zA-Z0-9-]+)*$</p>
-<p>上面的意思就是说: “以至少一个规范字符（除.外）开头,后面跟着0个或者多个以点开始的字符串.”</p>
-<p>简单化一点, 我们可以用 eregi()取代 ereg().eregi()对大小写不敏感, 我们就不需要指定两个范围 “a-z” 和 “A-Z” – 只需要指定一个就可以了:</p>
-<p>^[_a-z0-9-]+(/.[_a-z0-9-]+)*$</p>
-<p>后面的服务器名字也是一样,但要去掉下划线:</p>
-<p>^[a-z0-9-]+(/.[a-z0-9-]+)*$</p>
-<p>Done. 现在只需要用”@”把两部分连接:</p>
-<p>^[_a-z0-9-]+(/.[_a-z0-9-]+)<em>@[a-z0-9-]+(/.[a-z0-9-]+)</em>$</p>
-<p>这就是完整的email认证匹配模式了,只需要调用</p>
-<p>eregi(‘^[_a-z0-9-]+(/.[_a-z0-9-]+)<em>@[a-z0-9-]+(/.[a-z0-9-]+)</em>$ ‘,$eamil)</p>
-<p>就可以得到是否为email了</p>
-<h3 id="校验是否全由数字组成"><a href="#校验是否全由数字组成" class="headerlink" title="校验是否全由数字组成"></a>校验是否全由数字组成</h3><p>/^[0-9]{1,20}$/</p>
-<p>^ 表示打头的字符要匹配紧跟^后面的规则</p>
-<p>$ 表示打头的字符要匹配紧靠$前面的规则</p>
-<p>[ ] 中的内容是可选字符集</p>
-<p>[0-9] 表示要求字符范围在0-9之间</p>
-<p>{1,20}表示数字字符串长度合法为1到20，即为[0-9]中的字符出现次数的范围是1到20次。</p>
-<p>/^ 和 $/成对使用应该是表示要求整个字符串完全匹配定义的规则，而不是只匹配字符串中的一个子串。</p>
-<h3 id="校验登录名：只能输入5-20个以字母开头、可带数字、“-”、“-”的字串"><a href="#校验登录名：只能输入5-20个以字母开头、可带数字、“-”、“-”的字串" class="headerlink" title="校验登录名：只能输入5-20个以字母开头、可带数字、“_”、“.”的字串"></a>校验登录名：只能输入5-20个以字母开头、可带数字、“_”、“.”的字串</h3><p>/^[a-zA-Z]{1}([a-zA-Z0-9]|[._]){4,19}$/</p>
-<p>^[a-zA-Z]{1} 表示第一个字符要求是字母。</p>
-<p>([a-zA-Z0-9]|[.<em>]){4,19} 表示从第二位开始（因为它紧跟在上个表达式后面）的一个长度为4到9位的字符串，它要求是由大小写字母、数字或者特殊字符集[.</em>]组成。</p>
-<h3 id="校验用户姓名：只能输入1-30个以字母开头的字串"><a href="#校验用户姓名：只能输入1-30个以字母开头的字串" class="headerlink" title="校验用户姓名：只能输入1-30个以字母开头的字串"></a>校验用户姓名：只能输入1-30个以字母开头的字串</h3><p>/^[a-zA-Z]{1,30}$/</p>
-<h3 id="校验密码：只能输入6-20个字母、数字、下划线"><a href="#校验密码：只能输入6-20个字母、数字、下划线" class="headerlink" title="校验密码：只能输入6-20个字母、数字、下划线"></a>校验密码：只能输入6-20个字母、数字、下划线</h3><p>/^(\w){6,20}$/</p>
-<p>\w：用于匹配字母，数字或下划线字符</p>
-<h3 id="校验普通电话、传真号码：可以“-”或数字开头，可含有“-”-和-“-”"><a href="#校验普通电话、传真号码：可以“-”或数字开头，可含有“-”-和-“-”" class="headerlink" title="校验普通电话、传真号码：可以“+”或数字开头，可含有“-” 和 “ ”"></a>校验普通电话、传真号码：可以“+”或数字开头，可含有“-” 和 “ ”</h3><p>/^[+]{0,1}(\d){1,3}[ ]?([-]?((\d)|[ ]){1,12})+$/</p>
-<p>\d：用于匹配从0到9的数字；</p>
-<p>“?”元字符规定其前导对象必须在目标对象中连续出现零次或一次</p>
-<p>可以匹配的字符串如：+123 -999 999 ； +123-999 999 ；123 999 999 ；+123 999999等</p>
-<h3 id="校验URL"><a href="#校验URL" class="headerlink" title="校验URL"></a>校验URL</h3><p>/^http[s]{0,1}:\/\/.+$/ 或 /^http[s]{0,1}:\/\/.{1,n}$/ (表示url串的长度为length(“https://”) + n )</p>
-<p>\ / ：表示字符“/”。</p>
-<p>. 表示所有字符的集</p>
-<ul>
-<li>等同于{1,}，就是1到正无穷吧。</li>
-</ul>
-<h3 id="校验纯中文字符"><a href="#校验纯中文字符" class="headerlink" title="校验纯中文字符"></a>校验纯中文字符</h3><p>/^[\u4E00-\u9FA5]+$/</p>
-<p>[\u4E00-\u9FA5] ：估计是中文字符集的范围吧</p>
-<h3 id="正则表达式的其他用法"><a href="#正则表达式的其他用法" class="headerlink" title="正则表达式的其他用法"></a>正则表达式的其他用法</h3><h4 id="提取字符串"><a href="#提取字符串" class="headerlink" title="提取字符串"></a>提取字符串</h4><p>ereg() and eregi() 有一个特性是允许用户通过正则表达式去提取字符串的一部分(具体用法你可以阅读手册). 比如说,我们想从 path/URL 提取文件名 – 下面的代码就是你需要:</p>
-<p>ereg(“([^///]*)$”, $pathOrUrl, $regs);</p>
-<p>echo $regs[1];</p>
-<h4 id="高级的代换"><a href="#高级的代换" class="headerlink" title="高级的代换"></a>高级的代换</h4><p>ereg_replace() 和 eregi_replace()也是非常有用的: 假如我们想把所有的间隔负号都替换成逗号:</p>
-<p>ereg_replace(“[ /n/r/t]+”, “,”, trim($str));  </p>
-<p>PHP被大量的应用于Web的后台CGI开发，通常是在用户数据数据之后得出某种结果，但是如果用户输入的数据不正确，就会出现问题，比如说某人的生日是”2月30日”！那应该怎么样来检验暑假是否正确呢？ 在PHP中加入了正则表达式的支持，让我们可以十分方便的进行数据匹配。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;（基础篇）正则表达式的语法汇总与详细介绍&quot;&gt;&lt;a href=&quot;#（基础篇）正则表达式的语法汇总与详细介绍&quot; class=&quot;headerlink&quot; title=&quot;（基础篇）正则表达式的语法汇总与详细介绍&quot;&gt;&lt;/a&gt;（基础篇）正则表达式的语法汇总与详细介绍&lt;/h3&gt;&lt;
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
-    
-    
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
   </entry>
   
