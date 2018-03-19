@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-18T16:02:43.345Z</updated>
+  <updated>2018-03-19T02:53:25.712Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,45 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>工具|使用Markdowm写PPT</title>
+    <link href="http://yoursite.com/2018/03/19/%E5%B7%A5%E5%85%B7-%E4%BD%BF%E7%94%A8Markdowm%E5%86%99PPT/"/>
+    <id>http://yoursite.com/2018/03/19/工具-使用Markdowm写PPT/</id>
+    <published>2018-03-19T10:41:53.000Z</published>
+    <updated>2018-03-19T02:53:25.712Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Landslide是基于Google的html5slides的一个Slide生成工具，可以将markdown, ReST 或者 textile文件转化成HTML5的slide。该转化支持内联模式，即生成一个具有完整功能的HTML文件，将依赖的css等东西放入其中，很容易用来分享。</p>
+<ol>
+<li>安装：该工具是用python写成的，使用pip工具安装。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ pip install landslide</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>也可以使用源码安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ git clone https://github.com/adamzap/landslide.git</div><div class="line">$ cd landslide</div><div class="line">$ python setup.py build</div><div class="line">$ sudo python setup.py install</div></pre></td></tr></table></figure></p>
+<ol>
+<li>书写你的md文件，以下是官方提供的测试用例，可以生成这个页面，或者参考我的源码和这里的演示效果。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"># Landslide</div><div class="line"></div><div class="line">---</div><div class="line"></div><div class="line"># Overview</div><div class="line"></div><div class="line">Generate HTML5 slideshows from markdown, ReST, or textile.</div><div class="line"></div><div class="line">![python](http://i.imgur.com/bc2xk.png)</div><div class="line"></div><div class="line">Landslide is primarily written in Python, but it&apos;s themes use:</div><div class="line"></div><div class="line">- HTML5</div><div class="line">- Javascript</div><div class="line">- CSS</div><div class="line"></div><div class="line">---</div><div class="line"></div><div class="line"># Code Sample</div><div class="line"></div><div class="line">Landslide supports code snippets</div><div class="line"></div><div class="line">    !python</div><div class="line">    def log(self, message, level=&apos;notice&apos;):</div><div class="line">        if self.logger and not callable(self.logger):</div><div class="line">            raise ValueError(u&quot;Invalid logger set, must be a callable&quot;)</div><div class="line"></div><div class="line">        if self.verbose and self.logger:</div><div class="line">            self.logger(message, level)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>执行命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ landslide file.md -i -o &gt; name_you_like.html</div></pre></td></tr></table></figure></p>
+<p>将markdown文本file.md转化成你的slide文件name_you_like.html。参数-i是为了将所有依赖文件（如css）整合到这一个文件中，让你能够简单的分享和移动该slide。-o参数是讲输出重定向到标准输出流，再用&gt; file来指定保存的文件名，也可以不使用该参数生成默认文件名presentation.html。</p>
+<ol>
+<li>在浏览器中打开生成的HTML文件就可以看到你的PPT了，效果酷炫，还支持各种快捷键。以下列出了一些常用的：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">h:      展示帮助</div><div class="line">← →:    上/下一张幻灯片</div><div class="line">ESC:    展示目录</div><div class="line">n:      显示当前是第几张幻灯片</div><div class="line">b:      屏幕全黑</div><div class="line">e:      使当前幻灯片最大化</div><div class="line">3:      展示伪3D效果</div><div class="line">c:      取消显示前后幻灯片预览，只显示当前幻灯片</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><a href="https://www.jianshu.com/p/e063303317cb" target="_blank" rel="external">用Markdown写一个极客范儿的PPT</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;p&gt;Landslide是基于Google的html5slides的一个Slide生成工具，可以将markdown, ReST 或者 textil
+    
+    </summary>
+    
+      <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="工具" scheme="http://yoursite.com/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
   
   <entry>
     <title>python|python的运行的原理</title>
@@ -1888,159 +1927,6 @@ tex2jax: {inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]]
     
     
       <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>运维|CentOS搭建JavaWeb环境</title>
-    <link href="http://yoursite.com/2018/02/11/%E8%BF%90%E7%BB%B4-CentOS%E6%90%AD%E5%BB%BAJavaWeb%E7%8E%AF%E5%A2%83/"/>
-    <id>http://yoursite.com/2018/02/11/运维-CentOS搭建JavaWeb环境/</id>
-    <published>2018-02-11T11:59:39.000Z</published>
-    <updated>2018-02-12T06:36:15.786Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="配置要求"><a href="#配置要求" class="headerlink" title="配置要求"></a>配置要求</h3><p>这里列出的软件版本仅代表写作本文档使用的版本。操作时，请您以实际软件版本为准。</p>
-<p>操作系统：CentOS 7.4<br>Tomcat 版本：Tomcat 8.0.49<br>JDK 版本：JDK 1.8.0_141</p>
-<h3 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h3><p>CentOS 7.4 系统默认开启了防火墙。您可以关闭防火墙，也可以参考官网文档在防火墙里添加规则，放行 80、443 或 8080 端口入方向规则。</p>
-<p>关闭防火墙：</p>
-<blockquote>
-<p>systemctl stop firewalld.service</p>
-</blockquote>
-<p>关闭防火墙开机自启动功能：</p>
-<blockquote>
-<p>systemctl disable firewalld.service</p>
-</blockquote>
-<p>创建一般用户 www，运行 tomcat：</p>
-<blockquote>
-<p>useradd www</p>
-</blockquote>
-<p>在安全组中放行 8080 端口。具体操作，请参考 添加安全组规则(如果在阿里云服务器)。</p>
-<p>创建网站根目录：</p>
-<blockquote>
-<p>mkdir -p /data/wwwroot/default</p>
-</blockquote>
-<p>新建 Tomcat 测试页面：</p>
-<blockquote>
-<p>echo Tomcat test &gt; /data/wwwroot/default/index.jsp<br>chown -R www.www /data/wwwroot</p>
-</blockquote>
-<p>下载源代码</p>
-<blockquote>
-<p>wget <a href="https://mirrors.aliyun.com/apache/tomcat/tomcat-8/v8.0.49/bin/apache-tomcat-8.0.49.tar.gz" target="_blank" rel="external">https://mirrors.aliyun.com/apache/tomcat/tomcat-8/v8.0.49/bin/apache-tomcat-8.0.49.tar.gz</a></p>
-</blockquote>
-<p>说明：源代码版本会不断升级。您可以在 <strong><a href="https://mirrors.aliyun.com/apache/tomcat/tomcat-8/" target="_blank" rel="external">https://mirrors.aliyun.com/apache/tomcat/tomcat-8/</a></strong> 目录下获取合适的安装包地址。</p>
-<blockquote>
-<p>wget <a href="http://mirrors.linuxeye.com/jdk/jdk-8u141-linux-x64.tar.gz" target="_blank" rel="external">http://mirrors.linuxeye.com/jdk/jdk-8u141-linux-x64.tar.gz</a></p>
-</blockquote>
-<p>说明：源代码版本会不断升级。您可以在 <strong><a href="http://mirrors.linuxeye.com/jdk/" target="_blank" rel="external">http://mirrors.linuxeye.com/jdk/</a></strong> 目录下获取合适的安装包地址。</p>
-<h3 id="安装-JDK"><a href="#安装-JDK" class="headerlink" title="安装 JDK"></a>安装 JDK</h3><p>按以下步骤安装 JDK。</p>
-<p>1.新建一个目录：</p>
-<blockquote>
-<p>mkdir /usr/java</p>
-</blockquote>
-<p>解压 jdk-8u141-linux-x64.tar.gz 到 /usr/java。</p>
-<blockquote>
-<p>tar xzf jdk-8u141-linux-x64.tar.gz -C /usr/java</p>
-</blockquote>
-<p>设置环境变量：</p>
-<p>编辑 /etc/profile：<strong>vi /etc/profile</strong>。</p>
-<p>按 i 键进入编辑模式。</p>
-<p>在 /etc/profile 文件中添加以下信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#set java environment</div><div class="line">export JAVA_HOME=/usr/java/jdk1.8.0_141</div><div class="line">export CLASSPATH=$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib</div><div class="line">export PATH=$JAVA_HOME/bin:$PATH</div></pre></td></tr></table></figure></p>
-<p>按 Esc 键退出编辑模式，输入 :wq 保存并关闭文件。</p>
-<p>加载环境变量：<strong>source /etc/profile</strong>。</p>
-<p>查看 jdk 版本。当出现 jdk 版本信息时，表示 JDK 已经安装成功。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">java -version</div><div class="line">java version &quot;1.8.0_141&quot;</div><div class="line">Java(TM) SE Runtime Environment (build 1.8.0_141-b15)</div><div class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.141-b15, mixed mode)</div></pre></td></tr></table></figure></p>
-<h3 id="安装-Tomcat"><a href="#安装-Tomcat" class="headerlink" title="安装 Tomcat"></a>安装 Tomcat</h3><p>按以下步骤安装 Tomcat。</p>
-<ol>
-<li>依次运行以下命令解压 apache-tomcat-8.5.23.tar.gz，重命名 Tomcat 目录，并设置用户权限。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">tar xzf apache-tomcat-8.0.49.tar.gz</div><div class="line">mv apache-tomcat-8.0.49 /usr/local/tomcat/</div><div class="line">chown -R www.www /usr/local/tomcat/</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>说明：</p>
-<p>在 /usr/local/tomcat/ 目录里：</p>
-<ul>
-<li>bin 目录中存放 Tomcat 的一些脚本文件，包含启动和关闭 Tomcat 服务脚本。</li>
-<li>conf：存放 Tomcat 服务器的各种全局配置文件，其中最重要的是 server.xml 和 web.xml。</li>
-<li>webapps：Tomcat 的主要 Web 发布目录，默认情况下把 Web 应用文件放于此目录。</li>
-<li>logs：存放 Tomcat 执行时的日志文件。</li>
-</ul>
-<p>2.配置 server.xml 文件：</p>
-<p>切换到 /usr/local/tomcat/conf/ 目录：<strong>cd /usr/local/tomcat/conf/</strong>。</p>
-<p>重命名 server.xml 文件：<strong>mv server.xml server.xml_bk</strong>。</p>
-<p>创建一个新的 server.xml 文件：</p>
-<p>运行命令 <strong>vi server.xml</strong>。</p>
-<p>按 i 键进入编辑模式。</p>
-<p>添加以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line"> &lt;Server port=&quot;8006&quot; shutdown=&quot;SHUTDOWN&quot;&gt;</div><div class="line">&lt;Listener className=&quot;org.apache.catalina.core.JreMemoryLeakPreventionListener&quot;/&gt;</div><div class="line">&lt;Listener className=&quot;org.apache.catalina.mbeans.GlobalResourcesLifecycleListener&quot;/&gt;</div><div class="line">&lt;Listener className=&quot;org.apache.catalina.core.ThreadLocalLeakPreventionListener&quot;/&gt;</div><div class="line">&lt;Listener className=&quot;org.apache.catalina.core.AprLifecycleListener&quot;/&gt;</div><div class="line">&lt;GlobalNamingResources&gt;</div><div class="line">  &lt;Resource name=&quot;UserDatabase&quot; auth=&quot;Container&quot;</div><div class="line">            type=&quot;org.apache.catalina.UserDatabase&quot;</div><div class="line">            description=&quot;User database that can be updated and saved&quot;</div><div class="line">            factory=&quot;org.apache.catalina.users.MemoryUserDatabaseFactory&quot;</div><div class="line">            pathname=&quot;conf/tomcat-users.xml&quot;/&gt;</div><div class="line">&lt;/GlobalNamingResources&gt;</div><div class="line">&lt;Service name=&quot;Catalina&quot;&gt;</div><div class="line">  &lt;Connector port=&quot;8080&quot;</div><div class="line">            protocol=&quot;HTTP/1.1&quot;</div><div class="line">            connectionTimeout=&quot;20000&quot;</div><div class="line">            redirectPort=&quot;8443&quot;</div><div class="line">            maxThreads=&quot;1000&quot;</div><div class="line">            minSpareThreads=&quot;20&quot;</div><div class="line">            acceptCount=&quot;1000&quot;</div><div class="line">            maxHttpHeaderSize=&quot;65536&quot;</div><div class="line">            debug=&quot;0&quot;</div><div class="line">            disableUploadTimeout=&quot;true&quot;</div><div class="line">            useBodyEncodingForURI=&quot;true&quot;</div><div class="line">            enableLookups=&quot;false&quot;</div><div class="line">            URIEncoding=&quot;UTF-8&quot;/&gt;</div><div class="line">  &lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;</div><div class="line">    &lt;Realm className=&quot;org.apache.catalina.realm.LockOutRealm&quot;&gt;</div><div class="line">      &lt;Realm className=&quot;org.apache.catalina.realm.UserDatabaseRealm&quot;</div><div class="line">             resourceName=&quot;UserDatabase&quot;/&gt;</div><div class="line">    &lt;/Realm&gt;</div><div class="line">    &lt;Host name=&quot;localhost&quot; appBase=&quot;/data/wwwroot/default&quot; unpackWARs=&quot;true&quot; autoDeploy=&quot;true&quot;&gt;</div><div class="line">      &lt;Context path=&quot;&quot; docBase=&quot;/data/wwwroot/default&quot; debug=&quot;0&quot; reloadable=&quot;false&quot; crossContext=&quot;true&quot;/&gt;</div><div class="line">      &lt;Valve className=&quot;org.apache.catalina.valves.AccessLogValve&quot; directory=&quot;logs&quot;</div><div class="line">        prefix=&quot;localhost_access_log.&quot; suffix=&quot;.txt&quot; pattern=&quot;%h %l %u %t &amp;quot;%r&amp;quot; %s %b&quot; /&gt;</div><div class="line">    &lt;/Host&gt;</div><div class="line">  &lt;/Engine&gt;</div><div class="line">&lt;/Service&gt;</div><div class="line">&lt;/Server&gt;</div></pre></td></tr></table></figure></p>
-<p>设置 JVM 内存参数：</p>
-<p>运行命令 <strong>vi /usr/local/tomcat/bin/setenv.sh</strong>， 创建 /usr/local/tomcat/bin/setenv.sh。<br>按 i 键进入编辑模式。<br>添加以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">JAVA_OPTS=’-Djava.security.egd=file:/dev/./urandom -server -Xms256m -Xmx496m -Dfile.encoding=UTF-8’</div></pre></td></tr></table></figure></p>
-<p>按 Esc 键退出编辑模式，输入 :wq 保存并退出文件。</p>
-<p>-server:一定要作为第一个参数，在多个CPU时性能佳<br>-Xms：初始Heap大小，使用的最小内存,cpu性能高时此值应设的大一些<br>-Xmx：java heap最大值，使用的最大内存<br>上面两个值是分配JVM的最小和最大内存，取决于硬件物理内存的大小，建议均设为物理内存的一半。<br>-XX:PermSize:设定内存的永久保存区域<br>-XX:MaxPermSize:设定最大内存的永久保存区域<br>-XX:MaxNewSize:<br>-Xss 15120 这使得JBoss每增加一个线程（thread)就会立即消耗15M内存，而最佳值应该是128K,默认值好像是512k.<br>+XX:AggressiveHeap 会使得 Xms没有意义。这个参数让jvm忽略Xmx参数,疯狂地吃完一个G物理内存,再吃尽一个G的swap。<br>-Xss：每个线程的Stack大小<br>-verbose:gc 现实垃圾收集信息<br>-Xloggc:gc.log 指定垃圾收集日志文件<br>-Xmn：young generation的heap大小，一般设置为Xmx的3、4分之一<br>-XX:+UseParNewGC ：缩短minor收集的时间<br>-XX:+UseConcMarkSweepGC ：缩短major收集的时间</p>
-<p>3.设置 Tomcat 自启动脚本。</p>
-<p>下载脚本：<strong>wget <a href="https://github.com/lj2007331/oneinstack/raw/master/init.d/Tomcat-init" target="_blank" rel="external">https://github.com/lj2007331/oneinstack/raw/master/init.d/Tomcat-init</a></strong></p>
-<p>重命名 Tomcat-init。<strong>mv Tomcat-init /etc/init.d/tomcat</strong></p>
-<p>添加执行权限：<strong>chmod +x /etc/init.d/tomcat</strong></p>
-<p>设置启动脚本 JAVA_HOME：<strong>sed -i ‘s@^export JAVA_HOME=.*@export JAVA_HOME=/usr/java/jdk1.8.0_141@’ /etc/init.d/tomcat</strong></p>
-<p>4.设置自启动。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">chkconfig --add tomcat</div><div class="line">chkconfig tomcat on</div></pre></td></tr></table></figure></p>
-<p>5.启动 Tomcat。</p>
-<blockquote>
-<p>service tomcat start</p>
-</blockquote>
-<p>6.在浏览器地址栏中输入 <a href="http://ip:8080" target="_blank" rel="external">http://ip:8080</a> 进行访问。出现如图所示页面时表示安装成功。</p>
-<p><img src="/images/搭建JavaWeb服务器.png" alt="enter description here" title="搭建JavaWeb服务器"></p>
-<h3 id="安装Mysql"><a href="#安装Mysql" class="headerlink" title="安装Mysql"></a>安装Mysql</h3><h4 id="卸载老版本MySQL"><a href="#卸载老版本MySQL" class="headerlink" title="卸载老版本MySQL"></a>卸载老版本MySQL</h4><p>查找并删除mysql有关的文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">find / -name mysql</div><div class="line">rm -rf 上边查找到的路径，多个路径用空格隔开</div><div class="line">#或者下边一条命令即可</div><div class="line">find / -name mysql|xargs rm -rf</div></pre></td></tr></table></figure></p>
-<h4 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h4><blockquote>
-<p>wget <a href="http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz" target="_blank" rel="external">http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz</a></p>
-</blockquote>
-<h4 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h4><blockquote>
-<p>tar -zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz</p>
-</blockquote>
-<h4 id="移动文件"><a href="#移动文件" class="headerlink" title="移动文件"></a>移动文件</h4><blockquote>
-<p>mv mysql-5.6.33-linux-glibc2.5-x86_64/  /usr/local/mysql</p>
-</blockquote>
-<h4 id="添加mysql用户组和mysql用户"><a href="#添加mysql用户组和mysql用户" class="headerlink" title="添加mysql用户组和mysql用户"></a>添加mysql用户组和mysql用户</h4><p>先检查是否有mysql用户组和mysql用户</p>
-<blockquote>
-<p>groups mysql</p>
-</blockquote>
-<p>若无，则添加；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">groupadd mysql</div><div class="line">useradd -r -g mysql mysql</div></pre></td></tr></table></figure></p>
-<h4 id="进入mysql目录更改权限"><a href="#进入mysql目录更改权限" class="headerlink" title="进入mysql目录更改权限"></a>进入mysql目录更改权限</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/mysql</div><div class="line">chown -R mysql:mysql ./</div></pre></td></tr></table></figure>
-<h4 id="执行安装脚本"><a href="#执行安装脚本" class="headerlink" title="执行安装脚本"></a>执行安装脚本</h4><blockquote>
-<p>./scripts/mysql_install_db –user=mysql</p>
-</blockquote>
-<p>安装完之后修改当前目录拥有者为root用户，修改data目录拥有者为mysql</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">chown -R root:root ./</div><div class="line">chown -R mysql:mysql data</div></pre></td></tr></table></figure>
-<h4 id="更改mysql密码"><a href="#更改mysql密码" class="headerlink" title="更改mysql密码"></a>更改mysql密码</h4><p>上一步安装脚本执行输出的日志中告诉我们如何更改密码了</p>
-<p><img src="/images/搭建JavaWeb服务器-mysql.png" alt="搭建JavaWeb服务器--mysql" title="搭建JavaWeb服务器-mysql"></p>
-<p>但是如果直接执行这两条命令就会报错<br><img src="/images/搭建JavaWeb服务器--mysql.png" alt="搭建JavaWeb服务器--mysql" title="搭建JavaWeb服务器--mysql"></p>
-<p>因为这时还没有启动mysql，这算是一个坑。启动方法如下：</p>
-<blockquote>
-<p>./support-files/mysql.server start</p>
-</blockquote>
-<p><img src="/images/搭建JavaWeb服务器---mysql.png" alt="搭建JavaWeb服务器---mysql" title="搭建JavaWeb服务器---mysql"></p>
-<p>如果MySQL启动报错，则可能是已经存在MySQL进程，杀掉即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ps aux|grep mysql</div><div class="line">kill -9 上边的进程号</div><div class="line">#或者下边一条命令即可杀掉所有MySQL进程</div><div class="line">ps aux|grep mysql|awk &apos;&#123;print $2&#125;&apos;|xargs kill -9</div></pre></td></tr></table></figure></p>
-<p>MySQL启动之后再执行如下命令更改密码：</p>
-<blockquote>
-<p>./bin/mysqladmin -u root -h localhost.localdomain password ‘root’</p>
-</blockquote>
-<p>密码更改后即可登录MySQL</p>
-<blockquote>
-<p>./bin/mysql -h127.0.0.1 -uroot -proot</p>
-</blockquote>
-<p><img src="/images/搭建JavaWeb服务器----mysql.png" alt="搭建JavaWeb服务器----mysql" title="搭建JavaWeb服务器----mysql"></p>
-<p>登录之后将其他用户的密码也可改为root<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">update mysql.user set password=password(&apos;root&apos;) where user=&apos;root&apos;;</div><div class="line">flush privileges;</div></pre></td></tr></table></figure></p>
-<h4 id="增加远程登录权限"><a href="#增加远程登录权限" class="headerlink" title="增加远程登录权限"></a>增加远程登录权限</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">grant all privileges on *.* to root@&apos;%&apos; identified by &apos;root&apos;;</div><div class="line">flush privileges;</div></pre></td></tr></table></figure>
-<h4 id="将MySQL加入Service系统服务"><a href="#将MySQL加入Service系统服务" class="headerlink" title="将MySQL加入Service系统服务"></a>将MySQL加入Service系统服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cp support-files/mysql.server /etc/init.d/mysqld</div><div class="line">chkconfig --add mysqld</div><div class="line">chkconfig mysqld on</div><div class="line">service mysqld restart</div><div class="line">service mysqld status</div></pre></td></tr></table></figure>
-<p><img src="/images/搭建JavaWeb服务器-----mysql.png" alt="搭建JavaWeb服务器-----mysql" title="搭建JavaWeb服务器-----mysql"></p>
-<h4 id="配置my-cnf-配置可能会出错-这一步可以忽"><a href="#配置my-cnf-配置可能会出错-这一步可以忽" class="headerlink" title="配置my.cnf[配置可能会出错|这一步可以忽]"></a>配置my.cnf[配置可能会出错|这一步可以忽]</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">vim my.cnf</div><div class="line">#添加以下两条语句并保存退出</div><div class="line">default-character-set=utf8</div><div class="line">lower_case_table_names=1</div><div class="line">max_allowed_packet=100M</div></pre></td></tr></table></figure>
-<p>配置好之后，重启mysqld服务</p>
-<p><img src="/images/搭建JavaWeb服务器#mysql.png" alt="搭建JavaWeb服务器#mysql" title="搭建JavaWeb服务器#mysql"></p>
-<blockquote>
-<p>引用 <a href="https://help.aliyun.com/document_detail/51376.html?spm=a2c4g.11186623.2.6.f7qoYA" target="_blank" rel="external">https://help.aliyun.com/document_detail/51376.html?spm=a2c4g.11186623.2.6.f7qoYA</a></p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;配置要求&quot;&gt;&lt;a href=&quot;#配置要求&quot; class=&quot;headerlink&quot; title=&quot;配置要求&quot;&gt;&lt;/a&gt;配置要求&lt;/h3&gt;&lt;p&gt;这里列出的软件版本仅代表写作本文档使用的版本。操作时，请您以实际软件版本为准。&lt;/p&gt;
-&lt;p&gt;操作系统：CentOS 7.4
-    
-    </summary>
-    
     
   </entry>
   
