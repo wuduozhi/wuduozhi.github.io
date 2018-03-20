@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-20T16:36:26.850Z</updated>
+  <updated>2018-03-20T16:40:46.325Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,10 +20,10 @@
     <link href="http://yoursite.com/2018/03/21/python-urllib2%E7%9A%84%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E6%A1%88%E4%BE%8B/"/>
     <id>http://yoursite.com/2018/03/21/python-urllib2的一个简单案例/</id>
     <published>2018-03-20T23:50:24.000Z</published>
-    <updated>2018-03-20T16:36:26.850Z</updated>
+    <updated>2018-03-20T16:40:46.325Z</updated>
     
     <content type="html"><![CDATA[<h3 id="网络爬虫的概念"><a href="#网络爬虫的概念" class="headerlink" title="网络爬虫的概念"></a>网络爬虫的概念</h3><p>网络爬虫（Web Spider）是一种自动获取网页内容的程序，是搜索引擎的重要组成部分。 初次深入了解爬虫的概念是在吴军博士的《数学之美》中，其中描述互联网本质上就是一张无形的大网，我们可以把每一个网页当做网中的节点，超链接作为连接节点的弧。这样网络爬虫就可以从任何一个网页出发，通过图的遍历算法，自动的访问每一个网页并将它们存起来。</p>
-<p>实际上程序的目的都是代替人来完成大量的重复操作，爬虫亦是如此。假设现有一个需求是需要获取中国石油大学新闻网的所有新闻标题及发布日期来进行统计分析，那么用人来实现这个需求需要大概以下几个步骤。</p>
+<p>实际上程序的目的都是代替人来完成大量的重复操作，爬虫亦是如此。假设现有一个需求是需要获取<a href="http://news.upc.edu.cn/sdyw" target="_blank" rel="external">中国石油大学新闻网</a>的所有新闻标题及发布日期来进行统计分析，那么用人来实现这个需求需要大概以下几个步骤。</p>
 <ol>
 <li>通过浏览器访问中国石油大学新闻网。</li>
 <li>根据网页内容分析出哪些地方是我们需要获取的标题和日期。</li>
@@ -45,9 +45,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># -*- coding: utf-8 -*- </div><div class="line">import urllib2</div><div class="line">import re</div><div class="line"># 1.获取访问页面的HMTL</div><div class="line">url=&quot;http://news.upc.edu.cn/sdyw/&quot;</div><div class="line">response=urllib2.urlopen(url)</div><div class="line">html=response.read()</div><div class="line"># 2.根据正则表达式抓取特定内容</div><div class="line">r=re.compile(r&apos;&lt;a href=&quot;/sdyw/(?P&lt;Date&gt;.&#123;10&#125;).*&quot; target=&quot;_blank&quot;&gt;(?P&lt;Title&gt;.+)&lt;/a&gt;&apos;)</div><div class="line">news=r.findall(html)</div><div class="line">print news</div></pre></td></tr></table></figure>
 <p>在上方加入import re来导入python自带的正则表达式模块，通过re.compile(strPattern[, flag])方法将字符串形式的正则表达式编译为Pattern对象，第二个参数flag是匹配模式，我们此处省略填写。</p>
 <p>正则表达式字符串开头有一个前缀r，r是raw(原始)的意思。因为在表示字符串中有一些转义符，如表示回车’\n’。如果要表示\需要写为’\‘。但如果我就是需要表示一个’\’+’n’，不用r方式要写为:’\n’。但使用r方式则为r’\n’这样清晰多了。</p>
-<p>固定字符串<a href="/sdyw/后跟了一个用括号包起来的字符串(?P<Date>.{10})，(?P<name>...) 是定义一个命名组，(?P=name)则是对命名组的逆向引用。而后面的.匹配任意除换行符" \n"以外的字符。.{10}匹配10个任意字符，<a="" highlight="" plain"=""><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">for i in range(len(news)):</div><div class="line">    date=news[i][0]</div><div class="line">    title=news[i][1]</div><div class="line">    print title+&quot; &quot;+date</div></pre></td></tr></table>
+<p>固定字符串<a href="/sdyw/后跟了一个用括号包起来的字符串(?P<Date>.{10})，(?P<name>...) 是定义一个命名组，(?P=name)则是对命名组的逆向引用。而后面的.匹配任意除换行符" \n"以外的字符。.{10}匹配10个任意字符，<a="" highlight="" plain"=""><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">for i in range(len(news)):</div><div class="line">    date=news[i][0]</div><div class="line">    title=news[i][3]</div><div class="line">    print title+&quot; &quot;+date</div></pre></td></tr></table>
 <h4 id="遍历所有新闻页面"><a href="#遍历所有新闻页面" class="headerlink" title="遍历所有新闻页面"></a>遍历所有新闻页面</h4><p>上一节我们获取到了第一页的新闻数据，但是我们的目的是需要获取所有的内容。 那我们跳转到其他分页看看有没有什么规律可循。通过分析发现，第一页的url为http://news.upc.edu.cn/sdyw/List_171.shtml，第二页的url为http://news.upc.edu.cn/sdyw/List_170.shtml,最后一页的url为http://news.upc.edu.cn/sdyw/List_1.shtml。那么遍历所有新闻页面获取内容这件事就变的非常简单了，直接通过for循环就可以实现，废话不说了，直接上代码吧。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"># -*- coding: utf-8 -*- </div><div class="line">import urllib2</div><div class="line">import re</div><div class="line">import MySQLdb as mdb</div><div class="line"></div><div class="line">if __name__==&quot;__main__&quot;:</div><div class="line">    url=&quot;http://news.upc.edu.cn/sdyw/List_&quot;</div><div class="line">    con=mdb.connect(&apos;localhost&apos;,&apos;root&apos;,&apos;root&apos;,&apos;Python&apos;,charset=&apos;utf8&apos;)</div><div class="line">    with con:</div><div class="line">        for x in xrange(1,171):</div><div class="line">            response=urllib2.urlopen(url+str(x)+&apos;.shtml&apos;)</div><div class="line">            html=response.read()</div><div class="line">            r=re.compile(r&apos;&lt;a href=&quot;/sdyw/(?P&lt;Date&gt;.&#123;10&#125;).*&quot; target=&quot;_blank&quot;&gt;(?P&lt;Title&gt;.+)&lt;/a&gt;&apos;)</div><div class="line">            news=r.findall(html)</div><div class="line">            curs=con.cursor()</div><div class="line">            for i in range(len(news)):</div><div class="line">                date=news[i][0]</div><div class="line">                title=news[i][5]</div><div class="line">                curs.execute(&quot;INSERT INTO news2(PublishDate,Title) VALUES(%s,%s)&quot;,(date,title))</div><div class="line">                print title+&quot; &quot;+date</div></pre></td></tr></table></figure></p>
 <p>到此，本文已经结束了，短短的20行代码就可以实现一个简单的爬虫，这就是Python的魅力。</p>
+<p>  [3]: /images/python-urllib2实践-01.jpg “python-urllib2实践-01</p>
 </a></p>]]></content>
     
     <summary type="html">
