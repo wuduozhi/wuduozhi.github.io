@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-19T02:53:25.712Z</updated>
+  <updated>2018-03-20T15:44:08.625Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,95 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>安全|谈谈如何防范短信验证码被攻击</title>
+    <link href="http://yoursite.com/2018/03/21/%E5%AE%89%E5%85%A8-%E8%B0%88%E8%B0%88%E5%A6%82%E4%BD%95%E9%98%B2%E8%8C%83%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81%E8%A2%AB%E6%94%BB%E5%87%BB/"/>
+    <id>http://yoursite.com/2018/03/21/安全-谈谈如何防范短信验证码被攻击/</id>
+    <published>2018-03-20T23:30:15.000Z</published>
+    <updated>2018-03-20T15:44:08.625Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近在写个项目，需要发送验证验证手机号，之前的接口设计是只需要发送电话号码过来，后台验证电话号码的正确性，就发送验证码。</p>
+<p>殊不知这样设计存在巨大的安全隐患。如果短信验证码接口和页面不做任何限制，黑客很容易利用一些恶意的短信轰炸软件对接口进行攻击，不停的对同一个号码或者N个号码重复发送验证码短信。</p>
+<p>短信验证码被攻击，不仅会对用户造成骚扰，引起投诉，更会浪费你的短信余额，降低品牌形象。</p>
+<h3 id="如何防范短信验证码被攻击？"><a href="#如何防范短信验证码被攻击？" class="headerlink" title="如何防范短信验证码被攻击？"></a>如何防范短信验证码被攻击？</h3><h4 id="图形验证码"><a href="#图形验证码" class="headerlink" title="图形验证码"></a>图形验证码</h4><p>大部分短信轰炸脚本基于网页爬虫，图形验证码可以简单粗暴的防御这类刷码行为。</p>
+<p><img src="/images/web安全-短信验证-01.png" alt="图片验证" title="web安全-短信验证-01"></p>
+<h4 id="记录、比对IP和手机号码，做频率限制，过滤空IP头"><a href="#记录、比对IP和手机号码，做频率限制，过滤空IP头" class="headerlink" title="记录、比对IP和手机号码，做频率限制，过滤空IP头"></a>记录、比对IP和手机号码，做频率限制，过滤空IP头</h4><p>用户请求验证码时，记录请求的IP和手机号码，并对发送频率做限制，例如每分钟/单个IP/单个手机号仅能请求一次。如果脚本无法获取用户的真实IP，请直接过滤这类请求。</p>
+<h4 id="在-SUBMAIL-设置验证码模板的单日请求上线"><a href="#在-SUBMAIL-设置验证码模板的单日请求上线" class="headerlink" title="在 SUBMAIL 设置验证码模板的单日请求上线"></a>在 SUBMAIL 设置验证码模板的单日请求上线</h4><p>设置验证码模板的单日请求上限，设置一个合适的数值，这样每个手机号码单日超过这个上线的数量的验证码请求会被SUBMAIL直接过滤。</p>
+<h4 id="设置-IP-白名单"><a href="#设置-IP-白名单" class="headerlink" title="设置 IP 白名单"></a>设置 IP 白名单</h4><p>设置IP白名单，保护您的APPID不被非法劫持后滥用,只允许名单内的ip请求能得到相应。</p>
+<h4 id="SUBMAIL-主动防御机制"><a href="#SUBMAIL-主动防御机制" class="headerlink" title="SUBMAIL 主动防御机制"></a>SUBMAIL 主动防御机制</h4><p>如上述3种方法还不能完全防御，您也不用担心，因为SUBMAIL为短信验证码接口植入了主动防御的机制，提供了更强大的保护措施。SUBMAIL 主动防御机制会在以下3种情况中被触发：</p>
+<ol>
+<li>空号率触发安全机制：当用户请求发送的手机号码空号率达到一定的百分比之后，触发防御机制；</li>
+<li>手机号码高频率请求触发安全机制：当单个手机号高频率的请求验证码时，到达一定比例，触发防御机制；</li>
+<li>历史黑名单命中率触发安全机制：当命中历史黑名单到达一定比例时，触发防御机制；</li>
+</ol>
+<p>SUBMAIL 主动防御机制被触发后，将会自动设置合适的安全级别，防御恶意请求。例如非常请求仅能获取3次验证码，如超过3次，将会被列入临时保护黑名单。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近在写个项目，需要发送验证验证手机号，之前的接口设计是只需要发送电话号码过来，后台验证电话号码的正确性，就发送验证码。&lt;/p&gt;
+&lt;p&gt;殊不
+    
+    </summary>
+    
+      <category term="Web安全" scheme="http://yoursite.com/categories/Web%E5%AE%89%E5%85%A8/"/>
+    
+    
+      <category term="Web" scheme="http://yoursite.com/tags/Web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>pyhon|网络urllib2模块</title>
+    <link href="http://yoursite.com/2018/03/20/pyhon-%E7%BD%91%E7%BB%9Curllib2%E6%A8%A1%E5%9D%97/"/>
+    <id>http://yoursite.com/2018/03/20/pyhon-网络urllib2模块/</id>
+    <published>2018-03-19T23:10:34.000Z</published>
+    <updated>2018-03-20T15:46:13.377Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="分分钟扒一个网页下来"><a href="#分分钟扒一个网页下来" class="headerlink" title="分分钟扒一个网页下来"></a>分分钟扒一个网页下来</h3><p>怎样扒网页呢？其实就是根据URL来获取它的网页信息，虽然我们在浏览器中看到的是一幅幅优美的画面，但是其实是由浏览器解释才呈现出来的，实质它 是一段HTML代码，加 JS、CSS，如果把网页比作一个人，那么HTML便是他的骨架，JS便是他的肌肉，CSS便是它的衣服。所以最重要的部分是存在于HTML中的，下面我 们就写个例子来扒一个网页下来。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import  urllib2</div><div class="line">response  =  urllib2.urlopen(&quot;http://www.baidu.com&quot;)</div><div class="line">print  response.read()</div></pre></td></tr></table></figure></p>
+<p>是的你没看错，真正的程序就两行，把它保存成 demo.py，进入该文件的目录，执行如下命令查看运行结果，感受一下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python demo.py</div></pre></td></tr></table></figure></p>
+<p><img src="/images/python-urllib2-01.png" alt="爬虫--html" title="python-urllib2-01"></p>
+<h3 id="分析扒网页的方法"><a href="#分析扒网页的方法" class="headerlink" title="分析扒网页的方法"></a>分析扒网页的方法</h3><p>那么我们来分析这两行代码，第一行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">response  =  urllib2.urlopen(&quot;http://www.baidu.com&quot;)</div></pre></td></tr></table></figure></p>
+<p>首先我们调用的是urllib2库里面的urlopen方法，传入一个URL，这个网址是百度首页，协议是HTTP协议，当然你也可以把HTTP换做FTP,FILE,HTTPS 等等，只是代表了一种[访问控制]协议，urlopen一般接受三个参数，它的参数如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">urlopen(url, data, timeout)</div></pre></td></tr></table></figure></p>
+<p>第一个参数url即为URL，第二个参数data是访问URL时要传送的数据，第三个timeout是设置超时时间。</p>
+<p>第二三个参数是可以不传送的，data默认为空None，timeout默认为 socket._GLOBAL_DEFAULT_TIMEOUT</p>
+<p>第一个参数URL是必须要传送的，在这个例子里面我们传送了百度的URL，执行urlopen方法之后，返回一个response对象，返回信息便保存在这里面。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">print response.read()</div></pre></td></tr></table></figure></p>
+<p>response对象有一个read方法，可以返回获取到的网页内容。</p>
+<p>如果不加read直接打印会是什么？答案如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">addinfourl at 139728495260376 whose fp = socket._fileobject object at 0x7f1513fb3ad0&gt;&gt;</div></pre></td></tr></table></figure></p>
+<p>直接打印出了该对象的描述，所以记得一定要加read方法，否则它不出来内容可就不怪我咯！</p>
+<h3 id="构造Requset"><a href="#构造Requset" class="headerlink" title="构造Requset"></a>构造Requset</h3><p>其实上面的urlopen参数可以传入一个request请求,它其实就是一个Request类的实例，构造时需要传入Url,Data等等的内容。比如上面的两行代码，我们可以这么改写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">import  urllib2</div><div class="line"></div><div class="line">request  =  urllib2.Request(&quot;http://www.baidu.com&quot;)</div><div class="line"></div><div class="line">response  =  urllib2.urlopen(request)</div><div class="line"></div><div class="line">print  response.read()</div></pre></td></tr></table></figure></p>
+<p>运行结果是完全一样的，只不过中间多了一个request对象，推荐大家这么写，因为在构建请求时还需要加入好多内容，通过构建一个request，[服务器]响应请求得到应答，这样显得逻辑上清晰明确。</p>
+<h3 id="POST和GET数据传送"><a href="#POST和GET数据传送" class="headerlink" title="POST和GET数据传送"></a>POST和GET数据传送</h3><p>上面的程序演示了最基本的网页抓取，不过，现在大多数网站都是动态网页，需要你动态地传递参数给它，它做出对应的响应。所以，在访问时，我们需要传递数据给它。最常见的情况是什么？对了，就是登录注册的时候呀。</p>
+<p>把数据用户名和密码传送到一个URL，然后你得到服务器处理之后的响应，这个该怎么办？下面让我来为小伙伴们揭晓吧！</p>
+<p>数据传送分为POST和GET两种方式，两种方式有什么区别呢？</p>
+<p>最重要的区别是GET方式是直接以链接形式访问，链接中包含了所有的参数，当然如果包含了密码的话是一种不安全的选择，不过你可以直观地看到自己提交了什么内容。POST则不会在网址上显示所有的参数，不过如果你想直接查看提交了什么就不太方便了，大家可以酌情选择。</p>
+<h4 id="POST方式："><a href="#POST方式：" class="headerlink" title="POST方式："></a>POST方式：</h4><p>上面我们说了data参数是干嘛的？对了，它就是用在这里的，我们传送的数据就是这个参数data，下面[演示]一下POST方式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">import  urllib</div><div class="line"></div><div class="line">import  urllib2</div><div class="line"></div><div class="line">values  =  &#123;&quot;username&quot;:&quot;1016903103@qq.com&quot;,&quot;password&quot;:&quot;XXXX&quot;&#125;</div><div class="line"></div><div class="line">data  =  urllib.urlencode(values)</div><div class="line"></div><div class="line">url  =  &quot;https://passport.csdn.net/account/login?from=http://my.csdn.net/my/mycsdn&quot;</div><div class="line"></div><div class="line">request  =  urllib2.Request(url,data)</div><div class="line"></div><div class="line">response  =  urllib2.urlopen(request)</div><div class="line"></div><div class="line">print  response.read()</div></pre></td></tr></table></figure></p>
+<p>我们引入了urllib库，现在我们模拟登陆CSDN，当然上述代码可能登陆不进去，因为还要做一些设置头部header的工作，或者还有一些参数 没有设置全，还没有提及到在此就不写上去了，在此只是说明登录的原理。我们需要定义一个字典，名字为values，参数我设置了username和 password，下面利用urllib的urlencode方法将字典编码，命名为data，构建request时传入两个参数，url和data，运 行程序，即可实现登陆，返回的便是登陆后呈现的页面内容。当然你可以自己搭建一个[服务器]来测试一下。</p>
+<p>注意上面字典的定义方式还有一种，下面的写法是等价的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">import  urllib</div><div class="line"></div><div class="line">import  urllib2</div><div class="line"></div><div class="line">values  =  &#123;&#125;</div><div class="line"></div><div class="line">values[&apos;username&apos;]  =  &quot;1016903103@qq.com&quot;</div><div class="line"></div><div class="line">values[&apos;password&apos;]  =  &quot;XXXX&quot;</div><div class="line"></div><div class="line">data  =  urllib.urlencode(values)</div><div class="line"></div><div class="line">url  =  &quot;http://passport.csdn.net/account/login?from=http://my.csdn.net/my/mycsdn&quot;</div><div class="line"></div><div class="line">request  =  urllib2.Request(url,data)</div><div class="line"></div><div class="line">response  =  urllib2.urlopen(request)</div><div class="line"></div><div class="line">print  response.read()</div></pre></td></tr></table></figure></p>
+<p>以上方法便实现了POST方式的传送</p>
+<h4 id="GET方式："><a href="#GET方式：" class="headerlink" title="GET方式："></a>GET方式：</h4><p>至于GET方式我们可以直接把参数写到网址上面，直接构建一个带参数的URL出来即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">import  urllib</div><div class="line"></div><div class="line">import  urllib2</div><div class="line"></div><div class="line">values=&#123;&#125;</div><div class="line"></div><div class="line">values[&apos;username&apos;]  =  &quot;1016903103@qq.com&quot;</div><div class="line"></div><div class="line">values[&apos;password&apos;]=&quot;XXXX&quot;</div><div class="line"></div><div class="line">data  =  urllib.urlencode(values)</div><div class="line"></div><div class="line">url  =  &quot;http://passport.csdn.net/account/login&quot;</div><div class="line"></div><div class="line">geturl  =  url  +  &quot;?&quot;+data</div><div class="line"></div><div class="line">request  =  urllib2.Request(geturl)</div><div class="line"></div><div class="line">response  =  urllib2.urlopen(request)</div><div class="line"></div><div class="line">print  response.read()</div></pre></td></tr></table></figure></p>
+<p>你可以print geturl，打印输出一下url，发现其实就是原来的url加？然后加编码后的参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://passport.csdn.net/account/login?username=1016903103%40qq.com&amp;password=XXXX</div></pre></td></tr></table></figure></p>
+<p>和我们平常GET访问方式一模一样，这样就实现了数据的GET方式传送。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;分分钟扒一个网页下来&quot;&gt;&lt;a href=&quot;#分分钟扒一个网页下来&quot; class=&quot;headerlink&quot; title=&quot;分分钟扒一个网页下来&quot;&gt;&lt;/a&gt;分分钟扒一个网页下来&lt;/h3&gt;&lt;p&gt;怎样扒网页呢？其实就是根据URL来获取它的网页信息，虽然我们在浏览器中看到的
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
     <title>工具|使用Markdowm写PPT</title>
     <link href="http://yoursite.com/2018/03/19/%E5%B7%A5%E5%85%B7-%E4%BD%BF%E7%94%A8Markdowm%E5%86%99PPT/"/>
     <id>http://yoursite.com/2018/03/19/工具-使用Markdowm写PPT/</id>
     <published>2018-03-19T10:41:53.000Z</published>
-    <updated>2018-03-19T02:53:25.712Z</updated>
+    <updated>2018-03-19T09:16:15.293Z</updated>
     
     <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Landslide是基于Google的html5slides的一个Slide生成工具，可以将markdown, ReST 或者 textile文件转化成HTML5的slide。该转化支持内联模式，即生成一个具有完整功能的HTML文件，将依赖的css等东西放入其中，很容易用来分享。</p>
 <ol>
@@ -38,6 +122,15 @@
 <li>在浏览器中打开生成的HTML文件就可以看到你的PPT了，效果酷炫，还支持各种快捷键。以下列出了一些常用的：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">h:      展示帮助</div><div class="line">← →:    上/下一张幻灯片</div><div class="line">ESC:    展示目录</div><div class="line">n:      显示当前是第几张幻灯片</div><div class="line">b:      屏幕全黑</div><div class="line">e:      使当前幻灯片最大化</div><div class="line">3:      展示伪3D效果</div><div class="line">c:      取消显示前后幻灯片预览，只显示当前幻灯片</div></pre></td></tr></table></figure>
 </li>
 </ol>
+<h3 id="使用PrinceXML生成PDF"><a href="#使用PrinceXML生成PDF" class="headerlink" title="使用PrinceXML生成PDF"></a>使用PrinceXML生成PDF</h3><p>PrinceXML是一款将html转换为pdf的工具，提供免费带水印版试用。</p>
+<p>下载地址：</p>
+<blockquote>
+<p><a href="http://www.princexml.com/download/" target="_blank" rel="external">http://www.princexml.com/download/</a></p>
+</blockquote>
+<p>选择对应版本解压后执行脚本安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sh insatll.sh</div></pre></td></tr></table></figure></p>
+<p>指定路径安装完毕后即可使用prince命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ prince test.html -o test.pdf</div></pre></td></tr></table></figure>
+<p>即可生成需要的PDF PPT文件。</p>
 <p><a href="https://www.jianshu.com/p/e063303317cb" target="_blank" rel="external">用Markdown写一个极客范儿的PPT</a></p>
 ]]></content>
     
@@ -1715,218 +1808,6 @@ tex2jax: {inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]]
     
     </summary>
     
-    
-  </entry>
-  
-  <entry>
-    <title>爬虫|解读http的秘密&lt;进阶篇&gt;</title>
-    <link href="http://yoursite.com/2018/02/12/%E7%88%AC%E8%99%AB-%E8%A7%A3%E8%AF%BBhttp%E7%9A%84%E7%A7%98%E5%AF%86-%E8%BF%9B%E9%98%B6%E7%AF%87/"/>
-    <id>http://yoursite.com/2018/02/12/爬虫-解读http的秘密-进阶篇/</id>
-    <published>2018-02-12T15:47:52.000Z</published>
-    <updated>2018-02-12T08:20:06.118Z</updated>
-    
-    <content type="html"><![CDATA[<p>上一篇我们介绍了爬虫中HTTP的基础内容，相信看过的朋友们应该对HTTP已经有个初步的认识了。本篇博主将分享一些HTTP的高级内容，以及在爬虫中的应用，让大家更深入理解。这些内容包括：</p>
-<ul>
-<li>Cookie解读</li>
-<li>Session解读</li>
-<li>HTTPs解读</li>
-</ul>
-<h3 id="Cookie解读"><a href="#Cookie解读" class="headerlink" title="Cookie解读"></a>Cookie解读</h3><h4 id="什么是Cookie？"><a href="#什么是Cookie？" class="headerlink" title="什么是Cookie？"></a>什么是Cookie？</h4><p>==Cookie==原意是”小甜点”的意思，但是在互联网上被用作储存在用户本地终端上的数据。</p>
-<p>百度百科是这么解释的：</p>
-<blockquote>
-<p>Cookie，有时也用其复数形式 Cookies，指某些网站为了辨别用户身份、进行 session<br>跟踪而储存在用户本地终端上的数据（通常经过加密）。定义于 RFC2109 和 2965 中的都已废弃，最新取代的规范是<br>RFC6265。（可以叫做浏览器缓存）</p>
-</blockquote>
-<h4 id="为什么要使用Cookie？"><a href="#为什么要使用Cookie？" class="headerlink" title="为什么要使用Cookie？"></a>为什么要使用Cookie？</h4><p>首先，需要明确一个很重要的概念：HTTP是一个无状态的协议。</p>
-<p>什么意思呢？举一个简单的例子来理解一下。</p>
-<h5 id="lt-应用一-gt"><a href="#lt-应用一-gt" class="headerlink" title="&lt;应用一&gt;"></a>&lt;应用一&gt;</h5><p>比如，我们网上购物的时候，浏览了几个网页，选了几样商品放入了购物车。但是由于HTTP的无状态特点，当我们结账的时候服务器并不知道操作的用户是谁，即无法记录上下文的信息，这严重的妨碍了web应用程序交互式的操作。</p>
-<p>为了解决HTTP的无状态的问题，Cookie就应运而生了。Cookie绕开了HTTP的无状态性，提供了一种”额外手段”维护了用户跟服务器会话中的状态。<strong>说白了，Cookie就是一小段数据储存在本地，记录并标识了用户身份，以便服务器辨认。</strong>这其实相当于让一个失忆的人从此有了记忆。因此，无论当我们购买几次商品，退货，结账等，服务器都能通过这个标识来判断出你是谁。</p>
-<p>还有一个常见的例子，就是==登录==。</p>
-<h4 id="lt-应用二-gt"><a href="#lt-应用二-gt" class="headerlink" title="&lt;应用二&gt;"></a>&lt;应用二&gt;</h4><p>当我们登录某个网站输入用户名和密码后，一般浏览器会提示是”是否保存密码”。我们通常会勾选保存，那么这样带来的好处就是在以后的一段时间我们访问该网站都会自动登录而不必每次都去敲用户名和密码了。</p>
-<p>也正是这个原因，简化了爬虫中模拟登录的问题，每次登录只要post一个Cookie信息就可以了，而避免了每次都post登录信息。当然，这只针对一部分网站而言，一些复杂的网站会定期的变换一些算法，使得Cookie频繁的失效，这时候就需要post登录信息了或者模拟找到算法的规律。</p>
-<p>关于==爬虫模拟登录==的详细内容后续后专门开一篇和大家分享。</p>
-<h3 id="Cookie的分类"><a href="#Cookie的分类" class="headerlink" title="Cookie的分类"></a>Cookie的分类</h3><p>Cookie有两种类型：持久化Cookie，非持久化Cookie。</p>
-<ul>
-<li>持久化Cookie：表示Cookie会保存到本地磁盘上，关闭浏览器再次打开，Cookie依然有效直到设置的expire时间。</li>
-<li>非持久化Cookie：表示Cookie会在本地内存中，生命周期会受浏览器开关状态影响，只要浏览器关闭，Cookie则失效。</li>
-</ul>
-<h3 id="HTTP-Cookie的交互过程"><a href="#HTTP-Cookie的交互过程" class="headerlink" title="HTTP+Cookie的交互过程"></a>HTTP+Cookie的交互过程</h3><p>下面是HTTP请求中使用Cookie所实现的整个web交互过程。</p>
-<p><img src="/images/爬虫-http-07.jpg" alt="爬虫--cookie" title="爬虫-http-07"></p>
-<p>博主以一个==访问豆瓣==的实际例子作为上述过程的具体说明和描述。</p>
-<h4 id="步骤1的请求头"><a href="#步骤1的请求头" class="headerlink" title="步骤1的请求头"></a>步骤1的请求头</h4><p><img src="/images/爬虫-http-08.jpg" alt="爬虫--cookie" title="爬虫-http-08"></p>
-<p>看到请求头里面没有Cookie，只是常规的头域字段信息。</p>
-<h4 id="步骤2-gt-3的响应头"><a href="#步骤2-gt-3的响应头" class="headerlink" title="步骤2-&gt;3的响应头"></a>步骤2-&gt;3的响应头</h4><p><img src="/images/爬虫-http-09.jpg" alt="爬虫--cookie" title="爬虫-http-09"></p>
-<p>服务器根据==POST请求==（用户名密码等）生成一个Cookie，并通过响应头的==set-Cookie字段==返回此Cookie信息。</p>
-<h4 id="步骤5的请求头"><a href="#步骤5的请求头" class="headerlink" title="步骤5的请求头"></a>步骤5的请求头</h4><p><img src="/images/爬虫-http-10.jpg" alt="爬虫--cookie" title="爬虫-http-10"></p>
-<p>再一次刷新页面的请求头中就有了获取Cookie信息。</p>
-<h4 id="步骤7的响应头"><a href="#步骤7的响应头" class="headerlink" title="步骤7的响应头"></a>步骤7的响应头</h4><p><img src="/images/爬虫-http-11.jpg" alt="爬虫--cookie" title="爬虫-http-11"></p>
-<p>第二次的响应头==无set-Cookie==字段信息，因为服务器已经辨别了这个用户刚刚提交的Cookie信息。</p>
-<h3 id="5-Cookie的格式和属性"><a href="#5-Cookie的格式和属性" class="headerlink" title="5.Cookie的格式和属性"></a>5.Cookie的格式和属性</h3><p>==格式==</p>
-<ul>
-<li>客户端发送Cookie（键值对）：Cookie：key1=value1; key2=value2; key3=value3</li>
-<li>服务器响应Cookie：Set-Cookie: name=value；expires=date；path=path；domain=domain_name；secure</li>
-</ul>
-<p>==属性==</p>
-<ul>
-<li>name：为一个Cookie的名称。</li>
-<li>domain：为可以访问此Cookie的域名，该域名可以使多个web服务器共享Cookie。</li>
-<li>path：表示Cookie所在目录，“/”表示根目录。</li>
-<li>expires/max-age：为Cookie的生命周期。若设置该值，则到此时间Cookie会失效。若没有设置该值，默认与session一起失效。浏览器关闭，Cookie失效。</li>
-<li>secure：布尔值，指定Cookie的传输方式，默认是不安全的HTTP连接。</li>
-<li>http：Cookie的httponly属性，若此属性为true，则只能在http的请求头中携带Cookie信息。</li>
-</ul>
-<h3 id="Session解读"><a href="#Session解读" class="headerlink" title="Session解读"></a>Session解读</h3><h4 id="什么是Session？"><a href="#什么是Session？" class="headerlink" title="什么是Session？"></a>什么是Session？</h4><p>百度百科是这么解释的：</p>
-<blockquote>
-<p>Session: 在计算机中，尤其是在网络应用中，称为“会话控制”。Session对象存储特定用户会话所需的属性及配置信息。这样，当用户在应用程序的 Web 页之间跳转时，存储在 Session对象中的变量将不会丢失，而是在整个用户会话中一直存在下去。当用户请求来自应用程序的 Web 页时，如果该用户还没有会话，则 Web服务器将自动创建一个 Session 对象。当会话过期或被放弃后，服务器将终止该会话。</p>
-</blockquote>
-<h4 id="为什么要使用Session？"><a href="#为什么要使用Session？" class="headerlink" title="为什么要使用Session？"></a>为什么要使用Session？</h4><p>同样是因为HTTP是一个无状态协议。Session和Cookie的存在都是为了解决这个问题的。</p>
-<p>由于服务器本身并不会维持用户的上下文，因此为了实现会话的跟踪，不得不想出一种办法。<br>==Session正是一种保存上下文的机制==，对于每一个用户来讲，用户所产生的变量值都保存在了服务器端，这样就使得整个会话都衔接的上，而每个用户有自己独一无二的ID，我们叫做==SessionID==。</p>
-<h4 id="Session和Cookie有什么联系？"><a href="#Session和Cookie有什么联系？" class="headerlink" title="Session和Cookie有什么联系？"></a>Session和Cookie有什么联系？</h4><p>这个要从SessionID说起。我们上面提到服务器会每个用户创建一个SessionID，那么我们该如何使用它呢?</p>
-<h5 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h5><p>这是我们最常用的方式，Cookie相当于一个SessionID的高级应用，是SessionID的载体或者容器。我们说Cookie可以用来识别用户身份，也是因为SessionID的缘故。</p>
-<p><strong>因此，可以说Session是服务端的解决方案，实现了web的会话跟踪，而Cookie是客户端的解决方案，实现了跟踪过程的用户识别。</strong></p>
-<p>Session是真正解决HTTP无状态的方案，而Cookie只是实现了Session过程中的SessionID方式。</p>
-<h5 id="URL重写"><a href="#URL重写" class="headerlink" title="URL重写"></a>URL重写</h5><p>Cookie的使用给用户带来了极大的方便，以及很好的用户体验。但是Cookie存在着一些安全问题，Cookie储存在本地会很大程度暴露用户信息。因此，用户可以选择禁用Cookie。</p>
-<p>那么另一种实现SessionID的方式就是URL重写。URL重写就是把SessionID附加在URL里，可以作为URL路径附加信息或者查询字符串附加在URL后面。</p>
-<p><strong>就是说用户所有的请求的URL中都要有==sesssionID==这个东西，否则无法保持会话的持久状态。</strong></p>
-<h5 id="表单隐藏字段"><a href="#表单隐藏字段" class="headerlink" title="表单隐藏字段"></a>表单隐藏字段</h5><p>服务器会修改表单，设置一个SessionID的隐藏字段，用户需要将SessionID填写到隐藏字段中提交表单，以让服务器知道用户身份。</p>
-<p><strong>隐藏字段也是爬虫中的反爬策略之一</strong>，如果我们爬虫提交的表单没有填写隐藏字段，那么服务器会认为这是一种爬虫行为而禁掉，或者提交的内容不正确也可能造成同样的后果。因此，每次爬取前有必要查看一下是否存在隐藏字段。当然，关于隐藏字段还有更复杂的玩法这里就不详细介绍了。</p>
-<h4 id="Session的关闭"><a href="#Session的关闭" class="headerlink" title="Session的关闭"></a>Session的关闭</h4><h5 id="关闭浏览器"><a href="#关闭浏览器" class="headerlink" title="关闭浏览器"></a>关闭浏览器</h5><p>有时候我们可能会误以为关闭了浏览器，Session就消失了。其实，Session并没有消失（session存储在服务器中），如果消失，消失的也是Cookie（如果储存在内存的话）。</p>
-<p><strong>Session是储存在服务端的，注意是服务端</strong>。而服务端是不会知道浏览器什么时候关闭了的，但是服务端又不能一直开着Session，那样会损耗服务器资源。因此，为了解决这个问题，服务端一般会设置Session超时，通过检测用户活动状态来判断是否超时。如果超时，那么整个会话Session才真正消失，不然还是会开着直到超时。</p>
-<p>如果Cookie是本地储存在磁盘上的，在我们关闭浏览器的很短一段时间内再次打开浏览器，还是会回到刚才那个Session会话。但是如果Cookie储存在内存中，再次打开时浏览器已经忘记了Cookie，那么就无法和刚才的会话连接上了。</p>
-<p>结论是：==关闭浏览器并不会使服务端Session对象消失。==</p>
-<h5 id="注销"><a href="#注销" class="headerlink" title="注销"></a>注销</h5><p>注销和关闭浏览器有着本质的区别，注销实际上会使Session对象消失。就比如我们在网页上点击注销一样，用户信息就都被清空了。如果需要连接Session，需要重新创建Session。</p>
-<p>结论是：==注销会使服务端Session对象消失。==</p>
-<h3 id="HTTPs解读"><a href="#HTTPs解读" class="headerlink" title="HTTPs解读"></a>HTTPs解读</h3><h4 id="什么是HTTPs"><a href="#什么是HTTPs" class="headerlink" title="什么是HTTPs?"></a>什么是HTTPs?</h4><blockquote>
-<p>HTTPS（全称：Hyper Text Transfer Protocol over Secure SocketLayer），是以安全为目标的HTTP通道，简单讲是HTTP的安全版。即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL。<br>它是一个URIscheme（抽象标识符体系），句法类同http:体系。用于安全的HTTP数据传输。https:URL表明它使用了HTTP，但HTTPS存在不同于HTTP的默认端口及一个加密/身份验证层（在HTTP与TCP之间）。这个系统的最初研发由网景公司(Netscape)进行，并内置于其浏览器NetscapeNavigator中，提供了身份验证与加密通讯方法。现在它被广泛用于万维网上安全敏感的通讯，例如交易支付方面。</p>
-</blockquote>
-<h4 id="HTTPs与HTTP的区别"><a href="#HTTPs与HTTP的区别" class="headerlink" title="HTTPs与HTTP的区别"></a>HTTPs与HTTP的区别</h4><blockquote>
-<p>超文本传输协议HTTP协议被用于在Web浏览器和网站服务器之间传递信息。HTTP协议以明文方式发送内容，不提供任何方式的数据加密，如果攻击者截取了Web浏览器和网站服务器之间的传输报文，就可以直接读懂其中的信息，因此HTTP协议不适合传输一些敏感信息，比如信用卡号、密码等。<br>为了解决HTTP协议的这一缺陷，需要使用另一种协议：安全套接字层超文本传输协议HTTPS。为了数据传输的安全，HTTPS在HTTP的基础上加入了SSL协议，SSL依靠证书来验证服务器的身份，并为浏览器和服务器之间的通信加密。<br>HTTPS和HTTP的区别主要为以下四点：</p>
-<ul>
-<li>一、https协议需要到ca申请证书，一般免费证书很少，需要交费。</li>
-<li>二、http是超文本传输协议，信息是明文传输，https 则是具有安全性的ssl加密传输协议。</li>
-<li>三、http和https使用的是完全不同的连接方式，用的端口也不一样，前者是80，后者是443。</li>
-<li>四、http的连接很简单，是无状态的；HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，比http协议安全。</li>
-</ul>
-</blockquote>
-<h4 id="HTTPs对爬虫的影响"><a href="#HTTPs对爬虫的影响" class="headerlink" title="HTTPs对爬虫的影响"></a>HTTPs对爬虫的影响</h4><p>乍一看感觉HTTPs有点像反爬的手段，通过上面的了解，我们发现HTTPs是对服务器端的验证，通过CA证书保证了我们访问的网站是有身份的，而非其他假网站。相反，我们爬虫模拟的是客户端，并不受HTTPs的限制。</p>
-<p><strong>因此，HTTPs不影响我们爬虫</strong>。</p>
-<p>但是，我们在爬虫的过程仍然也会遇到过类似SSL不通过之类的错误。比如，博主以前用requests访问HTTPs的时候遇到过这样的坑，但最后究其原因是同时打开了fiddler造成的。</p>
-<blockquote>
-<p>转载 <a href="https://segmentfault.com/a/1190000013074959" target="_blank" rel="external">https://segmentfault.com/a/1190000013074959</a></p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;上一篇我们介绍了爬虫中HTTP的基础内容，相信看过的朋友们应该对HTTP已经有个初步的认识了。本篇博主将分享一些HTTP的高级内容，以及在爬虫中的应用，让大家更深入理解。这些内容包括：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Cookie解读&lt;/li&gt;
-&lt;li&gt;Session解读&lt;/li
-    
-    </summary>
-    
-      <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
-    
-    
-      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>爬虫|解读http的秘密&lt;基础篇&gt;</title>
-    <link href="http://yoursite.com/2018/02/12/%E7%88%AC%E8%99%AB-%E8%A7%A3%E8%AF%BBhttp%E7%9A%84%E7%A7%98%E5%AF%86-%E5%9F%BA%E7%A1%80%E7%AF%87/"/>
-    <id>http://yoursite.com/2018/02/12/爬虫-解读http的秘密-基础篇/</id>
-    <published>2018-02-12T14:57:36.000Z</published>
-    <updated>2018-02-12T07:44:58.924Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>在学习爬虫的过程中，相信大家对HTTP这个词已经不陌生了，它好像从未离开过我们的视线。被迫所需，我们每次都要使用开发者工具去查看请求头，响应头，以及头中的各个字段，使用别人封装好的模块填入信息，敲几行代码就解决了。面对简单的爬取任务，我们也许根本不用管它是什么，但可能等我们真正遇到问题的时候，却无从下手。</p>
-<p>认识并深刻理解HTTP对于爬虫的实现过程是非常有帮助的。为了更好的让大家理解爬虫中的HTTP，博主将分为两篇对HTTP进行讲述，&lt;基础篇&gt; 和 &lt;高阶篇&gt;。本篇为基础篇，将从以下几个部分进行阐述。</p>
-<ul>
-<li>什么是HTTP</li>
-<li>一个完整的HTTP请求过程</li>
-<li>HTTP请求报文</li>
-</ul>
-<h3 id="什么是HTTP？"><a href="#什么是HTTP？" class="headerlink" title="什么是HTTP？"></a>什么是HTTP？</h3><h4 id=""><a href="#" class="headerlink" title=""></a><http的介绍></http的介绍></h4><p>引自百度百科的权威回答：</p>
-<blockquote>
-<p>超文本传输协议（HTTP，HyperText Transfer Protocol)<br>是互联网上应用最为广泛的一种网络协议。所有WWW文件都必须遵守这个标准。设计HTTP最初的目的是为了提供一种发布和接收HTML页面的方法。<br>1960年美国人TedNelson构思了一种通过计算机处理文本信息的方法，并称之为超文本（hypertext）,这成为了HTTP超文本传输协议标准架构的发展根基。TedNelson组织协调万维网协会（World Wide Web Consortium）和互联网工程工作小组（InternetEngineering Task Force ）共同合作研究，最终发布了一系列的RFC，其中著名的RFC 2616定义了HTTP 1.1。<br><strong>HTTP协议是用于从WWW服务器传输超文本到本地浏览器的传输协议</strong>。它可以使浏览器更加高效，使网络传输减少。它不仅保证计算机正确快速地传输超文本文档，还确定传输文档中的哪一部分，以及哪部分内容首先显示(如文本先于图形)等。</p>
-</blockquote>
-<h4 id="-1"><a href="#-1" class="headerlink" title=""></a><http的模型></http的模型></h4><p>HTTP采用了浏览器/服务器这种请求/响应模型，浏览器永远是HTTP请求的发起者，服务器为响应者。</p>
-<p><img src="/images/爬虫-http-01.jpg" alt="爬虫-http-01" title="爬虫-http-01"></p>
-<p>这样在浏览器客户端没有发起请求的情况下，服务器是不能主动推送消息给客户端的。这也可以说是http协议的一个缺点吧。</p>
-<h4 id="-2"><a href="#-2" class="headerlink" title=""></a><http的定位></http的定位></h4><p>HTTP是一个<strong>应用层协议</strong>，是我们想从服务器端获取信息的最直观的请求。比如，在爬虫中使用的<strong><urllib模块></urllib模块></strong>，<strong><requests模块></requests模块></strong>等都是封装了HTTP协议，作为一个HTTP客户端实现了博文，图片，视频等信息源的下载。</p>
-<p>但是HTTP也不是直接就可以用的，它的请求是建立在一些底层协议的基础上完成的。如<strong>TCP/IP</strong>协议栈中，HTTP需要TCP的三次握手连接成功后才能向服务器发起请求。当然，如果是<strong>HTTPS</strong>的话，还需要<strong>TSL</strong>和<strong>SSL</strong>安全层。</p>
-<p><img src="/images/爬虫-http-02.jpg" alt="爬虫-http-02" title="爬虫-http-02"></p>
-<h3 id="一个完整的HTTP请求过程"><a href="#一个完整的HTTP请求过程" class="headerlink" title="一个完整的HTTP请求过程"></a>一个完整的HTTP请求过程</h3><p>既然==HTTP==协议需要建立在其它底层协议基础上，我们来看看一个完整的HTTP请求是什么样的。</p>
-<p>当我们点击一个链接或者输入一个链接的时候，整个HTTP的请求过程就开始了，然后经过以下步骤得到最后的信息，我们这里简单介绍一下前四个步骤，旨在了解HTTP。</p>
-<p><img src="/images/爬虫-http-03.jpg" alt="爬虫-http-03" title="爬虫-http-03"></p>
-<ul>
-<li><strong>域名解析</strong>：首先会搜索各种本地DNS缓存，如果没有就会向DNS服务器（互联网提供商）发起域名解析，以获取IP地址。</li>
-<li><strong>建立TCP连接</strong>：当获取IP后，将创建套接字socket连接，也就是TCP的3次握手连接，默认端口号80。</li>
-<li><strong>HTTP请求</strong>：一旦TCP连接成功后，浏览器/爬虫就可以向服务器发起HTTP请求报文了，报文内容包含请求行、请求头部、请求主体。</li>
-<li><strong>服务器响应</strong>：服务器响应，并返回一个HTTP响应包（如果成功会返回状态码200）和请求的HTML代码。</li>
-</ul>
-<p>上面的步骤<3>和<4>可以简单的示意如下，更方便大家理解。其中，请求和响应都包含特定格式的信息，具体我们接下来会继续解读。</4></3></p>
-<p><img src="/images/爬虫-http-04.jpg" alt="爬虫-http-04" title="爬虫-http-04"></p>
-<p>响应HTTP请求会返回响应状态码，根据状态码可以知道返回信息的状态。状态码规定如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">1xx: 信息响应类，表示接收到请求并且继续处理 </div><div class="line">100——必须继续发出请求 </div><div class="line">101——要求服务器根据请求转换HTTP协议版本</div><div class="line">2xx: 处理成功响应类，表示动作被成功接收、理解和接受 </div><div class="line">200——交易成功</div><div class="line">201——提示知道新文件的URL</div><div class="line">202——接受和处理、但处理未完成</div><div class="line">203——返回信息不确定或不完整</div><div class="line">204——请求收到，但返回信息为空</div><div class="line">205——服务器完成了请求，用户代理必须复位当前已经浏览过的文件</div><div class="line">206——服务器已经完成了部分用户的GET请求</div><div class="line"></div><div class="line">3xx: 重定向响应类，为了完成指定的动作，必须接受进一步处理</div><div class="line">300——请求的资源可在多处得到</div><div class="line">301——删除请求数据</div><div class="line">302——在其他地址发现了请求数据</div><div class="line">303——建议客户访问其他URL或访问方式</div><div class="line">304——客户端已经执行了GET，但文件未变化</div><div class="line">305——请求的资源必须从服务器指定的地址得到</div><div class="line">306——前一版本HTTP中使用的代码，现行版本中不再使用</div><div class="line">307——申明请求的资源临时性删除</div><div class="line"></div><div class="line">4xx: 客户端错误，客户请求包含语法错误或者是不能正确执行</div><div class="line">400——错误请求，如语法错误</div><div class="line">401——未授权</div><div class="line">402——保留有效ChargeTo头响应</div><div class="line">403——禁止访问</div><div class="line">404——没有发现文件、查询或URl</div><div class="line">405——在Request-Line字段定义的方法不允许</div><div class="line">406——根据发送的Accept，请求资源不可访问</div><div class="line">407——用户必须首先在代理服务器上得到授权</div><div class="line">408——客户端没有在指定的时间内完成请求</div><div class="line">409——对当前资源状态，请求不能完成</div><div class="line">410——服务器不再有此资源且无进一步地址</div><div class="line">411——服务器拒绝用户定义的Content-Length</div><div class="line">412——一个或多个请求头字段在当前请求中错误</div><div class="line">413——请求的资源大于服务器允许的大小</div><div class="line">414——请求的资源URL长于服务器允许的长度</div><div class="line">415——请求资源不支持请求项目格式</div><div class="line">416——请求中包含Range请求头字段，在当前请求资源范围内没有range指示值，请求也不包含If-Range请求头字段</div><div class="line">417——服务器不满足请求Expect头字段指定的期望值，如果是代理服务器，可能是下一级服务器不能满足请求长。</div><div class="line">5xx: 服务端错误，服务器不能正确执行一个正确的请求</div><div class="line">500——内部服务器错误</div><div class="line">501——未实现</div><div class="line">502——网关错误</div></pre></td></tr></table></figure>
-<h3 id="HTTP请求报文"><a href="#HTTP请求报文" class="headerlink" title="HTTP请求报文"></a>HTTP请求报文</h3><p>相信你已经对HTTP的请求过程有了大致的了解了，下面我们来详细介绍HTTP请求的==报文信息==。<br>报文内容包含==请求行==、==请求头部==、==请求主体==</p>
-<p><img src="/images/爬虫-http-05.jpg" alt="爬虫--http-05" title="爬虫-http-05"></p>
-<p>下面我们来看一下通过开发者工具请求网址<a href="https://www.baidu.com/截取下来的HTTP请求报文内容，对比一下上面的标准格式。" target="_blank" rel="external">https://www.baidu.com/截取下来的HTTP请求报文内容，对比一下上面的标准格式。</a></p>
-<p><img src="/images/爬虫-http-06.jpg" alt="爬虫-http-06" title="爬虫-http-06"></p>
-<p>我们发现请求报文的格式与上面基本一致，正式我们想要的。那么，接下来我们将要逐个的介绍以上各个信息</p>
-<h4 id="请求行"><a href="#请求行" class="headerlink" title="请求行"></a>请求行</h4><p>==GET==是HTTP的请求方式之一，HTTP/1.1协议中共定义了8种方法与服务器交互，有 GET、POST、HEAD、PUT、DELETE、OPTIONS、TRACE、CONNECT，其中比较常用的是==GET==和==POST==方法了。</p>
-<ul>
-<li>HEAD: 从服务器得到除了请求体与GET请求一样的响应</li>
-<li>GET：通过URL获取查询资源信息（爬虫特定URL爬取）</li>
-<li>POST：提交表单（爬虫中的模拟登录）</li>
-<li>PUT：上传文件（浏览器不支持）</li>
-<li>DELETE：删除</li>
-<li>OPTIONS：返回服务器对特定资源支持的HTTP请求方法</li>
-<li>TRACE：返回服务器收到的请求，用于测试或诊断 </li>
-<li>CONNECT：预留给管道连接方式的代理服务</li>
-</ul>
-<p>==GET==请求方法后URL（这里是/）和版本1.1，别忘了空格。</p>
-<h4 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h4><p>HTTP的头域包括==通用头==、==请求头==、==响应头==和==实体头==四部分。因为在爬虫过程中，我们经常会提交headers请求头信息用于伪装，所以我们这里对请求头着重讲解一下。</p>
-<p>请求头是请求报文特有的，它向服务器提交了一些额外的信息，例如通过Accept字段信息，我们客户端可以告诉服务器我们接受一些什么类型的数据。而我们其实可以把这些字段信息就当成==键值对==对待。</p>
-<p>下面我们看看这些字段都代表了什么意思？</p>
-<h4 id="Accept"><a href="#Accept" class="headerlink" title="==Accept=="></a>==Accept==</h4><p>内容：text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,/;q=0.8<br>含义：告诉浏览器我们接受MIME的类型</p>
-<h4 id="Accept-Encoding"><a href="#Accept-Encoding" class="headerlink" title="==Accept-Encoding=="></a>==Accept-Encoding==</h4><p>内容：gzip, deflate, br<br>含义：如果有这个字段，则代表客户端支持压缩将内容编码，去掉后会支持任意编码。<br>注意：爬虫时一般不要把它加上，博主最开始就是不懂全都复制过来，结果因为这个就是不好使卡住好长时间。</p>
-<h4 id="Accept-Lanague"><a href="#Accept-Lanague" class="headerlink" title="==Accept-Lanague=="></a>==Accept-Lanague==</h4><p>内容：zh-CN,zh;q=0.9<br>含义：告诉服务器能够接受的语言，没有则代表任何语言</p>
-<h4 id="Connection"><a href="#Connection" class="headerlink" title="==Connection=="></a>==Connection==</h4><p>内容：keep-alive<br>含义：告诉服务器需要持久有效的连接状态（HTTP1.1默认会进行持久连接）</p>
-<h4 id="Host"><a href="#Host" class="headerlink" title="==Host=="></a>==Host==</h4><p>内容：www.baidu.com<br>含义：客户端指定自己想访问的web服务器域名/IP地址和端口号</p>
-<h4 id="Cache-control"><a href="#Cache-control" class="headerlink" title="==Cache-control=="></a>==Cache-control==</h4><p>内容：max-age=0<br>含义：(引自百度百科)</p>
-<blockquote>
-<p>Cache-Control<br>是最重要的规则。这个字段用于指定所有缓存机制在整个请求/响应链中必须服从的指令。这些指令指定用于阻止缓存对请求或响应造成不利干扰的行为。这些指令通常覆盖默认缓存算法。缓存指令是单向的，即请求中存在一个指令并不意味着响应中将存在同一个指令。<br>网页的缓存是由HTTP消息头中的“Cache-control”来控制的，常见的取值有private、no-cache、max-age、must-revalidate等，默认为private。</p>
-</blockquote>
-<p>但是HTTP请求和响应的Cache-Control是不完全一样的。<br>常见的请求Cache-Control取值有==no-cache==, ==no-store==, ==max-age==, ==max-stale==, ==min-fresh==, ==only-if-cached==。</p>
-<p>响应的Cache-Control取值有==public==, ==private==,==no-cache==, ==no- store==, ==no-transform==, ==must-revalidate==, ==proxy-revalidate==, ==max-age==。</p>
-<p>我们这里主要介绍请求时的常见Cache-Control取值。</p>
-<h5 id="max-age-lt-0"><a href="#max-age-lt-0" class="headerlink" title="max-age&lt;=0"></a><1>max-age&lt;=0</1></h5><p>本例中使用max-age=0，表示每次请求会访问服务器，通过Last-Modified来判断文件是否被修改，如果被修改，返回状态码200并得到最新文件，否则将返回304状态码并读取缓存文件。</p>
-<h5 id="max-age-gt-0"><a href="#max-age-gt-0" class="headerlink" title="max-age&gt;0"></a><2>max-age&gt;0</2></h5><p>表示会直接从浏览器提取缓存。</p>
-<h5 id="no-cache"><a href="#no-cache" class="headerlink" title="no-cache"></a><3>no-cache</3></h5><p>表示不会在浏览器缓存进行提取，而是强制的向服务器发出请求，这样可以保证客户端能够收到最权威的回应。</p>
-<h5 id="no-store"><a href="#no-store" class="headerlink" title="no-store"></a><4>no-store</4></h5><p>所有内容都不会被缓存到缓存或Internet临时文件中。</p>
-<h4 id="Upgrade-Insecure-Requests"><a href="#Upgrade-Insecure-Requests" class="headerlink" title="==Upgrade-Insecure-Requests=="></a>==Upgrade-Insecure-Requests==</h4><p>内容：1<br>含义：表示浏览器/爬虫可以处理HTTPS协议，并能自动升级请求从HTTP到HTTPS。</p>
-<h4 id="User-Agent"><a href="#User-Agent" class="headerlink" title="==User-Agent=="></a>==User-Agent==</h4><p>内容：Mozilla/5.0 (Windows NT 6.1; WOW64) ..Safari/537.36<br>含义：（这个是爬虫中最常用了）用于伪装成浏览器身份请求网页。它的意思自然就是表示浏览器的身份，说明是用的哪种浏览器进行的操作。</p>
-<h4 id="Cookies"><a href="#Cookies" class="headerlink" title="==Cookies=="></a>==Cookies==</h4><p>含义：（这个也是爬虫中很重要的了，通常用于模拟登录）<br>Cookies是用于维持服务端的会话状态，由服务器端写入，然后在后续请求中，供服务器读取使用。</p>
-<p><em>以上就是本例中出现的所有字段信息内容。当然，还有其它一些常用字段信息，这里也一起说明一下。</em></p>
-<h3 id="其它请求头字段信息"><a href="#其它请求头字段信息" class="headerlink" title="其它请求头字段信息"></a>其它请求头字段信息</h3><h4 id="Referer"><a href="#Referer" class="headerlink" title="==Referer=="></a>==Referer==</h4><p>含义：（这个也是爬虫常用到的 ==防盗链==）<br>客户端通过当前URL代表的页面出发访问我们请求的页面。爬虫中，一般我们只要把它设置成请求的网页链接就好了。</p>
-<h4 id="Accept-Charset"><a href="#Accept-Charset" class="headerlink" title="==Accept-Charset=="></a>==Accept-Charset==</h4><p>含义：（这个也是爬虫常用到的）<br>表示浏览器可接受的字符集，可以是utf-8，gbk等</p>
-<h4 id="If-Modified-Since"><a href="#If-Modified-Since" class="headerlink" title="==If-Modified-Since=="></a>==If-Modified-Since==</h4><p>内容：Thu, 10 Apr 2008 09:14:42 GMT<br>含义：请求的内容在指定日期以后一旦被修改就被返回对象内容，否则返回“Not Modified”</p>
-<h4 id="Pragma"><a href="#Pragma" class="headerlink" title="==Pragma=="></a>==Pragma==</h4><blockquote>
-<p>Pragma头域用来包含实现特定的指令，最常用的是Pragma:no-cache。在HTTP/1.1协议中，它的含义和Cache-Control:no-cache相同。</p>
-</blockquote>
-<h4 id="Range"><a href="#Range" class="headerlink" title="==Range=="></a>==Range==</h4><p>含义：告诉浏览器自己想取对象的哪个部分。例如，Range: bytes=1173546</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;写在前面&quot;&gt;&lt;a href=&quot;#写在前面&quot; class=&quot;headerlink&quot; title=&quot;写在前面&quot;&gt;&lt;/a&gt;写在前面&lt;/h3&gt;&lt;p&gt;在学习爬虫的过程中，相信大家对HTTP这个词已经不陌生了，它好像从未离开过我们的视线。被迫所需，我们每次都要使用开发者工具去
-    
-    </summary>
-    
-      <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
-    
-    
-      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
     
   </entry>
   
