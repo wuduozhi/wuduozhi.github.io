@@ -1,0 +1,623 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>python|urllib2的一个简单案例 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="网络爬虫的概念网络爬虫（Web Spider）是一种自动获取网页内容的程序，是搜索引擎的重要组成部分。 初次深入了解爬虫的概念是在吴军博士的《数学之美》中，其中描述互联网本质上就是一张无形的大网，我们可以把每一个网页当做网中的节点，超链接作为连接节点的弧。这样网络爬虫就可以从任何一个网页出发，通过图的遍历算法，自动的访问每一个网页并将它们存起来。 实际上程序的目的都是代替人来完成大量的重复操作，爬">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python|urllib2的一个简单案例">
+<meta property="og:url" content="http://yoursite.com/2018/03/21/python-urllib2的一个简单案例/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="网络爬虫的概念网络爬虫（Web Spider）是一种自动获取网页内容的程序，是搜索引擎的重要组成部分。 初次深入了解爬虫的概念是在吴军博士的《数学之美》中，其中描述互联网本质上就是一张无形的大网，我们可以把每一个网页当做网中的节点，超链接作为连接节点的弧。这样网络爬虫就可以从任何一个网页出发，通过图的遍历算法，自动的访问每一个网页并将它们存起来。 实际上程序的目的都是代替人来完成大量的重复操作，爬">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/images/python-urllib2实践-01.jpg">
+<meta property="og:updated_time" content="2018-03-20T16:36:26.850Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python|urllib2的一个简单案例">
+<meta name="twitter:description" content="网络爬虫的概念网络爬虫（Web Spider）是一种自动获取网页内容的程序，是搜索引擎的重要组成部分。 初次深入了解爬虫的概念是在吴军博士的《数学之美》中，其中描述互联网本质上就是一张无形的大网，我们可以把每一个网页当做网中的节点，超链接作为连接节点的弧。这样网络爬虫就可以从任何一个网页出发，通过图的遍历算法，自动的访问每一个网页并将它们存起来。 实际上程序的目的都是代替人来完成大量的重复操作，爬">
+<meta name="twitter:image" content="http://yoursite.com/images/python-urllib2实践-01.jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/03/21/python-urllib2的一个简单案例/" title="python|urllib2的一个简单案例" itemprop="url">python|urllib2的一个简单案例</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-03-20T23:50:24.000Z" itemprop="datePublished"> Published 2018-03-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#网络爬虫的概念"><span class="toc-number">1.</span> <span class="toc-text">网络爬虫的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#llib2抓取网页内容"><span class="toc-number">2.</span> <span class="toc-text">llib2抓取网页内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正则表达式返回匹配信息"><span class="toc-number">3.</span> <span class="toc-text">正则表达式返回匹配信息</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#遍历所有新闻页面"><span class="toc-number">3.1.</span> <span class="toc-text">遍历所有新闻页面</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h3 id="网络爬虫的概念"><a href="#网络爬虫的概念" class="headerlink" title="网络爬虫的概念"></a>网络爬虫的概念</h3><p>网络爬虫（Web Spider）是一种自动获取网页内容的程序，是搜索引擎的重要组成部分。 初次深入了解爬虫的概念是在吴军博士的《数学之美》中，其中描述互联网本质上就是一张无形的大网，我们可以把每一个网页当做网中的节点，超链接作为连接节点的弧。这样网络爬虫就可以从任何一个网页出发，通过图的遍历算法，自动的访问每一个网页并将它们存起来。</p>
+<p>实际上程序的目的都是代替人来完成大量的重复操作，爬虫亦是如此。假设现有一个需求是需要获取中国石油大学新闻网的所有新闻标题及发布日期来进行统计分析，那么用人来实现这个需求需要大概以下几个步骤。</p>
+<ol>
+<li>通过浏览器访问中国石油大学新闻网。</li>
+<li>根据网页内容分析出哪些地方是我们需要获取的标题和日期。</li>
+<li>将获取的数据存储到文件中。</li>
+<li>跳转到下一页重复执行2和3步骤直到所有内容获取完毕。</li>
+</ol>
+<p>接下来我们就会按照以上思路用Python编写一个简单的爬虫。</p>
+<h3 id="llib2抓取网页内容"><a href="#llib2抓取网页内容" class="headerlink" title="llib2抓取网页内容"></a>llib2抓取网页内容</h3><p>网页抓取就是把URL地址指定的网络资源读取出来，保存到本地。相当于我们平时在浏览器中通过网址浏览网页，只不过我们看到的是解析过的页面效果，而程序获取到的是源代码等资。 Python的标准库和组件非常强大，可以处理包括数学计算、网络传输、正则表达式等诸多操作。urllib2就是使用各种协议打开url的一个扩展包。最简单的方法就是调用urlopen的方法，比如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">import urllib2</div><div class="line"></div><div class="line">url=&quot;http://news.upc.edu.cn/sdyw/&quot;</div><div class="line">response=urllib2.urlopen(url)</div><div class="line">html=response.read()</div><div class="line">print html</div></pre></td></tr></table></figure></p>
+<p>运行以上代码，可以得到以下结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/loose.dtd&quot;&gt;</div><div class="line">&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;</div><div class="line">&lt;title&gt;中国石油大学新闻网&lt;/title&gt;</div><div class="line">&lt;meta name=&quot;keywords&quot; content=&apos;石大门户网,石大资讯,石大新闻,中国石油大学新闻网,创造太阳网,石油之光&apos; /&gt;</div><div class="line">&lt;!--省略以下运行结果--&gt;</div></pre></td></tr></table></figure></p>
+<p>我们在浏览器中打开该网址，右键选择查看源代码发现和输出的内容是一致的，这时我们第一步已经完成了。</p>
+<h3 id="正则表达式返回匹配信息"><a href="#正则表达式返回匹配信息" class="headerlink" title="正则表达式返回匹配信息"></a>正则表达式返回匹配信息</h3><p>第二步中分析出哪些信息是我们需要的信息这个过程对于人来说非常简单，但是对于电脑就没那么容易了，这里需要引入正则表达式的概念。</p>
+<blockquote>
+<p>正则表达式，又称正规表示法、常规表示法（英语：Regular Expression，在代码中常简写为regex、regexp或RE），计算机科学的一个概念。正则表达式使用单个字符串来描述、匹配一系列符合某个句法规则的字符串。在很多文本编辑器里，正则表达式通常被用来检索、替换那些符合某个模式的文本。</p>
+</blockquote>
+<p>简而言之，正则表达式就是为了处理相对复杂的文本查询或替换。 我们在新闻标题上单击右键，选择查看元素，这样Chrome浏览器下方就会出现开发者工具，并定位新闻标题所在HTML的位置。</p>
+<p><img src="/images/python-urllib2实践-01.jpg" alt="查找结果" title="python-urllib2实践-01"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a href=&quot;/sdyw/2014/04/17/15361630123.shtml&quot; target=&quot;_blank&quot;&gt;1项目入选团中央学校共青团重点工作创新试点&lt;/a&gt;</div></pre></td></tr></table></figure>
+<p>我们分析HTML可以得知&lt;a href=”/sdyw/是标题的固定前缀，2014/04/17是新闻发布日期，15361630123.shtml是随机生成的静态页面名称。1项目入选团中央学校共青团重点工作创新试点是我们需要获取的新闻标题，最后以结尾，实现代码如下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># -*- coding: utf-8 -*- </div><div class="line">import urllib2</div><div class="line">import re</div><div class="line"># 1.获取访问页面的HMTL</div><div class="line">url=&quot;http://news.upc.edu.cn/sdyw/&quot;</div><div class="line">response=urllib2.urlopen(url)</div><div class="line">html=response.read()</div><div class="line"># 2.根据正则表达式抓取特定内容</div><div class="line">r=re.compile(r&apos;&lt;a href=&quot;/sdyw/(?P&lt;Date&gt;.&#123;10&#125;).*&quot; target=&quot;_blank&quot;&gt;(?P&lt;Title&gt;.+)&lt;/a&gt;&apos;)</div><div class="line">news=r.findall(html)</div><div class="line">print news</div></pre></td></tr></table></figure>
+<p>在上方加入import re来导入python自带的正则表达式模块，通过re.compile(strPattern[, flag])方法将字符串形式的正则表达式编译为Pattern对象，第二个参数flag是匹配模式，我们此处省略填写。</p>
+<p>正则表达式字符串开头有一个前缀r，r是raw(原始)的意思。因为在表示字符串中有一些转义符，如表示回车’\n’。如果要表示\需要写为’\‘。但如果我就是需要表示一个’\’+’n’，不用r方式要写为:’\n’。但使用r方式则为r’\n’这样清晰多了。</p>
+<p>固定字符串<a href="/sdyw/后跟了一个用括号包起来的字符串(?P<Date>.{10})，(?P<name>...) 是定义一个命名组，(?P=name)则是对命名组的逆向引用。而后面的.匹配任意除换行符" \n"以外的字符。.{10}匹配10个任意字符，<a="" highlight="" plain"=""><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">for i in range(len(news)):</div><div class="line">    date=news[i][0]</div><div class="line">    title=news[i][1]</div><div class="line">    print title+&quot; &quot;+date</div></pre></td></tr></table>
+<h4 id="遍历所有新闻页面"><a href="#遍历所有新闻页面" class="headerlink" title="遍历所有新闻页面"></a>遍历所有新闻页面</h4><p>上一节我们获取到了第一页的新闻数据，但是我们的目的是需要获取所有的内容。 那我们跳转到其他分页看看有没有什么规律可循。通过分析发现，第一页的url为http://news.upc.edu.cn/sdyw/List_171.shtml，第二页的url为http://news.upc.edu.cn/sdyw/List_170.shtml,最后一页的url为http://news.upc.edu.cn/sdyw/List_1.shtml。那么遍历所有新闻页面获取内容这件事就变的非常简单了，直接通过for循环就可以实现，废话不说了，直接上代码吧。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"># -*- coding: utf-8 -*- </div><div class="line">import urllib2</div><div class="line">import re</div><div class="line">import MySQLdb as mdb</div><div class="line"></div><div class="line">if __name__==&quot;__main__&quot;:</div><div class="line">    url=&quot;http://news.upc.edu.cn/sdyw/List_&quot;</div><div class="line">    con=mdb.connect(&apos;localhost&apos;,&apos;root&apos;,&apos;root&apos;,&apos;Python&apos;,charset=&apos;utf8&apos;)</div><div class="line">    with con:</div><div class="line">        for x in xrange(1,171):</div><div class="line">            response=urllib2.urlopen(url+str(x)+&apos;.shtml&apos;)</div><div class="line">            html=response.read()</div><div class="line">            r=re.compile(r&apos;&lt;a href=&quot;/sdyw/(?P&lt;Date&gt;.&#123;10&#125;).*&quot; target=&quot;_blank&quot;&gt;(?P&lt;Title&gt;.+)&lt;/a&gt;&apos;)</div><div class="line">            news=r.findall(html)</div><div class="line">            curs=con.cursor()</div><div class="line">            for i in range(len(news)):</div><div class="line">                date=news[i][0]</div><div class="line">                title=news[i][5]</div><div class="line">                curs.execute(&quot;INSERT INTO news2(PublishDate,Title) VALUES(%s,%s)&quot;,(date,title))</div><div class="line">                print title+&quot; &quot;+date</div></pre></td></tr></table></figure></p>
+<p>到此，本文已经结束了，短短的20行代码就可以实现一个简单的爬虫，这就是Python的魅力。</p>
+</a></p>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/python/">python</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/python/">python</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/03/21/安全-谈谈如何防范短信验证码被攻击/"  title="安全|谈谈如何防范短信验证码被攻击">
+ <span>安全|谈谈如何防范短信验证码被攻击
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Vim/" title="Vim">Vim<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/life/" title="life">life<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/运维/" title="运维">运维<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/面试/" title="面试">面试<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>20</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具/" title="工具">工具<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/面试/" title="面试">面试<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>
