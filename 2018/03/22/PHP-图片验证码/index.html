@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="前言 验证码（CAPTCHA）是“Completely Automated Public Turing test to tell Computers and Humans Apart”（全自动区分计算机和人类的图灵测试）的缩写，是一种区分用户是计算机还是人的公共全自动程序。可以防止：恶意破解密码、刷票、论坛灌水，有效防止某个黑客对某一个特定注册用户用特定程序暴力破解方式进行不断的登陆尝试，实际上用">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-03-23T16:36:59.191Z">
+<meta property="og:updated_time" content="2018-03-24T10:19:44.447Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP|图片验证码">
 <meta name="twitter:description" content="前言 验证码（CAPTCHA）是“Completely Automated Public Turing test to tell Computers and Humans Apart”（全自动区分计算机和人类的图灵测试）的缩写，是一种区分用户是计算机还是人的公共全自动程序。可以防止：恶意破解密码、刷票、论坛灌水，有效防止某个黑客对某一个特定注册用户用特定程序暴力破解方式进行不断的登陆尝试，实际上用">
@@ -50,7 +50,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -70,7 +70,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -93,16 +93,16 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-03-21T22:00:11.000Z" itemprop="datePublished"> 发表于 2018-03-22</time>
+    <time datetime="2018-03-21T22:00:11.000Z" itemprop="datePublished"> Published 2018-03-22</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
+			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#php图像处理简介"><span class="toc-number">2.</span> <span class="toc-text">php图像处理简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实践"><span class="toc-number">3.</span> <span class="toc-text">实践</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#产生验证码"><span class="toc-number">3.1.</span> <span class="toc-text">产生验证码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建图片"><span class="toc-number">3.2.</span> <span class="toc-text">创建图片</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#php图像处理简介"><span class="toc-number">2.</span> <span class="toc-text">php图像处理简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实践"><span class="toc-number">3.</span> <span class="toc-text">实践</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#产生验证码"><span class="toc-number">3.1.</span> <span class="toc-text">产生验证码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建图片"><span class="toc-number">3.2.</span> <span class="toc-text">创建图片</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#验证码安全性"><span class="toc-number">4.</span> <span class="toc-text">验证码安全性</span></a></li></ol>
 		
 		</div>
 		
@@ -123,18 +123,20 @@
 <p>简单实例代码:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">    //第一步，设置文件MIME类型</div><div class="line">    header(&apos;Content-Type: image/png;&apos;);</div><div class="line">    </div><div class="line">    //第二步，创建一个图形区域，图像背景</div><div class="line">    $im = imagecreatetruecolor(200,200);</div><div class="line">    </div><div class="line">    //第三步，在空白图像区域绘制填充背景</div><div class="line">    $blue = imagecolorallocate($im,0,102,255);    </div><div class="line">    imagefill($im,0,0,$blue);</div><div class="line">    </div><div class="line">    //第四步，在蓝色的背景上输入一些线条，文字等</div><div class="line">    $white = imagecolorallocate($im,255,255,255);</div><div class="line">    imageline($im,0,0,200,200,$white);</div><div class="line">    imageline($im,200,0,0,200,$white);</div><div class="line">    imagestring($im,5,66,20,&apos;Jing.Whale&apos;,$white);</div><div class="line">    </div><div class="line">    //第五步，输出最终图形</div><div class="line">    imagepng($im);</div><div class="line">    </div><div class="line">    //第六步，我要将所有的资源全部清空</div><div class="line">    imagedestroy($im);    </div><div class="line">?&gt;</div></pre></td></tr></table></figure>
 <h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><h4 id="产生验证码"><a href="#产生验证码" class="headerlink" title="产生验证码"></a>产生验证码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function create_code($length = 4)&#123;</div><div class="line">	$string = &quot;abcdefghijklmnopqrstuvwxyz0123456789&quot;;</div><div class="line">	$code = &quot;&quot;;</div><div class="line">	for($i=0;$i&lt;$length;$i++)&#123;</div><div class="line">		$pos = rand(0,35);</div><div class="line">		$code .= $string&#123;$pos&#125;;</div><div class="line">	&#125;</div><div class="line">	return $code;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="创建图片"><a href="#创建图片" class="headerlink" title="创建图片"></a>创建图片</h4><ol>
+<h4 id="创建图片"><a href="#创建图片" class="headerlink" title="创建图片"></a>创建图片</h4><ul>
 <li>创建一张简单的图片（80X20），设置背景色，文本色，再加一些干扰线，干扰素</li>
-</ol>
+</ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">$img_handle = Imagecreate(80, 20);  //图片大小80X20</div><div class="line">$back_color = ImageColorAllocate($img_handle, 255, 255, 255); //背景颜色（白色）</div><div class="line">$txt_color = ImageColorAllocate($img_handle, 0,0, 0);  //文本颜色（黑色）</div><div class="line"></div><div class="line">//加入干扰线</div><div class="line">for($i=0;$i&lt;3;$i++)</div><div class="line">&#123;</div><div class="line">    $line = ImageColorAllocate($img_handle,rand(0,255),rand(0,255),rand(0,255));</div><div class="line">    Imageline($img_handle, rand(0,15), rand(0,15), rand(100,150),rand(10,50), $line);</div><div class="line">&#125;</div><div class="line">//加入干扰象素</div><div class="line">for($i=0;$i&lt;200;$i++) </div><div class="line">&#123;</div><div class="line">    $randcolor = ImageColorallocate($img_handle,rand(0,255),rand(0,255),rand(0,255));</div><div class="line">    Imagesetpixel($img_handle, rand()%100 , rand()%50 , $randcolor);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ol>
+<ul>
 <li>填充图片背景色，再将产生的随机字符串填充图片；</li>
-</ol>
+</ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Imagefill($img_handle, 0, 0, $back_color);             //填充图片背景色</div><div class="line">ImageString($img_handle, 28, 10, 0, $code, $txt_color);//水平填充一行字符串</div></pre></td></tr></table></figure>
-<ol>
+<ul>
 <li>清空输出缓存区，再生成验证码图片，并显示图片。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ob_clean();   // ob_clean()清空输出缓存区    </div><div class="line">header(&quot;Content-type: image/png&quot;); //生成验证码图片    </div><div class="line">Imagepng($img_handle);//显示图片</div></pre></td></tr></table></figure>
 </li>
-</ol>
+</ul>
+<h3 id="验证码安全性"><a href="#验证码安全性" class="headerlink" title="验证码安全性"></a>验证码安全性</h3><p>验证码通常是由php脚本生成的随机字符串，通过GD库的处理，制作成图片。真正的验证码字符串保存在SESSION中，然后把生成的图片展示给用户。用户填写了验证码提交后，在服务端上SESSION中的验证码进行比对。</p>
+<p>这里有一个很多人都会犯的错误。验证码比对完成之后，不管是正确还是错误，我都没有清理SESSION。这样产生了一个问题，一旦一个用户第一次提交验证码成功，第二次以后不再访问生成验证码的脚本，这时候SESSION中的验证码并没有更新，也没有删除，导致验证码重复使用，起不到验证的作用。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -182,10 +184,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -213,7 +215,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分类</p>
+	<p class="asidetitle">Categories</p>
 		<ul>
 		
 		  
@@ -225,7 +227,7 @@
 		  
 		
 		  
-			<li><a href="/categories/PHP/" title="PHP">PHP<sup>9</sup></a></li>
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>10</sup></a></li>
 		  
 		
 		  
@@ -237,7 +239,7 @@
 		  
 		
 		  
-			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>1</sup></a></li>
+			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>2</sup></a></li>
 		  
 		
 		  
@@ -290,7 +292,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -298,7 +300,7 @@
 			
 		
 			
-				<li><a href="/tags/PHP/" title="PHP">PHP<sup>10</sup></a></li>
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>11</sup></a></li>
 			
 		
 			
@@ -322,19 +324,7 @@
 			
 		
 			
-				<li><a href="/tags/面试/" title="面试">面试<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
 			
 		
 			
@@ -342,11 +332,23 @@
 			
 		
 			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
 			
 		
 			
@@ -354,23 +356,23 @@
 			
 		
 			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -378,7 +380,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -565,7 +567,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 

