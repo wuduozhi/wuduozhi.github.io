@@ -12,13 +12,14 @@
 
     
     <meta name="description" content="RESTful简介REST(Representation State Transfer)翻译为表达性状态转移。REST是一种架构风格。在这种架构风格中，对象被视为一种资源（resource)。表达性状态是指资源数据在某个瞬间的状态快照。资源可以有多种表述，表述状态具有描述性，包括资源数据的内容、表述格式（XML、Json…)等信息。 REST的资源是可寻址的，通过HTTP协议的通用动词方法（如GE">
+<meta name="keywords" content="架构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="架构|RESTful API设计">
 <meta property="og:url" content="http://yoursite.com/2018/01/30/架构-RESTful-API设计/index.html">
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="RESTful简介REST(Representation State Transfer)翻译为表达性状态转移。REST是一种架构风格。在这种架构风格中，对象被视为一种资源（resource)。表达性状态是指资源数据在某个瞬间的状态快照。资源可以有多种表述，表述状态具有描述性，包括资源数据的内容、表述格式（XML、Json…)等信息。 REST的资源是可寻址的，通过HTTP协议的通用动词方法（如GE">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-02-03T03:22:17.456Z">
+<meta property="og:updated_time" content="2018-03-26T07:36:10.775Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="架构|RESTful API设计">
 <meta name="twitter:description" content="RESTful简介REST(Representation State Transfer)翻译为表达性状态转移。REST是一种架构风格。在这种架构风格中，对象被视为一种资源（resource)。表达性状态是指资源数据在某个瞬间的状态快照。资源可以有多种表述，表述状态具有描述性，包括资源数据的内容、表述格式（XML、Json…)等信息。 REST的资源是可寻址的，通过HTTP协议的通用动词方法（如GE">
@@ -49,7 +50,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -69,7 +70,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -92,16 +93,16 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-01-30T10:11:57.000Z" itemprop="datePublished"> Published 2018-01-30</time>
+    <time datetime="2018-01-30T10:11:57.000Z" itemprop="datePublished"> 發表於 2018-01-30</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
+			<strong class="toc-title">文章目錄</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#RESTful简介"><span class="toc-number">1.</span> <span class="toc-text">RESTful简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP动词"><span class="toc-number">2.</span> <span class="toc-text">HTTP动词</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Example"><span class="toc-number">2.1.</span> <span class="toc-text">Example</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#状态码"><span class="toc-number">3.</span> <span class="toc-text">状态码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#综述"><span class="toc-number">4.</span> <span class="toc-text">综述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些误区"><span class="toc-number">5.</span> <span class="toc-text">一些误区</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#RESTful简介"><span class="toc-number">1.</span> <span class="toc-text">RESTful简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP动词"><span class="toc-number">2.</span> <span class="toc-text">HTTP动词</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Example"><span class="toc-number">2.1.</span> <span class="toc-text">Example</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#过滤信息（Filtering）"><span class="toc-number">3.</span> <span class="toc-text">过滤信息（Filtering）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#状态码"><span class="toc-number">4.</span> <span class="toc-text">状态码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#错误处理（Error-handling）"><span class="toc-number">5.</span> <span class="toc-text">错误处理（Error handling）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#返回结果"><span class="toc-number">6.</span> <span class="toc-text">返回结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#综述"><span class="toc-number">7.</span> <span class="toc-text">综述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些误区"><span class="toc-number">8.</span> <span class="toc-text">一些误区</span></a></li></ol>
 		
 		</div>
 		
@@ -150,6 +151,15 @@
 <li>GET /zoos/ID/animals：列出某个指定动物园的所有动物</li>
 <li>DELETE /zoos/ID/animals/ID：删除某个指定动物园的指定动物</li>
 </ul>
+<h3 id="过滤信息（Filtering）"><a href="#过滤信息（Filtering）" class="headerlink" title="过滤信息（Filtering）"></a>过滤信息（Filtering）</h3><p>如果记录数量很多，服务器不可能都将它们返回给用户。AP I应该提供参数，过滤返回结果。 下面是一些常见的参数。</p>
+<ul>
+<li>?limit=10 =&gt; 指定返回记录的数量</li>
+<li>?offset=10 =&gt; 指定返回记录的开始位置。</li>
+<li>?page=2&amp;per_page=100 =&gt; 指定第几页，以及每页的记录数。</li>
+<li>?sortby=nameℴ=asc =&gt; 指定返回结果按照哪个属性排序，以及排序顺序。</li>
+<li>?animal_type_id=1 =&gt; 指定筛选条件</li>
+</ul>
+<p>参数的设计允许存在冗余，即允许 API 路径和 URL 参数偶尔有重复。比如，GET /zoo/ID/animals 与 GET /animals?zoo_id=ID 的含义是相同的。</p>
 <h3 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h3><ul>
 <li>200 OK - [GET]：服务器成功返回用户请求的数据，该操作是幂等的（* Idempotent）。</li>
 <li>201 CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功。</li>
@@ -163,6 +173,16 @@
 <li>410 Gone -[GET]：用户请求的资源被永久删除，且不会再得到的。</li>
 <li>422 Unprocesable entity - [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误。</li>
 <li>500 INTERNAL SERVER ERROR - [*]：服务器发生错误，用户将无法判断发出的请求是否成功。<br>状态码的完全列表参见这里。</li>
+</ul>
+<h3 id="错误处理（Error-handling）"><a href="#错误处理（Error-handling）" class="headerlink" title="错误处理（Error handling）"></a>错误处理（Error handling）</h3><p>如果状态码是 4xx，就应该向用户返回出错信息。一般来说，返回的信息中将 error 作为键名，出错信息作为键值即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;error&quot;: &quot;Invalid API key&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="返回结果"><a href="#返回结果" class="headerlink" title="返回结果"></a>返回结果</h3><p>针对不同操作，服务器向用户返回的结果应该符合以下规范。</p>
+<ul>
+<li>Get /collection =&gt; 返回资源对象的列表（数组）</li>
+<li>Get /collection/resource =&gt; 返回单个资源对象</li>
+<li>POST /collection =&gt; 返回新生成的资源对象</li>
+<li>PUT /collection/resource =&gt; 返回完整的资源对象</li>
+<li>PATCH /collection/resource =&gt; 返回完整的资源对象</li>
+<li>DELETE /collection/resource =&gt; 返回一个空文档</li>
 </ul>
 <h3 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h3><p>综合上面的解释，我们总结一下什么是RESTful架构：</p>
 <p>　　（1）每一个URI代表一种资源；</p>
@@ -183,6 +203,16 @@
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/架构/">架构</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/架构/">架构</a>
+  </div>
 
 </div>
 
@@ -215,10 +245,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -246,7 +276,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">Categories</p>
+	<p class="asidetitle">分類</p>
 		<ul>
 		
 		  
@@ -294,11 +324,15 @@
 		  
 		
 		  
-			<li><a href="/categories/工具/" title="工具">工具<sup>3</sup></a></li>
+			<li><a href="/categories/工具/" title="工具">工具<sup>4</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/架构/" title="架构">架构<sup>1</sup></a></li>
 		  
 		
 		  
@@ -323,7 +357,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">標簽</p>
 		<ul class="clearfix">
 		
 			
@@ -339,11 +373,11 @@
 			
 		
 			
-				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
 			
 		
 			
@@ -351,7 +385,11 @@
 			
 		
 			
-				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具/" title="工具">工具<sup>2</sup></a></li>
 			
 		
 			
@@ -359,23 +397,7 @@
 			
 		
 			
-				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/面试/" title="面试">面试<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
 			
 		
 			
@@ -383,15 +405,31 @@
 			
 		
 			
-				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/工具/" title="工具">工具<sup>1</sup></a></li>
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
 			
 		
 			
@@ -402,16 +440,12 @@
 				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
 			
 		
-			
-				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
-			
-		
 		</ul>
 </div>
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
 </div>
 
 </aside>
@@ -598,7 +632,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
