@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-26T09:30:36.031Z</updated>
+  <updated>2018-03-26T14:34:17.637Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,79 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PHP|PHP漏洞全解-文件上传漏洞</title>
+    <link href="http://yoursite.com/2018/03/27/PHP-PHP%E6%BC%8F%E6%B4%9E%E5%85%A8%E8%A7%A3-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/"/>
+    <id>http://yoursite.com/2018/03/27/PHP-PHP漏洞全解-文件上传漏洞/</id>
+    <published>2018-03-26T22:25:14.000Z</published>
+    <updated>2018-03-26T14:34:17.637Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>由于文件上传功能实现代码没有严格限制用户上传的文件后缀以及文件类型，导致允许攻击者向某个可通过 Web 访问的目录上传任意PHP文件，并能够将这些文件传递给 PHP解释器，就可以在远程服务器上执行任意PHP脚本，即文件上传漏洞。</p>
+<p>一套web应用程序，一般都会提供文件上传的功能，方便来访者上传一些文件。</p>
+<p>下面是一个简单的文件上传表单：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;form action=&quot;upload.php&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot; name=&quot;form1&quot;&gt; </div><div class="line">    &lt;input type=&quot;file&quot; name=&quot;file1&quot; /&gt;&lt;br /&gt; </div><div class="line">    &lt;input type=&quot;submit&quot; value=&quot;上传文件&quot; /&gt; </div><div class="line">    &lt;input type=&quot;hidden&quot; name=&quot;MAX_FILE_SIZE&quot; value=&quot;1024&quot; /&gt; </div><div class="line">&lt;form&gt;</div></pre></td></tr></table></figure></p>
+<p>php的配置文件php.ini，其中选项upload_max_filesize指定允许上传的文件大小，默认是2M，可根据实际情况修改。</p>
+<h3 id="FILES数组变量"><a href="#FILES数组变量" class="headerlink" title="$_FILES数组变量"></a>$_FILES数组变量</h3><p>PHP使用变量$_FILES来上传文件，$_FILES是一个数组。如果上传test.txt，那么$_FILES数组的内容为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">$FILES </div><div class="line">Array </div><div class="line">&#123; </div><div class="line">    [file] =&gt; Array </div><div class="line">        &#123; </div><div class="line">            [name] =&gt; test.txt //文件名称 </div><div class="line">            [type] =&gt; text/plain //MIME类型 </div><div class="line">            [tmp_name] =&gt; /tmp/php5D.tmp //临时文件 </div><div class="line">            [error] =&gt; 0 //错误信息 </div><div class="line">            [size] =&gt; 536 //文件大小，单位字节 </div><div class="line">        &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果上传文件按钮的name属性值为file，即<br><code>&lt;input type=&quot;file&quot; name=&quot;file&quot; /&gt;</code></p>
+<p>那么使用$_FILES[‘file’][‘name’]来获得客户端上传文件名称，不包含路径。使用$_FILES[‘file’][‘tmp_name’]来获得服务端保存上传文件的临时文件路径。</p>
+<h4 id="存放上传文件"><a href="#存放上传文件" class="headerlink" title="存放上传文件"></a>存放上传文件</h4><p>PHP不会直接将上传文件放到网站根目录中，而是保存为一个临时文件，名称就是$_FILES[‘file’][‘tmp_name’]的值，开发者必须把这个临时文件复制到存放的网站文件夹中。</p>
+<p>$_FILES[‘file’][‘tmp_name’]的值是由PHP设置的，与文件原始名称不一样，开发者必须使用$_FILES[‘file’][‘name’]来取得上传文件的原始名称。</p>
+<h4 id="传文件时的错误信息"><a href="#传文件时的错误信息" class="headerlink" title="传文件时的错误信息"></a>传文件时的错误信息</h4><p>$_FILES[‘file’][‘error’]变量用来保存上传文件时的错误信息，它的值如下：</p>
+<table>
+<thead>
+<tr>
+<th>错误信息</th>
+<th>数值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UPLOAD_ERR_OK</td>
+<td>0</td>
+<td>没有错误</td>
+</tr>
+<tr>
+<td>UPLOAD_ERR_INI_SIZE</td>
+<td>1</td>
+<td>上传文件的大小超过php.ini的设置</td>
+</tr>
+<tr>
+<td>UPLOAD_ERR_FROM_SIZE</td>
+<td>2</td>
+<td>上传文件的大小超过HTML表单中MAX_FILE_SIZE的值</td>
+</tr>
+<tr>
+<td>UPLOAD_ERR_PARTIAL</td>
+<td>3</td>
+<td>只上传部分的文件</td>
+</tr>
+<tr>
+<td>UPLOAD_ERR_NO_FILE</td>
+<td>4</td>
+<td>没有文件上传</td>
+</tr>
+</tbody>
+</table>
+<h3 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h3><p>如果提供给网站访问者上传图片的功能，那必须小心访问者上传的实际可能不是图片，而是可以指定的PHP程序。如果存放图片的目录是一个开放的文件夹，则入侵者就可以远程执行上传的PHP文件来进行攻击。</p>
+<p>下面是一个简单的文件上传例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">php </div><div class="line">// 设置上传文件的目录 </div><div class="line">$uploaddir = &quot;D:/www/images/&quot;; </div><div class="line">// 检查file是否存在 </div><div class="line">if (isset($_FILES[&apos;file1&apos;])) </div><div class="line">&#123; </div><div class="line">    // 要放在网站目录中的完整路径，包含文件名 </div><div class="line">    $uploadfile = $uploaddir . $_FILES[&apos;file1&apos;][&apos;name&apos;]; </div><div class="line">    // 将服务器存放的路径，移动到真实文件名 </div><div class="line">    move_uploaded_file($_FILES[&apos;file1&apos;][&apos;tmp_name&apos;],$uploadfile); </div><div class="line">&#125; </div><div class="line">?&gt; </div><div class="line">…… </div><div class="line">&lt;form method=&quot;post&quot; enctype=&quot;multipart/form-data&quot; name=&quot;form1&quot;&gt; </div><div class="line">    &lt;input type=&quot;file&quot; name=&quot;file1&quot; /&gt;&lt;br /&gt; </div><div class="line">    &lt;input type=&quot;submit&quot; value=&quot;上传文件&quot; /&gt; </div><div class="line">    &lt;input type=&quot;hidden&quot; name=&quot;MAX_FILE_SIZE&quot; value=&quot;1024&quot; /&gt; </div><div class="line">&lt;form&gt;</div></pre></td></tr></table></figure>
+<p>这个例子没有检验文件后缀，可以上传任意文件，很明显的上传漏洞。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;由于文件上传功能实现代码没有严格限制用户上传的文件后缀以及文件类型，导致允许攻击者向某个可通过 Web 访问的目录上传任意PHP文件，并能够
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+  </entry>
   
   <entry>
     <title>工具|Cmder使用教程</title>
@@ -434,7 +507,7 @@ echo &quot;&quot;;
     <link href="http://yoursite.com/2018/03/24/PHP-PHP%E6%BC%8F%E6%B4%9E%E5%85%A8%E8%A7%A3-Session%E4%BC%9A%E8%AF%9D%E5%8A%AB%E6%8C%81/"/>
     <id>http://yoursite.com/2018/03/24/PHP-PHP漏洞全解-Session会话劫持/</id>
     <published>2018-03-24T00:06:48.000Z</published>
-    <updated>2018-03-23T16:36:49.883Z</updated>
+    <updated>2018-03-26T12:42:49.798Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>服务端和客户端之间是通过session(会话)来连接沟通。当客户端的浏览器连接到服务器后，服务器就会建立一个该用户的session。每个用户的session都是独立的，并且由服务器来维护。每个用户的session是由一个独特的字符串来识别，成为session id。用户发出请求时，所发送的http表头内包含session id 的值。服务器使用http表头内的session id来识别时哪个用户提交的请求。</p>
 <p>session保存的是每个用户的个人数据，一般的web应用程序会使用session来保存通过验证的用户账号和密码。在转换不同的网页时，如果需要验证用户身份，就是用session内所保存的账号和密码来比较。session的生命周期从用户连上服务器后开始，在用户关掉浏览器或是注销时用户session_destroy函数删除session数据时结束。如果用户在20分钟内没有使用计算机的动作，session也会自动结束。</p>
@@ -1382,128 +1455,6 @@ if($stmt-&gt;fetch()){
     </summary>
     
       <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>工具|Vim操作</title>
-    <link href="http://yoursite.com/2018/03/12/%E5%B7%A5%E5%85%B7-Vim%E6%93%8D%E4%BD%9C/"/>
-    <id>http://yoursite.com/2018/03/12/工具-Vim操作/</id>
-    <published>2018-03-12T14:35:26.000Z</published>
-    <updated>2018-03-14T11:23:42.427Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在开始学习以前，我需要给你一些警告：</p>
-<ul>
-<li>学习vim在开始时是痛苦的。</li>
-<li>需要时间</li>
-<li>需要不断地练习，就像你学习一个乐器一样。</li>
-<li>不要期望你能在3天内把vim练得比别的编辑器更有效率。</li>
-<li>事实上，你需要2周时间的苦练，而不是3天。</li>
-</ul>
-<h3 id="开始攻关"><a href="#开始攻关" class="headerlink" title="开始攻关"></a>开始攻关</h3><h4 id="第一级-–-存活"><a href="#第一级-–-存活" class="headerlink" title="第一级 – 存活"></a>第一级 – 存活</h4><ol>
-<li>安装 vim</li>
-<li>启动 vim</li>
-<li>什么也别干！请先阅读</li>
-</ol>
-<p>当你安装好一个编辑器后，你一定会想在其中输入点什么东西，然后看看这个编辑器是什么样子。但vim不是这样的，请按照下面的命令操作：</p>
-<ol>
-<li>启 动Vim后，vim在 Normal 模式下。</li>
-<li>让我们进入 Insert 模式，请按下键 i 。(注：你会看到vim左下角有一个–insert–字样，表示，你可以以插入的方式输入了）</li>
-<li>此时，你可以输入文本了，就像你用“记事本”一样。</li>
-<li>如果你想返回 Normal 模式，请按 ESC 键。</li>
-</ol>
-<p>现在，你知道如何在 Insert 和 Normal 模式下切换了。下面是一些命令，可以让你在 Normal 模式下幸存下来：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">i → Insert 模式，按 ESC 回到 Normal 模式.</div><div class="line">x → 删当前光标所在的一个字符。</div><div class="line">:wq → 存盘 + 退出 (:w 存盘, :q 退出)   [注：:w 后可以跟文件名]</div><div class="line">dd → 删除当前行，并把删除的行存到剪贴板里</div><div class="line">p → 粘贴剪贴板</div><div class="line">推荐:</div><div class="line"></div><div class="line">hjkl (强例推荐使用其移动光标，但不必需) →你也可以使用光标键 (←↓↑→). 注: j 就像下箭头。</div><div class="line">:help &lt;command&gt; → 显示相关命令的帮助。你也可以就输入 :help 而不跟命令。（陈皓注：退出帮助需要输入:q）</div></pre></td></tr></table></figure>
-<p>你能在vim幸存下来只需要上述的那5个命令，你就可以编辑文本了，你一定要把这些命令练成一种下意识的状态。于是你就可以开始进阶到第二级了。</p>
-<p>当是，在你进入第二级时，需要再说一下 Normal 模式。在一般的编辑器下，当你需要copy一段文字的时候，你需要使用 Ctrl 键，比如：Ctrl-C。也就是说，Ctrl键就好像功能键一样，当你按下了功能键Ctrl后，C就不在是C了，而且就是一个命令或是一个快键键了，在VIM的Normal模式下，所有的键就是功能键了。这个你需要知道。</p>
-<p>标记:</p>
-<ul>
-<li>下面的文字中，如果是 Ctrl-λ我会写成 <c-λ>.</c-λ></li>
-<li>以 : 开始的命令你需要输入 <enter>回车，例如 — 如果我写成 :q 也就是说你要输入 :q<enter>.</enter></enter></li>
-</ul>
-<h4 id="第二级-–-感觉良好"><a href="#第二级-–-感觉良好" class="headerlink" title="第二级 – 感觉良好"></a>第二级 – 感觉良好</h4><p>上面的那些命令只能让你存活下来，现在是时候学习一些更多的命令了，下面是我的建议：[注：所有的命令都需要在Normal模式下使用，如果你不知道现在在什么样的模式，你就狂按几次ESC键]</p>
-<h5 id="各种插入模式"><a href="#各种插入模式" class="headerlink" title="各种插入模式"></a>各种插入模式</h5><ul>
-<li>a → 在光标后插入</li>
-<li>o → 在当前行后插入一个新行</li>
-<li>O → 在当前行前插入一个新行</li>
-<li>cw → 替换从光标所在位置后到一个单词结尾的字符</li>
-</ul>
-<h5 id="简单的移动光标"><a href="#简单的移动光标" class="headerlink" title="简单的移动光标"></a>简单的移动光标</h5><ul>
-<li>0 → 数字零，到行头</li>
-<li>^ → 到本行第一个不是blank字符的位置（所谓blank字符就是空格，tab，换行，回车等）</li>
-<li>$ → 到本行行尾</li>
-<li>g_ → 到本行最后一个不是blank字符的位置。</li>
-<li>/pattern → 搜索 pattern 的字符串（注：如果搜索出多个匹配，可按n键到下一个）</li>
-</ul>
-<h5 id="拷贝-粘贴-（注：p-P都可以，p是表示在当前位置之后，P表示在当前位置之前）"><a href="#拷贝-粘贴-（注：p-P都可以，p是表示在当前位置之后，P表示在当前位置之前）" class="headerlink" title="拷贝/粘贴 （注：p/P都可以，p是表示在当前位置之后，P表示在当前位置之前）"></a>拷贝/粘贴 （注：p/P都可以，p是表示在当前位置之后，P表示在当前位置之前）</h5><ul>
-<li>P → 粘贴</li>
-<li>yy → 拷贝当前行当行于 ddP</li>
-</ul>
-<h5 id="Undo-Redo"><a href="#Undo-Redo" class="headerlink" title="Undo/Redo"></a>Undo/Redo</h5><p>u → undo</p>
-<p><c-r> → redo</c-r></p>
-<h5 id="打开-保存-退出-改变文件-Buffer"><a href="#打开-保存-退出-改变文件-Buffer" class="headerlink" title="打开/保存/退出/改变文件(Buffer)"></a>打开/保存/退出/改变文件(Buffer)</h5><ul>
-<li>:e <path to="" file=""></path> → 打开一个文件</li>
-<li>:w → 存盘</li>
-<li>:saveas <path to="" file=""></path> → 另存为 <path to="" file=""></path></li>
-<li>:x， ZZ 或 :wq → 保存并退出 (:x 表示仅在需要时保存，ZZ不需要输入冒号并回车)</li>
-<li>:q! → 退出不保存 :qa! 强行退出所有的正在编辑的文件，就算别的文件有更改。</li>
-<li>:bn 和 :bp → 你可以同时打开很多文件，使用这两个命令来切换下一个或上一个文件。（陈皓注：我喜欢使用:n到下一个文件）</li>
-</ul>
-<p>花点时间熟悉一下上面的命令，一旦你掌握他们了，你就几乎可以干其它编辑器都能干的事了。但是到现在为止，你还是觉得使用vim还是有点笨拙，不过没关系，你可以进阶到第三级了。</p>
-<h4 id="第三级-–-更好，更强，更快"><a href="#第三级-–-更好，更强，更快" class="headerlink" title="第三级 – 更好，更强，更快"></a>第三级 – 更好，更强，更快</h4><p>先恭喜你！你干的很不错。我们可以开始一些更为有趣的事了。在第三级，我们只谈那些和vi可以兼容的命令。</p>
-<h5 id="更好"><a href="#更好" class="headerlink" title="更好"></a>更好</h5><p>下面，让我们看一下vim是怎么重复自己的：</p>
-<ul>
-<li>. → (小数点) 可以重复上一次的命令</li>
-<li>N<command> → 重复某个命令N次</li>
-</ul>
-<p>下面是一个示例，找开一个文件你可以试试下面的命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">2dd → 删除2行</div><div class="line">3p → 粘贴文本3次</div><div class="line">100idesu [ESC] → 会写下 “desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu desu “</div><div class="line">. → 重复上一个命令—— 100 “desu “.</div><div class="line">3. → 重复 3 次 “desu” (注意：不是 300，你看，VIM多聪明啊).</div></pre></td></tr></table></figure></p>
-<h5 id="更强"><a href="#更强" class="headerlink" title="更强"></a>更强</h5><p>你要让你的光标移动更有效率，你一定要了解下面的这些命令，千万别跳过。</p>
-<ul>
-<li>NG → 到第 N 行 （注：注意命令中的G是大写的，另我一般使用 : N 到第N行，如 :137 到第137行）</li>
-<li>gg → 到第一行。（注：相当于1G，或 :1）</li>
-<li>G → 到最后一行。</li>
-<li>按单词移动：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">w → 到下一个单词的开头。</div><div class="line">e → 到下一个单词的结尾。</div><div class="line"></div><div class="line">如果你认为单词是由默认方式，那么就用小写的e和w。默认上来说，一个</div><div class="line">单词由字母，数字和下划线组成（陈皓注：程序变量）</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>下面，让我来说说最强的光标移动：</p>
-<ul>
-<li>% : 匹配括号移动，包括 (, {, [. （注：你需要把光标先移到括号上）</li>
-<li><em>和#:  匹配光标当前所在的单词，移动光标到下一个（或上一个）匹配单词（</em>是下一个，#是上一个）</li>
-</ul>
-<p>相信我，上面这三个命令对程序员来说是相当强大的。</p>
-<h5 id="更快"><a href="#更快" class="headerlink" title="更快"></a>更快</h5><p>你一定要记住光标的移动，因为很多命令都可以和这些移动光标的命令连动。很多命令都可以如下来干：</p>
-<p><start position=""><command><end position=""></end></start></p>
-<p>例如 0y$ 命令意味着：</p>
-<ul>
-<li>0 → 先到行头</li>
-<li>y → 从这里开始拷贝</li>
-<li>$ → 拷贝到本行最后一个字符</li>
-</ul>
-<p>你可可以输入 ye，从当前位置拷贝到本单词的最后一个字符。</p>
-<p>你也可以输入 y2/foo 来拷贝2个 “foo” 之间的字符串。</p>
-<p>还有很多时间并不一定你就一定要按y才会拷贝，下面的命令也会被拷贝：</p>
-<ul>
-<li>d (删除 )</li>
-<li>v (可视化的选择)</li>
-<li>gU (变大写)</li>
-<li>gu (变小写)</li>
-<li>等等</li>
-</ul>
-<p>[注：可视化选择是一个很有意思的命令，你可以先按v，然后移动光标，你就会看到文本被选择，然后，你可能d，也可y，也可以变大写等]</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;在开始学习以前，我需要给你一些警告：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;学习vim在开始时是痛苦的。&lt;/li&gt;
-&lt;li&gt;需要时间&lt;/li&gt;
-&lt;li&gt;
-    
-    </summary>
-    
-      <category term="Vim" scheme="http://yoursite.com/categories/Vim/"/>
     
     
   </entry>
