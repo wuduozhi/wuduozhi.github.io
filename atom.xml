@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-25T16:22:45.685Z</updated>
+  <updated>2018-03-26T03:02:03.481Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,141 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Web安全|渗透基础知识</title>
+    <link href="http://yoursite.com/2018/03/26/Web%E5%AE%89%E5%85%A8-%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    <id>http://yoursite.com/2018/03/26/Web安全-渗透基础知识/</id>
+    <published>2018-03-26T10:39:00.000Z</published>
+    <updated>2018-03-26T03:02:03.481Z</updated>
+    
+    <content type="html"><![CDATA[<p>自己在Web开发这条路上走了将近一年了，虽然能完成大部分的功能需求，但是代码质量堪忧，还是有一些安全漏洞，所以决定入坑Web安全，了解一波。</p>
+<h3 id="HTML-表单基础"><a href="#HTML-表单基础" class="headerlink" title="HTML 表单基础"></a>HTML 表单基础</h3><ol>
+<li>该表单是提交给哪个文件进行处理的（查看 action 属性值）</li>
+<li>向后端程序提交的参数是什么（查看 name 属性）</li>
+</ol>
+<h3 id="SQL-数据库查询语句基础"><a href="#SQL-数据库查询语句基础" class="headerlink" title="SQL 数据库查询语句基础"></a>SQL 数据库查询语句基础</h3><ol>
+<li>查询返回所有的结果</li>
+</ol>
+<p><code>select * from users;</code></p>
+<ol>
+<li>条件查询</li>
+</ol>
+<p><code>select * from users where uame=&#39;$uname&#39;</code>;</p>
+<ol>
+<li>union 合并多个查询结果</li>
+</ol>
+<p><code>select * from users union select * from msgs;</code></p>
+<ol>
+<li>… …</li>
+</ol>
+<h3 id="万能用户名或者万能密码"><a href="#万能用户名或者万能密码" class="headerlink" title="万能用户名或者万能密码"></a>万能用户名或者万能密码</h3><ul>
+<li>第一种<br><code>select * from users where uame=&#39;&#39; or &#39;&#39;=&#39;&#39; and passwd=$passwd;</code></li>
+<li>第二种<br><code>select _from users where uame=&#39;&#39; union select_ from users and passwd=$passwd;</code></li>
+<li>第三种<br><code>select * from users where uame=$uname and passwd=&#39;&#39; or &#39;&#39;=&#39;&#39;;</code></li>
+<li>… …</li>
+</ul>
+<h3 id="使用PDO进行防注入基础"><a href="#使用PDO进行防注入基础" class="headerlink" title="使用PDO进行防注入基础"></a>使用PDO进行防注入基础</h3><ol>
+<li>允许长连接<br><code>PDO::ATTR_PERSISTENT=&gt;true</code></li>
+<li>不允许使用预处理语句<br><code>PDO::ATTR_EMULATE_PREPARE=&gt;false</code></li>
+<li>PDO 连接<br><code>$pdh=new PDO(host=&#39;127.0.0.1:1433&#39;,user=&#39;sa&#39;,password=&#39;root&#39;);</code></li>
+<li>预处理 SQL 查询语句<br><code>$stmt=$dbh-&gt;prepare($sql)</code></li>
+<li>填充 SQL 语句中的占位符<br><code>$stmt-&gt;execute(array(...,...,....));</code></li>
+<li>SQL 占位符（如：select <em> from users where uname=? and passwd=?;）<br>`select </em> from users where uname=? and passwd=?;`</li>
+<li>… …</li>
+</ol>
+<h3 id="Wireshark-抓包"><a href="#Wireshark-抓包" class="headerlink" title="Wireshark 抓包"></a>Wireshark 抓包</h3><ol>
+<li>熟练使用 Wireshark 这款软件</li>
+<li>熟练掌握过滤器的写法（如：tcp、udp、icmp、mac … …）</li>
+<li>知道各个协议的包结构、包头、包尾</li>
+<li>… …</li>
+</ol>
+<h3 id="审查代码的能力"><a href="#审查代码的能力" class="headerlink" title="审查代码的能力"></a>审查代码的能力</h3><ul>
+<li>HTML 源文件内容（通过右键网页 –&gt; 查看源文件）</li>
+<li>PHP 代码（了解代码逻辑以及书写规范，特别是对函数名的记忆）</li>
+<li>PYTHON 代码（快速读懂代码意思，特别是要从 main 函数入手去查看）</li>
+<li>C 语言代码（从代码中分析出来，该代码的意思以及各个函数的逻辑）</li>
+<li>… …</li>
+</ul>
+<h3 id="各个-WEB-漏洞的利用能力"><a href="#各个-WEB-漏洞的利用能力" class="headerlink" title="各个 WEB 漏洞的利用能力"></a>各个 WEB 漏洞的利用能力</h3><ul>
+<li>SQL 注入（通过万能用户名和万能密码来获取一定的 webshell）</li>
+<li>命令注入（特别是PHP中的 exec 和 system 函数也能获取到一定的 webshell）</li>
+<li>文件包含和目录遍历（通过 ../../../../… …/flag.txt 来获取文件）</li>
+<li>… …</li>
+</ul>
+<h3 id="Liunx-服务的安全配置"><a href="#Liunx-服务的安全配置" class="headerlink" title="Liunx 服务的安全配置"></a>Liunx 服务的安全配置</h3><ul>
+<li>SSH（禁止 root 登录；禁止空密码登录；禁止密钥登录 … …）</li>
+<li>TELNET（禁止 root telnet；禁用 telnet … …）</li>
+<li>VSFTP（不允许普通用户登录 ftp；禁止匿名用户登录 ftp … …）</li>
+<li>HTTPD（禁止回显 banner 信息；严格控制目录权限 … …）</li>
+<li>… …</li>
+</ul>
+<h3 id="PHP-安全配置"><a href="#PHP-安全配置" class="headerlink" title="PHP 安全配置"></a>PHP 安全配置</h3><ol>
+<li>开启安全模式<br><code>safe_mode = on</code></li>
+<li>禁用函数<br><code>disable_functions = system,exec,eval,shell_exec,phpinfo,... ...</code></li>
+<li>禁止SQL注入<br><code>magic_quotes_gpc = On</code></li>
+</ol>
+<h3 id="PYTHON-渗透脚本基础"><a href="#PYTHON-渗透脚本基础" class="headerlink" title="PYTHON 渗透脚本基础"></a>PYTHON 渗透脚本基础</h3><ul>
+<li>了解 scapy 这一模块（特别是在构造数据包的时候该怎么写）</li>
+<li>了解 dpkt 封装或者拆解网络协议包</li>
+<li>了解 socket 编程</li>
+<li>能够从 help 这一帮助函数中获取到其他函数的使用方法</li>
+<li>拥有快速阅读脚本的能力和代码逻辑思维</li>
+<li>… …</li>
+</ul>
+<h3 id="Liunx-常用命令"><a href="#Liunx-常用命令" class="headerlink" title="Liunx 常用命令"></a>Liunx 常用命令</h3><ul>
+<li>find<br><code>find  /  -iname  * | xargs  grep  –i  &#39;*key*&#39;</code></li>
+<li>grep<br><code>grep  &#39;*key*&#39;  ./keystring.txt</code></li>
+<li>netstat<br><code>netstat –tulnp 11.4 kill -9 [pid] 11.5 chattr +i /etc/passwd</code></li>
+<li>kill<br><code>kill -9 [pid]</code></li>
+<li>chattr<br><code>chattr  +i  /etc/passwd /etc/shadow</code></li>
+<li>useradd<br><code>useradd  -o  -u  0  test</code></li>
+</ul>
+<h3 id="WEB-漏洞训练平台"><a href="#WEB-漏洞训练平台" class="headerlink" title="WEB 漏洞训练平台"></a>WEB 漏洞训练平台</h3><ul>
+<li>DVWA <a href="https://github.com/ethicalhack3r/DVWA" target="_blank" rel="external">【DVWA】</a></li>
+<li>Web For Pentester <a href="https://pentesterlab.com/exercises/web_for_pentester_II" target="_blank" rel="external">【Web For Pentester II】</a>(请自行安装镜像，安装时请选择”其他 Liunx 3.x 内核 64 位”)</li>
+<li>ZVulDrill <a href="https://github.com/710leo/ZVulDrill" target="_blank" rel="external">【ZVulDrill】</a>(请自行准备 PHP 环境)</li>
+<li>… …</li>
+</ul>
+<h3 id="网络协议原理"><a href="#网络协议原理" class="headerlink" title="网络协议原理"></a>网络协议原理</h3><ul>
+<li>Tcp 三次握手和四次挥手</li>
+<li>Icmp 发包以及回包</li>
+<li>Mac 防洪原理</li>
+<li>ARP 发广播包，ARP 欺骗</li>
+<li>Dtp 生成树攻击原理</li>
+<li>… …</li>
+</ul>
+<h3 id="关于-PYTHON-的网络渗透编程"><a href="#关于-PYTHON-的网络渗透编程" class="headerlink" title="关于 PYTHON 的网络渗透编程"></a>关于 PYTHON 的网络渗透编程</h3><ul>
+<li><p>ARP 扫描</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import socket</div><div class="line"># or</div><div class="line">from scapy.all import *</div></pre></td></tr></table></figure>
+</li>
+<li><p>ARP 欺骗、ARP 监控<br><code>from scapy.all import *</code></p>
+</li>
+<li>OS 扫描<br><code>import nmap</code></li>
+<li><p>Mac 防洪</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import socket</div><div class="line"># or</div><div class="line">from scapy.all import *</div></pre></td></tr></table></figure>
+</li>
+<li><p>mssql 数据库密码爆破<br><code>import pymssql</code></p>
+</li>
+<li>跨越 VlAN 攻击<br><code>from scapy.all import *</code></li>
+<li>Dtp 攻击<br><code>from scapy.all import *</code></li>
+<li>… …<br><a href="https://vxhly.github.io/2017/09/pentest-basic-knowledge/" target="_blank" rel="external">渗透基础知识</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;自己在Web开发这条路上走了将近一年了，虽然能完成大部分的功能需求，但是代码质量堪忧，还是有一些安全漏洞，所以决定入坑Web安全，了解一波。&lt;/p&gt;
+&lt;h3 id=&quot;HTML-表单基础&quot;&gt;&lt;a href=&quot;#HTML-表单基础&quot; class=&quot;headerlink&quot; tit
+    
+    </summary>
+    
+      <category term="Web安全" scheme="http://yoursite.com/categories/Web%E5%AE%89%E5%85%A8/"/>
+    
+    
+      <category term="Web安全" scheme="http://yoursite.com/tags/Web%E5%AE%89%E5%85%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>Web安全|一些有用的工具</title>
@@ -1625,107 +1760,6 @@ if($stmt-&gt;fetch()){
     <summary type="html">
     
       &lt;h3 id=&quot;What&quot;&gt;&lt;a href=&quot;#What&quot; class=&quot;headerlink&quot; title=&quot;What&quot;&gt;&lt;/a&gt;What&lt;/h3&gt;&lt;p&gt;Servlet实际上是ServerApplet–小服务程序或服务连接器，用Java编写的服务器端程序，主要功能在于交互式地浏
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java|监听器基础</title>
-    <link href="http://yoursite.com/2018/03/01/Java-%E7%9B%91%E5%90%AC%E5%99%A8%E5%9F%BA%E7%A1%80/"/>
-    <id>http://yoursite.com/2018/03/01/Java-监听器基础/</id>
-    <published>2018-02-28T23:36:30.000Z</published>
-    <updated>2018-02-28T16:21:07.768Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="What"><a href="#What" class="headerlink" title="What"></a>What</h3><p>这里有三个概念，<strong>监听的事件源</strong>，<strong>监听者</strong>，<strong>事件</strong>，举个栗子来说是这样的，警察抓小偷，警察是监听者，小偷是被监听的事件源，抓小偷这个动作就是事件，什么时候会抓小偷呢？在小偷偷东西的时候。<br>这个概念在前端开发中比较常用，但是在Java服务器端用的相对比较少，比如你在浏览网页的过程中，第一次进入并不会全部加载页面的信息，而是加载一部分，你向下浏览网页，网页才会加载，这也是监听的一种体现形式，你向下滑动网页的过程就是监听的事件源，加载网页就是事件，监听者就是服务器程序咯，可能这些用词不是太准确，但是也算是表达了这个意思。</p>
-<p>JavaWeb中，监听的事件源有三个：</p>
-<h4 id="ServletContext"><a href="#ServletContext" class="headerlink" title="ServletContext"></a>ServletContext</h4><ul>
-<li><p>ServletContextListener：用于对Servlet整个上下文进行监听（创建、销毁）。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//上下文初始化</div><div class="line">public void contextInitialized(ServletContextEvent sce);</div><div class="line">//上下文销毁</div><div class="line">public void contextDestroyed(ServletContextEvent sce);</div><div class="line">//ServletContextEvent事件：取得一个ServletContext（application）对象</div><div class="line">public ServletContext getServletContext();</div></pre></td></tr></table></figure>
-</li>
-<li><p>ServletContextAttributeListener：对Servlet上下文属性的监听（增删改属性）。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//增加属性</div><div class="line">public void attributeAdded(ServletContextAttributeEvent scab);</div><div class="line">//属性删除</div><div class="line">public void attributeRemoved(ServletContextAttributeEvent scab);</div><div class="line">//属性替换（第二次设置同一属性）</div><div class="line">public void attributeRepalced(ServletContextAttributeEvent scab);</div><div class="line">//ServletContextAttributeEvent事件：能取得设置属性的名称与内容</div><div class="line">//得到属性名称</div><div class="line">public String getName();</div><div class="line">//取得属性的值</div><div class="line">public Object getValue();</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="HttpSession"><a href="#HttpSession" class="headerlink" title="HttpSession"></a>HttpSession</h4><p>Session属于http协议下的内容，接口位于javax.servlet.http.*包下。</p>
-<ul>
-<li><p>HttpSessionListener接口：对Session的整体状态的监听。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//session创建</div><div class="line">public void sessionCreated(HttpSessionEvent se);</div><div class="line">//session销毁</div><div class="line">public void sessionDestroyed(HttpSessionEvent se);</div><div class="line">//HttpSessionEvent事件：</div><div class="line">//取得当前操作的session</div><div class="line">public HttpSession getSession();</div></pre></td></tr></table></figure>
-</li>
-<li><p>HttpSessionAttributeListener接口：对session的属性监听。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public void attributeAdded(HttpSessionBindingEvent se);//增加属性</div><div class="line">public void attributeRemoved(HttpSessionBindingEvent se);//删除属性</div><div class="line">public void attributeReplaced(HttpSessionBindingEvent se);//替换属性</div><div class="line">//HttpSessionBindingEvent事件：</div><div class="line">public String getName();//取得属性的名称</div><div class="line">public Object getValue();//取得属性的值</div><div class="line">public HttpSession getSession();//取得当前的session</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>session的销毁有两种情况：</p>
-<ul>
-<li><p>session超时，web.xml配置：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;session-config&gt;</div><div class="line">    &lt;session-timeout&gt;120&lt;/session-timeout&gt;&lt;!--session120分钟后超时销毁--&gt;</div><div class="line">&lt;/session-config&gt;</div></pre></td></tr></table></figure>
-</li>
-<li><p>手工使session失效</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//使session失效方法。session.invalidate();</div><div class="line">public void invalidate();</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="ServletRequest"><a href="#ServletRequest" class="headerlink" title="ServletRequest"></a>ServletRequest</h4><ul>
-<li><p>ServletRequestListener：用于对Request请求进行监听（创建、销毁）。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public void requestInitialized(ServletRequestEvent sre);//request初始化</div><div class="line">public void requestDestroyed(ServletRequestEvent sre);//request销毁</div><div class="line">//ServletRequestEvent事件：</div><div class="line">public ServletRequest getServletRequest();//取得一个ServletRequest对象</div><div class="line">public ServletContext getServletContext();//取得一个ServletContext（application）对象</div></pre></td></tr></table></figure>
-</li>
-<li><p>ServletRequestAttributeListener：对Request属性的监听（增删改属性）。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public void attributeAdded(ServletRequestAttributeEvent srae);//增加属性</div><div class="line">public void attributeRemoved(ServletRequestAttributeEvent srae);//属性删除</div><div class="line">public void attributeReplaced(ServletRequestAttributeEvent srae);//属性替换（第二次设置同一属性）</div><div class="line">//ServletRequestAttributeEvent事件：能取得设置属性的名称与内容</div><div class="line">public String getName();//得到属性名称</div><div class="line">public Object getValue();//取得属性的值</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>它都会监听什么呢？</p>
-<ul>
-<li>监听域对象的创建和销毁的监听器</li>
-<li>监听域对象操作域属性的监听器</li>
-<li>监听HttpSession的监听器</li>
-</ul>
-<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line"> * ServletContextListener实现类</div><div class="line"> * contextDestroyed() -- 在ServletContext对象被销毁前调用</div><div class="line"> * contextInitialized() --  -- 在ServletContext对象被创建后调用</div><div class="line"> * ServletContextEvent -- 事件类对象</div><div class="line"> *     该类有getServletContext()，用来获取ServletContext对象，即获取事件源对象</div><div class="line"> */</div><div class="line">public class MyServletContextListener implements ServletContextListener &#123;</div><div class="line">    public void contextDestroyed(ServletContextEvent evt) &#123;</div><div class="line">        System.out.println(&quot;销毁ServletContext对象&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void contextInitialized(ServletContextEvent evt) &#123;</div><div class="line">        System.out.println(&quot;创建ServletContext对象&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>同时，需要在web.xml中部署：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;listener&gt;</div><div class="line">    &lt;listener-class&gt;net.sailfish.listener.MyServletContextListener&lt;/listener-class&gt;</div><div class="line">&lt;/listener&gt;</div></pre></td></tr></table></figure>
-<p><strong>需要注意的是</strong>：Listener配置信息必须在Filter和Servlet配置之前，Listener的初始化（ServletContentListener初始化）比Servlet和Filter都优先，而销毁比Servlet和Filter都慢。</p>
-<p>总结一下：</p>
-<ul>
-<li>监听器要在web.xml中进行配置</li>
-<li>监听器的方法都是类似的，这里列出的是域对象的创建和销毁的监听器</li>
-<li>ServletContextListener在tomcat启动时创建，在tomcat关闭的时候销毁</li>
-</ul>
-<h3 id="Where"><a href="#Where" class="headerlink" title="Where"></a>Where</h3><p>Listener的应用实例</p>
-<ul>
-<li>利用HttpSessionListener统计最多在线用户人数</li>
-<li>Spring使用ContextLoaderListener加载ApplicationContext配置信息</li>
-<li>Spring使用Log4jConfigListener配置Log4j日志</li>
-<li>Spring使用IntrospectorCleanupListener清理缓存</li>
-</ul>
-<h4 id="Listener应用实例"><a href="#Listener应用实例" class="headerlink" title="Listener应用实例"></a>Listener应用实例</h4><p>利用HttpSessionListener统计最多在线用户人数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">import java.text.DateFormat;</div><div class="line">import java.text.SimpleDateFormat;</div><div class="line">import java.util.Date;</div><div class="line">import javax.servlet.ServletContext;</div><div class="line">import javax.servlet.http.HttpSessionEvent;</div><div class="line">import javax.servlet.http.HttpSessionListener;</div><div class="line">public class HttpSessionListenerImpl implements HttpSessionListener &#123;</div><div class="line">    public void sessionCreated(HttpSessionEvent event) &#123;</div><div class="line">        ServletContext app = event.getSession().getServletContext();</div><div class="line">        int count = Integer.parseInt(app.getAttribute(&quot;onLineCount&quot;).toString());</div><div class="line">        count++;</div><div class="line">        app.setAttribute(&quot;onLineCount&quot;, count);</div><div class="line">        int maxOnLineCount = Integer.parseInt(app.getAttribute(&quot;maxOnLineCount&quot;).toString());</div><div class="line">        if (count &gt; maxOnLineCount) &#123;</div><div class="line">            //记录最多人数是多少</div><div class="line">            app.setAttribute(&quot;maxOnLineCount&quot;, count);</div><div class="line">            DateFormat df = new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);</div><div class="line">            //记录在那个时刻达到上限</div><div class="line">            app.setAttribute(&quot;date&quot;, df.format(new Date()));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    //session注销、超时时候调用，停止tomcat不会调用</div><div class="line">    public void sessionDestroyed(HttpSessionEvent event) &#123;</div><div class="line">        ServletContext app = event.getSession().getServletContext();</div><div class="line">        int count = Integer.parseInt(app.getAttribute(&quot;onLineCount&quot;).toString());</div><div class="line">        count--;</div><div class="line">        app.setAttribute(&quot;onLineCount&quot;, count);    </div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="Spring使用ContextLoaderListener加载ApplicationContext配置信息"><a href="#Spring使用ContextLoaderListener加载ApplicationContext配置信息" class="headerlink" title="Spring使用ContextLoaderListener加载ApplicationContext配置信息"></a>Spring使用ContextLoaderListener加载ApplicationContext配置信息</h4><p>ContextLoaderListener的作用就是启动Web容器时，自动装配ApplicationContext的配置信息。因为它实现了ServletContextListener这个接口，在web.xml配置这个监听器，启动容器时，就会默认执行它实现的方法。</p>
-<p>ContextLoaderListener如何查找ApplicationContext.xml的配置位置以及配置多个xml：如果在web.xml中不写任何参数配置信息，默认的路径是”/WEB-INF/applicationContext.xml”，在WEB-INF目录下创建的xml文件的名称必须是applicationContext.xml（在MyEclipse中把xml文件放置在src目录下）。如果是要自定义文件名可以在web.xml里加入contextConfigLocation这个context参数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;context-param&gt;</div><div class="line">    &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;</div><div class="line">    &lt;param-value&gt;classpath:spring/applicationContext-*.xml&lt;/param-value&gt;</div><div class="line">    &lt;!-- 采用的是通配符方式，查找WEB-INF/spring目录下xml文件。如有多个xml文件，以“,”分隔。 --&gt;</div><div class="line">&lt;/context-param&gt;</div><div class="line">&lt;listener&gt;</div><div class="line">    &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;</div><div class="line">&lt;/listener&gt;</div></pre></td></tr></table></figure></p>
-<h4 id="Spring使用Log4jConfigListener配置Log4j日志"><a href="#Spring使用Log4jConfigListener配置Log4j日志" class="headerlink" title="Spring使用Log4jConfigListener配置Log4j日志"></a>Spring使用Log4jConfigListener配置Log4j日志</h4><p>Spring使用Log4jConfigListener的好处：</p>
-<ul>
-<li>动态的改变记录级别和策略，不需要重启Web应用。</li>
-<li>把log文件定在 /WEB-INF/logs/ 而不需要写绝对路径。因为系统把web目录的路径压入一个叫webapp.root的系统变量。这样写log文件路径时不用写绝对路径了。</li>
-<li>可以把log4j.properties和其他properties一起放在/WEB-INF/ ，而不是Class-Path。</li>
-<li>设置log4jRefreshInterval时间，开一条watchdog线程每隔段时间扫描一下配置文件的变化。</li>
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;context-param&gt;</div><div class="line">    &lt;param-name&gt;webAppRootKey&lt;/param-name&gt;</div><div class="line">    &lt;param-value&gt;project.root&lt;/param-value&gt;&lt;!-- 用于定位log文件输出位置在web应用根目录下，log4j配置文件中写输出位置：log4j.appender.FILE.File=$&#123;project.root&#125;/logs/project.log --&gt;</div><div class="line">&lt;/context-param&gt;</div><div class="line">&lt;context-param&gt;</div><div class="line">    &lt;param-name&gt;log4jConfigLocation&lt;/param-name&gt;</div><div class="line">    &lt;param-value&gt;classpath:log4j.properties&lt;/param-value&gt;&lt;!-- 载入log4j配置文件 --&gt;</div><div class="line">&lt;/context-param&gt;</div><div class="line">&lt;context-param&gt;</div><div class="line">    &lt;param-name&gt;log4jRefreshInterval&lt;/param-name&gt;</div><div class="line">    &lt;param-value&gt;60000&lt;/param-value&gt;&lt;!--Spring刷新Log4j配置文件的间隔60秒,单位为millisecond--&gt;</div><div class="line">&lt;/context-param&gt;</div><div class="line">&lt;listener&gt;</div><div class="line">    &lt;listener-class&gt;org.springframework.web.util.Log4jConfigListener&lt;/listener-class&gt;</div><div class="line">&lt;/listener&gt;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="Spring使用IntrospectorCleanupListener清理缓存"><a href="#Spring使用IntrospectorCleanupListener清理缓存" class="headerlink" title="Spring使用IntrospectorCleanupListener清理缓存"></a>Spring使用IntrospectorCleanupListener清理缓存</h4><p>这个监听器的作用是在web应用关闭时刷新JDK的JavaBeans的Introspector缓存，以确保Web应用程序的类加载器以及其加载的类正确的释放资源。</p>
-<p>如果JavaBeans的Introspector已被用来分析应用程序类，系统级的Introspector缓存将持有这些类的一个硬引用。因此，这些类和Web应用程序的类加载器在Web应用程序关闭时将不会被垃圾收集器回收！而IntrospectorCleanupListener则会对其进行适当的清理，已使其能够被垃圾收集器回收。</p>
-<p>唯一能够清理Introspector的方法是刷新整个Introspector缓存，没有其他办法来确切指定应用程序所引用的类。这将删除所有其他应用程序在服务器的缓存的Introspector结果。</p>
-<p>在使用Spring内部的bean机制时，不需要使用此监听器，因为Spring自己的introspection results cache将会立即刷新被分析过的JavaBeans Introspector cache，而仅仅会在应用程序自己的ClassLoader里面持有一个cache。虽然Spring本身不产生泄漏，注意，即使在Spring框架的类本身驻留在一个“共同”类加载器（如系统的ClassLoader）的情况下，也仍然应该使用使用IntrospectorCleanupListener。在这种情况下，这个IntrospectorCleanupListener将会妥善清理Spring的introspection cache。</p>
-<p>应用程序类，几乎不需要直接使用JavaBeans Introspector，所以，通常都不是Introspector resource造成内存泄露。相反，许多库和框架，不清理Introspector，例如： Struts和Quartz。</p>
-<p>需要注意的是一个简单Introspector泄漏将会导致整个Web应用程序的类加载器不会被回收！这样做的结果，将会是在web应用程序关闭时，该应用程序所有的静态类资源（比如：单实例对象）都没有得到释放。而导致内存泄露的根本原因其实并不是这些未被回收的类！</p>
-<p>注意：IntrospectorCleanupListener应该注册为web.xml中的第一个Listener，在任何其他Listener之前注册，比如在Spring’s ContextLoaderListener注册之前，才能确保IntrospectorCleanupListener在Web应用的生命周期适当时机生效。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;listener&gt;&lt;!-- memory clean --&gt;</div><div class="line">    &lt;listener-class&gt;org.springframework.web.util.IntrospectorCleanupListener&lt;/listener-class&gt;</div><div class="line">&lt;/listener&gt;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;What&quot;&gt;&lt;a href=&quot;#What&quot; class=&quot;headerlink&quot; title=&quot;What&quot;&gt;&lt;/a&gt;What&lt;/h3&gt;&lt;p&gt;这里有三个概念，&lt;strong&gt;监听的事件源&lt;/strong&gt;，&lt;strong&gt;监听者&lt;/strong&gt;，&lt;strong&gt;事
     
     </summary>
     

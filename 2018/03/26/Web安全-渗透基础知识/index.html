@@ -4,24 +4,25 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>工具|Maven工具的使用 | 只为不凡而来</title>
+    <title>Web安全|渗透基础知识 | 只为不凡而来</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="wuduozhi">
     
 
     
-    <meta name="description" content="Maven简介Apache Maven 是一种用作软件项目管理和理解工具。它基于项目对象模型（POM）的概念，可以管理一个项目的构建、报告以及从项目核心信息中生成文档。 Maven是一种项目管理和理解工具。Maven向开发者提供了一个完整的构建生命周期框架。开发团队几乎不用花时间就可以使用自动化构建项目的基础框架，因为 Maven使用了一套标准的目录结构和默认的构建生命周期。 Maven提供给开发">
+    <meta name="description" content="自己在Web开发这条路上走了将近一年了，虽然能完成大部分的功能需求，但是代码质量堪忧，还是有一些安全漏洞，所以决定入坑Web安全，了解一波。 HTML 表单基础 该表单是提交给哪个文件进行处理的（查看 action 属性值） 向后端程序提交的参数是什么（查看 name 属性）  SQL 数据库查询语句基础 查询返回所有的结果  select * from users;  条件查询  select">
+<meta name="keywords" content="Web安全">
 <meta property="og:type" content="article">
-<meta property="og:title" content="工具|Maven工具的使用">
-<meta property="og:url" content="http://yoursite.com/2018/01/24/工具-Maven工具的使用/index.html">
+<meta property="og:title" content="Web安全|渗透基础知识">
+<meta property="og:url" content="http://yoursite.com/2018/03/26/Web安全-渗透基础知识/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="Maven简介Apache Maven 是一种用作软件项目管理和理解工具。它基于项目对象模型（POM）的概念，可以管理一个项目的构建、报告以及从项目核心信息中生成文档。 Maven是一种项目管理和理解工具。Maven向开发者提供了一个完整的构建生命周期框架。开发团队几乎不用花时间就可以使用自动化构建项目的基础框架，因为 Maven使用了一套标准的目录结构和默认的构建生命周期。 Maven提供给开发">
+<meta property="og:description" content="自己在Web开发这条路上走了将近一年了，虽然能完成大部分的功能需求，但是代码质量堪忧，还是有一些安全漏洞，所以决定入坑Web安全，了解一波。 HTML 表单基础 该表单是提交给哪个文件进行处理的（查看 action 属性值） 向后端程序提交的参数是什么（查看 name 属性）  SQL 数据库查询语句基础 查询返回所有的结果  select * from users;  条件查询  select">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-03-06T12:07:52.046Z">
+<meta property="og:updated_time" content="2018-03-26T03:02:03.481Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="工具|Maven工具的使用">
-<meta name="twitter:description" content="Maven简介Apache Maven 是一种用作软件项目管理和理解工具。它基于项目对象模型（POM）的概念，可以管理一个项目的构建、报告以及从项目核心信息中生成文档。 Maven是一种项目管理和理解工具。Maven向开发者提供了一个完整的构建生命周期框架。开发团队几乎不用花时间就可以使用自动化构建项目的基础框架，因为 Maven使用了一套标准的目录结构和默认的构建生命周期。 Maven提供给开发">
+<meta name="twitter:title" content="Web安全|渗透基础知识">
+<meta name="twitter:description" content="自己在Web开发这条路上走了将近一年了，虽然能完成大部分的功能需求，但是代码质量堪忧，还是有一些安全漏洞，所以决定入坑Web安全，了解一波。 HTML 表单基础 该表单是提交给哪个文件进行处理的（查看 action 属性值） 向后端程序提交的参数是什么（查看 name 属性）  SQL 数据库查询语句基础 查询返回所有的结果  select * from users;  条件查询  select">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -85,14 +86,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2018/01/24/工具-Maven工具的使用/" title="工具|Maven工具的使用" itemprop="url">工具|Maven工具的使用</a>
+      <a href="/2018/03/26/Web安全-渗透基础知识/" title="Web安全|渗透基础知识" itemprop="url">Web安全|渗透基础知识</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-01-23T21:43:25.000Z" itemprop="datePublished"> 发表于 2018-01-24</time>
+    <time datetime="2018-03-26T10:39:00.000Z" itemprop="datePublished"> 发表于 2018-03-26</time>
     
   </p>
 </header>
@@ -101,60 +102,137 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Maven简介"><span class="toc-number">1.</span> <span class="toc-text">Maven简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见命令"><span class="toc-number">2.</span> <span class="toc-text">常见命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改默认jdk库"><span class="toc-number">3.</span> <span class="toc-text">修改默认jdk库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编译parent"><span class="toc-number">4.</span> <span class="toc-text">编译parent</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML-表单基础"><span class="toc-number">1.</span> <span class="toc-text">HTML 表单基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL-数据库查询语句基础"><span class="toc-number">2.</span> <span class="toc-text">SQL 数据库查询语句基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#万能用户名或者万能密码"><span class="toc-number">3.</span> <span class="toc-text">万能用户名或者万能密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用PDO进行防注入基础"><span class="toc-number">4.</span> <span class="toc-text">使用PDO进行防注入基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Wireshark-抓包"><span class="toc-number">5.</span> <span class="toc-text">Wireshark 抓包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#审查代码的能力"><span class="toc-number">6.</span> <span class="toc-text">审查代码的能力</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#各个-WEB-漏洞的利用能力"><span class="toc-number">7.</span> <span class="toc-text">各个 WEB 漏洞的利用能力</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Liunx-服务的安全配置"><span class="toc-number">8.</span> <span class="toc-text">Liunx 服务的安全配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-安全配置"><span class="toc-number">9.</span> <span class="toc-text">PHP 安全配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PYTHON-渗透脚本基础"><span class="toc-number">10.</span> <span class="toc-text">PYTHON 渗透脚本基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Liunx-常用命令"><span class="toc-number">11.</span> <span class="toc-text">Liunx 常用命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WEB-漏洞训练平台"><span class="toc-number">12.</span> <span class="toc-text">WEB 漏洞训练平台</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#网络协议原理"><span class="toc-number">13.</span> <span class="toc-text">网络协议原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于-PYTHON-的网络渗透编程"><span class="toc-number">14.</span> <span class="toc-text">关于 PYTHON 的网络渗透编程</span></a></li></ol>
 		
 		</div>
 		
-		<h3 id="Maven简介"><a href="#Maven简介" class="headerlink" title="Maven简介"></a>Maven简介</h3><p>Apache Maven 是一种用作软件项目管理和理解工具。它基于项目对象模型（POM）的概念，可以管理一个项目的构建、报告以及从项目核心信息中生成文档。</p>
-<p>Maven是一种项目管理和理解工具。Maven向开发者提供了一个完整的构建生命周期框架。开发团队几乎不用花时间就可以使用自动化构建项目的基础框架，因为 Maven使用了一套标准的目录结构和默认的构建生命周期。</p>
-<p>Maven提供给开发者管理如下过程的方法：</p>
-<ul>
-<li>项目构建(Builds)</li>
-<li>文档(Documentation)</li>
-<li>报告(Reporting)</li>
-<li>项目依赖(Dependencies)</li>
-<li>软件配置管理(SCMs)</li>
-<li>发布(Releases)</li>
-<li>分发(Distribution)</li>
-<li>邮件列表(mailing list)</li>
+		<p>自己在Web开发这条路上走了将近一年了，虽然能完成大部分的功能需求，但是代码质量堪忧，还是有一些安全漏洞，所以决定入坑Web安全，了解一波。</p>
+<h3 id="HTML-表单基础"><a href="#HTML-表单基础" class="headerlink" title="HTML 表单基础"></a>HTML 表单基础</h3><ol>
+<li>该表单是提交给哪个文件进行处理的（查看 action 属性值）</li>
+<li>向后端程序提交的参数是什么（查看 name 属性）</li>
+</ol>
+<h3 id="SQL-数据库查询语句基础"><a href="#SQL-数据库查询语句基础" class="headerlink" title="SQL 数据库查询语句基础"></a>SQL 数据库查询语句基础</h3><ol>
+<li>查询返回所有的结果</li>
+</ol>
+<p><code>select * from users;</code></p>
+<ol>
+<li>条件查询</li>
+</ol>
+<p><code>select * from users where uame=&#39;$uname&#39;</code>;</p>
+<ol>
+<li>union 合并多个查询结果</li>
+</ol>
+<p><code>select * from users union select * from msgs;</code></p>
+<ol>
+<li>… …</li>
+</ol>
+<h3 id="万能用户名或者万能密码"><a href="#万能用户名或者万能密码" class="headerlink" title="万能用户名或者万能密码"></a>万能用户名或者万能密码</h3><ul>
+<li>第一种<br><code>select * from users where uame=&#39;&#39; or &#39;&#39;=&#39;&#39; and passwd=$passwd;</code></li>
+<li>第二种<br><code>select _from users where uame=&#39;&#39; union select_ from users and passwd=$passwd;</code></li>
+<li>第三种<br><code>select * from users where uame=$uname and passwd=&#39;&#39; or &#39;&#39;=&#39;&#39;;</code></li>
+<li>… …</li>
 </ul>
-<p>总的来说，Maven简化和统一了项目构建的过程。它无缝地处理项目编译，分发，文档，团队合作和其他任务，增加了任务处理的重用性，并可以处理大多数构建相关的任务。</p>
-<h3 id="常见命令"><a href="#常见命令" class="headerlink" title="常见命令"></a>常见命令</h3><ul>
-<li>mvn -v //查看版本  </li>
-<li>mvn archetype:create //创建 Maven 项目  </li>
-<li>mvn compile //编译源代码  </li>
-<li>mvn test-compile //编译测试代码  </li>
-<li>mvn test //运行应用程序中的单元测试  </li>
-<li>mvn site //生成项目相关信息的网站  </li>
-<li>mvn package //依据项目生成 jar 文件  </li>
-<li>mvn install //在本地 Repository 中安装 jar  </li>
-<li>mvn -Dmaven.test.skip=true //忽略测试文档编译  </li>
-<li>mvn clean //清除目标目录中的生成结果  </li>
-<li>mvn clean compile //将.java类编译为.class文件  </li>
-<li>mvn clean package //进行打包  </li>
-<li>mvn clean test //执行单元测试  </li>
-<li>mvn clean deploy //部署到版本仓库  </li>
-<li>mvn clean install</li>
-<li>//使其他项目使用这个jar,会安装到maven本地仓库中  </li>
-<li>mvn archetype:generate //创建项目架构  </li>
-<li>mvn dependency:list //查看已解析依赖  </li>
-<li>mvn dependency:tree //看到依赖树  </li>
-<li>mvn dependency:analyze //查看依赖的工具  </li>
-<li>mvn help:system //从中央仓库下载文件至本地仓库  </li>
-<li>mvn help:active-profiles //查看当前激活的profiles  </li>
-<li>mvn help:all-profiles //查看所有profiles  </li>
-<li>mvn help:effective -pom //查看完整的pom信息  </li>
+<h3 id="使用PDO进行防注入基础"><a href="#使用PDO进行防注入基础" class="headerlink" title="使用PDO进行防注入基础"></a>使用PDO进行防注入基础</h3><ol>
+<li>允许长连接<br><code>PDO::ATTR_PERSISTENT=&gt;true</code></li>
+<li>不允许使用预处理语句<br><code>PDO::ATTR_EMULATE_PREPARE=&gt;false</code></li>
+<li>PDO 连接<br><code>$pdh=new PDO(host=&#39;127.0.0.1:1433&#39;,user=&#39;sa&#39;,password=&#39;root&#39;);</code></li>
+<li>预处理 SQL 查询语句<br><code>$stmt=$dbh-&gt;prepare($sql)</code></li>
+<li>填充 SQL 语句中的占位符<br><code>$stmt-&gt;execute(array(...,...,....));</code></li>
+<li>SQL 占位符（如：select <em> from users where uname=? and passwd=?;）<br>`select </em> from users where uname=? and passwd=?;`</li>
+<li>… …</li>
+</ol>
+<h3 id="Wireshark-抓包"><a href="#Wireshark-抓包" class="headerlink" title="Wireshark 抓包"></a>Wireshark 抓包</h3><ol>
+<li>熟练使用 Wireshark 这款软件</li>
+<li>熟练掌握过滤器的写法（如：tcp、udp、icmp、mac … …）</li>
+<li>知道各个协议的包结构、包头、包尾</li>
+<li>… …</li>
+</ol>
+<h3 id="审查代码的能力"><a href="#审查代码的能力" class="headerlink" title="审查代码的能力"></a>审查代码的能力</h3><ul>
+<li>HTML 源文件内容（通过右键网页 –&gt; 查看源文件）</li>
+<li>PHP 代码（了解代码逻辑以及书写规范，特别是对函数名的记忆）</li>
+<li>PYTHON 代码（快速读懂代码意思，特别是要从 main 函数入手去查看）</li>
+<li>C 语言代码（从代码中分析出来，该代码的意思以及各个函数的逻辑）</li>
+<li>… …</li>
 </ul>
-<h3 id="修改默认jdk库"><a href="#修改默认jdk库" class="headerlink" title="修改默认jdk库"></a>修改默认jdk库</h3><p>修改maven的setting.xml文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;profile&gt;</div><div class="line">      &lt;id&gt;jdk-1.8&lt;/id&gt;</div><div class="line"></div><div class="line">      &lt;activation&gt;</div><div class="line">          &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;</div><div class="line">        &lt;jdk&gt;1.8&lt;/jdk&gt;</div><div class="line">      &lt;/activation&gt;</div><div class="line"></div><div class="line">      &lt;repositories&gt;</div><div class="line">          &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;</div><div class="line">        &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;</div><div class="line">        &lt;maven.compiler.compilerVersion&gt;1.8&lt;/maven.compiler.compilerVersion&gt;</div><div class="line">      &lt;/repositories&gt;</div><div class="line">    &lt;/profile&gt;</div></pre></td></tr></table></figure>
-<h3 id="编译parent"><a href="#编译parent" class="headerlink" title="编译parent"></a>编译parent</h3><blockquote>
-<p>mvn install:install-file –Dfile=non-maven-proj.jar –DgroupId=some.group –DartifactId=non-maven-proj –Dversion=1</p>
-</blockquote>
+<h3 id="各个-WEB-漏洞的利用能力"><a href="#各个-WEB-漏洞的利用能力" class="headerlink" title="各个 WEB 漏洞的利用能力"></a>各个 WEB 漏洞的利用能力</h3><ul>
+<li>SQL 注入（通过万能用户名和万能密码来获取一定的 webshell）</li>
+<li>命令注入（特别是PHP中的 exec 和 system 函数也能获取到一定的 webshell）</li>
+<li>文件包含和目录遍历（通过 ../../../../… …/flag.txt 来获取文件）</li>
+<li>… …</li>
+</ul>
+<h3 id="Liunx-服务的安全配置"><a href="#Liunx-服务的安全配置" class="headerlink" title="Liunx 服务的安全配置"></a>Liunx 服务的安全配置</h3><ul>
+<li>SSH（禁止 root 登录；禁止空密码登录；禁止密钥登录 … …）</li>
+<li>TELNET（禁止 root telnet；禁用 telnet … …）</li>
+<li>VSFTP（不允许普通用户登录 ftp；禁止匿名用户登录 ftp … …）</li>
+<li>HTTPD（禁止回显 banner 信息；严格控制目录权限 … …）</li>
+<li>… …</li>
+</ul>
+<h3 id="PHP-安全配置"><a href="#PHP-安全配置" class="headerlink" title="PHP 安全配置"></a>PHP 安全配置</h3><ol>
+<li>开启安全模式<br><code>safe_mode = on</code></li>
+<li>禁用函数<br><code>disable_functions = system,exec,eval,shell_exec,phpinfo,... ...</code></li>
+<li>禁止SQL注入<br><code>magic_quotes_gpc = On</code></li>
+</ol>
+<h3 id="PYTHON-渗透脚本基础"><a href="#PYTHON-渗透脚本基础" class="headerlink" title="PYTHON 渗透脚本基础"></a>PYTHON 渗透脚本基础</h3><ul>
+<li>了解 scapy 这一模块（特别是在构造数据包的时候该怎么写）</li>
+<li>了解 dpkt 封装或者拆解网络协议包</li>
+<li>了解 socket 编程</li>
+<li>能够从 help 这一帮助函数中获取到其他函数的使用方法</li>
+<li>拥有快速阅读脚本的能力和代码逻辑思维</li>
+<li>… …</li>
+</ul>
+<h3 id="Liunx-常用命令"><a href="#Liunx-常用命令" class="headerlink" title="Liunx 常用命令"></a>Liunx 常用命令</h3><ul>
+<li>find<br><code>find  /  -iname  * | xargs  grep  –i  &#39;*key*&#39;</code></li>
+<li>grep<br><code>grep  &#39;*key*&#39;  ./keystring.txt</code></li>
+<li>netstat<br><code>netstat –tulnp 11.4 kill -9 [pid] 11.5 chattr +i /etc/passwd</code></li>
+<li>kill<br><code>kill -9 [pid]</code></li>
+<li>chattr<br><code>chattr  +i  /etc/passwd /etc/shadow</code></li>
+<li>useradd<br><code>useradd  -o  -u  0  test</code></li>
+</ul>
+<h3 id="WEB-漏洞训练平台"><a href="#WEB-漏洞训练平台" class="headerlink" title="WEB 漏洞训练平台"></a>WEB 漏洞训练平台</h3><ul>
+<li>DVWA <a href="https://github.com/ethicalhack3r/DVWA" target="_blank" rel="external">【DVWA】</a></li>
+<li>Web For Pentester <a href="https://pentesterlab.com/exercises/web_for_pentester_II" target="_blank" rel="external">【Web For Pentester II】</a>(请自行安装镜像，安装时请选择”其他 Liunx 3.x 内核 64 位”)</li>
+<li>ZVulDrill <a href="https://github.com/710leo/ZVulDrill" target="_blank" rel="external">【ZVulDrill】</a>(请自行准备 PHP 环境)</li>
+<li>… …</li>
+</ul>
+<h3 id="网络协议原理"><a href="#网络协议原理" class="headerlink" title="网络协议原理"></a>网络协议原理</h3><ul>
+<li>Tcp 三次握手和四次挥手</li>
+<li>Icmp 发包以及回包</li>
+<li>Mac 防洪原理</li>
+<li>ARP 发广播包，ARP 欺骗</li>
+<li>Dtp 生成树攻击原理</li>
+<li>… …</li>
+</ul>
+<h3 id="关于-PYTHON-的网络渗透编程"><a href="#关于-PYTHON-的网络渗透编程" class="headerlink" title="关于 PYTHON 的网络渗透编程"></a>关于 PYTHON 的网络渗透编程</h3><ul>
+<li><p>ARP 扫描</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import socket</div><div class="line"># or</div><div class="line">from scapy.all import *</div></pre></td></tr></table></figure>
+</li>
+<li><p>ARP 欺骗、ARP 监控<br><code>from scapy.all import *</code></p>
+</li>
+<li>OS 扫描<br><code>import nmap</code></li>
+<li><p>Mac 防洪</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import socket</div><div class="line"># or</div><div class="line">from scapy.all import *</div></pre></td></tr></table></figure>
+</li>
+<li><p>mssql 数据库密码爆破<br><code>import pymssql</code></p>
+</li>
+<li>跨越 VlAN 攻击<br><code>from scapy.all import *</code></li>
+<li>Dtp 攻击<br><code>from scapy.all import *</code></li>
+<li>… …<br><a href="https://vxhly.github.io/2017/09/pentest-basic-knowledge/" target="_blank" rel="external">渗透基础知识</a></li>
+</ul>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Web安全/">Web安全</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Web安全/">Web安全</a>
+  </div>
 
 </div>
 
@@ -167,17 +245,10 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2018/01/24/总结-我的大二-上/" title="总结|我的大二.上">
-  <span>
-  总结|我的大二.上</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2018/01/23/Java-POI的简单用/"  title="Java|POI的简单用">
- <span>Java|POI的简单用
+<a href="/2018/03/26/Web安全-一些有用的工具/"  title="Web安全|一些有用的工具">
+ <span>Web安全|一些有用的工具
 </span>
 </a>
 </div>
