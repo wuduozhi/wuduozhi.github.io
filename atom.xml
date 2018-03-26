@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-26T03:02:03.481Z</updated>
+  <updated>2018-03-26T06:04:27.021Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,92 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Web安全|Sqlmap的使用入门</title>
+    <link href="http://yoursite.com/2018/03/26/Web%E5%AE%89%E5%85%A8-Sqlmap%E7%9A%84%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8/"/>
+    <id>http://yoursite.com/2018/03/26/Web安全-Sqlmap的使用入门/</id>
+    <published>2018-03-26T11:19:43.000Z</published>
+    <updated>2018-03-26T06:04:27.021Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>SQLmap 是一款用来检测与利用 SQL 注入漏洞的免费开源工具，有一个非常棒的特性，即对检测与利用的自动化处理（数据库指纹、访问底层文件系统、执行命令）</p>
+<h3 id="SQLmap-环境"><a href="#SQLmap-环境" class="headerlink" title="SQLmap 环境"></a>SQLmap 环境</h3><ul>
+<li>python 2.7.x</li>
+<li>Sqlmap <a href="https://sqlmap.org/" target="_blank" rel="external">官网下载</a></li>
+</ul>
+<p>将 SQLmap 解压至 Python 目录下，将 SQLmap 的程序目录重命名为 sqlmap</p>
+<ul>
+<li>DVWA  <a href="https://github.com/ethicalhack3r/DVWA" target="_blank" rel="external">Github 下载地址</a><br>DVWA(Dam Vulnerable Web Application) 使用 PHP+Mysql 编写的一套用于常规 WEB 漏洞教学和检测的 WEB 脆弱性测试程序。包含 SQL 注入、XSS、盲注等常见的一些漏洞。</li>
+</ul>
+<p>注:[在 Windows 下还需安装 PHP 环境，这里推介两个 PHP 集成环境 (Wamp、phpStudy)]</p>
+<h3 id="SQlmap-使用方法"><a href="#SQlmap-使用方法" class="headerlink" title="SQlmap 使用方法"></a>SQlmap 使用方法</h3><p>本次实验的目的：使用 SQLmap 得到以下信息：</p>
+<ul>
+<li>枚举 MYSQL 用户名与密码。</li>
+<li>枚举所有数据库。</li>
+<li>枚举指定数据库的数据表。</li>
+<li>枚举指定数据表中的所有用户名与密码。</li>
+</ul>
+<h4 id="查看帮助"><a href="#查看帮助" class="headerlink" title="查看帮助"></a>查看帮助</h4><p>Windows：查看 Python 帮助命令 <code>python sqlmap.py -h</code></p>
+<p>选项解释</p>
+<ul>
+<li>–cookie =&gt; 设置我们的 cookie 值 “将 DVWA 安全等级设置为 low”</li>
+<li>–data =&gt; 设置 POST 提交的值，如果是 GET 提交，不需要此选项</li>
+<li>-u =&gt; 指定目标 URL</li>
+<li>-b =&gt; 获取 DBMS banner</li>
+<li>–current-db =&gt; 获取当前数据库</li>
+<li>–current-user =&gt; 获取当前数据库的用户</li>
+<li>–tables =&gt; 获取数据库里所有的表名</li>
+<li>–columns =&gt; 获取表里的所有字段</li>
+<li>–dump =&gt; 获取值</li>
+<li>–current-user =&gt; 获取当前用户</li>
+<li>-D =&gt; 爆库指定数据库名</li>
+<li>-T =&gt; 爆库指定表名</li>
+<li>-C =&gt; 爆库指定字段名</li>
+<li>–string =&gt; 当查询可用时用来匹配页面中的字符串</li>
+<li>–users =&gt; 枚举 DBMS 用户</li>
+<li>–password =&gt; 枚举 DBMS 用户密码 hash</li>
+<li>–dbs =&gt; 枚举 DBMS 中的数据库</li>
+</ul>
+<h4 id="开始爆库-DVWA-的难度为-low"><a href="#开始爆库-DVWA-的难度为-low" class="headerlink" title="开始爆库 [DVWA 的难度为 low]"></a>开始爆库 [DVWA 的难度为 low]</h4><h5 id="先获取-Cookie"><a href="#先获取-Cookie" class="headerlink" title="先获取 Cookie"></a>先获取 Cookie</h5><p>登录DVWA，开开发者工具，查看cookie,复制下来，看图：</p>
+<p><img src="/images/sqlmap使用-01.png" alt="Sqlmap使用" title="sqlmap使用-01"></p>
+<h5 id="获取数据库，–current-db"><a href="#获取数据库，–current-db" class="headerlink" title="获取数据库，–current-db"></a>获取数据库，–current-db</h5><p>for example<br><code>python sqlmap.py -u &quot;http://127.0.0.1/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit#&quot; --cookie=&quot;security=low; PHPSESSID=n9q4k788od014b1invk832qal0&quot; --current-db</code></p>
+<blockquote>
+<p>URL 地址和 Cookie 请用真实的替换掉。这条命令可以把当前所有的数据库获取出来的。注意 –current-db 的 - 可是有两个的。</p>
+</blockquote>
+<p><img src="/images/sqlmap使用-02.png" alt="获取数据库" title="sqlmap使用-02"></p>
+<h5 id="获取表，–tables"><a href="#获取表，–tables" class="headerlink" title="获取表，–tables"></a>获取表，–tables</h5><blockquote>
+<p>前面，我们已经获取到数据库名，这时候我们要指定数据库名。使用 -D 选项指定数据库名。注意 –tables 的 - 可是有两个的。</p>
+</blockquote>
+<p>For Example:<br><code>python sqlmap.py -u &quot;http://127.0.0.1/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit#&quot; --cookie=&quot;security=low; PHPSESSID=n9q4k788od014b1invk832qal0&quot;  -D &#39;dvwa&#39; --tables</code></p>
+<p><img src="/images/sqlmap使用-03.png" alt="获取表" title="sqlmap使用-03"></p>
+<h5 id="获取字段，–columns"><a href="#获取字段，–columns" class="headerlink" title="获取字段，–columns"></a>获取字段，–columns</h5><blockquote>
+<p>前面，我们已经获取到数据库名和表名了，这时候我们要指定数据库名和表名。使用 -D 选项指定数据库名，使用 -T 指定表名。这里我们选择表 users。注意 –columns 的 - 可是有两个的。</p>
+</blockquote>
+<p>For Example:</p>
+<p><code>python sqlmap.py -u &quot;http://127.0.0.1/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit#&quot; --cookie=&quot;security=low; PHPSESSID=n9q4k788od014b1invk832qal0&quot; -D &#39;dvwa&#39; -T &#39;users&#39; --columns</code></p>
+<p><img src="/images/sqlmap使用-04.png" alt="获取字段" title="sqlmap使用-04"></p>
+<h5 id="获取数据，–dump"><a href="#获取数据，–dump" class="headerlink" title="获取数据，–dump"></a>获取数据，–dump</h5><blockquote>
+<p>前面，我们已经获取到数据库名、表名还有字段名了，这时候我们要指定数据库名、表名还有字段名。使用 -D 选项指定数据库名，使用 -T 指定表名，使用 -C 指定字段名。这里我们选择表 users中的字段 user_id。注意 –dump 的 - 可是有两个的。</p>
+</blockquote>
+<p>For Example:</p>
+<p><code>python sqlmap.py -u &quot;http://127.0.0.1/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit#&quot; --cookie=&quot;security=low; PHPSESSID=n9q4k788od014b1invk832qal0&quot; -D &#39;dvwa&#39; -T &#39;users&#39; -C &#39;user_id&#39; --dump</code></p>
+<p><img src="/images/sqlmap使用-05.png" alt="获取数据" title="sqlmap使用-05"></p>
+<h3 id="finally"><a href="#finally" class="headerlink" title="finally"></a>finally</h3><p>这就是Sqlmap的简单使用了，希望对你们有帮助。</p>
+<p><a href="https://vxhly.github.io/2016/09/usage-of-sqlmap/" target="_blank" rel="external">渗透工具用法（一）：SQLmap 的用法</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;p&gt;SQLmap 是一款用来检测与利用 SQL 注入漏洞的免费开源工具，有一个非常棒的特性，即对检测与利用的自动化处理（数据库指纹、访问底层文件
+    
+    </summary>
+    
+      <category term="Web安全" scheme="http://yoursite.com/categories/Web%E5%AE%89%E5%85%A8/"/>
+    
+    
+      <category term="Web安全" scheme="http://yoursite.com/tags/Web%E5%AE%89%E5%85%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>Web安全|渗透基础知识</title>
@@ -155,7 +241,7 @@
     <link href="http://yoursite.com/2018/03/26/Web%E5%AE%89%E5%85%A8-%E4%B8%80%E4%BA%9B%E6%9C%89%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7/"/>
     <id>http://yoursite.com/2018/03/26/Web安全-一些有用的工具/</id>
     <published>2018-03-25T23:44:58.000Z</published>
-    <updated>2018-03-25T16:22:45.685Z</updated>
+    <updated>2018-03-26T03:20:21.818Z</updated>
     
     <content type="html"><![CDATA[<h3 id="安利一些工具"><a href="#安利一些工具" class="headerlink" title="安利一些工具"></a>安利一些工具</h3><p>Sqlmap </p>
 <p><a href="https://vxhly.github.io/2016/09/usage-of-sqlmap/" target="_blank" rel="external">SQLmap 的用法</a></p>
@@ -1498,268 +1584,6 @@ if($stmt-&gt;fetch()){
     <summary type="html">
     
       &lt;h3 id=&quot;What&quot;&gt;&lt;a href=&quot;#What&quot; class=&quot;headerlink&quot; title=&quot;What&quot;&gt;&lt;/a&gt;What&lt;/h3&gt;&lt;p&gt;Tomcat简单的说就是一个运行JAVA的网络服务器，底层是Socket的一个程序，它也是JSP和Serlvet的一个容器。
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java|Servlet基础知识</title>
-    <link href="http://yoursite.com/2018/03/01/Java-Servlet%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
-    <id>http://yoursite.com/2018/03/01/Java-Servlet基础知识/</id>
-    <published>2018-03-01T09:07:13.000Z</published>
-    <updated>2018-03-01T02:48:02.490Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="What"><a href="#What" class="headerlink" title="What"></a>What</h3><p>Servlet实际上是ServerApplet–小服务程序或服务连接器，用Java编写的服务器端程序，主要功能在于交互式地浏览和修改数据，生成动态Web内容。与常用的协议，如DNS，TCP/IP，HTTP类似，Servlet是作为一整套规范存在的；同时作为J2EE标准的一部分，定义了javaweb开发的标准。Servlet制定了java处理WEB请求的一系列标准，我们只需要按照标准规定的去做就可以了。</p>
-<p>实际上，无论是Struts2的FilterDispatcher还是SpringMvc的DispatcherServlet,其底层都是通过实现Sevlet或者Servlet类型的扩展【如：GenericServlet】来实现的。</p>
-<p>Java Web服务器处理用户请求的基本过程：用户在客户端点击一个链接，浏览器会向Web应用服务器发送一个URL请求，该URL会指向一个servlet；Web容器看出这个请求指向某个servlet A，就会创建两个对象（HttpServletRequest和HttpServletResponse），并分配或创建一个线程，调用servlet A对应的service方法（上述请求和响应对象作为参数）；service根据HTTP请求区分出客户端发来的是GET还是POST请求，并调用对应的doGet()或doPost()方法；在doGet()或doPost()方法中进行业务逻辑的处理，处理完成后的结果通过响应对象返回写回给客户端。</p>
-<p>而Servlet容器又是什么呢？各个请求总要找到对应的servlet吧？每个请求总有一些状态需要管理吧？好了，servlet容器就是干这个的，它负责初始化并创建这些servlet，将请求解析成具体的类等一系列操作。比如我们常见的tomcat就是使用范围最广的servlet容器，其他的还有Jetty、jboss等。</p>
-<p><img src="/images/Java-Servlet-05.png" alt="Tomcat与Servlet的关系" title="Java-Servlet-05"></p>
-<h3 id="How-it-work"><a href="#How-it-work" class="headerlink" title="How it work?"></a>How it work?</h3><p>要想更好地理解Servlet是怎工作的，我们需要问自己这些问题：<strong>Servlet是如何工作的？Servlet 如何实例化、共享变量、并进行多线程处理</strong>？</p>
-<p>假设我有一个运行了大量 Servlet 的 web 服务器。通过 Servlet 之间传输信息得到 Servlet 上下文，并设置 session 变量。</p>
-<p>现在，如果有两名或更多使用者向这个服务发送请求，接下来 session 变量会发生什么变化？究竟是所有用户都是用共同的变量？还是不同的用户使用的变量都不一样？如果是后者，服务器如何区分不同用户？</p>
-<p>另一个相似的问题，如果有 <em>n</em> 名用户访问一个特定的 Servlet，那么该 Servlet 是仅在第一个用户首次访问的时候实例化，还是分别为每个用户实例化？</p>
-<p>当然，要回答上面的问题，我们首先要知道一下的内容：</p>
-<h4 id="ServletContext"><a href="#ServletContext" class="headerlink" title="ServletContext"></a>ServletContext</h4><p>当 Servlet 容器（比如 Apache Tomcat）启动后，会部署和加载所有 web 应用。当web 应用被加载，Servlet 容器会创建一次 ServletContext，然后将其保存在服务器的内存中。web 应用的 web.xml 被解析，找到其中所有 servlet、filter 和 Listener 或 @WebServlet、@WebFilter 和 @WebListener 注解的内容，创建一次并保存到服务器的内存中。<strong>对于所有过滤器会立即调用 init()</strong>。当 Servlet 容器停止，将卸载所有 web 应用，调用所有初始化的 Servlet 和过滤器的 destroy() 方法，最后回收 ServletContext 和所有 Servlet、Filter 与 Listener 实例。</p>
-<p>当问题中的 Servlet 配置的 load-on-startup 或者 @WebServlet(loadOnStartup) 设置了一个大于 0 的值，则同样会在启动的时候立即调用 init() 方法。“load-on-startup”中的值表示那些 Servlet 会以相同顺序初始化。如果配置的值相同，会遵循 web.xml 中指定的顺序或 @WebServlet 类加载的顺序。另外，如果不设置 “load-on-startup” 值，init() 方法只在第一次 HTTP 请求命中问题中的 Servlet 时才被调用。</p>
-<h4 id="HttpServletRequest-与-HttpServletResponse"><a href="#HttpServletRequest-与-HttpServletResponse" class="headerlink" title="HttpServletRequest 与 HttpServletResponse"></a>HttpServletRequest 与 HttpServletResponse</h4><p>Servlet 容器附加在一个 web 服务上，这个 web 服务会在某个端口号上监听 HTTP 请求，在开发环境中这个端口通常为 8080，生产环境中通常为 80。当客户端（web 浏览器）发送了一个 HTTP 请求，Servlet 容器会创建新的 HttpServletRequest 和 HttpServletResponse 对象，传递给已创建好并且请求的 URL 匹配 url-pattern 的 Filter 和 Servlet 实例中的方法，所有工作都在同一个线程中处理。</p>
-<p>request 对象可以访问所有该 HTTP 请求中的信息，例如 request header 和 request body。response 对象为你提供需要的控制和发送 HTTP 响应方法，例如设置 header 和 body（通常会带有 JSP 文件中的 HTML 内容）。提交并完成HTTP 响应后，将回收 request 和 response 对象。</p>
-<h4 id="HttpSession"><a href="#HttpSession" class="headerlink" title="HttpSession"></a>HttpSession</h4><p>当用户第一次访问该 web 应用时，会通过 request.getSession() 第一次获得 HttpSession。之后 Servlet 容器将会创建 HttpSession，生成一个唯一的 ID（可以通过 session.getId() 获取）并储存在<strong>服务器内存</strong>中。然后 Servlet 容器在该次 HTTP 响应的 Set-Cookie 头部设置一个 Cookie，以 JSESSIONID 作为 Cookie 名字，那个唯一的 session ID 作为 Cookie 的值。</p>
-<p>按照 HTTP cookie 规则（正常 web 浏览器和 web 服务端必须遵循的标准），当 cookie 有效时，要求客户端（浏览器）在后续请求的 Cookie 头中返回这个 cookie。使用浏览器内置的 HTTP 流量监控器，你可以查看它们（在 Chrome、Firefox23+、IE9+ 中按 F12，然后查看 Net/Network 标签）。Servlet 容器将会确定每个进入的 HTTP 请求的 Cookie 头中是否存在名为JSESSIONID 的 cookie，然后用它的值（session ID）从服务端内存中找到关联的 HttpSession。</p>
-<p>你可以在 web.xml 中设置 session-timeout ，默认值为 30 分钟。超时到达之前 HttpSession 会一直存活。所以当客户端不再访问该 web 应用超过 30 分钟后，Servlet 容器就会回收这个 session。后续每个请求，即使指定 cookie 名称也不能再访问到相同的 session。Servlet 容器会创建一个新的 Cookie。</p>
-<p>另一方面，客户端上的 session cookie 有一个默认存活时间，该事件和该浏览器实例运行时间一样长。所以，当客户端关闭该浏览器实例（所有标签和窗口）后，这个 session 就会被客户端回收。新浏览器实例不再发送与该 session 关联的 cookie。一个新的 request.getSession() 将会返回新的 HttpSession 并设置一个拥有新 session ID 的 cookie。</p>
-<h4 id="总结一下"><a href="#总结一下" class="headerlink" title="总结一下"></a>总结一下</h4><ul>
-<li>ServletContext 与 web 应用存活时间一样长。它被所有 session 中的所有请求共享。</li>
-<li>只要客户端一直与相同浏览器实例的web应用交互并且没有超时，HttpSession就会存在。</li>
-<li>HttpServletRequest 和 HttpServletResponse 的存活时间为客户端发送完成到完整的响应（web 页面）到达的这段时间。不会被其他地方共享。</li>
-<li>所有 Servlet、Filter 和 Listener 对象在 web 应用运行时都是活跃的。它们被所有 session 中的请求共享。</li>
-<li>你设置在 HttpServletRequest、HttpServletResponse 和 HttpSession 中的所有属性在问题中的对象存活时都会一直保持存活。</li>
-</ul>
-<h4 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h4><p>通过上述内容，我们知道Servlet 和 filter 被所有请求共享。那是 Java 的一个优点，使得多个不同线程（读取 HTTP 请求）可以使用同一个实例。否则为每个请求重新创建线程的开销实在过于昂贵。</p>
-<p>但你应该也意识到永远不要将任何 request 或 session 域中的数据赋值给 servlet 或 filter 的实例变量。它将会被所有其他 session 中的所有请求共享。<strong>那是非线程安全的！</strong></p>
-<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p>我们先看一段简单的servlet请求响应的代码片段:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//HelloServlet类</div><div class="line">public class HelloServlet extends HttpServlet&#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;</div><div class="line">        String name  = req.getParameter(&quot;name&quot;);</div><div class="line">        resp.setContentType(&quot;text/html;charset=UTF-8&quot;);</div><div class="line">        PrintWriter printWriter = resp.getWriter();</div><div class="line">        printWriter.write(&quot;&lt;html&gt;&lt;head&gt;&lt;head&gt;&lt;body&gt;&lt;h1&gt;&quot;);</div><div class="line">        printWriter.write(&quot;Hello &quot;+name);</div><div class="line">        printWriter.write(&quot;&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&quot;);</div><div class="line">        printWriter.close();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>然后在web.xml注册此servlet</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;web-app version=&quot;3.0&quot;</div><div class="line">        xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot;</div><div class="line">        xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">        xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot;&gt;</div><div class="line"></div><div class="line">    &lt;display-name&gt;wthfeng 的mvc练习项目&lt;/display-name&gt;</div><div class="line">    &lt;servlet&gt;</div><div class="line">        &lt;servlet-name&gt;hello&lt;/servlet-name&gt;</div><div class="line">        &lt;servlet-class&gt;com.wthfeng.mymvc.servlet.HelloServlet&lt;/servlet-class&gt;</div><div class="line">        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;</div><div class="line">    &lt;/servlet&gt;</div><div class="line">  &lt;servlet-mapping&gt;</div><div class="line">      &lt;servlet-name&gt;hello&lt;/servlet-name&gt;</div><div class="line">      &lt;url-pattern&gt;/hello&lt;/url-pattern&gt;</div><div class="line">  &lt;/servlet-mapping&gt;</div><div class="line">&lt;/web-app&gt;</div></pre></td></tr></table></figure>
-<p>启动项目，效果如下图所示：</p>
-<p><img src="/images/Java-Servlet-01.png" alt="效果" title="Java-Servlet-01"></p>
-<p>这样我们就写完了一个简单的servlet，有关这个例子，我们需要知道：</p>
-<ol>
-<li>编写Servlet必须继承HttpServlet或GenericServlet或直接实现Servlet接口。HttpServlet已经为我们封装了有关http请求的相关参数，一般情况下我们直接继承此类即可。</li>
-<li>此servlet重写了doGet方法，也就是它可以响应/myprojectName/hello?name=xxx 的请求，并在页面打印xxx的内容。</li>
-</ol>
-<h4 id="Servlet的创建和初始化"><a href="#Servlet的创建和初始化" class="headerlink" title="Servlet的创建和初始化"></a>Servlet的创建和初始化</h4><p>好了，这些逻辑符合上面所说的，浏览器发出请求/hello，一个名为hello的 servlet被命中，接受请求处理后返回。这里我们再深入一些，为什么要把servlet的定义在web.xml中？web.xml又和servlet容器有什么关系？</p>
-<p><strong>web.xml是web项目的入口文件。在项目启动过程中，servlet容器（如tomcat）会读取web.xml并进行相应配置以初始化该项目</strong>。</p>
-<p>具体容器启动流程如下（以tomcat为例）：</p>
-<ol>
-<li><p>先解析tomcat路径下的conf/web.xml等web.xml文件,它们是全局web配置文件，做一些基本配置工作。如注册了default、jsp等servlet。</p>
-</li>
-<li><p>解析web.xml，将其各个配置项（包括servlet、filter、listener)经处理包装后设在Tomcat的Context容器中，一个 Web 应用对应一个 Context 容器。</p>
-</li>
-<li><p>创建servlet并初始化。load-on-startup大于1的servlet会在此时初始化。初始化servlet就是调用servlet的init方法。注意：若不设置 此 值，init() 方法只在第一次 HTTP 请求命中时才被调用。此时servlet容器就算启动了。</p>
-</li>
-</ol>
-<p><strong>简而言之就是，web.xml是项目和servlet容器（服务器）关联的桥梁。通过在web.xml注册servlet、filter、listener等，使得项目具有处理特定请求的功能。</strong></p>
-<p><img src="/images/Java-Servlet-06.png" alt="生命周期" title="Java-Servlet-06"></p>
-<h4 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h4><p>在容器启动时，XXXServlet在JVM的管理下被实例化为一个对象，这时候它还不是servlet，需要在容器的管理下调用init()方法进行初始化，获得ServletConfig和ServletContext对象的引用后，才称为一个真正的Servlet。</p>
-<p><img src="/images/Java-Servlet-02.png" alt="生命周期" title="Java-Servlet-02"></p>
-<ol>
-<li>init()<ul>
-<li>何时调用？servlet实例创建后，并在servlet能为客户请求提供服务之前，容器需要通过init方法初始化servlet。</li>
-<li>作用？初始化servlet实例，使之获得web容器的相关信息</li>
-<li>是否会被覆盖？有可能</li>
-</ul>
-</li>
-<li>service()<ul>
-<li>何时调用？当一个客户请求到来时，容器会创建（或从线程池分配一个线程），并调用servlet的service方法</li>
-<li>作用？这个方法会确定HTTP方法（GET or POST），并调用对应的servlet方法——doGet或doPost；</li>
-<li>是否会被覆盖？可以，但是不会</li>
-</ul>
-</li>
-<li>doGet()或doPost()<ul>
-<li>何时调用？</li>
-<li>作用？具体的业务逻辑</li>
-<li>是否会被覆盖？至少要覆盖其中之一</li>
-</ul>
-</li>
-</ol>
-<p><strong>关键点：每个请求都在一个单独的线程中运行！</strong></p>
-<p><img src="/images/Java-Servlet-04.png" alt="工作方式" title="Java-Servlet-04"></p>
-<h3 id="Servlet的继承体系"><a href="#Servlet的继承体系" class="headerlink" title="Servlet的继承体系"></a>Servlet的继承体系</h3><ul>
-<li>servlet接口：javax.servlet.Servlet，表示所有的Servlet都有这5个方法，其中init、service和destroy三个方法和servlet的生命周期有关</li>
-<li>GenericServlet：javax.servlet.GenericServlet，这是一个抽象类，它实现了开发者需要的大部分基本servlet方法，大多数servlet的“servlet行为”都来自这个类；</li>
-<li>HttpServlet：javax.servlet.http.HttpServlet，这也是一个抽象类，它实现了自己的service()方法，处理servlet的HTTP特性（service方法不仅仅只处理HTTP请求）。</li>
-<li>MyTestServlet：这是开发者自己编写的处理类，一般只需要实现doGet()和doPost()方法。</li>
-</ul>
-<p><img src="/images/Java-Servlet-03.png" alt="继承体系" title="Java-Servlet-03"></p>
-<h3 id="HTTP相关API"><a href="#HTTP相关API" class="headerlink" title="HTTP相关API"></a>HTTP相关API</h3><h4 id="HTTP请求的API"><a href="#HTTP请求的API" class="headerlink" title="HTTP请求的API"></a>HTTP请求的API</h4><table>
-<thead>
-<tr>
-<th>方法</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>getHeader()</td>
-<td>可以获取首部信息，例如request.getHeader(“User-Agent”)可以获取客户端的平台和浏览器信息</td>
-</tr>
-<tr>
-<td>getIntHeader()</td>
-<td>如果首部信息中的“key/value”对中的value是int类型的，可以使用这个方法直接获取值而不需要显式类型转换</td>
-</tr>
-<tr>
-<td>getCookies()</td>
-<td>可以获取与请求相关的cookie</td>
-</tr>
-<tr>
-<td>getSession()</td>
-<td>可以获取与请求相关的会话</td>
-</tr>
-<tr>
-<td>getMethod()</td>
-<td>可以获取http方法</td>
-</tr>
-<tr>
-<td>getInputStream()</td>
-<td>可以获取请求的输入流</td>
-</tr>
-<tr>
-<td>getParameter(String name)</td>
-<td>可以获取HTTP请求的请求参数，对于GET请求，可以获取查询字符串中的数据、对于POST请求，可以获取请求体中的数据</td>
-</tr>
-<tr>
-<td>getRemotePort()</td>
-<td>获取客户端的端口号</td>
-</tr>
-<tr>
-<td>getServerPort()</td>
-<td>获取服务端接受请求的端口号（请求一开始发送服务端的哪个端口？）</td>
-</tr>
-<tr>
-<td>getLocalPort()</td>
-<td>获取服务端处理请求的端口号（请求最后是发送到服务端的哪个端口？）</td>
-</tr>
-</tbody>
-</table>
-<h4 id="HTTP响应的API"><a href="#HTTP响应的API" class="headerlink" title="HTTP响应的API"></a>HTTP响应的API</h4><p>大多数情况下，使用响应只是为了向客户发回数据。会对响应调用两个方法：setContentType()和getWriter()。在此之后，可以将HTML或其他内容写入到流。不过，你也可以使用响应设置首部、发送错误或增加Cookie。</p>
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>setContentType()</td>
-<td>设置响应返回的MIME类型</td>
-</tr>
-<tr>
-<td>getOutputStream()</td>
-<td>获取HTTP输出字节流</td>
-</tr>
-<tr>
-<td>getWriter()</td>
-<td>获取HTTP输出字符流</td>
-</tr>
-<tr>
-<td>addCookie(Cookie cookie)</td>
-<td>给响应首部中增加cookie对象，注意这里不是增加“key/value”对</td>
-</tr>
-<tr>
-<td>addHeader()</td>
-<td>在响应首部中添加一个“key/value”对</td>
-</tr>
-<tr>
-<td>setHeader()</td>
-<td>在响应首部中设置一个“key/value”对；<strong>和addHeader()的区别是，如果响应首部中已经有对应的key存在，setHeader()会覆盖现有的值，而addHeder()会新增一个“key/value”对，使用时需要注意</strong>；</td>
-</tr>
-<tr>
-<td>encodeRedirectURL()</td>
-<td>对包含session ID的URL进行编码。<strong>使用场景：在浏览器不支持使用cookie跟踪会话时，可以使用URL重写（即将URL重定向到另一个URL，而这个URL的后面会带上session id传给客户端，这个URL在返回给客户端之前需要经过编码）</strong></td>
-</tr>
-<tr>
-<td>sendError()</td>
-<td>给客户端返回错误的响应（错误码、错误信息），在该方法被调用之后，就意味着响应已经被返回给客户端，也就不能再调用response的任何方法，否则会报IllegalStateException。</td>
-</tr>
-<tr>
-<td>setStatus()</td>
-<td>设置响应的状态码</td>
-</tr>
-<tr>
-<td>sendRedirect()</td>
-<td>用于URL重定向，告诉客户端去访问另一个URL来完成需求，如果location没有以“/”开头，则它是相对路径，容器会负责将这个相对路径转化成该web应用的绝对路径；否则容器会把它当做绝对路径处理。</td>
-</tr>
-</tbody>
-</table>
-<h4 id="重定向和请求派发"><a href="#重定向和请求派发" class="headerlink" title="重定向和请求派发"></a>重定向和请求派发</h4><ul>
-<li>重定向是让浏览器访问新的URL完成工作，用户会在浏览器地址栏看到新的URL,通过httpServlet的sendDirect(String location)方法。</li>
-<li>请求派发是服务端的工作，是当前servlet委托另外的servlet完成请求，并给客户端发回响应，用户的浏览器地址栏的URL没有改变,是通过requestDispatcher对象的forward(httpServletRequest req,HttpServletResponse res)方法来实现的。其中getRequestDispatcher方法的参数，必须以“／”开头，表示web的根目录，比如要<br>跳转：　“<a href="http://locahost:8080/servlet/servet/LifeCycleServlet" target="_blank" rel="external">http://locahost:8080/servlet/servet/LifeCycleServlet</a>“, 则参数为”/servlet/LifeCycleServlet”.</li>
-</ul>
-<h3 id="获取初始化参数"><a href="#获取初始化参数" class="headerlink" title="获取初始化参数"></a>获取初始化参数</h3><ol>
-<li><p>在 web.xml中配置servlet时，可以配置一些初始化参数，在servlet可以通过servletConfig接口提供的接口获取这些参数。</p>
-<ul>
-<li><p>在web.xml中配置init-param 参数：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;servlet&gt;</div><div class="line">        </div><div class="line">        &lt;servlet-name&gt;HelloServlet&lt;/servlet-name&gt;&lt;!-- servlet的名字 --&gt;</div><div class="line">        &lt;servlet-class&gt;servlet.HelloServlet&lt;/servlet-class&gt;&lt;!-- servlet的具体类型，需要带包名 --&gt;</div><div class="line">        &lt;init-param&gt;</div><div class="line">            &lt;param-name&gt;username&lt;/param-name&gt;</div><div class="line">            &lt;param-value&gt;forezp&lt;/param-value&gt;</div><div class="line">        &lt;/init-param&gt;</div><div class="line">    &lt;/servlet&gt;</div></pre></td></tr></table></figure>
-<ul>
-<li>在servlet中获取</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class HelloServlet extends HttpServlet &#123;</div><div class="line">    </div><div class="line">    @Override</div><div class="line">    public void init() throws ServletException &#123;</div><div class="line">        // TODO Auto-generated method stub</div><div class="line">        super.init();</div><div class="line">        String name=this.getInitParameter(&quot;username&quot;);</div><div class="line">        System.out.println(name);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<pre><code>+ 部署项目，访问helloServlet就可以看见在控制台打印了forezp
-</code></pre><ol>
-<li>也可以配置一些全局的参数:context-param.</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;web-app version=&quot;2.5&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot;</div><div class="line">    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">    xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee </div><div class="line">    http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot;&gt;</div><div class="line">    &lt;display-name&gt;&lt;/display-name&gt;</div><div class="line">    &lt;welcome-file-list&gt;</div><div class="line">        &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;</div><div class="line">    &lt;/welcome-file-list&gt;</div><div class="line"></div><div class="line"></div><div class="line">    &lt;context-param&gt;</div><div class="line">        &lt;param-name&gt;haha&lt;/param-name&gt;</div><div class="line">        &lt;param-value&gt;xixi&lt;/param-value&gt;</div><div class="line">    &lt;/context-param&gt;</div><div class="line">    </div><div class="line">&lt;/web-app&gt;</div></pre></td></tr></table></figure>
-<pre><code>+ 获取方式：servlet中通过getServletContext()获取servletContext对象，使用ServletContext的getInitParameter()方法获取制定参数名来获取参数。
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ServletContext servletContext=getServletConfig().getServletContext();</div><div class="line">String str=servletContext.getInitParameter(&quot;haha&quot;);</div><div class="line">System.out.println(str);</div></pre></td></tr></table></figure>
-<h3 id="随便讲讲Filter和Listener"><a href="#随便讲讲Filter和Listener" class="headerlink" title="随便讲讲Filter和Listener"></a>随便讲讲Filter和Listener</h3><p>在有关web servlet的配置中，常能在web.xml看到filter、listener的配置。实际上，filter是过滤器，listener是监听器。这两项配置都是servlet中的重要部分。我们一一来看。</p>
-<h4 id="fliter-过滤器"><a href="#fliter-过滤器" class="headerlink" title="fliter(过滤器)"></a>fliter(过滤器)</h4><p>先来个例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public class MyFilter implements Filter &#123;</div><div class="line"></div><div class="line">    private String param; </div><div class="line">     </div><div class="line">    //初始化方法，在容器启动时调用</div><div class="line">    public void init(FilterConfig filterConfig) throws ServletException &#123;</div><div class="line">        //做一些初始化操作</div><div class="line">        param = filterConfig.getInitParameter(&quot;myParam&quot;);</div><div class="line">        System.out.println(&quot;filter:&quot;+param);</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)</div><div class="line">            throws IOException, ServletException &#123;</div><div class="line">        //处理请求</div><div class="line">        chain.doFilter(request,response); //调用下一个过滤器</div><div class="line">        //处理响应</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void destroy() &#123;</div><div class="line">      //在servlet销毁后销毁</div><div class="line">      //做一些销毁后的善后工作</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>在 web.xml中添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"> &lt;filter&gt;</div><div class="line">    &lt;filter-name&gt;myFilter&lt;/filter-name&gt;</div><div class="line">    &lt;filter-class&gt;com.wthfeng.mymvc.filter.MyFilter&lt;/filter-class&gt;</div><div class="line">    &lt;init-param&gt;</div><div class="line">        &lt;param-name&gt;myParam&lt;/param-name&gt;</div><div class="line">        &lt;param-value&gt;myValue&lt;/param-value&gt;</div><div class="line">    &lt;/init-param&gt;</div><div class="line">&lt;/filter&gt;</div><div class="line">&lt;filter-mapping&gt;</div><div class="line">    &lt;filter-name&gt;myFilter&lt;/filter-name&gt;</div><div class="line">    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;</div><div class="line">&lt;/filter-mapping&gt;</div></pre></td></tr></table></figure></p>
-<p>配置后filter就会拦截所有servlet请求，需注意：</p>
-<p>所有的filter在容器启动时即初始化。<br>filter的调用顺序为在web.xml中的定义顺序。若多余一个会形成过滤链依次处理。</p>
-<h4 id="Listener-监听器"><a href="#Listener-监听器" class="headerlink" title="Listener(监听器)"></a>Listener(监听器)</h4><p>servlet 监听器用于监听servlet容器中事件变化，当指定事件变化时，会触发注册该事件的监听器。监听器基于观察者模式。</p>
-<p>Servlet监听器分为3类，分别用于监听ServletContent（Servlet上下文）、HttpSession（Session）,HttpRequest(Request)。</p>
-<p>主要有以下几个类：</p>
-<ul>
-<li><p>ServletContextListener //监听Servlet容器创建销毁<br>ServletContextAttributeListener  //监听Servlet容器级别属性的添加及删除</p>
-</li>
-<li><p>HttpSessionListener  //监听Session创建销毁<br>HttpSessionAttributeListener //监听Session属性创建删除</p>
-</li>
-<li><p>ServletRequestListener  //监听请求创建及销毁<br>ServletRequestAttributeListener  //监听请求属性变化</p>
-</li>
-</ul>
-<p>如我们常见的Spring项目中的如下片段，就是Spring的监听器。其实现了ServletContextListener，用于监听Servlet上下文，以便在项目初始化时加载Spring的必要配置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"> &lt;listener&gt;</div><div class="line">       &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;</div><div class="line">&lt;/listener&gt;</div></pre></td></tr></table></figure></p>
-<h4 id="Servlet-、Filter、Listerer-执行顺序"><a href="#Servlet-、Filter、Listerer-执行顺序" class="headerlink" title="Servlet 、Filter、Listerer 执行顺序"></a>Servlet 、Filter、Listerer 执行顺序</h4><p>分别了解了servlet、filter、listener后，来确定一下他们之间的执行顺序。我们已经知道，filter在servlet之前，那listener呢？</p>
-<p>应该想到，监听器负责监听事件变化，应该有最先执行的权限，测试一下，我把上述三种都加了日志，打印结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//开启服务器并请求</div><div class="line">listener 容器初始化开始  //servletContent 监听器 contextInitialized()</div><div class="line">filter初始化        //filter init()</div><div class="line">初始化servlet       //servlet init()</div><div class="line">listener request初始化  // request 监听器requestInitialized()</div><div class="line">开始filter            //fiter doFilter() chain.doFilter前</div><div class="line">执行servlet        //servlet service()</div><div class="line">结束filter          //fiter doFilter() chain.doFilter后</div><div class="line">listener request销毁  //request 监听器 requestInitialized()</div><div class="line"></div><div class="line">//关闭服务器</div><div class="line">servlet销毁</div><div class="line">filter销毁</div><div class="line">listener 容器销毁</div></pre></td></tr></table></figure></p>
-<p>从此我们可以得出结论：</p>
-<ul>
-<li>对于涉及3者的部分，顺序为 listener - filter - servlet</li>
-<li>filter和servlet的初始化部分，先filter后servlet</li>
-<li>销毁或结束顺序为加载顺序的反序</li>
-</ul>
-<blockquote>
-<p>参考 </p>
-<ul>
-<li><a href="http://blog.wthfeng.com/javaweb/servlet/2017/04/30/Servlet%E5%92%8CServlet%E5%AE%B9%E5%99%A8/" target="_blank" rel="external">Servlet工作机制解析</a></li>
-<li><a href="https://www.jianshu.com/p/fc7f31b664d5" target="_blank" rel="external">Servlet请求和响应</a></li>
-<li><a href="https://www.jianshu.com/p/4d71ec3e1b99" target="_blank" rel="external">当Java遇见了Html–Servlet篇</a></li>
-</ul>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;What&quot;&gt;&lt;a href=&quot;#What&quot; class=&quot;headerlink&quot; title=&quot;What&quot;&gt;&lt;/a&gt;What&lt;/h3&gt;&lt;p&gt;Servlet实际上是ServerApplet–小服务程序或服务连接器，用Java编写的服务器端程序，主要功能在于交互式地浏
     
     </summary>
     
