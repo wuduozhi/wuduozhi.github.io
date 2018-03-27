@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="GDB概述GDB是GNU开源组织发布的一个强大的UNIX下的程序调试工具。或许，各位比较喜欢那种图形界面方式的，像VC、BCB等IDE的调试，但如果你是在UNIX平台下做软件，你会发现GDB这个调试工具有比VC、BCB的图形化调试器更强大的功能。所谓“寸有所长，尺有所短”就是这个道理。 一般来说，GDB主要帮忙你完成下面四个方面的功能：  启动你的程序，可以按照你的自定义的要求随心所欲的运行程序。">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-03-27T08:17:34.857Z">
+<meta property="og:updated_time" content="2018-03-27T08:43:22.340Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="工具|gdb调试">
 <meta name="twitter:description" content="GDB概述GDB是GNU开源组织发布的一个强大的UNIX下的程序调试工具。或许，各位比较喜欢那种图形界面方式的，像VC、BCB等IDE的调试，但如果你是在UNIX平台下做软件，你会发现GDB这个调试工具有比VC、BCB的图形化调试器更强大的功能。所谓“寸有所长，尺有所短”就是这个道理。 一般来说，GDB主要帮忙你完成下面四个方面的功能：  启动你的程序，可以按照你的自定义的要求随心所欲的运行程序。">
@@ -183,6 +183,25 @@
 </tr>
 </tbody>
 </table>
+<p>注:[断点还可以根据条件表达式设置断点]</p>
+<p>程序在运行过程中，当某个条件满足时，程序在某行中断暂停执行</p>
+<ul>
+<li>方法1 命令格式：break行号或函数名 if  条件</li>
+<li>方法2  watch &lt;条件表达式&gt;</li>
+</ul>
+<p>==whatis 命令==<br>作用：用来显示某个变量或表达式值的数据类型<br>格式：whatis &lt;变量或表达式&gt;</p>
+<p>==set 命令==<br>作用：用来给变量赋值<br>格式：set variable 变量=值   相当于print 变量=值</p>
+<p>==next和step命令==</p>
+<p>作用：一次一条地执行程序代码</p>
+<p>next和step的区别：</p>
+<ol>
+<li>如果遇到函数调用，next会把该函数调用当作一条语句来执行，再次输入next会执行函数调用后的语句</li>
+<li>step则会跟踪进入函数，一次一条地执行函数内的代码，直到函数的代码执行完，才执行函数调用后的语句</li>
+</ol>
+<p>== nexti和stepi命令==</p>
+<p>作用：用来单步执行一条机器指令，注意不是单步执行一行语句。单步执行一行语句的命令是</p>
+<p>next和step命令通常一条语句由多条机器指令构成</p>
+<p>注意：nexti和next类似，不会跟踪进入函数内部去执行;Stepi和step类似，跟踪进入函数执行。</p>
 <p><a href="https://blog.csdn.net/haoel/article/details/2879" target="_blank" rel="external">用GDB调试程序(一)</a><br><a href="https://blog.csdn.net/liigo/article/details/582231" target="_blank" rel="external">GDB十分钟教程</a></p>
   
 	</div>
