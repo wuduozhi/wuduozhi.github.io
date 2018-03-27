@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-27T07:43:23.427Z</updated>
+  <updated>2018-03-27T08:17:34.857Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/03/27/%E5%B7%A5%E5%85%B7-gdb%E8%B0%83%E8%AF%95/"/>
     <id>http://yoursite.com/2018/03/27/工具-gdb调试/</id>
     <published>2018-03-27T14:48:03.000Z</published>
-    <updated>2018-03-27T07:43:23.427Z</updated>
+    <updated>2018-03-27T08:17:34.857Z</updated>
     
     <content type="html"><![CDATA[<h3 id="GDB概述"><a href="#GDB概述" class="headerlink" title="GDB概述"></a>GDB概述</h3><p>GDB是GNU开源组织发布的一个强大的UNIX下的程序调试工具。或许，各位比较喜欢那种图形界面方式的，像VC、BCB等IDE的调试，但如果你是在UNIX平台下做软件，你会发现GDB这个调试工具有比VC、BCB的图形化调试器更强大的功能。所谓“寸有所长，尺有所短”就是这个道理。</p>
 <p>一般来说，GDB主要帮忙你完成下面四个方面的功能：</p>
@@ -58,7 +58,7 @@
 <td>(gdb) c</td>
 </tr>
 <tr>
-<td>b &lt;行号&gt; b &lt;函数名称&gt; b <em>&lt;函数名称&gt; b </em>&lt;代码地址&gt; d [编号]</td>
+<td>b &lt;行号&gt;; b &lt;函数名称&gt; ;b <em>&lt;函数名称&gt;; b </em>&lt;代码地址&gt;; d [编号]</td>
 <td>b: Breakpoint的简写，设置断点。两可以使用“行号”“函数名称”“执行地址”等方式指定断点位置。其中在函数名称前面加“*”符号表示将断点设置在“由编译器生成的prolog代码处”。如果不了解汇编，可以不予理会此用法。d: Delete breakpoint的简写，删除指定编号的某个断点，或删除所有断点。断点编号从1开始递增。</td>
 <td>(gdb) b 8 (gdb) b main  (gdb) b <em>main  (gdb) b </em>0x804835c  (gdb) d</td>
 </tr>
@@ -78,7 +78,7 @@
 <td>(gdb) p i  (gdb) p nGlobalVar</td>
 </tr>
 <tr>
-<td>display …    undisplay &lt;编号&gt;</td>
+<td>display …   ; undisplay &lt;编号&gt;</td>
 <td>display，设置程序中断后欲显示的数据及其格式。例如，如果希望每次程序中断后可以看到即将被执行的下一条汇编指令，可以使用命令“display /i $pc”其中 $pc 代表当前汇编指令，/i表示以十六进行显示。当需要关心汇编代码时，此命令相当有用。undispaly，取消先前的display设置，编号从1开始递增。</td>
 <td>(gdb) display /i $pc (gdb) undisplay 1</td>
 </tr>
@@ -1201,24 +1201,24 @@ if($stmt-&gt;fetch()){
   </entry>
   
   <entry>
-    <title>计算机算法|分支法</title>
+    <title>计算机算法|分治法</title>
     <link href="http://yoursite.com/2018/03/16/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95-%E5%88%86%E6%94%AF%E6%B3%95/"/>
     <id>http://yoursite.com/2018/03/16/计算机算法-分支法/</id>
     <published>2018-03-16T10:26:41.000Z</published>
-    <updated>2018-03-18T16:06:27.188Z</updated>
+    <updated>2018-03-27T08:23:27.629Z</updated>
     
     <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><h3 id="一些案例"><a href="#一些案例" class="headerlink" title="一些案例"></a>一些案例</h3><h4 id="寻找峰值"><a href="#寻找峰值" class="headerlink" title="寻找峰值"></a>寻找峰值</h4><h5 id="一维数组"><a href="#一维数组" class="headerlink" title="一维数组"></a>一维数组</h5><p>直观地说，将数组两头边界视为负无穷大，则 不小于 两边的数就是一个峰。如下图所示，7、6、9都是此数组的峰。</p>
-<p><img src="./images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95-%E5%88%86%E6%B2%BB%E6%B3%95-01.png" alt="一维数组" title="计算机算法-分治法-01"></p>
+<p><img src="/images/计算机算法-分治法-01.png" alt="一维数组" title="计算机算法-分治法-01"></p>
 <p>方案1.1 由定义出发，遍历所有元素即可，由于只要求找一个峰，找到即结束。易知最坏情况（即只有最后一个元素满足条件）的复杂度为(n)。</p>
 <p>算法优化<br>注意到问题的要求，并不需要找到所有的峰，而方案1.1在最坏情况下遍历所有元素的消耗与寻找所有的峰等同，所以很有可能做了无用功。</p>
 <p>注意到数组有峰的性质，只要子数组两端的元素仍然不小于其外侧相邻的元素，这样的性质就能在子数组中得到保持，我们采取二分的方法，这里用伪代码表示：</p>
 <p>方案1.2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">FIND_PEAK(A)</div><div class="line">    n=A.length</div><div class="line">    if A[n/2]&gt;=A[n/2-1] and A[n/2]&gt;=A[n/2+1]</div><div class="line">        return n/2</div><div class="line">    else if A[n/2]&lt;A[n/2-1]</div><div class="line">        return FIND_PEAK(A[1..n/2-1])</div><div class="line">    else</div><div class="line">        return FIND_PEAK(A[n/2+1..n])</div></pre></td></tr></table></figure></p>
 <p>这也就是说，取中间的元素，如果它本身就是峰，就结束；否则哪边的元素比中间大哪半边就必然有峰（用证明1的方法可得到验证）。如此递归，最坏复杂度降为(log n)。</p>
 <h5 id="二维数组"><a href="#二维数组" class="headerlink" title="二维数组"></a>二维数组</h5><p>二维数组的峰值是这样的：</p>
-<p><img src="./images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95-%E5%88%86%E6%B2%BB%E6%B3%95-02.png" alt="二维数组" title="计算机算法-分治法-02"></p>
+<p><img src="/images/计算机算法-分治法-02.png" alt="二维数组" title="计算机算法-分治法-02"></p>
 <p>先铺垫一下，再看「峰」的本质：由定义易知这里的峰和函数中的峰，或极值是相似的。即最值一定是极值，而极值不一定是最值。</p>
 <p><strong>方案1</strong>：当然，我们的基本思路是将二元寻峰问题化归为一元寻峰问题。考虑寻找每一列的峰值。</p>
-<p><img src="./images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95-%E5%88%86%E6%B2%BB%E6%B3%95-03.png" alt="方案一" title="计算机算法-分治法-03"></p>
+<p><img src="/images/计算机算法-分治法-03.png" alt="方案一" title="计算机算法-分治法-03"></p>
 <p>如这张图所示，我们用橙色标记出了由优化后的寻找一维数组的峰值得到的每列一个峰值。然而下一步好像却没有什么好的方法继续寻找全局峰值。</p>
 <p>红色标记展示了一种失败的方法，即在纵向寻峰的基础上再在该行横向寻峰，得到6。它显然不符合峰的定义。</p>
 <p>注意到无论如何在一行或一列中寻找局部峰值，我们总无法保证它不小于相邻行列的数，我们就不得不在某些步骤上诉诸先前所讨论的最值了。</p>
@@ -1228,7 +1228,7 @@ if($stmt-&gt;fetch()){
 <p>我们依旧从中间一列下手。然而我们这次寻找的是这一列的最大值，而非一个峰。仍然以上张图为例，我们找到的还是5。由于右边的6&gt;5，我们将范围缩小到右半边。然后递归处理。</p>
 <p>相比刚才的失败方法，区别在于找到5后我们不再把范围限定在这一行，而是整个右半边。</p>
 <p>去掉无关的数据，得到下图：</p>
-<p><img src="./images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95-%E5%88%86%E6%B2%BB%E6%B3%95-04.png" alt="方案二" title="计算机算法-分治法-04"></p>
+<p><img src="/images/计算机算法-分治法-04.png" alt="方案二" title="计算机算法-分治法-04"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">FIND_PEAK_2(A)</div><div class="line">    A[n/2][i] is max(A[n/2])</div><div class="line">    if A[n/2][i]&gt;=A[n/2-1][i] and A[n/2][i]&gt;=A[n/2+1][i]</div><div class="line">        return (n/2,i)</div><div class="line">    else if A[n/2][i]&lt;A[n/2-1][i]</div><div class="line">        return FIND_PEAK_2(A)[1..n/2-1]</div><div class="line">    else</div><div class="line">        return FIND_PEAK_2(A)[n/2+1..n]</div></pre></td></tr></table></figure>
 <p>这种方案的最坏复杂度是(m*logn)。当然，根据(m,n)的大小，在实际操作时我们可以灵活选择从行或列着手。</p>
 <p><a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/" target="_blank" rel="external">MIT公开课</a></p>
