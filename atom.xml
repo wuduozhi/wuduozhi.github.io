@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-26T14:34:17.637Z</updated>
+  <updated>2018-03-27T07:43:23.427Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,111 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>工具|gdb调试</title>
+    <link href="http://yoursite.com/2018/03/27/%E5%B7%A5%E5%85%B7-gdb%E8%B0%83%E8%AF%95/"/>
+    <id>http://yoursite.com/2018/03/27/工具-gdb调试/</id>
+    <published>2018-03-27T14:48:03.000Z</published>
+    <updated>2018-03-27T07:43:23.427Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="GDB概述"><a href="#GDB概述" class="headerlink" title="GDB概述"></a>GDB概述</h3><p>GDB是GNU开源组织发布的一个强大的UNIX下的程序调试工具。或许，各位比较喜欢那种图形界面方式的，像VC、BCB等IDE的调试，但如果你是在UNIX平台下做软件，你会发现GDB这个调试工具有比VC、BCB的图形化调试器更强大的功能。所谓“寸有所长，尺有所短”就是这个道理。</p>
+<p>一般来说，GDB主要帮忙你完成下面四个方面的功能：</p>
+<ol>
+<li>启动你的程序，可以按照你的自定义的要求随心所欲的运行程序。</li>
+<li>可让被调试的程序在你所指定的调置的断点处停住。（断点可以是条件表达式）</li>
+<li>当程序被停住时，可以检查此时你的程序中所发生的事。</li>
+<li>动态的改变你程序的执行环境。</li>
+</ol>
+<p>从上面看来，GDB和一般的调试工具没有什么两样，基本上也是完成这些功能，不过在细节上，你会发现GDB这个调试工具的强大，大家可能比较习惯了图形化的调试工具，但有时候，命令行的调试工具却有着图形化工具所不能完成的功能。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div></pre></td><td class="code"><pre><div class="line">源程序：tst.c</div><div class="line"></div><div class="line">     1 #include &lt;stdio.h&gt;</div><div class="line">     2</div><div class="line">     3 int func(int n)</div><div class="line">     4 &#123;</div><div class="line">     5         int sum=0,i;</div><div class="line">     6         for(i=0; i&lt;n; i++)</div><div class="line">     7         &#123;</div><div class="line">     8                 sum+=i;</div><div class="line">     9         &#125;</div><div class="line">    10         return sum;</div><div class="line">    11 &#125;</div><div class="line">    12</div><div class="line">    13</div><div class="line">    14 main()</div><div class="line">    15 &#123;</div><div class="line">    16         int i;</div><div class="line">    17         long result = 0;</div><div class="line">    18         for(i=1; i&lt;=100; i++)</div><div class="line">    19         &#123;</div><div class="line">    20                 result += i;</div><div class="line">    21         &#125;</div><div class="line">    22</div><div class="line">    23        printf(&quot;result[1-100] = %d /n&quot;, result );</div><div class="line">    24        printf(&quot;result[1-250] = %d /n&quot;, func(250) );</div><div class="line">    25 &#125;</div><div class="line"></div><div class="line">编译生成执行文件：（Linux下）</div><div class="line">    hchen/test&gt; cc -g tst.c -o tst</div><div class="line"></div><div class="line">使用GDB调试：</div><div class="line"></div><div class="line">hchen/test&gt; gdb tst  &lt;---------- 启动GDB</div><div class="line">GNU gdb 5.1.1</div><div class="line">Copyright 2002 Free Software Foundation, Inc.</div><div class="line">GDB is free software, covered by the GNU General Public License, and you are</div><div class="line">welcome to change it and/or distribute copies of it under certain conditions.</div><div class="line">Type &quot;show copying&quot; to see the conditions.</div><div class="line">There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for details.</div><div class="line">This GDB was configured as &quot;i386-suse-linux&quot;...</div><div class="line">(gdb) l     &lt;-------------------- l命令相当于list，从第一行开始例出原码。</div><div class="line">1        #include &lt;stdio.h&gt;</div><div class="line">2</div><div class="line">3        int func(int n)</div><div class="line">4        &#123;</div><div class="line">5                int sum=0,i;</div><div class="line">6                for(i=0; i&lt;n; i++)</div><div class="line">7                &#123;</div><div class="line">8                        sum+=i;</div><div class="line">9                &#125;</div><div class="line">10               return sum;</div><div class="line">(gdb)       &lt;-------------------- 直接回车表示，重复上一次命令</div><div class="line">11       &#125;</div><div class="line">12</div><div class="line">13</div><div class="line">14       main()</div><div class="line">15       &#123;</div><div class="line">16               int i;</div><div class="line">17               long result = 0;</div><div class="line">18               for(i=1; i&lt;=100; i++)</div><div class="line">19               &#123;</div><div class="line">20                       result += i;    </div><div class="line">(gdb) break 16    &lt;-------------------- 设置断点，在源程序第16行处。</div><div class="line">Breakpoint 1 at 0x8048496: file tst.c, line 16.</div><div class="line">(gdb) break func  &lt;-------------------- 设置断点，在函数func()入口处。</div><div class="line">Breakpoint 2 at 0x8048456: file tst.c, line 5.</div><div class="line">(gdb) info break  &lt;-------------------- 查看断点信息。</div><div class="line">Num Type           Disp Enb Address    What</div><div class="line">1   breakpoint     keep y   0x08048496 in main at tst.c:16</div><div class="line">2   breakpoint     keep y   0x08048456 in func at tst.c:5</div><div class="line">(gdb) r           &lt;--------------------- 运行程序，run命令简写</div><div class="line">Starting program: /home/hchen/test/tst</div><div class="line"></div><div class="line">Breakpoint 1, main () at tst.c:17    &lt;---------- 在断点处停住。</div><div class="line">17               long result = 0;</div><div class="line">(gdb) n          &lt;--------------------- 单条语句执行，next命令简写。</div><div class="line">18               for(i=1; i&lt;=100; i++)</div><div class="line">(gdb) n</div><div class="line">20                       result += i;</div><div class="line">(gdb) n</div><div class="line">18               for(i=1; i&lt;=100; i++)</div><div class="line">(gdb) n</div><div class="line">20                       result += i;</div><div class="line">(gdb) c          &lt;--------------------- 继续运行程序，continue命令简写。</div><div class="line">Continuing.</div><div class="line">result[1-100] = 5050       &lt;----------程序输出。</div><div class="line"></div><div class="line">Breakpoint 2, func (n=250) at tst.c:5</div><div class="line">5                int sum=0,i;</div><div class="line">(gdb) n</div><div class="line">6                for(i=1; i&lt;=n; i++)</div><div class="line">(gdb) p i        &lt;--------------------- 打印变量i的值，print命令简写。</div><div class="line">$1 = 134513808</div><div class="line">(gdb) n</div><div class="line">8                        sum+=i;</div><div class="line">(gdb) n</div><div class="line">6                for(i=1; i&lt;=n; i++)</div><div class="line">(gdb) p sum</div><div class="line">$2 = 1</div><div class="line">(gdb) n</div><div class="line">8                        sum+=i;</div><div class="line">(gdb) p i</div><div class="line">$3 = 2</div><div class="line">(gdb) n</div><div class="line">6                for(i=1; i&lt;=n; i++)</div><div class="line">(gdb) p sum</div><div class="line">$4 = 3</div><div class="line">(gdb) bt        &lt;--------------------- 查看函数堆栈。</div><div class="line">#0  func (n=250) at tst.c:5</div><div class="line">#1  0x080484e4 in main () at tst.c:24</div><div class="line">#2  0x400409ed in __libc_start_main () from /lib/libc.so.6</div><div class="line">(gdb) finish    &lt;--------------------- 退出函数。</div><div class="line">Run till exit from #0  func (n=250) at tst.c:5</div><div class="line">0x080484e4 in main () at tst.c:24</div><div class="line">24              printf(&quot;result[1-250] = %d /n&quot;, func(250) );</div><div class="line">Value returned is $6 = 31375</div><div class="line">(gdb) c     &lt;--------------------- 继续运行。</div><div class="line">Continuing.</div><div class="line">result[1-250] = 31375    &lt;----------程序输出。</div><div class="line"></div><div class="line">Program exited with code 027. &lt;--------程序退出，调试结束。</div><div class="line">(gdb) q     &lt;--------------------- 退出gdb。</div><div class="line">hchen/test&gt;</div></pre></td></tr></table></figure>
+<p>好了，有了以上的感性认识，还是让我们来系统地认识一下gdb吧。</p>
+<h3 id="使用GDB"><a href="#使用GDB" class="headerlink" title="使用GDB"></a>使用GDB</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>解释</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>file &lt;文件名&gt;</td>
+<td>加载被调试的可执行程序文件。因为一般都在被调试程序所在目录下执行GDB，因而文本名不需要带路径。</td>
+<td>(gdb) file gdb-sample</td>
+</tr>
+<tr>
+<td>r</td>
+<td>Run的简写，运行被调试的程序。如果此前没有下过断点，则执行完整个程序；如果有断点，则程序暂停在第一个可用断点处。</td>
+<td>(gdb) r</td>
+</tr>
+<tr>
+<td>c</td>
+<td>Continue的简写，继续执行被调试程序，直至下一个断点或程序结束。</td>
+<td>(gdb) c</td>
+</tr>
+<tr>
+<td>b &lt;行号&gt; b &lt;函数名称&gt; b <em>&lt;函数名称&gt; b </em>&lt;代码地址&gt; d [编号]</td>
+<td>b: Breakpoint的简写，设置断点。两可以使用“行号”“函数名称”“执行地址”等方式指定断点位置。其中在函数名称前面加“*”符号表示将断点设置在“由编译器生成的prolog代码处”。如果不了解汇编，可以不予理会此用法。d: Delete breakpoint的简写，删除指定编号的某个断点，或删除所有断点。断点编号从1开始递增。</td>
+<td>(gdb) b 8 (gdb) b main  (gdb) b <em>main  (gdb) b </em>0x804835c  (gdb) d</td>
+</tr>
+<tr>
+<td>s, n</td>
+<td>s: 执行一行源程序代码，如果此行代码中有函数调用，则进入该函数；n: 执行一行源程序代码，此行代码中的函数调用也一并执行。s 相当于其它调试器中的“Step Into (单步跟踪进入)”；n 相当于其它调试器中的“Step Over (单步跟踪)”。这两个命令必须在有源代码调试信息的情况下才可以使用（GCC编译时使用“-g”参数）。</td>
+<td>(gdb) s   (gdb) n</td>
+</tr>
+<tr>
+<td>si, ni</td>
+<td>si命令类似于s命令，ni命令类似于n命令。所不同的是，这两个命令（si/ni）所针对的是汇编指令，而s/n针对的是源代码。</td>
+<td>(gdb) si (gdb) ni</td>
+</tr>
+<tr>
+<td>p &lt;变量名称&gt;</td>
+<td>Print的简写，显示指定变量（临时变量或全局变量）的值。</td>
+<td>(gdb) p i  (gdb) p nGlobalVar</td>
+</tr>
+<tr>
+<td>display …    undisplay &lt;编号&gt;</td>
+<td>display，设置程序中断后欲显示的数据及其格式。例如，如果希望每次程序中断后可以看到即将被执行的下一条汇编指令，可以使用命令“display /i $pc”其中 $pc 代表当前汇编指令，/i表示以十六进行显示。当需要关心汇编代码时，此命令相当有用。undispaly，取消先前的display设置，编号从1开始递增。</td>
+<td>(gdb) display /i $pc (gdb) undisplay 1</td>
+</tr>
+<tr>
+<td>i</td>
+<td>Info的简写，用于显示各类信息，详情请查阅“help i”。</td>
+<td>(gdb) i r</td>
+</tr>
+<tr>
+<td>q</td>
+<td>Quit的简写，退出GDB调试环境。</td>
+<td>(gdb) q</td>
+</tr>
+<tr>
+<td>help [命令名称]</td>
+<td>GDB帮助命令，提供对GDB名种命令的解释说明。如果指定了“命令名称”参数，则显示该命令的详细说明；如果没有指定参数，则分类显示所有GDB命令，供用户进一步浏览和查询。</td>
+<td>(gdb) help display</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://blog.csdn.net/haoel/article/details/2879" target="_blank" rel="external">用GDB调试程序(一)</a><br><a href="https://blog.csdn.net/liigo/article/details/582231" target="_blank" rel="external">GDB十分钟教程</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;GDB概述&quot;&gt;&lt;a href=&quot;#GDB概述&quot; class=&quot;headerlink&quot; title=&quot;GDB概述&quot;&gt;&lt;/a&gt;GDB概述&lt;/h3&gt;&lt;p&gt;GDB是GNU开源组织发布的一个强大的UNIX下的程序调试工具。或许，各位比较喜欢那种图形界面方式的，像VC、BCB
+    
+    </summary>
+    
+      <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="工具" scheme="http://yoursite.com/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
+  
+  <entry>
     <title>PHP|PHP漏洞全解-文件上传漏洞</title>
     <link href="http://yoursite.com/2018/03/27/PHP-PHP%E6%BC%8F%E6%B4%9E%E5%85%A8%E8%A7%A3-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/"/>
     <id>http://yoursite.com/2018/03/27/PHP-PHP漏洞全解-文件上传漏洞/</id>
     <published>2018-03-26T22:25:14.000Z</published>
-    <updated>2018-03-26T14:34:17.637Z</updated>
+    <updated>2018-03-26T16:41:23.111Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>由于文件上传功能实现代码没有严格限制用户上传的文件后缀以及文件类型，导致允许攻击者向某个可通过 Web 访问的目录上传任意PHP文件，并能够将这些文件传递给 PHP解释器，就可以在远程服务器上执行任意PHP脚本，即文件上传漏洞。</p>
 <p>一套web应用程序，一般都会提供文件上传的功能，方便来访者上传一些文件。</p>
@@ -1343,119 +1443,6 @@ if($stmt-&gt;fetch()){
     
     
       <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>工具|虚拟机的一些坑</title>
-    <link href="http://yoursite.com/2018/03/13/%E5%B7%A5%E5%85%B7-%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/"/>
-    <id>http://yoursite.com/2018/03/13/工具-虚拟机的一些坑/</id>
-    <published>2018-03-13T09:25:11.000Z</published>
-    <updated>2018-03-23T13:02:40.679Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="虚拟机的三种联网方式"><a href="#虚拟机的三种联网方式" class="headerlink" title="虚拟机的三种联网方式"></a>虚拟机的三种联网方式</h3><p>vmware为我们提供了三种网络工作模式，它们分别是：Bridged（桥接模式）、NAT（网络地址转换模式）、Host-Only（仅主机模式）。</p>
-<p>打开vmware虚拟机，我们可以在选项栏的“编辑”下的“虚拟网络编辑器”中看到VMnet0（桥接模式）、VMnet1（仅主机模式）、VMnet8（NAT模式），那么这些都是有什么作用呢？其实，我们现在看到的VMnet0表示的是用于桥接模式下的虚拟交换机；VMnet1表示的是用于仅主机模式下的虚拟交换机；VMnet8表示的是用于NAT模式下的虚拟交换机。</p>
-<p><img src="/images/工具--虚拟机-三种联网方式-01.png" alt="虚拟机三种联网方式" title="工具--虚拟机-三种联网方式-01"></p>
-<p>同时，在主机上对应的有VMware Network Adapter VMnet1和VMware Network Adapter VMnet8两块虚拟网卡，它们分别作用于仅主机模式与NAT模式下。在“网络连接”中我们可以看到这两块虚拟网卡，如果将这两块卸载了，可以在vmware的“编辑”下的“虚拟网络编辑器”中点击“还原默认设置”，可重新将虚拟网卡还原。</p>
-<p><img src="/images/工具--虚拟机-三种联网方式-02.png" alt="主机网卡" title="工具--虚拟机-三种联网方式-02"></p>
-<p>小伙伴看到这里，肯定有疑问，为什么在真机上没有VMware Network Adapter VMnet0虚拟网卡呢？那么接下来，我们就一起来看一下这是为什么。</p>
-<h4 id="Bridged（桥接模式）"><a href="#Bridged（桥接模式）" class="headerlink" title="Bridged（桥接模式）"></a>Bridged（桥接模式）</h4><p>什么是桥接模式？桥接模式就是将主机网卡与虚拟机虚拟的网卡利用虚拟网桥进行通信。在桥接的作用下，类似于把物理主机虚拟为一个交换机，所有桥接设置的虚拟机连接到这个交换机的一个接口上，物理主机也同样插在这个交换机当中，所以所有桥接下的网卡与网卡都是交换模式的，相互可以访问而不干扰。  </p>
-<p>在桥接模式下，虚拟机和宿主计算机处于同等地位，虚拟机就像是一台真实主机一样存在于局域网中。因此在桥接模式下，我们就要像对待其他真实计算机一样为其配置IP、网关、子网掩码等等。</p>
-<p>其网络结构如下图所示：</p>
-<p><img src="/images/工具--虚拟机-三种联网方式-03.png" alt="桥接" title="工具--虚拟机-三种联网方式-03"></p>
-<p>接下来，我们就来实际操作，如何设置桥接模式。</p>
-<p>首先，安装完系统之后，在开启系统之前，点击“编辑虚拟机设置”来设置网卡模式。</p>
-<h5 id="How-to-do"><a href="#How-to-do" class="headerlink" title="How to do"></a>How to do</h5><ol>
-<li>首先，安装完系统之后，在开启系统之前，点击“编辑虚拟机设置”来设置网卡模式。</li>
-</ol>
-<p><img src="/images/工具--虚拟机-三种联网方式-04.png" alt="How-one" title="工具--虚拟机-三种联网方式-04"></p>
-<ol>
-<li>点击“网络适配器”，选择“桥接模式”，然后“确定”</li>
-</ol>
-<p><img src="/images/工具--虚拟机-三种联网方式-05.png" alt="Hoe-two" title="工具--虚拟机-三种联网方式-05"></p>
-<ol>
-<li>在进入系统之前，我们先确认一下主机的ip地址、网关、DNS等信息。</li>
-</ol>
-<p><img src="/images/工具--虚拟机-三种联网方式-06.png" alt="How-three" title="工具--虚拟机-三种联网方式-06"></p>
-<ol>
-<li>然后，进入系统编辑网卡配置文件，命令为vi /etc/sysconfig/network-scripts/ifcfg-eth0</li>
-</ol>
-<p><img src="/images/工具--虚拟机-三种联网方式-07.png" alt="How-four" title="工具--虚拟机-三种联网方式-07"></p>
-<ol>
-<li>添加内容如下：</li>
-</ol>
-<p><img src="/images/工具--虚拟机-三种联网方式-08.png" alt="How-five" title="工具--虚拟机-三种联网方式-08"></p>
-<ol>
-<li>编辑完成，保存退出，然后重启虚拟机网卡，使用ping命令ping外网ip，测试能否联网。</li>
-</ol>
-<p><img src="/images/工具--虚拟机-三种联网方式-09.png" alt="How-six" title="工具--虚拟机-三种联网方式-09"></p>
-<ol>
-<li>能ping通外网ip，证明桥接模式设置成功。那主机与虚拟机之间的通信是否正常呢？我们就用远程工具来测试一下。</li>
-</ol>
-<p><img src="/images/工具--虚拟机-三种联网方式-.png" alt="How-seven" title="工具--虚拟机-三种联网方式-"></p>
-<p>主机与虚拟机通信正常。</p>
-<p>这就是桥接模式的设置步骤，相信大家应该学会了如何去设置桥接模式了。桥接模式配置简单，但如果你的网络环境是ip资源很缺少或对ip管理比较严格的话，那桥接模式就不太适用了。</p>
-<h4 id="NAT（地址转换模式）"><a href="#NAT（地址转换模式）" class="headerlink" title="NAT（地址转换模式）"></a>NAT（地址转换模式）</h4><p>刚刚我们说到，如果你的网络ip资源紧缺，但是你又希望你的虚拟机能够联网，这时候NAT模式是最好的选择。NAT模式借助虚拟NAT设备和虚拟DHCP服务器，使得虚拟机可以联网。其网络结构如下图所示：</p>
-<p><img src="/images/工具--虚拟机-三种联网方式-11.png" alt="NAT模式" title="工具--虚拟机-三种联网方式-11"></p>
-<p>在NAT模式中，主机网卡直接与虚拟NAT设备相连，然后虚拟NAT设备与虚拟DHCP服务器一起连接在虚拟交换机VMnet8上，这样就实现了虚拟机联网。那么我们会觉得很奇怪，为什么需要虚拟网卡VMware Network Adapter VMnet8呢？原来我们的VMware Network Adapter VMnet8虚拟网卡主要是为了实现主机与虚拟机之间的通信。在之后的设置步骤中，我们可以加以验证。</p>
-<h4 id="How-to-do-1"><a href="#How-to-do-1" class="headerlink" title="How to do"></a>How to do</h4><ol>
-<li><p>首先，设置虚拟机中NAT模式的选项，打开vmware，点击“编辑”下的“虚拟网络编辑器”，设置NAT参数及DHCP参数。<br><img src="/images/工具--虚拟机-三种联网方式-12.png" alt="How-one" title="工具--虚拟机-三种联网方式-12"><br><img src="/images/工具--虚拟机-三种联网方式-13.png" alt="How-two" title="工具--虚拟机-三种联网方式-13"><br><img src="/images/工具--虚拟机-三种联网方式-14.png" alt="How-three" title="工具--虚拟机-三种联网方式-14"></p>
-</li>
-<li><p>将虚拟机的网络连接模式修改成NAT模式，点击“编辑虚拟机设置”，然后点击“网络适配器”，选择“NAT模式”<br><img src="/images/工具--虚拟机-三种联网方式-15.png" alt="How-four" title="工具--虚拟机-三种联网方式-15"><br><img src="/images/工具--虚拟机-三种联网方式-6.png" alt="How-five" title="工具--虚拟机-三种联网方式-6"></p>
-</li>
-<li><p>然后开机启动系统，编辑网卡配置文件，命令为vi /etc/sysconfig/network-scripts/ifcfg-eth0<br><img src="/images/工具--虚拟机-三种联网方式-17.png" alt="How-six" title="工具--虚拟机-三种联网方式-17"><br><img src="/images/工具--虚拟机-三种联网方式-18.png" alt="How-seven" title="工具--虚拟机-三种联网方式-18"></p>
-</li>
-<li><p>编辑完成，保存退出，然后重启虚拟机网卡，动态获取ip地址，使用ping命令ping外网ip，测试能否联网。</p>
-</li>
-</ol>
-<p><img src="/images/工具--虚拟机-三种联网方式-19.png" alt="How-eight" title="工具--虚拟机-三种联网方式-19"></p>
-<ol>
-<li>之前，我们说过VMware Network Adapter VMnet8虚拟网卡的作用，那我们现在就来测试一下。</li>
-</ol>
-<p><img src="/images/工具--虚拟机-三种联网方式-20.png" alt="How-nine" title="工具--虚拟机-三种联网方式-20"></p>
-<p>如此看来，虚拟机能联通外网，确实不是通过VMware Network Adapter VMnet8虚拟网卡，那么为什么要有这块虚拟网卡呢？<br>之前我们就说VMware Network Adapter VMnet8的作用是主机与虚拟机之间的通信，接下来，我们就用远程连接工具来测试一下。</p>
-<p><img src="/images/工具--虚拟机-三种联网方式-21.png" alt="How-ten" title="工具--虚拟机-三种联网方式-21"></p>
-<p>然后，将VMware Network Adapter VMnet8启用之后，发现远程工具可以连接上虚拟机了。</p>
-<p>那么，这就是NAT模式，利用虚拟的NAT设备以及虚拟DHCP服务器来使虚拟机连接外网，而VMware Network Adapter VMnet8虚拟网卡是用来与虚拟机通信的。</p>
-<h4 id="Host-Only（仅主机模式）"><a href="#Host-Only（仅主机模式）" class="headerlink" title="Host-Only（仅主机模式）"></a>Host-Only（仅主机模式）</h4><p>Host-Only模式其实就是NAT模式去除了虚拟NAT设备，然后使用VMware Network Adapter VMnet1虚拟网卡连接VMnet1虚拟交换机来与虚拟机通信的，Host-Only模式将虚拟机与外网隔开，使得虚拟机成为一个独立的系统，只与主机相互通讯。其网络结构如下图所示：</p>
-<p><img src="/images/工具--虚拟机-三种联网方式-22.png" alt="enter description here" title="工具--虚拟机-三种联网方式-22"></p>
-<p>通过上图，我们可以发现，如果要使得虚拟机能联网，我们可以将主机网卡共享给VMware Network Adapter VMnet1网卡，从而达到虚拟机联网的目的。</p>
-<h3 id="Ubantu去掉图形界面"><a href="#Ubantu去掉图形界面" class="headerlink" title="Ubantu去掉图形界面"></a>Ubantu去掉图形界面</h3><ul>
-<li><p>如果已经登录了图形界面，那么使用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/etc/init.d/gdm  stop  (旧版的ubuntu)  再次启动图形界面 （/etc/init.d/gdm  start）</div><div class="line">/etc/init.d/lightdm  stop(新版的ubuntu)  再次启动图形界面  （/etc/init.d/lightdm  start）</div></pre></td></tr></table></figure>
-</li>
-<li><p>如果想下次开机直接进入命令行：</p>
-<ul>
-<li><p>ubuntu 12.04默认的开机会进入一个图形界面，他是由lightdm进程来实现的。首先要做的，就是阻止这个lightdm的进程开机启动。 做法：</p>
-<ul>
-<li><p>查看文件/etc/init/rc-sysinit.conf，在第14行附近：确认“env DEFAULT_RUNLEVEL=2”。2是新装系统默认的，确保不被修改。</p>
-</li>
-<li><p>编辑文件 /etc/init/lightdm.conf，在第12行附近，原句“ and runlevel [!06]” 改为“ and runlevel [!026]”</p>
-</li>
-</ul>
-</li>
-<li><p>Ubuntu12.04启动直接进入字符界面：改GRUB 的配置文件(最好不要直接改 grub.conf)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/default/grub</div></pre></td></tr></table></figure>
-<p>将GRUB_CMDLINE_LINUX_DEFAULT=”quiet splash”<br>替换为  GRUB_CMDLINE_LINUX_DEFAULT=”text”<br>保存后 sudo update-grub ，此时系统会更新grub.conf</p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="Ipv4下通过ISATAP隧道访问Ipv6网站"><a href="#Ipv4下通过ISATAP隧道访问Ipv6网站" class="headerlink" title="Ipv4下通过ISATAP隧道访问Ipv6网站"></a>Ipv4下通过ISATAP隧道访问Ipv6网站</h3><p>windows:</p>
-<p>管理员权限cmd:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">netsh interface ipv6 isatap set router isatap.sjtu.edu.cn </div><div class="line">netsh interface ipv6 isatap set state enabled</div></pre></td></tr></table></figure></p>
-<p>要恢复原样的话只要<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">netsh interface ipv6 isatap set router default</div><div class="line">netsh interface ipv6 isatap set state default</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">清华大学        59.66.4.50 / isatap.tsinghua.edu.cn</div><div class="line">  </div><div class="line">北京邮电大学    211.68.71.43 / isatap.bupt.edu.cn</div><div class="line">  </div><div class="line">上海交通大学    202.120.58.150 / isatap.sjtu.edu.cn</div><div class="line">  </div><div class="line">平顶山大学      211.69.16.36 / 官网未提供域名 只提供ip</div><div class="line">  </div><div class="line">华中科技大学    218.199.111.9 / isatap.hust.edu.cn / 华中科技大学提供的cmd http://ncs.hust.edu.cn/download/intro/ipv6/IPv6.cmd</div><div class="line">  </div><div class="line">西安建筑科技大学 222.24.128.238 / isatap.xauat.edu.cn</div><div class="line">  </div><div class="line">河南工程学院 211.84.0.1</div><div class="line"></div><div class="line">湖南大学 210.43.96.186    210.43.96.182</div><div class="line"></div><div class="line">四川大学 202.115.39.98 / isatap.scu.edu.cn</div><div class="line"></div><div class="line">电子科大 202.115.255.242</div><div class="line"></div><div class="line">华南农业大学 isatap.scau.edu.cn</div><div class="line"></div><div class="line">中南财经政法大学 isatap.znufe.edu.cn</div><div class="line"></div><div class="line">厦门大学 210.34.219.13</div><div class="line"></div><div class="line">亚太电信 tb.ipv6.apol.com.tw</div></pre></td></tr></table></figure>
-<p><a href="https://www.cnblogs.com/linjiaxin/p/6476480.html" target="_blank" rel="external">虚拟机三种联网方式</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;虚拟机的三种联网方式&quot;&gt;&lt;a href=&quot;#虚拟机的三种联网方式&quot; class=&quot;headerlink&quot; title=&quot;虚拟机的三种联网方式&quot;&gt;&lt;/a&gt;虚拟机的三种联网方式&lt;/h3&gt;&lt;p&gt;vmware为我们提供了三种网络工作模式，它们分别是：Bridged（桥接模
-    
-    </summary>
-    
-      <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
-    
     
   </entry>
   
