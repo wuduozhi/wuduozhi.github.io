@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="GDB概述GDB是GNU开源组织发布的一个强大的UNIX下的程序调试工具。或许，各位比较喜欢那种图形界面方式的，像VC、BCB等IDE的调试，但如果你是在UNIX平台下做软件，你会发现GDB这个调试工具有比VC、BCB的图形化调试器更强大的功能。所谓“寸有所长，尺有所短”就是这个道理。 一般来说，GDB主要帮忙你完成下面四个方面的功能：  启动你的程序，可以按照你的自定义的要求随心所欲的运行程序。">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-03-27T08:43:22.340Z">
+<meta property="og:updated_time" content="2018-03-27T09:34:04.508Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="工具|gdb调试">
 <meta name="twitter:description" content="GDB概述GDB是GNU开源组织发布的一个强大的UNIX下的程序调试工具。或许，各位比较喜欢那种图形界面方式的，像VC、BCB等IDE的调试，但如果你是在UNIX平台下做软件，你会发现GDB这个调试工具有比VC、BCB的图形化调试器更强大的功能。所谓“寸有所长，尺有所短”就是这个道理。 一般来说，GDB主要帮忙你完成下面四个方面的功能：  启动你的程序，可以按照你的自定义的要求随心所欲的运行程序。">
@@ -50,7 +50,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -93,16 +93,16 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-03-27T14:48:03.000Z" itemprop="datePublished"> 發表於 2018-03-27</time>
+    <time datetime="2018-03-27T14:48:03.000Z" itemprop="datePublished"> 发表于 2018-03-27</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目錄</strong>
+			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GDB概述"><span class="toc-number">1.</span> <span class="toc-text">GDB概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用GDB"><span class="toc-number">2.</span> <span class="toc-text">使用GDB</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GDB概述"><span class="toc-number">1.</span> <span class="toc-text">GDB概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用GDB"><span class="toc-number">2.</span> <span class="toc-text">使用GDB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些小技巧"><span class="toc-number">3.</span> <span class="toc-text">一些小技巧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objdump命令的使用"><span class="toc-number">4.</span> <span class="toc-text">objdump命令的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#for-example"><span class="toc-number">4.1.</span> <span class="toc-text">for example</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -115,7 +115,7 @@
 <li>动态的改变你程序的执行环境。</li>
 </ol>
 <p>从上面看来，GDB和一般的调试工具没有什么两样，基本上也是完成这些功能，不过在细节上，你会发现GDB这个调试工具的强大，大家可能比较习惯了图形化的调试工具，但有时候，命令行的调试工具却有着图形化工具所不能完成的功能。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div></pre></td><td class="code"><pre><div class="line">源程序：tst.c</div><div class="line"></div><div class="line">     1 #include &lt;stdio.h&gt;</div><div class="line">     2</div><div class="line">     3 int func(int n)</div><div class="line">     4 &#123;</div><div class="line">     5         int sum=0,i;</div><div class="line">     6         for(i=0; i&lt;n; i++)</div><div class="line">     7         &#123;</div><div class="line">     8                 sum+=i;</div><div class="line">     9         &#125;</div><div class="line">    10         return sum;</div><div class="line">    11 &#125;</div><div class="line">    12</div><div class="line">    13</div><div class="line">    14 main()</div><div class="line">    15 &#123;</div><div class="line">    16         int i;</div><div class="line">    17         long result = 0;</div><div class="line">    18         for(i=1; i&lt;=100; i++)</div><div class="line">    19         &#123;</div><div class="line">    20                 result += i;</div><div class="line">    21         &#125;</div><div class="line">    22</div><div class="line">    23        printf(&quot;result[1-100] = %d /n&quot;, result );</div><div class="line">    24        printf(&quot;result[1-250] = %d /n&quot;, func(250) );</div><div class="line">    25 &#125;</div><div class="line"></div><div class="line">编译生成执行文件：（Linux下）</div><div class="line">    hchen/test&gt; cc -g tst.c -o tst</div><div class="line"></div><div class="line">使用GDB调试：</div><div class="line"></div><div class="line">hchen/test&gt; gdb tst  &lt;---------- 启动GDB</div><div class="line">GNU gdb 5.1.1</div><div class="line">Copyright 2002 Free Software Foundation, Inc.</div><div class="line">GDB is free software, covered by the GNU General Public License, and you are</div><div class="line">welcome to change it and/or distribute copies of it under certain conditions.</div><div class="line">Type &quot;show copying&quot; to see the conditions.</div><div class="line">There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for details.</div><div class="line">This GDB was configured as &quot;i386-suse-linux&quot;...</div><div class="line">(gdb) l     &lt;-------------------- l命令相当于list，从第一行开始例出原码。</div><div class="line">1        #include &lt;stdio.h&gt;</div><div class="line">2</div><div class="line">3        int func(int n)</div><div class="line">4        &#123;</div><div class="line">5                int sum=0,i;</div><div class="line">6                for(i=0; i&lt;n; i++)</div><div class="line">7                &#123;</div><div class="line">8                        sum+=i;</div><div class="line">9                &#125;</div><div class="line">10               return sum;</div><div class="line">(gdb)       &lt;-------------------- 直接回车表示，重复上一次命令</div><div class="line">11       &#125;</div><div class="line">12</div><div class="line">13</div><div class="line">14       main()</div><div class="line">15       &#123;</div><div class="line">16               int i;</div><div class="line">17               long result = 0;</div><div class="line">18               for(i=1; i&lt;=100; i++)</div><div class="line">19               &#123;</div><div class="line">20                       result += i;    </div><div class="line">(gdb) break 16    &lt;-------------------- 设置断点，在源程序第16行处。</div><div class="line">Breakpoint 1 at 0x8048496: file tst.c, line 16.</div><div class="line">(gdb) break func  &lt;-------------------- 设置断点，在函数func()入口处。</div><div class="line">Breakpoint 2 at 0x8048456: file tst.c, line 5.</div><div class="line">(gdb) info break  &lt;-------------------- 查看断点信息。</div><div class="line">Num Type           Disp Enb Address    What</div><div class="line">1   breakpoint     keep y   0x08048496 in main at tst.c:16</div><div class="line">2   breakpoint     keep y   0x08048456 in func at tst.c:5</div><div class="line">(gdb) r           &lt;--------------------- 运行程序，run命令简写</div><div class="line">Starting program: /home/hchen/test/tst</div><div class="line"></div><div class="line">Breakpoint 1, main () at tst.c:17    &lt;---------- 在断点处停住。</div><div class="line">17               long result = 0;</div><div class="line">(gdb) n          &lt;--------------------- 单条语句执行，next命令简写。</div><div class="line">18               for(i=1; i&lt;=100; i++)</div><div class="line">(gdb) n</div><div class="line">20                       result += i;</div><div class="line">(gdb) n</div><div class="line">18               for(i=1; i&lt;=100; i++)</div><div class="line">(gdb) n</div><div class="line">20                       result += i;</div><div class="line">(gdb) c          &lt;--------------------- 继续运行程序，continue命令简写。</div><div class="line">Continuing.</div><div class="line">result[1-100] = 5050       &lt;----------程序输出。</div><div class="line"></div><div class="line">Breakpoint 2, func (n=250) at tst.c:5</div><div class="line">5                int sum=0,i;</div><div class="line">(gdb) n</div><div class="line">6                for(i=1; i&lt;=n; i++)</div><div class="line">(gdb) p i        &lt;--------------------- 打印变量i的值，print命令简写。</div><div class="line">$1 = 134513808</div><div class="line">(gdb) n</div><div class="line">8                        sum+=i;</div><div class="line">(gdb) n</div><div class="line">6                for(i=1; i&lt;=n; i++)</div><div class="line">(gdb) p sum</div><div class="line">$2 = 1</div><div class="line">(gdb) n</div><div class="line">8                        sum+=i;</div><div class="line">(gdb) p i</div><div class="line">$3 = 2</div><div class="line">(gdb) n</div><div class="line">6                for(i=1; i&lt;=n; i++)</div><div class="line">(gdb) p sum</div><div class="line">$4 = 3</div><div class="line">(gdb) bt        &lt;--------------------- 查看函数堆栈。</div><div class="line">#0  func (n=250) at tst.c:5</div><div class="line">#1  0x080484e4 in main () at tst.c:24</div><div class="line">#2  0x400409ed in __libc_start_main () from /lib/libc.so.6</div><div class="line">(gdb) finish    &lt;--------------------- 退出函数。</div><div class="line">Run till exit from #0  func (n=250) at tst.c:5</div><div class="line">0x080484e4 in main () at tst.c:24</div><div class="line">24              printf(&quot;result[1-250] = %d /n&quot;, func(250) );</div><div class="line">Value returned is $6 = 31375</div><div class="line">(gdb) c     &lt;--------------------- 继续运行。</div><div class="line">Continuing.</div><div class="line">result[1-250] = 31375    &lt;----------程序输出。</div><div class="line"></div><div class="line">Program exited with code 027. &lt;--------程序退出，调试结束。</div><div class="line">(gdb) q     &lt;--------------------- 退出gdb。</div><div class="line">hchen/test&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div></pre></td><td class="code"><pre><div class="line">源程序：tst.c</div><div class="line"></div><div class="line">     1 #include &lt;stdio.h&gt;</div><div class="line">     2</div><div class="line">     3 int func(int n)</div><div class="line">     4 &#123;</div><div class="line">     5         int sum=0,i;</div><div class="line">     6         for(i=0; i&lt;n; i++)</div><div class="line">     7         &#123;</div><div class="line">     8                 sum+=i;</div><div class="line">     9         &#125;</div><div class="line">    10         return sum;</div><div class="line">    11 &#125;</div><div class="line">    12</div><div class="line">    13</div><div class="line">    14 main()</div><div class="line">    15 &#123;</div><div class="line">    16         int i;</div><div class="line">    17         long result = 0;</div><div class="line">    18         for(i=1; i&lt;=100; i++)</div><div class="line">    19         &#123;</div><div class="line">    20                 result += i;</div><div class="line">    21         &#125;</div><div class="line">    22</div><div class="line">    23        printf(&quot;result[1-100] = %d /n&quot;, result );</div><div class="line">    24        printf(&quot;result[1-250] = %d /n&quot;, func(250) );</div><div class="line">    25 &#125;</div><div class="line"></div><div class="line">编译生成执行文件：（Linux下）</div><div class="line">    hchen/test&gt; gcc -g tst.c -o tst</div><div class="line"></div><div class="line">使用GDB调试：</div><div class="line"></div><div class="line">hchen/test&gt; gdb tst  &lt;---------- 启动GDB</div><div class="line">GNU gdb 5.1.1</div><div class="line">Copyright 2002 Free Software Foundation, Inc.</div><div class="line">GDB is free software, covered by the GNU General Public License, and you are</div><div class="line">welcome to change it and/or distribute copies of it under certain conditions.</div><div class="line">Type &quot;show copying&quot; to see the conditions.</div><div class="line">There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for details.</div><div class="line">This GDB was configured as &quot;i386-suse-linux&quot;...</div><div class="line">(gdb) l     &lt;-------------------- l命令相当于list，从第一行开始例出原码。</div><div class="line">1        #include &lt;stdio.h&gt;</div><div class="line">2</div><div class="line">3        int func(int n)</div><div class="line">4        &#123;</div><div class="line">5                int sum=0,i;</div><div class="line">6                for(i=0; i&lt;n; i++)</div><div class="line">7                &#123;</div><div class="line">8                        sum+=i;</div><div class="line">9                &#125;</div><div class="line">10               return sum;</div><div class="line">(gdb)       &lt;-------------------- 直接回车表示，重复上一次命令</div><div class="line">11       &#125;</div><div class="line">12</div><div class="line">13</div><div class="line">14       main()</div><div class="line">15       &#123;</div><div class="line">16               int i;</div><div class="line">17               long result = 0;</div><div class="line">18               for(i=1; i&lt;=100; i++)</div><div class="line">19               &#123;</div><div class="line">20                       result += i;    </div><div class="line">(gdb) break 16    &lt;-------------------- 设置断点，在源程序第16行处。</div><div class="line">Breakpoint 1 at 0x8048496: file tst.c, line 16.</div><div class="line">(gdb) break func  &lt;-------------------- 设置断点，在函数func()入口处。</div><div class="line">Breakpoint 2 at 0x8048456: file tst.c, line 5.</div><div class="line">(gdb) info break  &lt;-------------------- 查看断点信息。</div><div class="line">Num Type           Disp Enb Address    What</div><div class="line">1   breakpoint     keep y   0x08048496 in main at tst.c:16</div><div class="line">2   breakpoint     keep y   0x08048456 in func at tst.c:5</div><div class="line">(gdb) r           &lt;--------------------- 运行程序，run命令简写</div><div class="line">Starting program: /home/hchen/test/tst</div><div class="line"></div><div class="line">Breakpoint 1, main () at tst.c:17    &lt;---------- 在断点处停住。</div><div class="line">17               long result = 0;</div><div class="line">(gdb) n          &lt;--------------------- 单条语句执行，next命令简写。</div><div class="line">18               for(i=1; i&lt;=100; i++)</div><div class="line">(gdb) n</div><div class="line">20                       result += i;</div><div class="line">(gdb) n</div><div class="line">18               for(i=1; i&lt;=100; i++)</div><div class="line">(gdb) n</div><div class="line">20                       result += i;</div><div class="line">(gdb) c          &lt;--------------------- 继续运行程序，continue命令简写。</div><div class="line">Continuing.</div><div class="line">result[1-100] = 5050       &lt;----------程序输出。</div><div class="line"></div><div class="line">Breakpoint 2, func (n=250) at tst.c:5</div><div class="line">5                int sum=0,i;</div><div class="line">(gdb) n</div><div class="line">6                for(i=1; i&lt;=n; i++)</div><div class="line">(gdb) p i        &lt;--------------------- 打印变量i的值，print命令简写。</div><div class="line">$1 = 134513808</div><div class="line">(gdb) n</div><div class="line">8                        sum+=i;</div><div class="line">(gdb) n</div><div class="line">6                for(i=1; i&lt;=n; i++)</div><div class="line">(gdb) p sum</div><div class="line">$2 = 1</div><div class="line">(gdb) n</div><div class="line">8                        sum+=i;</div><div class="line">(gdb) p i</div><div class="line">$3 = 2</div><div class="line">(gdb) n</div><div class="line">6                for(i=1; i&lt;=n; i++)</div><div class="line">(gdb) p sum</div><div class="line">$4 = 3</div><div class="line">(gdb) bt        &lt;--------------------- 查看函数堆栈。</div><div class="line">#0  func (n=250) at tst.c:5</div><div class="line">#1  0x080484e4 in main () at tst.c:24</div><div class="line">#2  0x400409ed in __libc_start_main () from /lib/libc.so.6</div><div class="line">(gdb) finish    &lt;--------------------- 退出函数。</div><div class="line">Run till exit from #0  func (n=250) at tst.c:5</div><div class="line">0x080484e4 in main () at tst.c:24</div><div class="line">24              printf(&quot;result[1-250] = %d /n&quot;, func(250) );</div><div class="line">Value returned is $6 = 31375</div><div class="line">(gdb) c     &lt;--------------------- 继续运行。</div><div class="line">Continuing.</div><div class="line">result[1-250] = 31375    &lt;----------程序输出。</div><div class="line"></div><div class="line">Program exited with code 027. &lt;--------程序退出，调试结束。</div><div class="line">(gdb) q     &lt;--------------------- 退出gdb。</div><div class="line">hchen/test&gt;</div></pre></td></tr></table></figure>
 <p>好了，有了以上的感性认识，还是让我们来系统地认识一下gdb吧。</p>
 <h3 id="使用GDB"><a href="#使用GDB" class="headerlink" title="使用GDB"></a>使用GDB</h3><table>
 <thead>
@@ -190,7 +190,7 @@
 <li>方法2  watch &lt;条件表达式&gt;</li>
 </ul>
 <p>==whatis 命令==<br>作用：用来显示某个变量或表达式值的数据类型<br>格式：whatis &lt;变量或表达式&gt;</p>
-<p>==set 命令==<br>作用：用来给变量赋值<br>格式：set variable 变量=值   相当于print 变量=值</p>
+<p>==set 命令==<br>作用：用来给变量赋值,当程序继续运行时，将使用更改后的值。<br>格式：set variable 变量=值   相当于print 变量=值</p>
 <p>==next和step命令==</p>
 <p>作用：一次一条地执行程序代码</p>
 <p>next和step的区别：</p>
@@ -202,6 +202,49 @@
 <p>作用：用来单步执行一条机器指令，注意不是单步执行一行语句。单步执行一行语句的命令是</p>
 <p>next和step命令通常一条语句由多条机器指令构成</p>
 <p>注意：nexti和next类似，不会跟踪进入函数内部去执行;Stepi和step类似，跟踪进入函数执行。</p>
+<h3 id="一些小技巧"><a href="#一些小技巧" class="headerlink" title="一些小技巧"></a>一些小技巧</h3><ul>
+<li>查看所有的局部变量:<code>(gdb) info local</code></li>
+<li>查看此时的栈状态 (反映了函数调用，见Linux从程序到进程):<code>(gdb) info stack</code></li>
+</ul>
+<h3 id="objdump命令的使用"><a href="#objdump命令的使用" class="headerlink" title="objdump命令的使用"></a>objdump命令的使用</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>objdump -f test</td>
+<td>显示test的文件头信息</td>
+</tr>
+<tr>
+<td>objdump -d test</td>
+<td>反汇编test中的需要执行指令的那些section</td>
+</tr>
+<tr>
+<td>objdump -D test</td>
+<td>与-d类似，但反汇编test中的所有section</td>
+</tr>
+<tr>
+<td>objdump -h test</td>
+<td>显示test的Section Header信息</td>
+</tr>
+<tr>
+<td>objdump -x test</td>
+<td>显示test的全部Header信息</td>
+</tr>
+<tr>
+<td>objdump -s test</td>
+<td>除了显示test的全部Header信息，还显示他们对应的十六进制文件代码</td>
+</tr>
+</tbody>
+</table>
+<h4 id="for-example"><a href="#for-example" class="headerlink" title="for example"></a>for example</h4><p>将C源代码和反汇编出来的指令对照：</p>
+<ol>
+<li>编译成目标文件（要加-g选项） <code>gcc -g -o test.c</code></li>
+<li>输出C源代码和反汇编出来的指令对照的格式 <code>objdump -S test.o</code></li>
+</ol>
 <p><a href="https://blog.csdn.net/haoel/article/details/2879" target="_blank" rel="external">用GDB调试程序(一)</a><br><a href="https://blog.csdn.net/liigo/article/details/582231" target="_blank" rel="external">GDB十分钟教程</a></p>
   
 	</div>
@@ -243,10 +286,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -274,7 +317,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分類</p>
+	<p class="asidetitle">分类</p>
 		<ul>
 		
 		  
@@ -355,7 +398,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
 			
@@ -443,7 +486,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
 </aside>
@@ -630,7 +673,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
