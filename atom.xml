@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-27T09:34:04.508Z</updated>
+  <updated>2018-03-31T16:29:09.932Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,43 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>工具|Dos下的debug工具使用</title>
+    <link href="http://yoursite.com/2018/04/01/%E5%B7%A5%E5%85%B7-Dos%E4%B8%8B%E7%9A%84debug%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/"/>
+    <id>http://yoursite.com/2018/04/01/工具-Dos下的debug工具使用/</id>
+    <published>2018-04-01T00:04:11.000Z</published>
+    <updated>2018-03-31T16:29:09.932Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Dubug是dos,windows下提供的调试工具，使用该工具，可以查看和修改寄存器，内存的内容。同时可以在机器码级别跟踪程序源码的运行。</p>
+<h3 id="常用的debug功能"><a href="#常用的debug功能" class="headerlink" title="常用的debug功能"></a>常用的debug功能</h3><ul>
+<li>用Debug的R命令查看、改变CPU寄存器内容；</li>
+<li>用Debug的D命令查看内存中的内容；</li>
+<li>用Debug的E命令查看内存中的内容；</li>
+<li>用Debug的U命令将内存中机器指令翻译成汇编指令；</li>
+<li>用Debug的T命令执行一条机器指令；</li>
+<li>用Debug的A命令以汇编指令的格式在内存中写入一条机器指令；</li>
+</ul>
+<p><a href="https://blog.csdn.net/u013018721/article/details/51154153" target="_blank" rel="external">Dos下的调试工具debug的使用教程 </a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;p&gt;Dubug是dos,windows下提供的调试工具，使用该工具，可以查看和修改寄存器，内存的内容。同时可以在机器码级别跟踪程序源码的运行。&lt;
+    
+    </summary>
+    
+      <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="工具" scheme="http://yoursite.com/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
+  
+  <entry>
     <title>工具|gdb调试</title>
     <link href="http://yoursite.com/2018/03/27/%E5%B7%A5%E5%85%B7-gdb%E8%B0%83%E8%AF%95/"/>
     <id>http://yoursite.com/2018/03/27/工具-gdb调试/</id>
     <published>2018-03-27T14:48:03.000Z</published>
-    <updated>2018-03-27T09:34:04.508Z</updated>
+    <updated>2018-03-30T09:46:30.747Z</updated>
     
     <content type="html"><![CDATA[<h3 id="GDB概述"><a href="#GDB概述" class="headerlink" title="GDB概述"></a>GDB概述</h3><p>GDB是GNU开源组织发布的一个强大的UNIX下的程序调试工具。或许，各位比较喜欢那种图形界面方式的，像VC、BCB等IDE的调试，但如果你是在UNIX平台下做软件，你会发现GDB这个调试工具有比VC、BCB的图形化调试器更强大的功能。所谓“寸有所长，尺有所短”就是这个道理。</p>
 <p>一般来说，GDB主要帮忙你完成下面四个方面的功能：</p>
@@ -118,6 +150,59 @@
 <p>作用：用来单步执行一条机器指令，注意不是单步执行一行语句。单步执行一行语句的命令是</p>
 <p>next和step命令通常一条语句由多条机器指令构成</p>
 <p>注意：nexti和next类似，不会跟踪进入函数内部去执行;Stepi和step类似，跟踪进入函数执行。</p>
+<p>== list ==<br>list命令后面还可以更一些参数，来显示更多功能：</p>
+<ul>
+<li><linenum>    行号。</linenum></li>
+<li>&lt;+&gt; [offset]    当前行号的正偏移量。</li>
+<li>&lt;-&gt; [offset]     当前行号的负偏移量。</li>
+<li><filename:linenum> 文件的中的行行。</filename:linenum></li>
+<li><function>             函数的代码</function></li>
+<li><filename:function>     文件中的函数。</filename:function></li>
+<li>&lt;*address&gt; 程序运行时的语句在内存中的地址。</li>
+</ul>
+<h3 id="查看函数返回值"><a href="#查看函数返回值" class="headerlink" title="查看函数返回值"></a>查看函数返回值</h3><p>查看函数返回值是在调试的过程中经常遇到的需求。例如，对于如下函数</p>
+<pre><code>int foo()
+{
+    return 100;
+}
+</code></pre><p>我们可以以如下方式获取函数的返回值：</p>
+<ol>
+<li><p>通过finish命令运行至函数结束，此时会打印函数返回值。</p>
+<p> (gdb) finish<br> Run till exit from #0 foo () at main.c:9<br> main () at main.c:15<br> 15 }<br> Value returned is $2 = 100</p>
+</li>
+<li>返回值会存储在eax寄存器中，通过查看信息可以获取返回值。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(gdb) p $eax</div><div class="line">$3 = 100</div><div class="line">(gdb) info registers</div><div class="line">eax 0x64 100</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="查看连续内存"><a href="#查看连续内存" class="headerlink" title="查看连续内存"></a>查看连续内存</h3><p>可以使用GDB的”@”操作符查看连续内存，”@”的左边是第一个内存的地址的值，”@”的右边则你你想查看内存的长度。</p>
+<p>例如，对于如下代码：int arr[] = {2, 4, 6, 8, 10};，可以通过如下命令查看arr前三个单元的数据。</p>
+<pre><code>(gdb) p *arr@3
+$2 = {2, 4, 6}
+</code></pre><h3 id="查看内存"><a href="#查看内存" class="headerlink" title="查看内存"></a>查看内存</h3><p>可以使用examine命令（简写为x）来查看内存地址中的值。x命令的语法如下所示：</p>
+<p><code>x /&lt;n/f/u&gt; &lt;addr&gt;</code></p>
+<ul>
+<li>n 表示显示内存的长度，也就是说从当前地址向后显示几个地址的内容。</li>
+<li>f 表示显示的格式，如果是字符串，则用s，如果是数字，则可以用i。</li>
+<li>u 表示从当前地址往后请求的字节数，默认是4个bytes。（b单字节，h双字节，w四字节，g八字节）</li>
+<li><addr> 表示一个内存地址。</addr></li>
+</ul>
+<p>例如：以两字节为单位显示前面的那个数组的地址后32字节内存信息如下.</p>
+<pre><code>(gdb) x /16uh arr
+0xbffff4cc: 2 0 4 0 6 0 8 0
+0xbffff4dc: 10 0 34032 2052 0 0 0 0
+</code></pre><h3 id="自动显示"><a href="#自动显示" class="headerlink" title="自动显示"></a>自动显示</h3><p>在VisualStudio中，可以通过监视窗口动态查看变量的值。在gdb中，也提供了类似的命令display，它的语法是：</p>
+<ul>
+<li>display expr</li>
+<li>display fmt expr</li>
+<li>display fmt addr</li>
+</ul>
+<p>expr是一个表达式，fmt表示显示的格式，addr表示内存地址。当你用display设定好了一个或多个表达式后，只要你的程序被停下来（单步跟踪时），GDB会自动显示你所设置的这些表达式的值。</p>
+<h3 id="几个相关的命令如下："><a href="#几个相关的命令如下：" class="headerlink" title="几个相关的命令如下："></a>几个相关的命令如下：</h3><ul>
+<li>undisplay <dnums...>        不显示dispaly</dnums...></li>
+<li>delete display [dnums]    <em> 删除自动显示，不带dnums参数则删除所有自动显示，也支持范围删除，如： delete </em> display 1,3-5</li>
+<li>disable display <dnums...>    使display失效</dnums...></li>
+<li>enable display <dnums...>    恢复display</dnums...></li>
+<li>info display        查看display信息</li>
+</ul>
 <h3 id="一些小技巧"><a href="#一些小技巧" class="headerlink" title="一些小技巧"></a>一些小技巧</h3><ul>
 <li>查看所有的局部变量:<code>(gdb) info local</code></li>
 <li>查看此时的栈状态 (反映了函数调用，见Linux从程序到进程):<code>(gdb) info stack</code></li>
@@ -1314,7 +1399,7 @@ if($stmt-&gt;fetch()){
     <link href="http://yoursite.com/2018/03/16/%E5%B7%A5%E5%85%B7-gcc%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/"/>
     <id>http://yoursite.com/2018/03/16/工具-gcc的一些坑/</id>
     <published>2018-03-15T23:44:27.000Z</published>
-    <updated>2018-03-27T08:35:49.496Z</updated>
+    <updated>2018-03-30T08:56:53.471Z</updated>
     
     <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>GCC 的意思也只是 GNU C Compiler 而已。经过了这么多年的发展，GCC 已经不仅仅能支持 C 语言；它现在还支持 Ada 语言、C++ 语言、Java 语言、Objective C 语言、Pascal 语言、COBOL语言，以及支持函数式编程和逻辑编程的 Mercury 语言，等等。而 GCC 也不再单只是 GNU C 语言编译器的意思了，而是变成了 GNU Compiler Collection 也即是 GNU 编译器家族的意思了。另一方面，说到 GCC 对于操作系统平台及硬件平台支持，概括起来就是一句话：无所不在</p>
 <h3 id="How-to-use"><a href="#How-to-use" class="headerlink" title="How to use?"></a>How to use?</h3><p>gcc说到底也就是一个工具，知道怎么用才是硬功夫。</p>
@@ -1372,140 +1457,6 @@ if($stmt-&gt;fetch()){
     
       <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>面试|SpringMVC常见面试题</title>
-    <link href="http://yoursite.com/2018/03/15/%E9%9D%A2%E8%AF%95-SpringMVC%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
-    <id>http://yoursite.com/2018/03/15/面试-SpringMVC常见面试题/</id>
-    <published>2018-03-14T19:15:46.000Z</published>
-    <updated>2018-03-15T15:56:49.562Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h3><h4 id="什么是Spring框架？Spring框架有哪些主要模块？"><a href="#什么是Spring框架？Spring框架有哪些主要模块？" class="headerlink" title="什么是Spring框架？Spring框架有哪些主要模块？"></a>什么是Spring框架？Spring框架有哪些主要模块？</h4><p>Spring框架是一个为Java应用程序的开发提供了综合、广泛的基础性支持的Java平台。Spring帮助开发者解决了开发中基础性的问题，使得开发人员可以专注于应用程序的开发。Spring框架本身亦是按照设计模式精心打造，这使得我们可以在开发环境中安心的集成Spring框架，不必担心Spring是如何在后台进行工作的。</p>
-<p>Spring框架至今已集成了20多个模块。这些模块主要被分如下图所示的核心容器、数据访问/集成,、Web、AOP（面向切面编程）、工具、消息和测试模块。</p>
-<p><img src="/images/面试--Spring-01.png" alt="Spring模块" title="面试--Spring-01"></p>
-<h4 id="使用Spring框架能带来哪些好处？"><a href="#使用Spring框架能带来哪些好处？" class="headerlink" title="使用Spring框架能带来哪些好处？"></a>使用Spring框架能带来哪些好处？</h4><p>下面列举了一些使用Spring框架带来的主要好处：</p>
-<ul>
-<li>Dependency Injection(DI) 方法使得构造器和JavaBean properties文件中的依赖关系一目了然。</li>
-<li>与EJB容器相比较，IoC容器更加趋向于轻量级。这样一来IoC容器在有限的内存和CPU资源的情况下进行应用程序的开发和发布就变得十分有利。</li>
-<li>Spring并没有闭门造车，Spring利用了已有的技术比如ORM框架、logging框架、J2EE、Quartz和JDK Timer，以及其他视图技术。</li>
-<li>Spring框架是按照模块的形式来组织的。由包和类的编号就可以看出其所属的模块，开发者仅仅需要选用他们需要的模块即可。</li>
-<li>要测试一项用Spring开发的应用程序十分简单，因为测试相关的环境代码都已经囊括在框架中了。更加简单的是，利用JavaBean形式的POJO类，可以很方便的利用依赖注入来写入测试数据。</li>
-<li>Spring的Web框架亦是一个精心设计的Web MVC框架，为开发者们在web框架的选择上提供了一个除了主流框架比如Struts、过度设计的、不流行web框架的以外的有力选项。</li>
-<li>Spring提供了一个便捷的事务管理接口，适用于小型的本地事物处理（比如在单DB的环境下）和复杂的共同事物处理（比如利用JTA的复杂DB环境）。</li>
-</ul>
-<h4 id="什么是控制反转-IOC-？什么是依赖注入？"><a href="#什么是控制反转-IOC-？什么是依赖注入？" class="headerlink" title="什么是控制反转(IOC)？什么是依赖注入？"></a>什么是控制反转(IOC)？什么是依赖注入？</h4><p>控制反转是应用于软件工程领域中的，在运行时被装配器对象来绑定耦合对象的一种编程技巧，对象之间耦合关系在编译时通常是未知的。在传统的编程方式中，业务逻辑的流程是由应用程序中的早已被设定好关联关系的对象来决定的。在使用控制反转的情况下，业务逻辑的流程是由对象关系图来决定的，该对象关系图由装配器负责实例化，这种实现方式还可以将对象之间的关联关系的定义抽象化。而绑定的过程是通过“依赖注入”实现的。</p>
-<p>控制反转是一种以给予应用程序中目标组件更多控制为目的设计范式，并在我们的实际工作中起到了有效的作用。</p>
-<p>依赖注入是在编译阶段尚未知所需的功能是来自哪个的类的情况下，将其他对象所依赖的功能对象实例化的模式。这就需要一种机制用来激活相应的组件以提供特定的功能，所以依赖注入是控制反转的基础。否则如果在组件不受框架控制的情况下，框架又怎么知道要创建哪个组件？</p>
-<p>在Java中依然注入有以下三种实现方式：</p>
-<ol>
-<li>构造器注入</li>
-<li>Setter方法注入</li>
-<li>接口注入</li>
-</ol>
-<h4 id="请解释下Spring框架中的IoC？"><a href="#请解释下Spring框架中的IoC？" class="headerlink" title="请解释下Spring框架中的IoC？"></a>请解释下Spring框架中的IoC？</h4><p>Spring中的 org.springframework.beans 包和 org.springframework.context包构成了Spring框架IoC容器的基础。</p>
-<p>BeanFactory 接口提供了一个先进的配置机制，使得任何类型的对象的配置成为可能。ApplicationContex接口对BeanFactory（是一个子接口）进行了扩展，在BeanFactory的基础上添加了其他功能，比如与Spring的AOP更容易集成，也提供了处理message resource的机制（用于国际化）、事件传播以及应用层的特别配置，比如针对Web应用的WebApplicationContext。</p>
-<p>org.springframework.beans.factory.BeanFactory 是Spring IoC容器的具体实现，用来包装和管理前面提到的各种bean。BeanFactory接口是Spring IoC 容器的核心接口。</p>
-<h4 id="谈谈你对spring-IOC和DI的理解，它们有什么区别？"><a href="#谈谈你对spring-IOC和DI的理解，它们有什么区别？" class="headerlink" title="谈谈你对spring IOC和DI的理解，它们有什么区别？"></a>谈谈你对spring IOC和DI的理解，它们有什么区别？</h4><p>IoC Inverse of Control 反转控制的概念，就是将原本在程序中手动创建UserService对象的控制权，交由Spring框架管理，简单说，就是创建UserService对象控制权被反转到了Spring框架</p>
-<p>DI：Dependency Injection 依赖注入，在Spring框架负责创建Bean对象时，动态的将依赖对象注入到Bean组件</p>
-<p><img src="/images/面试--Spring-03.jpg" alt="Spring-Ioc" title="面试--Spring-03"></p>
-<p><strong>[IoC 控制反转，指将对象的创建权，反转到Spring容器 ， DI 依赖注入，指Spring创建对象的过程中，将对象依赖属性通过配置进行注入]</strong></p>
-<h4 id="BeanFactory和ApplicationContext有什么区别？"><a href="#BeanFactory和ApplicationContext有什么区别？" class="headerlink" title="BeanFactory和ApplicationContext有什么区别？"></a>BeanFactory和ApplicationContext有什么区别？</h4><p>BeanFactory 可以理解为含有bean集合的工厂类。BeanFactory 包含了种bean的定义，以便在接收到客户端请求时将对应的bean实例化。</p>
-<p>BeanFactory还能在实例化对象的时生成协作类之间的关系。此举将bean自身与bean客户端的配置中解放出来。BeanFactory还包含了bean生命周期的控制，调用客户端的初始化方法（initialization methods）和销毁方法（destruction methods）。</p>
-<p>从表面上看，application context如同bean factory一样具有bean定义、bean关联关系的设置，根据请求分发bean的功能。但application context在此基础上还提供了其他的功能。</p>
-<ul>
-<li>提供了支持国际化的文本消息</li>
-<li>统一的资源文件读取方式</li>
-<li>已在监听器中注册的bean的事件</li>
-</ul>
-<p>以下是三种较常见的 ApplicationContext 实现方式：</p>
-<p>1、ClassPathXmlApplicationContext：从classpath的XML配置文件中读取上下文，并生成上下文定义。应用程序上下文从程序环境变量中取得。</p>
-<blockquote>
-<p>ApplicationContext context = new ClassPathXmlApplicationContext(“bean.xml”);</p>
-</blockquote>
-<p>2、FileSystemXmlApplicationContext ：由文件系统中的XML配置文件读取上下文。</p>
-<blockquote>
-<p>ApplicationContext context = new FileSystemXmlApplicationContext(“bean.xml”);</p>
-</blockquote>
-<p>3、XmlWebApplicationContext：由Web应用的XML文件读取上下文。</p>
-<p>6、Spring有几种配置方式？<br>将Spring配置到应用开发中有以下三种方式：</p>
-<p>基于XML的配置<br>基于注解的配置<br>基于Java的配置</p>
-<h4 id="如何用基于XML配置的方式配置Spring？"><a href="#如何用基于XML配置的方式配置Spring？" class="headerlink" title="如何用基于XML配置的方式配置Spring？"></a>如何用基于XML配置的方式配置Spring？</h4><p>在Spring框架中，依赖和服务需要在专门的配置文件来实现，我常用的XML格式的配置文件。这些配置文件的格式通常用<beans>开头，然后一系列的bean定义和专门的应用配置选项组成。</beans></p>
-<p>SpringXML配置的主要目的时候是使所有的Spring组件都可以用xml文件的形式来进行配置。这意味着不会出现其他的Spring配置类型（比如声明的方式或基于Java Class的配置方式）</p>
-<p>Spring的XML配置方式是使用被Spring命名空间的所支持的一系列的XML标签来实现的。Spring有以下主要的命名空间：context、beans、jdbc、tx、aop、mvc和aso。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;beans&gt;</div><div class="line"> </div><div class="line">    &lt;!-- JSON Support --&gt;</div><div class="line">    &lt;bean name=&quot;viewResolver&quot; class=&quot;org.springframework.web.servlet.view.BeanNameViewResolver&quot;/&gt;</div><div class="line">    &lt;bean name=&quot;jsonTemplate&quot; class=&quot;org.springframework.web.servlet.view.json.MappingJackson2JsonView&quot;/&gt;</div><div class="line"> </div><div class="line">    &lt;bean id=&quot;restTemplate&quot; class=&quot;org.springframework.web.client.RestTemplate&quot;/&gt;</div><div class="line"> </div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
-<p>下面这个web.xml仅仅配置了DispatcherServlet，这件最简单的配置便能满足应用程序配置运行时组件的需求。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;web-app&gt;</div><div class="line">  &lt;display-name&gt;Archetype Created Web Application&lt;/display-name&gt;</div><div class="line"> </div><div class="line">  &lt;servlet&gt;</div><div class="line">        &lt;servlet-name&gt;spring&lt;/servlet-name&gt;</div><div class="line">            &lt;servlet-class&gt;</div><div class="line">                org.springframework.web.servlet.DispatcherServlet</div><div class="line">            &lt;/servlet-class&gt;</div><div class="line">        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;</div><div class="line">    &lt;/servlet&gt;</div><div class="line"> </div><div class="line">    &lt;servlet-mapping&gt;</div><div class="line">        &lt;servlet-name&gt;spring&lt;/servlet-name&gt;</div><div class="line">        &lt;url-pattern&gt;/&lt;/url-pattern&gt;</div><div class="line">    &lt;/servlet-mapping&gt;</div><div class="line"> </div><div class="line">&lt;/web-app&gt;</div></pre></td></tr></table></figure></p>
-<h4 id="请解释Spring-Bean的生命周期？"><a href="#请解释Spring-Bean的生命周期？" class="headerlink" title="请解释Spring Bean的生命周期？"></a>请解释Spring Bean的生命周期？</h4><p>Spring Bean的生命周期简单易懂。在一个bean实例被初始化时，需要执行一系列的初始化操作以达到可用的状态。同样的，当一个bean不在被调用时需要进行相关的析构操作，并从bean容器中移除。</p>
-<p>Spring bean factory 负责管理在spring容器中被创建的bean的生命周期。Bean的生命周期由两组回调（call back）方法组成。</p>
-<ol>
-<li>初始化之后调用的回调方法。</li>
-<li>销毁之前调用的回调方法。</li>
-</ol>
-<p>Spring框架提供了以下四种方式来管理bean的生命周期事件：</p>
-<ul>
-<li>InitializingBean和DisposableBean回调接口</li>
-<li>针对特殊行为的其他Aware接口</li>
-<li>Bean配置文件中的Custom init()方法和destroy()方法</li>
-<li>@PostConstruct和@PreDestroy注解方式</li>
-</ul>
-<p>使用customInit()和 customDestroy()方法管理bean生命周期的代码样例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;beans&gt;</div><div class="line">    &lt;bean id=&quot;demoBean&quot; class=&quot;com.howtodoinjava.task.DemoBean&quot;</div><div class="line">            init-method=&quot;customInit&quot; destroy-method=&quot;customDestroy&quot;&gt;&lt;/bean&gt;</div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure></p>
-<h4 id="Bean注入属性有哪几种方式？"><a href="#Bean注入属性有哪几种方式？" class="headerlink" title="Bean注入属性有哪几种方式？"></a>Bean注入属性有哪几种方式？</h4><p><img src="/images/面试--Spring-04.jpg" alt="Bean注入方式" title="面试--Spring-04"></p>
-<h4 id="什么是AOP，AOP的作用是什么？"><a href="#什么是AOP，AOP的作用是什么？" class="headerlink" title="什么是AOP，AOP的作用是什么？"></a>什么是AOP，AOP的作用是什么？</h4><p>面向切面编程（AOP）提供另外一种角度来思考程序结构，通过这种方式弥补了面向对象编程（OOP）的不足，除了类（classes）以外，AOP提供了切面。切面对关注点进行模块化，例如横切多个类型和对象的事务管理。</p>
-<p>Spring的一个关键的组件就是AOP框架，可以自由选择是否使用AOP 提供声明式企业服务，特别是为了替代EJB声明式服务。最重要的服务是声明性事务管理，这个服务建立在Spring的抽象事物管理之上。允许用户实现自定义切面，用AOP来完善OOP的使用,可以把Spring AOP看作是对Spring的一种增强。</p>
-<p><img src="/images/面试--Spring-05.jpg" alt="Spring-AOP" title="面试--Spring-05"></p>
-<h4 id="Spring的核心类有哪些，各有什么作用？"><a href="#Spring的核心类有哪些，各有什么作用？" class="headerlink" title="Spring的核心类有哪些，各有什么作用？"></a>Spring的核心类有哪些，各有什么作用？</h4><ul>
-<li>BeanFactory：产生一个新的实例，可以实现单例模式</li>
-<li>BeanWrapper：提供统一的get及set方法</li>
-<li>ApplicationContext:提供框架的实现，包括BeanFactory的所有功能</li>
-</ul>
-<h3 id="SpringMVC"><a href="#SpringMVC" class="headerlink" title="SpringMVC"></a>SpringMVC</h3><h4 id="简单的谈一下SpringMVC的工作流程？"><a href="#简单的谈一下SpringMVC的工作流程？" class="headerlink" title="简单的谈一下SpringMVC的工作流程？"></a>简单的谈一下SpringMVC的工作流程？</h4><p><img src="/images/面试--Spring-02.jpg" alt="SpringMVC工作流程" title="面试--Spring-02"></p>
-<ol>
-<li>用户发送请求至前端控制器DispatcherServlet </li>
-<li>DispatcherServlet收到请求调用HandlerMapping处理器映射器。 </li>
-<li>处理器映射器找到具体的处理器，生成处理器对象及处理器拦截器(如果有则生成)一并返回给DispatcherServlet。 </li>
-<li>DispatcherServlet调用HandlerAdapter处理器适配器 </li>
-<li>HandlerAdapter经过适配调用具体的处理器(Controller，也叫后端控制器)。 </li>
-<li>Controller执行完成返回ModelAndView </li>
-<li>HandlerAdapter将controller执行结果ModelAndView返回给DispatcherServlet </li>
-<li>DispatcherServlet将ModelAndView传给ViewReslover视图解析器 </li>
-<li>ViewReslover解析后返回具体View </li>
-<li>DispatcherServlet根据View进行渲染视图（即将模型数据填充至视图中）。 </li>
-<li>DispatcherServlet响应用户</li>
-</ol>
-<p>总的来说，系统启动的时候根据配置文件创建spring的容器, 首先是发送http请求到核心控制器disPatherServlet，spring容器通过映射器去寻找业务控制器， 使用适配器找到相应的业务类，在进业务类时进行数据封装，在封装前可能会涉及到类型转换，执行完业务类后使用ModelAndView进行视图转发，数据放在model中，用map传递数据进行页面显示。</p>
-<h4 id="如何解决POST请求中文乱码问题，GET的又如何处理呢？"><a href="#如何解决POST请求中文乱码问题，GET的又如何处理呢？" class="headerlink" title="如何解决POST请求中文乱码问题，GET的又如何处理呢？"></a>如何解决POST请求中文乱码问题，GET的又如何处理呢？</h4><ol>
-<li>在web.xml中加入：</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;filter&gt;</div><div class="line">    &lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt;</div><div class="line">    &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;</div><div class="line">    &lt;init-param&gt;</div><div class="line">        &lt;param-name&gt;encoding&lt;/param-name&gt;</div><div class="line">        &lt;param-value&gt;utf-8&lt;/param-value&gt;</div><div class="line">    &lt;/init-param&gt;</div><div class="line">&lt;/filter&gt;</div><div class="line">&lt;filter-mapping&gt;</div><div class="line">    &lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt;</div><div class="line">    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;</div><div class="line">&lt;/filter-mapping&gt;</div></pre></td></tr></table></figure>
-<p>以上可以解决post请求乱码问题。对于get请求中文参数出现乱码解决方法有两个：</p>
-<ol>
-<li><p>修改tomcat配置文件添加编码与工程编码一致，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;ConnectorURIEncoding=&quot;utf-8&quot; connectionTimeout=&quot;20000&quot; port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot; redirectPort=&quot;8443&quot;/&gt;</div></pre></td></tr></table></figure>
-</li>
-<li><p>另外一种方法对参数进行重新编码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">String userName = new String(request.getParamter(&quot;userName&quot;).getBytes(&quot;ISO8859-1&quot;),&quot;utf-8&quot;)</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>注：ISO8859-1是tomcat默认编码，需要将tomcat编码后的内容按utf-8编码</p>
-<h4 id="SpringMVC与Struts2的主要区别？"><a href="#SpringMVC与Struts2的主要区别？" class="headerlink" title="SpringMVC与Struts2的主要区别？"></a>SpringMVC与Struts2的主要区别？</h4><ul>
-<li>①springmvc的入口是一个servlet即前端控制器，而struts2入口是一个filter过虑器。</li>
-<li>②springmvc是基于方法开发，传递参数是通过方法形参，可以设计为单例或多例(建议单例)，struts2是基于类开发，传递参数是通过类的属性，只能设计为多例。 </li>
-<li>③Struts采用值栈存储请求和响应的数据，通过OGNL存取数据，springmvc通过参数解析器是将request对象内容进行解析成方法形参，将响应数据和页面封装成ModelAndView对象，最后又将模型数据通过request对象传输到页面。 Jsp视图解析器默认使用jstl。</li>
-</ul>
-<p><a href="http://www.cnblogs.com/wang-meng/p/5701946.html" target="_blank" rel="external">Java面试大全</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;Spring&quot;&gt;&lt;a href=&quot;#Spring&quot; class=&quot;headerlink&quot; title=&quot;Spring&quot;&gt;&lt;/a&gt;Spring&lt;/h3&gt;&lt;h4 id=&quot;什么是Spring框架？Spring框架有哪些主要模块？&quot;&gt;&lt;a href=&quot;#什么是Spring
-    
-    </summary>
-    
-      <category term="面试" scheme="http://yoursite.com/categories/%E9%9D%A2%E8%AF%95/"/>
-    
-    
-      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
     
   </entry>
   
