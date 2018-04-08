@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-31T16:29:09.932Z</updated>
+  <updated>2018-04-08T08:48:38.789Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,54 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>浮点数的二进制表示</title>
+    <link href="http://yoursite.com/2018/04/09/%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%A1%A8%E7%A4%BA/"/>
+    <id>http://yoursite.com/2018/04/09/浮点数的二进制表示/</id>
+    <published>2018-04-08T16:38:58.000Z</published>
+    <updated>2018-04-08T08:48:38.789Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line"></div><div class="line">　　void main(void)&#123;</div><div class="line"></div><div class="line">　　　　int num=9; /* num是整型变量，设为9 */</div><div class="line"></div><div class="line">　　　　float* pFloat=&amp;num; /* pFloat表示num的内存地址，但是设为浮点数 */</div><div class="line"></div><div class="line">　　　　printf(&quot;num的值为：%d\n&quot;,num); /* 显示num的整型值 */</div><div class="line"></div><div class="line">　　　　printf(&quot;*pFloat的值为：%f\n&quot;,*pFloat); /* 显示num的浮点值 */</div><div class="line"></div><div class="line">　　　　*pFloat=9.0; /* 将num的值改为浮点数 */</div><div class="line"></div><div class="line">　　　　printf(&quot;num的值为：%d\n&quot;,num); /* 显示num的整型值 */</div><div class="line"></div><div class="line">　　　　printf(&quot;*pFloat的值为：%f\n&quot;,*pFloat); /* 显示num的浮点值 */</div><div class="line"></div><div class="line">　　&#125;</div></pre></td></tr></table></figure>
+<p>大家知道程序运行的结果是什么嘛？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">num的值为：9</div><div class="line">*pFloat的值为：0.000000</div><div class="line">num的值为：1091567616</div><div class="line">*pFloat的值为：9.000000</div></pre></td></tr></table></figure>
+<p>我很惊讶，num和*pFloat在内存中明明是同一个数，为什么浮点数和整数的解读结果会差别这么大？</p>
+<p>要理解这个结果，一定要搞懂浮点数在计算机内部的表示方法。我读了一些资料，下面就是我的笔记。</p>
+<h3 id="int的表示"><a href="#int的表示" class="headerlink" title="int的表示"></a>int的表示</h3><p>在讨论浮点数之前，先看一下整数在计算机内部是怎样表示的。<br><code>int num=9;</code></p>
+<p>上面这条命令，声明了一个整数变量，类型为int，值为9（二进制写法为1001）。普通的32位计算机，用4个字节表示int变量，所以9就被保存为00000000 00000000 00000000 00001001，写成16进制就是0x00000009。</p>
+<p>那么，我们的问题就简化成：为什么0x00000009还原成浮点数，就成了0.000000？</p>
+<h3 id="IEEE标准"><a href="#IEEE标准" class="headerlink" title="IEEE标准"></a>IEEE标准</h3><p>根据国际标准IEEE 754，任意一个二进制浮点数V可以表示成下面的形式：</p>
+<p><img src="./images/浮点数的二进制表示01.png" alt="IEEE754" title="浮点数的二进制表示01"></p>
+<p>举例来说，十进制的5.0，写成二进制是101.0，相当于1.01×2^2。那么，按照上面V的格式，可以得出s=0，M=1.01，E=2。</p>
+<p>十进制的-5.0，写成二进制是-101.0，相当于-1.01×2^2。那么，s=1，M=1.01，E=2。</p>
+<p>IEEE 754规定，对于32位的浮点数，最高的1位是符号位s，接着的8位是指数E，剩下的23位为有效数字M。</p>
+<p><img src="./images/浮点数的二进制表示02.png" alt="32bit" title="浮点数的二进制表示02"></p>
+<p>对于64位的浮点数，最高的1位是符号位S，接着的11位是指数E，剩下的52位为有效数字M。</p>
+<p><img src="./images/浮点数的二进制表示03.png" alt="64bit" title="浮点数的二进制表示03"></p>
+<p>IEEE 754对有效数字M和指数E，还有一些特别规定。</p>
+<p>前面说过，1≤M&lt;2，也就是说，M可以写成1.xxxxxx的形式，其中xxxxxx表示小数部分。IEEE 754规定，在计算机内部保存M时，默认这个数的第一位总是1，因此可以被舍去，只保存后面的xxxxxx部分。比如保存1.01的时候，只保存01，等到读取的时候，再把第一位的1加上去。这样做的目的，是节省1位有效数字。以32位浮点数为例，留给M只有23位，将第一位的1舍去以后，等于可以保存24位有效数字。</p>
+<p>至于指数E，情况就比较复杂。</p>
+<p>首先，E为一个无符号整数（unsigned int）。这意味着，如果E为8位，它的取值范围为0~255；如果E为11位，它的取值范围为0~2047。但是，我们知道，科学计数法中的E是可以出现负数的，所以IEEE 754规定，E的真实值必须再减去一个中间数，对于8位的E，这个中间数是127；对于11位的E，这个中间数是1023。</p>
+<p>比如，2^10的E是10，所以保存成32位浮点数时，必须保存成10+127=137，即10001001。</p>
+<p>然后，指数E还可以再分成三种情况：</p>
+<p>（1）E不全为0或不全为1。这时，浮点数就采用上面的规则表示，即指数E的计算值减去127（或1023），得到真实值，再将有效数字M前加上第一位的1。</p>
+<p>（2）E全为0。这时，浮点数的指数E等于1-127（或者1-1023），有效数字M不再加上第一位的1，而是还原为0.xxxxxx的小数。这样做是为了表示±0，以及接近于0的很小的数字。</p>
+<p>（3）E全为1。这时，如果有效数字M全为0，表示±无穷大（正负取决于符号位s）；如果有效数字M不全为0，表示这个数不是一个数（NaN）。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div c
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>工具|Dos下的debug工具使用</title>
     <link href="http://yoursite.com/2018/04/01/%E5%B7%A5%E5%85%B7-Dos%E4%B8%8B%E7%9A%84debug%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/"/>
     <id>http://yoursite.com/2018/04/01/工具-Dos下的debug工具使用/</id>
     <published>2018-04-01T00:04:11.000Z</published>
-    <updated>2018-03-31T16:29:09.932Z</updated>
+    <updated>2018-04-03T01:30:19.958Z</updated>
     
     <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Dubug是dos,windows下提供的调试工具，使用该工具，可以查看和修改寄存器，内存的内容。同时可以在机器码级别跟踪程序源码的运行。</p>
 <h3 id="常用的debug功能"><a href="#常用的debug功能" class="headerlink" title="常用的debug功能"></a>常用的debug功能</h3><ul>
@@ -32,6 +75,17 @@
 <li>用Debug的A命令以汇编指令的格式在内存中写入一条机器指令；</li>
 </ul>
 <p><a href="https://blog.csdn.net/u013018721/article/details/51154153" target="_blank" rel="external">Dos下的调试工具debug的使用教程 </a></p>
+<h3 id="汇编结尾int-20h-和int-21-h-啥区别"><a href="#汇编结尾int-20h-和int-21-h-啥区别" class="headerlink" title="汇编结尾int 20h 和int 21 h 啥区别"></a>汇编结尾int 20h 和int 21 h 啥区别</h3><p>int 20h只适用于ms-dos（相对应的有PC-DOS、FREE-DOS等等），而且int 20h要求入口参数CS=PSP段</p>
+<h3 id="int指令引发的中断"><a href="#int指令引发的中断" class="headerlink" title="int指令引发的中断"></a>int指令引发的中断</h3><p>int n指令，相当于引发一个n号中断。</p>
+<p>执行过程相当于：</p>
+<p>（1）取中断类型码n。<br>（2）标志寄存器入栈；设置IF=0，TF=0。<br>（3）CS，IP入栈<br>（4）（IP）=（n<em>4），（CS）=（n</em>4+2）</p>
+<h4 id="int-21h中断"><a href="#int-21h中断" class="headerlink" title="int 21h中断"></a>int 21h中断</h4><p>它是DOS提供的中断例程，包含了DOS提供给程序员在编程时调用的子程序。</p>
+<p>前面我们一直用下面的代码返回:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mov  ax,4c00h  </div><div class="line">int 21h</div></pre></td></tr></table></figure></p>
+<p>其实这是用了21号中断例程的4ch号子程序，al是用来存放程序返回值的，上面的代码即0.<br>本质就是:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mov ah,4ch  </div><div class="line">mov al,0  </div><div class="line">int 21h</div></pre></td></tr></table></figure></p>
+<h4 id="带返回码的结束（AH-4CH）"><a href="#带返回码的结束（AH-4CH）" class="headerlink" title="带返回码的结束（AH=4CH）"></a>带返回码的结束（AH=4CH）</h4><p>功能：返回DOS</p>
+<p>入口参数：无</p>
+<p>调用方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">MOV    AH,4CH</div><div class="line">INT      21H</div></pre></td></tr></table></figure></p>
+<p>通过4CH功能调用能够结束当前正在执行的程序，返回DOS系统，一般用于汇编程序的结束位置。</p>
 ]]></content>
     
     <summary type="html">
@@ -1391,72 +1445,6 @@ if($stmt-&gt;fetch()){
     
     
       <category term="计算机算法" scheme="http://yoursite.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>工具|gcc的一些坑</title>
-    <link href="http://yoursite.com/2018/03/16/%E5%B7%A5%E5%85%B7-gcc%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/"/>
-    <id>http://yoursite.com/2018/03/16/工具-gcc的一些坑/</id>
-    <published>2018-03-15T23:44:27.000Z</published>
-    <updated>2018-03-30T08:56:53.471Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>GCC 的意思也只是 GNU C Compiler 而已。经过了这么多年的发展，GCC 已经不仅仅能支持 C 语言；它现在还支持 Ada 语言、C++ 语言、Java 语言、Objective C 语言、Pascal 语言、COBOL语言，以及支持函数式编程和逻辑编程的 Mercury 语言，等等。而 GCC 也不再单只是 GNU C 语言编译器的意思了，而是变成了 GNU Compiler Collection 也即是 GNU 编译器家族的意思了。另一方面，说到 GCC 对于操作系统平台及硬件平台支持，概括起来就是一句话：无所不在</p>
-<h3 id="How-to-use"><a href="#How-to-use" class="headerlink" title="How to use?"></a>How to use?</h3><p>gcc说到底也就是一个工具，知道怎么用才是硬功夫。</p>
-<h4 id="简单编译"><a href="#简单编译" class="headerlink" title="简单编译"></a>简单编译</h4><p>示例程序如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//test.c</div><div class="line">#include &lt;stdio.h&gt;</div><div class="line">int main(void)</div><div class="line">&#123;</div><div class="line">    printf(&quot;Hello World!\n&quot;);</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这个程序，一步到位的编译指令是:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc test.c -o test</div></pre></td></tr></table></figure></p>
-<p>实质上，上述编译过程是分为四个阶段进行的，即预处理(也称预编译，Preprocessing)、编译(Compilation)、汇编 (Assembly)和连接(Linking)。</p>
-<h5 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -E test.c -o test.i 或 gcc -E test.c</div></pre></td></tr></table></figure>
-<p>可以输出test.i文件中存放着test.c经预处理之后的代码。打开test.i文件，看一看，就明白了。后面那条指令，是直接在命令行窗口中输出预处理后的代码.</p>
-<p>gcc的-E选项，可以让编译器在预处理后停止，并输出预处理结果。在本例中，预处理结果就是将stdio.h 文件中的内容插入到test.c中了。</p>
-<h5 id="编译为汇编代码-Compilation"><a href="#编译为汇编代码-Compilation" class="headerlink" title="编译为汇编代码(Compilation)"></a>编译为汇编代码(Compilation)</h5><p>预处理之后，可直接对生成的test.i文件编译，生成汇编代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -S test.i -o test.s</div></pre></td></tr></table></figure></p>
-<p>gcc的-S选项，表示在程序编译期间，在生成汇编代码后，停止，-o输出汇编代码文件。</p>
-<h5 id="汇编-Assembly"><a href="#汇编-Assembly" class="headerlink" title="汇编(Assembly)"></a>汇编(Assembly)</h5><p>对于上一小节中生成的汇编代码文件test.s，gas汇编器负责将其编译为目标文件，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -c test.s -o test.o</div></pre></td></tr></table></figure></p>
-<h5 id="连接-Linking"><a href="#连接-Linking" class="headerlink" title="连接(Linking)"></a>连接(Linking)</h5><p>gcc连接器是gas提供的，负责将程序的目标文件与所需的所有附加的目标文件连接起来，最终生成可执行文件。附加的目标文件包括静态连接库和动态连接库。</p>
-<p>对于上一小节中生成的test.o，将其与Ｃ标准输入输出库进行连接，最终生成程序test<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc test.o -o test</div></pre></td></tr></table></figure></p>
-<p>最后，在命令行窗口中，执行./test, 让它说HelloWorld吧！</p>
-<p><img src="/images/工具--gcc编译流程.png" alt="gcc编译总结" title="工具--gcc编译流程"></p>
-<h4 id="多个程序文件的编译"><a href="#多个程序文件的编译" class="headerlink" title="多个程序文件的编译"></a>多个程序文件的编译</h4><p>通常整个程序是由多个源文件组成的，相应地也就形成了多个编译单元，使用GCC能够很好地管理这些编译单元。假设有一个由test1.c和 test2.c两个源文件组成的程序，为了对它们进行编译，并最终生成可执行程序test，可以使用下面这条命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc test1.c test2.c -o test</div></pre></td></tr></table></figure></p>
-<p>如果同时处理的文件不止一个，GCC仍然会按照预处理、编译和链接的过程依次进行。如果深究起来，上面这条命令大致相当于依次执行如下三条命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">gcc -c test1.c -o test1.o</div><div class="line">gcc -c test2.c -o test2.o</div><div class="line">gcc test1.o test2.o -o test</div></pre></td></tr></table></figure></p>
-<h4 id="检错"><a href="#检错" class="headerlink" title="检错"></a>检错</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -pedantic illcode.c -o illcode</div></pre></td></tr></table></figure>
-<p><strong>-pedantic</strong>编译选项并不能保证被编译程序与ANSI/ISO C标准的完全兼容，它仅仅只能用来帮助Linux程序员离这个目标越来越近。或者换句话说，<strong>-pedantic</strong>选项能够帮助程序员发现一些不符合 ANSI/ISO C标准的代码，但不是全部，事实上只有ANSI/ISO C语言标准中要求进行编译器诊断的那些情况，才有可能被GCC发现并提出警告。</p>
-<p>除了-pedantic之外，GCC还有一些其它编译选项也能够产生有用的警告信息。这些选项大多以-W开头，其中最有价值的当数-Wall了，使用它能够使GCC产生尽可能多的警告信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -Wall illcode.c -o illcode</div></pre></td></tr></table></figure></p>
-<p>GCC给出的警告信息虽然从严格意义上说不能算作错误，但却很可能成为错误的栖身之所。一个优秀的Linux程序员应该尽量避免产生警告信息，使自己的代码始终保持标准、健壮的特性。所以将警告信息当成编码错误来对待，是一种值得赞扬的行为！所以，在编译程序时带上-Werror选项，那么GCC会在所有产生警告的地方停止编译，迫使程序员对自己的代码进行修改，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -Werror test.c -o test</div></pre></td></tr></table></figure></p>
-<h4 id="库文件连接"><a href="#库文件连接" class="headerlink" title="库文件连接"></a>库文件连接</h4><p>开发软件时，完全不使用第三方函数库的情况是比较少见的，通常来讲都需要借助许多函数库的支持才能够完成相应的功能。从程序员的角度看，函数库实际上就是一些头文件（.h）和库文件（so、或lib、dll）的集合。。虽然Linux下的大多数函数都默认将头文件放到/usr/include/目录下，而库文件则放到/usr/lib/目录下；Windows所使用的库文件主要放在Visual Stido的目录下的include和lib，以及系统文件夹下。但也有的时候，我们要用的库不再这些目录下，所以GCC在编译时必须用自己的办法来查找所需要的头文件和库文件。</p>
-<p>例如我们的程序test.c是在linux上使用c连接mysql，这个时候我们需要去mysql官网下载MySQL Connectors的C库，下载下来解压之后，有一个include文件夹，里面包含mysql connectors的头文件，还有一个lib文件夹，里面包含二进制so文件libmysqlclient.so</p>
-<p>其中inclulde文件夹的路径是/usr/dev/mysql/include,lib文件夹是/usr/dev/mysql/lib</p>
-<h5 id="编译成可执行文件"><a href="#编译成可执行文件" class="headerlink" title="编译成可执行文件"></a>编译成可执行文件</h5><p>首先我们要进行编译test.c为目标文件，这个时候需要执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc –c –I /usr/dev/mysql/include test.c –o test.o</div></pre></td></tr></table></figure></p>
-<h5 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h5><p>最后我们把所有目标文件链接成可执行文件:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc –L /usr/dev/mysql/lib –lmysqlclient test.o –o test</div></pre></td></tr></table></figure></p>
-<p>Linux下的库文件分为两大类分别是动态链接库（通常以.so结尾）和静态链接库（通常以.a结尾），二者的区别仅在于程序执行时所需的代码是在运行时动态加载的，还是在编译时静态加载的。</p>
-<h5 id="强制链接时使用静态链接库"><a href="#强制链接时使用静态链接库" class="headerlink" title="强制链接时使用静态链接库"></a>强制链接时使用静态链接库</h5><p>默认情况下， GCC在链接时优先使用动态链接库，只有当动态链接库不存在时才考虑使用静态链接库，如果需要的话可以在编译时加上-static选项，强制使用静态链接库。</p>
-<p>在/usr/dev/mysql/lib目录下有链接时所需要的库文件libmysqlclient.so和libmysqlclient.a，为了让GCC在链接时只用到静态链接库，可以使用下面的命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc –L /usr/dev/mysql/lib –static –lmysqlclient test.o –o test</div></pre></td></tr></table></figure></p>
-<p>静态库链接时搜索路径顺序：</p>
-<ol>
-<li>ld会去找GCC命令中的参数-L</li>
-<li>再找gcc的环境变量LIBRARY_PATH</li>
-<li>再找内定目录 /lib /usr/lib /usr/local/lib 这是当初compile gcc时写在程序内的</li>
-</ol>
-<p>动态链接时、执行时搜索路径顺序:</p>
-<ol>
-<li>编译目标代码时指定的动态库搜索路径</li>
-<li>环境变量LD_LIBRARY_PATH指定的动态库搜索路径</li>
-<li>配置文件/etc/ld.so.conf中指定的动态库搜索路径</li>
-<li>默认的动态库搜索路径/lib</li>
-<li>默认的动态库搜索路径/usr/lib</li>
-</ol>
-<p>有关环境变量：<br>LIBRARY_PATH环境变量：指定程序静态链接库文件搜索路径<br>LD_LIBRARY_PATH环境变量：指定程序动态链接库文件搜索路径</p>
-<p><a href="http://www.cnblogs.com/ggjucheng/archive/2011/12/14/2287738.html" target="_blank" rel="external">gcc常用操作</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;p&gt;GCC 的意思也只是 GNU C Compiler 而已。经过了这么多年的发展，GCC 已经不仅仅能支持 C 语言；它现在还支持 Ada 语
-    
-    </summary>
-    
-      <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
-    
     
   </entry>
   

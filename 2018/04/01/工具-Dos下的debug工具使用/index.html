@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="简介Dubug是dos,windows下提供的调试工具，使用该工具，可以查看和修改寄存器，内存的内容。同时可以在机器码级别跟踪程序源码的运行。 常用的debug功能 用Debug的R命令查看、改变CPU寄存器内容； 用Debug的D命令查看内存中的内容； 用Debug的E命令查看内存中的内容； 用Debug的U命令将内存中机器指令翻译成汇编指令； 用Debug的T命令执行一条机器指令； 用Debu">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-03-31T16:29:09.932Z">
+<meta property="og:updated_time" content="2018-04-03T01:30:19.958Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="工具|Dos下的debug工具使用">
 <meta name="twitter:description" content="简介Dubug是dos,windows下提供的调试工具，使用该工具，可以查看和修改寄存器，内存的内容。同时可以在机器码级别跟踪程序源码的运行。 常用的debug功能 用Debug的R命令查看、改变CPU寄存器内容； 用Debug的D命令查看内存中的内容； 用Debug的E命令查看内存中的内容； 用Debug的U命令将内存中机器指令翻译成汇编指令； 用Debug的T命令执行一条机器指令； 用Debu">
@@ -50,7 +50,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -70,7 +70,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -93,16 +93,16 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-04-01T00:04:11.000Z" itemprop="datePublished"> 发表于 2018-04-01</time>
+    <time datetime="2018-04-01T00:04:11.000Z" itemprop="datePublished"> Published 2018-04-01</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
+			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用的debug功能"><span class="toc-number">2.</span> <span class="toc-text">常用的debug功能</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用的debug功能"><span class="toc-number">2.</span> <span class="toc-text">常用的debug功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#汇编结尾int-20h-和int-21-h-啥区别"><span class="toc-number">3.</span> <span class="toc-text">汇编结尾int 20h 和int 21 h 啥区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#int指令引发的中断"><span class="toc-number">4.</span> <span class="toc-text">int指令引发的中断</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#int-21h中断"><span class="toc-number">4.1.</span> <span class="toc-text">int 21h中断</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#带返回码的结束（AH-4CH）"><span class="toc-number">4.2.</span> <span class="toc-text">带返回码的结束（AH=4CH）</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -116,6 +116,17 @@
 <li>用Debug的A命令以汇编指令的格式在内存中写入一条机器指令；</li>
 </ul>
 <p><a href="https://blog.csdn.net/u013018721/article/details/51154153" target="_blank" rel="external">Dos下的调试工具debug的使用教程 </a></p>
+<h3 id="汇编结尾int-20h-和int-21-h-啥区别"><a href="#汇编结尾int-20h-和int-21-h-啥区别" class="headerlink" title="汇编结尾int 20h 和int 21 h 啥区别"></a>汇编结尾int 20h 和int 21 h 啥区别</h3><p>int 20h只适用于ms-dos（相对应的有PC-DOS、FREE-DOS等等），而且int 20h要求入口参数CS=PSP段</p>
+<h3 id="int指令引发的中断"><a href="#int指令引发的中断" class="headerlink" title="int指令引发的中断"></a>int指令引发的中断</h3><p>int n指令，相当于引发一个n号中断。</p>
+<p>执行过程相当于：</p>
+<p>（1）取中断类型码n。<br>（2）标志寄存器入栈；设置IF=0，TF=0。<br>（3）CS，IP入栈<br>（4）（IP）=（n<em>4），（CS）=（n</em>4+2）</p>
+<h4 id="int-21h中断"><a href="#int-21h中断" class="headerlink" title="int 21h中断"></a>int 21h中断</h4><p>它是DOS提供的中断例程，包含了DOS提供给程序员在编程时调用的子程序。</p>
+<p>前面我们一直用下面的代码返回:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mov  ax,4c00h  </div><div class="line">int 21h</div></pre></td></tr></table></figure></p>
+<p>其实这是用了21号中断例程的4ch号子程序，al是用来存放程序返回值的，上面的代码即0.<br>本质就是:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mov ah,4ch  </div><div class="line">mov al,0  </div><div class="line">int 21h</div></pre></td></tr></table></figure></p>
+<h4 id="带返回码的结束（AH-4CH）"><a href="#带返回码的结束（AH-4CH）" class="headerlink" title="带返回码的结束（AH=4CH）"></a>带返回码的结束（AH=4CH）</h4><p>功能：返回DOS</p>
+<p>入口参数：无</p>
+<p>调用方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">MOV    AH,4CH</div><div class="line">INT      21H</div></pre></td></tr></table></figure></p>
+<p>通过4CH功能调用能够结束当前正在执行的程序，返回DOS系统，一般用于汇编程序的结束位置。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -143,6 +154,13 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2018/04/09/浮点数的二进制表示/" title="浮点数的二进制表示">
+  <span>
+  浮点数的二进制表示</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2018/03/27/工具-gdb调试/"  title="工具|gdb调试">
@@ -156,10 +174,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -187,7 +205,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分类</p>
+	<p class="asidetitle">Categories</p>
 		<ul>
 		
 		  
@@ -268,7 +286,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -308,23 +326,7 @@
 			
 		
 			
-				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/面试/" title="面试">面试<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
 			
 		
 			
@@ -332,15 +334,27 @@
 			
 		
 			
-				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
 			
 		
 			
@@ -348,7 +362,11 @@
 			
 		
 			
-				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+				<li><a href="/tags/面试/" title="面试">面试<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -356,7 +374,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -543,7 +561,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
