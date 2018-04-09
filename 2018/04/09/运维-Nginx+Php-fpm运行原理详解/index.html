@@ -1,0 +1,657 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>运维|Nginx+Php-fpm运行原理详解 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="代理与反向代理现实生活中的例子1、正向代理：访问google.com  如上图，因为google被墙，我们需要vpn翻墙才能访问google.com。  vpn对于“我们”来说，是可以感知到的（我们连接vpn）vpn对于”google服务器”来说，是不可感知的(google只知道有http请求过来)。  对于人来说可以感知到，但服务器感知不到的服务器，我们叫他正向代理服务器。 2、反向代理：通过反">
+<meta name="keywords" content="运维">
+<meta property="og:type" content="article">
+<meta property="og:title" content="运维|Nginx+Php-fpm运行原理详解">
+<meta property="og:url" content="http://yoursite.com/2018/04/09/运维-Nginx+Php-fpm运行原理详解/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="代理与反向代理现实生活中的例子1、正向代理：访问google.com  如上图，因为google被墙，我们需要vpn翻墙才能访问google.com。  vpn对于“我们”来说，是可以感知到的（我们连接vpn）vpn对于”google服务器”来说，是不可感知的(google只知道有http请求过来)。  对于人来说可以感知到，但服务器感知不到的服务器，我们叫他正向代理服务器。 2、反向代理：通过反">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/images/Nginx+Php-fpm运行原理详解01.png">
+<meta property="og:image" content="http://yoursite.com/images/Nginx+Php-fpm运行原理详解02.png">
+<meta property="og:image" content="http://yoursite.com/images/Nginx+Php-fpm运行原理详解03.png">
+<meta property="og:image" content="http://yoursite.com/images/Nginx+Php-fpm运行原理详解04.png">
+<meta property="og:image" content="http://yoursite.com/images/Nginx+Php-fpm运行原理详解05.png">
+<meta property="og:image" content="http://yoursite.com/images/Nginx+Php-fpm运行原理详解06.png">
+<meta property="og:image" content="http://yoursite.com/images/Nginx+Php-fpm运行原理详解07.png">
+<meta property="og:updated_time" content="2018-04-09T08:00:30.042Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="运维|Nginx+Php-fpm运行原理详解">
+<meta name="twitter:description" content="代理与反向代理现实生活中的例子1、正向代理：访问google.com  如上图，因为google被墙，我们需要vpn翻墙才能访问google.com。  vpn对于“我们”来说，是可以感知到的（我们连接vpn）vpn对于”google服务器”来说，是不可感知的(google只知道有http请求过来)。  对于人来说可以感知到，但服务器感知不到的服务器，我们叫他正向代理服务器。 2、反向代理：通过反">
+<meta name="twitter:image" content="http://yoursite.com/images/Nginx+Php-fpm运行原理详解01.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/04/09/运维-Nginx+Php-fpm运行原理详解/" title="运维|Nginx+Php-fpm运行原理详解" itemprop="url">运维|Nginx+Php-fpm运行原理详解</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-04-09T11:41:10.000Z" itemprop="datePublished"> Published 2018-04-09</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#代理与反向代理"><span class="toc-number">1.</span> <span class="toc-text">代理与反向代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#初识Nginx与Php-fpm"><span class="toc-number">2.</span> <span class="toc-text">初识Nginx与Php-fpm</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Nginx是什么"><span class="toc-number">2.1.</span> <span class="toc-text">Nginx是什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Php-fpm是什么"><span class="toc-number">2.2.</span> <span class="toc-text">Php-fpm是什么</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#cgi、fast-cgi协议"><span class="toc-number">2.2.1.</span> <span class="toc-text">cgi、fast-cgi协议</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#php-fpm是什么"><span class="toc-number">2.2.2.</span> <span class="toc-text">php-fpm是什么</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx如何与Php-fpm结合"><span class="toc-number">3.</span> <span class="toc-text">Nginx如何与Php-fpm结合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些问题"><span class="toc-number">5.</span> <span class="toc-text">一些问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#反向代理和负载均衡是什么关系"><span class="toc-number">5.1.</span> <span class="toc-text">反向代理和负载均衡是什么关系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#proxy-pass-和-fastcgi-pass-的区别"><span class="toc-number">5.2.</span> <span class="toc-text">proxy_pass 和 fastcgi_pass 的区别</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h3 id="代理与反向代理"><a href="#代理与反向代理" class="headerlink" title="代理与反向代理"></a>代理与反向代理</h3><p>现实生活中的例子<br>1、正向代理：访问google.com</p>
+<p><img src="/images/Nginx+Php-fpm运行原理详解01.png" alt="正向代理" title="Nginx+Php-fpm运行原理详解01"></p>
+<p>如上图，因为google被墙，我们需要vpn翻墙才能访问google.com。</p>
+<blockquote>
+<p>vpn对于“我们”来说，是可以感知到的（我们连接vpn）<br>vpn对于”google服务器”来说，是不可感知的(google只知道有http请求过来)。</p>
+</blockquote>
+<p>对于人来说可以感知到，但服务器感知不到的服务器，我们叫他正向代理服务器。</p>
+<p>2、反向代理：通过反向代理实现负载均衡</p>
+<p><img src="/images/Nginx+Php-fpm运行原理详解02.png" alt="反向代理" title="Nginx+Php-fpm运行原理详解02"></p>
+<p>如上图，我们访问baidu.com的时候，baidu有一个代理服务器，通过这个代理服务器，可以做负载均衡，路由到不同的server。</p>
+<blockquote>
+<p>此代理服务器,对于“我们”来说是不可感知的(我们只能感知到访问的是百度的服务器，不知道中间还有代理服务器来做负载均衡)。</p>
+</blockquote>
+<p>此代理服务器，对于”server1 server2 server3”是可感知的(代理服务器负载均衡路由到不同的server)<br>对于人来说不可感知，但对于服务器来说是可以感知的，我们叫他反向代理服务器</p>
+<p>总结<br>说白了：“正向”、“反向”是相对于人的感知来说的。<br>人能感受到的代理就是正向代理，人感受不到的代理就是反向代理。</p>
+<h3 id="初识Nginx与Php-fpm"><a href="#初识Nginx与Php-fpm" class="headerlink" title="初识Nginx与Php-fpm"></a>初识Nginx与Php-fpm</h3><h4 id="Nginx是什么"><a href="#Nginx是什么" class="headerlink" title="Nginx是什么"></a>Nginx是什么</h4><p>Nginx (“engine x”) 是一个高性能的HTTP和反向代理服务器，也是一个IMAP/POP3/SMTP服务器。</p>
+<h4 id="Php-fpm是什么"><a href="#Php-fpm是什么" class="headerlink" title="Php-fpm是什么"></a>Php-fpm是什么</h4><h5 id="cgi、fast-cgi协议"><a href="#cgi、fast-cgi协议" class="headerlink" title="cgi、fast-cgi协议"></a>cgi、fast-cgi协议</h5><p>cgi的历史<br>早期的webserver只处理html等静态文件，但是随着技术的发展，出现了像php等动态语言。<br>webserver处理不了了，怎么办呢？那就交给php解释器来处理吧！<br>交给php解释器处理很好，但是，php解释器如何与webserver进行通信呢？</p>
+<p>为了解决不同的语言解释器(如php、python解释器)与webserver的通信，于是出现了cgi协议。只要你按照cgi协议去编写程序，就能实现语言解释器与webwerver的通信。如php-cgi程序。</p>
+<p>fast-cgi的改进<br>有了cgi协议，解决了php解释器与webserver通信的问题，webserver终于可以处理动态语言了。<br>但是，webserver每收到一个请求，都会去fork一个cgi进程，请求结束再kill掉这个进程。这样有10000个请求，就需要fork、kill php-cgi进程10000次。</p>
+<p>有没有发现很浪费资源？</p>
+<p>于是，出现了cgi的改良版本，fast-cgi。fast-cgi每次处理完请求后，不会kill掉这个进程，而是保留这个进程，使这个进程可以一次处理多个请求。这样每次就不用重新fork一个进程了，大大提高了效率。</p>
+<h5 id="php-fpm是什么"><a href="#php-fpm是什么" class="headerlink" title="php-fpm是什么"></a>php-fpm是什么</h5><p>php-fpm即php-Fastcgi Process Manager.<br>php-fpm是 FastCGI 的实现，并提供了进程管理的功能。<br>进程包含 master 进程和 worker 进程两种进程。<br>master 进程只有一个，负责监听端口，接收来自 Web Server 的请求，而 worker 进程则一般有多个(具体数量根据实际需要配置)，每个进程内部都嵌入了一个 PHP 解释器，是 PHP 代码真正执行的地方。</p>
+<h3 id="Nginx如何与Php-fpm结合"><a href="#Nginx如何与Php-fpm结合" class="headerlink" title="Nginx如何与Php-fpm结合"></a>Nginx如何与Php-fpm结合</h3><p>上面我们说了，Nginx不只有处理http请求的功能，还能做反向代理。<br>Nginx通过反向代理功能将动态请求转向后端Php-fpm。</p>
+<p>下面我们来配置一个全新的Nginx+Php-fpm</p>
+<ol>
+<li>配置nginx.conf文件</li>
+</ol>
+<p>进入nginx目录下，编辑 nginx.conf文件。<br>如图，在nginx.conf最后一行，添加include文件</p>
+<p><img src="/images/Nginx+Php-fpm运行原理详解03.png" alt="How -1" title="Nginx+Php-fpm运行原理详解03"></p>
+<ol>
+<li>添加对应的server<br>进入上面include的路径，添加一个server</li>
+</ol>
+<p><img src="/images/Nginx+Php-fpm运行原理详解04.png" alt="添加server" title="Nginx+Php-fpm运行原理详解04"></p>
+<p>下面我们解释一下配置项的含义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen       80; #监听80端口，接收http请求</div><div class="line">    server_name  www.example.com; #就是网站地址</div><div class="line">    root /usr/local/etc/nginx/www/huxintong_admin; # 准备存放代码工程的路径</div><div class="line">    #路由到网站根目录www.example.com时候的处理</div><div class="line">    location / &#123;</div><div class="line">        index index.php; #跳转到www.example.com/index.php</div><div class="line">        autoindex on;</div><div class="line">    &#125;   </div><div class="line"></div><div class="line">    #当请求网站下php文件的时候，反向代理到php-fpm</div><div class="line">    location ~ \.php$ &#123;</div><div class="line">        include /usr/local/etc/nginx/fastcgi.conf; #加载nginx的fastcgi模块</div><div class="line">        fastcgi_intercept_errors on;</div><div class="line">        fastcgi_pass   127.0.0.1:9000; #nginx fastcgi进程监听的IP地址和端口</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>总而言之：当我们访问www.example.com的时候，处理流程是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">  www.example.com</div><div class="line">        |</div><div class="line">        |</div><div class="line">      Nginx</div><div class="line">        |</div><div class="line">        |</div><div class="line">路由到www.example.com/index.php</div><div class="line">        |</div><div class="line">        |</div><div class="line">加载nginx的fast-cgi模块</div><div class="line">        |</div><div class="line">        |</div><div class="line">fast-cgi监听127.0.0.1:9000地址</div><div class="line">        |</div><div class="line">        |</div><div class="line">www.example.com/index.php请求到达127.0.0.1:9000</div><div class="line">        |</div><div class="line">        |</div><div class="line">     等待处理...</div></pre></td></tr></table></figure>
+<p>下面我们启用php的php-fpm来处理这个请求</p>
+<p>打开php-fpm.conf文件，我们看到如下配置：</p>
+<p><img src="/images/Nginx+Php-fpm运行原理详解05.png" alt="php-fpm" title="Nginx+Php-fpm运行原理详解05"></p>
+<blockquote>
+<p>即:php-fpm模块监听127.0.0.1:9000端口，等待请求到来去处理。</p>
+</blockquote>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>nginx与php-fpm的结合，完整的流程是这样的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"> www.example.com</div><div class="line">        |</div><div class="line">        |</div><div class="line">      Nginx</div><div class="line">        |</div><div class="line">        |</div><div class="line">路由到www.example.com/index.php</div><div class="line">        |</div><div class="line">        |</div><div class="line">加载nginx的fast-cgi模块</div><div class="line">        |</div><div class="line">        |</div><div class="line">fast-cgi监听127.0.0.1:9000地址</div><div class="line">        |</div><div class="line">        |</div><div class="line">www.example.com/index.php请求到达127.0.0.1:9000</div><div class="line">        |</div><div class="line">        |</div><div class="line">php-fpm 监听127.0.0.1:9000</div><div class="line">        |</div><div class="line">        |</div><div class="line">php-fpm 接收到请求，启用worker进程处理请求</div><div class="line">        |</div><div class="line">        |</div><div class="line">php-fpm 处理完请求，返回给nginx</div><div class="line">        |</div><div class="line">        |</div><div class="line">nginx将结果通过http返回给浏览器</div></pre></td></tr></table></figure>
+<p><img src="/images/Nginx+Php-fpm运行原理详解06.png" alt="运行原理" title="Nginx+Php-fpm运行原理详解06"></p>
+<h3 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h3><h4 id="反向代理和负载均衡是什么关系"><a href="#反向代理和负载均衡是什么关系" class="headerlink" title="反向代理和负载均衡是什么关系"></a>反向代理和负载均衡是什么关系</h4><p>反向代理和负载均衡这两个词经常出现在一起，但他们实际上是不同的概念，负载均衡它更多的是强调的是一种算法或策略，将请求分布到不同的机器上，因此实际上也起到了反向代理的作用。</p>
+<h4 id="proxy-pass-和-fastcgi-pass-的区别"><a href="#proxy-pass-和-fastcgi-pass-的区别" class="headerlink" title="proxy_pass 和 fastcgi_pass 的区别"></a>proxy_pass 和 fastcgi_pass 的区别</h4><p>一个是反向代理模块，一个是转发给 factcgi 后端处理。</p>
+<p><img src="/images/Nginx+Php-fpm运行原理详解07.png" alt="proxy_pass 和 fastcgi_pass 的区别" title="Nginx+Php-fpm运行原理详解07"></p>
+<p><a href="https://segmentfault.com/a/1190000010443248" target="_blank" rel="external">阿里云服务器CentOS7.0安装Nginx 1.12.1</a><br><a href="http://www.cnblogs.com/freeweb/p/5425554.html" target="_blank" rel="external">Linux下安装php环境并且配置Nginx支持php-fpm模块</a><br><a href="https://www.jianshu.com/p/495a02eb2672" target="_blank" rel="external">CentOS7搭建配置Nginx+PHP+MySQL</a><br><a href="https://segmentfault.com/a/1190000007322358" target="_blank" rel="external">nginx与php-fpm关系大揭秘</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/运维/">运维</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/运维/">运维</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/04/09/浮点数的二进制表示/"  title="浮点数的二进制表示">
+ <span>浮点数的二进制表示
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>11</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Vim/" title="Vim">Vim<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/life/" title="life">life<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/架构/" title="架构">架构<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/运维/" title="运维">运维<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/面试/" title="面试">面试<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>20</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>12</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具/" title="工具">工具<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/markdowm/" title="markdowm">markdowm<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/架构/" title="架构">架构<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>
