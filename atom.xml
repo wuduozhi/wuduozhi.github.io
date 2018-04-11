@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-11T03:49:20.175Z</updated>
+  <updated>2018-04-11T16:40:48.122Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>计算机算法|我的学习之路</title>
+    <link href="http://yoursite.com/2018/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95-%E6%88%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/"/>
+    <id>http://yoursite.com/2018/04/12/计算机算法-我的学习之路/</id>
+    <published>2018-04-12T00:23:58.000Z</published>
+    <updated>2018-04-11T16:40:48.122Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>自己作为一名大二的准CS本科生，正在学习计算机算法这门课，但由于学校开设的课不咋地，同时自己又深知算法的重要性，只能自己另寻出路了。</p>
+<h3 id="My-Way"><a href="#My-Way" class="headerlink" title="My Way"></a>My Way</h3><p><a href="http://open.163.com/special/opencourse/algorithms.html" target="_blank" rel="external">网易云-麻省理工公开课</a><br><a href="https://www.bilibili.com/video/av13229392/" target="_blank" rel="external">bliblili-斯坦福公开课</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;自己作为一名大二的准CS本科生，正在学习计算机算法这门课，但由于学校开设的课不咋地，同时自己又深知算法的重要性，只能自己另寻出路了。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="计算机算法" scheme="http://yoursite.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="计算机算法" scheme="http://yoursite.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>深入学习计算机系统|我的学习之路</title>
@@ -1334,52 +1358,6 @@ if($stmt-&gt;fetch()){
     
     
       <category term="Web" scheme="http://yoursite.com/tags/Web/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>pyhon|网络urllib2模块</title>
-    <link href="http://yoursite.com/2018/03/20/pyhon-%E7%BD%91%E7%BB%9Curllib2%E6%A8%A1%E5%9D%97/"/>
-    <id>http://yoursite.com/2018/03/20/pyhon-网络urllib2模块/</id>
-    <published>2018-03-19T23:10:34.000Z</published>
-    <updated>2018-03-20T15:46:13.377Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="分分钟扒一个网页下来"><a href="#分分钟扒一个网页下来" class="headerlink" title="分分钟扒一个网页下来"></a>分分钟扒一个网页下来</h3><p>怎样扒网页呢？其实就是根据URL来获取它的网页信息，虽然我们在浏览器中看到的是一幅幅优美的画面，但是其实是由浏览器解释才呈现出来的，实质它 是一段HTML代码，加 JS、CSS，如果把网页比作一个人，那么HTML便是他的骨架，JS便是他的肌肉，CSS便是它的衣服。所以最重要的部分是存在于HTML中的，下面我 们就写个例子来扒一个网页下来。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import  urllib2</div><div class="line">response  =  urllib2.urlopen(&quot;http://www.baidu.com&quot;)</div><div class="line">print  response.read()</div></pre></td></tr></table></figure></p>
-<p>是的你没看错，真正的程序就两行，把它保存成 demo.py，进入该文件的目录，执行如下命令查看运行结果，感受一下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python demo.py</div></pre></td></tr></table></figure></p>
-<p><img src="/images/python-urllib2-01.png" alt="爬虫--html" title="python-urllib2-01"></p>
-<h3 id="分析扒网页的方法"><a href="#分析扒网页的方法" class="headerlink" title="分析扒网页的方法"></a>分析扒网页的方法</h3><p>那么我们来分析这两行代码，第一行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">response  =  urllib2.urlopen(&quot;http://www.baidu.com&quot;)</div></pre></td></tr></table></figure></p>
-<p>首先我们调用的是urllib2库里面的urlopen方法，传入一个URL，这个网址是百度首页，协议是HTTP协议，当然你也可以把HTTP换做FTP,FILE,HTTPS 等等，只是代表了一种[访问控制]协议，urlopen一般接受三个参数，它的参数如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">urlopen(url, data, timeout)</div></pre></td></tr></table></figure></p>
-<p>第一个参数url即为URL，第二个参数data是访问URL时要传送的数据，第三个timeout是设置超时时间。</p>
-<p>第二三个参数是可以不传送的，data默认为空None，timeout默认为 socket._GLOBAL_DEFAULT_TIMEOUT</p>
-<p>第一个参数URL是必须要传送的，在这个例子里面我们传送了百度的URL，执行urlopen方法之后，返回一个response对象，返回信息便保存在这里面。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">print response.read()</div></pre></td></tr></table></figure></p>
-<p>response对象有一个read方法，可以返回获取到的网页内容。</p>
-<p>如果不加read直接打印会是什么？答案如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">addinfourl at 139728495260376 whose fp = socket._fileobject object at 0x7f1513fb3ad0&gt;&gt;</div></pre></td></tr></table></figure></p>
-<p>直接打印出了该对象的描述，所以记得一定要加read方法，否则它不出来内容可就不怪我咯！</p>
-<h3 id="构造Requset"><a href="#构造Requset" class="headerlink" title="构造Requset"></a>构造Requset</h3><p>其实上面的urlopen参数可以传入一个request请求,它其实就是一个Request类的实例，构造时需要传入Url,Data等等的内容。比如上面的两行代码，我们可以这么改写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">import  urllib2</div><div class="line"></div><div class="line">request  =  urllib2.Request(&quot;http://www.baidu.com&quot;)</div><div class="line"></div><div class="line">response  =  urllib2.urlopen(request)</div><div class="line"></div><div class="line">print  response.read()</div></pre></td></tr></table></figure></p>
-<p>运行结果是完全一样的，只不过中间多了一个request对象，推荐大家这么写，因为在构建请求时还需要加入好多内容，通过构建一个request，[服务器]响应请求得到应答，这样显得逻辑上清晰明确。</p>
-<h3 id="POST和GET数据传送"><a href="#POST和GET数据传送" class="headerlink" title="POST和GET数据传送"></a>POST和GET数据传送</h3><p>上面的程序演示了最基本的网页抓取，不过，现在大多数网站都是动态网页，需要你动态地传递参数给它，它做出对应的响应。所以，在访问时，我们需要传递数据给它。最常见的情况是什么？对了，就是登录注册的时候呀。</p>
-<p>把数据用户名和密码传送到一个URL，然后你得到服务器处理之后的响应，这个该怎么办？下面让我来为小伙伴们揭晓吧！</p>
-<p>数据传送分为POST和GET两种方式，两种方式有什么区别呢？</p>
-<p>最重要的区别是GET方式是直接以链接形式访问，链接中包含了所有的参数，当然如果包含了密码的话是一种不安全的选择，不过你可以直观地看到自己提交了什么内容。POST则不会在网址上显示所有的参数，不过如果你想直接查看提交了什么就不太方便了，大家可以酌情选择。</p>
-<h4 id="POST方式："><a href="#POST方式：" class="headerlink" title="POST方式："></a>POST方式：</h4><p>上面我们说了data参数是干嘛的？对了，它就是用在这里的，我们传送的数据就是这个参数data，下面[演示]一下POST方式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">import  urllib</div><div class="line"></div><div class="line">import  urllib2</div><div class="line"></div><div class="line">values  =  &#123;&quot;username&quot;:&quot;1016903103@qq.com&quot;,&quot;password&quot;:&quot;XXXX&quot;&#125;</div><div class="line"></div><div class="line">data  =  urllib.urlencode(values)</div><div class="line"></div><div class="line">url  =  &quot;https://passport.csdn.net/account/login?from=http://my.csdn.net/my/mycsdn&quot;</div><div class="line"></div><div class="line">request  =  urllib2.Request(url,data)</div><div class="line"></div><div class="line">response  =  urllib2.urlopen(request)</div><div class="line"></div><div class="line">print  response.read()</div></pre></td></tr></table></figure></p>
-<p>我们引入了urllib库，现在我们模拟登陆CSDN，当然上述代码可能登陆不进去，因为还要做一些设置头部header的工作，或者还有一些参数 没有设置全，还没有提及到在此就不写上去了，在此只是说明登录的原理。我们需要定义一个字典，名字为values，参数我设置了username和 password，下面利用urllib的urlencode方法将字典编码，命名为data，构建request时传入两个参数，url和data，运 行程序，即可实现登陆，返回的便是登陆后呈现的页面内容。当然你可以自己搭建一个[服务器]来测试一下。</p>
-<p>注意上面字典的定义方式还有一种，下面的写法是等价的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">import  urllib</div><div class="line"></div><div class="line">import  urllib2</div><div class="line"></div><div class="line">values  =  &#123;&#125;</div><div class="line"></div><div class="line">values[&apos;username&apos;]  =  &quot;1016903103@qq.com&quot;</div><div class="line"></div><div class="line">values[&apos;password&apos;]  =  &quot;XXXX&quot;</div><div class="line"></div><div class="line">data  =  urllib.urlencode(values)</div><div class="line"></div><div class="line">url  =  &quot;http://passport.csdn.net/account/login?from=http://my.csdn.net/my/mycsdn&quot;</div><div class="line"></div><div class="line">request  =  urllib2.Request(url,data)</div><div class="line"></div><div class="line">response  =  urllib2.urlopen(request)</div><div class="line"></div><div class="line">print  response.read()</div></pre></td></tr></table></figure></p>
-<p>以上方法便实现了POST方式的传送</p>
-<h4 id="GET方式："><a href="#GET方式：" class="headerlink" title="GET方式："></a>GET方式：</h4><p>至于GET方式我们可以直接把参数写到网址上面，直接构建一个带参数的URL出来即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">import  urllib</div><div class="line"></div><div class="line">import  urllib2</div><div class="line"></div><div class="line">values=&#123;&#125;</div><div class="line"></div><div class="line">values[&apos;username&apos;]  =  &quot;1016903103@qq.com&quot;</div><div class="line"></div><div class="line">values[&apos;password&apos;]=&quot;XXXX&quot;</div><div class="line"></div><div class="line">data  =  urllib.urlencode(values)</div><div class="line"></div><div class="line">url  =  &quot;http://passport.csdn.net/account/login&quot;</div><div class="line"></div><div class="line">geturl  =  url  +  &quot;?&quot;+data</div><div class="line"></div><div class="line">request  =  urllib2.Request(geturl)</div><div class="line"></div><div class="line">response  =  urllib2.urlopen(request)</div><div class="line"></div><div class="line">print  response.read()</div></pre></td></tr></table></figure></p>
-<p>你可以print geturl，打印输出一下url，发现其实就是原来的url加？然后加编码后的参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://passport.csdn.net/account/login?username=1016903103%40qq.com&amp;password=XXXX</div></pre></td></tr></table></figure></p>
-<p>和我们平常GET访问方式一模一样，这样就实现了数据的GET方式传送。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;分分钟扒一个网页下来&quot;&gt;&lt;a href=&quot;#分分钟扒一个网页下来&quot; class=&quot;headerlink&quot; title=&quot;分分钟扒一个网页下来&quot;&gt;&lt;/a&gt;分分钟扒一个网页下来&lt;/h3&gt;&lt;p&gt;怎样扒网页呢？其实就是根据URL来获取它的网页信息，虽然我们在浏览器中看到的
-    
-    </summary>
-    
-      <category term="python" scheme="http://yoursite.com/categories/python/"/>
-    
-    
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
   </entry>
   
