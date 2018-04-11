@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-11T03:22:06.058Z</updated>
+  <updated>2018-04-11T03:49:20.175Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>深入学习计算机系统|我的学习之路</title>
+    <link href="http://yoursite.com/2018/04/11/%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E6%88%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/"/>
+    <id>http://yoursite.com/2018/04/11/深入学习计算机系统-我的学习之路/</id>
+    <published>2018-04-11T11:43:41.000Z</published>
+    <updated>2018-04-11T03:49:20.175Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>自己作为一名大二的准CS本科生，正在学习深入学习计算机系统这门课，但由于学校开设的课不咋地，同时自己又深知底层知识的重要性，只能自己另寻出路了。</p>
+<h3 id="My-Way"><a href="#My-Way" class="headerlink" title="My Way"></a>My Way</h3><p><a href="http://www.cnblogs.com/zuoxiaolong/category/518480.html" target="_blank" rel="external">博客教程</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;自己作为一名大二的准CS本科生，正在学习深入学习计算机系统这门课，但由于学校开设的课不咋地，同时自己又深知底层知识的重要性，只能自己另寻出路
+    
+    </summary>
+    
+      <category term="深入学习计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="深入学习计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>操作系统|我的学习之路</title>
@@ -1356,54 +1380,6 @@ if($stmt-&gt;fetch()){
     
     
       <category term="python" scheme="http://yoursite.com/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>工具|使用Markdowm写PPT</title>
-    <link href="http://yoursite.com/2018/03/19/%E5%B7%A5%E5%85%B7-%E4%BD%BF%E7%94%A8Markdowm%E5%86%99PPT/"/>
-    <id>http://yoursite.com/2018/03/19/工具-使用Markdowm写PPT/</id>
-    <published>2018-03-19T10:41:53.000Z</published>
-    <updated>2018-03-19T09:16:15.293Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Landslide是基于Google的html5slides的一个Slide生成工具，可以将markdown, ReST 或者 textile文件转化成HTML5的slide。该转化支持内联模式，即生成一个具有完整功能的HTML文件，将依赖的css等东西放入其中，很容易用来分享。</p>
-<ol>
-<li>安装：该工具是用python写成的，使用pip工具安装。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ pip install landslide</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>也可以使用源码安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ git clone https://github.com/adamzap/landslide.git</div><div class="line">$ cd landslide</div><div class="line">$ python setup.py build</div><div class="line">$ sudo python setup.py install</div></pre></td></tr></table></figure></p>
-<ol>
-<li>书写你的md文件，以下是官方提供的测试用例，可以生成这个页面，或者参考我的源码和这里的演示效果。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"># Landslide</div><div class="line"></div><div class="line">---</div><div class="line"></div><div class="line"># Overview</div><div class="line"></div><div class="line">Generate HTML5 slideshows from markdown, ReST, or textile.</div><div class="line"></div><div class="line">![python](http://i.imgur.com/bc2xk.png)</div><div class="line"></div><div class="line">Landslide is primarily written in Python, but it&apos;s themes use:</div><div class="line"></div><div class="line">- HTML5</div><div class="line">- Javascript</div><div class="line">- CSS</div><div class="line"></div><div class="line">---</div><div class="line"></div><div class="line"># Code Sample</div><div class="line"></div><div class="line">Landslide supports code snippets</div><div class="line"></div><div class="line">    !python</div><div class="line">    def log(self, message, level=&apos;notice&apos;):</div><div class="line">        if self.logger and not callable(self.logger):</div><div class="line">            raise ValueError(u&quot;Invalid logger set, must be a callable&quot;)</div><div class="line"></div><div class="line">        if self.verbose and self.logger:</div><div class="line">            self.logger(message, level)</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>执行命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ landslide file.md -i -o &gt; name_you_like.html</div></pre></td></tr></table></figure></p>
-<p>将markdown文本file.md转化成你的slide文件name_you_like.html。参数-i是为了将所有依赖文件（如css）整合到这一个文件中，让你能够简单的分享和移动该slide。-o参数是讲输出重定向到标准输出流，再用&gt; file来指定保存的文件名，也可以不使用该参数生成默认文件名presentation.html。</p>
-<ol>
-<li>在浏览器中打开生成的HTML文件就可以看到你的PPT了，效果酷炫，还支持各种快捷键。以下列出了一些常用的：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">h:      展示帮助</div><div class="line">← →:    上/下一张幻灯片</div><div class="line">ESC:    展示目录</div><div class="line">n:      显示当前是第几张幻灯片</div><div class="line">b:      屏幕全黑</div><div class="line">e:      使当前幻灯片最大化</div><div class="line">3:      展示伪3D效果</div><div class="line">c:      取消显示前后幻灯片预览，只显示当前幻灯片</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="使用PrinceXML生成PDF"><a href="#使用PrinceXML生成PDF" class="headerlink" title="使用PrinceXML生成PDF"></a>使用PrinceXML生成PDF</h3><p>PrinceXML是一款将html转换为pdf的工具，提供免费带水印版试用。</p>
-<p>下载地址：</p>
-<blockquote>
-<p><a href="http://www.princexml.com/download/" target="_blank" rel="external">http://www.princexml.com/download/</a></p>
-</blockquote>
-<p>选择对应版本解压后执行脚本安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sh insatll.sh</div></pre></td></tr></table></figure></p>
-<p>指定路径安装完毕后即可使用prince命令。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ prince test.html -o test.pdf</div></pre></td></tr></table></figure>
-<p>即可生成需要的PDF PPT文件。</p>
-<p><a href="https://www.jianshu.com/p/e063303317cb" target="_blank" rel="external">用Markdown写一个极客范儿的PPT</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;p&gt;Landslide是基于Google的html5slides的一个Slide生成工具，可以将markdown, ReST 或者 textil
-    
-    </summary>
-    
-      <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
-    
-    
-      <category term="工具" scheme="http://yoursite.com/tags/%E5%B7%A5%E5%85%B7/"/>
     
   </entry>
   
