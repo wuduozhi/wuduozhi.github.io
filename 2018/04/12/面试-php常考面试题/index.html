@@ -4,30 +4,24 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>计算机算法|分治法 | 只为不凡而来</title>
+    <title>面试|php常考面试题 | 只为不凡而来</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="wuduozhi">
     
 
     
-    <meta name="description" content="简介一些案例寻找峰值一维数组直观地说，将数组两头边界视为负无穷大，则 不小于 两边的数就是一个峰。如下图所示，7、6、9都是此数组的峰。  方案1.1 由定义出发，遍历所有元素即可，由于只要求找一个峰，找到即结束。易知最坏情况（即只有最后一个元素满足条件）的复杂度为(n)。 算法优化注意到问题的要求，并不需要找到所有的峰，而方案1.1在最坏情况下遍历所有元素的消耗与寻找所有的峰等同，所以很有可能做">
-<meta name="keywords" content="计算机算法">
+    <meta name="description" content="My Blog">
 <meta property="og:type" content="article">
-<meta property="og:title" content="计算机算法|分治法">
-<meta property="og:url" content="http://yoursite.com/2018/03/16/计算机算法-分支法/index.html">
+<meta property="og:title" content="面试|php常考面试题">
+<meta property="og:url" content="http://yoursite.com/2018/04/12/面试-php常考面试题/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="简介一些案例寻找峰值一维数组直观地说，将数组两头边界视为负无穷大，则 不小于 两边的数就是一个峰。如下图所示，7、6、9都是此数组的峰。  方案1.1 由定义出发，遍历所有元素即可，由于只要求找一个峰，找到即结束。易知最坏情况（即只有最后一个元素满足条件）的复杂度为(n)。 算法优化注意到问题的要求，并不需要找到所有的峰，而方案1.1在最坏情况下遍历所有元素的消耗与寻找所有的峰等同，所以很有可能做">
+<meta property="og:description" content="My Blog">
 <meta property="og:locale" content="Chinese">
-<meta property="og:image" content="http://yoursite.com/images/计算机算法-分治法-01.png">
-<meta property="og:image" content="http://yoursite.com/images/计算机算法-分治法-02.png">
-<meta property="og:image" content="http://yoursite.com/images/计算机算法-分治法-03.png">
-<meta property="og:image" content="http://yoursite.com/images/计算机算法-分治法-04.png">
-<meta property="og:updated_time" content="2018-03-27T08:23:27.629Z">
+<meta property="og:updated_time" content="2018-04-12T00:57:19.410Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="计算机算法|分治法">
-<meta name="twitter:description" content="简介一些案例寻找峰值一维数组直观地说，将数组两头边界视为负无穷大，则 不小于 两边的数就是一个峰。如下图所示，7、6、9都是此数组的峰。  方案1.1 由定义出发，遍历所有元素即可，由于只要求找一个峰，找到即结束。易知最坏情况（即只有最后一个元素满足条件）的复杂度为(n)。 算法优化注意到问题的要求，并不需要找到所有的峰，而方案1.1在最坏情况下遍历所有元素的消耗与寻找所有的峰等同，所以很有可能做">
-<meta name="twitter:image" content="http://yoursite.com/images/计算机算法-分治法-01.png">
+<meta name="twitter:title" content="面试|php常考面试题">
+<meta name="twitter:description" content="My Blog">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -91,14 +85,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2018/03/16/计算机算法-分支法/" title="计算机算法|分治法" itemprop="url">计算机算法|分治法</a>
+      <a href="/2018/04/12/面试-php常考面试题/" title="面试|php常考面试题" itemprop="url">面试|php常考面试题</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-03-16T10:26:41.000Z" itemprop="datePublished"> Published 2018-03-16</time>
+    <time datetime="2018-04-12T08:57:19.000Z" itemprop="datePublished"> Published 2018-04-12</time>
     
   </p>
 </header>
@@ -107,50 +101,15 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些案例"><span class="toc-number">2.</span> <span class="toc-text">一些案例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#寻找峰值"><span class="toc-number">2.1.</span> <span class="toc-text">寻找峰值</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#一维数组"><span class="toc-number">2.1.1.</span> <span class="toc-text">一维数组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#二维数组"><span class="toc-number">2.1.2.</span> <span class="toc-text">二维数组</span></a></li></ol></li></ol></li></ol>
+			
 		
 		</div>
 		
-		<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><h3 id="一些案例"><a href="#一些案例" class="headerlink" title="一些案例"></a>一些案例</h3><h4 id="寻找峰值"><a href="#寻找峰值" class="headerlink" title="寻找峰值"></a>寻找峰值</h4><h5 id="一维数组"><a href="#一维数组" class="headerlink" title="一维数组"></a>一维数组</h5><p>直观地说，将数组两头边界视为负无穷大，则 不小于 两边的数就是一个峰。如下图所示，7、6、9都是此数组的峰。</p>
-<p><img src="/images/计算机算法-分治法-01.png" alt="一维数组" title="计算机算法-分治法-01"></p>
-<p>方案1.1 由定义出发，遍历所有元素即可，由于只要求找一个峰，找到即结束。易知最坏情况（即只有最后一个元素满足条件）的复杂度为(n)。</p>
-<p>算法优化<br>注意到问题的要求，并不需要找到所有的峰，而方案1.1在最坏情况下遍历所有元素的消耗与寻找所有的峰等同，所以很有可能做了无用功。</p>
-<p>注意到数组有峰的性质，只要子数组两端的元素仍然不小于其外侧相邻的元素，这样的性质就能在子数组中得到保持，我们采取二分的方法，这里用伪代码表示：</p>
-<p>方案1.2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">FIND_PEAK(A)</div><div class="line">    n=A.length</div><div class="line">    if A[n/2]&gt;=A[n/2-1] and A[n/2]&gt;=A[n/2+1]</div><div class="line">        return n/2</div><div class="line">    else if A[n/2]&lt;A[n/2-1]</div><div class="line">        return FIND_PEAK(A[1..n/2-1])</div><div class="line">    else</div><div class="line">        return FIND_PEAK(A[n/2+1..n])</div></pre></td></tr></table></figure></p>
-<p>这也就是说，取中间的元素，如果它本身就是峰，就结束；否则哪边的元素比中间大哪半边就必然有峰（用证明1的方法可得到验证）。如此递归，最坏复杂度降为(log n)。</p>
-<h5 id="二维数组"><a href="#二维数组" class="headerlink" title="二维数组"></a>二维数组</h5><p>二维数组的峰值是这样的：</p>
-<p><img src="/images/计算机算法-分治法-02.png" alt="二维数组" title="计算机算法-分治法-02"></p>
-<p>先铺垫一下，再看「峰」的本质：由定义易知这里的峰和函数中的峰，或极值是相似的。即最值一定是极值，而极值不一定是最值。</p>
-<p><strong>方案1</strong>：当然，我们的基本思路是将二元寻峰问题化归为一元寻峰问题。考虑寻找每一列的峰值。</p>
-<p><img src="/images/计算机算法-分治法-03.png" alt="方案一" title="计算机算法-分治法-03"></p>
-<p>如这张图所示，我们用橙色标记出了由优化后的寻找一维数组的峰值得到的每列一个峰值。然而下一步好像却没有什么好的方法继续寻找全局峰值。</p>
-<p>红色标记展示了一种失败的方法，即在纵向寻峰的基础上再在该行横向寻峰，得到6。它显然不符合峰的定义。</p>
-<p>注意到无论如何在一行或一列中寻找局部峰值，我们总无法保证它不小于相邻行列的数，我们就不得不在某些步骤上诉诸先前所讨论的最值了。</p>
-<p><strong>方案二：找到全局最大值。</strong></p>
-<p>由于数组是无序的，这种方案的复杂度只能是(m*n)，这不是我们希望看到的。</p>
-<p>自然地，优化的方法仍然是分治法。我们的目标是找到一个必定存在全局峰值的子数组。</p>
-<p>我们依旧从中间一列下手。然而我们这次寻找的是这一列的最大值，而非一个峰。仍然以上张图为例，我们找到的还是5。由于右边的6&gt;5，我们将范围缩小到右半边。然后递归处理。</p>
-<p>相比刚才的失败方法，区别在于找到5后我们不再把范围限定在这一行，而是整个右半边。</p>
-<p>去掉无关的数据，得到下图：</p>
-<p><img src="/images/计算机算法-分治法-04.png" alt="方案二" title="计算机算法-分治法-04"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">FIND_PEAK_2(A)</div><div class="line">    A[n/2][i] is max(A[n/2])</div><div class="line">    if A[n/2][i]&gt;=A[n/2-1][i] and A[n/2][i]&gt;=A[n/2+1][i]</div><div class="line">        return (n/2,i)</div><div class="line">    else if A[n/2][i]&lt;A[n/2-1][i]</div><div class="line">        return FIND_PEAK_2(A)[1..n/2-1]</div><div class="line">    else</div><div class="line">        return FIND_PEAK_2(A)[n/2+1..n]</div></pre></td></tr></table></figure>
-<p>这种方案的最坏复杂度是(m*logn)。当然，根据(m,n)的大小，在实际操作时我们可以灵活选择从行或列着手。</p>
-<p><a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/" target="_blank" rel="external">MIT公开课</a></p>
-  
+		  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/计算机算法/">计算机算法</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/计算机算法/">计算机算法</a>
-  </div>
 
 </div>
 
@@ -163,17 +122,10 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2018/03/19/python-python的运行的原理/" title="python|python的运行的原理">
-  <span>
-  python|python的运行的原理</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2018/03/16/工具-gcc的一些坑/"  title="工具|gcc的一些坑">
- <span>工具|gcc的一些坑
+<a href="/2018/04/12/面试-Java常考面试题/"  title="面试|Java常考面试题">
+ <span>面试|Java常考面试题
 </span>
 </a>
 </div>

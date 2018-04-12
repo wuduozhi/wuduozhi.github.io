@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-11T16:50:50.694Z</updated>
+  <updated>2018-04-12T00:57:19.410Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,61 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>面试|php常考面试题</title>
+    <link href="http://yoursite.com/2018/04/12/%E9%9D%A2%E8%AF%95-php%E5%B8%B8%E8%80%83%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    <id>http://yoursite.com/2018/04/12/面试-php常考面试题/</id>
+    <published>2018-04-12T08:57:19.000Z</published>
+    <updated>2018-04-12T00:57:19.410Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>面试|Java常考面试题</title>
+    <link href="http://yoursite.com/2018/04/12/%E9%9D%A2%E8%AF%95-Java%E5%B8%B8%E8%80%83%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    <id>http://yoursite.com/2018/04/12/面试-Java常考面试题/</id>
+    <published>2018-04-12T08:57:04.000Z</published>
+    <updated>2018-04-12T01:08:57.202Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="JDK和JRE的区别是什么？"><a href="#JDK和JRE的区别是什么？" class="headerlink" title="JDK和JRE的区别是什么？"></a>JDK和JRE的区别是什么？</h3><p>链接：<a href="https://www.nowcoder.com/questionTerminal/36bd480a52d542298a8ca2056021f774" target="_blank" rel="external">https://www.nowcoder.com/questionTerminal/36bd480a52d542298a8ca2056021f774</a><br>来源：牛客网</p>
+<p>JRE： Java Runtime Environment<br>JDK：Java Development Kit<br>JRE顾名思义是java运行时环境，包含了java虚拟机，java基础类库。是使用java语言编写的程序运行所需要的软件环境，是提供给想运行java程序的用户使用的。<br>JDK顾名思义是java开发工具包，是程序员使用java语言编写java程序所需的开发工具包，是提供给程序员使用的。JDK包含了JRE，同时还包含了编译java源码的编译器javac，还包含了很多java程序调试和分析的工具：jconsole，jvisualvm等工具软件，还包含了java程序编写所需的文档和demo例子程序。<br>如果你需要运行java程序，只需安装JRE就可以了。如果你需要编写java程序，需要安装JDK。<br>JRE根据不同操作系统（如：windows，linux等）和不同JRE提供商（IBM,ORACLE等）有很多版本 </p>
+<p>再说说java的跨平台吧:<br>java源程序先经过javac编译器编译成二进制的.class字节码文件（java的跨平台指的就是.class字节码文件的跨平台，.class字节码文件是与平台无关的），.class文件再运行在jvm上，java解释器（jvm的一部分）会将其解释成对应平台的机器码执行，所以java所谓的跨平台就是在不同平台上安装了不同的jvm，而在不同平台上生成的.class文件都是一样的，而.class文件再由对应平台的jvm解释成对应平台的机器码执行</p>
+<p>最后解释下机器码和字节码的区别:<br> 一，机器码，完全依附硬件而存在～并且不同硬件由于内嵌指令集不同，即使相同的0 1代码<br>意思也可能是不同的～换句话说，根本不存在跨平台性～比如～不同型号的CPU,你给他个指令10001101，他们可能会解析为不同的结果～<br>二，我们知道JAVA是跨平台的，为什么呢？因为他有一个jvm,不论那种硬件，只要你装有jvm,那么他就认识这个JAVA字节码～～～～至于底层的机器码，咱不用管，有jvm搞定，他会把字节码再翻译成所在机器认识的机器码～～～</p>
+<h3 id="是否可以在static环境中访问非static变量？"><a href="#是否可以在static环境中访问非static变量？" class="headerlink" title="是否可以在static环境中访问非static变量？"></a>是否可以在static环境中访问非static变量？</h3><p>static变量在Java中是属于类的，它在所有的实例中的值是一样的。当类被Java虚拟机载入的时候，会对static变量进行初始化。如果你的代码尝试不用实例来访问非static的变量，编译器会报错，因为这些变量还没有被创建出来，还没有跟任何实例关联上。</p>
+<h3 id="Java支持的数据类型有哪些？什么是自动拆装箱？"><a href="#Java支持的数据类型有哪些？什么是自动拆装箱？" class="headerlink" title="Java支持的数据类型有哪些？什么是自动拆装箱？"></a>Java支持的数据类型有哪些？什么是自动拆装箱？</h3><p>Java语言支持的8种基本数据类型是：</p>
+<ul>
+<li>byte</li>
+<li>short</li>
+<li>int</li>
+<li>long</li>
+<li>float</li>
+<li>double</li>
+<li>boolean</li>
+<li>char</li>
+</ul>
+<p>自动装箱是Java编译器在基本数据类型和对应的对象包装类型之间做的一个转化。比如：把int转化成Integer，double转化成Double，等等。反之就是自动拆箱。</p>
+<p>Java支持的数据类型包括两种：一种是基本数据类型，包含byte，char,short, boolean ,int , long, float,double;另一种是引用类型：如String等，其实是对象的引用，JVM中虚拟栈中存的是对象的地址，创建的对象实质在堆中，通过地址来找到堆中的对象的过程，即为引用类型。自动装箱就是Java编译器在基本数据类型和对应的对象包装类型间的转化，即int转化为Integer,自动拆箱是Integer调用其方法将其转化为int的过程 .</p>
+<h3 id="Java支持多继承么？"><a href="#Java支持多继承么？" class="headerlink" title="Java支持多继承么？"></a>Java支持多继承么？</h3><p>Java中类不支持多继承，只支持单继承（即一个类只有一个父类）。 但是java中的接口支持多继承，，即一个子接口可以有多个父接口。（接口的作用是用来扩展对象的功能，一个子接口继承多个父接口，说明子接口扩展了多个功能，当类实现接口时，类就扩展了相应的功能）。 </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;JDK和JRE的区别是什么？&quot;&gt;&lt;a href=&quot;#JDK和JRE的区别是什么？&quot; class=&quot;headerlink&quot; title=&quot;JDK和JRE的区别是什么？&quot;&gt;&lt;/a&gt;JDK和JRE的区别是什么？&lt;/h3&gt;&lt;p&gt;链接：&lt;a href=&quot;https://ww
+    
+    </summary>
+    
+      <category term="面试" scheme="http://yoursite.com/categories/%E9%9D%A2%E8%AF%95/"/>
+    
+    
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+  </entry>
   
   <entry>
     <title>计算机算法|我的学习之路</title>
@@ -1213,151 +1268,6 @@ if($stmt-&gt;fetch()){
     
     
       <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>python|urllib2的一个简单案例</title>
-    <link href="http://yoursite.com/2018/03/21/python-urllib2%E7%9A%84%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E6%A1%88%E4%BE%8B/"/>
-    <id>http://yoursite.com/2018/03/21/python-urllib2的一个简单案例/</id>
-    <published>2018-03-20T23:50:24.000Z</published>
-    <updated>2018-03-20T16:43:02.616Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="网络爬虫的概念"><a href="#网络爬虫的概念" class="headerlink" title="网络爬虫的概念"></a>网络爬虫的概念</h3><p>网络爬虫（Web Spider）是一种自动获取网页内容的程序，是搜索引擎的重要组成部分。 初次深入了解爬虫的概念是在吴军博士的《数学之美》中，其中描述互联网本质上就是一张无形的大网，我们可以把每一个网页当做网中的节点，超链接作为连接节点的弧。这样网络爬虫就可以从任何一个网页出发，通过图的遍历算法，自动的访问每一个网页并将它们存起来。</p>
-<p>实际上程序的目的都是代替人来完成大量的重复操作，爬虫亦是如此。假设现有一个需求是需要获取<a href="http://news.upc.edu.cn/sdyw" target="_blank" rel="external">中国石油大学新闻网</a>的所有新闻标题及发布日期来进行统计分析，那么用人来实现这个需求需要大概以下几个步骤。</p>
-<ol>
-<li>通过浏览器访问中国石油大学新闻网。</li>
-<li>根据网页内容分析出哪些地方是我们需要获取的标题和日期。</li>
-<li>将获取的数据存储到文件中。</li>
-<li>跳转到下一页重复执行2和3步骤直到所有内容获取完毕。</li>
-</ol>
-<p>接下来我们就会按照以上思路用Python编写一个简单的爬虫。</p>
-<h3 id="llib2抓取网页内容"><a href="#llib2抓取网页内容" class="headerlink" title="llib2抓取网页内容"></a>llib2抓取网页内容</h3><p>网页抓取就是把URL地址指定的网络资源读取出来，保存到本地。相当于我们平时在浏览器中通过网址浏览网页，只不过我们看到的是解析过的页面效果，而程序获取到的是源代码等资。 Python的标准库和组件非常强大，可以处理包括数学计算、网络传输、正则表达式等诸多操作。urllib2就是使用各种协议打开url的一个扩展包。最简单的方法就是调用urlopen的方法，比如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">import urllib2</div><div class="line"></div><div class="line">url=&quot;http://news.upc.edu.cn/sdyw/&quot;</div><div class="line">response=urllib2.urlopen(url)</div><div class="line">html=response.read()</div><div class="line">print html</div></pre></td></tr></table></figure></p>
-<p>运行以上代码，可以得到以下结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/loose.dtd&quot;&gt;</div><div class="line">&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;</div><div class="line">&lt;title&gt;中国石油大学新闻网&lt;/title&gt;</div><div class="line">&lt;meta name=&quot;keywords&quot; content=&apos;石大门户网,石大资讯,石大新闻,中国石油大学新闻网,创造太阳网,石油之光&apos; /&gt;</div><div class="line">&lt;!--省略以下运行结果--&gt;</div></pre></td></tr></table></figure></p>
-<p>我们在浏览器中打开该网址，右键选择查看源代码发现和输出的内容是一致的，这时我们第一步已经完成了。</p>
-<h3 id="正则表达式返回匹配信息"><a href="#正则表达式返回匹配信息" class="headerlink" title="正则表达式返回匹配信息"></a>正则表达式返回匹配信息</h3><p>第二步中分析出哪些信息是我们需要的信息这个过程对于人来说非常简单，但是对于电脑就没那么容易了，这里需要引入正则表达式的概念。</p>
-<blockquote>
-<p>正则表达式，又称正规表示法、常规表示法（英语：Regular Expression，在代码中常简写为regex、regexp或RE），计算机科学的一个概念。正则表达式使用单个字符串来描述、匹配一系列符合某个句法规则的字符串。在很多文本编辑器里，正则表达式通常被用来检索、替换那些符合某个模式的文本。</p>
-</blockquote>
-<p>简而言之，正则表达式就是为了处理相对复杂的文本查询或替换。 我们在新闻标题上单击右键，选择查看元素，这样Chrome浏览器下方就会出现开发者工具，并定位新闻标题所在HTML的位置。</p>
-<p><img src="/images/python-urllib2实践-01.jpg" alt="查找结果" title="python-urllib2实践-01"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a href=&quot;/sdyw/2014/04/17/15361630123.shtml&quot; target=&quot;_blank&quot;&gt;1项目入选团中央学校共青团重点工作创新试点&lt;/a&gt;</div></pre></td></tr></table></figure>
-<p>我们分析HTML可以得知&lt;a href=”/sdyw/是标题的固定前缀，2014/04/17是新闻发布日期，15361630123.shtml是随机生成的静态页面名称。1项目入选团中央学校共青团重点工作创新试点是我们需要获取的新闻标题，最后以结尾，实现代码如下。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># -*- coding: utf-8 -*- </div><div class="line">import urllib2</div><div class="line">import re</div><div class="line"># 1.获取访问页面的HMTL</div><div class="line">url=&quot;http://news.upc.edu.cn/sdyw/&quot;</div><div class="line">response=urllib2.urlopen(url)</div><div class="line">html=response.read()</div><div class="line"># 2.根据正则表达式抓取特定内容</div><div class="line">r=re.compile(r&apos;&lt;a href=&quot;/sdyw/(?P&lt;Date&gt;.&#123;10&#125;).*&quot; target=&quot;_blank&quot;&gt;(?P&lt;Title&gt;.+)&lt;/a&gt;&apos;)</div><div class="line">news=r.findall(html)</div><div class="line">print news</div></pre></td></tr></table></figure>
-<p>在上方加入import re来导入python自带的正则表达式模块，通过re.compile(strPattern[, flag])方法将字符串形式的正则表达式编译为Pattern对象，第二个参数flag是匹配模式，我们此处省略填写。</p>
-<p>正则表达式字符串开头有一个前缀r，r是raw(原始)的意思。因为在表示字符串中有一些转义符，如表示回车’\n’。如果要表示\需要写为’\‘。但如果我就是需要表示一个’\’+’n’，不用r方式要写为:’\n’。但使用r方式则为r’\n’这样清晰多了。</p>
-<p>固定字符串<a href="/sdyw/后跟了一个用括号包起来的字符串(?P<Date>.{10})，(?P<name>...) 是定义一个命名组，(?P=name)则是对命名组的逆向引用。而后面的.匹配任意除换行符" \n"以外的字符。.{10}匹配10个任意字符，<a="" highlight="" plain"=""><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">for i in range(len(news)):</div><div class="line">    date=news[i][0]</div><div class="line">    title=news[i][3]</div><div class="line">    print title+&quot; &quot;+date</div></pre></td></tr></table>
-<h4 id="遍历所有新闻页面"><a href="#遍历所有新闻页面" class="headerlink" title="遍历所有新闻页面"></a>遍历所有新闻页面</h4><p>上一节我们获取到了第一页的新闻数据，但是我们的目的是需要获取所有的内容。 那我们跳转到其他分页看看有没有什么规律可循。通过分析发现，第一页的url为http://news.upc.edu.cn/sdyw/List_171.shtml，第二页的url为http://news.upc.edu.cn/sdyw/List_170.shtml,最后一页的url为http://news.upc.edu.cn/sdyw/List_1.shtml。那么遍历所有新闻页面获取内容这件事就变的非常简单了，直接通过for循环就可以实现，废话不说了，直接上代码吧。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"># -*- coding: utf-8 -*- </div><div class="line">import urllib2</div><div class="line">import re</div><div class="line">import MySQLdb as mdb</div><div class="line"></div><div class="line">if __name__==&quot;__main__&quot;:</div><div class="line">    url=&quot;http://news.upc.edu.cn/sdyw/List_&quot;</div><div class="line">    con=mdb.connect(&apos;localhost&apos;,&apos;root&apos;,&apos;root&apos;,&apos;Python&apos;,charset=&apos;utf8&apos;)</div><div class="line">    with con:</div><div class="line">        for x in xrange(1,171):</div><div class="line">            response=urllib2.urlopen(url+str(x)+&apos;.shtml&apos;)</div><div class="line">            html=response.read()</div><div class="line">            r=re.compile(r&apos;&lt;a href=&quot;/sdyw/(?P&lt;Date&gt;.&#123;10&#125;).*&quot; target=&quot;_blank&quot;&gt;(?P&lt;Title&gt;.+)&lt;/a&gt;&apos;)</div><div class="line">            news=r.findall(html)</div><div class="line">            curs=con.cursor()</div><div class="line">            for i in range(len(news)):</div><div class="line">                date=news[i][0]</div><div class="line">                title=news[i][5]</div><div class="line">                curs.execute(&quot;INSERT INTO news2(PublishDate,Title) VALUES(%s,%s)&quot;,(date,title))</div><div class="line">                print title+&quot; &quot;+date</div></pre></td></tr></table></figure></p>
-<p>到此，本文已经结束了，短短的20行代码就可以实现一个简单的爬虫，这就是Python的魅力。</p>
-</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;网络爬虫的概念&quot;&gt;&lt;a href=&quot;#网络爬虫的概念&quot; class=&quot;headerlink&quot; title=&quot;网络爬虫的概念&quot;&gt;&lt;/a&gt;网络爬虫的概念&lt;/h3&gt;&lt;p&gt;网络爬虫（Web Spider）是一种自动获取网页内容的程序，是搜索引擎的重要组成部分。 初次深入了
-    
-    </summary>
-    
-      <category term="python" scheme="http://yoursite.com/categories/python/"/>
-    
-    
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>安全|谈谈如何防范短信验证码被攻击</title>
-    <link href="http://yoursite.com/2018/03/21/%E5%AE%89%E5%85%A8-%E8%B0%88%E8%B0%88%E5%A6%82%E4%BD%95%E9%98%B2%E8%8C%83%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81%E8%A2%AB%E6%94%BB%E5%87%BB/"/>
-    <id>http://yoursite.com/2018/03/21/安全-谈谈如何防范短信验证码被攻击/</id>
-    <published>2018-03-20T23:30:15.000Z</published>
-    <updated>2018-03-20T17:13:32.379Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近在写个项目，需要发送验证验证手机号，之前的接口设计是只需要发送电话号码过来，后台验证电话号码的正确性，就发送验证码。</p>
-<p>殊不知这样设计存在巨大的安全隐患。如果短信验证码接口和页面不做任何限制，黑客很容易利用一些恶意的短信轰炸软件对接口进行攻击，不停的对同一个号码或者N个号码重复发送验证码短信。</p>
-<p>短信验证码被攻击，不仅会对用户造成骚扰，引起投诉，更会浪费你的短信余额，降低品牌形象。</p>
-<h3 id="验证的必要性"><a href="#验证的必要性" class="headerlink" title="验证的必要性"></a>验证的必要性</h3><p>在现实生活中，需要用户验证其手机号的场景有很多，例如：使用手机号注册账号、手机号修改密码、提交用户联系方式等……</p>
-<p>在这些场景中服务商要求用户对自身手机号码进行验证的原因在于：确保用户手机号真实、可用。</p>
-<p>确保能通过该联系方式联系到用户本人<br>防止用户随机提交他人手机号作为自身联系方式</p>
-<h3 id="验证方法是什么？"><a href="#验证方法是什么？" class="headerlink" title="验证方法是什么？"></a>验证方法是什么？</h3><p>现在普遍采用验证码方式对手机号进行验证，分为：</p>
-<ul>
-<li>短信验证码</li>
-<li>语音验证码</li>
-</ul>
-<h3 id="验证需要注意哪些？"><a href="#验证需要注意哪些？" class="headerlink" title="验证需要注意哪些？"></a>验证需要注意哪些？</h3><p>在用户进行手机号验证的过程中可能会出现如下问题：</p>
-<ul>
-<li>用户利用短信验证码接口向他人频繁发送骚扰短信</li>
-<li>用户通过发包暴力破解验证码</li>
-</ul>
-<p>因此在验证过程中需加入如下手段：</p>
-<ul>
-<li>在发送短信验证码前需让用户进行图形验证码校验</li>
-<li>用户提交短信验证码失败5次后，将此短信验证码作废</li>
-</ul>
-<p>为防止用户对验证码的暴力破解和重复使用，加入验证码作废机制：</p>
-<ul>
-<li>图形验证码对比 1 次后（无论成功与否）立即失效</li>
-<li>短信验证码成功对比 1 次后立即失效</li>
-<li>短信验证码错误对比 5 次后失效</li>
-</ul>
-<h3 id="如何防范短信验证码被攻击？"><a href="#如何防范短信验证码被攻击？" class="headerlink" title="如何防范短信验证码被攻击？"></a>如何防范短信验证码被攻击？</h3><h4 id="图形验证码"><a href="#图形验证码" class="headerlink" title="图形验证码"></a>图形验证码</h4><p>大部分短信轰炸脚本基于网页爬虫，图形验证码可以简单粗暴的防御这类刷码行为。</p>
-<p><img src="/images/web安全-短信验证-01.png" alt="图片验证" title="web安全-短信验证-01"></p>
-<h4 id="记录、比对IP和手机号码，做频率限制，过滤空IP头"><a href="#记录、比对IP和手机号码，做频率限制，过滤空IP头" class="headerlink" title="记录、比对IP和手机号码，做频率限制，过滤空IP头"></a>记录、比对IP和手机号码，做频率限制，过滤空IP头</h4><p>用户请求验证码时，记录请求的IP和手机号码，并对发送频率做限制，例如每分钟/单个IP/单个手机号仅能请求一次。如果脚本无法获取用户的真实IP，请直接过滤这类请求。</p>
-<h4 id="在-SUBMAIL-设置验证码模板的单日请求上线"><a href="#在-SUBMAIL-设置验证码模板的单日请求上线" class="headerlink" title="在 SUBMAIL 设置验证码模板的单日请求上线"></a>在 SUBMAIL 设置验证码模板的单日请求上线</h4><p>设置验证码模板的单日请求上限，设置一个合适的数值，这样每个手机号码单日超过这个上线的数量的验证码请求会被SUBMAIL直接过滤。</p>
-<h4 id="设置-IP-白名单"><a href="#设置-IP-白名单" class="headerlink" title="设置 IP 白名单"></a>设置 IP 白名单</h4><p>设置IP白名单，保护您的APPID不被非法劫持后滥用,只允许名单内的ip请求能得到相应。</p>
-<h4 id="SUBMAIL-主动防御机制"><a href="#SUBMAIL-主动防御机制" class="headerlink" title="SUBMAIL 主动防御机制"></a>SUBMAIL 主动防御机制</h4><p>如上述3种方法还不能完全防御，您也不用担心，因为SUBMAIL为短信验证码接口植入了主动防御的机制，提供了更强大的保护措施。SUBMAIL 主动防御机制会在以下3种情况中被触发：</p>
-<ol>
-<li>空号率触发安全机制：当用户请求发送的手机号码空号率达到一定的百分比之后，触发防御机制；</li>
-<li>手机号码高频率请求触发安全机制：当单个手机号高频率的请求验证码时，到达一定比例，触发防御机制；</li>
-<li>历史黑名单命中率触发安全机制：当命中历史黑名单到达一定比例时，触发防御机制；</li>
-</ol>
-<p>SUBMAIL 主动防御机制被触发后，将会自动设置合适的安全级别，防御恶意请求。例如非常请求仅能获取3次验证码，如超过3次，将会被列入临时保护黑名单。</p>
-<h4 id="使用PHP实现的一个小案例"><a href="#使用PHP实现的一个小案例" class="headerlink" title="使用PHP实现的一个小案例"></a>使用PHP实现的一个小案例</h4><h5 id="图形验证码-1"><a href="#图形验证码-1" class="headerlink" title="图形验证码"></a>图形验证码</h5><p>验证过程主要分为以下几步：</p>
-<ul>
-<li>生成图形验证码</li>
-<li>将验证码字符串保存在 session 中</li>
-<li>将用户所提交的验证码与 session 对比<ul>
-<li>对比成功：用户通过图形验证码验证，程序进入下一流程，销毁 session</li>
-<li>对比失败：销毁 session。刷新验证码，要求用户重新进行验证操作</li>
-</ul>
-</li>
-</ul>
-<p>其中，生成图形验证码的大致步骤为：</p>
-<ul>
-<li>产生一个随机字符串</li>
-<li>创建一个图像</li>
-<li>将字符串输出到图像中</li>
-<li>在图像中加入噪点干扰，例如直线、雪花点等</li>
-<li>输出图像</li>
-<li>销毁图像资源</li>
-</ul>
-<h5 id="短信验证码"><a href="#短信验证码" class="headerlink" title="短信验证码"></a>短信验证码</h5><p>和图形验证码的机制是一样的，也是将用户提交的验证码与 session 做对比。验证过程如下：</p>
-<ul>
-<li>产生一个随机 6 位数（按需求而定）</li>
-<li>将随机数存储在 session 中</li>
-<li>拟定短信文案，加入验证码信息，调用短信平台接口向指定手机号发送短信</li>
-<li>将用户所提交的验证码与 session 内容进行对比<ul>
-<li>对比成功：用户通过短信验证码流程，销毁 session，进入下一步流程（允许用户获取短信验证码）</li>
-<li>对比失败：<ul>
-<li>失败次数 &lt;5 ：允许用户重新提交验证码进行验证</li>
-<li>失败次数 &gt;=5 ：销毁 session，用户若再提交，提示用户验证码已过期，要求用户重新获取验证码</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @param $code 验证码</div><div class="line"> * @param $phone 用户手机号</div><div class="line"> * @return int -1：已过期 0:失败 1:成功</div><div class="line"> */</div><div class="line">private function checkCode($code, $phone)</div><div class="line">&#123;</div><div class="line">    session_start();</div><div class="line">    if (!isset($_SESSION[static::MESSAGE_CODE_TIME]) || !isset($_SESSION[static::MESSAGE_CODE])) &#123;</div><div class="line">        return 0;</div><div class="line">    &#125;</div><div class="line">	// 验证码五分钟后过期</div><div class="line">    if ($_SESSION[static::MESSAGE_CODE_TIME] + 60*5 &lt; time()) &#123;</div><div class="line">        // 销毁 session</div><div class="line">        $this-&gt;unsetCode();</div><div class="line">        return -1;</div><div class="line">    &#125; else &#123;</div><div class="line">        if ($_SESSION[static::MESSAGE_CODE] == $code &amp;&amp; $_SESSION[static::MESSAGE_CODE_USER] == $phone) &#123;</div><div class="line">            // 销毁 session</div><div class="line">            $this-&gt;unsetCode();</div><div class="line">            return 1;</div><div class="line">        &#125; else &#123;</div><div class="line">            // 输入验证码错误</div><div class="line">            if (!isset($_SESSION[static::SESSION_MESSAGE_CODE_COUNT])) &#123;</div><div class="line">            		// 初始化错误次数</div><div class="line">                $_SESSION[static::SESSION_MESSAGE_CODE_COUNT] = 1;</div><div class="line">            &#125; else &#123;</div><div class="line">            		// 记录错误次数</div><div class="line">                $_SESSION[static::SESSION_MESSAGE_CODE_COUNT]++;</div><div class="line">            &#125;</div><div class="line">            if ($_SESSION[static::SESSION_MESSAGE_CODE_COUNT] &gt;= 5) &#123;</div><div class="line">                // 尝试超过5次，销毁 session</div><div class="line">                $this-&gt;unsetCode();</div><div class="line">            &#125;</div><div class="line">            return 0;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近在写个项目，需要发送验证验证手机号，之前的接口设计是只需要发送电话号码过来，后台验证电话号码的正确性，就发送验证码。&lt;/p&gt;
-&lt;p&gt;殊不
-    
-    </summary>
-    
-      <category term="Web安全" scheme="http://yoursite.com/categories/Web%E5%AE%89%E5%85%A8/"/>
-    
-    
-      <category term="Web" scheme="http://yoursite.com/tags/Web/"/>
     
   </entry>
   
