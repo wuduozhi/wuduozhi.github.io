@@ -1,0 +1,860 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>深入理解计算机系统|浮点数的表示 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="MathJax.Hub.Config({ tex2jax: {inlineMath: [[&apos;$&apos;,&apos;$&apos;], [&apos;\\(&apos;,&apos;\\)&apos;]]} });     第三次小班课|浮点数 浮点数的表示及IEEE 浮点格式 浮点数的表示范围   在讲之前，来段程序C语言 #include&amp;lt;stdio.h&amp;gt; int main(){     float sum;     int i;     //">
+<meta name="keywords" content="深入理解计算机系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解计算机系统|浮点数的表示">
+<meta property="og:url" content="http://yoursite.com/2018/04/14/深入理解计算机系统-浮点数的表示/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="MathJax.Hub.Config({ tex2jax: {inlineMath: [[&apos;$&apos;,&apos;$&apos;], [&apos;\\(&apos;,&apos;\\)&apos;]]} });     第三次小班课|浮点数 浮点数的表示及IEEE 浮点格式 浮点数的表示范围   在讲之前，来段程序C语言 #include&amp;lt;stdio.h&amp;gt; int main(){     float sum;     int i;     //">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/2018/04/14/深入理解计算机系统-浮点数的表示/07.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/14/深入理解计算机系统-浮点数的表示/03.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/14/深入理解计算机系统-浮点数的表示/02.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/14/深入理解计算机系统-浮点数的表示/04.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/14/深入理解计算机系统-浮点数的表示/01.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/14/深入理解计算机系统-浮点数的表示/01.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/14/深入理解计算机系统-浮点数的表示/05.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/04/14/深入理解计算机系统-浮点数的表示/06.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/04/14/深入理解计算机系统-浮点数的表示/08.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/14/深入理解计算机系统-浮点数的表示/10.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/14/深入理解计算机系统-浮点数的表示/11.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/04/14/深入理解计算机系统-浮点数的表示/12.jpg">
+<meta property="og:updated_time" content="2018-04-13T09:15:07.658Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入理解计算机系统|浮点数的表示">
+<meta name="twitter:description" content="MathJax.Hub.Config({ tex2jax: {inlineMath: [[&apos;$&apos;,&apos;$&apos;], [&apos;\\(&apos;,&apos;\\)&apos;]]} });     第三次小班课|浮点数 浮点数的表示及IEEE 浮点格式 浮点数的表示范围   在讲之前，来段程序C语言 #include&amp;lt;stdio.h&amp;gt; int main(){     float sum;     int i;     //">
+<meta name="twitter:image" content="http://yoursite.com/2018/04/14/深入理解计算机系统-浮点数的表示/07.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/04/14/深入理解计算机系统-浮点数的表示/" title="深入理解计算机系统|浮点数的表示" itemprop="url">深入理解计算机系统|浮点数的表示</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-04-13T17:14:01.000Z" itemprop="datePublished"> 发表于 2018-04-14</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#第三次小班课-浮点数"><span class="toc-number">1.</span> <span class="toc-text">第三次小班课|浮点数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#浮点数的表示及IEEE-浮点格式"><span class="toc-number">1.1.</span> <span class="toc-text">浮点数的表示及IEEE 浮点格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#浮点数的表示范围"><span class="toc-number">1.2.</span> <span class="toc-text">浮点数的表示范围</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在讲之前，来段程序"><span class="toc-number">2.</span> <span class="toc-text">在讲之前，来段程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#程序的结果"><span class="toc-number">3.</span> <span class="toc-text">程序的结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二进制小数"><span class="toc-number">4.</span> <span class="toc-text">二进制小数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#来看一个表"><span class="toc-number">5.</span> <span class="toc-text">来看一个表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IEEE标准"><span class="toc-number">6.</span> <span class="toc-text">IEEE标准</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#不如来些例子"><span class="toc-number">7.</span> <span class="toc-text">不如来些例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#M-尾数部分"><span class="toc-number">8.</span> <span class="toc-text">M 尾数部分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#E-指数部分"><span class="toc-number">9.</span> <span class="toc-text">E 指数部分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#来实际操作一些"><span class="toc-number">10.</span> <span class="toc-text">来实际操作一些</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#result"><span class="toc-number">11.</span> <span class="toc-text">result</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开头的0-1呢？"><span class="toc-number">12.</span> <span class="toc-text">开头的0.1呢？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些精华"><span class="toc-number">13.</span> <span class="toc-text">一些精华</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#规范化"><span class="toc-number">14.</span> <span class="toc-text">规范化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#规范化取值范围"><span class="toc-number">15.</span> <span class="toc-text">规范化取值范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非规格化的"><span class="toc-number">16.</span> <span class="toc-text">非规格化的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非规格化的取值范围"><span class="toc-number">17.</span> <span class="toc-text">非规格化的取值范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特殊值"><span class="toc-number">18.</span> <span class="toc-text">特殊值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">19.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#THANK-YOU"><span class="toc-number"></span> <span class="toc-text">THANK YOU</span></a>
+		
+		</div>
+		
+		<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<h3 id="第三次小班课-浮点数"><a href="#第三次小班课-浮点数" class="headerlink" title="第三次小班课|浮点数"></a>第三次小班课|浮点数</h3><ul>
+<li><h4 id="浮点数的表示及IEEE-浮点格式"><a href="#浮点数的表示及IEEE-浮点格式" class="headerlink" title="浮点数的表示及IEEE 浮点格式"></a>浮点数的表示及IEEE 浮点格式</h4></li>
+<li><h4 id="浮点数的表示范围"><a href="#浮点数的表示范围" class="headerlink" title="浮点数的表示范围"></a>浮点数的表示范围</h4></li>
+</ul>
+<hr>
+<h3 id="在讲之前，来段程序"><a href="#在讲之前，来段程序" class="headerlink" title="在讲之前，来段程序"></a>在讲之前，来段程序</h3><pre><code>C语言
+#include&lt;stdio.h&gt;
+int main(){
+    float sum;
+    int i;
+    //将保存总和量清0
+    sum = 0;
+    //将0.1累加100次
+    for(i=1;i&lt;=100;i++){
+        sum += 0.1;
+    }
+    //显示结果
+    printf(&quot;%f\n&quot;,sum);
+    return 0;
+}
+</code></pre><p>代码的作用很简单，就是将0.1累加100次，大家猜猜结果是什么呀？</p>
+<hr>
+<h3 id="程序的结果"><a href="#程序的结果" class="headerlink" title="程序的结果"></a>程序的结果</h3><p><img src="07.png" alt="result"></p>
+<p>哇塞，神通无比的计算机也出错了，是程序出bug了？还是什么原因呢？</p>
+<p>仔细观察，程序是没错的，要想找到答案，只有到计算机的内部，看看计算机是怎么处理小数的。</p>
+<hr>
+<h3 id="二进制小数"><a href="#二进制小数" class="headerlink" title="二进制小数"></a>二进制小数</h3><p>我们先来看看二进制是如何表示小数的，这有助于我们理解浮点数的表示。如果是一个十进制小数，相信各位都再熟悉不过了，对于12345.6789来说，它的值是由下列式子得到的。</p>
+<p><img src="03.png" alt="整数"></p>
+<p>　　这对我们来说应该是常识，那么对于二进制小数也是类似的，考虑这样一个小数10010.1110，它的值则可以由以下式子得到。</p>
+<p><img src="02.png" alt="二进制小数"></p>
+<p>　　从这个角度来看，二进制小数其实与十进制小数是一样的计算方式，只是这里是2的整数次幂而已。</p>
+<p>　　在书中给出了二进制小数的公式，对于一个形式为bm….b0.b-1….b-n的二进制小数b来说，它的值为以下计算方式。</p>
+<p><img src="04.png" alt="二进制小数"></p>
+<hr>
+<h3 id="来看一个表"><a href="#来看一个表" class="headerlink" title="来看一个表"></a>来看一个表</h3><table>
+<thead>
+<tr>
+<th>二进制数</th>
+<th>十进制数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.0000</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0.0001</td>
+<td>0.0625</td>
+</tr>
+<tr>
+<td>0.0010</td>
+<td>0.125</td>
+</tr>
+<tr>
+<td>0.0011</td>
+<td>0.1875</td>
+</tr>
+<tr>
+<td>0.0100</td>
+<td>0.25</td>
+</tr>
+<tr>
+<td>0.0101</td>
+<td>0.3125</td>
+</tr>
+<tr>
+<td>0.0110</td>
+<td>0.375</td>
+</tr>
+<tr>
+<td>0.0111</td>
+<td>0.4375</td>
+</tr>
+<tr>
+<td>0.1000</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>0.1001</td>
+<td>0.5625</td>
+</tr>
+<tr>
+<td>0.1010</td>
+<td>0.625</td>
+</tr>
+<tr>
+<td>0.1011</td>
+<td>0.6875</td>
+</tr>
+<tr>
+<td>0.1100</td>
+<td>0.75</td>
+</tr>
+<tr>
+<td>0.1101</td>
+<td>0.8125</td>
+</tr>
+<tr>
+<td>0.1110</td>
+<td>0.875</td>
+</tr>
+<tr>
+<td>0.1111</td>
+<td>0.9375</td>
+</tr>
+</tbody>
+</table>
+<p>对于连续的二进制数，对应的十进制数是不连续的。</p>
+<hr>
+<h3 id="IEEE标准"><a href="#IEEE标准" class="headerlink" title="IEEE标准"></a>IEEE标准</h3><blockquote>
+<p>电气和电子工程师协会( IEEE，全称是Institute of Electrical and Electronics Engineers)是一个国际性的电子技术与信息科学工程师的协会，是目前全球最大的非营利性专业技术学会，其会员人数超过40万人，遍布160多个国家。IEEE致力于电气、电子、计算机工程和与科学有关的领域的开发和研究，在太空、计算机、电信、生物医学、电力及消费性电子产品等领域已制定了900多个行业标准，现已发展成为具有较大影响力的国际学术组织。</p>
+</blockquote>
+<p>根据IEEE标准，任意一个二进制浮点数V可以表示成下面的形式：</p>
+<p><img src="01.png" alt="IEEE标准"></p>
+<hr>
+<h3 id="不如来些例子"><a href="#不如来些例子" class="headerlink" title="不如来些例子"></a>不如来些例子</h3><p><img src="01.png" alt="IEEE标准"></p>
+<ul>
+<li>十进制的5.0，写成二进制是101.0，相当于1.01×2^2。那么，按照上面V的格式，可以得出s=0，M=1.01，E=2。</li>
+<li>十进制的-5.0，写成二进制是-101.0，相当于-1.01×2^2。那么，s=1，M=1.01，E=2。</li>
+</ul>
+<hr>
+<h3 id="M-尾数部分"><a href="#M-尾数部分" class="headerlink" title="M 尾数部分"></a>M 尾数部分</h3><ul>
+<li>M 尾数部分使用正则表达式，可以将表现形式多样的浮点数统一为一种表现形式。例如，十进制数0.75有如下表示方法：</li>
+</ul>
+<p><img src="05.jpg" alt="0.75"></p>
+<p>对于十进制数来说，应该遵循”小数点前面是0，小数点后面第一位不能是0的”这样的规则。同理，对二进制数来说，它也应该有自己的规则：“将小数点前面的值固定为1的正则表达式”。具体的操作就是将二进制数进行小数左移或右移数次后，整数部分第一位变为 1 。同时，在计算机的存储中，第一位的 1 不保存，原因是第一位必须为 1 。因此，省略改部分后，就节省了一个数据位，从而能表示更多的数据范围。</p>
+<pre><code>1011.0011                     ...原始数值
+    |
+0001.0110011                  ...右移是整数部分使第一位变为 1
+    |
+0001.01100110000000000000000  ...确保小数点后的长度为23位
+    |
+01100110000000000000000       ...仅保留小数点后面的部分，完成正则表达式
+</code></pre><hr>
+<h3 id="E-指数部分"><a href="#E-指数部分" class="headerlink" title="E 指数部分"></a>E 指数部分</h3><ul>
+<li>E 指数部分采用的是EXCESS系统，使用这种方法主要是<strong>为了表示负数时不用使用符号位</strong>。在某些情况下，在指数部分，需要通过“负00次幂”的形式来表示负数。EXCESS系统是指，通过将指数部分表示范围的中间值设为0，使得负数不用用符号位来表示。</li>
+<li>也就是说，当指数部分是八位单精度浮点数时，最大值11111111 = 255 的 1/2，即01111111 = 127 表述的是 0 ；是 11 位双精度浮点数时 11111111111 = 2047 的 1/2.即01111111111 = 1023 表述 0。</li>
+</ul>
+<p><img src="06.jpg" alt="0.75"></p>
+<hr>
+<h3 id="来实际操作一些"><a href="#来实际操作一些" class="headerlink" title="来实际操作一些"></a>来实际操作一些</h3><p>举个例子，十进制数 0.75 在32位的计算机中是怎么表示的呢？来个程序验证一下。</p>
+<pre><code>#include&lt;stdio.h&gt;
+#include&lt;string.h&gt;
+int main(){
+    float data;
+    unsigned long buff;
+    int i;
+    char s[34];
+    scanf(&quot;%f&quot;,&amp;data);
+    //把数据复制4字节长度的整数变量buff中以逐个取出每一位
+    memcpy(&amp;buff,&amp;data,4);
+    for(i=33;i&gt;=0;i--){
+        if(i==1 || i==10){
+            s[i] = &apos;-&apos;;
+        }else{
+            if(buff%2==1){
+                s[i] = &apos;1&apos;;
+            }else{
+                s[i] = &apos;0&apos;;
+            }
+            buff/=2;
+        }
+    }
+    s[34] = &apos;\0&apos;;
+    printf(&quot;%s\n&quot;,s );
+    return 0;
+}
+</code></pre><hr>
+<h3 id="result"><a href="#result" class="headerlink" title="result"></a>result</h3><p>程序执行的结果</p>
+<p><img src="08.png" alt="result"></p>
+<p>内部表示</p>
+<pre><code>符号部分 ... 0表示整数
+|   指数部分 ...转换成十进制数是126，在EXCESS系统下，表示的是 126-127 = -1
+|      |
+0-01111110-10000000000000000000000
+                    |
+        尾数部分...表示的是1.以后的部分，也就是1.10000000000000000000000
+该数据用二进制表示为 1.1x2^-1,用十进制表示为 1.5x2^-1 = 0.75
+</code></pre><hr>
+<h3 id="开头的0-1呢？"><a href="#开头的0-1呢？" class="headerlink" title="开头的0.1呢？"></a>开头的0.1呢？</h3><p><img src="10.png" alt="result"></p>
+<pre><code>符号部分 ... 0表示整数
+|   指数部分 ...转换成十进制数是123，在EXCESS系统下，表示的是 123-127 = -4
+|      |
+0-01111011-10011001100110011001101
+                    |
+        尾数部分...表示的是1.以后的部分，也就是1.10011001100110011001101
+该数据用二进制表示为 1.10011001100110011001101x2^-4,
+用十进制表示为 1.600000023841858 x2^-4 = 0.1000000014901161
+</code></pre><hr>
+<h3 id="一些精华"><a href="#一些精华" class="headerlink" title="一些精华"></a>一些精华</h3><p>针对阶码E的值，浮点数的值可以分为三种不同的情况，分别是规格化的，非规格化的以及特殊值，这三种情况就是浮点数的奥义所在了。首先给出一个书中对于单精度的三种情况的图示描述，分别是1、2、3，其中3也就是特殊值又分了两种情况3a和3b。</p>
+<p><img src="11.jpg" alt="special"></p>
+<hr>
+<h3 id="规范化"><a href="#规范化" class="headerlink" title="规范化"></a>规范化</h3><p>规格化的浮点数是上述的第1种情况，对于单精度来说，也就是指数不为0且不为255的这种情况。</p>
+<p>在此范围内的浮点数，阶码会被转换成一个“偏置”后的有符号数。“偏置”的含义就是在原有的值的基础上加上一个偏移量，对于阶码位数为k的情况来说，偏移量$Bias = 2^{k-1}-1$。假设e是阶码的无符号数值，那么真实的阶码E = e - Bias。举个例子，假设阶码位数为8，则Bias = 127。由于8位阶码下的规格化的浮点数的阶码范围是1至254，因此真实阶码的范围则为-126至127。</p>
+<p>对于尾数的解释，则是一个小于1的小数或者0。也就是假设尾数位表示为fn-1…f0，则f的值为0.fn-1…f0。这只是尾数的值，当计算浮点数数值的时候，会在尾数值的基础上加1，也就是真实的尾数M = 1 + f。相当于我们省掉了1位二进制，形成了浮点数表示的约定，默认尾数的值还有一个最高位的1。</p>
+<hr>
+<h3 id="规范化取值范围"><a href="#规范化取值范围" class="headerlink" title="规范化取值范围"></a>规范化取值范围</h3><p>　对于规格化的浮点数来说，同样有三个比较重要的取值。</p>
+<p>1、当阶码为最低位为1，其余全为0，尾数为n个0时，此时的值为最小的规格化的值。它此时的阶码恰好与非规格化的阶码相同，都为$E=2-2^{k-1}$而它的尾数值则很好计算，由于尾数全部为0，则M = 1 + f = 1。因此此时的值为$2^{2 - 2^{k-1}}$</p>
+<p>###<code>0-00000001-00000000000000000000000</code></p>
+<p>2、当阶码为最高位为0，其余全为1，尾数为n个0时，此时的值为1。因为在偏置之后，阶码E = 0 ，而尾数M = 1 + f = 1。</p>
+<p>###<code>0-01111111-00000000000000000000000</code></p>
+<p>3、当阶码为最低位为0，其余全为1，尾数为n个1时，此时的值为最大的规格化的值。此时的阶码 $E = 2^{k-1}-1$， 尾数 $M = 2 - 2^{-n}$。 因此此时的值为$(2 - 2^{-n}) <em> 2^{-1} + 2^{k-1}$， 也可以化简一下为$(1 - 2^{-n-1}) </em> 2^{2^{k-1}}$</p>
+<p>###<code>0-11111110-11111111111111111111111</code></p>
+<hr>
+<h3 id="非规格化的"><a href="#非规格化的" class="headerlink" title="非规格化的"></a>非规格化的</h3><p>非规格化的浮点数对应图中的第2种情况，也就是阶码全为0的时候。</p>
+<p>按照上面规格化的阶码求值方式来说，非规格化的阶码值应该固定在-Bias这个值上面。不过这里有一个小技巧，我们设定阶码的值E = 1 - Bias。这样做是为了能够平滑的从非规格化的浮点数过渡到规格化的浮点数，有关这一点后面我们再详细看。</p>
+<p>对于尾数的解释，非规格化的方式与规格化不同，它不会对尾数进行加1的处理，也就是说，真实的尾数M = f。这是为了能够表示0这个数值，否则的话尾数总是大于1，那么无论如何都将得不到0这个数值。</p>
+<p>非规格化的浮点数除了可以表示0以外，它还有一个作用，就是可以表示接近于0的数值。另外，在浮点数当中，0的表示有两种，一种是位表示全部为0，则为+0.0。还有一种则是符号位为1，其余全为0，此时为-0.0。</p>
+<hr>
+<h3 id="非规格化的取值范围"><a href="#非规格化的取值范围" class="headerlink" title="非规格化的取值范围"></a>非规格化的取值范围</h3><p>对于非规格化的浮点数来说，由于阶码固定为k个0，因此真实阶码都为<br>$$ E = 1 - (2^{k-1} - 1) = 2 - 2^{k-1}$$<br>那么我们可以得到下面几个重要的取值。</p>
+<p>1、当尾数为n个0时，此时的值为+0.0。</p>
+<p>###<code>0-00000000-00000000000000000000000</code></p>
+<p>2、当尾数为最低位为1，其余全为0时，此时的值为最小的非0值。它此时的尾数<br>$$M = f = 2^{-n}$$<br>因此此时的值为<br>$$2^{-n} * 2^{2 - 2^{k-1}} = 2^{-n+2 - 2^{k-1}}$$</p>
+<p>###<code>0-00000000-00000000000000000000001</code></p>
+<p>3、当尾数为n个1时，此时的值为最大的非规格化的值。它此时的尾数<br>$$M = f = 1 - 2^{-n}$$<br>因此此时的值为<br>$$(1 - 2^{-n}) * 2^{2 - 2^{k-1}}$$</p>
+<p>###<code>0-00000000-11111111111111111111</code></p>
+<hr>
+<h3 id="特殊值"><a href="#特殊值" class="headerlink" title="特殊值"></a>特殊值</h3><p>特殊值则对应图中的3a和3b这两种情况，也就是阶码全为1的时候。</p>
+<p>在阶码全为1时，如果尾数位全为0，则表示无穷大。符号位为0则表示正无穷大，相反则表示负无穷大。倘若尾数位不全为0时，此时则表示NaN，表示不是一个数字。这一点在Javascript当中有一个相关的函数与这个NaN的含义有点类似，它的作用是用来判断一个参数是否是一个数字。</p>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><img src="12.jpg" alt="总结"></p>
+<hr>
+<h1 id="THANK-YOU"><a href="#THANK-YOU" class="headerlink" title="THANK YOU"></a>THANK YOU</h1><p><a href="http://www.cnblogs.com/zuoxiaolong/p/computer11.html" target="_blank" rel="external">深入理解计算机系统（2.7）—二进制浮点数，IEEE标准（重要）</a><br><a href="https://blog.csdn.net/shuzfan/article/details/53814424" target="_blank" rel="external">浮点数表示</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/深入理解计算机系统/">深入理解计算机系统</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/深入理解计算机系统/">深入理解计算机系统</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/04/14/干货-一些好的东西/"  title="干货|一些好的东西">
+ <span>干货|一些好的东西
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>11</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Vim/" title="Vim">Vim<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/life/" title="life">life<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/干货/" title="干货">干货<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/操作系统/" title="操作系统">操作系统<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/架构/" title="架构">架构<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/深入学习计算机系统/" title="深入学习计算机系统">深入学习计算机系统<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/运维/" title="运维">运维<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/面试/" title="面试">面试<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>20</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>12</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具/" title="工具">工具<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/面试/" title="面试">面试<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Octave/" title="Octave">Octave<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/干货/" title="干货">干货<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/操作系统/" title="操作系统">操作系统<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>
