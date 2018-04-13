@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-13T09:22:17.684Z</updated>
+  <updated>2018-04-13T11:19:16.045Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PHP|PHP连贯查询操作的两种实现原理</title>
+    <link href="http://yoursite.com/2018/04/14/PHP-PHP%E8%BF%9E%E8%B4%AF%E6%9F%A5%E8%AF%A2%E6%93%8D%E4%BD%9C%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/"/>
+    <id>http://yoursite.com/2018/04/14/PHP-PHP连贯查询操作的两种实现原理/</id>
+    <published>2018-04-13T19:15:56.000Z</published>
+    <updated>2018-04-13T11:19:16.045Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>一些常见的框架都支持PHP连贯查询操作，那这是怎么实现的呢？</p>
+<p><code>$result = $db-&gt;limit(&#39;0,10&#39;)-&gt;order(&#39;id desc&#39;)-&gt;findall();</code></p>
+<p>“-&gt;”只能用于访问对象中的方法，所以 limit 和 order 肯定都返回的是对象。</p>
+<h3 id="第一种：不使用-call"><a href="#第一种：不使用-call" class="headerlink" title="第一种：不使用__call()"></a>第一种：不使用__call()</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class db &#123;</div><div class="line">	private $sql = array(</div><div class="line">		&quot;from&quot;  =&gt; &quot;&quot;,</div><div class="line">		&quot;where&quot; =&gt; &quot;&quot;,</div><div class="line">		&quot;order&quot; =&gt; &quot;&quot;,</div><div class="line">		&quot;limit&quot; =&gt; &quot;&quot;</div><div class="line">		);</div><div class="line"> </div><div class="line">	public function from($tableName) &#123;</div><div class="line">		$this-&gt;sql[&quot;from&quot;]=&quot;$tableName&quot;;</div><div class="line">		return $this;</div><div class="line">	&#125;</div><div class="line"> </div><div class="line">	public function where($where=&apos;1=1&apos;) &#123;</div><div class="line">		$this-&gt;sql[&quot;where&quot;]=&quot;$where&quot;;</div><div class="line">		return $this;</div><div class="line">	&#125;</div><div class="line"> </div><div class="line">	public function order($order=&apos;id DESC&apos;) &#123;</div><div class="line">		$this-&gt;sql[&quot;order&quot;]=&quot;BY $order&quot;;</div><div class="line">		return $this;</div><div class="line">	&#125;</div><div class="line"> </div><div class="line">	public function limit($limit=&apos;30&apos;) &#123;</div><div class="line">		$this-&gt;sql[&quot;limit&quot;]=&quot;$limit&quot;;</div><div class="line">		return $this;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public function select($select=&apos;*&apos;) &#123;</div><div class="line">		$sql = &quot;SELECT $select &quot;;</div><div class="line">		foreach ($this-&gt;sql as $key =&gt; $value) &#123;</div><div class="line">			$sql .= strtoupper($key).&quot; $value &quot;;</div><div class="line">		&#125;</div><div class="line">		return $sql;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line">$db =new db();</div><div class="line">echo $db-&gt;from(&quot;testTable&quot;)-&gt;where(&quot;id=1&quot;)-&gt;order(&quot;id DESC&quot;)-&gt;limit(10)-&gt;select();</div><div class="line">// 输出 SELECT * FROM testTable WHERE id=1 ORDER BY id DESC LIMIT 10</div><div class="line">?&gt;</div><div class="line">`</div></pre></td></tr></table></figure>
+<h3 id="第二种：-call"><a href="#第二种：-call" class="headerlink" title="第二种：__call()"></a>第二种：__call()</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">&lt;?php  </div><div class="line">class db &#123;</div><div class="line">	private $sql = array(</div><div class="line">		&quot;from&quot;  =&gt; &quot;&quot;,</div><div class="line">		&quot;where&quot; =&gt; &quot;&quot;,</div><div class="line">		&quot;order&quot; =&gt; &quot;&quot;,</div><div class="line">		&quot;limit&quot; =&gt; &quot;&quot;</div><div class="line">		);</div><div class="line"></div><div class="line">	public function __call($func, $args) &#123;</div><div class="line">		if (in_array($func, array(&apos;form&apos;,&apos;where&apos;,&apos;order&apos;,&apos;limit&apos;))) &#123;</div><div class="line">			$this-&gt;sql[$func] = $args;</div><div class="line">			return $this;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public function select($select=&apos;*&apos;) &#123;</div><div class="line">		$sql = &quot;SELECT $select &quot;;</div><div class="line">		foreach ($this-&gt;sql as $key =&gt; $value) &#123;</div><div class="line">			$sql .= strtoupper($key).&quot; $value &quot;;</div><div class="line">		&#125;</div><div class="line">		return $sql;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">$db =new db();</div><div class="line">echo $db-&gt;from(&quot;testTable&quot;)-&gt;where(&quot;id=1&quot;)-&gt;order(&quot;BY id DESC&quot;)-&gt;limit(10)-&gt;select();</div><div class="line">// 输出 SELECT * FROM testTable WHERE id=1 ORDER BY id DESC LIMIT 10</div><div class="line">?&gt;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;一些常见的框架都支持PHP连贯查询操作，那这是怎么实现的呢？&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;$result = $db-&amp;gt;limit(&amp;#
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+  </entry>
   
   <entry>
     <title>深入理解计算机系统|浮点数的表示</title>
@@ -1347,95 +1374,6 @@ echo &quot;&quot;;
     <summary type="html">
     
       &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;服务端和客户端之间是通过session(会话)来连接沟通。当客户端的浏览器连接到服务器后，服务器就会建立一个该用户的session。每个用户
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
-    
-    
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP|PHP漏洞全解-SQL注入攻击</title>
-    <link href="http://yoursite.com/2018/03/24/PHP-PHP%E6%BC%8F%E6%B4%9E%E5%85%A8%E8%A7%A3-SQL%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB/"/>
-    <id>http://yoursite.com/2018/03/24/PHP-PHP漏洞全解-SQL注入攻击/</id>
-    <published>2018-03-23T23:43:54.000Z</published>
-    <updated>2018-03-24T03:11:29.812Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>所谓的SQL注入攻击，即一部分程序员在编写代码的时候，没有对用户输入数据的合法性进行判断，使应用程序存在安全隐患。用户可以提交一段数据库查询代码，根据程序返回的结果，获得某些他想得知的数据。</p>
-<h3 id="SQL注入攻击"><a href="#SQL注入攻击" class="headerlink" title="SQL注入攻击"></a>SQL注入攻击</h3><p>SQL注入攻击(SQL Injection)，是攻击者在表单中提交精心构造的sql语句，改动原来的sql语句，如果web程序没有对提交的数据经过检查，那么就会造成sql注入攻击。</p>
-<p>SQL注入攻击的一般步骤:</p>
-<ol>
-<li><p>攻击者访问有SQL注入漏洞的站点，寻找注入点</p>
-</li>
-<li><p>攻击者构造注入语句，注入语句和程序中的SQL语句结合生成新的sql语句</p>
-</li>
-<li><p>新的sql语句被提交到数据库中执行 处理</p>
-</li>
-<li><p>数据库执行了新的SQL语句，引发SQL注入攻击</p>
-</li>
-</ol>
-<p><img src="/images/PHP漏洞分析-SQL注入攻击-01.jpeg" alt="SQL注入攻击" title="PHP漏洞分析-SQL注入攻击-01"></p>
-<h3 id="漏洞实例"><a href="#漏洞实例" class="headerlink" title="漏洞实例"></a>漏洞实例</h3><p>来个初学者刚学PHP时通常会写的SQL语句，如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$query = &quot;select * from postmessage where id = &quot;.$_GET[&quot;id&quot;];</div><div class="line"></div><div class="line">$result = mysql_query($query)</div><div class="line"></div><div class="line">or die(&quot;执行ySQL查询语句失败：&quot; . mysql_error());</div></pre></td></tr></table></figure></p>
-<p>如果用户的地址为 <a href="http://www.wduozhi.xyz/a.php?id=71" target="_blank" rel="external">http://www.wduozhi.xyz/a.php?id=71</a> and 1=1 和 <a href="http://www.wduozhi.xyz/a.php?id=71" target="_blank" rel="external">http://www.wduozhi.xyz/a.php?id=71</a> and 2=1,<br>参数id传递进来后，和前面的字符串结合的sql语句放入数据库执行 查询<br>提交 and 1=1，语句变成select <em> from postmessage where id = 71 and 1=1 这语句前值后值都为真，and以后也为真，返回查询到的数据<br>提交 and 1=2，语句变成select </em> from postmessage where id = 71 and 1=2 这语句前值为真，后值为假，and以后为假，查询不到任何数据<br>正常的SQL查询，经过我们构造的语句之后，形成了SQL注入攻击。通过这个注入点，我们还可以进一步拿到权限，比如说运用 union读取管理密码，读取数据库信息，或者用mysql的load_file，into outfile等函数进一步渗透。</p>
-<h3 id="防范方法"><a href="#防范方法" class="headerlink" title="防范方法"></a>防范方法</h3><h4 id="整型参数"><a href="#整型参数" class="headerlink" title="整型参数:"></a>整型参数:</h4><p>运用 intval函数将数据转换成整数</p>
-<p>函数原型</p>
-<p>int intval(mixed var, int base)</p>
-<p>var是要转换成整形的变量</p>
-<p>base，可选，是基础数，默认是10</p>
-<h4 id="浮点型参数"><a href="#浮点型参数" class="headerlink" title="浮点型参数:"></a>浮点型参数:</h4><p>运用 floatval或doubleval函数分别转换单精度和双精度浮点型参数</p>
-<p>函数原型</p>
-<p>int floatval(mixed var)</p>
-<pre><code>var是要转换的变量
-</code></pre><p>int doubleval(mixed var)</p>
-<pre><code>var是要转换的变量
-</code></pre><h4 id="字符型参数"><a href="#字符型参数" class="headerlink" title="字符型参数:"></a>字符型参数:</h4><p>运用 addslashes函数来将单引号“’”转换成“\’”，双引号“””转换成“\””，反斜杠“\”转换成“\”，NULL字符加上反斜杠“\”</p>
-<p>函数原型</p>
-<p>string addslashes (string str)</p>
-<pre><code>str是要检查的字符串
-</code></pre><p>那么刚才出现的代码漏洞，我们可以这样修补<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// 执行mysql查询语句</div><div class="line"></div><div class="line">$query = &quot;select * from postmessage where id = &quot;.intval($_GET[&quot;id&quot;]);</div><div class="line"></div><div class="line">$result = mysql_query($query)</div><div class="line"></div><div class="line">or die(&quot;执行ySQL查询语句失败：&quot; . mysql_error());</div></pre></td></tr></table></figure></p>
-<p>如果是字符型，先判断magic_quotes_gpc能无法 为On,当不为On的时候运用 addslashes转义特殊字符。如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if(get_magic_quotes_gpc())&#123;  </div><div class="line">  　 $var = $_GET[&quot;var&quot;];  </div><div class="line">&#125;else&#123;  </div><div class="line">　   $var = addslashes($_GET[&quot;var&quot;]);  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h4 id="使用预编译语句，避免sql注入"><a href="#使用预编译语句，避免sql注入" class="headerlink" title="使用预编译语句，避免sql注入"></a>使用预编译语句，避免sql注入</h4><p>注入是早前很大的一个问题，不过近些年因为大家比较重视这个问题，所以慢慢变得好了很多。</p>
-<p>吴翰清在web白帽子里说的很好，其实很多漏洞，像sql注入或xss，都是将“数据”和“代码”没有区分开。“代码”是程序员写的内容，“数据”是用户可以改变的内容。如果我们写一个sql语句<strong>select * from admin where username=’admin’ password=’xxxxx’</strong>, admin和xxxxx就是数据，是用户输入的用户名和密码，但如果没有任何处理，用户输入的就可能是“代码”，比如’or ‘’=’，这样就造成了漏洞。“代码”是绝对不能让用户接触的。</p>
-<p>在php中，对于mysql数据库有两个模块，mysql和mysqli，mysqli的意思就是mysql improve。mysql的改进版，这个模块中就含有“预编译”这个概念。像上面那个sql语句，改一改<strong>：select * from admin where username=’?’ password=’?’</strong>，它就不是一个sql语句了，但是可以通过mysqli的预编译功能先把他编译成stmt对象，在后期用户输入账号密码后，用stmt-&gt;bind_param将用户输入的“数据”绑定到这两个问号的位置。这样，用户输入的内容就只能是“数据”，而不可能变成“代码”。</p>
-<p>这两个问号限定了“数据”的位置，以及sql语句的结构。我们可以把我们所有的数据库操作都封装到一个类中，所有sql语句的执行都进行预编译。这样就完全避免了sql注入，这也是吴翰清最推荐的解决方案。</p>
-<p>下面是使用mysqli的一些代码部分(所有的判断函数运行成功或失败的代码我都省略了，但不代表不重要)：</p>
-<pre><code>&lt;?php
-//用户输入的数据
-$name = &apos;admin&apos;;
-$pass = &apos;123456&apos;;
-//首先新建mysqli对象,构造函数参数中包含了数据库相关内容。
-$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
-//设置sql语句默认编码
-$this-&gt;mysqli-&gt;set_charset(&quot;utf8&quot;);
-//创建一个使用通配符的sql语句
-$sql = &apos;SELECT user_id FROM admin WHERE username=? AND password=?;&apos;;
-//编译该语句，得到一个stmt对象.
-$stmt = $conn-&gt;prepare($sql);
-/********************之后的内容就能重复利用，不用再次编译*************************/
-//用bind_param方法绑定数据
-//大家可以看出来，因为我留了两个?，也就是要向其中绑定两个数据，所以第一个参数是绑定的数据的类型(s=string,i=integer)，第二个以后的参数是要绑定的数据
-$stmt-&gt;bind_param(&apos;ss&apos;, $name, $pass);
-//调用bind_param方法绑定结果（如果只是检查该用户与密码是否存在，或只是一个DML语句的时候，不用绑定结果）
-//这个结果就是我select到的字段，有几个就要绑定几个
-$stmt-&gt;bind_result($user_id);
-//执行该语句
-$stmt-&gt;execute();
-//得到结果
-if($stmt-&gt;fetch()){
-    echo &apos;登陆成功&apos;;
-    //一定要注意释放结果资源，否则后面会出错
-    $stmt-&gt;free_result();
-    return $user_id; //返回刚才select到的内容
-}else{echo &apos;登录失败&apos;;}
-?&gt;
-</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;所谓的SQL注入攻击，即一部分程序员在编写代码的时候，没有对用户输入数据的合法性进行判断，使应用程序存在安全隐患。用户可以提交一段数据库查询
     
     </summary>
     
