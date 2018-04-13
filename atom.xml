@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-12T00:57:19.410Z</updated>
+  <updated>2018-04-13T09:04:34.298Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>干货|一些好的东西</title>
+    <link href="http://yoursite.com/2018/04/14/%E5%B9%B2%E8%B4%A7-%E4%B8%80%E4%BA%9B%E5%A5%BD%E7%9A%84%E4%B8%9C%E8%A5%BF/"/>
+    <id>http://yoursite.com/2018/04/14/干货-一些好的东西/</id>
+    <published>2018-04-13T16:21:18.000Z</published>
+    <updated>2018-04-13T09:04:34.298Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="一些好的书籍"><a href="#一些好的书籍" class="headerlink" title="一些好的书籍"></a>一些好的书籍</h3><ul>
+<li>程序是怎么跑起来的</li>
+<li>网络是怎样连接的</li>
+<li>计算机是怎样跑起来的</li>
+<li>计算机程序设计艺术（TAOCP）</li>
+<li>计算机程序的构造和解释（SICP）</li>
+<li>算法导论（CLRS）</li>
+<li>深入理解计算机系统（CSAPP）</li>
+<li>程序设计语言-实践之路</li>
+<li>面向对象分析与设计</li>
+</ul>
+<h3 id="一些好的电影"><a href="#一些好的电影" class="headerlink" title="一些好的电影"></a>一些好的电影</h3><h3 id="一些好的工具"><a href="#一些好的工具" class="headerlink" title="一些好的工具"></a>一些好的工具</h3><h3 id="一些好的博客"><a href="#一些好的博客" class="headerlink" title="一些好的博客"></a>一些好的博客</h3>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;一些好的书籍&quot;&gt;&lt;a href=&quot;#一些好的书籍&quot; class=&quot;headerlink&quot; title=&quot;一些好的书籍&quot;&gt;&lt;/a&gt;一些好的书籍&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;程序是怎么跑起来的&lt;/li&gt;
+&lt;li&gt;网络是怎样连接的&lt;/li&gt;
+&lt;li&gt;计算机是怎样跑起来的&lt;
+    
+    </summary>
+    
+      <category term="干货" scheme="http://yoursite.com/categories/%E5%B9%B2%E8%B4%A7/"/>
+    
+    
+      <category term="干货" scheme="http://yoursite.com/tags/%E5%B9%B2%E8%B4%A7/"/>
+    
+  </entry>
   
   <entry>
     <title>面试|php常考面试题</title>
@@ -1208,59 +1244,6 @@ if($stmt-&gt;fetch()){
     <summary type="html">
     
       &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;Command Injection，即命令注入攻击，是指这样一种攻击手段，黑客通过把HTML代码输入一个输入机制(例如缺乏有效验证限制的表格
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
-    
-    
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP|图片验证码</title>
-    <link href="http://yoursite.com/2018/03/22/PHP-%E5%9B%BE%E7%89%87%E9%AA%8C%E8%AF%81%E7%A0%81/"/>
-    <id>http://yoursite.com/2018/03/22/PHP-图片验证码/</id>
-    <published>2018-03-21T22:00:11.000Z</published>
-    <updated>2018-03-24T10:19:44.447Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p> 验证码（CAPTCHA）是“Completely Automated Public Turing test to tell Computers and Humans Apart”（全自动区分计算机和人类的图灵测试）的缩写，是一种区分用户是计算机还是人的公共全自动程序。可以防止：恶意破解密码、刷票、论坛灌水，有效防止某个黑客对某一个特定注册用户用特定程序暴力破解方式进行不断的登陆尝试，实际上用验证码是现在很多网站通行的方式，我们利用比较简易的方式实现了这个功能。</p>
-<p>这个问题可以由计算机生成并评判，但是必须只有人类才能解答。由于计算机无法解答CAPTCHA的问题，所以回答出问题的用户就可以被认为是人类。</p>
-<h3 id="php图像处理简介"><a href="#php图像处理简介" class="headerlink" title="php图像处理简介"></a>php图像处理简介</h3><p>在PHP5中，动态图象的处理要比以前容易得多。PHP5在php.ini文件中包含了GD扩展包，只需去掉GD扩展包的相应注释就可以正常使用了。PHP5包含的GD库正是升级的GD2库，其中包含支持真彩图像处理的一些有用的JPG功能。</p>
-<p>一般生成的图形，通过PHP的文档格式存放，但可以通过HTML的图片插入方式SRC来直接获取动态图形。比如，验证码、水印、微缩图等。</p>
-<p>创建图像的一般流程：</p>
-<ol>
-<li>设定标头，告诉浏览器你要生成的MIME类型。</li>
-<li>创建一个图像区域，以后的操作都将基于此图像区域。</li>
-<li>在空白图像区域绘制填充背景。</li>
-<li>在背景上绘制图形轮廓输入文本。</li>
-<li>输出最终图形。</li>
-<li>清除所有资源。</li>
-<li>其他页面调用图像。</li>
-</ol>
-<p>简单实例代码:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">    //第一步，设置文件MIME类型</div><div class="line">    header(&apos;Content-Type: image/png;&apos;);</div><div class="line">    </div><div class="line">    //第二步，创建一个图形区域，图像背景</div><div class="line">    $im = imagecreatetruecolor(200,200);</div><div class="line">    </div><div class="line">    //第三步，在空白图像区域绘制填充背景</div><div class="line">    $blue = imagecolorallocate($im,0,102,255);    </div><div class="line">    imagefill($im,0,0,$blue);</div><div class="line">    </div><div class="line">    //第四步，在蓝色的背景上输入一些线条，文字等</div><div class="line">    $white = imagecolorallocate($im,255,255,255);</div><div class="line">    imageline($im,0,0,200,200,$white);</div><div class="line">    imageline($im,200,0,0,200,$white);</div><div class="line">    imagestring($im,5,66,20,&apos;Jing.Whale&apos;,$white);</div><div class="line">    </div><div class="line">    //第五步，输出最终图形</div><div class="line">    imagepng($im);</div><div class="line">    </div><div class="line">    //第六步，我要将所有的资源全部清空</div><div class="line">    imagedestroy($im);    </div><div class="line">?&gt;</div></pre></td></tr></table></figure>
-<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><h4 id="产生验证码"><a href="#产生验证码" class="headerlink" title="产生验证码"></a>产生验证码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function create_code($length = 4)&#123;</div><div class="line">	$string = &quot;abcdefghijklmnopqrstuvwxyz0123456789&quot;;</div><div class="line">	$code = &quot;&quot;;</div><div class="line">	for($i=0;$i&lt;$length;$i++)&#123;</div><div class="line">		$pos = rand(0,35);</div><div class="line">		$code .= $string&#123;$pos&#125;;</div><div class="line">	&#125;</div><div class="line">	return $code;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="创建图片"><a href="#创建图片" class="headerlink" title="创建图片"></a>创建图片</h4><ul>
-<li>创建一张简单的图片（80X20），设置背景色，文本色，再加一些干扰线，干扰素</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">$img_handle = Imagecreate(80, 20);  //图片大小80X20</div><div class="line">$back_color = ImageColorAllocate($img_handle, 255, 255, 255); //背景颜色（白色）</div><div class="line">$txt_color = ImageColorAllocate($img_handle, 0,0, 0);  //文本颜色（黑色）</div><div class="line"></div><div class="line">//加入干扰线</div><div class="line">for($i=0;$i&lt;3;$i++)</div><div class="line">&#123;</div><div class="line">    $line = ImageColorAllocate($img_handle,rand(0,255),rand(0,255),rand(0,255));</div><div class="line">    Imageline($img_handle, rand(0,15), rand(0,15), rand(100,150),rand(10,50), $line);</div><div class="line">&#125;</div><div class="line">//加入干扰象素</div><div class="line">for($i=0;$i&lt;200;$i++) </div><div class="line">&#123;</div><div class="line">    $randcolor = ImageColorallocate($img_handle,rand(0,255),rand(0,255),rand(0,255));</div><div class="line">    Imagesetpixel($img_handle, rand()%100 , rand()%50 , $randcolor);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>填充图片背景色，再将产生的随机字符串填充图片；</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Imagefill($img_handle, 0, 0, $back_color);             //填充图片背景色</div><div class="line">ImageString($img_handle, 28, 10, 0, $code, $txt_color);//水平填充一行字符串</div></pre></td></tr></table></figure>
-<ul>
-<li>清空输出缓存区，再生成验证码图片，并显示图片。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ob_clean();   // ob_clean()清空输出缓存区    </div><div class="line">header(&quot;Content-type: image/png&quot;); //生成验证码图片    </div><div class="line">Imagepng($img_handle);//显示图片</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="验证码安全性"><a href="#验证码安全性" class="headerlink" title="验证码安全性"></a>验证码安全性</h3><p>验证码通常是由php脚本生成的随机字符串，通过GD库的处理，制作成图片。真正的验证码字符串保存在SESSION中，然后把生成的图片展示给用户。用户填写了验证码提交后，在服务端上SESSION中的验证码进行比对。</p>
-<p>这里有一个很多人都会犯的错误。验证码比对完成之后，不管是正确还是错误，我都没有清理SESSION。这样产生了一个问题，一旦一个用户第一次提交验证码成功，第二次以后不再访问生成验证码的脚本，这时候SESSION中的验证码并没有更新，也没有删除，导致验证码重复使用，起不到验证的作用。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt; 验证码（CAPTCHA）是“Completely Automated Public Turing test to tell Compute
     
     </summary>
     
