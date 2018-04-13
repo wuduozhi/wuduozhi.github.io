@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-13T09:15:07.658Z</updated>
+  <updated>2018-04-13T09:22:17.684Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/04/14/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA/"/>
     <id>http://yoursite.com/2018/04/14/深入理解计算机系统-浮点数的表示/</id>
     <published>2018-04-13T17:14:01.000Z</published>
-    <updated>2018-04-13T09:15:07.658Z</updated>
+    <updated>2018-04-13T09:22:17.684Z</updated>
     
     <content type="html"><![CDATA[<script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -52,17 +52,17 @@ int main(){
 }
 </code></pre><p>代码的作用很简单，就是将0.1累加100次，大家猜猜结果是什么呀？</p>
 <hr>
-<h3 id="程序的结果"><a href="#程序的结果" class="headerlink" title="程序的结果"></a>程序的结果</h3><p><img src="07.png" alt="result"></p>
+<h3 id="程序的结果"><a href="#程序的结果" class="headerlink" title="程序的结果"></a>程序的结果</h3><p><img src="/images/07.png" alt="result"></p>
 <p>哇塞，神通无比的计算机也出错了，是程序出bug了？还是什么原因呢？</p>
 <p>仔细观察，程序是没错的，要想找到答案，只有到计算机的内部，看看计算机是怎么处理小数的。</p>
 <hr>
 <h3 id="二进制小数"><a href="#二进制小数" class="headerlink" title="二进制小数"></a>二进制小数</h3><p>我们先来看看二进制是如何表示小数的，这有助于我们理解浮点数的表示。如果是一个十进制小数，相信各位都再熟悉不过了，对于12345.6789来说，它的值是由下列式子得到的。</p>
-<p><img src="03.png" alt="整数"></p>
+<p><img src="/images/03.png" alt="整数"></p>
 <p>　　这对我们来说应该是常识，那么对于二进制小数也是类似的，考虑这样一个小数10010.1110，它的值则可以由以下式子得到。</p>
-<p><img src="02.png" alt="二进制小数"></p>
+<p><img src="/images/02.png" alt="二进制小数"></p>
 <p>　　从这个角度来看，二进制小数其实与十进制小数是一样的计算方式，只是这里是2的整数次幂而已。</p>
 <p>　　在书中给出了二进制小数的公式，对于一个形式为bm….b0.b-1….b-n的二进制小数b来说，它的值为以下计算方式。</p>
-<p><img src="04.png" alt="二进制小数"></p>
+<p><img src="/images/04.png" alt="二进制小数"></p>
 <hr>
 <h3 id="来看一个表"><a href="#来看一个表" class="headerlink" title="来看一个表"></a>来看一个表</h3><table>
 <thead>
@@ -144,9 +144,9 @@ int main(){
 <p>电气和电子工程师协会( IEEE，全称是Institute of Electrical and Electronics Engineers)是一个国际性的电子技术与信息科学工程师的协会，是目前全球最大的非营利性专业技术学会，其会员人数超过40万人，遍布160多个国家。IEEE致力于电气、电子、计算机工程和与科学有关的领域的开发和研究，在太空、计算机、电信、生物医学、电力及消费性电子产品等领域已制定了900多个行业标准，现已发展成为具有较大影响力的国际学术组织。</p>
 </blockquote>
 <p>根据IEEE标准，任意一个二进制浮点数V可以表示成下面的形式：</p>
-<p><img src="01.png" alt="IEEE标准"></p>
+<p><img src="/images/01.png" alt="IEEE标准"></p>
 <hr>
-<h3 id="不如来些例子"><a href="#不如来些例子" class="headerlink" title="不如来些例子"></a>不如来些例子</h3><p><img src="01.png" alt="IEEE标准"></p>
+<h3 id="不如来些例子"><a href="#不如来些例子" class="headerlink" title="不如来些例子"></a>不如来些例子</h3><p><img src="/images/01.png" alt="IEEE标准"></p>
 <ul>
 <li>十进制的5.0，写成二进制是101.0，相当于1.01×2^2。那么，按照上面V的格式，可以得出s=0，M=1.01，E=2。</li>
 <li>十进制的-5.0，写成二进制是-101.0，相当于-1.01×2^2。那么，s=1，M=1.01，E=2。</li>
@@ -155,7 +155,7 @@ int main(){
 <h3 id="M-尾数部分"><a href="#M-尾数部分" class="headerlink" title="M 尾数部分"></a>M 尾数部分</h3><ul>
 <li>M 尾数部分使用正则表达式，可以将表现形式多样的浮点数统一为一种表现形式。例如，十进制数0.75有如下表示方法：</li>
 </ul>
-<p><img src="05.jpg" alt="0.75"></p>
+<p><img src="/images/05.jpg" alt="0.75"></p>
 <p>对于十进制数来说，应该遵循”小数点前面是0，小数点后面第一位不能是0的”这样的规则。同理，对二进制数来说，它也应该有自己的规则：“将小数点前面的值固定为1的正则表达式”。具体的操作就是将二进制数进行小数左移或右移数次后，整数部分第一位变为 1 。同时，在计算机的存储中，第一位的 1 不保存，原因是第一位必须为 1 。因此，省略改部分后，就节省了一个数据位，从而能表示更多的数据范围。</p>
 <pre><code>1011.0011                     ...原始数值
     |
@@ -169,7 +169,7 @@ int main(){
 <li>E 指数部分采用的是EXCESS系统，使用这种方法主要是<strong>为了表示负数时不用使用符号位</strong>。在某些情况下，在指数部分，需要通过“负00次幂”的形式来表示负数。EXCESS系统是指，通过将指数部分表示范围的中间值设为0，使得负数不用用符号位来表示。</li>
 <li>也就是说，当指数部分是八位单精度浮点数时，最大值11111111 = 255 的 1/2，即01111111 = 127 表述的是 0 ；是 11 位双精度浮点数时 11111111111 = 2047 的 1/2.即01111111111 = 1023 表述 0。</li>
 </ul>
-<p><img src="06.jpg" alt="0.75"></p>
+<p><img src="/images/06.jpg" alt="0.75"></p>
 <hr>
 <h3 id="来实际操作一些"><a href="#来实际操作一些" class="headerlink" title="来实际操作一些"></a>来实际操作一些</h3><p>举个例子，十进制数 0.75 在32位的计算机中是怎么表示的呢？来个程序验证一下。</p>
 <pre><code>#include&lt;stdio.h&gt;
@@ -200,7 +200,7 @@ int main(){
 }
 </code></pre><hr>
 <h3 id="result"><a href="#result" class="headerlink" title="result"></a>result</h3><p>程序执行的结果</p>
-<p><img src="08.png" alt="result"></p>
+<p><img src="/images/08.png" alt="result"></p>
 <p>内部表示</p>
 <pre><code>符号部分 ... 0表示整数
 |   指数部分 ...转换成十进制数是126，在EXCESS系统下，表示的是 126-127 = -1
@@ -210,7 +210,7 @@ int main(){
         尾数部分...表示的是1.以后的部分，也就是1.10000000000000000000000
 该数据用二进制表示为 1.1x2^-1,用十进制表示为 1.5x2^-1 = 0.75
 </code></pre><hr>
-<h3 id="开头的0-1呢？"><a href="#开头的0-1呢？" class="headerlink" title="开头的0.1呢？"></a>开头的0.1呢？</h3><p><img src="10.png" alt="result"></p>
+<h3 id="开头的0-1呢？"><a href="#开头的0-1呢？" class="headerlink" title="开头的0.1呢？"></a>开头的0.1呢？</h3><p><img src="/images/10.png" alt="result"></p>
 <pre><code>符号部分 ... 0表示整数
 |   指数部分 ...转换成十进制数是123，在EXCESS系统下，表示的是 123-127 = -4
 |      |
@@ -221,7 +221,7 @@ int main(){
 用十进制表示为 1.600000023841858 x2^-4 = 0.1000000014901161
 </code></pre><hr>
 <h3 id="一些精华"><a href="#一些精华" class="headerlink" title="一些精华"></a>一些精华</h3><p>针对阶码E的值，浮点数的值可以分为三种不同的情况，分别是规格化的，非规格化的以及特殊值，这三种情况就是浮点数的奥义所在了。首先给出一个书中对于单精度的三种情况的图示描述，分别是1、2、3，其中3也就是特殊值又分了两种情况3a和3b。</p>
-<p><img src="11.jpg" alt="special"></p>
+<p><img src="/images/11.jpg" alt="special"></p>
 <hr>
 <h3 id="规范化"><a href="#规范化" class="headerlink" title="规范化"></a>规范化</h3><p>规格化的浮点数是上述的第1种情况，对于单精度来说，也就是指数不为0且不为255的这种情况。</p>
 <p>在此范围内的浮点数，阶码会被转换成一个“偏置”后的有符号数。“偏置”的含义就是在原有的值的基础上加上一个偏移量，对于阶码位数为k的情况来说，偏移量$Bias = 2^{k-1}-1$。假设e是阶码的无符号数值，那么真实的阶码E = e - Bias。举个例子，假设阶码位数为8，则Bias = 127。由于8位阶码下的规格化的浮点数的阶码范围是1至254，因此真实阶码的范围则为-126至127。</p>
@@ -251,9 +251,9 @@ int main(){
 <h3 id="特殊值"><a href="#特殊值" class="headerlink" title="特殊值"></a>特殊值</h3><p>特殊值则对应图中的3a和3b这两种情况，也就是阶码全为1的时候。</p>
 <p>在阶码全为1时，如果尾数位全为0，则表示无穷大。符号位为0则表示正无穷大，相反则表示负无穷大。倘若尾数位不全为0时，此时则表示NaN，表示不是一个数字。这一点在Javascript当中有一个相关的函数与这个NaN的含义有点类似，它的作用是用来判断一个参数是否是一个数字。</p>
 <hr>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><img src="12.jpg" alt="总结"></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><img src="/images/12.jpg" alt="总结"></p>
 <hr>
-<h1 id="THANK-YOU"><a href="#THANK-YOU" class="headerlink" title="THANK YOU"></a>THANK YOU</h1><p><a href="http://www.cnblogs.com/zuoxiaolong/p/computer11.html" target="_blank" rel="external">深入理解计算机系统（2.7）—二进制浮点数，IEEE标准（重要）</a><br><a href="https://blog.csdn.net/shuzfan/article/details/53814424" target="_blank" rel="external">浮点数表示</a></p>
+<p><a href="http://www.cnblogs.com/zuoxiaolong/p/computer11.html" target="_blank" rel="external">深入理解计算机系统（2.7）—二进制浮点数，IEEE标准（重要）</a><br><a href="https://blog.csdn.net/shuzfan/article/details/53814424" target="_blank" rel="external">浮点数表示</a></p>
 ]]></content>
     
     <summary type="html">
