@@ -4,25 +4,25 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>求职|第一次电话面试 | 只为不凡而来</title>
+    <title>Java文件处理 | 只为不凡而来</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="wuduozhi">
     
 
     
-    <meta name="description" content="开篇经过开学第一个星期的疯狂投简历、笔试风波后，自己本以为求职风波就可以暂停一波了，但是就在前几天，蓝杰的学长发了一则深信服的招聘信息，自己看了一下觉得自己挺符合的，并且简历也都写好了，就给学长发过去了，反正不管结果如何，自己也没损失嘛… 电话面试投了简历之后，学长跟我说这两天就会有电话面试，让我保持手机畅通。说实话，这两天我手机的电池还真没有少过50%，毕竟第一次电话面试，万一没电了就尴尬了。同">
-<meta name="keywords" content="求职">
+    <meta name="description" content="谈谈Java文件处理今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。 文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：  定位要操作的文件 建立管道 进行操作  简单点说，就是我们只需要找到我们想要操作的文件的路径，就能定">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="求职|第一次电话面试">
-<meta property="og:url" content="http://yoursite.com/2017/09/30/第一次电话面试/index.html">
+<meta property="og:title" content="Java文件处理">
+<meta property="og:url" content="http://yoursite.com/2017/07/26/Java文件处理/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="开篇经过开学第一个星期的疯狂投简历、笔试风波后，自己本以为求职风波就可以暂停一波了，但是就在前几天，蓝杰的学长发了一则深信服的招聘信息，自己看了一下觉得自己挺符合的，并且简历也都写好了，就给学长发过去了，反正不管结果如何，自己也没损失嘛… 电话面试投了简历之后，学长跟我说这两天就会有电话面试，让我保持手机畅通。说实话，这两天我手机的电池还真没有少过50%，毕竟第一次电话面试，万一没电了就尴尬了。同">
+<meta property="og:description" content="谈谈Java文件处理今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。 文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：  定位要操作的文件 建立管道 进行操作  简单点说，就是我们只需要找到我们想要操作的文件的路径，就能定">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2017-09-29T16:43:12.315Z">
+<meta property="og:updated_time" content="2018-04-14T02:50:17.008Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="求职|第一次电话面试">
-<meta name="twitter:description" content="开篇经过开学第一个星期的疯狂投简历、笔试风波后，自己本以为求职风波就可以暂停一波了，但是就在前几天，蓝杰的学长发了一则深信服的招聘信息，自己看了一下觉得自己挺符合的，并且简历也都写好了，就给学长发过去了，反正不管结果如何，自己也没损失嘛… 电话面试投了简历之后，学长跟我说这两天就会有电话面试，让我保持手机畅通。说实话，这两天我手机的电池还真没有少过50%，毕竟第一次电话面试，万一没电了就尴尬了。同">
+<meta name="twitter:title" content="Java文件处理">
+<meta name="twitter:description" content="谈谈Java文件处理今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。 文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：  定位要操作的文件 建立管道 进行操作  简单点说，就是我们只需要找到我们想要操作的文件的路径，就能定">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -86,14 +86,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/09/30/第一次电话面试/" title="求职|第一次电话面试" itemprop="url">求职|第一次电话面试</a>
+      <a href="/2017/07/26/Java文件处理/" title="Java文件处理" itemprop="url">Java文件处理</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2017-09-30T00:08:21.000Z" itemprop="datePublished"> Published 2017-09-30</time>
+    <time datetime="2017-07-25T22:46:17.000Z" itemprop="datePublished"> Published 2017-07-26</time>
     
   </p>
 </header>
@@ -102,17 +102,19 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#开篇"><span class="toc-number">1.</span> <span class="toc-text">开篇</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#电话面试"><span class="toc-number">2.</span> <span class="toc-text">电话面试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#谈谈Java文件处理"><span class="toc-number">1.</span> <span class="toc-text">谈谈Java文件处理</span></a></li></ol>
 		
 		</div>
 		
-		<h3 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h3><p>经过开学第一个星期的疯狂投简历、笔试风波后，自己本以为求职风波就可以暂停一波了，但是就在前几天，蓝杰的学长发了一则深信服的招聘信息，自己看了一下觉得自己挺符合的，并且简历也都写好了，就给学长发过去了，反正不管结果如何，自己也没损失嘛…</p>
-<h3 id="电话面试"><a href="#电话面试" class="headerlink" title="电话面试"></a>电话面试</h3><p>投了简历之后，学长跟我说这两天就会有电话面试，让我保持手机畅通。说实话，这两天我手机的电池还真没有少过50%，毕竟第一次电话面试，万一没电了就尴尬了。同时，自己还对笔试时发现的不足进行了一次恶补，就是一些Mysql的知识和PHP面向对象的一些细节啦。然后，自己还上网找了一些PHP的面试题看了一下，不看不知道啊，一看收获还挺大的，还真的有一些知识是自己不知道的，并且平时也不会注意的细节。偷偷告诉你，面试的时候还真的问了一些题，好开心。</p>
-<p>一共打了20分钟的电话。面试官问的话就10多分钟吧，并且问的问题都是一些不能在基础的问题了，比如说get和post的区别啊，主键和索引的区别啊，php中echo、print，print_r的区别啊,mvc思想啊，一些比较难的问题，比如说计算机网络啊、Linux啊，都没有问道。在面试官问到数据库这一部分的时候，自己很担心问道Mysql的优化方面的东西，毕竟自己在这一块真的可以说是空白。自己也知道他肯定会问的，所以就提前坦白了说自己在这一块没什么了解，然后面试官就只问了一些简单的问题，就问其他的问题了。是啊，不懂就是不懂，面试官提前并不知道你不懂，出于对你的考虑，肯定会问你一下，如果你坦白了，就不会问了，并且这样也不会让面试变的尴尬。</p>
-<p>各个领域都问了一些简单的问题后，面试官就说觉得我还可以，问我什么时候可以来面试。我说寒假或者暑假，然后他就叫我有时间就联系他，他好让Hr联系我。接着，我就问了一些实习方面的问题，面试就结束了。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>哈哈，没想到自己第一次电话面试就通过了，有一点有意外。虽然说，难度算不上是一些正规的面试，但是对自己也是一种锻炼。</p>
-<p>不得不说，有人内推，就是不一样，起码笔试就省了，直接进入面试环节。说实话，笔试也是不容易的，运气不好，碰到自己不擅长的领域就什么都没了。还有就是，要提前准备好简历，机会一来，就果断把简历发出去。</p>
-<p>我在努力，我在成长。</p>
+		<h3 id="谈谈Java文件处理"><a href="#谈谈Java文件处理" class="headerlink" title="谈谈Java文件处理"></a>谈谈Java文件处理</h3><p>今天，一时兴起，用Java跟着教程弄了一个文件管理器，其功能有复制源文件夹内的容到目标文件夹、查看、修改功能。</p>
+<p>文件管理器的核心就是文件的操作，Java为我们封装了许多用于文件操作的类，初学的话对这些类不熟悉，常常会觉得文件操作很困难，但其实并不困难，只要我们记住一下的步骤：</p>
+<ol>
+<li>定位要操作的文件</li>
+<li>建立管道</li>
+<li>进行操作</li>
+</ol>
+<p>简单点说，就是我们只需要找到我们想要操作的文件的路径，就能定位到它，就能对其进行一些列的操作，比如查看、复制、删除…这些操作，Java都已经为我们准备好了，需要用的时候查看文档就好了，最主要的是要记住步骤。</p>
+<p>另外，需要注意的是，IO流的操作是很占用内存的，举个例子吧：如果我们要把文件A里的内容复制到B中，计算机是这样工作的：计算机要先找到A文件，然后读取内容到JVM的内存中，然后在写进B文件中，但我们的A文件很大时，计算机就需要进行多次这样的循环工作，非常耗时，浪费资源。所以我们可以改进一下，我们可以这样设想，如果我们把从A读取的内容先在JVM中存起来，当达到足够的量时在一次把这些内容写进B中，这样就减少了一些重复性的工作，效率会提高不少。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -120,13 +122,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/colleage/">colleage</a>
+  <a class="article-category-link" href="/categories/Java/">Java</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/求职/">求职</a>
+  <span></span> <a href="/tags/Java/">Java</a>
   </div>
 
 </div>
@@ -141,16 +143,16 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2017/10/10/游玩-2017国庆/" title="游玩|2017国庆">
+ <a href="/2017/07/28/a-b-c/" title="a+b=c">
   <span>
-  游玩|2017国庆</span>
+  a+b=c</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2017/09/28/数据结构-什么是数据结构/"  title="数据结构|什么是数据结构">
- <span>数据结构|什么是数据结构
+<a href="/2017/07/26/Java文件处理器/"  title="Java文件处理器">
+ <span>Java文件处理器
 </span>
 </a>
 </div>

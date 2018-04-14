@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="MathJax.Hub.Config({ tex2jax: {inlineMath: [[&apos;$&apos;,&apos;$&apos;], [&apos;\\(&apos;,&apos;\\)&apos;]]} });      My First Hexo Blog  Hexo，一个博客框架，之前听学长讲过，今天跟着教程弄了一下，不是很难，如果之前有接触过git，那就更简单了，跟装个软件差不多。  史上最详细的Hexo博客搭建图文教程  系列教程  如何在Hexo">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-04-13T09:46:44.885Z">
+<meta property="og:updated_time" content="2018-04-14T02:54:43.807Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
 <meta name="twitter:description" content="MathJax.Hub.Config({ tex2jax: {inlineMath: [[&apos;$&apos;,&apos;$&apos;], [&apos;\\(&apos;,&apos;\\)&apos;]]} });      My First Hexo Blog  Hexo，一个博客框架，之前听学长讲过，今天跟着教程弄了一下，不是很难，如果之前有接触过git，那就更简单了，跟装个软件差不多。  史上最详细的Hexo博客搭建图文教程  系列教程  如何在Hexo">
@@ -102,7 +102,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#My-First-Hexo-Blog"><span class="toc-number">1.</span> <span class="toc-text">My First Hexo Blog</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何在Hexo博客中插入数学公式"><span class="toc-number">2.</span> <span class="toc-text">如何在Hexo博客中插入数学公式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法一-安装hexo-math插件"><span class="toc-number">2.1.</span> <span class="toc-text">方法一 安装hexo-math插件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方法二-MathJax"><span class="toc-number">2.2.</span> <span class="toc-text">方法二 MathJax</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo常用命令"><span class="toc-number">3.</span> <span class="toc-text">Hexo常用命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置自己的域名"><span class="toc-number">4.</span> <span class="toc-text">配置自己的域名</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#My-First-Hexo-Blog"><span class="toc-number">1.</span> <span class="toc-text">My First Hexo Blog</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何在Hexo博客中插入数学公式"><span class="toc-number">2.</span> <span class="toc-text">如何在Hexo博客中插入数学公式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法一-安装hexo-math插件"><span class="toc-number">2.1.</span> <span class="toc-text">方法一 安装hexo-math插件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方法二-MathJax"><span class="toc-number">2.2.</span> <span class="toc-text">方法二 MathJax</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在-hexo-new-之后立即打开新建的-Markdown-文稿"><span class="toc-number">3.</span> <span class="toc-text">在 hexo new 之后立即打开新建的 Markdown 文稿</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo常用命令"><span class="toc-number">4.</span> <span class="toc-text">Hexo常用命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置自己的域名"><span class="toc-number">5.</span> <span class="toc-text">配置自己的域名</span></a></li></ol>
 		
 		</div>
 		
@@ -146,6 +146,14 @@ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 <li>在文字中显示，只需要在两边分别加上$即可。例如$f(x)=x^2$, 请问$f(x)=x^2$的导数为?咦？看到这里你是不是想说这**博主，说好的在文字中显示呢？？！！这里要解释一下，因为$这个符号在其他上下文中有不同的意义，比如它可以当作美元符号等等，所以默认情况下$…$是不支持的。那如何解决呢？只需要在第一步添加的代码之前再添加如下:<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;script type=&quot;text/x-mathjax-config&quot;&gt;</div><div class="line">MathJax.Hub.Config(&#123;</div><div class="line">tex2jax: &#123;inlineMath: [[&apos;$&apos;,&apos;$&apos;], [&apos;\\(&apos;,&apos;\\)&apos;]]&#125;</div><div class="line">&#125;);</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
 </li>
 </ul>
+<p>也可以添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;script type=&quot;text/javascript&quot;&gt;</div><div class="line">$(document).ready(function()&#123;</div><div class="line">  $(&quot;code&quot;).map(function()&#123;</div><div class="line">    match = /^\$(.*)\$$/.exec($(this).html());</div><div class="line">    if (match)&#123;</div><div class="line">      //$(this).after(&quot;&lt;span class=mathjax_inline&gt;&quot; + match + &quot;&lt;/span&gt;&quot;);</div><div class="line">      //$(this).hide();</div><div class="line">      $(this).replaceWith(&quot;&lt;span class=hpl_mathjax_inline&gt;&quot; + $(this).html() + &quot;&lt;/span&gt;&quot;);</div><div class="line">      MathJax.Hub.Queue([&quot;Typeset&quot;,MathJax.Hub,$(this).get(0)]);</div><div class="line">    &#125;</div><div class="line">  &#125;);</div><div class="line">&#125;);</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure></p>
+<h3 id="在-hexo-new-之后立即打开新建的-Markdown-文稿"><a href="#在-hexo-new-之后立即打开新建的-Markdown-文稿" class="headerlink" title="在 hexo new 之后立即打开新建的 Markdown 文稿"></a>在 hexo new 之后立即打开新建的 Markdown 文稿</h3><p>在 Hexo 中新建一篇博文非常简单，只需要在命令行中执行<br><code>hexo new &quot;the title of your blog&quot;</code></p>
+<p>即可。Hexo 会在后台自动帮你创建名为 yyyy-mm-dd-the-title-of-your-blog.md 的文件，供你撰写博文。不过，也有不方便的地方。通常你需要依次打开 hexo-home/source/_post 目录，然后在成堆的 Markdown 文件中找到刚才创建的文档。</p>
+<p>哪能不能new之后就直接打开新建的文档呢？</p>
+<p>Tommy 指出，可以在 Hexo 目录下的 scripts 目录（若没有，则新建一个）中创建一个 JavaScript 脚本，监听 hexo new 这个动作。并在检测到 hexo new 之后，执行编辑器打开的命令。</p>
+<p>Tommy 给出的代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">var spawn = require(&apos;child_process&apos;).spawn;</div><div class="line"></div><div class="line">// Hexo 2.x</div><div class="line">hexo.on(&apos;new&apos;, function(path)&#123;</div><div class="line">  spawn(&apos;vi&apos;, [path]);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">// Hexo 3</div><div class="line">hexo.on(&apos;new&apos;, function(data)&#123;</div><div class="line">  spawn(&apos;vi&apos;, [data.path]);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">var exec = require(&apos;child_process&apos;).exec;</div><div class="line">// Hexo 2.x 传进来的参数即是路径</div><div class="line">/*</div><div class="line">hexo.on(&apos;new&apos;, function(path)&#123;</div><div class="line">    exec(&apos;&quot;S:\\Hexo\\MarkdownPad2\\MarkdownPad2.exe&quot; &apos; + &quot;\&quot;&quot; + [path] + &quot;\&quot;&quot;);</div><div class="line">&#125;);</div><div class="line">*/</div><div class="line">// Hexo 3 传进来的参数是一个&#123;&#125;定义的多属性对象，</div><div class="line">// 参见&quot;hexo根目录/node_modules/hexo/lib/plugins/console/new.js&quot;</div><div class="line">hexo.on(&apos;new&apos;, function(data)&#123;</div><div class="line">    exec(&apos;&quot;H:/Haroopad/haroopad.exe&quot; &apos; + &quot;\&quot;&quot; + [data.path] + &quot;\&quot;&quot;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>其实也就是获取到文件名，执行一条shell语句。</p>
 <p><a href="http://daniellaah.github.io/2016/Mathmatical-Formula-within-Markdown.html" target="_blank" rel="external">如何在Hexo博客中插入数学公式</a></p>
 <h3 id="Hexo常用命令"><a href="#Hexo常用命令" class="headerlink" title="Hexo常用命令"></a>Hexo常用命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">* hexo new &quot;postName&quot; #新建文章</div><div class="line">* hexo generate #生成静态页面至public目录</div><div class="line">* hexo server #开启预览访问端口（默认端口4000，&apos;ctrl + c&apos;关闭server）</div><div class="line">* hexo deploy #部署到GitHub</div><div class="line">* hexo help  # 查看帮助</div><div class="line">* hexo version  #查看Hexo的版本</div><div class="line"></div><div class="line">缩写：</div><div class="line"></div><div class="line">* hexo n == hexo new</div><div class="line">* hexo g == hexo generate</div><div class="line">* hexo s == hexo server</div><div class="line">* hexo d == hexo deploy</div><div class="line"></div><div class="line">组合命令：</div><div class="line"></div><div class="line">* hexo s -g #生成并本地预览</div><div class="line">* hexo d -g #生成并上传</div></pre></td></tr></table></figure>
 <h3 id="配置自己的域名"><a href="#配置自己的域名" class="headerlink" title="配置自己的域名"></a>配置自己的域名</h3><p>在自己本地的hexo目录下的source文件夹中，新建一个CNAME文件(<strong>注意，没有后缀名.</strong>)，内容为yourdomin.xxx。然后再执行一下hexo d -g，重新上传自己的博客。</p>
@@ -178,9 +186,9 @@ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2017/07/26/Java文件处处理/" title="Java文件处处理">
+ <a href="/2017/07/26/Java文件处理器/" title="Java文件处理器">
   <span>
-  Java文件处处理</span>
+  Java文件处理器</span>
 </a>
 </div>
 
@@ -229,7 +237,7 @@ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 		  
 		
 		  
-			<li><a href="/categories/Java/" title="Java">Java<sup>19</sup></a></li>
+			<li><a href="/categories/Java/" title="Java">Java<sup>15</sup></a></li>
 		  
 		
 		  
@@ -322,7 +330,7 @@ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Java/" title="Java">Java<sup>20</sup></a></li>
+				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
 			
 		
 			
@@ -338,19 +346,7 @@ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 			
 		
 			
-				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
 			
 		
 			
@@ -358,11 +354,19 @@ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 			
 		
 			
-				<li><a href="/tags/干货/" title="干货">干货<sup>2</sup></a></li>
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/面试/" title="面试">面试<sup>2</sup></a></li>
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/干货/" title="干货">干货<sup>2</sup></a></li>
 			
 		
 			
@@ -370,11 +374,15 @@ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 			
 		
 			
-				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+				<li><a href="/tags/面试/" title="面试">面试<sup>2</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/求职/" title="求职">求职<sup>1</sup></a></li>
 			
 		
 			
@@ -386,11 +394,7 @@ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 			
 		
 			
-				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/深入学习计算机系统/" title="深入学习计算机系统">深入学习计算机系统<sup>1</sup></a></li>
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
 			
 		
 			
@@ -399,6 +403,10 @@ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 		
 			
 				<li><a href="/tags/架构/" title="架构">架构<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
 			
 		
 		</ul>
