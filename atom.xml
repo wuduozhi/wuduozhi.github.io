@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-13T11:19:16.045Z</updated>
+  <updated>2018-04-14T02:00:30.899Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,87 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>爬虫|Requests的使用</title>
+    <link href="http://yoursite.com/2018/04/14/%E7%88%AC%E8%99%AB-Request%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <id>http://yoursite.com/2018/04/14/爬虫-Request的使用/</id>
+    <published>2018-04-14T08:50:12.000Z</published>
+    <updated>2018-04-14T02:00:30.899Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="初识-requests"><a href="#初识-requests" class="headerlink" title="初识 requests"></a>初识 requests</h3><p>requests 库的宣言是</p>
+<p>HTTP for Humans （给人用的 HTTP 库）</p>
+<p>我们首先来验证一下。</p>
+<p>在网络编程中，最最基本的任务包含：</p>
+<ul>
+<li>发送请求</li>
+<li>登录</li>
+<li>获取数据</li>
+<li>解析数据</li>
+<li>反序列化打印内容</li>
+</ul>
+<p>我们以 GitHub 为例，先看一下使用 urllib2 要怎么做。为了把事情弄简单点，我们假设实现已经知道，GET 请求 <a href="https://api.github.com/" target="_blank" rel="external">https://api.github.com/</a> 返回的内容是个 JSON 格式的数据（实际上通过 content-type 也能判断）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">import urllib2</div><div class="line">import json</div><div class="line"></div><div class="line">gh_url  = &apos;https://api.github.com&apos;</div><div class="line">cs_user = &apos;user&apos;</div><div class="line">cs_psw  = &apos;password&apos;</div><div class="line"></div><div class="line">req = urllib2.Request(gh_url)</div><div class="line"></div><div class="line">password_manager = urllib2.HTTPPasswordMgrWithDefaultRealm()</div><div class="line">password_manager.add_password(None, gh_url, cs_user, cs_psw)</div><div class="line"></div><div class="line">auth_manager = urllib2.HTTPBasicAuthHandler(password_manager)</div><div class="line">opener = urllib2.build_opener(auth_manager)</div><div class="line"></div><div class="line">urllib2.install_opener(opener)</div><div class="line"></div><div class="line">handler = urllib2.urlopen(req)</div><div class="line"></div><div class="line">if handler.getcode() == requests.codes.ok:</div><div class="line">    text = handler.read()</div><div class="line">    d_text = json.loads(text)</div><div class="line">    for k, v in d_text.items():</div><div class="line">        print k, v</div></pre></td></tr></table></figure></p>
+<p>如果运行正确，那么代码应该返回：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">issues_url https://api.github.com/issues</div><div class="line">current_user_repositories_url https://api.github.com/user/repos&#123;?type,page,per_page,sort&#125;</div><div class="line">rate_limit_url https://api.github.com/rate_limit</div><div class="line">repository_url https://api.github.com/repos/&#123;owner&#125;/&#123;repo&#125;</div><div class="line">...</div><div class="line">user_repositories_url https://api.github.com/users/&#123;user&#125;/repos&#123;?type,page,per_page,sort&#125;</div><div class="line">team_url https://api.github.com/teams</div></pre></td></tr></table></figure></p>
+<p>同样的效果，用 requests 库则有如下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url  = &apos;https://api.github.com&apos;</div><div class="line">cs_user = &apos;user&apos;</div><div class="line">cs_psw  = &apos;password&apos;</div><div class="line"></div><div class="line">r = requests.get(cs_url, auth=(cs_user, cs_psw))</div><div class="line"></div><div class="line">if r.status_code == requests.codes.ok</div><div class="line">    for k, v in r.json().items():</div><div class="line">        print k, v</div></pre></td></tr></table></figure></p>
+<p>溢美之词就不用说了，读到这里的你心里肯定只有一声「卧槽，这才是 Python 该有的样子」。那么，接下来我们看看 requests 都有哪些黑魔法。</p>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>requests 的基本用法，呃，真是不能再基本了。最基本的操作，就是以某种 HTTP 方法向远端服务器发送一个请求而已；而 requests 库就是这么做的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://httpbin.org&apos;</div><div class="line"></div><div class="line">r = requests.get(&quot;%s/%s&quot; % (cs_url, &apos;get&apos;))</div><div class="line">r = requests.post(&quot;%s/%s&quot; % (cs_url, &apos;post&apos;))</div><div class="line">r = requests.put(&quot;%s/%s&quot; % (cs_url, &apos;put&apos;))</div><div class="line">r = requests.delete(&quot;%s/%s&quot; % (cs_url, &apos;delete&apos;))</div><div class="line">r = requests.patch(&quot;%s/%s&quot; % (cs_url, &apos;patch&apos;))</div><div class="line">r = requests.options(&quot;%s/%s&quot; % (cs_url, &apos;get&apos;))</div></pre></td></tr></table></figure>
+<p>从语法上看，requests 库设计的非常自然。所谓 requests.get，就是以 GET 方式发送一个 REQUEST，得到一个 Response 类的结果，保存为 r。</p>
+<p>你可以在 r 中取得所有你想得到的和 HTTP 有关的信息。下面，我们以 GET 方法为例，依次介绍。</p>
+<h3 id="URL-传参-获取请求的-URL"><a href="#URL-传参-获取请求的-URL" class="headerlink" title="URL 传参 / 获取请求的 URL"></a>URL 传参 / 获取请求的 URL</h3><p>如果你经常上网（废话，看到这里的都上过网吧……），一定见过类似下面的链接：<a href="https://encrypted.google.com/search?q=hello" target="_blank" rel="external">https://encrypted.google.com/search?q=hello</a></p>
+<p>即：</p>
+<blockquote>
+<p>&lt;协议&gt;://&lt;域名&gt;/&lt;接口&gt;?&lt;键1&gt;=&lt;值1&gt;&amp;&lt;键2&gt;=&lt;值2&gt;</p>
+</blockquote>
+<p>requests 库提供的 HTTP 方法，都提供了名为 params 的参数。这个参数可以接受一个 Python 字典，并自动格式化为上述格式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://www.so.com/s&apos;</div><div class="line">param  = &#123;&apos;ie&apos;:&apos;utf-8&apos;, &apos;q&apos;:&apos;query&apos;&#125;</div><div class="line"></div><div class="line">r = requests.get (cs_url, params = param)</div><div class="line">print r.url</div></pre></td></tr></table></figure>
+<p>运行将得到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.so.com/s?q=query&amp;ie=utf-8</div></pre></td></tr></table></figure></p>
+<h3 id="HTTP-状态码-重定向跳转"><a href="#HTTP-状态码-重定向跳转" class="headerlink" title="HTTP 状态码 / 重定向跳转"></a>HTTP 状态码 / 重定向跳转</h3><p>requests 库定义的 Response 类可以方便地获取请求的 HTTP 状态码和重定向状态。</p>
+<p>360 公司的搜索引擎，原名「好搜」，现在改为「360 搜索」；域名也从 www.haosou.com 改成了 www.so.com。如果你在地址栏输入 www.haosou.com，那么会经由 302 跳转到 www.so.com。我们借此来演示。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://www.so.com/s&apos;</div><div class="line">param  = &#123;&apos;ie&apos;:&apos;utf-8&apos;, &apos;q&apos;:&apos;query&apos;&#125;</div><div class="line">r = requests.get (cs_url, params = param)</div><div class="line">print r.url, r.status_code</div><div class="line"></div><div class="line">cs_url = &apos;http://www.haosou.com/s&apos;</div><div class="line">r = requests.get (cs_url, params = param)</div><div class="line">print r.url, r.status_code, r.history</div></pre></td></tr></table></figure></p>
+<p>结果是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">http://www.so.com/s?q=query&amp;ie=utf-8 200</div><div class="line">http://www.so.com/s?q=query&amp;ie=utf-8 200 [&lt;Response [302]&gt;]</div></pre></td></tr></table></figure></p>
+<p>我们发现，requests 默认自动地处理了 302 跳转。在经过跳转的请求中，返回的 URL 和状态码都是跳转之后的信息；唯独在 history 中，用 Python 列表记录了跳转情况。</p>
+<p>大多数情况下，自动处理是挺好的。不过，有时候我们也想单步追踪页面跳转情况。此时，可以给请求加上 allow_redirects = False 参数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://www.so.com/s&apos;</div><div class="line">param  = &#123;&apos;ie&apos;:&apos;utf-8&apos;, &apos;q&apos;:&apos;query&apos;&#125;</div><div class="line">r = requests.get (cs_url, params = param)</div><div class="line">print r.url, r.status_code</div><div class="line"></div><div class="line">cs_url = &apos;http://www.haosou.com/s&apos;</div><div class="line">r = requests.get (cs_url, params = param, allow_redirects = False)</div><div class="line">print r.url, r.status_code, r.history</div></pre></td></tr></table></figure></p>
+<p>输出结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">http://www.so.com/s?q=query&amp;ie=utf-8 200</div><div class="line">http://www.haosou.com/s?q=query&amp;ie=utf-8 302 []</div></pre></td></tr></table></figure></p>
+<p>不允许 requests 自动处理跳转后，返回的 URL 和状态码都符合预期了。</p>
+<h3 id="超时设置"><a href="#超时设置" class="headerlink" title="超时设置"></a>超时设置</h3><p>requests 的超时设置以秒为单位。例如，对请求加参数 timeout = 5 即可设置超时为 5 秒。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># a very short timeout is set intentionally</div><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://www.zhihu.com&apos;</div><div class="line">r = requests.get (cs_url, timeout = 0.000001)</div></pre></td></tr></table></figure></p>
+<h3 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h3><p>我们先来看一下 requests 发出的 HTTP 报文默认的请求头是什么样子的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://httpbin.org/get&apos;</div><div class="line">r = requests.get (cs_url)</div><div class="line">print r.content</div></pre></td></tr></table></figure></p>
+<p>返回结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;args&quot;: &#123;&#125;,</div><div class="line">  &quot;headers&quot;: &#123;</div><div class="line">    &quot;Accept&quot;: &quot;*/*&quot;,</div><div class="line">    &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;,</div><div class="line">    &quot;Host&quot;: &quot;httpbin.org&quot;,</div><div class="line">    &quot;User-Agent&quot;: &quot;python-requests/2.7.0 CPython/2.7.10 Windows/7&quot;</div><div class="line">  &#125;,</div><div class="line">  &quot;origin&quot;: &quot;xx.xx.xx.xx&quot;,</div><div class="line">  &quot;url&quot;: &quot;http://httpbin.org/get&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>通常我们比较关注其中的 User-Agent 和 Accept-Encoding。如果我们要修改 HTTP 头中的这两项内容，只需要将一个合适的字典参数传给 headers 即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">my_headers = &#123;&apos;User-Agent&apos; : &apos;From Liam Huang&apos;, &apos;Accept-Encoding&apos; : &apos;gzip&apos;&#125;</div><div class="line">cs_url = &apos;http://httpbin.org/get&apos;</div><div class="line">r = requests.get (cs_url, headers = my_headers)</div><div class="line">print r.content</div></pre></td></tr></table></figure></p>
+<p>返回：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;args&quot;: &#123;&#125;,</div><div class="line">  &quot;headers&quot;: &#123;</div><div class="line">    &quot;Accept&quot;: &quot;*/*&quot;,</div><div class="line">    &quot;Accept-Encoding&quot;: &quot;gzip&quot;,</div><div class="line">    &quot;Host&quot;: &quot;httpbin.org&quot;,</div><div class="line">    &quot;User-Agent&quot;: &quot;From Liam Huang&quot;</div><div class="line">  &#125;,</div><div class="line">  &quot;origin&quot;: &quot;xx.xx.xx.xx&quot;,</div><div class="line">  &quot;url&quot;: &quot;http://httpbin.org/get&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以看到，UA 和 AE 都已经被修改了。</p>
+<h3 id="响应头"><a href="#响应头" class="headerlink" title="响应头"></a>响应头</h3><p>作为 HTTP 请求的响应，返回的内容中也有 HTTP 头。它是一个反序列化为 Python 字典的数据结构，可以通过 Response.headers 来查看。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://httpbin.org/get&apos;</div><div class="line">r = requests.get (cs_url)</div><div class="line">print r.headers</div></pre></td></tr></table></figure>
+<p>返回：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;content-length&quot;: &quot;263&quot;,</div><div class="line">    &quot;server&quot;: &quot;nginx&quot;,</div><div class="line">    &quot;connection&quot;: &quot;keep-alive&quot;,</div><div class="line">    &quot;access-control-allow-credentials&quot;: &quot;true&quot;,</div><div class="line">    &quot;date&quot;: &quot;Fri, 26 Feb 2016 10:26:17 GMT&quot;,</div><div class="line">    &quot;access-control-allow-origin&quot;: &quot;*&quot;,</div><div class="line">    &quot;content-type&quot;: &quot;application/json&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="响应内容"><a href="#响应内容" class="headerlink" title="响应内容"></a>响应内容</h3><h4 id="字节模式-自动解包"><a href="#字节模式-自动解包" class="headerlink" title="字节模式 / 自动解包"></a>字节模式 / 自动解包</h4><p>长期以来，互联网都存在带宽有限的情况。因此，网络上传输的数据，很多情况下都是经过压缩的。经由 requests 发送的请求，当收到的响应内容经过 gzip 或 deflate 压缩时，requests 会自动为我们解包。我们可以用 Response.content 来获得以字节形式返回的相应内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://www.zhihu.com&apos;</div><div class="line">r = requests.get (cs_url)</div><div class="line"></div><div class="line">if r.status_code == requests.codes.ok:</div><div class="line">    print r.content</div></pre></td></tr></table></figure>
+<p>这相当于 urllib2.urlopen(url).read()。</p>
+<p>如果相应内容不是文本，而是二进制数据（比如图片），那么上述打印结果可能会糊你一脸。这里以图片为例，示例一下该怎么办。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line">from PIL import Image</div><div class="line">from StringIO import StringIO</div><div class="line"></div><div class="line">cs_url = &apos;http://liam0205.me/uploads/avatar/avatar-2.jpg&apos;</div><div class="line">r = requests.get (cs_url)</div><div class="line"></div><div class="line">if r.status_code == requests.codes.ok:</div><div class="line">    Image.open(StringIO(r.content)).show()</div></pre></td></tr></table></figure>
+<h4 id="文本模式-编码"><a href="#文本模式-编码" class="headerlink" title="文本模式 / 编码"></a>文本模式 / 编码</h4><p>如果响应返回是文本，那么你可以用 Response.text 获得 Unicode 编码的响应返回内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://www.zhihu.com&apos;</div><div class="line">r = requests.get (cs_url)</div><div class="line"></div><div class="line">if r.status_code == requests.codes.ok:</div><div class="line">    print r.text</div></pre></td></tr></table></figure>
+<p>要获得 Unicode 编码的结果，意味着 requests 会为我们做解码工作。那么 requests 是按照何种编码去对返回结果解码的呢？</p>
+<p>requests 会读取 HTTP header 中关于字符集的内容。如果获取成功，则会依此进行解码；若不然，则会根据响应内容对编码进行猜测。具体来说，我们可以用 Response.encoding 来查看/修改使用的编码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://www.zhihu.com&apos;</div><div class="line">r = requests.get (cs_url)</div><div class="line"></div><div class="line">if r.status_code == requests.codes.ok:</div><div class="line">    print r.encoding</div></pre></td></tr></table></figure>
+<h4 id="反序列化-JSON-数据"><a href="#反序列化-JSON-数据" class="headerlink" title="反序列化 JSON 数据"></a>反序列化 JSON 数据</h4><p>开篇给出的第一个 requests 示例中，特别吸引人的一点就是 requests 无需任何其他库，就能解析序列化为 JSON 格式的数据。</p>
+<p>我们以 IP 查询 Google 公共 DNS 为例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url   = &apos;http://ip.taobao.com/service/getIpInfo.php&apos;</div><div class="line">my_param = &#123;&apos;ip&apos;:&apos;8.8.8.8&apos;&#125;</div><div class="line"></div><div class="line">r = requests.get(cs_url, params = my_param)</div><div class="line"></div><div class="line">print r.json()[&apos;data&apos;][&apos;country&apos;].encode(&apos;utf-8&apos;)</div></pre></td></tr></table></figure></p>
+<p>结果将输出：</p>
+<p><code>美国</code></p>
+<p><a href="http://docs.python-requests.org/zh_CN/latest/user/quickstart.html#" target="_blank" rel="external">快速上手</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;初识-requests&quot;&gt;&lt;a href=&quot;#初识-requests&quot; class=&quot;headerlink&quot; title=&quot;初识 requests&quot;&gt;&lt;/a&gt;初识 requests&lt;/h3&gt;&lt;p&gt;requests 库的宣言是&lt;/p&gt;
+&lt;p&gt;HTTP for Hum
+    
+    </summary>
+    
+      <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
+    
+  </entry>
   
   <entry>
     <title>PHP|PHP连贯查询操作的两种实现原理</title>
@@ -1318,62 +1399,6 @@ echo &quot;&quot;;
     <summary type="html">
     
       &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;跨站脚本攻击(Cross Site Script为了区别于CSS简称为XSS)指的是恶意攻击者往Web页面里插入恶意html代码，当用户浏览
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
-    
-    
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP|PHP漏洞全解-Session会话劫持</title>
-    <link href="http://yoursite.com/2018/03/24/PHP-PHP%E6%BC%8F%E6%B4%9E%E5%85%A8%E8%A7%A3-Session%E4%BC%9A%E8%AF%9D%E5%8A%AB%E6%8C%81/"/>
-    <id>http://yoursite.com/2018/03/24/PHP-PHP漏洞全解-Session会话劫持/</id>
-    <published>2018-03-24T00:06:48.000Z</published>
-    <updated>2018-03-26T12:42:49.798Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>服务端和客户端之间是通过session(会话)来连接沟通。当客户端的浏览器连接到服务器后，服务器就会建立一个该用户的session。每个用户的session都是独立的，并且由服务器来维护。每个用户的session是由一个独特的字符串来识别，成为session id。用户发出请求时，所发送的http表头内包含session id 的值。服务器使用http表头内的session id来识别时哪个用户提交的请求。</p>
-<p>session保存的是每个用户的个人数据，一般的web应用程序会使用session来保存通过验证的用户账号和密码。在转换不同的网页时，如果需要验证用户身份，就是用session内所保存的账号和密码来比较。session的生命周期从用户连上服务器后开始，在用户关掉浏览器或是注销时用户session_destroy函数删除session数据时结束。如果用户在20分钟内没有使用计算机的动作，session也会自动结束。</p>
-<p>Session对于Web应用无疑是最重要的，也是最复杂的。对于web应用程序来说，加强安全性的第一条原则就是 – 不要信任来自客户端的数据，一定要进行数据验证以及过滤，才能在程序中使用，进而保存到数据层。 然而，为了维持来自同一个用户的不同请求之间的状态， 客户端必须要给服务器端发送一个唯一的身份标识符(Session ID)。 很显然，这和前面提到的安全原则是矛盾的，但是没有办法，http协议是无状态的，为了维持状态，我们别无选择。 可以看出，web应用程序中最脆弱的环节就是session，因为服务器端是通过来自客户端的一个身份标识来认证用户的， 所以session是web应用程序中最需要加强安全性的环节。　</p>
-<p>同时，基于session的攻击有很多种方式。大部分的手段都是首先通过捕获合法用户的session, 然后冒充该用户来访问系统。也就是说，攻击者至少必须要获取到一个有效的session标识符，用于接下来的身份验证。</p>
-<p>php处理session的应用架构:</p>
-<p><img src="/images/PHP漏洞分析-Session会话劫持-01.jpeg" alt="Session架构" title="PHP漏洞分析-Session会话劫持-01"></p>
-<h3 id="会话劫持"><a href="#会话劫持" class="headerlink" title="会话劫持"></a>会话劫持</h3><p>会话劫持是指攻击者利用各种手段来获取目标用户的session id。一旦获取到session id，那么攻击者可以利用目标用户的身份来登录网站，获取目标用户的操作权限。</p>
-<p>攻击者获取目标用户session id的方法:</p>
-<p>1）暴力破解:尝试各种session id，直到破解为止。<br>2）计算:如果session id使用非随机的方式产生，那么就有可能计算出来<br>3）窃取:使用网络截获，xss攻击等方法获得</p>
-<p>对于PHP来说，其内部Session的实现机制虽然不是很安全，但是关于生成Session ID的环节还是比较安全的，这个随机的Session ID往往是极其复杂的并且难于被预测出来，所以，对于第一、第二种攻击方式基本上是不太可能成功的。</p>
-<p>对于第三种方式大多使用网络数据通讯层进行攻击获取，可以使用SSL进行防御。</p>
-<p>在应用层上也可以做出相应的防御措施：</p>
-<p>目前有三种广泛使用的在Web环境中维护会话（传递Session ID）的方法：URL参数，隐藏域和Cookie。其中每一种都各有利弊，Cookie已经被证明是三种方法中最方便最安全的。从安全的观点，如果不是全部也是绝大多数针对基于Cookie的会话管理机制的攻击对于URL或是隐藏域机制同样适用，但是反过来却不一定，这就让Cookie成为从安全考虑的最佳选择。</p>
-<p>会话劫持的攻击步骤:</p>
-<p><img src="/images/PHP漏洞分析-Session会话劫持-02.jpeg" alt="劫持步骤" title="PHP漏洞分析-Session会话劫持-02"></p>
-<h3 id="防御方法"><a href="#防御方法" class="headerlink" title="防御方法"></a>防御方法</h3><ol>
-<li><p>更改Session名称。PHP中Session的默认名称是PHPSESSID，此变量会保存在Cookie中，如果攻击者不分析站点，就不能猜到Session名称，阻挡部分攻击。</p>
-</li>
-<li><p>关闭透明化Session ID。透明化Session ID指当浏览器中的Http请求没有使用Cookie来存放Session ID时，Session ID则使用URL来传递。</p>
-</li>
-<li><p>设置HttpOnly。通过设置Cookie的HttpOnly为true，可以防止客户端脚本访问这个Cookie，从而有效的防止XSS攻击。</p>
-</li>
-<li><p>关闭所有phpinfo类dump request信息的页面。</p>
-</li>
-<li><p>验证HTTP头部信息</p>
-</li>
-</ol>
-<p>在http访问头文件：[Accept-Charset、Accept-Encoding、Accept-Language、User-Agent]，浏览器一般发出的头部不会改</p>
-<p>使用User-Agent检测请求的一致性:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">GET/HTTP/1.1</div><div class="line">host:example.org</div><div class="line">User-Agent:Firefox/1.0</div><div class="line">Accept:text/html,image/png,image/jpeg,image/gif,*/*</div><div class="line">Cookie:PHPSESSID=1234</div><div class="line">&lt;?php</div><div class="line">session_start();</div><div class="line">if(isset($_SESSION[&apos;HTTP_USER_AGENT&apos;]))&#123;    </div><div class="line">    if($_SESSION[&apos;HTTP_USER_AGENT&apos;]!=md5($_SERVER[&apos;HTTP_USER_AGENT&apos;]))&#123;</div><div class="line">                    /*Promptforpassword*/</div><div class="line">                   exit;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">else&#123;      </div><div class="line">　　$_SESSION[&apos;HTTP_USER_AGENT&apos;]=md5($_SERVER[&apos;HTTP_USER_AGENT&apos;]);</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
-<p>确保User-Agent头部信息一致的确是有效的，如果会话标识通过cookie传递，攻击者能取得会话标识，他同时也能取得其它HTTP头部。由于cookie暴露与浏览器漏洞或跨站脚本漏洞相关，受害者需要访问攻击者的网站并暴露所有头部信息。则攻击者只需重建头部即可进行攻击了。</p>
-<ol>
-<li>加入Token校验。同样是用于检测请求的一致性，给攻击者制造一些麻烦，使攻击者即使获取了Session ID，也无法进行破坏，能够减少对系统造成的损失。但Token需要存放在客户端，如果攻击者有办法获取到Session ID，那么也同样可以获取到Token。</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;服务端和客户端之间是通过session(会话)来连接沟通。当客户端的浏览器连接到服务器后，服务器就会建立一个该用户的session。每个用户
     
     </summary>
     

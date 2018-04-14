@@ -1,0 +1,673 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>爬虫|Requests的使用 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="初识 requestsrequests 库的宣言是 HTTP for Humans （给人用的 HTTP 库） 我们首先来验证一下。 在网络编程中，最最基本的任务包含：  发送请求 登录 获取数据 解析数据 反序列化打印内容  我们以 GitHub 为例，先看一下使用 urllib2 要怎么做。为了把事情弄简单点，我们假设实现已经知道，GET 请求 https://api.github.com/">
+<meta name="keywords" content="爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫|Requests的使用">
+<meta property="og:url" content="http://yoursite.com/2018/04/14/爬虫-Request的使用/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="初识 requestsrequests 库的宣言是 HTTP for Humans （给人用的 HTTP 库） 我们首先来验证一下。 在网络编程中，最最基本的任务包含：  发送请求 登录 获取数据 解析数据 反序列化打印内容  我们以 GitHub 为例，先看一下使用 urllib2 要怎么做。为了把事情弄简单点，我们假设实现已经知道，GET 请求 https://api.github.com/">
+<meta property="og:locale" content="Chinese">
+<meta property="og:updated_time" content="2018-04-14T02:00:30.899Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="爬虫|Requests的使用">
+<meta name="twitter:description" content="初识 requestsrequests 库的宣言是 HTTP for Humans （给人用的 HTTP 库） 我们首先来验证一下。 在网络编程中，最最基本的任务包含：  发送请求 登录 获取数据 解析数据 反序列化打印内容  我们以 GitHub 为例，先看一下使用 urllib2 要怎么做。为了把事情弄简单点，我们假设实现已经知道，GET 请求 https://api.github.com/">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/04/14/爬虫-Request的使用/" title="爬虫|Requests的使用" itemprop="url">爬虫|Requests的使用</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-04-14T08:50:12.000Z" itemprop="datePublished"> Published 2018-04-14</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#初识-requests"><span class="toc-number">1.</span> <span class="toc-text">初识 requests</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本用法"><span class="toc-number">2.</span> <span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#URL-传参-获取请求的-URL"><span class="toc-number">3.</span> <span class="toc-text">URL 传参 / 获取请求的 URL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-状态码-重定向跳转"><span class="toc-number">4.</span> <span class="toc-text">HTTP 状态码 / 重定向跳转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#超时设置"><span class="toc-number">5.</span> <span class="toc-text">超时设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请求头"><span class="toc-number">6.</span> <span class="toc-text">请求头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#响应头"><span class="toc-number">7.</span> <span class="toc-text">响应头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#响应内容"><span class="toc-number">8.</span> <span class="toc-text">响应内容</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#字节模式-自动解包"><span class="toc-number">8.1.</span> <span class="toc-text">字节模式 / 自动解包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文本模式-编码"><span class="toc-number">8.2.</span> <span class="toc-text">文本模式 / 编码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#反序列化-JSON-数据"><span class="toc-number">8.3.</span> <span class="toc-text">反序列化 JSON 数据</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h3 id="初识-requests"><a href="#初识-requests" class="headerlink" title="初识 requests"></a>初识 requests</h3><p>requests 库的宣言是</p>
+<p>HTTP for Humans （给人用的 HTTP 库）</p>
+<p>我们首先来验证一下。</p>
+<p>在网络编程中，最最基本的任务包含：</p>
+<ul>
+<li>发送请求</li>
+<li>登录</li>
+<li>获取数据</li>
+<li>解析数据</li>
+<li>反序列化打印内容</li>
+</ul>
+<p>我们以 GitHub 为例，先看一下使用 urllib2 要怎么做。为了把事情弄简单点，我们假设实现已经知道，GET 请求 <a href="https://api.github.com/" target="_blank" rel="external">https://api.github.com/</a> 返回的内容是个 JSON 格式的数据（实际上通过 content-type 也能判断）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">import urllib2</div><div class="line">import json</div><div class="line"></div><div class="line">gh_url  = &apos;https://api.github.com&apos;</div><div class="line">cs_user = &apos;user&apos;</div><div class="line">cs_psw  = &apos;password&apos;</div><div class="line"></div><div class="line">req = urllib2.Request(gh_url)</div><div class="line"></div><div class="line">password_manager = urllib2.HTTPPasswordMgrWithDefaultRealm()</div><div class="line">password_manager.add_password(None, gh_url, cs_user, cs_psw)</div><div class="line"></div><div class="line">auth_manager = urllib2.HTTPBasicAuthHandler(password_manager)</div><div class="line">opener = urllib2.build_opener(auth_manager)</div><div class="line"></div><div class="line">urllib2.install_opener(opener)</div><div class="line"></div><div class="line">handler = urllib2.urlopen(req)</div><div class="line"></div><div class="line">if handler.getcode() == requests.codes.ok:</div><div class="line">    text = handler.read()</div><div class="line">    d_text = json.loads(text)</div><div class="line">    for k, v in d_text.items():</div><div class="line">        print k, v</div></pre></td></tr></table></figure></p>
+<p>如果运行正确，那么代码应该返回：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">issues_url https://api.github.com/issues</div><div class="line">current_user_repositories_url https://api.github.com/user/repos&#123;?type,page,per_page,sort&#125;</div><div class="line">rate_limit_url https://api.github.com/rate_limit</div><div class="line">repository_url https://api.github.com/repos/&#123;owner&#125;/&#123;repo&#125;</div><div class="line">...</div><div class="line">user_repositories_url https://api.github.com/users/&#123;user&#125;/repos&#123;?type,page,per_page,sort&#125;</div><div class="line">team_url https://api.github.com/teams</div></pre></td></tr></table></figure></p>
+<p>同样的效果，用 requests 库则有如下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url  = &apos;https://api.github.com&apos;</div><div class="line">cs_user = &apos;user&apos;</div><div class="line">cs_psw  = &apos;password&apos;</div><div class="line"></div><div class="line">r = requests.get(cs_url, auth=(cs_user, cs_psw))</div><div class="line"></div><div class="line">if r.status_code == requests.codes.ok</div><div class="line">    for k, v in r.json().items():</div><div class="line">        print k, v</div></pre></td></tr></table></figure></p>
+<p>溢美之词就不用说了，读到这里的你心里肯定只有一声「卧槽，这才是 Python 该有的样子」。那么，接下来我们看看 requests 都有哪些黑魔法。</p>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>requests 的基本用法，呃，真是不能再基本了。最基本的操作，就是以某种 HTTP 方法向远端服务器发送一个请求而已；而 requests 库就是这么做的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://httpbin.org&apos;</div><div class="line"></div><div class="line">r = requests.get(&quot;%s/%s&quot; % (cs_url, &apos;get&apos;))</div><div class="line">r = requests.post(&quot;%s/%s&quot; % (cs_url, &apos;post&apos;))</div><div class="line">r = requests.put(&quot;%s/%s&quot; % (cs_url, &apos;put&apos;))</div><div class="line">r = requests.delete(&quot;%s/%s&quot; % (cs_url, &apos;delete&apos;))</div><div class="line">r = requests.patch(&quot;%s/%s&quot; % (cs_url, &apos;patch&apos;))</div><div class="line">r = requests.options(&quot;%s/%s&quot; % (cs_url, &apos;get&apos;))</div></pre></td></tr></table></figure>
+<p>从语法上看，requests 库设计的非常自然。所谓 requests.get，就是以 GET 方式发送一个 REQUEST，得到一个 Response 类的结果，保存为 r。</p>
+<p>你可以在 r 中取得所有你想得到的和 HTTP 有关的信息。下面，我们以 GET 方法为例，依次介绍。</p>
+<h3 id="URL-传参-获取请求的-URL"><a href="#URL-传参-获取请求的-URL" class="headerlink" title="URL 传参 / 获取请求的 URL"></a>URL 传参 / 获取请求的 URL</h3><p>如果你经常上网（废话，看到这里的都上过网吧……），一定见过类似下面的链接：<a href="https://encrypted.google.com/search?q=hello" target="_blank" rel="external">https://encrypted.google.com/search?q=hello</a></p>
+<p>即：</p>
+<blockquote>
+<p>&lt;协议&gt;://&lt;域名&gt;/&lt;接口&gt;?&lt;键1&gt;=&lt;值1&gt;&amp;&lt;键2&gt;=&lt;值2&gt;</p>
+</blockquote>
+<p>requests 库提供的 HTTP 方法，都提供了名为 params 的参数。这个参数可以接受一个 Python 字典，并自动格式化为上述格式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://www.so.com/s&apos;</div><div class="line">param  = &#123;&apos;ie&apos;:&apos;utf-8&apos;, &apos;q&apos;:&apos;query&apos;&#125;</div><div class="line"></div><div class="line">r = requests.get (cs_url, params = param)</div><div class="line">print r.url</div></pre></td></tr></table></figure>
+<p>运行将得到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.so.com/s?q=query&amp;ie=utf-8</div></pre></td></tr></table></figure></p>
+<h3 id="HTTP-状态码-重定向跳转"><a href="#HTTP-状态码-重定向跳转" class="headerlink" title="HTTP 状态码 / 重定向跳转"></a>HTTP 状态码 / 重定向跳转</h3><p>requests 库定义的 Response 类可以方便地获取请求的 HTTP 状态码和重定向状态。</p>
+<p>360 公司的搜索引擎，原名「好搜」，现在改为「360 搜索」；域名也从 www.haosou.com 改成了 www.so.com。如果你在地址栏输入 www.haosou.com，那么会经由 302 跳转到 www.so.com。我们借此来演示。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://www.so.com/s&apos;</div><div class="line">param  = &#123;&apos;ie&apos;:&apos;utf-8&apos;, &apos;q&apos;:&apos;query&apos;&#125;</div><div class="line">r = requests.get (cs_url, params = param)</div><div class="line">print r.url, r.status_code</div><div class="line"></div><div class="line">cs_url = &apos;http://www.haosou.com/s&apos;</div><div class="line">r = requests.get (cs_url, params = param)</div><div class="line">print r.url, r.status_code, r.history</div></pre></td></tr></table></figure></p>
+<p>结果是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">http://www.so.com/s?q=query&amp;ie=utf-8 200</div><div class="line">http://www.so.com/s?q=query&amp;ie=utf-8 200 [&lt;Response [302]&gt;]</div></pre></td></tr></table></figure></p>
+<p>我们发现，requests 默认自动地处理了 302 跳转。在经过跳转的请求中，返回的 URL 和状态码都是跳转之后的信息；唯独在 history 中，用 Python 列表记录了跳转情况。</p>
+<p>大多数情况下，自动处理是挺好的。不过，有时候我们也想单步追踪页面跳转情况。此时，可以给请求加上 allow_redirects = False 参数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://www.so.com/s&apos;</div><div class="line">param  = &#123;&apos;ie&apos;:&apos;utf-8&apos;, &apos;q&apos;:&apos;query&apos;&#125;</div><div class="line">r = requests.get (cs_url, params = param)</div><div class="line">print r.url, r.status_code</div><div class="line"></div><div class="line">cs_url = &apos;http://www.haosou.com/s&apos;</div><div class="line">r = requests.get (cs_url, params = param, allow_redirects = False)</div><div class="line">print r.url, r.status_code, r.history</div></pre></td></tr></table></figure></p>
+<p>输出结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">http://www.so.com/s?q=query&amp;ie=utf-8 200</div><div class="line">http://www.haosou.com/s?q=query&amp;ie=utf-8 302 []</div></pre></td></tr></table></figure></p>
+<p>不允许 requests 自动处理跳转后，返回的 URL 和状态码都符合预期了。</p>
+<h3 id="超时设置"><a href="#超时设置" class="headerlink" title="超时设置"></a>超时设置</h3><p>requests 的超时设置以秒为单位。例如，对请求加参数 timeout = 5 即可设置超时为 5 秒。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># a very short timeout is set intentionally</div><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://www.zhihu.com&apos;</div><div class="line">r = requests.get (cs_url, timeout = 0.000001)</div></pre></td></tr></table></figure></p>
+<h3 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h3><p>我们先来看一下 requests 发出的 HTTP 报文默认的请求头是什么样子的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://httpbin.org/get&apos;</div><div class="line">r = requests.get (cs_url)</div><div class="line">print r.content</div></pre></td></tr></table></figure></p>
+<p>返回结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;args&quot;: &#123;&#125;,</div><div class="line">  &quot;headers&quot;: &#123;</div><div class="line">    &quot;Accept&quot;: &quot;*/*&quot;,</div><div class="line">    &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;,</div><div class="line">    &quot;Host&quot;: &quot;httpbin.org&quot;,</div><div class="line">    &quot;User-Agent&quot;: &quot;python-requests/2.7.0 CPython/2.7.10 Windows/7&quot;</div><div class="line">  &#125;,</div><div class="line">  &quot;origin&quot;: &quot;xx.xx.xx.xx&quot;,</div><div class="line">  &quot;url&quot;: &quot;http://httpbin.org/get&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>通常我们比较关注其中的 User-Agent 和 Accept-Encoding。如果我们要修改 HTTP 头中的这两项内容，只需要将一个合适的字典参数传给 headers 即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">my_headers = &#123;&apos;User-Agent&apos; : &apos;From Liam Huang&apos;, &apos;Accept-Encoding&apos; : &apos;gzip&apos;&#125;</div><div class="line">cs_url = &apos;http://httpbin.org/get&apos;</div><div class="line">r = requests.get (cs_url, headers = my_headers)</div><div class="line">print r.content</div></pre></td></tr></table></figure></p>
+<p>返回：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;args&quot;: &#123;&#125;,</div><div class="line">  &quot;headers&quot;: &#123;</div><div class="line">    &quot;Accept&quot;: &quot;*/*&quot;,</div><div class="line">    &quot;Accept-Encoding&quot;: &quot;gzip&quot;,</div><div class="line">    &quot;Host&quot;: &quot;httpbin.org&quot;,</div><div class="line">    &quot;User-Agent&quot;: &quot;From Liam Huang&quot;</div><div class="line">  &#125;,</div><div class="line">  &quot;origin&quot;: &quot;xx.xx.xx.xx&quot;,</div><div class="line">  &quot;url&quot;: &quot;http://httpbin.org/get&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以看到，UA 和 AE 都已经被修改了。</p>
+<h3 id="响应头"><a href="#响应头" class="headerlink" title="响应头"></a>响应头</h3><p>作为 HTTP 请求的响应，返回的内容中也有 HTTP 头。它是一个反序列化为 Python 字典的数据结构，可以通过 Response.headers 来查看。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://httpbin.org/get&apos;</div><div class="line">r = requests.get (cs_url)</div><div class="line">print r.headers</div></pre></td></tr></table></figure>
+<p>返回：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;content-length&quot;: &quot;263&quot;,</div><div class="line">    &quot;server&quot;: &quot;nginx&quot;,</div><div class="line">    &quot;connection&quot;: &quot;keep-alive&quot;,</div><div class="line">    &quot;access-control-allow-credentials&quot;: &quot;true&quot;,</div><div class="line">    &quot;date&quot;: &quot;Fri, 26 Feb 2016 10:26:17 GMT&quot;,</div><div class="line">    &quot;access-control-allow-origin&quot;: &quot;*&quot;,</div><div class="line">    &quot;content-type&quot;: &quot;application/json&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="响应内容"><a href="#响应内容" class="headerlink" title="响应内容"></a>响应内容</h3><h4 id="字节模式-自动解包"><a href="#字节模式-自动解包" class="headerlink" title="字节模式 / 自动解包"></a>字节模式 / 自动解包</h4><p>长期以来，互联网都存在带宽有限的情况。因此，网络上传输的数据，很多情况下都是经过压缩的。经由 requests 发送的请求，当收到的响应内容经过 gzip 或 deflate 压缩时，requests 会自动为我们解包。我们可以用 Response.content 来获得以字节形式返回的相应内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://www.zhihu.com&apos;</div><div class="line">r = requests.get (cs_url)</div><div class="line"></div><div class="line">if r.status_code == requests.codes.ok:</div><div class="line">    print r.content</div></pre></td></tr></table></figure>
+<p>这相当于 urllib2.urlopen(url).read()。</p>
+<p>如果相应内容不是文本，而是二进制数据（比如图片），那么上述打印结果可能会糊你一脸。这里以图片为例，示例一下该怎么办。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line">from PIL import Image</div><div class="line">from StringIO import StringIO</div><div class="line"></div><div class="line">cs_url = &apos;http://liam0205.me/uploads/avatar/avatar-2.jpg&apos;</div><div class="line">r = requests.get (cs_url)</div><div class="line"></div><div class="line">if r.status_code == requests.codes.ok:</div><div class="line">    Image.open(StringIO(r.content)).show()</div></pre></td></tr></table></figure>
+<h4 id="文本模式-编码"><a href="#文本模式-编码" class="headerlink" title="文本模式 / 编码"></a>文本模式 / 编码</h4><p>如果响应返回是文本，那么你可以用 Response.text 获得 Unicode 编码的响应返回内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://www.zhihu.com&apos;</div><div class="line">r = requests.get (cs_url)</div><div class="line"></div><div class="line">if r.status_code == requests.codes.ok:</div><div class="line">    print r.text</div></pre></td></tr></table></figure>
+<p>要获得 Unicode 编码的结果，意味着 requests 会为我们做解码工作。那么 requests 是按照何种编码去对返回结果解码的呢？</p>
+<p>requests 会读取 HTTP header 中关于字符集的内容。如果获取成功，则会依此进行解码；若不然，则会根据响应内容对编码进行猜测。具体来说，我们可以用 Response.encoding 来查看/修改使用的编码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url = &apos;http://www.zhihu.com&apos;</div><div class="line">r = requests.get (cs_url)</div><div class="line"></div><div class="line">if r.status_code == requests.codes.ok:</div><div class="line">    print r.encoding</div></pre></td></tr></table></figure>
+<h4 id="反序列化-JSON-数据"><a href="#反序列化-JSON-数据" class="headerlink" title="反序列化 JSON 数据"></a>反序列化 JSON 数据</h4><p>开篇给出的第一个 requests 示例中，特别吸引人的一点就是 requests 无需任何其他库，就能解析序列化为 JSON 格式的数据。</p>
+<p>我们以 IP 查询 Google 公共 DNS 为例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">cs_url   = &apos;http://ip.taobao.com/service/getIpInfo.php&apos;</div><div class="line">my_param = &#123;&apos;ip&apos;:&apos;8.8.8.8&apos;&#125;</div><div class="line"></div><div class="line">r = requests.get(cs_url, params = my_param)</div><div class="line"></div><div class="line">print r.json()[&apos;data&apos;][&apos;country&apos;].encode(&apos;utf-8&apos;)</div></pre></td></tr></table></figure></p>
+<p>结果将输出：</p>
+<p><code>美国</code></p>
+<p><a href="http://docs.python-requests.org/zh_CN/latest/user/quickstart.html#" target="_blank" rel="external">快速上手</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/爬虫/">爬虫</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/爬虫/">爬虫</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/04/14/PHP-PHP连贯查询操作的两种实现原理/"  title="PHP|PHP连贯查询操作的两种实现原理">
+ <span>PHP|PHP连贯查询操作的两种实现原理
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Vim/" title="Vim">Vim<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/life/" title="life">life<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/干货/" title="干货">干货<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/操作系统/" title="操作系统">操作系统<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/架构/" title="架构">架构<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/深入学习计算机系统/" title="深入学习计算机系统">深入学习计算机系统<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/运维/" title="运维">运维<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/面试/" title="面试">面试<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>20</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具/" title="工具">工具<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/干货/" title="干货">干货<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/面试/" title="面试">面试<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/操作系统/" title="操作系统">操作系统<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/深入学习计算机系统/" title="深入学习计算机系统">深入学习计算机系统<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/架构/" title="架构">架构<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>
