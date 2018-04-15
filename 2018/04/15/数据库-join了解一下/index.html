@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://yoursite.com/images/sql-join09.png">
 <meta property="og:image" content="http://yoursite.com/images/sql-join07.png">
 <meta property="og:image" content="http://yoursite.com/images/sql-join08.png">
-<meta property="og:updated_time" content="2018-04-15T06:50:16.357Z">
+<meta property="og:updated_time" content="2018-04-15T07:00:16.165Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库|join了解一下">
 <meta name="twitter:description" content="对于SQL的Join，在学习起来可能是比较乱的。我们知道，SQL的Join语法有很多inner的，有outer的，有left的，有时候，对于Select出来的结果集是什么样子有点不是很清楚。Coding Horror上有一篇文章通过 文氏图 Venn diagrams 解释了SQL的Join。我觉得清楚易懂，转过来。 假设我们有两张表。  Table A 是左边的表。 Table B 是右边的表。">
@@ -61,7 +61,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -81,7 +81,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -104,14 +104,14 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-04-15T14:05:32.000Z" itemprop="datePublished"> Published 2018-04-15</time>
+    <time datetime="2018-04-15T14:05:32.000Z" itemprop="datePublished"> 發表於 2018-04-15</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
+			<strong class="toc-title">文章目錄</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Inner-join"><span class="toc-number">1.</span> <span class="toc-text">Inner join</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Full-outer-join"><span class="toc-number">2.</span> <span class="toc-text">Full outer join</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#special-use"><span class="toc-number">2.1.</span> <span class="toc-text">special use</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LEFT-OUTER-JOIN"><span class="toc-number">3.</span> <span class="toc-text">LEFT OUTER JOIN</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#special-use-1"><span class="toc-number">3.1.</span> <span class="toc-text">special use</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#了解一下"><span class="toc-number">4.</span> <span class="toc-text">了解一下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#来个example"><span class="toc-number">5.</span> <span class="toc-text">来个example</span></a></li></ol>
 		
@@ -192,7 +192,7 @@ CROSS JOIN TableB
 <h3 id="了解一下"><a href="#了解一下" class="headerlink" title="了解一下"></a>了解一下</h3><p>通过上面的叙述，不难发现，我们完全可以从集合的角度来理解join的用法，不同的join使用就是为了满足集合的运算。</p>
 <p><img src="/images/sql-join09.png" alt="总结"><br><img src="/images/sql-join07.png" alt="总结"><br><img src="/images/sql-join08.png" alt="总结"></p>
 <h3 id="来个example"><a href="#来个example" class="headerlink" title="来个example"></a>来个example</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">create table table_1 (</div><div class="line">	 `id` INT (11) NOT NULL,</div><div class="line">	user_name varchar(20) NOT NULL</div><div class="line">)</div><div class="line"></div><div class="line">create table table_2 (</div><div class="line">	 `id` INT (11) NOT NULL,</div><div class="line">	user_name varchar(20) NOT NULL</div><div class="line">)</div><div class="line"></div><div class="line"></div><div class="line">set sql_safe_updates=0;</div><div class="line">insert into table_1 values (1,&quot;zhangsan_1_1&quot;),(2,&quot;lisi_1_1&quot;),(3,&quot;wangmazi_1&quot;),(1,&quot;zhangsan_1_2&quot;),(2,&quot;lisi_1_2&quot;);</div><div class="line">select * from table_1</div><div class="line">-- DELETE from table_1</div><div class="line">insert into table_2 values (4,&quot;zhaoliu_2_1&quot;),(2,&quot;lisi_2_1&quot;),(3,&quot;wangmazi_2_1&quot;),(1,&quot;zhangsan_2&quot;),(2,&quot;lisi_2_2&quot;),(4,&quot;zhaoliu_2_2&quot;),(3,&quot;wangmazi_2_2&quot;)</div><div class="line">-- DELETE from table_2</div><div class="line">select * from table_2</div><div class="line">SELECT * FROM table_1 t1 INNER JOIN table_2 t2 ON t1.id = t2.id;</div><div class="line">SELECT * FROM table_1 t1 WHERE EXISTS (SELECT 1 FROM table_2 t2 WHERE t2.id = t1.id );</div><div class="line">-- 结果集：1+2==3</div><div class="line">-- 1、inner join： SELECT * FROM table_1 t1, table_2 t2 where t1.id = t2.id;</div><div class="line">-- 2、anti-join： SELECT * FROM table_1 t1, table_2 t2 where t1.id != t2.id;</div><div class="line">-- 3、cross join：select * from table_1 t1, table_2 t2; -- 不带条件等同于 cross join</div><div class="line"></div><div class="line"></div><div class="line">SELECT * FROM table_1 t1 WHERE EXISTS (SELECT 1 FROM table_2 t2 WHERE t2.id = t1.id );</div><div class="line">1   zhangsan_1_1</div><div class="line">2   lisi_1_1</div><div class="line">3   wangmazi_1</div><div class="line">1   zhangsan_1_2</div><div class="line">2   lisi_1_2</div><div class="line"></div><div class="line"></div><div class="line">SELECT * FROM table_1 t1 INNER JOIN table_2 t2 ON t1.id = t2.id;</div><div class="line">2   lisi_1_1        2   lisi_2_1</div><div class="line">2   lisi_1_2        2   lisi_2_1</div><div class="line">3   wangmazi_1      3   wangmazi_2_1</div><div class="line">1   zhangsan_1_1    1   zhangsan_2</div><div class="line">1   zhangsan_1_2    1   zhangsan_2</div><div class="line">2   lisi_1_1        2   lisi_2_2</div><div class="line">2   lisi_1_2        2   lisi_2_2</div><div class="line">3   wangmazi_1      3   wangmazi_2_2</div></pre></td></tr></table></figure>
-<p><a href="https://my.oschina.net/leejun2005/blog/134719" target="_blank" rel="external">图文并茂教程</a></p>
+<p><a href="https://my.oschina.net/leejun2005/blog/134719" target="_blank" rel="external">图文并茂教程</a><br><a href="http://www.cnblogs.com/rush/archive/2012/03/27/2420246.html" target="_blank" rel="external">SQL Join的一些总结</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -233,10 +233,10 @@ CROSS JOIN TableB
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -264,7 +264,7 @@ CROSS JOIN TableB
 
   
 <div class="categorieslist">
-	<p class="asidetitle">Categories</p>
+	<p class="asidetitle">分類</p>
 		<ul>
 		
 		  
@@ -369,7 +369,7 @@ CROSS JOIN TableB
 
   
 <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">標簽</p>
 		<ul class="clearfix">
 		
 			
@@ -457,7 +457,7 @@ CROSS JOIN TableB
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
 </div>
 
 </aside>
@@ -650,7 +650,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
