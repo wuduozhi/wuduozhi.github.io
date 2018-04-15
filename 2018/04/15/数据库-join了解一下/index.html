@@ -1,0 +1,716 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>数据库|join了解一下 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="对于SQL的Join，在学习起来可能是比较乱的。我们知道，SQL的Join语法有很多inner的，有outer的，有left的，有时候，对于Select出来的结果集是什么样子有点不是很清楚。Coding Horror上有一篇文章通过 文氏图 Venn diagrams 解释了SQL的Join。我觉得清楚易懂，转过来。 假设我们有两张表。  Table A 是左边的表。 Table B 是右边的表。">
+<meta name="keywords" content="数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库|join了解一下">
+<meta property="og:url" content="http://yoursite.com/2018/04/15/数据库-join了解一下/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="对于SQL的Join，在学习起来可能是比较乱的。我们知道，SQL的Join语法有很多inner的，有outer的，有left的，有时候，对于Select出来的结果集是什么样子有点不是很清楚。Coding Horror上有一篇文章通过 文氏图 Venn diagrams 解释了SQL的Join。我觉得清楚易懂，转过来。 假设我们有两张表。  Table A 是左边的表。 Table B 是右边的表。">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/images/sql-join01.png">
+<meta property="og:image" content="http://yoursite.com/images/sql-join02.png">
+<meta property="og:image" content="http://yoursite.com/images/sql-join03.png">
+<meta property="og:image" content="http://yoursite.com/images/sql-join06.png">
+<meta property="og:image" content="http://yoursite.com/images/sql-join04.png">
+<meta property="og:image" content="http://yoursite.com/images/sql-join05.png">
+<meta property="og:image" content="http://yoursite.com/images/sql-join10.png">
+<meta property="og:image" content="http://yoursite.com/images/sql-join09.png">
+<meta property="og:image" content="http://yoursite.com/images/sql-join07.png">
+<meta property="og:image" content="http://yoursite.com/images/sql-join08.png">
+<meta property="og:updated_time" content="2018-04-15T06:50:16.357Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据库|join了解一下">
+<meta name="twitter:description" content="对于SQL的Join，在学习起来可能是比较乱的。我们知道，SQL的Join语法有很多inner的，有outer的，有left的，有时候，对于Select出来的结果集是什么样子有点不是很清楚。Coding Horror上有一篇文章通过 文氏图 Venn diagrams 解释了SQL的Join。我觉得清楚易懂，转过来。 假设我们有两张表。  Table A 是左边的表。 Table B 是右边的表。">
+<meta name="twitter:image" content="http://yoursite.com/images/sql-join01.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/04/15/数据库-join了解一下/" title="数据库|join了解一下" itemprop="url">数据库|join了解一下</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-04-15T14:05:32.000Z" itemprop="datePublished"> Published 2018-04-15</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Inner-join"><span class="toc-number">1.</span> <span class="toc-text">Inner join</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Full-outer-join"><span class="toc-number">2.</span> <span class="toc-text">Full outer join</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#special-use"><span class="toc-number">2.1.</span> <span class="toc-text">special use</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LEFT-OUTER-JOIN"><span class="toc-number">3.</span> <span class="toc-text">LEFT OUTER JOIN</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#special-use-1"><span class="toc-number">3.1.</span> <span class="toc-text">special use</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#了解一下"><span class="toc-number">4.</span> <span class="toc-text">了解一下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#来个example"><span class="toc-number">5.</span> <span class="toc-text">来个example</span></a></li></ol>
+		
+		</div>
+		
+		<p>对于SQL的Join，在学习起来可能是比较乱的。我们知道，SQL的Join语法有很多inner的，有outer的，有left的，有时候，对于Select出来的结果集是什么样子有点不是很清楚。Coding Horror上有<a href="https://blog.codinghorror.com/a-visual-explanation-of-sql-joins/" target="_blank" rel="external">一篇文章</a>通过 文氏图 Venn diagrams 解释了SQL的Join。我觉得清楚易懂，转过来。</p>
+<p>假设我们有两张表。</p>
+<ul>
+<li>Table A 是左边的表。</li>
+<li>Table B 是右边的表。</li>
+</ul>
+<p><img src="/images/sql-join01.png" alt="表数据"></p>
+<p>下面让我们来看看不同的Join会产生什么样的结果。</p>
+<h3 id="Inner-join"><a href="#Inner-join" class="headerlink" title="Inner join"></a>Inner join</h3><pre><code>SELECT * FROM TableA
+INNER JOIN TableB
+ON TableA.name = TableB.name
+
+id  name       id   name
+--  ----       --   ----
+1   Pirate     2    Pirate
+3   Ninja      4    Ninja
+</code></pre><p>Inner join<br>产生的结果集中，是A和B的交集。</p>
+<p><img src="/images/sql-join02.png" alt="Inner join"></p>
+<h3 id="Full-outer-join"><a href="#Full-outer-join" class="headerlink" title="Full outer join"></a>Full outer join</h3><pre><code>SELECT * FROM TableA
+FULL OUTER JOIN TableB
+ON TableA.name = TableB.name
+
+id    name       id    name
+--    ----       --    ----
+1     Pirate     2     Pirate
+2     Monkey     null  null
+3     Ninja      4     Ninja
+4     Spaghetti  null  null
+null  null       1     Rutabaga
+null  null       3     Darth Vader
+</code></pre><p>Full outer join 产生A和B的并集。但是需要注意的是，对于没有匹配的记录，则会以null做为值。</p>
+<p><img src="/images/sql-join03.png" alt="Full join"></p>
+<h4 id="special-use"><a href="#special-use" class="headerlink" title="special use"></a>special use</h4><pre><code>SELECT * FROM TableA
+FULL OUTER JOIN TableB
+ON TableA.name = TableB.name
+WHERE TableA.id IS null
+OR TableB.id IS null
+
+id    name       id    name
+--    ----       --    ----
+2     Monkey     null  null
+4     Spaghetti  null  null
+null  null       1     Rutabaga
+null  null       3     Darth Vader
+</code></pre><p>产生A表和B表都没有出现的数据集。<br><img src="/images/sql-join06.png" alt="Full join"></p>
+<h3 id="LEFT-OUTER-JOIN"><a href="#LEFT-OUTER-JOIN" class="headerlink" title="LEFT OUTER JOIN"></a>LEFT OUTER JOIN</h3><pre><code>SELECT * FROM TableA
+LEFT OUTER JOIN TableB
+ON TableA.name = TableB.name
+
+id  name       id    name
+--  ----       --    ----
+1   Pirate     2     Pirate
+2   Monkey     null  null
+3   Ninja      4     Ninja
+4   Spaghetti  null  null
+</code></pre><p>Left outer join 产生表A的完全集，而B表中匹配的则有值，没有匹配的则以null值取代。</p>
+<p><img src="/images/sql-join04.png" alt="left join"></p>
+<h4 id="special-use-1"><a href="#special-use-1" class="headerlink" title="special use"></a>special use</h4><pre><code>SELECT * FROM TableA
+LEFT OUTER JOIN TableB
+ON TableA.name = TableB.name
+WHERE TableB.id IS null 
+
+id  name       id     name
+--  ----       --     ----
+2   Monkey     null   null
+4   Spaghetti  null   null
+</code></pre><p>产生在A表中有而在B表中没有的集合<br><img src="/images/sql-join05.png" alt="left join"></p>
+<p>还需要知道的是我们还有一个是“交差集” cross join, 这种Join没有办法用文式图表示，因为其就是把表A和表B的数据进行一个N*M的组合，即笛卡尔积。表达式如下：</p>
+<pre><code>SELECT * FROM TableA
+CROSS JOIN TableB
+</code></pre><p>这个笛卡尔乘积会产生 4 x 4 = 16 条记录，一般来说，我们很少用到这个语法。但是我们得小心，如果不是使用嵌套的select语句，一般系统都会产生笛卡尔乘积然再做过滤。这是对于性能来说是非常危险的，尤其是表很大的时候。</p>
+<p><img src="/images/sql-join10.png" alt="cross join"></p>
+<h3 id="了解一下"><a href="#了解一下" class="headerlink" title="了解一下"></a>了解一下</h3><p>通过上面的叙述，不难发现，我们完全可以从集合的角度来理解join的用法，不同的join使用就是为了满足集合的运算。</p>
+<p><img src="/images/sql-join09.png" alt="总结"><br><img src="/images/sql-join07.png" alt="总结"><br><img src="/images/sql-join08.png" alt="总结"></p>
+<h3 id="来个example"><a href="#来个example" class="headerlink" title="来个example"></a>来个example</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">create table table_1 (</div><div class="line">	 `id` INT (11) NOT NULL,</div><div class="line">	user_name varchar(20) NOT NULL</div><div class="line">)</div><div class="line"></div><div class="line">create table table_2 (</div><div class="line">	 `id` INT (11) NOT NULL,</div><div class="line">	user_name varchar(20) NOT NULL</div><div class="line">)</div><div class="line"></div><div class="line"></div><div class="line">set sql_safe_updates=0;</div><div class="line">insert into table_1 values (1,&quot;zhangsan_1_1&quot;),(2,&quot;lisi_1_1&quot;),(3,&quot;wangmazi_1&quot;),(1,&quot;zhangsan_1_2&quot;),(2,&quot;lisi_1_2&quot;);</div><div class="line">select * from table_1</div><div class="line">-- DELETE from table_1</div><div class="line">insert into table_2 values (4,&quot;zhaoliu_2_1&quot;),(2,&quot;lisi_2_1&quot;),(3,&quot;wangmazi_2_1&quot;),(1,&quot;zhangsan_2&quot;),(2,&quot;lisi_2_2&quot;),(4,&quot;zhaoliu_2_2&quot;),(3,&quot;wangmazi_2_2&quot;)</div><div class="line">-- DELETE from table_2</div><div class="line">select * from table_2</div><div class="line">SELECT * FROM table_1 t1 INNER JOIN table_2 t2 ON t1.id = t2.id;</div><div class="line">SELECT * FROM table_1 t1 WHERE EXISTS (SELECT 1 FROM table_2 t2 WHERE t2.id = t1.id );</div><div class="line">-- 结果集：1+2==3</div><div class="line">-- 1、inner join： SELECT * FROM table_1 t1, table_2 t2 where t1.id = t2.id;</div><div class="line">-- 2、anti-join： SELECT * FROM table_1 t1, table_2 t2 where t1.id != t2.id;</div><div class="line">-- 3、cross join：select * from table_1 t1, table_2 t2; -- 不带条件等同于 cross join</div><div class="line"></div><div class="line"></div><div class="line">SELECT * FROM table_1 t1 WHERE EXISTS (SELECT 1 FROM table_2 t2 WHERE t2.id = t1.id );</div><div class="line">1   zhangsan_1_1</div><div class="line">2   lisi_1_1</div><div class="line">3   wangmazi_1</div><div class="line">1   zhangsan_1_2</div><div class="line">2   lisi_1_2</div><div class="line"></div><div class="line"></div><div class="line">SELECT * FROM table_1 t1 INNER JOIN table_2 t2 ON t1.id = t2.id;</div><div class="line">2   lisi_1_1        2   lisi_2_1</div><div class="line">2   lisi_1_2        2   lisi_2_1</div><div class="line">3   wangmazi_1      3   wangmazi_2_1</div><div class="line">1   zhangsan_1_1    1   zhangsan_2</div><div class="line">1   zhangsan_1_2    1   zhangsan_2</div><div class="line">2   lisi_1_1        2   lisi_2_2</div><div class="line">2   lisi_1_2        2   lisi_2_2</div><div class="line">3   wangmazi_1      3   wangmazi_2_2</div></pre></td></tr></table></figure>
+<p><a href="https://my.oschina.net/leejun2005/blog/134719" target="_blank" rel="external">图文并茂教程</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/数据库/">数据库</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/数据库/">数据库</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/04/15/计算机网络-tcp三次握手四次分手/"  title="计算机网络|tcp三次握手四次分手">
+ <span>计算机网络|tcp三次握手四次分手
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>15</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Vim/" title="Vim">Vim<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/life/" title="life">life<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/干货/" title="干货">干货<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/操作系统/" title="操作系统">操作系统<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/架构/" title="架构">架构<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/深入学习计算机系统/" title="深入学习计算机系统">深入学习计算机系统<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机网络/" title="计算机网络">计算机网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/运维/" title="运维">运维<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/面试/" title="面试">面试<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具/" title="工具">工具<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/干货/" title="干货">干货<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/面试/" title="面试">面试<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>
