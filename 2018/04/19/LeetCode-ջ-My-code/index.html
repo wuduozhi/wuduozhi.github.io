@@ -4,25 +4,25 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>LeetCode|ջ-My code | 只为不凡而来</title>
+    <title>LeetCode|My code | 只为不凡而来</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="wuduozhi">
     
 
     
-    <meta name="description" content="LeetCode 11题目来源 题目大意：给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。画 n 条垂直线，使得垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。 注意：你不能倾斜容器，n 至少是2。 思路:用两个指针从两端开始向中间靠拢，如果左端线段短于右端，那么左端右移，反">
+    <meta name="description" content="LeetCode 11 Container With Most Water（最大水容器） 题目大意：给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。画 n 条垂直线，使得垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。 注意：你不能倾斜容器，n 至少是2。 思路:用两个指针从">
 <meta name="keywords" content="LeetCode">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode|ջ-My code">
+<meta property="og:title" content="LeetCode|My code">
 <meta property="og:url" content="http://yoursite.com/2018/04/19/LeetCode-ջ-My-code/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="LeetCode 11题目来源 题目大意：给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。画 n 条垂直线，使得垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。 注意：你不能倾斜容器，n 至少是2。 思路:用两个指针从两端开始向中间靠拢，如果左端线段短于右端，那么左端右移，反">
+<meta property="og:description" content="LeetCode 11 Container With Most Water（最大水容器） 题目大意：给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。画 n 条垂直线，使得垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。 注意：你不能倾斜容器，n 至少是2。 思路:用两个指针从">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-04-19T07:49:19.453Z">
+<meta property="og:updated_time" content="2018-04-23T03:02:47.903Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LeetCode|ջ-My code">
-<meta name="twitter:description" content="LeetCode 11题目来源 题目大意：给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。画 n 条垂直线，使得垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。 注意：你不能倾斜容器，n 至少是2。 思路:用两个指针从两端开始向中间靠拢，如果左端线段短于右端，那么左端右移，反">
+<meta name="twitter:title" content="LeetCode|My code">
+<meta name="twitter:description" content="LeetCode 11 Container With Most Water（最大水容器） 题目大意：给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。画 n 条垂直线，使得垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。 注意：你不能倾斜容器，n 至少是2。 思路:用两个指针从">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -86,7 +86,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2018/04/19/LeetCode-ջ-My-code/" title="LeetCode|ջ-My code" itemprop="url">LeetCode|ջ-My code</a>
+      <a href="/2018/04/19/LeetCode-ջ-My-code/" title="LeetCode|My code" itemprop="url">LeetCode|My code</a>
   </h1>
   <p class="article-author">By
        
@@ -102,16 +102,65 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-11"><span class="toc-number">1.</span> <span class="toc-text">LeetCode 11</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-11-Container-With-Most-Water（最大水容器）"><span class="toc-number">1.</span> <span class="toc-text">LeetCode 11 Container With Most Water（最大水容器） </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-144-Binary-Tree-Preorder-Traversal"><span class="toc-number">2.</span> <span class="toc-text">LeetCode 144 Binary Tree Preorder Traversal </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-94-Binary-Tree-Inorder-Traversal（中序遍历"><span class="toc-number">3.</span> <span class="toc-text">LeetCode 94 Binary Tree Inorder Traversal（中序遍历</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-145-Binary-Tree-Postorder-Traversal"><span class="toc-number">4.</span> <span class="toc-text">LeetCode 145 Binary Tree Postorder Traversal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-136-Single-NumberSingle-Number"><span class="toc-number">5.</span> <span class="toc-text">LeetCode 136 Single NumberSingle Number</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-137：Single-Number-II"><span class="toc-number">6.</span> <span class="toc-text">LeetCode 137：Single Number II</span></a></li></ol>
 		
 		</div>
 		
-		<h3 id="LeetCode-11"><a href="#LeetCode-11" class="headerlink" title="LeetCode 11"></a>LeetCode 11</h3><p><a href="https://leetcode-cn.com/problems/container-with-most-water/description/" target="_blank" rel="external">题目来源</a></p>
-<p>题目大意：给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。画 n 条垂直线，使得垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。</p>
+		<h3 id="LeetCode-11-Container-With-Most-Water（最大水容器）"><a href="#LeetCode-11-Container-With-Most-Water（最大水容器）" class="headerlink" title="LeetCode 11 Container With Most Water（最大水容器） "></a><a href="https://leetcode-cn.com/problems/container-with-most-water/description/" target="_blank" rel="external">LeetCode 11 Container With Most Water（最大水容器） </a></h3><p>题目大意：给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。画 n 条垂直线，使得垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。</p>
 <p>注意：你不能倾斜容器，n 至少是2。</p>
 <p>思路:用两个指针从两端开始向中间靠拢，如果左端线段短于右端，那么左端右移，反之右端左移，只到左右两端移到中间重合，记录这个过程中每一次组成木桶的容积，保留其中最大的。因为当左端线段L小于右端线段R时，我们把L右移，右移到下一个比当前线段大的线段处，这时舍弃的是R与左端其他线段（L+1,L+2, …）组成的木桶，这些木桶是没必要判断的，因为这些木桶的容积肯定都没有L和R组成的木桶容积大。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">public:</div><div class="line">    int maxArea(vector&lt;int&gt;&amp; height) &#123;</div><div class="line">        int area = 0;</div><div class="line">        int length = height.size();</div><div class="line">        int l=0,r=length-1;</div><div class="line">        int left = height[0],right = height[length-1];</div><div class="line">        while(l&lt;r)&#123;</div><div class="line">            int tmp=0;</div><div class="line">            if(left&lt;right)&#123;</div><div class="line">               tmp = left*(r-l);</div><div class="line">                while(height[l]&lt;=left)&#123;</div><div class="line">                    l++;</div><div class="line">                &#125;</div><div class="line">                left = height[l];</div><div class="line">            &#125;else&#123;</div><div class="line">                tmp = right*(r-l);</div><div class="line">                while(height[r]&lt;=right)&#123;</div><div class="line">                    r--;</div><div class="line">                &#125;</div><div class="line">                right = height[r];</div><div class="line">            &#125;</div><div class="line">            if(area&lt;tmp)&#123;</div><div class="line">                area = tmp;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return area;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-  
+<h3 id="LeetCode-144-Binary-Tree-Preorder-Traversal"><a href="#LeetCode-144-Binary-Tree-Preorder-Traversal" class="headerlink" title="LeetCode 144 Binary Tree Preorder Traversal "></a><a href="https://leetcode-cn.com/problems/binary-tree-preorder-traversal/description/" target="_blank" rel="external">LeetCode 144 Binary Tree Preorder Traversal </a></h3><p>题目大意：给定一个二叉树，返回它的 前序 遍历。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">示例:</div><div class="line"></div><div class="line">输入: [1,null,2,3]  </div><div class="line">   1</div><div class="line">    \</div><div class="line">     2</div><div class="line">    /</div><div class="line">   3 </div><div class="line"></div><div class="line">输出: [1,2,3]</div><div class="line"></div><div class="line">进阶: 递归算法很简单，你可以通过迭代算法完成吗？</div></pre></td></tr></table></figure></p>
+<p>思路：题目要求对二叉树进行非递归的前序遍历，所谓前序遍历即，先访问根节点、再访问左子树、然后是右子树。通常采用递归的方法，题目要求采用非递归的方法实现。算法如下：</p>
+<ol>
+<li>如果根节点非空，将根节点加入到栈中。</li>
+<li>如果栈不空，弹出出栈顶节点，将其值加加入到数组中。<br> 2.1. 如果该节点的右子树不为空，将右子节点加入栈中。<br> 2.2. 如果左子节点不为空，将左子节点加入栈中。</li>
+<li>重复第二步，直到栈空。 </li>
+</ol>
+<p>这里最重要的一个是先添加右节点，然后在添加左节点，这样做是为了使左节点在栈顶，下一次迭代的时候处理的是左节点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * struct TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode *left;</div><div class="line"> *     TreeNode *right;</div><div class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line">class Solution &#123;</div><div class="line">public:</div><div class="line">    vector&lt;int&gt; preorderTraversal(TreeNode* root) &#123;</div><div class="line">        stack&lt;TreeNode *&gt; sta;</div><div class="line">        </div><div class="line">        if(root!=NULL)</div><div class="line">          sta.push(root);</div><div class="line">        </div><div class="line">        vector&lt;int&gt; result;</div><div class="line">        while(!sta.empty())&#123;</div><div class="line">            TreeNode * node = sta.top();</div><div class="line">            sta.pop();</div><div class="line">            result.push_back(node-&gt;val);</div><div class="line">            if(node-&gt;right!=NULL)&#123;</div><div class="line">                sta.push(node-&gt;right);</div><div class="line">            &#125;</div><div class="line">            if(node-&gt;left!=NULL)&#123;</div><div class="line">                sta.push(node-&gt;left);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="LeetCode-94-Binary-Tree-Inorder-Traversal（中序遍历"><a href="#LeetCode-94-Binary-Tree-Inorder-Traversal（中序遍历" class="headerlink" title="LeetCode 94 Binary Tree Inorder Traversal（中序遍历"></a><a href="https://leetcode-cn.com/problems/binary-tree-inorder-traversal/description/" target="_blank" rel="external">LeetCode 94 Binary Tree Inorder Traversal（中序遍历</a></h3><p>题目大意：给定一个二叉树，返回它的中序 遍历。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">示例:</div><div class="line"></div><div class="line">输入: [1,null,2,3]</div><div class="line">   1</div><div class="line">    \</div><div class="line">     2</div><div class="line">    /</div><div class="line">   3</div><div class="line"></div><div class="line">输出: [1,3,2]</div><div class="line"></div><div class="line">进阶: 递归算法很简单，你可以通过迭代算法完成吗？</div></pre></td></tr></table></figure>
+<p>思路：<br>太经典基础的算法问题了，但想写出一个无bug的非递归二叉树中序遍历也不是很容易。先看递归版本的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">private:</div><div class="line">    vector&lt;int&gt; result;</div><div class="line">    void helper(TreeNode* root) &#123;</div><div class="line">        if (root == nullptr) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        helper(root -&gt; left);</div><div class="line">        result.push_back(root -&gt; val);</div><div class="line">        helper(root -&gt; right);</div><div class="line">    &#125;</div><div class="line">public:</div><div class="line">    vector&lt;int&gt; inorderTraversal(TreeNode* root) &#123;</div><div class="line">        helper(root);</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>再考虑非递归，其实就是对于每个节点，走到最左端，沿路径压栈。</p>
+<p>到达最左端后以此返回，开始弹栈，对于每个弹出的元素，记录其value，并且走向其右节点重复上述过程（走到最左端…）。</p>
+<p>直到栈内元素为空为止。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">public:</div><div class="line">    vector&lt;int&gt; inorderTraversal(TreeNode* root) &#123;</div><div class="line">        vector&lt;int&gt; result;</div><div class="line">        stack&lt;TreeNode*&gt; s;</div><div class="line">        TreeNode* p = root;</div><div class="line">        while (p || !s.empty()) &#123;</div><div class="line">            while (p != nullptr) &#123;</div><div class="line">                s.push(p);</div><div class="line">                p = p -&gt; left; </div><div class="line">            &#125;</div><div class="line">            if (!s.empty()) &#123;</div><div class="line">                p = s.top();</div><div class="line">                result.push_back(p -&gt; val);</div><div class="line">                s.pop();</div><div class="line">                p = p -&gt; right;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h3 id="LeetCode-145-Binary-Tree-Postorder-Traversal"><a href="#LeetCode-145-Binary-Tree-Postorder-Traversal" class="headerlink" title="LeetCode 145 Binary Tree Postorder Traversal"></a><a href="https://leetcode-cn.com/problems/binary-tree-postorder-traversal/description/" target="_blank" rel="external">LeetCode 145 Binary Tree Postorder Traversal</a></h3><p>题目大意：给定一个二叉树，返回它的 后序 遍历。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">示例:</div><div class="line"></div><div class="line">输入: [1,null,2,3]  </div><div class="line">   1</div><div class="line">    \</div><div class="line">     2</div><div class="line">    /</div><div class="line">   3 </div><div class="line"></div><div class="line">输出: [3,2,1]</div><div class="line"></div><div class="line">进阶: 递归算法很简单，你可以通过迭代算法完成吗？</div></pre></td></tr></table></figure></p>
+<p>思路：利用到了一个后续遍历的特点，即：</p>
+<blockquote>
+<p>后续遍历序列中，父节点前面一定紧挨着他的儿子节点（如果有的话）</p>
+</blockquote>
+<p>所以，额外保存一个pre变量代表前一个遍历的节点，用来判断当前的节点（如果是父节点）的子节点的访问情况，。如果pre节点是当前节点的儿子节点（或者当前节点没有儿子），说明当前节点的儿子节点都遍历过了，可以遍历父节点了。</p>
+<p>如何更新维护pre呢？当一个节点输出后，将prev置为这个节点，这是因为如果pre是后续遍历序列中的前一个节点，那么这个pre节点必须是已经被输出的节点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * struct TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode *left;</div><div class="line"> *     TreeNode *right;</div><div class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line">class Solution &#123;</div><div class="line">public:</div><div class="line">    vector&lt;int&gt; postorderTraversal(TreeNode* root) &#123;</div><div class="line">        vector&lt;int&gt; result;</div><div class="line">        stack&lt;TreeNode*&gt; s;</div><div class="line">        TreeNode* pre = NULL;</div><div class="line">        TreeNode* node = root;</div><div class="line">        if(node)&#123;</div><div class="line">            s.push(node);</div><div class="line">        &#125;</div><div class="line">        while (!s.empty()) &#123;</div><div class="line">            node = s.top();</div><div class="line">            if(!node)&#123;</div><div class="line">                s.pop();</div><div class="line">            &#125;else if((node-&gt;left==NULL &amp;&amp; node-&gt;right==NULL) || (node-&gt;left == pre &amp;&amp; pre) || (node-&gt;right == pre &amp;&amp; pre))&#123;</div><div class="line">                result.push_back(node-&gt;val);</div><div class="line">                s.pop();</div><div class="line">                pre = node;</div><div class="line">            &#125;else&#123;</div><div class="line">                s.push(node-&gt;right);</div><div class="line">                s.push(node-&gt;left);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="LeetCode-136-Single-NumberSingle-Number"><a href="#LeetCode-136-Single-NumberSingle-Number" class="headerlink" title="LeetCode 136 Single NumberSingle Number"></a><a href="https://leetcode-cn.com/problems/single-number/description/" target="_blank" rel="external">LeetCode 136 Single NumberSingle Number</a></h3><p>题目大意:给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。</p>
+<p>说明：你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">示例 1:</div><div class="line"></div><div class="line">输入: [2,2,1]</div><div class="line">输出: 1</div><div class="line"></div><div class="line">示例 2:</div><div class="line"></div><div class="line">输入: [4,1,2,1,2]</div><div class="line">输出: 4</div></pre></td></tr></table></figure>
+<p>思路：题目要求O(n)时间复杂度，O(1)空间复杂度，所以简单地暴力搜索是肯定不行的了，需要用巧妙的方法–利用异或操作。异或的性质1：交换律a ^ b = b ^ a，性质2：0 ^ a = a。于是利用交换律可以将数组假想成相同元素全部相邻，于是将所有元素依次做异或操作，相同元素异或为0，最终剩下的元素就为Single Number。时间复杂度O(n)，空间复杂度O(1)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">public:</div><div class="line">    int singleNumber(vector&lt;int&gt;&amp; nums) &#123;</div><div class="line">         //异或</div><div class="line">        int elem = 0;</div><div class="line">        for(int i = 0; i &lt; nums.size() ; i++) &#123;</div><div class="line">            elem = elem ^ nums[i];</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        return elem;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="LeetCode-137：Single-Number-II"><a href="#LeetCode-137：Single-Number-II" class="headerlink" title="LeetCode 137：Single Number II"></a><a href="https://leetcode-cn.com/problems/single-number-ii/description/" target="_blank" rel="external">LeetCode 137：Single Number II</a></h3><p>题目大意：给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现了三次。找出那个只出现了一次的元素。</p>
+<p>说明：你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">示例 1:</div><div class="line"></div><div class="line">输入: [2,2,3,2]</div><div class="line">输出: 3</div><div class="line"></div><div class="line">示例 2:</div><div class="line"></div><div class="line">输入: [0,1,0,1,0,1,99]</div><div class="line">输出: 99</div></pre></td></tr></table></figure>
+<p>思路：Single Number II 比Single Number要复杂的多，很难直观的找到算法。</p>
+<p>考虑每个元素的为一个32位的二进制数，这样每一位上出现要么为1 ，要么为0。对数组，统计每一位上1 出现的次数count，必定是3N或者3N+1 次。让count对3取模，能够获得到那个只出现1次的元素该位是0还是1。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">public:</div><div class="line">    int singleNumber(vector&lt;int&gt;&amp; nums) &#123;</div><div class="line">        int length = nums.size();  </div><div class="line">        int result = 0;  </div><div class="line">        for(int i = 0; i&lt;32; i++)&#123;  </div><div class="line">            int count = 0;   </div><div class="line">            int mask = 1&lt;&lt; i;  </div><div class="line">            for(int j=0; j&lt;length; j++)&#123;  </div><div class="line">                if(nums[j] &amp; mask)  </div><div class="line">                    count++;  </div><div class="line">            &#125;  </div><div class="line">          if(count %3)  </div><div class="line">                result |= mask;  </div><div class="line">        &#125;  </div><div class="line">        return result;  </div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>同时，不难发现，该算法同样适用于Single Number I的解答。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;  </div><div class="line">public:  </div><div class="line">    int singleNumber(vector&lt;int&gt;&amp; nums) &#123;  </div><div class="line">        int length = nums.size();  </div><div class="line">        int result = 0;  </div><div class="line">        for(int i = 0; i&lt;32; i++)&#123;  </div><div class="line">            int count = 0;  </div><div class="line">            int mask = 1&lt;&lt; i;  </div><div class="line">            for(int j=0; j&lt;length; j++)&#123;  </div><div class="line">                if(nums[j] &amp; mask)  </div><div class="line">                    count++;  </div><div class="line">            &#125;  </div><div class="line">           if(count %2)  </div><div class="line">                result |= mask;  </div><div class="line">        &#125;  </div><div class="line">        return result;  </div><div class="line">    &#125;  </div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>同时，对Single Number II 网上还有一种解法，自己不是很明白，先记录下日后研究。</p>
+<pre><code>int singleNumber(int A[], int n)  
+{  
+    int one = 0, two = 0;  
+    for (int i = 0; i &lt; n; i++)  
+    {  
+        two |= A[i] &amp; one;  
+        one ^= A[i];  
+        int three = one &amp; two;  
+        one &amp;= ~three;  
+        two &amp;= ~three;  
+    }  
+    return one;  
+}  
+</code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -277,6 +326,10 @@
 		  
 		
 		  
+			<li><a href="/categories/简历/" title="简历">简历<sup>1</sup></a></li>
+		  
+		
+		  
 			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>2</sup></a></li>
 		  
 		
@@ -318,15 +371,15 @@
 			
 		
 			
+				<li><a href="/tags/life/" title="life">life<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/life/" title="life">life<sup>3</sup></a></li>
 			
 		
 			
@@ -354,23 +407,23 @@
 			
 		
 			
-				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/操作系统/" title="操作系统">操作系统<sup>1</sup></a></li>
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
 			
 		
 			
@@ -378,7 +431,7 @@
 			
 		
 			
-				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
+				<li><a href="/tags/操作系统/" title="操作系统">操作系统<sup>1</sup></a></li>
 			
 		
 		</ul>
