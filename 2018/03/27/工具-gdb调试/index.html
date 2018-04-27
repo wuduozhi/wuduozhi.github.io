@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="GDB概述GDB是GNU开源组织发布的一个强大的UNIX下的程序调试工具。或许，各位比较喜欢那种图形界面方式的，像VC、BCB等IDE的调试，但如果你是在UNIX平台下做软件，你会发现GDB这个调试工具有比VC、BCB的图形化调试器更强大的功能。所谓“寸有所长，尺有所短”就是这个道理。 一般来说，GDB主要帮忙你完成下面四个方面的功能：  启动你的程序，可以按照你的自定义的要求随心所欲的运行程序。">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-04-27T05:07:51.595Z">
+<meta property="og:updated_time" content="2018-04-27T05:36:41.745Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="工具|gdb调试">
 <meta name="twitter:description" content="GDB概述GDB是GNU开源组织发布的一个强大的UNIX下的程序调试工具。或许，各位比较喜欢那种图形界面方式的，像VC、BCB等IDE的调试，但如果你是在UNIX平台下做软件，你会发现GDB这个调试工具有比VC、BCB的图形化调试器更强大的功能。所谓“寸有所长，尺有所短”就是这个道理。 一般来说，GDB主要帮忙你完成下面四个方面的功能：  启动你的程序，可以按照你的自定义的要求随心所欲的运行程序。">
@@ -50,7 +50,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -70,7 +70,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -93,16 +93,16 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-03-27T14:48:03.000Z" itemprop="datePublished"> 發表於 2018-03-27</time>
+    <time datetime="2018-03-27T14:48:03.000Z" itemprop="datePublished"> Published 2018-03-27</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目錄</strong>
+			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GDB概述"><span class="toc-number">1.</span> <span class="toc-text">GDB概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用GDB"><span class="toc-number">2.</span> <span class="toc-text">使用GDB</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#whatis-命令"><span class="toc-number">2.1.</span> <span class="toc-text">whatis 命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#set-命令"><span class="toc-number">2.2.</span> <span class="toc-text">set 命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#next和step命令"><span class="toc-number">2.3.</span> <span class="toc-text">next和step命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#nexti和stepi命令"><span class="toc-number">2.4.</span> <span class="toc-text">nexti和stepi命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#list"><span class="toc-number">2.5.</span> <span class="toc-text">list</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#watch"><span class="toc-number">2.6.</span> <span class="toc-text">watch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看函数返回值"><span class="toc-number">2.7.</span> <span class="toc-text">查看函数返回值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看连续内存"><span class="toc-number">2.8.</span> <span class="toc-text">查看连续内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看内存"><span class="toc-number">2.9.</span> <span class="toc-text">查看内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自动显示"><span class="toc-number">2.10.</span> <span class="toc-text">自动显示</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#几个相关的命令如下："><span class="toc-number">3.</span> <span class="toc-text">几个相关的命令如下：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些小技巧"><span class="toc-number">4.</span> <span class="toc-text">一些小技巧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objdump命令的使用"><span class="toc-number">5.</span> <span class="toc-text">objdump命令的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#for-example"><span class="toc-number">5.1.</span> <span class="toc-text">for example</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GDB概述"><span class="toc-number">1.</span> <span class="toc-text">GDB概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用GDB"><span class="toc-number">2.</span> <span class="toc-text">使用GDB</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#whatis-命令"><span class="toc-number">2.1.</span> <span class="toc-text">whatis 命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#set-命令"><span class="toc-number">2.2.</span> <span class="toc-text">set 命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#next和step命令"><span class="toc-number">2.3.</span> <span class="toc-text">next和step命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#nexti和stepi命令"><span class="toc-number">2.4.</span> <span class="toc-text">nexti和stepi命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#list"><span class="toc-number">2.5.</span> <span class="toc-text">list</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#watch"><span class="toc-number">2.6.</span> <span class="toc-text">watch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看函数返回值"><span class="toc-number">2.7.</span> <span class="toc-text">查看函数返回值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看连续内存"><span class="toc-number">2.8.</span> <span class="toc-text">查看连续内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看内存"><span class="toc-number">2.9.</span> <span class="toc-text">查看内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自动显示"><span class="toc-number">2.10.</span> <span class="toc-text">自动显示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#几个相关的命令如下："><span class="toc-number">2.11.</span> <span class="toc-text">几个相关的命令如下：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一些小技巧"><span class="toc-number">2.12.</span> <span class="toc-text">一些小技巧</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objdump命令的使用"><span class="toc-number">3.</span> <span class="toc-text">objdump命令的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#for-example"><span class="toc-number">3.1.</span> <span class="toc-text">for example</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -263,17 +263,31 @@ $2 = {2, 4, 6}
 <li>display fmt addr</li>
 </ul>
 <p>expr是一个表达式，fmt表示显示的格式，addr表示内存地址。当你用display设定好了一个或多个表达式后，只要你的程序被停下来（单步跟踪时），GDB会自动显示你所设置的这些表达式的值。</p>
-<h3 id="几个相关的命令如下："><a href="#几个相关的命令如下：" class="headerlink" title="几个相关的命令如下："></a>几个相关的命令如下：</h3><ul>
-<li>undisplay <dnums...>        不显示dispaly</dnums...></li>
-<li>delete display [dnums]    <em> 删除自动显示，不带dnums参数则删除所有自动显示，也支持范围删除，如： delete </em> display 1,3-5</li>
-<li>disable display <dnums...>    使display失效</dnums...></li>
-<li>enable display <dnums...>    恢复display</dnums...></li>
-<li>info display        查看display信息</li>
+<h4 id="几个相关的命令如下："><a href="#几个相关的命令如下：" class="headerlink" title="几个相关的命令如下："></a>几个相关的命令如下：</h4><ul>
+<li><code>undisplay &lt;dnums...&gt;</code>        不显示dispaly</li>
+<li><code>delete display [dnums]</code>      除自动显示，不带dnums参数则删除所有自动显示，也支持范围删除，如： <code>delete display 1,3-5</code></li>
+<li><code>disable display &lt;dnums...&gt;</code>    使display失效</li>
+<li><code>enable display &lt;dnums...&gt;</code>    恢复display</li>
+<li><code>info display</code>        查看display信息</li>
 </ul>
-<h3 id="一些小技巧"><a href="#一些小技巧" class="headerlink" title="一些小技巧"></a>一些小技巧</h3><ul>
+<h4 id="一些小技巧"><a href="#一些小技巧" class="headerlink" title="一些小技巧"></a>一些小技巧</h4><ul>
 <li>查看所有的局部变量:<code>(gdb) info local</code></li>
 <li>查看此时的栈状态 (反映了函数调用，见Linux从程序到进程):<code>(gdb) info stack</code></li>
 </ul>
+<ol>
+<li><p>查看寄存器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(gdb) i r</div><div class="line">(gdb) i r a                     # 查看所有寄存器（包括浮点、多媒体）</div><div class="line">(gdb) i r esp</div><div class="line">(gdb) i r pc</div></pre></td></tr></table></figure>
+</li>
+<li><p>查看内存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(gdb) x /wx 0x80040000    # 以16进制显示指定地址处的数据</div><div class="line">(gdb) x /8x $esp</div><div class="line">(gdb) x /16x $esp+12</div><div class="line">(gdb) x /16s 0x86468700   # 以字符串形式显示指定地址处的数据</div><div class="line">(gdb) x /24i 0x8048a51      # 以指令形式显示指定地址处的数据（24条）</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改寄存器的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(gdb) set $v0 = 0x004000000</div><div class="line">(gdb) set $epc = 0xbfc00000</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改内存的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(gdb) set &#123;unsigned int&#125;0x8048a51=0x0</div><div class="line">(gdb) set *(unsigned int*)0x8048a54=0x55aa55aa</div></pre></td></tr></table></figure>
+</li>
+</ol>
 <h3 id="objdump命令的使用"><a href="#objdump命令的使用" class="headerlink" title="objdump命令的使用"></a>objdump命令的使用</h3><table>
 <thead>
 <tr>
@@ -361,10 +375,10 @@ $2 = {2, 4, 6}
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -392,7 +406,7 @@ $2 = {2, 4, 6}
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分類</p>
+	<p class="asidetitle">Categories</p>
 		<ul>
 		
 		  
@@ -509,7 +523,7 @@ $2 = {2, 4, 6}
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -597,7 +611,7 @@ $2 = {2, 4, 6}
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -790,7 +804,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 

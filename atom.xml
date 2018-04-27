@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-25T15:01:22.824Z</updated>
+  <updated>2018-04-27T16:43:06.046Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/04/24/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-C%E9%99%B7%E9%98%B1%E4%B8%8E%E7%BC%BA%E9%99%B7/"/>
     <id>http://yoursite.com/2018/04/24/读书笔记-C陷阱与缺陷/</id>
     <published>2018-04-23T19:57:59.000Z</published>
-    <updated>2018-04-25T15:01:22.824Z</updated>
+    <updated>2018-04-27T16:43:06.046Z</updated>
     
     <content type="html"><![CDATA[<h2 id="0-导读"><a href="#0-导读" class="headerlink" title="0|导读"></a>0|导读</h2><p>程序设计错误实际上反映的是程序与程序员对该程序的“心智模式”两者的相异之处。</p>
 <h2 id="1-词法陷阱"><a href="#1-词法陷阱" class="headerlink" title="1|词法陷阱"></a>1|词法陷阱</h2><p>第一章，将程序代码看成是有符号构成的字符序列，把自己想象成是c语言的“词法分析器”，看看相同的字符序列，在不同的上下文环境中，会发生那些有意思的事情。</p>
@@ -180,6 +180,67 @@
 <p>是存在风险的。因为上述代码如果要正确运行，需要保证 <code>i++</code> 在 <code>y[i] = x[i]</code>之后运行，但这是无法保证的。所以推荐写法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">i = 0;</div><div class="line">while(i&lt;n)&#123;</div><div class="line">	y[i] = x[i];</div><div class="line">    i++;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="为函数main提供返回值"><a href="#为函数main提供返回值" class="headerlink" title="为函数main提供返回值"></a>为函数main提供返回值</h3><p>如果不为main函数显示声明返回类型，那么就会默认为整型。虽然某些情况下函数main的返回值无关紧要，但是大多数C语言实现都通过这个返回值来告知系统该函数执行成功或者失败。</p>
+<h2 id="5-库函数"><a href="#5-库函数" class="headerlink" title="5|库函数"></a>5|库函数</h2><p>这一章介绍一些使用过程中经常会犯错的库函数。</p>
+<h3 id="返回整数的getchar函数"><a href="#返回整数的getchar函数" class="headerlink" title="返回整数的getchar函数"></a>返回整数的getchar函数</h3><p>先看个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#include&lt;stdio.h&gt;</div><div class="line"></div><div class="line">main()&#123;</div><div class="line">	char c;</div><div class="line">    while((c=getchar()) != EOF)</div><div class="line">    	putchar(c);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个例子本意是把标准输入复制到标准输出，但是有潜在的bug。原因是变量 c 是 char 类型的，只占一个字节，但是getchar函数返回的是int 整数，也就是说c无法容下所有可能的字符，那么如果EOF不在c所能容下的字符之中，就陷入了死循环了。</p>
+<h3 id="更新顺序文件"><a href="#更新顺序文件" class="headerlink" title="更新顺序文件"></a>更新顺序文件</h3><p>这一小节讲文件的操作。在C语言中，在对文件操作是，<strong>需要注意一个输入操作不能随后直接紧跟一个输出操作，反之亦然。</strong>如果要同时进行输入输出操作，必须在其中插入 fseek() 函数。</p>
+<blockquote>
+<p>int fseek(FILE <em>stream, long offset, int fromwhere);函数设置文件指针stream的位置。如果执行成功，stream将指向以fromwhere为基准，偏移offset（指针偏移量）个字节的位置，函数返回0。如果执行失败(比如offset取值大于等于2</em>1024<em>1024</em>1024，即long的正数范围2G)，则不改变stream指向的位置，函数返回一个非0值。</p>
+</blockquote>
+<h3 id="缓冲输出与内存分配"><a href="#缓冲输出与内存分配" class="headerlink" title="缓冲输出与内存分配"></a>缓冲输出与内存分配</h3><p>程序有两种输出方式：</p>
+<ul>
+<li>即时处理 [相应快，但系统负担较高]</li>
+<li>先暂存起来，然后大块写入  [相应慢，但减少io交互]</li>
+</ul>
+<p>两种各有各的优缺点，需要根据实际情况进行选择。</p>
+<p>缓存可以通过库函数 <code>setbuf</code>实现。如果buf是一个大小适合的字符数组，那么 <code>setbuf(stdout,buf)</code>语句将通知输入/输出库，所有写到stdout的输出都应该使用buf作为输出缓冲区，直到buf缓冲区被填满或者程序员直接调用 ·fflush`,buf缓冲区中的内容才实际写入到stdout中。<strong>那么问题来了，如果在程序退出时，缓冲区没满，我们又没有调用fflush，会出现什么问题呢？</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#include&lt;stdio.h&gt;</div><div class="line">int main()&#123;</div><div class="line">    int c;</div><div class="line">    char buf[BUFSIZ];   //BUFSIZE缓冲区的大小在stdio.h有定义</div><div class="line">    setbuf(stdout,buf); //所有写入到stdout的输出都应该使用buf作为输出缓冲区，直到buf缓冲区被填                                  //满或者程序员直接调用fflush</div><div class="line">    while((c=getchar())!=EOF)</div><div class="line">        putchar(c);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在这个例子中，有潜在的bug。如果在程序退出的时候，buf缓冲区没有被填满，buf缓冲中的数据将不会被写入stdout中。</p>
+<p>要避免类似的错误，有两种方法：</p>
+<ul>
+<li>让缓冲数组成为静态数组</li>
+<li>动态分配缓冲区</li>
+</ul>
+<h3 id="使用errno检测错误"><a href="#使用errno检测错误" class="headerlink" title="使用errno检测错误"></a>使用errno检测错误</h3><p>很多库函数在执行失败时会通过一个名称为errno的外部变量通知程序该函数调用失败。但是不能利用errno判断函数是否调用失败。如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/*调用库函数*/</div><div class="line">if(errno)</div><div class="line">      /*处理错误*/</div></pre></td></tr></table></figure></p>
+<p>但这样是错误的，因为在库函数调用没有失败的情况下，并没有强制要求库函数一定要设置errno为0，这样errno的值就可能是前一个执行失败的库函数设置的值。</p>
+<p>所以有人可能会想下面的例子是对的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">errno  = 0</div><div class="line">/*调用库函数*/</div><div class="line">if(errno)</div><div class="line">      /*处理错误*/</div></pre></td></tr></table></figure>
+<p>很遗憾，这也是错的，因为库函数调用成功是，既没有强制要求对errno清零，但同时也没有禁止 设置errno。<strong>哪为什么调用成功了还有设置errno呢？</strong>因为库函数可能会调用其他的库函数，在调用其他的库函数过程中可能会出错从而设置errno。比如fopen，fopen函数调用过程中可能需要调用其他的库函数，以检测同名文件是否存在。</p>
+<p>所以，在调用库函数时，应首先检测作为错误指示的返回值，确定程序执行已经失败，然后再检查errno，来搞清楚出错原因：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/* 调用库函数 */</div><div class="line">if(返回的错误值)</div><div class="line">        检查errno</div></pre></td></tr></table></figure></p>
+<h3 id="库函数signal"><a href="#库函数signal" class="headerlink" title="库函数signal"></a>库函数signal</h3><p>signal库函数可作为捕获异步事件的一种方式。源文件：#include<signal.h></signal.h></p>
+<p>signal(signal type,handler funtion)signal type代表系统头文件signal.h中定义的某些常量，这些常量用来标识signal加密手机将要捕获的信号类型。handler funtion 是当指定的时间发生时，将要加以调用的事件处理函数。</p>
+<p>一个信号可能在C程序执行期间的任何时刻上发生，信号甚至可能出现在某些负责库函数（如malloc）的过程中。因此，信号的处理函数不应该调用上述类型的库函数。</p>
+<p>当一个算术运算错误（例如溢出或者零作除数）引发一个信号时，signal处理函数的唯一安全、可移植的操作是打印一条出错消息，然后使用longjmp或exit立即退出程序。</p>
+<h2 id="6-预处理器"><a href="#6-预处理器" class="headerlink" title="6|预处理器"></a>6|预处理器</h2><p><strong>宏只是对程序的文本起作用</strong>。宏提供了一种对组成C语言程序的字符进行变换的方式，并没有作用于程序中的对象。宏是一把双刃剑。</p>
+<h3 id="不能忽视宏定义中的空格"><a href="#不能忽视宏定义中的空格" class="headerlink" title="不能忽视宏定义中的空格"></a>不能忽视宏定义中的空格</h3><p>在定义宏的时候，要注意空格，比如：</p>
+<p><code>#define f (x)  ((x)-1)</code></p>
+<p>上面的宏定义有两种解释方法：</p>
+<ul>
+<li>f(x) 代表 ((x)-1)</li>
+<li>f 代表 x ((x)-1)</li>
+</ul>
+<p>虽然我们的本意是第一种，但是很遗憾，实际上是第二种，因为我们在定义宏的时候，f与(x) 之间多了个空格!!所以正确写法 <code>#define f(x)  ((x)-1)</code></p>
+<h3 id="宏不是函数"><a href="#宏不是函数" class="headerlink" title="宏不是函数"></a>宏不是函数</h3><p>虽然宏定义表面上与函数非常类似，但是宏定义不是函数，<strong>宏只是对程序的文本起作用</strong>。我们经常看到这样的写法:<code>#define abs(x) (((x)&gt;=0)?(x):-(x))</code>或者<code>#define max(a,b) ((a)&gt;(b)?(a):(b))</code>。很多人会不解为什么要用这么多括号，不要小看这些括号，它们额的作用是预防引起优先级有关的问题。</p>
+<p>但是当遇到递增运算时，括号也不怎么管用了。因为如果一个操作数被两处用到，就会被求值两处。看个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">biggest = x[0];</div><div class="line">i = 1;</div><div class="line">while(i &lt; n)&#123;</div><div class="line">	biggest = max(biggest,x[i++]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当代码中的max是我们刚定义的宏时，就出现了一些意想不到的事情。假设：</p>
+<pre><code>x[0] = 2;
+x[1] = 3;
+x[2] = 1;
+</code></pre><p>当我们把宏定义展开时，是这样的：<code>biggest = ((biggest)&gt;(x[i++])?(biggest):(x[i++]));</code>。在这个代码中，biggest将与x[i++] 比较，i此时为1，x[1]为3，biggest为2，比较结果为false。为i++,比较后 i = 2。比较结果为false,所以x[i++]的值讲被赋给biggest,但是在比较的时候，i已经变成了2，所以biggest的值为1。这时，又因为i++,i的值变为了3。不可思议吧。</p>
+<p>但是，如果这里的max是个函数的话，是不会有什么问题的。</p>
+<p>还应该注意，<strong>宏展开可能产生非常庞大的表达式，占用的空间远远超过了编程者所期望的空间</strong>。</p>
+<h3 id="宏不是语句"><a href="#宏不是语句" class="headerlink" title="宏不是语句"></a>宏不是语句</h3><p>主要理解两点：</p>
+<ul>
+<li>夸张的说我们可以用宏把一门语言变成另外一门语言，但是问题会很多，比如说：导致替换后的分号有时候要加有时候不用加，大括号的匹配出现问题，else的匹配出现问题</li>
+<li>一个小技巧能避免上述的问题：<code>#define deal(x) (表达式一||表达式二)</code>这样可以让if判断语句通过 || 或者 &amp;&amp; 来简化操作，并且不用但是大括号和else的匹配问题</li>
+</ul>
+<h3 id="宏并不是类型定义"><a href="#宏并不是类型定义" class="headerlink" title="宏并不是类型定义"></a>宏并不是类型定义</h3><p>看个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#define T1 struct foo *</div><div class="line">typedef struct foo *T2</div></pre></td></tr></table></figure>
+<p>可以看出T1，T2概念上完全相同，都是指向结构foo的指针，如果用它们来定义多个变量时，问题就来了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">T1 a,b;</div><div class="line">T2 a,b;</div></pre></td></tr></table></figure>
+<p>对宏定义的T1来说，是这样的 <code>struct foo * a,b;</code>,a,b是不同类型的变量，对T2来说，a，b是一样的。所以还是要区分宏与类型定义的不同。</p>
 ]]></content>
     
     <summary type="html">
@@ -1515,7 +1576,7 @@ tex2jax: {inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]]
     <link href="http://yoursite.com/2018/03/27/%E5%B7%A5%E5%85%B7-gdb%E8%B0%83%E8%AF%95/"/>
     <id>http://yoursite.com/2018/03/27/工具-gdb调试/</id>
     <published>2018-03-27T14:48:03.000Z</published>
-    <updated>2018-04-27T05:07:51.595Z</updated>
+    <updated>2018-04-27T05:36:41.745Z</updated>
     
     <content type="html"><![CDATA[<h3 id="GDB概述"><a href="#GDB概述" class="headerlink" title="GDB概述"></a>GDB概述</h3><p>GDB是GNU开源组织发布的一个强大的UNIX下的程序调试工具。或许，各位比较喜欢那种图形界面方式的，像VC、BCB等IDE的调试，但如果你是在UNIX平台下做软件，你会发现GDB这个调试工具有比VC、BCB的图形化调试器更强大的功能。所谓“寸有所长，尺有所短”就是这个道理。</p>
 <p>一般来说，GDB主要帮忙你完成下面四个方面的功能：</p>
@@ -1674,17 +1735,31 @@ $2 = {2, 4, 6}
 <li>display fmt addr</li>
 </ul>
 <p>expr是一个表达式，fmt表示显示的格式，addr表示内存地址。当你用display设定好了一个或多个表达式后，只要你的程序被停下来（单步跟踪时），GDB会自动显示你所设置的这些表达式的值。</p>
-<h3 id="几个相关的命令如下："><a href="#几个相关的命令如下：" class="headerlink" title="几个相关的命令如下："></a>几个相关的命令如下：</h3><ul>
-<li>undisplay <dnums...>        不显示dispaly</dnums...></li>
-<li>delete display [dnums]    <em> 删除自动显示，不带dnums参数则删除所有自动显示，也支持范围删除，如： delete </em> display 1,3-5</li>
-<li>disable display <dnums...>    使display失效</dnums...></li>
-<li>enable display <dnums...>    恢复display</dnums...></li>
-<li>info display        查看display信息</li>
+<h4 id="几个相关的命令如下："><a href="#几个相关的命令如下：" class="headerlink" title="几个相关的命令如下："></a>几个相关的命令如下：</h4><ul>
+<li><code>undisplay &lt;dnums...&gt;</code>        不显示dispaly</li>
+<li><code>delete display [dnums]</code>      除自动显示，不带dnums参数则删除所有自动显示，也支持范围删除，如： <code>delete display 1,3-5</code></li>
+<li><code>disable display &lt;dnums...&gt;</code>    使display失效</li>
+<li><code>enable display &lt;dnums...&gt;</code>    恢复display</li>
+<li><code>info display</code>        查看display信息</li>
 </ul>
-<h3 id="一些小技巧"><a href="#一些小技巧" class="headerlink" title="一些小技巧"></a>一些小技巧</h3><ul>
+<h4 id="一些小技巧"><a href="#一些小技巧" class="headerlink" title="一些小技巧"></a>一些小技巧</h4><ul>
 <li>查看所有的局部变量:<code>(gdb) info local</code></li>
 <li>查看此时的栈状态 (反映了函数调用，见Linux从程序到进程):<code>(gdb) info stack</code></li>
 </ul>
+<ol>
+<li><p>查看寄存器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(gdb) i r</div><div class="line">(gdb) i r a                     # 查看所有寄存器（包括浮点、多媒体）</div><div class="line">(gdb) i r esp</div><div class="line">(gdb) i r pc</div></pre></td></tr></table></figure>
+</li>
+<li><p>查看内存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(gdb) x /wx 0x80040000    # 以16进制显示指定地址处的数据</div><div class="line">(gdb) x /8x $esp</div><div class="line">(gdb) x /16x $esp+12</div><div class="line">(gdb) x /16s 0x86468700   # 以字符串形式显示指定地址处的数据</div><div class="line">(gdb) x /24i 0x8048a51      # 以指令形式显示指定地址处的数据（24条）</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改寄存器的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(gdb) set $v0 = 0x004000000</div><div class="line">(gdb) set $epc = 0xbfc00000</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改内存的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(gdb) set &#123;unsigned int&#125;0x8048a51=0x0</div><div class="line">(gdb) set *(unsigned int*)0x8048a54=0x55aa55aa</div></pre></td></tr></table></figure>
+</li>
+</ol>
 <h3 id="objdump命令的使用"><a href="#objdump命令的使用" class="headerlink" title="objdump命令的使用"></a>objdump命令的使用</h3><table>
 <thead>
 <tr>
