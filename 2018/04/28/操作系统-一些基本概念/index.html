@@ -1,0 +1,675 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>操作系统|一些基本概念 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="系统调用操作系统是一个系统程序，即为别的程序提供服务的程序。那么，操作系统的服务是通过什么方式提供的呢？答案就是：系统调用（System Call）。 所谓系统调用就是：操作系统提供的API，用户通过调用这些API即可获得操作系统的服务。（想想是不是跟我们现在所作的什么Web Service、WCF、WebAPI、开放API之类的一致？）例如，如果用户程序需要进行读磁盘的操作，在C程序代码中可以使">
+<meta name="keywords" content="操作系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统|一些基本概念">
+<meta property="og:url" content="http://yoursite.com/2018/04/28/操作系统-一些基本概念/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="系统调用操作系统是一个系统程序，即为别的程序提供服务的程序。那么，操作系统的服务是通过什么方式提供的呢？答案就是：系统调用（System Call）。 所谓系统调用就是：操作系统提供的API，用户通过调用这些API即可获得操作系统的服务。（想想是不是跟我们现在所作的什么Web Service、WCF、WebAPI、开放API之类的一致？）例如，如果用户程序需要进行读磁盘的操作，在C程序代码中可以使">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/images/操作系统-一些基本概念01.jpg">
+<meta property="og:image" content="http://yoursite.com/images/操作系统-一些基本概念02.jpg">
+<meta property="og:image" content="http://yoursite.com/images/操作系统-一些基本概念03.jpg">
+<meta property="og:updated_time" content="2018-04-28T04:03:57.368Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="操作系统|一些基本概念">
+<meta name="twitter:description" content="系统调用操作系统是一个系统程序，即为别的程序提供服务的程序。那么，操作系统的服务是通过什么方式提供的呢？答案就是：系统调用（System Call）。 所谓系统调用就是：操作系统提供的API，用户通过调用这些API即可获得操作系统的服务。（想想是不是跟我们现在所作的什么Web Service、WCF、WebAPI、开放API之类的一致？）例如，如果用户程序需要进行读磁盘的操作，在C程序代码中可以使">
+<meta name="twitter:image" content="http://yoursite.com/images/操作系统-一些基本概念01.jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/04/28/操作系统-一些基本概念/" title="操作系统|一些基本概念" itemprop="url">操作系统|一些基本概念</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-04-28T10:21:30.000Z" itemprop="datePublished"> 发表于 2018-04-28</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#系统调用"><span class="toc-number">1.</span> <span class="toc-text">系统调用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#系统调用的实现"><span class="toc-number">1.1.</span> <span class="toc-text">系统调用的实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内核态与用户态"><span class="toc-number">2.</span> <span class="toc-text">内核态与用户态</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#两种状态的概念"><span class="toc-number">2.1.</span> <span class="toc-text">两种状态的概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#两种状态的优势"><span class="toc-number">2.2.</span> <span class="toc-text">两种状态的优势</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#两种状态的本质"><span class="toc-number">2.3.</span> <span class="toc-text">两种状态的本质</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#中断机制"><span class="toc-number">3.</span> <span class="toc-text">中断机制</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h3><p>操作系统是一个系统程序，即为别的程序提供服务的程序。那么，操作系统的服务是通过什么方式提供的呢？答案就是：<code>系统调用（System Call）</code>。</p>
+<p>所谓系统调用就是：操作系统提供的API，用户通过调用这些API即可获得操作系统的服务。（想想是不是跟我们现在所作的什么Web Service、WCF、WebAPI、开放API之类的一致？）例如，如果用户程序需要进行读磁盘的操作，在C程序代码中可以使用如下语句来操作：<br><code>result = read(fd, buffer, nbytes);</code></p>
+<p>这个read函数是C语言提供的库函数，而这个库函数本身则是调用的操作系统的read系统调用。具体的系统调用过程不是我们讨论的重点，但我们还是可以通过下图来看看这个read系统调用的过程。</p>
+<p><img src="/images/操作系统-一些基本概念01.jpg" alt="系统调用"></p>
+<p><strong>对于上图中的用户空间和内核空间是什么意思呢？</strong>请往下看。</p>
+<h4 id="系统调用的实现"><a href="#系统调用的实现" class="headerlink" title="系统调用的实现"></a>系统调用的实现</h4><p>系统调用说白了就是一个应用程序申请操作系统的服务，既然是要调用操作系统的服务，那么是怎么从普通的应用程序切换到操作系统中运行的呢？</p>
+<p>答案是 <code>int指令</code>,这是一个汇编的指令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">int指令</div><div class="line"></div><div class="line">格式：int n</div><div class="line"></div><div class="line">n为中断类型码，它的功能是引发中断过程。</div><div class="line"></div><div class="line">CPU执行int n指令，相当于引发一个n号中断的中断过程，执行过程如下：</div><div class="line">1）取中断类型码n；</div><div class="line">2）标志寄存器入栈，IF=0，TF=0；</div><div class="line">3）CS、IP入栈</div><div class="line">4）（IP）=（n*4），(CS)=(n*4+2)</div></pre></td></tr></table></figure>
+<h3 id="内核态与用户态"><a href="#内核态与用户态" class="headerlink" title="内核态与用户态"></a>内核态与用户态</h3><blockquote>
+<p>残酷的现实：世界上的人并非都是平等的，有些人生来占有的资源就多，而有的人占有的资源就很少。当有些人来了，其他人就得让出资源。程序亦是如此。</p>
+</blockquote>
+<p>操作系统作为计算机的管理者，享有着更多的方便或权限。为了区分不同的程序的不同权限，人们发明了内核态和用户态的概念。</p>
+<h4 id="两种状态的概念"><a href="#两种状态的概念" class="headerlink" title="两种状态的概念"></a>两种状态的概念</h4><p>内核态就是拥有资源多的状态（或访问资源多的状态），也称为特权态。而用户态则是非特权态，在用户态下访问的资源会受到限制。例如，要访问OS的<code>内核数据结构</code>，如<code>进程表</code>等，则需要在特权态下才能做到。如果任意一个程序都能访问到这些数据，并有操作的能力，那整个操作系统是及其不安全、不稳定的。如果只需要访问用户程序里的数据，则在用户态下就可以了。</p>
+<h4 id="两种状态的优势"><a href="#两种状态的优势" class="headerlink" title="两种状态的优势"></a>两种状态的优势</h4><ul>
+<li>内核态：访问资源多，但可靠性、安全性要求高，维护管理都比较复杂；</li>
+<li>用户态：访问资源有限，但可靠性、安全性要求低，维护起来比较简单；</li>
+</ul>
+<p>那么，一个程序到底应该运行在内核态还是用户态呢？这取决于其对资源和效率的需求；下图展示了Windows操作系统的内核态与用户态的界限，我们可以看到哪些需要在内核态下运行，哪些只在用户态下运行。</p>
+<p><img src="/images/操作系统-一些基本概念02.jpg" alt="运行状态"></p>
+<h4 id="两种状态的本质"><a href="#两种状态的本质" class="headerlink" title="两种状态的本质"></a>两种状态的本质</h4><p>计算机对于内核态和用户态的识别是通过CPU的一个状态位来实现的，这个状态位是CPU状态字里面的一个字位。所谓的用户态、内核态实际是CPU的一种状态，而不是程序的状态。通过设置该状态字，可以使CPU处于内核态、用户态或者其他的子态（有的CPU有更多种子态）。</p>
+<p>换句话说：一个程序运行时，CPU是什么态，这个程序就运行在什么态。</p>
+<p>那么，知道了是怎么实现的，那又是如何对用户态的访问进行限制的呢？在对用户态下程序执行的每一条指令进行检查，这种检查又被称为地址翻译，即对程序发出的每一条指令都要经过这个地址翻译过程（你可以将其理解为我们在实际开发中所作的权限管理，对用户发出的每个操作请求首先都经过一个Filter进行过滤），通过对翻译的控制，就可以限制程序对资源的访问。</p>
+<h3 id="中断机制"><a href="#中断机制" class="headerlink" title="中断机制"></a>中断机制</h3><p>操作系统是为其他程序服务的，操作系统需要管理进程、内存、磁盘等，就是管理在内存中的程序，为其分配运行的空间、资源，所以操作系统要统一管理这些资源。所以说一个应用程序需要请求硬盘读写操作或申请内存空间，都需要通知操作系统，然后操作系统为其分配，这也是为什么要分用户态和内核态的原因。</p>
+<p>那么用户态的程序是怎么通知操作系统的呢？答案就是<code>中断机制</code>。</p>
+<p>中断是计算机里面的一个最为重要的机制，它也是操作系统获得计算机控制权的根本保证。其基本原理是：设备在完成自己的任务后向CPU发出终端，CPU判断优先级，然后确定是否响应。如果响应，则执行中断服务程序，并在中断服务程序执行完后继续执行原来的程序。下图简单地描述了中断机制：</p>
+<p><img src="/images/操作系统-一些基本概念03.jpg" alt="中断机制"></p>
+<p><a href="http://www.cnblogs.com/edisonchou/p/4999362.html" target="_blank" rel="external">一些基本概念</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/操作系统/">操作系统</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/操作系统/">操作系统</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/04/28/操作系统-关于cpu管理/" title="操作系统|关于cpu管理">
+  <span>
+  操作系统|关于cpu管理</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/04/28/操作系统-关于操作系统/"  title="操作系统|关于操作系统">
+ <span>操作系统|关于操作系统
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>16</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Vim/" title="Vim">Vim<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/life/" title="life">life<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/干货/" title="干货">干货<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/操作系统/" title="操作系统">操作系统<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/架构/" title="架构">架构<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/简历/" title="简历">简历<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机网络/" title="计算机网络">计算机网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/运维/" title="运维">运维<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/面试/" title="面试">面试<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具/" title="工具">工具<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/操作系统/" title="操作系统">操作系统<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/面试/" title="面试">面试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/干货/" title="干货">干货<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>

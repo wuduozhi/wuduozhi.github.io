@@ -1,0 +1,680 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>操作系统|关于cpu管理 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="进程 从单任务到多道任务最开始的时候，计算机只能一个一个程序的运行，后来人们需求多了，需要在工作的同时还能听听歌、聊天…所以就发展到了多道任务的时代。同时，单一操作员单一控制终端，CPU使用率很低；多道任务也提高计算机CPU的利用率。 进程多道任务的思想虽然表面上看是多个程序同时运行，但在计算机的内部还是一次只能执行一个任务，造成同时运行的表象是因为cpu能做到快速切换。 我们都知道一个任务在运行">
+<meta name="keywords" content="操作系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统|关于cpu管理">
+<meta property="og:url" content="http://yoursite.com/2018/04/28/操作系统-关于cpu管理/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="进程 从单任务到多道任务最开始的时候，计算机只能一个一个程序的运行，后来人们需求多了，需要在工作的同时还能听听歌、聊天…所以就发展到了多道任务的时代。同时，单一操作员单一控制终端，CPU使用率很低；多道任务也提高计算机CPU的利用率。 进程多道任务的思想虽然表面上看是多个程序同时运行，但在计算机的内部还是一次只能执行一个任务，造成同时运行的表象是因为cpu能做到快速切换。 我们都知道一个任务在运行">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/images/操作系统-关于cpu管理01.jpg">
+<meta property="og:image" content="http://yoursite.com/images/操作系统-关于CPU管理02.gif">
+<meta property="og:image" content="http://yoursite.com/images/操作系统-关于cpu管理03.jpg">
+<meta property="og:image" content="http://yoursite.com/images/操作系统-关于cpu管理04.jpg">
+<meta property="og:image" content="http://yoursite.com/images/操作系统-关于cpu管理05.jpg">
+<meta property="og:image" content="http://yoursite.com/images/操作系统-关于cpu管理06.jpg">
+<meta property="og:updated_time" content="2018-04-28T04:03:37.281Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="操作系统|关于cpu管理">
+<meta name="twitter:description" content="进程 从单任务到多道任务最开始的时候，计算机只能一个一个程序的运行，后来人们需求多了，需要在工作的同时还能听听歌、聊天…所以就发展到了多道任务的时代。同时，单一操作员单一控制终端，CPU使用率很低；多道任务也提高计算机CPU的利用率。 进程多道任务的思想虽然表面上看是多个程序同时运行，但在计算机的内部还是一次只能执行一个任务，造成同时运行的表象是因为cpu能做到快速切换。 我们都知道一个任务在运行">
+<meta name="twitter:image" content="http://yoursite.com/images/操作系统-关于cpu管理01.jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/04/28/操作系统-关于cpu管理/" title="操作系统|关于cpu管理" itemprop="url">操作系统|关于cpu管理</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-04-28T11:02:54.000Z" itemprop="datePublished"> 发表于 2018-04-28</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#从单任务到多道任务"><span class="toc-number">1.</span> <span class="toc-text">从单任务到多道任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程"><span class="toc-number">2.</span> <span class="toc-text">进程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#多视角度解读进程"><span class="toc-number">2.1.</span> <span class="toc-text">多视角度解读进程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程切换"><span class="toc-number">3.</span> <span class="toc-text">进程切换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#进程状态"><span class="toc-number">3.1.</span> <span class="toc-text">进程状态</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程调度"><span class="toc-number">4.</span> <span class="toc-text">进程调度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本调度算法"><span class="toc-number">4.1.</span> <span class="toc-text">基本调度算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#先来先服务算法"><span class="toc-number">4.1.1.</span> <span class="toc-text">先来先服务算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#时间片轮转算法"><span class="toc-number">4.1.2.</span> <span class="toc-text">时间片轮转算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#短任务优先算法"><span class="toc-number">4.1.3.</span> <span class="toc-text">短任务优先算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#优先级调度算法"><span class="toc-number">4.1.4.</span> <span class="toc-text">优先级调度算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#混合调度算法"><span class="toc-number">4.1.5.</span> <span class="toc-text">混合调度算法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#进程调度的过程"><span class="toc-number">4.2.</span> <span class="toc-text">进程调度的过程</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<p><a href="http://www.cnblogs.com/edisonchou/p/5003694.html" target="_blank" rel="external">进程</a></p>
+<h3 id="从单任务到多道任务"><a href="#从单任务到多道任务" class="headerlink" title="从单任务到多道任务"></a>从单任务到多道任务</h3><p>最开始的时候，计算机只能一个一个程序的运行，后来人们需求多了，需要在工作的同时还能听听歌、聊天…所以就发展到了多道任务的时代。同时，单一操作员单一控制终端，CPU使用率很低；多道任务也提高计算机CPU的利用率。</p>
+<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>多道任务的思想虽然表面上看是多个程序同时运行，但在计算机的内部还是一次只能执行一个任务，造成同时运行的表象是因为cpu能做到快速切换。</p>
+<p>我们都知道一个任务在运行的时候，是有它自己的状态的，比如说当前的指令是什么、下一条指令在哪里…专业点讲就是寄存器、程序计数器、状态字、栈指针、优先级、进程ID、创建时间、所耗CPU时间、当前持有的各种句柄等等。当CPU进行切换的时候，为了保证下次切换回来能恢复这些状态，就要有一个数据结构能保存这些数据，这就是<code>进程控制块（Process Control Block，PCB）</code>。</p>
+<p>同时为了管理的方便，也引出了<code>进程</code>的概念，作为任务的另一说法。</p>
+<blockquote>
+<p>进程（Process）是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。在早期面向进程设计的计算机结构中，进程是程序的基本执行实体；在当代面向线程设计的计算机结构中，进程是线程的容器。程序是指令、数据及其组织形式的描述，进程是程序的实体。</p>
+</blockquote>
+<p>所以，多道任务的理解就是：</p>
+<p><strong>操作系统将需要运行的程序载入到内存中，并通过某种策略进行切换、分配cpu执行权限，给用户一种多进程同时运行的假象。</strong></p>
+<h4 id="多视角度解读进程"><a href="#多视角度解读进程" class="headerlink" title="多视角度解读进程"></a>多视角度解读进程</h4><p><img src="/images/操作系统-关于cpu管理01.jpg" alt="多视角度解读进程"></p>
+<ul>
+<li><p>物理视角：从物理内存的分配来看，每个进程占用一片内存空间，从这点上看，进程其实就是内存的某片空间。由于在任意时刻，一个CPU只能执行一条指令，因此任意时刻在CPU上执行的进程只有一个，而到底执行哪条指令是由物理程序计数器指定。因此，<strong>在物理层面，所有进程共用一个程序计数器，只是CPU在不停地做进程切换</strong>。</p>
+</li>
+<li><p>逻辑视角：从逻辑层面来看，每个进程都可以执行，也可以暂时挂起让别的进程执行，之后又可以接着执行。所以，进程需要想办法保持状态才能在下次接着执行时从正确的地点开始。因此，每个进程都有自己的计数器，记录其下一条指令所在的位置。（从逻辑上来说，程序计数器可以有多个）</p>
+</li>
+<li><p>时序视角：从时间来看，每个进程都必须往前推进。在运行一定时间后，进程都应该完成了一定的工作量。换句话说，每次进程返回，它都处在上次返回点之后。哲学家有云：“一个人不能两次踏入同一条河流”</p>
+</li>
+</ul>
+<h3 id="进程切换"><a href="#进程切换" class="headerlink" title="进程切换"></a>进程切换</h3><h4 id="进程状态"><a href="#进程状态" class="headerlink" title="进程状态"></a>进程状态</h4><p><img src="/images/操作系统-关于CPU管理02.gif" alt="进程状态"></p>
+<h3 id="进程调度"><a href="#进程调度" class="headerlink" title="进程调度"></a>进程调度</h3><p>既然有多个进程在内存中等待执行，就需要有一种合理的策略来安排执行的顺序。首先，一般的程序任务分为三种：CPU计算密集型、IO密集型与平衡（计算与IO各半）型，对于不同类型的程序，调度需要达到的目的也有所不同。对于IO密集型，响应时间最重要；对于CPU密集型，则周转时间最重要；而对于平衡型，进行某种响应和周转之间的平衡就显得比较重要。</p>
+<p>因此，进程调度的目标就是要达到极小化平均响应时间、极大化系统吞吐率、保持系统各个功能部件均处于繁忙状态和提供某种貌似公平的机制。</p>
+<h4 id="基本调度算法"><a href="#基本调度算法" class="headerlink" title="基本调度算法"></a>基本调度算法</h4><h5 id="先来先服务算法"><a href="#先来先服务算法" class="headerlink" title="先来先服务算法"></a>先来先服务算法</h5><p><img src="/images/操作系统-关于cpu管理03.jpg" alt="FCFS"></p>
+<p>先来先服务（FCFS）算法是一种最常见的算法，它是人的本性中的一种公平观念。其优点就是简单且实现容易，缺点则是短的工作有可能变得很慢，因为其前面有很长的工作在执行，这样就会造成用户的交互式体验也比较差。</p>
+<p>例如排队办理业务时，你要办理的业务只需要几分钟就可以办好，但是你前面的一个人办理的事情很复杂需要1个小时，这时你需要在他后面等很久，于是你就想到：要是每个人轮流办理10分钟事务的话，那该多好！于是就出现了时间片轮转算法。</p>
+<h5 id="时间片轮转算法"><a href="#时间片轮转算法" class="headerlink" title="时间片轮转算法"></a>时间片轮转算法</h5><p><img src="/images/操作系统-关于cpu管理04.jpg" alt="RR"></p>
+<p>时间片轮转是对FCFS算法的一种改进，其主要目的是改善短程序的响应时间，实现方式就是周期性地进行进程切换。时间片轮转的重点在于时间片的选择，需要考虑多方因素：如果运行的进程多时，时间片就需要短一些；进程数量少时，时间片就可以适当长一些。因此，时间片的选择是一个综合的考虑，权衡各方利益，进行适当折中。</p>
+<p>但是，时间片轮转的系统响应时间也不一定总是比FCFS的响应时间短。时间片轮转是一种大锅饭的做法，但是现实生活中却是走的“一部分人先富，先富带动后富”的路线。例如，如果有30个任务，其中一个任务只需要1秒时间执行，而其他29个任务需要30秒钟执行，如果因为某种原因，这个只要1秒钟的任务排在另外29个任务的后面轮转，则它需要等待29秒钟才能执行（假定时间片为1秒）。于是，这个任务的响应时间和交互体验就变得非常差。因此，短任务优先算法被提出。</p>
+<h5 id="短任务优先算法"><a href="#短任务优先算法" class="headerlink" title="短任务优先算法"></a>短任务优先算法</h5><p>短任务优先算法的核心是所有的任务并不都一样，而是有优先级的区分。具体来说，就是短任务的优先级比长任务的高，而我们总是安排优先级高的任务先运行。</p>
+<p>短任务优先算法又分为两种类型：一种是非抢占式，一种是抢占式。非抢占式当已经在CPU上运行的任务结束或阻塞时，从候选任务中选择执行时间最短的进程来执行。而抢占式则是每增加一个新的进程就需要对所有进程（包括正在CPU上运行的进程）进行检查，谁的时间短就运行谁。</p>
+<p>由于短任务优先总是运行需要执行时间最短的程序，因此其系统平均响应时间在以上几种算法中是最优的，这也是短任务优先算法的优点。但短任务优先算法也有缺点：一是可能造成长任务无法得到CPU时间从而导致“肌饿”。二是如何知道每个进程还需要运转多久？于是为了解决第一个缺点，优先级调度算法被提出。而第二个缺点则可以采取一些启发式的方法来进行估算，目前很多的人工智能算法都可以做这个事。</p>
+<h5 id="优先级调度算法"><a href="#优先级调度算法" class="headerlink" title="优先级调度算法"></a>优先级调度算法</h5><p>优先级调度算法给每个进程赋予一个优先级，每次需要进程切换时，找一个优先级最高的进程进行调度。这样如果赋予长进程一个高优先级，则该进程就不会再“饥饿”。事实上，短任务优先算法本身就是一种优先级调度，只不过它给予短进程更高的优先级而已。</p>
+<p>该算法的优点在于可以赋予重要的进程以高优先级以确保重要任务能够得到CPU时间，其缺点则有二：一是低优先级的进程可能会“饥饿”，二是响应时间无法保证。第一个缺点可以通过动态地调节任务的优先级解决，例如一个进程如果等待时间过长，其优先级将因持续提升而超越其他进程的优先级，从而得到CPU时间。第二个缺点可以通过将一个进程优先级设置为最高来解决，但即使将优先级设置为最高，但如果每个人都将自己的进程优先级设置为最高，其响应时间还是无法保证。</p>
+<h5 id="混合调度算法"><a href="#混合调度算法" class="headerlink" title="混合调度算法"></a>混合调度算法</h5><p>之前的算法都存在一定缺点，那么可否有一个算法混合他们的优点，摒弃它们的缺点，这就是所谓的混合调度算法。混合调度算法将所有进程分为不同的大类，每个大类为一个优先级。如果两个进程处于不同的大类，则处于高优先级大类的进程优先执行；如果处于同一个大类，则采用时间片轮转算法来执行。混合调度算法的示意图如下图所示：</p>
+<p><img src="/images/操作系统-关于cpu管理05.jpg" alt="混合方法"></p>
+<h4 id="进程调度的过程"><a href="#进程调度的过程" class="headerlink" title="进程调度的过程"></a>进程调度的过程</h4><p><img src="/images/操作系统-关于cpu管理06.jpg" alt="调度过程"></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/操作系统/">操作系统</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/操作系统/">操作系统</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/04/28/操作系统-一些基本概念/"  title="操作系统|一些基本概念">
+ <span>操作系统|一些基本概念
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>16</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Vim/" title="Vim">Vim<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/life/" title="life">life<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/干货/" title="干货">干货<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/操作系统/" title="操作系统">操作系统<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/架构/" title="架构">架构<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/简历/" title="简历">简历<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机网络/" title="计算机网络">计算机网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/运维/" title="运维">运维<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/面试/" title="面试">面试<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具/" title="工具">工具<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/操作系统/" title="操作系统">操作系统<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/面试/" title="面试">面试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/干货/" title="干货">干货<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>

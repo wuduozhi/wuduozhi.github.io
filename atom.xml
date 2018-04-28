@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-27T16:43:06.046Z</updated>
+  <updated>2018-04-28T04:03:37.281Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,184 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>操作系统|关于cpu管理</title>
+    <link href="http://yoursite.com/2018/04/28/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%85%B3%E4%BA%8Ecpu%E7%AE%A1%E7%90%86/"/>
+    <id>http://yoursite.com/2018/04/28/操作系统-关于cpu管理/</id>
+    <published>2018-04-28T11:02:54.000Z</published>
+    <updated>2018-04-28T04:03:37.281Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="http://www.cnblogs.com/edisonchou/p/5003694.html" target="_blank" rel="external">进程</a></p>
+<h3 id="从单任务到多道任务"><a href="#从单任务到多道任务" class="headerlink" title="从单任务到多道任务"></a>从单任务到多道任务</h3><p>最开始的时候，计算机只能一个一个程序的运行，后来人们需求多了，需要在工作的同时还能听听歌、聊天…所以就发展到了多道任务的时代。同时，单一操作员单一控制终端，CPU使用率很低；多道任务也提高计算机CPU的利用率。</p>
+<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>多道任务的思想虽然表面上看是多个程序同时运行，但在计算机的内部还是一次只能执行一个任务，造成同时运行的表象是因为cpu能做到快速切换。</p>
+<p>我们都知道一个任务在运行的时候，是有它自己的状态的，比如说当前的指令是什么、下一条指令在哪里…专业点讲就是寄存器、程序计数器、状态字、栈指针、优先级、进程ID、创建时间、所耗CPU时间、当前持有的各种句柄等等。当CPU进行切换的时候，为了保证下次切换回来能恢复这些状态，就要有一个数据结构能保存这些数据，这就是<code>进程控制块（Process Control Block，PCB）</code>。</p>
+<p>同时为了管理的方便，也引出了<code>进程</code>的概念，作为任务的另一说法。</p>
+<blockquote>
+<p>进程（Process）是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。在早期面向进程设计的计算机结构中，进程是程序的基本执行实体；在当代面向线程设计的计算机结构中，进程是线程的容器。程序是指令、数据及其组织形式的描述，进程是程序的实体。</p>
+</blockquote>
+<p>所以，多道任务的理解就是：</p>
+<p><strong>操作系统将需要运行的程序载入到内存中，并通过某种策略进行切换、分配cpu执行权限，给用户一种多进程同时运行的假象。</strong></p>
+<h4 id="多视角度解读进程"><a href="#多视角度解读进程" class="headerlink" title="多视角度解读进程"></a>多视角度解读进程</h4><p><img src="/images/操作系统-关于cpu管理01.jpg" alt="多视角度解读进程"></p>
+<ul>
+<li><p>物理视角：从物理内存的分配来看，每个进程占用一片内存空间，从这点上看，进程其实就是内存的某片空间。由于在任意时刻，一个CPU只能执行一条指令，因此任意时刻在CPU上执行的进程只有一个，而到底执行哪条指令是由物理程序计数器指定。因此，<strong>在物理层面，所有进程共用一个程序计数器，只是CPU在不停地做进程切换</strong>。</p>
+</li>
+<li><p>逻辑视角：从逻辑层面来看，每个进程都可以执行，也可以暂时挂起让别的进程执行，之后又可以接着执行。所以，进程需要想办法保持状态才能在下次接着执行时从正确的地点开始。因此，每个进程都有自己的计数器，记录其下一条指令所在的位置。（从逻辑上来说，程序计数器可以有多个）</p>
+</li>
+<li><p>时序视角：从时间来看，每个进程都必须往前推进。在运行一定时间后，进程都应该完成了一定的工作量。换句话说，每次进程返回，它都处在上次返回点之后。哲学家有云：“一个人不能两次踏入同一条河流”</p>
+</li>
+</ul>
+<h3 id="进程切换"><a href="#进程切换" class="headerlink" title="进程切换"></a>进程切换</h3><h4 id="进程状态"><a href="#进程状态" class="headerlink" title="进程状态"></a>进程状态</h4><p><img src="/images/操作系统-关于CPU管理02.gif" alt="进程状态"></p>
+<h3 id="进程调度"><a href="#进程调度" class="headerlink" title="进程调度"></a>进程调度</h3><p>既然有多个进程在内存中等待执行，就需要有一种合理的策略来安排执行的顺序。首先，一般的程序任务分为三种：CPU计算密集型、IO密集型与平衡（计算与IO各半）型，对于不同类型的程序，调度需要达到的目的也有所不同。对于IO密集型，响应时间最重要；对于CPU密集型，则周转时间最重要；而对于平衡型，进行某种响应和周转之间的平衡就显得比较重要。</p>
+<p>因此，进程调度的目标就是要达到极小化平均响应时间、极大化系统吞吐率、保持系统各个功能部件均处于繁忙状态和提供某种貌似公平的机制。</p>
+<h4 id="基本调度算法"><a href="#基本调度算法" class="headerlink" title="基本调度算法"></a>基本调度算法</h4><h5 id="先来先服务算法"><a href="#先来先服务算法" class="headerlink" title="先来先服务算法"></a>先来先服务算法</h5><p><img src="/images/操作系统-关于cpu管理03.jpg" alt="FCFS"></p>
+<p>先来先服务（FCFS）算法是一种最常见的算法，它是人的本性中的一种公平观念。其优点就是简单且实现容易，缺点则是短的工作有可能变得很慢，因为其前面有很长的工作在执行，这样就会造成用户的交互式体验也比较差。</p>
+<p>例如排队办理业务时，你要办理的业务只需要几分钟就可以办好，但是你前面的一个人办理的事情很复杂需要1个小时，这时你需要在他后面等很久，于是你就想到：要是每个人轮流办理10分钟事务的话，那该多好！于是就出现了时间片轮转算法。</p>
+<h5 id="时间片轮转算法"><a href="#时间片轮转算法" class="headerlink" title="时间片轮转算法"></a>时间片轮转算法</h5><p><img src="/images/操作系统-关于cpu管理04.jpg" alt="RR"></p>
+<p>时间片轮转是对FCFS算法的一种改进，其主要目的是改善短程序的响应时间，实现方式就是周期性地进行进程切换。时间片轮转的重点在于时间片的选择，需要考虑多方因素：如果运行的进程多时，时间片就需要短一些；进程数量少时，时间片就可以适当长一些。因此，时间片的选择是一个综合的考虑，权衡各方利益，进行适当折中。</p>
+<p>但是，时间片轮转的系统响应时间也不一定总是比FCFS的响应时间短。时间片轮转是一种大锅饭的做法，但是现实生活中却是走的“一部分人先富，先富带动后富”的路线。例如，如果有30个任务，其中一个任务只需要1秒时间执行，而其他29个任务需要30秒钟执行，如果因为某种原因，这个只要1秒钟的任务排在另外29个任务的后面轮转，则它需要等待29秒钟才能执行（假定时间片为1秒）。于是，这个任务的响应时间和交互体验就变得非常差。因此，短任务优先算法被提出。</p>
+<h5 id="短任务优先算法"><a href="#短任务优先算法" class="headerlink" title="短任务优先算法"></a>短任务优先算法</h5><p>短任务优先算法的核心是所有的任务并不都一样，而是有优先级的区分。具体来说，就是短任务的优先级比长任务的高，而我们总是安排优先级高的任务先运行。</p>
+<p>短任务优先算法又分为两种类型：一种是非抢占式，一种是抢占式。非抢占式当已经在CPU上运行的任务结束或阻塞时，从候选任务中选择执行时间最短的进程来执行。而抢占式则是每增加一个新的进程就需要对所有进程（包括正在CPU上运行的进程）进行检查，谁的时间短就运行谁。</p>
+<p>由于短任务优先总是运行需要执行时间最短的程序，因此其系统平均响应时间在以上几种算法中是最优的，这也是短任务优先算法的优点。但短任务优先算法也有缺点：一是可能造成长任务无法得到CPU时间从而导致“肌饿”。二是如何知道每个进程还需要运转多久？于是为了解决第一个缺点，优先级调度算法被提出。而第二个缺点则可以采取一些启发式的方法来进行估算，目前很多的人工智能算法都可以做这个事。</p>
+<h5 id="优先级调度算法"><a href="#优先级调度算法" class="headerlink" title="优先级调度算法"></a>优先级调度算法</h5><p>优先级调度算法给每个进程赋予一个优先级，每次需要进程切换时，找一个优先级最高的进程进行调度。这样如果赋予长进程一个高优先级，则该进程就不会再“饥饿”。事实上，短任务优先算法本身就是一种优先级调度，只不过它给予短进程更高的优先级而已。</p>
+<p>该算法的优点在于可以赋予重要的进程以高优先级以确保重要任务能够得到CPU时间，其缺点则有二：一是低优先级的进程可能会“饥饿”，二是响应时间无法保证。第一个缺点可以通过动态地调节任务的优先级解决，例如一个进程如果等待时间过长，其优先级将因持续提升而超越其他进程的优先级，从而得到CPU时间。第二个缺点可以通过将一个进程优先级设置为最高来解决，但即使将优先级设置为最高，但如果每个人都将自己的进程优先级设置为最高，其响应时间还是无法保证。</p>
+<h5 id="混合调度算法"><a href="#混合调度算法" class="headerlink" title="混合调度算法"></a>混合调度算法</h5><p>之前的算法都存在一定缺点，那么可否有一个算法混合他们的优点，摒弃它们的缺点，这就是所谓的混合调度算法。混合调度算法将所有进程分为不同的大类，每个大类为一个优先级。如果两个进程处于不同的大类，则处于高优先级大类的进程优先执行；如果处于同一个大类，则采用时间片轮转算法来执行。混合调度算法的示意图如下图所示：</p>
+<p><img src="/images/操作系统-关于cpu管理05.jpg" alt="混合方法"></p>
+<h4 id="进程调度的过程"><a href="#进程调度的过程" class="headerlink" title="进程调度的过程"></a>进程调度的过程</h4><p><img src="/images/操作系统-关于cpu管理06.jpg" alt="调度过程"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/edisonchou/p/5003694.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;进程&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;从单任务到多道任务&quot;&gt;&lt;a href=&quot;#从单任务到多道
+    
+    </summary>
+    
+      <category term="操作系统" scheme="http://yoursite.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="操作系统" scheme="http://yoursite.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>操作系统|一些基本概念</title>
+    <link href="http://yoursite.com/2018/04/28/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/"/>
+    <id>http://yoursite.com/2018/04/28/操作系统-一些基本概念/</id>
+    <published>2018-04-28T10:21:30.000Z</published>
+    <updated>2018-04-28T04:03:57.368Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h3><p>操作系统是一个系统程序，即为别的程序提供服务的程序。那么，操作系统的服务是通过什么方式提供的呢？答案就是：<code>系统调用（System Call）</code>。</p>
+<p>所谓系统调用就是：操作系统提供的API，用户通过调用这些API即可获得操作系统的服务。（想想是不是跟我们现在所作的什么Web Service、WCF、WebAPI、开放API之类的一致？）例如，如果用户程序需要进行读磁盘的操作，在C程序代码中可以使用如下语句来操作：<br><code>result = read(fd, buffer, nbytes);</code></p>
+<p>这个read函数是C语言提供的库函数，而这个库函数本身则是调用的操作系统的read系统调用。具体的系统调用过程不是我们讨论的重点，但我们还是可以通过下图来看看这个read系统调用的过程。</p>
+<p><img src="/images/操作系统-一些基本概念01.jpg" alt="系统调用"></p>
+<p><strong>对于上图中的用户空间和内核空间是什么意思呢？</strong>请往下看。</p>
+<h4 id="系统调用的实现"><a href="#系统调用的实现" class="headerlink" title="系统调用的实现"></a>系统调用的实现</h4><p>系统调用说白了就是一个应用程序申请操作系统的服务，既然是要调用操作系统的服务，那么是怎么从普通的应用程序切换到操作系统中运行的呢？</p>
+<p>答案是 <code>int指令</code>,这是一个汇编的指令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">int指令</div><div class="line"></div><div class="line">格式：int n</div><div class="line"></div><div class="line">n为中断类型码，它的功能是引发中断过程。</div><div class="line"></div><div class="line">CPU执行int n指令，相当于引发一个n号中断的中断过程，执行过程如下：</div><div class="line">1）取中断类型码n；</div><div class="line">2）标志寄存器入栈，IF=0，TF=0；</div><div class="line">3）CS、IP入栈</div><div class="line">4）（IP）=（n*4），(CS)=(n*4+2)</div></pre></td></tr></table></figure>
+<h3 id="内核态与用户态"><a href="#内核态与用户态" class="headerlink" title="内核态与用户态"></a>内核态与用户态</h3><blockquote>
+<p>残酷的现实：世界上的人并非都是平等的，有些人生来占有的资源就多，而有的人占有的资源就很少。当有些人来了，其他人就得让出资源。程序亦是如此。</p>
+</blockquote>
+<p>操作系统作为计算机的管理者，享有着更多的方便或权限。为了区分不同的程序的不同权限，人们发明了内核态和用户态的概念。</p>
+<h4 id="两种状态的概念"><a href="#两种状态的概念" class="headerlink" title="两种状态的概念"></a>两种状态的概念</h4><p>内核态就是拥有资源多的状态（或访问资源多的状态），也称为特权态。而用户态则是非特权态，在用户态下访问的资源会受到限制。例如，要访问OS的<code>内核数据结构</code>，如<code>进程表</code>等，则需要在特权态下才能做到。如果任意一个程序都能访问到这些数据，并有操作的能力，那整个操作系统是及其不安全、不稳定的。如果只需要访问用户程序里的数据，则在用户态下就可以了。</p>
+<h4 id="两种状态的优势"><a href="#两种状态的优势" class="headerlink" title="两种状态的优势"></a>两种状态的优势</h4><ul>
+<li>内核态：访问资源多，但可靠性、安全性要求高，维护管理都比较复杂；</li>
+<li>用户态：访问资源有限，但可靠性、安全性要求低，维护起来比较简单；</li>
+</ul>
+<p>那么，一个程序到底应该运行在内核态还是用户态呢？这取决于其对资源和效率的需求；下图展示了Windows操作系统的内核态与用户态的界限，我们可以看到哪些需要在内核态下运行，哪些只在用户态下运行。</p>
+<p><img src="/images/操作系统-一些基本概念02.jpg" alt="运行状态"></p>
+<h4 id="两种状态的本质"><a href="#两种状态的本质" class="headerlink" title="两种状态的本质"></a>两种状态的本质</h4><p>计算机对于内核态和用户态的识别是通过CPU的一个状态位来实现的，这个状态位是CPU状态字里面的一个字位。所谓的用户态、内核态实际是CPU的一种状态，而不是程序的状态。通过设置该状态字，可以使CPU处于内核态、用户态或者其他的子态（有的CPU有更多种子态）。</p>
+<p>换句话说：一个程序运行时，CPU是什么态，这个程序就运行在什么态。</p>
+<p>那么，知道了是怎么实现的，那又是如何对用户态的访问进行限制的呢？在对用户态下程序执行的每一条指令进行检查，这种检查又被称为地址翻译，即对程序发出的每一条指令都要经过这个地址翻译过程（你可以将其理解为我们在实际开发中所作的权限管理，对用户发出的每个操作请求首先都经过一个Filter进行过滤），通过对翻译的控制，就可以限制程序对资源的访问。</p>
+<h3 id="中断机制"><a href="#中断机制" class="headerlink" title="中断机制"></a>中断机制</h3><p>操作系统是为其他程序服务的，操作系统需要管理进程、内存、磁盘等，就是管理在内存中的程序，为其分配运行的空间、资源，所以操作系统要统一管理这些资源。所以说一个应用程序需要请求硬盘读写操作或申请内存空间，都需要通知操作系统，然后操作系统为其分配，这也是为什么要分用户态和内核态的原因。</p>
+<p>那么用户态的程序是怎么通知操作系统的呢？答案就是<code>中断机制</code>。</p>
+<p>中断是计算机里面的一个最为重要的机制，它也是操作系统获得计算机控制权的根本保证。其基本原理是：设备在完成自己的任务后向CPU发出终端，CPU判断优先级，然后确定是否响应。如果响应，则执行中断服务程序，并在中断服务程序执行完后继续执行原来的程序。下图简单地描述了中断机制：</p>
+<p><img src="/images/操作系统-一些基本概念03.jpg" alt="中断机制"></p>
+<p><a href="http://www.cnblogs.com/edisonchou/p/4999362.html" target="_blank" rel="external">一些基本概念</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;系统调用&quot;&gt;&lt;a href=&quot;#系统调用&quot; class=&quot;headerlink&quot; title=&quot;系统调用&quot;&gt;&lt;/a&gt;系统调用&lt;/h3&gt;&lt;p&gt;操作系统是一个系统程序，即为别的程序提供服务的程序。那么，操作系统的服务是通过什么方式提供的呢？答案就是：&lt;code&gt;系统调
+    
+    </summary>
+    
+      <category term="操作系统" scheme="http://yoursite.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="操作系统" scheme="http://yoursite.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>操作系统|关于操作系统</title>
+    <link href="http://yoursite.com/2018/04/28/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%85%B3%E4%BA%8E%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    <id>http://yoursite.com/2018/04/28/操作系统-关于操作系统/</id>
+    <published>2018-04-28T09:57:44.000Z</published>
+    <updated>2018-04-28T04:04:17.960Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="操作系统是什么？"><a href="#操作系统是什么？" class="headerlink" title="操作系统是什么？"></a>操作系统是什么？</h2><h3 id="两个问题"><a href="#两个问题" class="headerlink" title="两个问题"></a>两个问题</h3><h4 id="操作系统到底是什么鬼？"><a href="#操作系统到底是什么鬼？" class="headerlink" title="操作系统到底是什么鬼？"></a>操作系统到底是什么鬼？</h4><p>操作系统是介于计算机和应用软件之间的一个软件系统[<strong>也是一种软件噢</strong>]，操作系统的上层和下层都有其他的对象存在：</p>
+<p><img src="/images/操作系统-关于操作系统01.jpg" alt="OS"></p>
+<p>从上图可以看出，OS上边是应用软件，下边是硬件平台。</p>
+<h4 id="操作系统到底操控什么事？"><a href="#操作系统到底操控什么事？" class="headerlink" title="操作系统到底操控什么事？"></a>操作系统到底操控什么事？</h4><p>最原始的计算机并没有OS，直接由人来掌管事情。随着计算机复杂性的增长，人已经不能胜任直接掌控计算机了。于是，OS这个软件被编写出来帮我们掌控计算机，使人类从日益复杂的掌控任务中解脱出来。既然OS是专门掌控计算机的，那么计算机上发生的所有事情都需要OS的知晓和认可，未经OS同意的任何事情均被视为非法的（想想病毒和入侵攻击者试图做的事情）。</p>
+<h3 id="两种角色"><a href="#两种角色" class="headerlink" title="两种角色"></a>两种角色</h3><ul>
+<li>魔术家</li>
+</ul>
+<p><img src="/images/操作系统-关于操作系统02.jpg" alt="魔术家"></p>
+<p>魔术家的目标是把差的东西变好，把少的东西变多，把复杂变简单。同样，OS将计算机以一个更加容易、更加方便、更加强大的方式呈现给用户。</p>
+<blockquote>
+<p>Example：OS通过进程抽象让每一个用户感觉有一台自己独享的CPU，通过虚拟内存抽象，让用户感觉物理内存空间具有无限扩张性，这就是把少变多的一个实例。</p>
+</blockquote>
+<ul>
+<li>管理者</li>
+</ul>
+<p><img src="/images/操作系统-关于操作系统03.jpg" alt="管理者"></p>
+<p>操作系统管理计算机上的软硬件资源，如CPU、内存、磁盘等，使得不同用户之间或者同一用户的不同程序之间可以安全有序地共享这些硬件资源。</p>
+<p>那么，问题来了，如何让用户很好地利用这些硬件资源呢？这就是分块（Parcel Out），把硬件分块给应用程序使用。这就涉及到有效和公平的原则，这也是一个管理者的必备素质，更是设计操作系统时的不懈追求！</p>
+<p>操作系统的两个角色之间既有区别又有联系，为了完成不同的任务，OS有时需要扮演魔术师，有时有需要扮演管理者，还有时需要同时扮演两个角色。</p>
+<h2 id="操作系统的范畴"><a href="#操作系统的范畴" class="headerlink" title="操作系统的范畴"></a>操作系统的范畴</h2><h3 id="CPU管理"><a href="#CPU管理" class="headerlink" title="CPU管理"></a>CPU管理</h3><p>即如何分配CPU给不同应用和用户，对于进程管理坚持三个目标：一是公平（每个程序都有机会使用CPU），二是非阻塞（任何程序不能无休止地阻挠其他程序的正常推进），三是优先级（优先级高的程序开始运行则优先级低的就需要让出资源—&gt;让一部分人先富起来）。</p>
+<h3 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h3><p>即如何分配内存给不同应用和用户，主要管理缓存、主存、磁盘、磁带等存储介质所形成的内存架构。其目的主要有二：一是将少变多（比如虚拟内存的使用能够使得运行程序的大小大大地增加），二是让多个程序共享同一个物理内存（这就需要对物理内存进行分割和保护，不让一个程序访问另一个程序所占的内存空间，专业术语称为运行时不能越界访问）。</p>
+<h3 id="外存管理"><a href="#外存管理" class="headerlink" title="外存管理"></a>外存管理</h3><p>即如何分配外存（磁盘）给不同应用和用户，外存管理也称存储管理，也就是我们所说的文件系统，其目的是将磁盘变为一个很容易使用的存储介质以提供给用户使用。</p>
+<h3 id="I-O管理"><a href="#I-O管理" class="headerlink" title="I/O管理"></a>I/O管理</h3><p>即如何分配输入输出设备给应用和用户，也称为设备管理，也就是管理输入输出设备。其目的主要有两个：一是屏蔽不同设备的差异性（用户用同样的方式访问不同的设备，从而减低编程的难度），二是提供并发访问（即将那些看上去并不具备共享特征的设备如打印机变得可以共享）。</p>
+<p>操作系统的四个核心功能如下图所示：</p>
+<p><img src="/images/操作系统-关于操作系统04.jpg" alt="操作系统核心功能"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>操作系统的技巧也应用于很多领域，如抽象、缓存、并发等。操作系统简单说来就是实现抽象：<code>进程抽象</code>、<code>文件抽象</code>、<code>虚拟存储抽象</code>等。而很多领域都会使用抽象，例如数据结构和程序设计（抽象数据类型？抽象类？）；很多地方也会用到缓存，例如开发Web应用程序时使用缓存降低数据库访问压力，加快页面响应速度等等。更为重要的是，对于一个程序员来说，要想知道计算机在软件层面是怎么运转的，就得学习操作系统。</p>
+<h2 id="程序是如何运行的？"><a href="#程序是如何运行的？" class="headerlink" title="程序是如何运行的？"></a>程序是如何运行的？</h2><h3 id="程序运行的四大要素"><a href="#程序运行的四大要素" class="headerlink" title="程序运行的四大要素"></a>程序运行的四大要素</h3><ol>
+<li>程序设计语言</li>
+</ol>
+<p>首先，我们得使用一门程序设计语言进行编程，一般我们使用的都是高级程序设计语言（如C、C++、Java、C#等）。</p>
+<ol>
+<li>编译系统</li>
+</ol>
+<p>我们写好了代码，但是由于计算机不认识高级语言编写的程序，需要编译成计算机能够识别的机器语言，这就需要编译器和汇编器的帮助。</p>
+<ol>
+<li>操作系统</li>
+</ol>
+<p>机器语言程序需要加载到内存，才能形成一个运动中的程序（即进程），这就需要操作系统的帮助。</p>
+<blockquote>
+<p>bout：进程需要在计算机芯片即CPU上执行才算是真正在执行，而将进程调度到CPU上运行也是由操作系统完成的，这里也就不难理解为什么进程管理会在我们的教科书中排在最重要的位置了。</p>
+</blockquote>
+<ol>
+<li>指令集结构（计算机硬件系统）</li>
+</ol>
+<p>在CPU上执行的机器语言指令需要变成能够在一个个时钟脉冲里执行的基本操作，这就需要指令集结构和计算机硬件的支持。</p>
+<h3 id="程序运行的基本流程"><a href="#程序运行的基本流程" class="headerlink" title="程序运行的基本流程"></a>程序运行的基本流程</h3><p>基于上面提到的四大要素，我们可以得出下面一幅图，该图从一个线性角度展示了程序的演变过程，能够帮助我们理解整个程序是如何在计算机上执行的。</p>
+<p><img src="/images/操作系统-关于操作系统05.jpg" alt="程序运行"></p>
+<p>事实上，程序可以执行在机器语言或汇编语言上编写，用这种被称为“低级”（我更愿意称其为底层）的语言编写出来的机器语言程序无需经过编译器的翻译就可以在计算机指令集上执行。如果是在汇编语言上编写的汇编程序，则只需要经过汇编器的翻译即可加载执行。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;操作系统是什么？&quot;&gt;&lt;a href=&quot;#操作系统是什么？&quot; class=&quot;headerlink&quot; title=&quot;操作系统是什么？&quot;&gt;&lt;/a&gt;操作系统是什么？&lt;/h2&gt;&lt;h3 id=&quot;两个问题&quot;&gt;&lt;a href=&quot;#两个问题&quot; class=&quot;headerlink&quot; 
+    
+    </summary>
+    
+      <category term="操作系统" scheme="http://yoursite.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="操作系统" scheme="http://yoursite.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>读书笔记|C陷阱与缺陷</title>
@@ -980,7 +1158,7 @@ CROSS JOIN TableB
     <link href="http://yoursite.com/2018/04/14/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA/"/>
     <id>http://yoursite.com/2018/04/14/深入理解计算机系统-浮点数的表示/</id>
     <published>2018-04-13T17:14:01.000Z</published>
-    <updated>2018-04-13T09:22:17.684Z</updated>
+    <updated>2018-04-28T01:55:33.823Z</updated>
     
     <content type="html"><![CDATA[<script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -1366,7 +1544,7 @@ tex2jax: {inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]]
     <link href="http://yoursite.com/2018/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E6%88%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/"/>
     <id>http://yoursite.com/2018/04/11/深入理解计算机系统-我的学习之路/</id>
     <published>2018-04-11T11:43:41.000Z</published>
-    <updated>2018-04-13T09:14:37.510Z</updated>
+    <updated>2018-04-28T01:55:09.747Z</updated>
     
     <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>自己作为一名大二的准CS本科生，正在学习深入学习计算机系统这门课，但由于学校开设的课不咋地，同时自己又深知底层知识的重要性，只能自己另寻出路了。</p>
 <h3 id="My-Way"><a href="#My-Way" class="headerlink" title="My Way"></a>My Way</h3><p><a href="http://www.cnblogs.com/zuoxiaolong/category/518480.html" target="_blank" rel="external">博客教程</a></p>
@@ -1378,10 +1556,10 @@ tex2jax: {inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]]
     
     </summary>
     
-      <category term="深入学习计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
     
     
-      <category term="深入学习计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
@@ -1482,336 +1660,6 @@ tex2jax: {inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]]
     
     
       <category term="运维" scheme="http://yoursite.com/tags/%E8%BF%90%E7%BB%B4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>浮点数的二进制表示</title>
-    <link href="http://yoursite.com/2018/04/09/%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%A1%A8%E7%A4%BA/"/>
-    <id>http://yoursite.com/2018/04/09/浮点数的二进制表示/</id>
-    <published>2018-04-08T16:38:58.000Z</published>
-    <updated>2018-04-10T09:04:54.565Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line"></div><div class="line">　　void main(void)&#123;</div><div class="line"></div><div class="line">　　　　int num=9; /* num是整型变量，设为9 */</div><div class="line"></div><div class="line">　　　　float* pFloat=&amp;num; /* pFloat表示num的内存地址，但是设为浮点数 */</div><div class="line"></div><div class="line">　　　　printf(&quot;num的值为：%d\n&quot;,num); /* 显示num的整型值 */</div><div class="line"></div><div class="line">　　　　printf(&quot;*pFloat的值为：%f\n&quot;,*pFloat); /* 显示num的浮点值 */</div><div class="line"></div><div class="line">　　　　*pFloat=9.0; /* 将num的值改为浮点数 */</div><div class="line"></div><div class="line">　　　　printf(&quot;num的值为：%d\n&quot;,num); /* 显示num的整型值 */</div><div class="line"></div><div class="line">　　　　printf(&quot;*pFloat的值为：%f\n&quot;,*pFloat); /* 显示num的浮点值 */</div><div class="line"></div><div class="line">　　&#125;</div></pre></td></tr></table></figure>
-<p>大家知道程序运行的结果是什么嘛？</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">num的值为：9</div><div class="line">*pFloat的值为：0.000000</div><div class="line">num的值为：1091567616</div><div class="line">*pFloat的值为：9.000000</div></pre></td></tr></table></figure>
-<p>我很惊讶，num和*pFloat在内存中明明是同一个数，为什么浮点数和整数的解读结果会差别这么大？</p>
-<p>要理解这个结果，一定要搞懂浮点数在计算机内部的表示方法。我读了一些资料，下面就是我的笔记。</p>
-<h3 id="int的表示"><a href="#int的表示" class="headerlink" title="int的表示"></a>int的表示</h3><p>在讨论浮点数之前，先看一下整数在计算机内部是怎样表示的。<br><code>int num=9;</code></p>
-<p>上面这条命令，声明了一个整数变量，类型为int，值为9（二进制写法为1001）。普通的32位计算机，用4个字节表示int变量，所以9就被保存为00000000 00000000 00000000 00001001，写成16进制就是0x00000009。</p>
-<p>那么，我们的问题就简化成：为什么0x00000009还原成浮点数，就成了0.000000？</p>
-<h3 id="IEEE标准"><a href="#IEEE标准" class="headerlink" title="IEEE标准"></a>IEEE标准</h3><p>根据国际标准IEEE 754，任意一个二进制浮点数V可以表示成下面的形式：</p>
-<p><img src="/images/浮点数的二进制表示01.png" alt="IEEE754" title="浮点数的二进制表示01"></p>
-<p>举例来说，十进制的5.0，写成二进制是101.0，相当于1.01×2^2。那么，按照上面V的格式，可以得出s=0，M=1.01，E=2。</p>
-<p>十进制的-5.0，写成二进制是-101.0，相当于-1.01×2^2。那么，s=1，M=1.01，E=2。</p>
-<p>IEEE 754规定，对于32位的浮点数，最高的1位是符号位s，接着的8位是指数E，剩下的23位为有效数字M。</p>
-<p><img src="/images/浮点数的二进制表示02.png" alt="32bit" title="浮点数的二进制表示02"></p>
-<p>对于64位的浮点数，最高的1位是符号位S，接着的11位是指数E，剩下的52位为有效数字M。</p>
-<p><img src="/images/浮点数的二进制表示03.png" alt="64bit" title="浮点数的二进制表示03"></p>
-<p>IEEE 754对有效数字M和指数E，还有一些特别规定。</p>
-<p>前面说过，1≤M&lt;2，也就是说，M可以写成1.xxxxxx的形式，其中xxxxxx表示小数部分。IEEE 754规定，在计算机内部保存M时，默认这个数的第一位总是1，因此可以被舍去，只保存后面的xxxxxx部分。比如保存1.01的时候，只保存01，等到读取的时候，再把第一位的1加上去。这样做的目的，是节省1位有效数字。以32位浮点数为例，留给M只有23位，将第一位的1舍去以后，等于可以保存24位有效数字。</p>
-<p>至于指数E，情况就比较复杂。</p>
-<p>首先，E为一个无符号整数（unsigned int）。这意味着，如果E为8位，它的取值范围为0~255；如果E为11位，它的取值范围为0~2047。但是，我们知道，科学计数法中的E是可以出现负数的，所以IEEE 754规定，E的真实值必须再减去一个中间数，对于8位的E，这个中间数是127；对于11位的E，这个中间数是1023。</p>
-<p>比如，2^10的E是10，所以保存成32位浮点数时，必须保存成10+127=137，即10001001。</p>
-<p>然后，指数E还可以再分成三种情况：</p>
-<p>（1）E不全为0或不全为1。这时，浮点数就采用上面的规则表示，即指数E的计算值减去127（或1023），得到真实值，再将有效数字M前加上第一位的1。</p>
-<p>（2）E全为0。这时，浮点数的指数E等于1-127（或者1-1023），有效数字M不再加上第一位的1，而是还原为0.xxxxxx的小数。这样做是为了表示±0，以及接近于0的很小的数字。</p>
-<p>（3）E全为1。这时，如果有效数字M全为0，表示±无穷大（正负取决于符号位s）；如果有效数字M不全为0，表示这个数不是一个数（NaN）。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div c
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>工具|Dos下的debug工具使用</title>
-    <link href="http://yoursite.com/2018/04/01/%E5%B7%A5%E5%85%B7-Dos%E4%B8%8B%E7%9A%84debug%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/"/>
-    <id>http://yoursite.com/2018/04/01/工具-Dos下的debug工具使用/</id>
-    <published>2018-04-01T00:04:11.000Z</published>
-    <updated>2018-04-03T01:30:19.958Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Dubug是dos,windows下提供的调试工具，使用该工具，可以查看和修改寄存器，内存的内容。同时可以在机器码级别跟踪程序源码的运行。</p>
-<h3 id="常用的debug功能"><a href="#常用的debug功能" class="headerlink" title="常用的debug功能"></a>常用的debug功能</h3><ul>
-<li>用Debug的R命令查看、改变CPU寄存器内容；</li>
-<li>用Debug的D命令查看内存中的内容；</li>
-<li>用Debug的E命令查看内存中的内容；</li>
-<li>用Debug的U命令将内存中机器指令翻译成汇编指令；</li>
-<li>用Debug的T命令执行一条机器指令；</li>
-<li>用Debug的A命令以汇编指令的格式在内存中写入一条机器指令；</li>
-</ul>
-<p><a href="https://blog.csdn.net/u013018721/article/details/51154153" target="_blank" rel="external">Dos下的调试工具debug的使用教程 </a></p>
-<h3 id="汇编结尾int-20h-和int-21-h-啥区别"><a href="#汇编结尾int-20h-和int-21-h-啥区别" class="headerlink" title="汇编结尾int 20h 和int 21 h 啥区别"></a>汇编结尾int 20h 和int 21 h 啥区别</h3><p>int 20h只适用于ms-dos（相对应的有PC-DOS、FREE-DOS等等），而且int 20h要求入口参数CS=PSP段</p>
-<h3 id="int指令引发的中断"><a href="#int指令引发的中断" class="headerlink" title="int指令引发的中断"></a>int指令引发的中断</h3><p>int n指令，相当于引发一个n号中断。</p>
-<p>执行过程相当于：</p>
-<p>（1）取中断类型码n。<br>（2）标志寄存器入栈；设置IF=0，TF=0。<br>（3）CS，IP入栈<br>（4）（IP）=（n<em>4），（CS）=（n</em>4+2）</p>
-<h4 id="int-21h中断"><a href="#int-21h中断" class="headerlink" title="int 21h中断"></a>int 21h中断</h4><p>它是DOS提供的中断例程，包含了DOS提供给程序员在编程时调用的子程序。</p>
-<p>前面我们一直用下面的代码返回:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mov  ax,4c00h  </div><div class="line">int 21h</div></pre></td></tr></table></figure></p>
-<p>其实这是用了21号中断例程的4ch号子程序，al是用来存放程序返回值的，上面的代码即0.<br>本质就是:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mov ah,4ch  </div><div class="line">mov al,0  </div><div class="line">int 21h</div></pre></td></tr></table></figure></p>
-<h4 id="带返回码的结束（AH-4CH）"><a href="#带返回码的结束（AH-4CH）" class="headerlink" title="带返回码的结束（AH=4CH）"></a>带返回码的结束（AH=4CH）</h4><p>功能：返回DOS</p>
-<p>入口参数：无</p>
-<p>调用方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">MOV    AH,4CH</div><div class="line">INT      21H</div></pre></td></tr></table></figure></p>
-<p>通过4CH功能调用能够结束当前正在执行的程序，返回DOS系统，一般用于汇编程序的结束位置。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;p&gt;Dubug是dos,windows下提供的调试工具，使用该工具，可以查看和修改寄存器，内存的内容。同时可以在机器码级别跟踪程序源码的运行。&lt;
-    
-    </summary>
-    
-      <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
-    
-    
-      <category term="工具" scheme="http://yoursite.com/tags/%E5%B7%A5%E5%85%B7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>工具|gdb调试</title>
-    <link href="http://yoursite.com/2018/03/27/%E5%B7%A5%E5%85%B7-gdb%E8%B0%83%E8%AF%95/"/>
-    <id>http://yoursite.com/2018/03/27/工具-gdb调试/</id>
-    <published>2018-03-27T14:48:03.000Z</published>
-    <updated>2018-04-27T05:36:41.745Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="GDB概述"><a href="#GDB概述" class="headerlink" title="GDB概述"></a>GDB概述</h3><p>GDB是GNU开源组织发布的一个强大的UNIX下的程序调试工具。或许，各位比较喜欢那种图形界面方式的，像VC、BCB等IDE的调试，但如果你是在UNIX平台下做软件，你会发现GDB这个调试工具有比VC、BCB的图形化调试器更强大的功能。所谓“寸有所长，尺有所短”就是这个道理。</p>
-<p>一般来说，GDB主要帮忙你完成下面四个方面的功能：</p>
-<ol>
-<li>启动你的程序，可以按照你的自定义的要求随心所欲的运行程序。</li>
-<li>可让被调试的程序在你所指定的调置的断点处停住。（断点可以是条件表达式）</li>
-<li>当程序被停住时，可以检查此时你的程序中所发生的事。</li>
-<li>动态的改变你程序的执行环境。</li>
-</ol>
-<p>从上面看来，GDB和一般的调试工具没有什么两样，基本上也是完成这些功能，不过在细节上，你会发现GDB这个调试工具的强大，大家可能比较习惯了图形化的调试工具，但有时候，命令行的调试工具却有着图形化工具所不能完成的功能。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div></pre></td><td class="code"><pre><div class="line">源程序：tst.c</div><div class="line"></div><div class="line">     1 #include &lt;stdio.h&gt;</div><div class="line">     2</div><div class="line">     3 int func(int n)</div><div class="line">     4 &#123;</div><div class="line">     5         int sum=0,i;</div><div class="line">     6         for(i=0; i&lt;n; i++)</div><div class="line">     7         &#123;</div><div class="line">     8                 sum+=i;</div><div class="line">     9         &#125;</div><div class="line">    10         return sum;</div><div class="line">    11 &#125;</div><div class="line">    12</div><div class="line">    13</div><div class="line">    14 main()</div><div class="line">    15 &#123;</div><div class="line">    16         int i;</div><div class="line">    17         long result = 0;</div><div class="line">    18         for(i=1; i&lt;=100; i++)</div><div class="line">    19         &#123;</div><div class="line">    20                 result += i;</div><div class="line">    21         &#125;</div><div class="line">    22</div><div class="line">    23        printf(&quot;result[1-100] = %d /n&quot;, result );</div><div class="line">    24        printf(&quot;result[1-250] = %d /n&quot;, func(250) );</div><div class="line">    25 &#125;</div><div class="line"></div><div class="line">编译生成执行文件：（Linux下）</div><div class="line">    hchen/test&gt; gcc -g tst.c -o tst</div><div class="line"></div><div class="line">使用GDB调试：</div><div class="line"></div><div class="line">hchen/test&gt; gdb tst  &lt;---------- 启动GDB</div><div class="line">GNU gdb 5.1.1</div><div class="line">Copyright 2002 Free Software Foundation, Inc.</div><div class="line">GDB is free software, covered by the GNU General Public License, and you are</div><div class="line">welcome to change it and/or distribute copies of it under certain conditions.</div><div class="line">Type &quot;show copying&quot; to see the conditions.</div><div class="line">There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for details.</div><div class="line">This GDB was configured as &quot;i386-suse-linux&quot;...</div><div class="line">(gdb) l     &lt;-------------------- l命令相当于list，从第一行开始例出原码。</div><div class="line">1        #include &lt;stdio.h&gt;</div><div class="line">2</div><div class="line">3        int func(int n)</div><div class="line">4        &#123;</div><div class="line">5                int sum=0,i;</div><div class="line">6                for(i=0; i&lt;n; i++)</div><div class="line">7                &#123;</div><div class="line">8                        sum+=i;</div><div class="line">9                &#125;</div><div class="line">10               return sum;</div><div class="line">(gdb)       &lt;-------------------- 直接回车表示，重复上一次命令</div><div class="line">11       &#125;</div><div class="line">12</div><div class="line">13</div><div class="line">14       main()</div><div class="line">15       &#123;</div><div class="line">16               int i;</div><div class="line">17               long result = 0;</div><div class="line">18               for(i=1; i&lt;=100; i++)</div><div class="line">19               &#123;</div><div class="line">20                       result += i;    </div><div class="line">(gdb) break 16    &lt;-------------------- 设置断点，在源程序第16行处。</div><div class="line">Breakpoint 1 at 0x8048496: file tst.c, line 16.</div><div class="line">(gdb) break func  &lt;-------------------- 设置断点，在函数func()入口处。</div><div class="line">Breakpoint 2 at 0x8048456: file tst.c, line 5.</div><div class="line">(gdb) info break  &lt;-------------------- 查看断点信息。</div><div class="line">Num Type           Disp Enb Address    What</div><div class="line">1   breakpoint     keep y   0x08048496 in main at tst.c:16</div><div class="line">2   breakpoint     keep y   0x08048456 in func at tst.c:5</div><div class="line">(gdb) r           &lt;--------------------- 运行程序，run命令简写</div><div class="line">Starting program: /home/hchen/test/tst</div><div class="line"></div><div class="line">Breakpoint 1, main () at tst.c:17    &lt;---------- 在断点处停住。</div><div class="line">17               long result = 0;</div><div class="line">(gdb) n          &lt;--------------------- 单条语句执行，next命令简写。</div><div class="line">18               for(i=1; i&lt;=100; i++)</div><div class="line">(gdb) n</div><div class="line">20                       result += i;</div><div class="line">(gdb) n</div><div class="line">18               for(i=1; i&lt;=100; i++)</div><div class="line">(gdb) n</div><div class="line">20                       result += i;</div><div class="line">(gdb) c          &lt;--------------------- 继续运行程序，continue命令简写。</div><div class="line">Continuing.</div><div class="line">result[1-100] = 5050       &lt;----------程序输出。</div><div class="line"></div><div class="line">Breakpoint 2, func (n=250) at tst.c:5</div><div class="line">5                int sum=0,i;</div><div class="line">(gdb) n</div><div class="line">6                for(i=1; i&lt;=n; i++)</div><div class="line">(gdb) p i        &lt;--------------------- 打印变量i的值，print命令简写。</div><div class="line">$1 = 134513808</div><div class="line">(gdb) n</div><div class="line">8                        sum+=i;</div><div class="line">(gdb) n</div><div class="line">6                for(i=1; i&lt;=n; i++)</div><div class="line">(gdb) p sum</div><div class="line">$2 = 1</div><div class="line">(gdb) n</div><div class="line">8                        sum+=i;</div><div class="line">(gdb) p i</div><div class="line">$3 = 2</div><div class="line">(gdb) n</div><div class="line">6                for(i=1; i&lt;=n; i++)</div><div class="line">(gdb) p sum</div><div class="line">$4 = 3</div><div class="line">(gdb) bt        &lt;--------------------- 查看函数堆栈。</div><div class="line">#0  func (n=250) at tst.c:5</div><div class="line">#1  0x080484e4 in main () at tst.c:24</div><div class="line">#2  0x400409ed in __libc_start_main () from /lib/libc.so.6</div><div class="line">(gdb) finish    &lt;--------------------- 退出函数。</div><div class="line">Run till exit from #0  func (n=250) at tst.c:5</div><div class="line">0x080484e4 in main () at tst.c:24</div><div class="line">24              printf(&quot;result[1-250] = %d /n&quot;, func(250) );</div><div class="line">Value returned is $6 = 31375</div><div class="line">(gdb) c     &lt;--------------------- 继续运行。</div><div class="line">Continuing.</div><div class="line">result[1-250] = 31375    &lt;----------程序输出。</div><div class="line"></div><div class="line">Program exited with code 027. &lt;--------程序退出，调试结束。</div><div class="line">(gdb) q     &lt;--------------------- 退出gdb。</div><div class="line">hchen/test&gt;</div></pre></td></tr></table></figure>
-<p>好了，有了以上的感性认识，还是让我们来系统地认识一下gdb吧。</p>
-<h3 id="使用GDB"><a href="#使用GDB" class="headerlink" title="使用GDB"></a>使用GDB</h3><table>
-<thead>
-<tr>
-<th>命令</th>
-<th>解释</th>
-<th>示例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>file &lt;文件名&gt;</td>
-<td>加载被调试的可执行程序文件。因为一般都在被调试程序所在目录下执行GDB，因而文本名不需要带路径。</td>
-<td>(gdb) file gdb-sample</td>
-</tr>
-<tr>
-<td>r</td>
-<td>Run的简写，运行被调试的程序。如果此前没有下过断点，则执行完整个程序；如果有断点，则程序暂停在第一个可用断点处。</td>
-<td>(gdb) r</td>
-</tr>
-<tr>
-<td>c</td>
-<td>Continue的简写，继续执行被调试程序，直至下一个断点或程序结束。</td>
-<td>(gdb) c</td>
-</tr>
-<tr>
-<td>b &lt;行号&gt;; b &lt;函数名称&gt; ;b <em>*&lt;函数名称&gt;; b </em> *&lt;代码地址&gt;; d [编号]</td>
-<td>b: Breakpoint的简写，设置断点。两可以使用“行号”“函数名称”“执行地址”等方式指定断点位置。其中在函数名称前面加“*”符号表示将断点设置在“由编译器生成的prolog代码处”。如果不了解汇编，可以不予理会此用法。d: Delete breakpoint的简写，删除指定编号的某个断点，或删除所有断点。断点编号从1开始递增。</td>
-<td>(gdb) b 8 (gdb) b main  (gdb) b <em>main  (gdb) b </em>0x804835c  (gdb) d</td>
-</tr>
-<tr>
-<td>s, n</td>
-<td>s: 执行一行源程序代码，如果此行代码中有函数调用，则进入该函数；n: 执行一行源程序代码，此行代码中的函数调用也一并执行。s 相当于其它调试器中的“Step Into (单步跟踪进入)”；n 相当于其它调试器中的“Step Over (单步跟踪)”。这两个命令必须在有源代码调试信息的情况下才可以使用（GCC编译时使用“-g”参数）。</td>
-<td>(gdb) s   (gdb) n</td>
-</tr>
-<tr>
-<td>si, ni</td>
-<td>si命令类似于s命令，ni命令类似于n命令。所不同的是，这两个命令（si/ni）所针对的是汇编指令，而s/n针对的是源代码。</td>
-<td>(gdb) si (gdb) ni</td>
-</tr>
-<tr>
-<td>p &lt;变量名称&gt;</td>
-<td>Print的简写，显示指定变量（临时变量或全局变量）的值。</td>
-<td>(gdb) p i  (gdb) p nGlobalVar</td>
-</tr>
-<tr>
-<td>display …   ; undisplay &lt;编号&gt;</td>
-<td>display，设置程序中断后欲显示的数据及其格式。例如，如果希望每次程序中断后可以看到即将被执行的下一条汇编指令，可以使用命令“display /i $pc”其中 $pc 代表当前汇编指令，/i表示以十六进行显示。当需要关心汇编代码时，此命令相当有用。undispaly，取消先前的display设置，编号从1开始递增。</td>
-<td>(gdb) display /i $pc (gdb) undisplay 1</td>
-</tr>
-<tr>
-<td>i</td>
-<td>Info的简写，用于显示各类信息，详情请查阅“help i”。</td>
-<td>(gdb) i r</td>
-</tr>
-<tr>
-<td>q</td>
-<td>Quit的简写，退出GDB调试环境。</td>
-<td>(gdb) q</td>
-</tr>
-<tr>
-<td>help [命令名称]</td>
-<td>GDB帮助命令，提供对GDB名种命令的解释说明。如果指定了“命令名称”参数，则显示该命令的详细说明；如果没有指定参数，则分类显示所有GDB命令，供用户进一步浏览和查询。</td>
-<td>(gdb) help display</td>
-</tr>
-</tbody>
-</table>
-<p>注:[断点还可以根据条件表达式设置断点]</p>
-<p>程序在运行过程中，当某个条件满足时，程序在某行中断暂停执行</p>
-<ul>
-<li>方法1 命令格式：break行号或函数名 if  条件</li>
-<li>方法2  watch &lt;条件表达式&gt;</li>
-</ul>
-<h4 id="whatis-命令"><a href="#whatis-命令" class="headerlink" title="whatis 命令"></a>whatis 命令</h4><p>作用：用来显示某个变量或表达式值的数据类型<br>格式：whatis &lt;变量或表达式&gt;</p>
-<h4 id="set-命令"><a href="#set-命令" class="headerlink" title="set 命令"></a>set 命令</h4><p>作用：用来给变量赋值,当程序继续运行时，将使用更改后的值。<br>格式：set variable 变量=值   相当于print 变量=值</p>
-<h4 id="next和step命令"><a href="#next和step命令" class="headerlink" title="next和step命令"></a>next和step命令</h4><p>作用：一次一条地执行程序代码</p>
-<p>next和step的区别：</p>
-<ol>
-<li>如果遇到函数调用，next会把该函数调用当作一条语句来执行，再次输入next会执行函数调用后的语句</li>
-<li>step则会跟踪进入函数，一次一条地执行函数内的代码，直到函数的代码执行完，才执行函数调用后的语句</li>
-</ol>
-<h4 id="nexti和stepi命令"><a href="#nexti和stepi命令" class="headerlink" title="nexti和stepi命令"></a>nexti和stepi命令</h4><p>作用：用来单步执行一条机器指令，注意不是单步执行一行语句。单步执行一行语句的命令是</p>
-<p>next和step命令通常一条语句由多条机器指令构成</p>
-<p>注意：nexti和next类似，不会跟踪进入函数内部去执行;Stepi和step类似，跟踪进入函数执行。</p>
-<h4 id="list"><a href="#list" class="headerlink" title="list"></a>list</h4><p>list命令后面还可以更一些参数，来显示更多功能：</p>
-<ul>
-<li><linenum>    行号。</linenum></li>
-<li>&lt;+&gt; [offset]    当前行号的正偏移量。</li>
-<li>&lt;-&gt; [offset]     当前行号的负偏移量。</li>
-<li><filename:linenum> 文件的中的行行。</filename:linenum></li>
-<li><function>             函数的代码</function></li>
-<li><filename:function>     文件中的函数。</filename:function></li>
-<li>&lt;*address&gt; 程序运行时的语句在内存中的地址。</li>
-</ul>
-<h4 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h4><p>为表达式（变量）expr设置一个观察点。变量量表达式值有变化时，马上停住程序。</p>
-<ul>
-<li>表达式可以是一个变量<br>例如：watch value_a</li>
-<li>表达式可以是一个地址：<br>例如：watch <em>(int </em>)0x12345678 可以检测4个字节的内存是否变化。</li>
-<li>表达式可以是一个复杂的语句表达式：<br>例如：watch a*b + c/d</li>
-</ul>
-<p>使用watch时步骤如下：</p>
-<ol>
-<li><p>使用break在要观察的变量所在处设置断电；</p>
-</li>
-<li><p>使用run执行，直到断点；</p>
-</li>
-<li><p>使用watch设置观察点；</p>
-</li>
-<li><p>使用continue观察设置的观察点是否有变化。</p>
-</li>
-</ol>
-<h4 id="查看函数返回值"><a href="#查看函数返回值" class="headerlink" title="查看函数返回值"></a>查看函数返回值</h4><p>查看函数返回值是在调试的过程中经常遇到的需求。例如，对于如下函数</p>
-<pre><code>int foo()
-{
-    return 100;
-}
-</code></pre><p>我们可以以如下方式获取函数的返回值：</p>
-<ol>
-<li><p>通过finish命令运行至函数结束，此时会打印函数返回值。</p>
-</li>
-<li><p>返回值会存储在eax寄存器中，通过查看信息可以获取返回值。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(gdb) p $eax</div><div class="line">$3 = 100</div><div class="line">(gdb) info registers</div><div class="line">eax 0x64 100</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="查看连续内存"><a href="#查看连续内存" class="headerlink" title="查看连续内存"></a>查看连续内存</h4><p>可以使用GDB的”@”操作符查看连续内存，”@”的左边是第一个内存的地址的值，”@”的右边则你你想查看内存的长度。</p>
-<p>例如，对于如下代码：int arr[] = {2, 4, 6, 8, 10};，可以通过如下命令查看arr前三个单元的数据。</p>
-<pre><code>(gdb) p *arr@3
-$2 = {2, 4, 6}
-</code></pre><h4 id="查看内存"><a href="#查看内存" class="headerlink" title="查看内存"></a>查看内存</h4><p>可以使用examine命令（简写为x）来查看内存地址中的值。x命令的语法如下所示：</p>
-<p><code>x /&lt;n/f/u&gt; &lt;addr&gt;</code></p>
-<ul>
-<li>n 表示显示内存的长度，也就是说从当前地址向后显示几个地址的内容。</li>
-<li>f 表示显示的格式，如果是字符串，则用s，如果是数字，则可以用i。</li>
-<li>u 表示从当前地址往后请求的字节数，默认是4个bytes。（b单字节，h双字节，w四字节，g八字节）</li>
-<li><addr> 表示一个内存地址。</addr></li>
-</ul>
-<p>例如：以两字节为单位显示前面的那个数组的地址后32字节内存信息如下.</p>
-<pre><code>(gdb) x /16uh arr
-0xbffff4cc: 2 0 4 0 6 0 8 0
-0xbffff4dc: 10 0 34032 2052 0 0 0 0
-</code></pre><h4 id="自动显示"><a href="#自动显示" class="headerlink" title="自动显示"></a>自动显示</h4><p>在VisualStudio中，可以通过监视窗口动态查看变量的值。在gdb中，也提供了类似的命令display，它的语法是：</p>
-<ul>
-<li>display expr</li>
-<li>display fmt expr</li>
-<li>display fmt addr</li>
-</ul>
-<p>expr是一个表达式，fmt表示显示的格式，addr表示内存地址。当你用display设定好了一个或多个表达式后，只要你的程序被停下来（单步跟踪时），GDB会自动显示你所设置的这些表达式的值。</p>
-<h4 id="几个相关的命令如下："><a href="#几个相关的命令如下：" class="headerlink" title="几个相关的命令如下："></a>几个相关的命令如下：</h4><ul>
-<li><code>undisplay &lt;dnums...&gt;</code>        不显示dispaly</li>
-<li><code>delete display [dnums]</code>      除自动显示，不带dnums参数则删除所有自动显示，也支持范围删除，如： <code>delete display 1,3-5</code></li>
-<li><code>disable display &lt;dnums...&gt;</code>    使display失效</li>
-<li><code>enable display &lt;dnums...&gt;</code>    恢复display</li>
-<li><code>info display</code>        查看display信息</li>
-</ul>
-<h4 id="一些小技巧"><a href="#一些小技巧" class="headerlink" title="一些小技巧"></a>一些小技巧</h4><ul>
-<li>查看所有的局部变量:<code>(gdb) info local</code></li>
-<li>查看此时的栈状态 (反映了函数调用，见Linux从程序到进程):<code>(gdb) info stack</code></li>
-</ul>
-<ol>
-<li><p>查看寄存器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(gdb) i r</div><div class="line">(gdb) i r a                     # 查看所有寄存器（包括浮点、多媒体）</div><div class="line">(gdb) i r esp</div><div class="line">(gdb) i r pc</div></pre></td></tr></table></figure>
-</li>
-<li><p>查看内存</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(gdb) x /wx 0x80040000    # 以16进制显示指定地址处的数据</div><div class="line">(gdb) x /8x $esp</div><div class="line">(gdb) x /16x $esp+12</div><div class="line">(gdb) x /16s 0x86468700   # 以字符串形式显示指定地址处的数据</div><div class="line">(gdb) x /24i 0x8048a51      # 以指令形式显示指定地址处的数据（24条）</div></pre></td></tr></table></figure>
-</li>
-<li><p>修改寄存器的值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(gdb) set $v0 = 0x004000000</div><div class="line">(gdb) set $epc = 0xbfc00000</div></pre></td></tr></table></figure>
-</li>
-<li><p>修改内存的值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(gdb) set &#123;unsigned int&#125;0x8048a51=0x0</div><div class="line">(gdb) set *(unsigned int*)0x8048a54=0x55aa55aa</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="objdump命令的使用"><a href="#objdump命令的使用" class="headerlink" title="objdump命令的使用"></a>objdump命令的使用</h3><table>
-<thead>
-<tr>
-<th>命令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>objdump -f test</td>
-<td>显示test的文件头信息</td>
-</tr>
-<tr>
-<td>objdump -d test</td>
-<td>反汇编test中的需要执行指令的那些section</td>
-</tr>
-<tr>
-<td>objdump -D test</td>
-<td>与-d类似，但反汇编test中的所有section</td>
-</tr>
-<tr>
-<td>objdump -h test</td>
-<td>显示test的Section Header信息</td>
-</tr>
-<tr>
-<td>objdump -x test</td>
-<td>显示test的全部Header信息</td>
-</tr>
-<tr>
-<td>objdump -s test</td>
-<td>除了显示test的全部Header信息，还显示他们对应的十六进制文件代码</td>
-</tr>
-</tbody>
-</table>
-<h4 id="for-example"><a href="#for-example" class="headerlink" title="for example"></a>for example</h4><p>将C源代码和反汇编出来的指令对照：</p>
-<ol>
-<li>编译成目标文件（要加-g选项） <code>gcc -g -o test.c</code></li>
-<li>输出C源代码和反汇编出来的指令对照的格式 <code>objdump -S test.o</code></li>
-</ol>
-<p><a href="https://blog.csdn.net/haoel/article/details/2879" target="_blank" rel="external">用GDB调试程序(一)</a><br><a href="https://blog.csdn.net/liigo/article/details/582231" target="_blank" rel="external">GDB十分钟教程</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;GDB概述&quot;&gt;&lt;a href=&quot;#GDB概述&quot; class=&quot;headerlink&quot; title=&quot;GDB概述&quot;&gt;&lt;/a&gt;GDB概述&lt;/h3&gt;&lt;p&gt;GDB是GNU开源组织发布的一个强大的UNIX下的程序调试工具。或许，各位比较喜欢那种图形界面方式的，像VC、BCB
-    
-    </summary>
-    
-      <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
-    
-    
-      <category term="工具" scheme="http://yoursite.com/tags/%E5%B7%A5%E5%85%B7/"/>
     
   </entry>
   
