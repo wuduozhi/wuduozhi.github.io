@@ -19,10 +19,13 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="LeetCode 11 Container With Most Water（最大水容器） 题目大意：给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。画 n 条垂直线，使得垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。 注意：你不能倾斜容器，n 至少是2。 思路:用两个指针从">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-04-25T16:16:01.918Z">
+<meta property="og:image" content="http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png">
+<meta property="og:image" content="https://img-blog.csdn.net/20150706205350137">
+<meta property="og:updated_time" content="2018-05-03T15:59:21.615Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode|My code">
 <meta name="twitter:description" content="LeetCode 11 Container With Most Water（最大水容器） 题目大意：给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。画 n 条垂直线，使得垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。 注意：你不能倾斜容器，n 至少是2。 思路:用两个指针从">
+<meta name="twitter:image" content="http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -50,7 +53,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -93,16 +96,16 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-04-19T15:44:48.000Z" itemprop="datePublished"> 發表於 2018-04-19</time>
+    <time datetime="2018-04-19T15:44:48.000Z" itemprop="datePublished"> 发表于 2018-04-19</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目錄</strong>
+			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-11-Container-With-Most-Water（最大水容器）"><span class="toc-number">1.</span> <span class="toc-text">LeetCode 11 Container With Most Water（最大水容器） </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-144-Binary-Tree-Preorder-Traversal"><span class="toc-number">2.</span> <span class="toc-text">LeetCode 144 Binary Tree Preorder Traversal </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-94-Binary-Tree-Inorder-Traversal-中序遍历"><span class="toc-number">3.</span> <span class="toc-text">LeetCode 94 Binary Tree Inorder Traversal  中序遍历</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-145-Binary-Tree-Postorder-Traversal"><span class="toc-number">4.</span> <span class="toc-text">LeetCode 145 Binary Tree Postorder Traversal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-136-Single-NumberSingle-Number"><span class="toc-number">5.</span> <span class="toc-text">LeetCode 136 Single NumberSingle Number</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-137：Single-Number-II"><span class="toc-number">6.</span> <span class="toc-text">LeetCode 137：Single Number II</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-260-Single-Number-III"><span class="toc-number">7.</span> <span class="toc-text">LeetCode 260 Single Number III</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-78-Subsets"><span class="toc-number">8.</span> <span class="toc-text">LeetCode 78 Subsets</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-90-Subsets-II"><span class="toc-number">9.</span> <span class="toc-text">LeetCode 90 Subsets II</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-11-Container-With-Most-Water（最大水容器）"><span class="toc-number">1.</span> <span class="toc-text">LeetCode 11 Container With Most Water（最大水容器） </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-144-Binary-Tree-Preorder-Traversal"><span class="toc-number">2.</span> <span class="toc-text">LeetCode 144 Binary Tree Preorder Traversal </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-94-Binary-Tree-Inorder-Traversal-中序遍历"><span class="toc-number">3.</span> <span class="toc-text">LeetCode 94 Binary Tree Inorder Traversal  中序遍历</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-145-Binary-Tree-Postorder-Traversal"><span class="toc-number">4.</span> <span class="toc-text">LeetCode 145 Binary Tree Postorder Traversal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-136-Single-NumberSingle-Number"><span class="toc-number">5.</span> <span class="toc-text">LeetCode 136 Single NumberSingle Number</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-137：Single-Number-II"><span class="toc-number">6.</span> <span class="toc-text">LeetCode 137：Single Number II</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-260-Single-Number-III"><span class="toc-number">7.</span> <span class="toc-text">LeetCode 260 Single Number III</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-78-Subsets"><span class="toc-number">8.</span> <span class="toc-text">LeetCode 78 Subsets</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-90-Subsets-II"><span class="toc-number">9.</span> <span class="toc-text">LeetCode 90 Subsets II</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-17-Letter-Combinations-of-a-Phone-Number"><span class="toc-number">10.</span> <span class="toc-text">LeetCode 17 Letter Combinations of a Phone Number</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode-39-Combination-Sum"><span class="toc-number">11.</span> <span class="toc-text">LeetCode 39 Combination Sum</span></a></li></ol>
 		
 		</div>
 		
@@ -216,6 +219,22 @@
 <p>对于元素1，需要加入{}，成为新的集合{1}</p>
 <p>对于元素2，需要加入{}和{1}，成为新的集合{2}和{1,2}。考虑重复，再产生新集合{2,2}和{1,2,2}。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">public:</div><div class="line">    vector&lt;vector&lt;int&gt;&gt; subsetsWithDup(vector&lt;int&gt;&amp; nums) &#123;</div><div class="line">        vector&lt;vector&lt;int&gt; &gt; ret;</div><div class="line">        vector&lt;int&gt; empty;</div><div class="line">        ret.push_back(empty);</div><div class="line">        </div><div class="line">        sort(nums.begin(), nums.end());</div><div class="line">        unordered_map&lt;int, int&gt; count;</div><div class="line">        for(int i = 0; i &lt; nums.size(); i ++)</div><div class="line">            count[nums[i]] ++;</div><div class="line">        vector&lt;int&gt;::iterator iter = unique(nums.begin(), nums.end());</div><div class="line">        nums.erase(iter, nums.end());</div><div class="line">        for(int i = 0; i &lt; nums.size(); i ++)</div><div class="line">        &#123;</div><div class="line">            int size = ret.size();</div><div class="line">            for(int j = 0; j &lt; size; j ++)</div><div class="line">            &#123;</div><div class="line">                vector&lt;int&gt; newset = ret[j];</div><div class="line">                for(int k = 0; k &lt; count[nums[i]]; k ++)  //产生重复元素的集合 &#123;22&#125;</div><div class="line">                &#123;</div><div class="line">                    newset.push_back(nums[i]);</div><div class="line">                    ret.push_back(newset);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return ret;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="LeetCode-17-Letter-Combinations-of-a-Phone-Number"><a href="#LeetCode-17-Letter-Combinations-of-a-Phone-Number" class="headerlink" title="LeetCode 17 Letter Combinations of a Phone Number"></a><a href="https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/description/" target="_blank" rel="external">LeetCode 17 Letter Combinations of a Phone Number</a></h3><p>题目大意：给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。<br>给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。</p>
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png" alt="题目图片"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">示例:</div><div class="line"></div><div class="line">输入：&quot;23&quot;</div><div class="line">输出：[&quot;ad&quot;, &quot;ae&quot;, &quot;af&quot;, &quot;bd&quot;, &quot;be&quot;, &quot;bf&quot;, &quot;cd&quot;, &quot;ce&quot;, &quot;cf&quot;].</div></pre></td></tr></table></figure>
+<p>思路：经典的backtracking（回溯算法）的题目。当一个题目，存在各种满足条件的组合，并且需要把它们全部列出来时，就可以考虑backtracking了。当然，backtracking在一定程度上属于穷举，所以当数据特别大的时候，不合适。而对于那些题目，可能就需要通过动态规划来完成。</p>
+<p>这道题的思路很简单，假设输入的是”23”，2对应的是”abc”，3对应的是”edf”，那么我们在递归时，先确定2对应的其中一个字母（假设是a），然后进入下一层，穷举3对应的所有字母，并组合起来（”ae”，”ad”，”af”），当”edf”穷举完后，返回上一层，更新字母b，再重新进入下一层。这个就是backtracing的基本思想。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public List&lt;String&gt; letterCombinations(String digits) &#123;</div><div class="line">        //把table上的数字对应的字母列出来，当输入为2是，digits[2]就是2所对应的&quot;abc&quot;</div><div class="line">        String[] table = new String[] </div><div class="line">                             &#123;&quot;&quot;,&quot;&quot;,&quot;abc&quot;,&quot;def&quot;,&quot;ghi&quot;,&quot;jkl&quot;,&quot;mno&quot;,&quot;pqrs&quot;,&quot;tuv&quot;,&quot;wxyz&quot;&#125;;</div><div class="line">        List&lt;String&gt; list = new ArrayList&lt;String&gt;();</div><div class="line">        //index从0开始，即digits的第一个数字</div><div class="line">        letterCombinations(list,digits,&quot;&quot;,0,table);</div><div class="line">        return list;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    private void letterCombinations (List&lt;String&gt; list, String digits, </div><div class="line">                                    String curr, int index,String[] table) &#123;</div><div class="line">        //最后一层退出条件</div><div class="line">        if (index == digits.length()) &#123;</div><div class="line">            if(curr.length() != 0) list.add(curr);</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        //找到数字对应的字符串</div><div class="line">        String temp = table[digits.charAt(index) - &apos;0&apos;];</div><div class="line">        for (int i = 0; i &lt; temp.length(); i++) &#123;</div><div class="line">            //每次循环把不同字符串加到当前curr之后</div><div class="line">            String next = curr + temp.charAt(i);</div><div class="line">            //进入下一层</div><div class="line">            letterCombinations(list,digits,next,index+1,table);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="LeetCode-39-Combination-Sum"><a href="#LeetCode-39-Combination-Sum" class="headerlink" title="LeetCode 39 Combination Sum"></a><a href="https://leetcode-cn.com/problems/combination-sum/description/" target="_blank" rel="external">LeetCode 39 Combination Sum</a></h3><p>题目大意:给定一个无重复元素的数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。</p>
+<p>candidates 中的数字可以无限制重复被选取。</p>
+<p>说明：</p>
+<ul>
+<li>所有数字（包括 target）都是正整数。</li>
+<li>解集不能包含重复的组合。 </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">示例 1:</div><div class="line"></div><div class="line">输入: candidates = [2,3,6,7], target = 7,</div><div class="line">所求解集为:</div><div class="line">[</div><div class="line">  [7],</div><div class="line">  [2,2,3]</div><div class="line">]</div><div class="line"></div><div class="line">示例 2:</div><div class="line"></div><div class="line">输入: candidates = [2,3,5], target = 8,</div><div class="line">所求解集为:</div><div class="line">[</div><div class="line">  [2,2,2,2],</div><div class="line">  [2,3,3],</div><div class="line">  [3,5]</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>思路：使用回溯法，用vector记录路径，当找到合适的路径是就保存到结果中，同时进行回溯操作。对于输入candidates=[1,2] ，target=3，遍历的方向如图：<br><img src="https://img-blog.csdn.net/20150706205350137" alt="路径"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">public:</div><div class="line">    vector&lt;vector&lt;int&gt;&gt; combinationSum(vector&lt;int&gt;&amp; candidates, int target) &#123;</div><div class="line">        vector&lt;vector&lt;int&gt;&gt; result;</div><div class="line">        vector&lt;int&gt; path;</div><div class="line">        sort(candidates.begin(),candidates.end());</div><div class="line">        helper(candidates,0,0,target,path,result);</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">void helper(vector&lt;int&gt; &amp;nums,int pos,int base,int target,vector&lt;int&gt;&amp; path,vector&lt;vector&lt;int&gt;&gt; &amp; result)</div><div class="line">    &#123;</div><div class="line">        if(base==target)</div><div class="line">        &#123;</div><div class="line">            result.push_back(path);</div><div class="line">            return ;</div><div class="line">        &#125;</div><div class="line">        if(base&gt;target)</div><div class="line">            return ;</div><div class="line">        for(int i=pos;i&lt;nums.size();i++)</div><div class="line">        &#123;</div><div class="line">            path.push_back(nums[i]);</div><div class="line">            helper(nums,i,base+nums[i],target,path,result);</div><div class="line">            path.pop_back();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -263,10 +282,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -294,7 +313,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分類</p>
+	<p class="asidetitle">分类</p>
 		<ul>
 		
 		  
@@ -382,7 +401,7 @@
 		  
 		
 		  
-			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>2</sup></a></li>
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>3</sup></a></li>
 		  
 		
 		  
@@ -407,7 +426,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
 			
@@ -431,7 +450,7 @@
 			
 		
 			
-				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
 			
 		
 			
@@ -439,7 +458,7 @@
 			
 		
 			
-				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>3</sup></a></li>
 			
 		
 			
@@ -447,15 +466,15 @@
 			
 		
 			
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
 			
 		
 			
@@ -463,23 +482,15 @@
 			
 		
 			
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/干货/" title="干货">干货<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/动态规划/" title="动态规划">动态规划<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
 			
 		
 			
@@ -487,7 +498,15 @@
 			
 		
 			
-				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mysql/" title="Mysql">Mysql<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -495,7 +514,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
 </aside>
@@ -688,7 +707,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
