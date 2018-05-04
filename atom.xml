@@ -575,13 +575,14 @@ x[2] = 1;
     <link href="http://yoursite.com/2018/04/23/%E5%90%B4%E5%A4%9A%E6%99%BA-%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/"/>
     <id>http://yoursite.com/2018/04/23/吴多智-个人简历/</id>
     <published>2018-04-23T11:02:22.000Z</published>
-    <updated>2018-05-01T15:24:07.957Z</updated>
+    <updated>2018-05-04T15:22:55.234Z</updated>
     
     <content type="html"><![CDATA[<h3 id="个人信息"><a href="#个人信息" class="headerlink" title="个人信息"></a>个人信息</h3><ul>
 <li>吴多智</li>
-<li>Tel:130-9892-1645</li>
-<li>Email:wduozhi@gmail.com</li>
-<li>Blog:wuduozhi.me</li>
+<li>Tel: 130-9892-1645</li>
+<li>Email: wduozhi@gmail.com</li>
+<li>Github: <a href="https://github.com/wuduozhi" target="_blank" rel="external">https://github.com/wuduozhi</a></li>
+<li>Blog: wuduozhi.me</li>
 </ul>
 <hr>
 <h3 id="自我评价"><a href="#自我评价" class="headerlink" title="自我评价"></a>自我评价</h3><ul>
@@ -592,8 +593,8 @@ x[2] = 1;
 </ul>
 <hr>
 <h3 id="项目经历"><a href="#项目经历" class="headerlink" title="项目经历"></a>项目经历</h3><h4 id="内容分发平台-http-1000-hnu-edu-cn"><a href="#内容分发平台-http-1000-hnu-edu-cn" class="headerlink" title="内容分发平台  http://1000.hnu.edu.cn"></a>内容分发平台  <a href="http://1000.hnu.edu.cn" target="_blank" rel="external">http://1000.hnu.edu.cn</a></h4><ul>
-<li>学校通知、活动等内容分发平台，类似学校的门户网站。项目采用mvc架构，前后端完全分离，后端使用PHP的CI框架，前端使用Vue，用json进行数据交互</li>
-<li>自己负责后台逻辑的开发，熟练掌握了CI框架的使用，掌握对Mysql数据库的使用，理解RESTFul API接口的设计规范，加深了对MVC思想的理解</li>
+<li>学校通知、活动等内容分发平台，类似学校的门户网站。项目采用mvc架构，前后端完全分离，后端使用PHP的CI框架，前端使用Vue，用RESTFul API接口进行数据交互</li>
+<li>自己负责后台逻辑的开发，熟练掌握了CI框架的使用，掌握对Mysql数据库的使用，理解RESTFul API接口的设计规范，加深了对MVC架构的理解</li>
 </ul>
 <h4 id="微信公众号后台开发"><a href="#微信公众号后台开发" class="headerlink" title="微信公众号后台开发"></a>微信公众号后台开发</h4><ul>
 <li>学校网络工作室的微信公众号，负责原创内容的分发和集成一些功能，如成绩查询、课表查询…后台使用PHP的微框架Slim+Medoo，Slim负责处理请求的相应，Medoo负责数据库的处理，前端使用jQuery，用RESTFul API接口进行数据交互</li>
@@ -626,8 +627,8 @@ x[2] = 1;
     
       &lt;h3 id=&quot;个人信息&quot;&gt;&lt;a href=&quot;#个人信息&quot; class=&quot;headerlink&quot; title=&quot;个人信息&quot;&gt;&lt;/a&gt;个人信息&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;吴多智&lt;/li&gt;
-&lt;li&gt;Tel:130-9892-1645&lt;/li&gt;
-&lt;li&gt;Email:wduozhi@gm
+&lt;li&gt;Tel: 130-9892-1645&lt;/li&gt;
+&lt;li&gt;Email: wduozhi@
     
     </summary>
     
@@ -882,11 +883,11 @@ Output completed (0 sec consumed) - Normal Termination
     <link href="http://yoursite.com/2018/04/19/LeetCode-%D5%BB-My-code/"/>
     <id>http://yoursite.com/2018/04/19/LeetCode-ջ-My-code/</id>
     <published>2018-04-19T15:44:48.000Z</published>
-    <updated>2018-05-04T15:09:51.017Z</updated>
+    <updated>2018-05-04T15:26:17.117Z</updated>
     
     <content type="html"><![CDATA[<h3 id="LeetCode-11-Container-With-Most-Water（最大水容器）"><a href="#LeetCode-11-Container-With-Most-Water（最大水容器）" class="headerlink" title="LeetCode 11 Container With Most Water（最大水容器） "></a><a href="https://leetcode-cn.com/problems/container-with-most-water/description/" target="_blank" rel="external">LeetCode 11 Container With Most Water（最大水容器） </a></h3><p>题目大意：给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。画 n 条垂直线，使得垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。</p>
 <p>注意：你不能倾斜容器，n 至少是2。</p>
-<p>思路:用两个指针从两端开始向中间靠拢，如果左端线段短于右端，那么左端右移，反之右端左移，只到左右两端移到中间重合，记录这个过程中每一次组成木桶的容积，保留其中最大的。因为当左端线段L小于右端线段R时，我们把L右移，右移到下一个比当前线段大的线段处，这时舍弃的是R与左端其他线段（L+1,L+2, …）组成的木桶，这些木桶是没必要判断的，因为这些木桶的容积肯定都没有L和R组成的木桶容积大。</p>
+<p>思路:用两个指针从两端开始向中间靠拢，如果左端线段短于右端，那么左端右移，反之右端左移，直到左右两端移到中间重合，记录这个过程中每一次组成木桶的容积，保留其中最大的。因为当左端线段L小于右端线段R时，我们把L右移，右移到下一个比当前线段大的线段处，这时舍弃的是R与左端其他线段（L+1,L+2, …）组成的木桶，这些木桶是没必要判断的，因为这些木桶的容积肯定都没有L和R组成的木桶容积大。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">public:</div><div class="line">    int maxArea(vector&lt;int&gt;&amp; height) &#123;</div><div class="line">        int area = 0;</div><div class="line">        int length = height.size();</div><div class="line">        int l=0,r=length-1;</div><div class="line">        int left = height[0],right = height[length-1];</div><div class="line">        while(l&lt;r)&#123;</div><div class="line">            int tmp=0;</div><div class="line">            if(left&lt;right)&#123;</div><div class="line">               tmp = left*(r-l);</div><div class="line">                while(height[l]&lt;=left)&#123;</div><div class="line">                    l++;</div><div class="line">                &#125;</div><div class="line">                left = height[l];</div><div class="line">            &#125;else&#123;</div><div class="line">                tmp = right*(r-l);</div><div class="line">                while(height[r]&lt;=right)&#123;</div><div class="line">                    r--;</div><div class="line">                &#125;</div><div class="line">                right = height[r];</div><div class="line">            &#125;</div><div class="line">            if(area&lt;tmp)&#123;</div><div class="line">                area = tmp;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return area;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h3 id="LeetCode-144-Binary-Tree-Preorder-Traversal"><a href="#LeetCode-144-Binary-Tree-Preorder-Traversal" class="headerlink" title="LeetCode 144 Binary Tree Preorder Traversal "></a><a href="https://leetcode-cn.com/problems/binary-tree-preorder-traversal/description/" target="_blank" rel="external">LeetCode 144 Binary Tree Preorder Traversal </a></h3><p>题目大意：给定一个二叉树，返回它的 前序 遍历。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">示例:</div><div class="line"></div><div class="line">输入: [1,null,2,3]  </div><div class="line">   1</div><div class="line">    \</div><div class="line">     2</div><div class="line">    /</div><div class="line">   3 </div><div class="line"></div><div class="line">输出: [1,2,3]</div><div class="line"></div><div class="line">进阶: 递归算法很简单，你可以通过迭代算法完成吗？</div></pre></td></tr></table></figure></p>
 <p>思路：题目要求对二叉树进行非递归的前序遍历，所谓前序遍历即，先访问根节点、再访问左子树、然后是右子树。通常采用递归的方法，题目要求采用非递归的方法实现。算法如下：</p>
