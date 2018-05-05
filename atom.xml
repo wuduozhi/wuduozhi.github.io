@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-03T16:38:43.022Z</updated>
+  <updated>2018-05-05T13:13:58.093Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,140 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>深入理解计算机系统|汇编的世界-2</title>
+    <link href="http://yoursite.com/2018/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E6%B1%87%E7%BC%96%E7%9A%84%E4%B8%96%E7%95%8C-2/"/>
+    <id>http://yoursite.com/2018/05/06/深入理解计算机系统-汇编的世界-2/</id>
+    <published>2018-05-05T20:47:06.000Z</published>
+    <updated>2018-05-05T13:13:58.093Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="数据传送指令"><a href="#数据传送指令" class="headerlink" title="数据传送指令"></a>数据传送指令</h3><p>据传送指令的目的是为了将一个数据从一个位置复制到另外一个位置。既然如此，那么数据传送指令就会包含一个源操作数和一个目的操作数，指令会将原操作数的值复制到目的操作数并覆盖。</p>
+<p>数据传送指令一共可分为五种，分别是<code>mov</code>、<code>movs</code>、<code>movz</code>、<code>push</code>以及<code>pop</code>。</p>
+<h3 id="mov指令"><a href="#mov指令" class="headerlink" title="mov指令"></a>mov指令</h3><p>mov指令的作用是将源操作数S中的数据复制到目的操作数D中，mov指令有一个数据格式和两个操作数，因此一般的形式为[movx S D]。其中x为数据格式，S为源操作数，D为目的操作数。</p>
+<p>这里举一个简单的例子，比如我们有一条指令为<code>movl %edx %eax</code>。那么它的执行过程就如下图所示。</p>
+<p><img src="/images/汇编-06.png" alt="mov指令"></p>
+<p>可以看到，在指令执行之后，%edx寄存器当中的内容会被复制到%eax寄存器。需要一提的是，mov指令可以在后面加上任何数据格式，比如上面这一过程中，数据格式则为四个字节，也就是双字。因此不难推断出，我们还可以使用movb和movw去复制一个字节或者两个字节。</p>
+<h3 id="movs指令"><a href="#movs指令" class="headerlink" title="movs指令"></a>movs指令</h3><p>movs指令的作用是将源操作数S中的数据做符号扩展后，再复制到目的操作数D中，movs指令有两个数据格式和两个操作数，因此一般的形式为[movsxy S D]。其中x、y为数据格式，S为源操作数，D为目的操作数。其中x、y的组合一共有三种，分别是bw、bl、wl，这三个组合代表的意思分别是单字节到双字节，单字节到双字以及双字节到双字。</p>
+<p>对于指令<code>movswl %dx %eax</code>来讲，它的作用如下图所示。</p>
+<p><img src="/images/汇编-07.png" alt="movs指令"></p>
+<p>这里为了可以看出符号位的扩展，因此LZ这里使用了十六进制的整数表示方式。可以看到，movs指令将0x8FFF扩展以后存入%eax寄存器，其中%dx为寄存器%edx的后16位表示。</p>
+<h3 id="movz指令"><a href="#movz指令" class="headerlink" title="movz指令"></a>movz指令</h3><p>movz指令的作用是将源操作数S做零扩展后，再复制到目的操作数中。它与movs指令十分相似，也有两个数据格式和两个操作数，因此一般的形式为[movzxy S D]。其中x、y为数据格式，S为源操作数，D为目的操作数。其中x、y的组合一共有三种，分别是bw、bl、wl，这三个组合代表的意思分别是单字节到双字节，单字节到双字以及双字节到双字。</p>
+<p>这里依然采用相似的示例，我们来看看对于指令<code>movzwl %dx %eax</code>来讲，它的作用与上面的movs有何不同。</p>
+<p><img src="/images/汇编-08.png" alt="movz指令"></p>
+<p>可以看出，movz与movs指令是十分相似的，只是这里扩展后，目标寄存器%eax的前16位为0而不再是1。</p>
+<h3 id="push指令"><a href="#push指令" class="headerlink" title="push指令"></a>push指令</h3><p>push指令与上面的mov族指令有着不同，它的目的操作数被固定为栈顶，因此它的指令当中没有目的操作数。另外有一点需要注意的是，它在进行复制操作之前，需要移动栈顶指针（-4）。push指令的一般形式为[pushl S]，其中l代表数据格式为双字，S为源操作数，目的操作数默认为栈顶。</p>
+<p>这里举一个简单的例子，比如<code>pushl %edx</code>这条命令，它的任务是将%edx寄存器的值复制到栈顶。我们首先来看一下命令执行前，寄存器以及存储器的状态。</p>
+<p><img src="/images/汇编-09.png" alt="push指令"></p>
+<p>可以看到，寄存器%ebp和%esp分别指向帧指针和栈指针，而%esp实际上就是指向的栈顶。由于现在栈顶位于-16的位置，因此若要将%edx压入栈，则先需要将栈顶移动到-20的位置，然后再进行复制，移动后的状态如下图所示。</p>
+<p><img src="/images/汇编-10.png" alt="push指令"></p>
+<p>可以看到，这里栈指针的位置已经发生了变化，向下移动了四位，并且将%edx寄存器的值放入新的栈顶，因此pushl %edx指令就相当于下面两条指令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">subl $4,%esp</div><div class="line">movl %edx,(%esp)</div></pre></td></tr></table></figure></p>
+<p>###pop指令</p>
+<p>pop指令与push指令是做的相反的操作，一个是入栈一个是出栈。对于pop指令来讲，它的源操作数被固定为栈顶，相反，它会先进行复制操作，然后再移动栈指针。pop指令的一般形式为[popl D]，其中l代表数据格式为双字，D为目的操作数，源操作数默认为栈顶。</p>
+<p>接下来我们举一个例子，与上面的例子类似，我们考虑<code>popl %edx</code>这条指令的效果，它会将栈顶的值弹出到寄存器%edx。首先来看执行之前，寄存器以及存储器的状态。</p>
+<p><img src="/images/汇编-11.png" alt="ppo指令"></p>
+<p>接下来执行pop指令时，会先将栈顶的值复制到%edx，然后再将栈指针移动（+4）。我们来看一下它执行后的状态。</p>
+<p><img src="/images/汇编-12.png" alt="ppo指令"></p>
+<p>可以看到，之前栈顶的内容已经被弹出到%edx寄存器，并且当前栈顶已经移动到了-16的位置，也就是进行了+4操作。因此popl %edx指令就相当于下面两条指令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">movl (%esp),%edx</div><div class="line">addl $4,%esp</div></pre></td></tr></table></figure></p>
+<p><a href="http://www.cnblogs.com/zuoxiaolong/p/computer15.html" target="_blank" rel="external">深入理解计算机系统（3.3）—数据传送（或者说复制）指令详解</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;数据传送指令&quot;&gt;&lt;a href=&quot;#数据传送指令&quot; class=&quot;headerlink&quot; title=&quot;数据传送指令&quot;&gt;&lt;/a&gt;数据传送指令&lt;/h3&gt;&lt;p&gt;据传送指令的目的是为了将一个数据从一个位置复制到另外一个位置。既然如此，那么数据传送指令就会包含一个源操作数
+    
+    </summary>
+    
+      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>深入理解计算机系统|汇编的世界-1</title>
+    <link href="http://yoursite.com/2018/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E6%B1%87%E7%BC%96%E7%9A%84%E4%B8%96%E7%95%8C-1/"/>
+    <id>http://yoursite.com/2018/05/06/深入理解计算机系统-汇编的世界-1/</id>
+    <published>2018-05-05T20:38:21.000Z</published>
+    <updated>2018-05-05T12:46:53.667Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="汇编层次的对象"><a href="#汇编层次的对象" class="headerlink" title="汇编层次的对象"></a>汇编层次的对象</h3><p>在平时的开发过程中，CPU处理器的状态对开发者是隐藏的，我们看不到CPU当中各个对象的状态。但是在汇编语言中，我们可以清楚的看到这些对象的状态，其中CPU主要包含以下几个对象。</p>
+<ul>
+<li>程序计数器（PC）：记录下一条指令的地址。</li>
+<li>整数寄存器文件：共8个，可以存储一些地址或者整数的数据。</li>
+<li>条件寄存器：保存算数或逻辑指令的状态信息，可以实现程序的流程控制。</li>
+<li>浮点寄存器：存储浮点数。</li>
+</ul>
+<p>　　可以看出，这些都是CPU处理器当中的对象，这是汇编层面能操作的寄存器，当然，还有一节寄存器是我们不能操作的，比如说时钟寄存器。</p>
+<h3 id="操作数指示符"><a href="#操作数指示符" class="headerlink" title="操作数指示符"></a>操作数指示符</h3><p>在汇编指令中，有三种表示数据的格式：</p>
+<ul>
+<li>一种是$符号后跟一个标准C表示的整数，比如$100，$0x11等等</li>
+<li>第二种则是寄存器，当它作为一个操作数的时候，则是取的寄存器当中的数值。另外，对于寄存器来说，也可以选择性的操作4个、2个、1个字节，而并不一定非要操作4个字节</li>
+<li>最后一种，则是我们相对来说最熟悉的，就是存储器或者说内存。当它作为一个操作数的时候，会去计算存储器地址的数值，然后去这个地址取相应的数值。</li>
+</ul>
+<p><img src="/images/汇编-05.png" alt="数据格式"></p>
+<p>第一列是代表的类型，而第一行则是指的立即数，第二行则是指的寄存器，而剩下的都是存储器了。对于立即数和寄存器来讲，比较好理解，就是直接取值或者取寄存器的值。而对于存储器来讲，则有很多种情况，不过我们也可以看出，上面所有的情况，其实都是最后一种的特殊情况。Imm(Eb,Ei,s)是存储器取值的一般形式，比如当Imm为0时，则是倒数第二种取值方式。对于其它的形式，也可以使用同样的方式推算出来。</p>
+<p><a href="http://www.cnblogs.com/zuoxiaolong/p/computer14.html" target="_blank" rel="external">深入理解计算机系统（3.2）—数据格式、访问信息以及操作数指示符</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;汇编层次的对象&quot;&gt;&lt;a href=&quot;#汇编层次的对象&quot; class=&quot;headerlink&quot; title=&quot;汇编层次的对象&quot;&gt;&lt;/a&gt;汇编层次的对象&lt;/h3&gt;&lt;p&gt;在平时的开发过程中，CPU处理器的状态对开发者是隐藏的，我们看不到CPU当中各个对象的状态。但是在汇
+    
+    </summary>
+    
+      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>深入理解计算机系统|走进汇编的世界</title>
+    <link href="http://yoursite.com/2018/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%B5%B0%E8%BF%9B%E6%B1%87%E7%BC%96%E7%9A%84%E4%B8%96%E7%95%8C/"/>
+    <id>http://yoursite.com/2018/05/06/深入理解计算机系统-走进汇编的世界/</id>
+    <published>2018-05-05T20:03:58.000Z</published>
+    <updated>2018-05-05T12:36:59.063Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>计算机真正能够理解的是低级语言，它专门用来控制硬件。汇编语言就是低级语言，直接描述/控制 CPU 的运行。如果你想了解 CPU 到底干了些什么，以及代码的运行步骤，就一定要学习汇编语言。</p>
+<h3 id="What"><a href="#What" class="headerlink" title="What"></a>What</h3><p>我们知道，CPU 只负责计算，本身不具备智能。你输入一条指令（instruction），它就运行一次，然后停下来，等待下一条指令。</p>
+<p>这些指令都是二进制的，称为操作码（opcode），比如加法指令就是00000011。编译器的作用，就是将高级语言写好的程序，翻译成一条条操作码。</p>
+<p>对于人类来说，二进制程序是不可读的，根本看不出来机器干了什么。为了解决可读性的问题，以及偶尔的编辑需求，就诞生了汇编语言。</p>
+<p>汇编语言是二进制指令的文本形式，与指令是一一对应的关系。比如，加法指令00000011写成汇编语言就是 ADD。只要还原成二进制，汇编语言就可以被 CPU 直接执行，所以它是最底层的低级语言。</p>
+<h3 id="初次体会汇编"><a href="#初次体会汇编" class="headerlink" title="初次体会汇编"></a>初次体会汇编</h3><p>在编译一段C语言程序的过程中，其实做了很多步骤，比如预编译处理、编译处理、汇编处理以及链接处理。我们要了解的汇编语言，就是在编译处理后的产物。因此我们可以在GCC的编译器当中加入一些参数来控制它只生成汇编语言，而不进行汇编处理和链接处理。</p>
+<p>我们看下面这一段简单的C语言代码，假设为sum.c。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">int simple(int *xp,int y)&#123;</div><div class="line">    int t = *xp+y;</div><div class="line">    *xp=t;</div><div class="line">    return t;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们使用GCC编译器加-S参数来编译这段代码，最终我们可以得到一个sum.s的文件，我们使用cat来查看一下这个文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">.file    &quot;sum.c&quot;</div><div class="line">    .text</div><div class="line">.globl simple</div><div class="line">    .type    simple, @function</div><div class="line">simple:</div><div class="line">    pushl    %ebp</div><div class="line">    movl    %esp, %ebp</div><div class="line">    subl    $16, %esp</div><div class="line">    movl    8(%ebp), %eax//这一步是从主存取变量xp</div><div class="line">    movl    (%eax), %eax//取*xp的值</div><div class="line">    addl    12(%ebp), %eax//计算*xp+y，并存到%eax寄存器</div><div class="line">    movl    %eax, -4(%ebp)//将*xp+y赋给变量t</div><div class="line">    movl    8(%ebp), %eax//再取xp</div><div class="line">    movl    -4(%ebp), %edx//取t</div><div class="line">    movl    %edx, (%eax)//执行t-&gt;*xp</div><div class="line">    movl    -4(%ebp), %eax//将t放入%eax准备返回</div><div class="line">    leave</div><div class="line">    ret</div><div class="line">    .size    simple, .-simple</div><div class="line">    .ident    &quot;GCC: (Ubuntu 4.4.3-4ubuntu5.1) 4.4.3&quot;</div><div class="line">    .section    .note.GNU-stack,&quot;&quot;,@progbits</div></pre></td></tr></table></figure></p>
+<p>有些人可能会惊讶，为什么我们的源代码只有短短的三行，但是汇编的代码却有这么多行。这是很正常的，汇编指令能做的事情是很简单的，比如我们的加法运算，我们需要去内存中找到操作数，把内存中的操作数存在寄存器中，然后在进行加法运算。</p>
+<h3 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h3><p>学习汇编语言，首先必须了解两个知识点：寄存器和内存模型。</p>
+<p>先来看寄存器。CPU 本身只负责运算，不负责储存数据。数据一般都储存在内存之中，CPU 要用的时候就去内存读写数据。但是，CPU 的运算速度远高于内存的读写速度，为了避免被拖慢，CPU 都自带一级缓存和二级缓存。基本上，CPU 缓存可以看作是读写速度较快的内存。</p>
+<p>但是，CPU 缓存还是不够快，另外数据在缓存里面的地址是不固定的，CPU 每次读写都要寻址也会拖慢速度。因此，除了缓存之外，CPU 还自带了寄存器（register），用来储存最常用的数据。也就是说，那些最频繁读写的数据（比如循环变量），都会放在寄存器里面，CPU 优先读写寄存器，再由寄存器跟内存交换数据。</p>
+<p>寄存器不依靠地址区分数据，而依靠名称。每一个寄存器都有自己的名称，我们告诉 CPU 去具体的哪一个寄存器拿数据，这样的速度是最快的。有人比喻寄存器是 CPU 的零级缓存。</p>
+<p><img src="/images/汇编-04.png" alt="寄存器"></p>
+<h3 id="内存模型：Heap"><a href="#内存模型：Heap" class="headerlink" title="内存模型：Heap"></a>内存模型：Heap</h3><p>寄存器只能存放很少量的数据，大多数时候，CPU 要指挥寄存器，直接跟内存交换数据。所以，除了寄存器，还必须了解内存怎么储存数据。</p>
+<p>程序运行的时候，操作系统会给它分配一段内存，用来储存程序和运行产生的数据。这段内存有起始地址和结束地址，比如从0x1000到0x8000，起始地址是较小的那个地址，结束地址是较大的那个地址</p>
+<p><img src="/images/汇编-03.png" alt="内存模型"></p>
+<p>程序运行过程中，对于动态的内存占用请求（比如新建对象，或者使用malloc命令），系统就会从预先分配好的那段内存之中，划出一部分给用户，具体规则是从起始地址开始划分（实际上，起始地址会有一段静态数据，这里忽略）。举例来说，用户要求得到10个字节内存，那么从起始地址0x1000开始给他分配，一直分配到地址0x100A，如果再要求得到22个字节，那么就分配到0x1020。</p>
+<p><img src="/images/汇编-01.png" alt="内存模型"></p>
+<p>这种因为用户主动请求而划分出来的内存区域，叫做 Heap（堆）。它由起始地址开始，从低位（地址）向高位（地址）增长。Heap 的一个重要特点就是不会自动消失，必须手动释放，或者由垃圾回收机制来回收。</p>
+<h3 id="内存模型：Stack"><a href="#内存模型：Stack" class="headerlink" title="内存模型：Stack"></a>内存模型：Stack</h3><p>除了 Heap 以外，其他的内存占用叫做 Stack（栈）。简单说，Stack 是由于函数运行而临时占用的内存区域。这里所说的栈与数据结构里的栈的思想是一样的，数据的操作都是<code>后进先出</code>。为什么这样呢，栈是为函数调用服务的，最后调用的函数进栈，哪当然是最后调用的函数先执行完，然后释放其占用的空间。<br><img src="/images/汇编-02.png" alt="Stack模型"></p>
+<p><a href="http://www.ruanyifeng.com/blog/2018/01/assembly-language-primer.html" target="_blank" rel="external">汇编语言入门教程</a><br><a href="http://www.ruanyifeng.com/blog/2018/01/assembly-language-primer.html" target="_blank" rel="external">深入理解计算机系统（3.1）—走进汇编的世界</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;计算机真正能够理解的是低级语言，它专门用来控制硬件。汇编语言就是低级语言，直接描述/控制 CPU 的运行。如果你想了解 CPU 到底干了些什
+    
+    </summary>
+    
+      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>计算机算法|回溯法</title>
@@ -883,7 +1017,7 @@ Output completed (0 sec consumed) - Normal Termination
     <link href="http://yoursite.com/2018/04/19/LeetCode-%D5%BB-My-code/"/>
     <id>http://yoursite.com/2018/04/19/LeetCode-ջ-My-code/</id>
     <published>2018-04-19T15:44:48.000Z</published>
-    <updated>2018-05-04T16:44:56.104Z</updated>
+    <updated>2018-05-05T07:56:16.816Z</updated>
     
     <content type="html"><![CDATA[<h3 id="LeetCode-11-Container-With-Most-Water（最大水容器）"><a href="#LeetCode-11-Container-With-Most-Water（最大水容器）" class="headerlink" title="LeetCode 11 Container With Most Water（最大水容器） "></a><a href="https://leetcode-cn.com/problems/container-with-most-water/description/" target="_blank" rel="external">LeetCode 11 Container With Most Water（最大水容器） </a></h3><p>题目大意：给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。画 n 条垂直线，使得垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。</p>
 <p>注意：你不能倾斜容器，n 至少是2。</p>
@@ -1063,6 +1197,11 @@ Output completed (0 sec consumed) - Normal Termination
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;  </div><div class="line">public:  </div><div class="line">    int maxSubArray(vector&lt;int&gt;&amp; nums) &#123;  </div><div class="line">        vector&lt;int&gt;dp(nums.size());  </div><div class="line">        int result = nums[0];  </div><div class="line">        dp[0]=nums[0];  </div><div class="line">        for (int i = 1; i &lt; nums.size(); i++)  </div><div class="line">        &#123;  </div><div class="line">            dp[i] = max(dp[i - 1] + nums[i], nums[i]);  </div><div class="line">            if (result &lt; dp[i])  </div><div class="line">                result = dp[i];  </div><div class="line">        &#125;  </div><div class="line">        return result;  </div><div class="line">    &#125;  </div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>可以简单优化一下：因为递推式只用到了后一项，所以在编码实现的时候可以进行状态压缩，用一个变量即可，即不需要开一个数组了。</p>
 <p>时间复杂度O(n)，空间复杂度O(1)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;  </div><div class="line">public:  </div><div class="line">    int maxSubArray(vector&lt;int&gt;&amp; nums) &#123;    </div><div class="line">        int ans = 0,res = INT_MIN;</div><div class="line">        int len = nums.size();</div><div class="line">        for(int i=0;i&lt;len;i++)&#123;</div><div class="line">            if(ans&lt;0) ans = 0;</div><div class="line">            ans += nums[i];</div><div class="line">            res = max(ans,res);</div><div class="line">        &#125;</div><div class="line">    &#125;    </div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h3 id="Leetcode-46-Permutations-全排列"><a href="#Leetcode-46-Permutations-全排列" class="headerlink" title="Leetcode 46 Permutations 全排列"></a><a href="https://leetcode-cn.com/problems/permutations/description/" target="_blank" rel="external">Leetcode 46 Permutations 全排列</a></h3><p>题目大意：给定一个没有重复数字的序列，返回其所有可能的全排列。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">示例:</div><div class="line"></div><div class="line">输入: [1,2,3]</div><div class="line">输出:</div><div class="line">[</div><div class="line">  [1,2,3],</div><div class="line">  [1,3,2],</div><div class="line">  [2,1,3],</div><div class="line">  [2,3,1],</div><div class="line">  [3,1,2],</div><div class="line">  [3,2,1]</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>思路：选择用：dfs+回溯（思路是深搜每个元素，选择，直到树的底部，如果满足条件放入结果，返回，回溯）</p>
+<p>排列用：递归+交换（思路是对n个元素的数组想象成n层的树，全排列，每个元素都要到第i层去，所以枚举每一层，然后让每个元素都来这一层。每一层是一个递归，在递归里面用for循环让每个元素都来一次本层）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">public:</div><div class="line">    vector&lt;vector&lt;int&gt;&gt; permute(vector&lt;int&gt;&amp; nums) &#123;</div><div class="line">        vector&lt;vector&lt;int&gt;&gt; result;</div><div class="line">        helper(nums,0,result);</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    void helper(vector&lt;int&gt;&amp; nums,int pos,vector&lt;vector&lt;int&gt;&gt;&amp; result)&#123;</div><div class="line">    	if(pos == nums.size())&#123;</div><div class="line">    		result.push_back(nums);</div><div class="line">            return;</div><div class="line">    	&#125;</div><div class="line"></div><div class="line">    	int length = nums.size();</div><div class="line">    	for(int i=pos;i&lt;length;++i)&#123;</div><div class="line">    		swap(nums,pos,i);</div><div class="line">    		helper(nums,pos+1,result);</div><div class="line">    		swap(nums,i,pos);</div><div class="line">    	&#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    void swap(vector&lt;int&gt;&amp; nums, int i, int j) &#123;</div><div class="line">        int temp = nums[i];</div><div class="line">        nums[i] = nums[j];</div><div class="line">        nums[j]  = temp;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 ]]></content>
     
     <summary type="html">
@@ -1721,83 +1860,6 @@ tex2jax: {inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]]
     
     
       <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>计算机算法|我的学习之路</title>
-    <link href="http://yoursite.com/2018/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95-%E6%88%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/"/>
-    <id>http://yoursite.com/2018/04/12/计算机算法-我的学习之路/</id>
-    <published>2018-04-12T00:23:58.000Z</published>
-    <updated>2018-05-04T01:12:18.748Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>自己作为一名大二的准CS本科生，正在学习计算机算法这门课，但由于学校开设的课不咋地，同时自己又深知算法的重要性，只能自己另寻出路了。</p>
-<h3 id="My-Way"><a href="#My-Way" class="headerlink" title="My Way"></a>My Way</h3><p><a href="http://open.163.com/special/opencourse/algorithms.html" target="_blank" rel="external">网易云-麻省理工公开课</a><br><a href="https://www.bilibili.com/video/av13229392/" target="_blank" rel="external">bliblili-斯坦福公开课</a><br><a href="https://www.coursera.org/specializations/algorithms" target="_blank" rel="external">coursera</a></p>
-<p><a href="https://www.nowcoder.com/live/2" target="_blank" rel="external">牛课堂算法精讲直播讲座（2015）_牛客网</a><br><a href="https://www.nowcoder.com/live/11" target="_blank" rel="external">牛课堂算法精讲直播讲座（2016）_牛客网</a></p>
-<p><a href="https://github.com/zhuxiuwei/CLRS" target="_blank" rel="external">CLRS第三版答案</a><br><a href="https://github.com/gzc/CLRS" target="_blank" rel="external">CLRS第三版答案</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;自己作为一名大二的准CS本科生，正在学习计算机算法这门课，但由于学校开设的课不咋地，同时自己又深知算法的重要性，只能自己另寻出路了。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="计算机算法" scheme="http://yoursite.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="计算机算法" scheme="http://yoursite.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深入理解计算机系统|我的学习之路</title>
-    <link href="http://yoursite.com/2018/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E6%88%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/"/>
-    <id>http://yoursite.com/2018/04/11/深入理解计算机系统-我的学习之路/</id>
-    <published>2018-04-11T11:43:41.000Z</published>
-    <updated>2018-04-28T01:55:09.747Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>自己作为一名大二的准CS本科生，正在学习深入学习计算机系统这门课，但由于学校开设的课不咋地，同时自己又深知底层知识的重要性，只能自己另寻出路了。</p>
-<h3 id="My-Way"><a href="#My-Way" class="headerlink" title="My Way"></a>My Way</h3><p><a href="http://www.cnblogs.com/zuoxiaolong/category/518480.html" target="_blank" rel="external">博客教程</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;自己作为一名大二的准CS本科生，正在学习深入学习计算机系统这门课，但由于学校开设的课不咋地，同时自己又深知底层知识的重要性，只能自己另寻出路
-    
-    </summary>
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>操作系统|我的学习之路</title>
-    <link href="http://yoursite.com/2018/04/11/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E6%88%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/"/>
-    <id>http://yoursite.com/2018/04/11/操作系统-我的学习之路/</id>
-    <published>2018-04-11T10:20:12.000Z</published>
-    <updated>2018-04-11T03:22:06.058Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>自己作为一名大二的准CS本科生，正在学习操作系统这门课，但由于学校开设的课不咋地，同时自己又深知操作系统的重要性，只能自己另寻出路了。</p>
-<h3 id="学习之路"><a href="#学习之路" class="headerlink" title="学习之路"></a>学习之路</h3><p>幸运的是自己生在互联网的时代，自己淘到了哈工大的李治军老师主讲的公开课，棒棒的。</p>
-<p>课程视频资料:</p>
-<p><a href="http://mooc.study.163.com/course/1000002004?tid=1000002003#/info" target="_blank" rel="external">操作系统之基础</a><br><a href="http://mooc.study.163.com/course/1000002008?tid=1000003004#/info" target="_blank" rel="external">操作系统之进程与线程</a><br><a href="http://mooc.study.163.com/course/1000003007?tid=1000003005#/info" target="_blank" rel="external">操作系统之内存管理</a><br><a href="http://mooc.study.163.com/course/1000002009?tid=1000002008#/info" target="_blank" rel="external">操作系统之外设与文件系统</a></p>
-<p>哈工大课程实验配套资料:<br><a href="https://www.jianshu.com/p/01774f28b401" target="_blank" rel="external">写在实验之前</a><br><a href="https://github.com/DeathKing/hit-oslab" target="_blank" rel="external">GItHub环境仓库</a><br><a href="https://github.com/hoverwinter/HIT-OSLab" target="_blank" rel="external">GitHub代码</a><br><a href="https://www.kancloud.cn/digest/os-experiment/120076" target="_blank" rel="external">看云实验手册</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;自己作为一名大二的准CS本科生，正在学习操作系统这门课，但由于学校开设的课不咋地，同时自己又深知操作系统的重要性，只能自己另寻出路了。&lt;/p
-    
-    </summary>
-    
-      <category term="操作系统" scheme="http://yoursite.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="操作系统" scheme="http://yoursite.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   

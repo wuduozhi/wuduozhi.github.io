@@ -1,0 +1,673 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>深入理解计算机系统|汇编的世界-2 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="数据传送指令据传送指令的目的是为了将一个数据从一个位置复制到另外一个位置。既然如此，那么数据传送指令就会包含一个源操作数和一个目的操作数，指令会将原操作数的值复制到目的操作数并覆盖。 数据传送指令一共可分为五种，分别是mov、movs、movz、push以及pop。 mov指令mov指令的作用是将源操作数S中的数据复制到目的操作数D中，mov指令有一个数据格式和两个操作数，因此一般的形式为[mov">
+<meta name="keywords" content="深入理解计算机系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解计算机系统|汇编的世界-2">
+<meta property="og:url" content="http://yoursite.com/2018/05/06/深入理解计算机系统-汇编的世界-2/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="数据传送指令据传送指令的目的是为了将一个数据从一个位置复制到另外一个位置。既然如此，那么数据传送指令就会包含一个源操作数和一个目的操作数，指令会将原操作数的值复制到目的操作数并覆盖。 数据传送指令一共可分为五种，分别是mov、movs、movz、push以及pop。 mov指令mov指令的作用是将源操作数S中的数据复制到目的操作数D中，mov指令有一个数据格式和两个操作数，因此一般的形式为[mov">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/images/汇编-06.png">
+<meta property="og:image" content="http://yoursite.com/images/汇编-07.png">
+<meta property="og:image" content="http://yoursite.com/images/汇编-08.png">
+<meta property="og:image" content="http://yoursite.com/images/汇编-09.png">
+<meta property="og:image" content="http://yoursite.com/images/汇编-10.png">
+<meta property="og:image" content="http://yoursite.com/images/汇编-11.png">
+<meta property="og:image" content="http://yoursite.com/images/汇编-12.png">
+<meta property="og:updated_time" content="2018-05-05T13:13:58.093Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入理解计算机系统|汇编的世界-2">
+<meta name="twitter:description" content="数据传送指令据传送指令的目的是为了将一个数据从一个位置复制到另外一个位置。既然如此，那么数据传送指令就会包含一个源操作数和一个目的操作数，指令会将原操作数的值复制到目的操作数并覆盖。 数据传送指令一共可分为五种，分别是mov、movs、movz、push以及pop。 mov指令mov指令的作用是将源操作数S中的数据复制到目的操作数D中，mov指令有一个数据格式和两个操作数，因此一般的形式为[mov">
+<meta name="twitter:image" content="http://yoursite.com/images/汇编-06.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/05/06/深入理解计算机系统-汇编的世界-2/" title="深入理解计算机系统|汇编的世界-2" itemprop="url">深入理解计算机系统|汇编的世界-2</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-05-05T20:47:06.000Z" itemprop="datePublished"> 发表于 2018-05-06</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据传送指令"><span class="toc-number">1.</span> <span class="toc-text">数据传送指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mov指令"><span class="toc-number">2.</span> <span class="toc-text">mov指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#movs指令"><span class="toc-number">3.</span> <span class="toc-text">movs指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#movz指令"><span class="toc-number">4.</span> <span class="toc-text">movz指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#push指令"><span class="toc-number">5.</span> <span class="toc-text">push指令</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="数据传送指令"><a href="#数据传送指令" class="headerlink" title="数据传送指令"></a>数据传送指令</h3><p>据传送指令的目的是为了将一个数据从一个位置复制到另外一个位置。既然如此，那么数据传送指令就会包含一个源操作数和一个目的操作数，指令会将原操作数的值复制到目的操作数并覆盖。</p>
+<p>数据传送指令一共可分为五种，分别是<code>mov</code>、<code>movs</code>、<code>movz</code>、<code>push</code>以及<code>pop</code>。</p>
+<h3 id="mov指令"><a href="#mov指令" class="headerlink" title="mov指令"></a>mov指令</h3><p>mov指令的作用是将源操作数S中的数据复制到目的操作数D中，mov指令有一个数据格式和两个操作数，因此一般的形式为[movx S D]。其中x为数据格式，S为源操作数，D为目的操作数。</p>
+<p>这里举一个简单的例子，比如我们有一条指令为<code>movl %edx %eax</code>。那么它的执行过程就如下图所示。</p>
+<p><img src="/images/汇编-06.png" alt="mov指令"></p>
+<p>可以看到，在指令执行之后，%edx寄存器当中的内容会被复制到%eax寄存器。需要一提的是，mov指令可以在后面加上任何数据格式，比如上面这一过程中，数据格式则为四个字节，也就是双字。因此不难推断出，我们还可以使用movb和movw去复制一个字节或者两个字节。</p>
+<h3 id="movs指令"><a href="#movs指令" class="headerlink" title="movs指令"></a>movs指令</h3><p>movs指令的作用是将源操作数S中的数据做符号扩展后，再复制到目的操作数D中，movs指令有两个数据格式和两个操作数，因此一般的形式为[movsxy S D]。其中x、y为数据格式，S为源操作数，D为目的操作数。其中x、y的组合一共有三种，分别是bw、bl、wl，这三个组合代表的意思分别是单字节到双字节，单字节到双字以及双字节到双字。</p>
+<p>对于指令<code>movswl %dx %eax</code>来讲，它的作用如下图所示。</p>
+<p><img src="/images/汇编-07.png" alt="movs指令"></p>
+<p>这里为了可以看出符号位的扩展，因此LZ这里使用了十六进制的整数表示方式。可以看到，movs指令将0x8FFF扩展以后存入%eax寄存器，其中%dx为寄存器%edx的后16位表示。</p>
+<h3 id="movz指令"><a href="#movz指令" class="headerlink" title="movz指令"></a>movz指令</h3><p>movz指令的作用是将源操作数S做零扩展后，再复制到目的操作数中。它与movs指令十分相似，也有两个数据格式和两个操作数，因此一般的形式为[movzxy S D]。其中x、y为数据格式，S为源操作数，D为目的操作数。其中x、y的组合一共有三种，分别是bw、bl、wl，这三个组合代表的意思分别是单字节到双字节，单字节到双字以及双字节到双字。</p>
+<p>这里依然采用相似的示例，我们来看看对于指令<code>movzwl %dx %eax</code>来讲，它的作用与上面的movs有何不同。</p>
+<p><img src="/images/汇编-08.png" alt="movz指令"></p>
+<p>可以看出，movz与movs指令是十分相似的，只是这里扩展后，目标寄存器%eax的前16位为0而不再是1。</p>
+<h3 id="push指令"><a href="#push指令" class="headerlink" title="push指令"></a>push指令</h3><p>push指令与上面的mov族指令有着不同，它的目的操作数被固定为栈顶，因此它的指令当中没有目的操作数。另外有一点需要注意的是，它在进行复制操作之前，需要移动栈顶指针（-4）。push指令的一般形式为[pushl S]，其中l代表数据格式为双字，S为源操作数，目的操作数默认为栈顶。</p>
+<p>这里举一个简单的例子，比如<code>pushl %edx</code>这条命令，它的任务是将%edx寄存器的值复制到栈顶。我们首先来看一下命令执行前，寄存器以及存储器的状态。</p>
+<p><img src="/images/汇编-09.png" alt="push指令"></p>
+<p>可以看到，寄存器%ebp和%esp分别指向帧指针和栈指针，而%esp实际上就是指向的栈顶。由于现在栈顶位于-16的位置，因此若要将%edx压入栈，则先需要将栈顶移动到-20的位置，然后再进行复制，移动后的状态如下图所示。</p>
+<p><img src="/images/汇编-10.png" alt="push指令"></p>
+<p>可以看到，这里栈指针的位置已经发生了变化，向下移动了四位，并且将%edx寄存器的值放入新的栈顶，因此pushl %edx指令就相当于下面两条指令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">subl $4,%esp</div><div class="line">movl %edx,(%esp)</div></pre></td></tr></table></figure></p>
+<p>###pop指令</p>
+<p>pop指令与push指令是做的相反的操作，一个是入栈一个是出栈。对于pop指令来讲，它的源操作数被固定为栈顶，相反，它会先进行复制操作，然后再移动栈指针。pop指令的一般形式为[popl D]，其中l代表数据格式为双字，D为目的操作数，源操作数默认为栈顶。</p>
+<p>接下来我们举一个例子，与上面的例子类似，我们考虑<code>popl %edx</code>这条指令的效果，它会将栈顶的值弹出到寄存器%edx。首先来看执行之前，寄存器以及存储器的状态。</p>
+<p><img src="/images/汇编-11.png" alt="ppo指令"></p>
+<p>接下来执行pop指令时，会先将栈顶的值复制到%edx，然后再将栈指针移动（+4）。我们来看一下它执行后的状态。</p>
+<p><img src="/images/汇编-12.png" alt="ppo指令"></p>
+<p>可以看到，之前栈顶的内容已经被弹出到%edx寄存器，并且当前栈顶已经移动到了-16的位置，也就是进行了+4操作。因此popl %edx指令就相当于下面两条指令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">movl (%esp),%edx</div><div class="line">addl $4,%esp</div></pre></td></tr></table></figure></p>
+<p><a href="http://www.cnblogs.com/zuoxiaolong/p/computer15.html" target="_blank" rel="external">深入理解计算机系统（3.3）—数据传送（或者说复制）指令详解</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/深入理解计算机系统/">深入理解计算机系统</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/深入理解计算机系统/">深入理解计算机系统</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/05/06/深入理解计算机系统-汇编的世界-1/"  title="深入理解计算机系统|汇编的世界-1">
+ <span>深入理解计算机系统|汇编的世界-1
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>16</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Vim/" title="Vim">Vim<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/config/" title="config">config<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/life/" title="life">life<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/干货/" title="干货">干货<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/操作系统/" title="操作系统">操作系统<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/架构/" title="架构">架构<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>5</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/简历/" title="简历">简历<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机网络/" title="计算机网络">计算机网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/运维/" title="运维">运维<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/面试/" title="面试">面试<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具/" title="工具">工具<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/操作系统/" title="操作系统">操作系统<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/面试/" title="面试">面试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/干货/" title="干货">干货<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/游学/" title="游学">游学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VHDL/" title="VHDL">VHDL<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>
