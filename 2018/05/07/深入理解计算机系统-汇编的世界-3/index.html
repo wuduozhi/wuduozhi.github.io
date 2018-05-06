@@ -1,0 +1,647 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>深入理解计算机系统|汇编的世界-3 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="算术与逻辑运算指令算术与逻辑运算包括很多种，估计各位猿友也能很快的想出来，比如最常见的加减乘除、与或非、左移右移等等。不过还有一个很神奇的指令 leal。  leal指令leal指令是非常神奇的一个指令，它可以取一个存储器操作数的地址，并且将其赋给目的操作数。如果用C语言当中来对应的话，它就相当于&amp;amp;运算。 比如对于leal 4(%edx,%edx,4),%eax这条指令来讲，我们假设%ed">
+<meta name="keywords" content="深入理解计算机系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解计算机系统|汇编的世界-3">
+<meta property="og:url" content="http://yoursite.com/2018/05/07/深入理解计算机系统-汇编的世界-3/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="算术与逻辑运算指令算术与逻辑运算包括很多种，估计各位猿友也能很快的想出来，比如最常见的加减乘除、与或非、左移右移等等。不过还有一个很神奇的指令 leal。  leal指令leal指令是非常神奇的一个指令，它可以取一个存储器操作数的地址，并且将其赋给目的操作数。如果用C语言当中来对应的话，它就相当于&amp;amp;运算。 比如对于leal 4(%edx,%edx,4),%eax这条指令来讲，我们假设%ed">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/images/汇编-13.png">
+<meta property="og:image" content="http://yoursite.com/images/汇编-14.png">
+<meta property="og:image" content="http://yoursite.com/images/汇编-15.png">
+<meta property="og:image" content="http://yoursite.com/images/汇编-16.png">
+<meta property="og:image" content="http://yoursite.com/images/汇编-17.png">
+<meta property="og:image" content="http://yoursite.com/images/汇编-18.png">
+<meta property="og:image" content="http://yoursite.com/images/汇编-19.png">
+<meta property="og:updated_time" content="2018-05-06T14:10:08.003Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入理解计算机系统|汇编的世界-3">
+<meta name="twitter:description" content="算术与逻辑运算指令算术与逻辑运算包括很多种，估计各位猿友也能很快的想出来，比如最常见的加减乘除、与或非、左移右移等等。不过还有一个很神奇的指令 leal。  leal指令leal指令是非常神奇的一个指令，它可以取一个存储器操作数的地址，并且将其赋给目的操作数。如果用C语言当中来对应的话，它就相当于&amp;amp;运算。 比如对于leal 4(%edx,%edx,4),%eax这条指令来讲，我们假设%ed">
+<meta name="twitter:image" content="http://yoursite.com/images/汇编-13.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/05/07/深入理解计算机系统-汇编的世界-3/" title="深入理解计算机系统|汇编的世界-3" itemprop="url">深入理解计算机系统|汇编的世界-3</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-05-06T20:43:50.000Z" itemprop="datePublished"> 發表於 2018-05-07</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#算术与逻辑运算指令"><span class="toc-number">1.</span> <span class="toc-text">算术与逻辑运算指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#leal指令"><span class="toc-number">2.</span> <span class="toc-text">leal指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特殊的算术操作指令"><span class="toc-number">3.</span> <span class="toc-text">特殊的算术操作指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#imull、mull指令"><span class="toc-number">4.</span> <span class="toc-text">imull、mull指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cltd指令"><span class="toc-number">5.</span> <span class="toc-text">cltd指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#idivl、divl指令"><span class="toc-number">6.</span> <span class="toc-text">idivl、divl指令</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="算术与逻辑运算指令"><a href="#算术与逻辑运算指令" class="headerlink" title="算术与逻辑运算指令"></a>算术与逻辑运算指令</h3><p>算术与逻辑运算包括很多种，估计各位猿友也能很快的想出来，比如最常见的加减乘除、与或非、左移右移等等。不过还有一个很神奇的指令 <code>leal</code>。</p>
+<p><img src="/images/汇编-13.png" alt="算术与逻辑运算指令"></p>
+<h3 id="leal指令"><a href="#leal指令" class="headerlink" title="leal指令"></a>leal指令</h3><p>leal指令是非常神奇的一个指令，它可以取一个存储器操作数的地址，并且将其赋给目的操作数。如果用C语言当中来对应的话，它就相当于&amp;运算。</p>
+<p>比如对于<code>leal 4(%edx,%edx,4),%eax</code>这条指令来讲，我们假设<code>%edx</code>寄存器的值为x的话，那么这条指令的作用就是将<code>4 + x + 4x = 5x + 4</code>赋给<code>%eax</code>寄存器。它和<code>mov指令</code>的区别就在于，假设是<code>movl 4(%edx,%edx,4),%eax</code>这个指令，它的作用是将内存地址为<code>5x+4</code>的内存区域的值赋给<code>%eax</code>寄存器，而<code>leal指令</code>只是将5x+4这个地址赋给目的操<code>作数%eax</code>而已，它并不对存储器进行引用的值的计算。</p>
+<p><img src="/images/汇编-14.png" alt="leal指令"></p>
+<p>可以看到，此时在存储器中，地址为5x+4的区域的值为1000。那么此时若是进行movl 4(%edx,%edx,4),%eax操作，很显然，%eax的值应该为1000，也就是下图。</p>
+<p><img src="/images/汇编-15.png" alt="leal指令"></p>
+<p>但是如果进行leal 4(%edx,%edx,4),%eax操作的话，%eax的值就不是1000了，因为leal指令不会去取存储器当中的值，因此寄存器%eax的值应该是5x+4。</p>
+<p><img src="/images/汇编-16.png" alt="leal指令"></p>
+<p>试想一下，倘若在地址为5x+4的位置存储的是变量i，那么其实这条指令就相当于&amp;i操作，这也就是C语言当中的&amp;取地址操作的汇编级做法。</p>
+<h3 id="特殊的算术操作指令"><a href="#特殊的算术操作指令" class="headerlink" title="特殊的算术操作指令"></a>特殊的算术操作指令</h3><p>不难发现这张图的指令跟上面的指令有点类似，不过下面的指令有点特殊：<strong>这些指令可以让只有32位的寄存器存储64位的数据</strong>。</p>
+<p><img src="/images/汇编-17.png" alt="特殊的算术操作指令"></p>
+<h3 id="imull、mull指令"><a href="#imull、mull指令" class="headerlink" title="imull、mull指令"></a>imull、mull指令</h3><p>这两个指令一看就是双胞胎，它们一个负责有符号全64位乘法，一个负责无符号全64位乘法。不难发现，imull这个指令好像是负责乘法的指令，而且在之前的乘法并没有区分有符号和无符号，现在怎么又成双胞胎指令了。</p>
+<p>上张图中出现的指令是<code>IMUL指令</code>，当它操作双字的时候，也就是<code>imull指令</code>。不过不同的是，它的一般形式是<code>imull S D</code>，这里有两个操作数，它将计算S和D的乘积并截断为双字，然后存储在D当中。由于在截断时，无符号以及有符号的二进制序列是一样的，因此此处的乘法指令并不区分有符号和无符号。</p>
+<p>现在我们讨论的<code>imull指令</code>，则与上面的普通乘法指令稍有不同，它只有一个操作数，也就是说，它的一般形式为<code>imull S</code>，这点在图片中也能看出来，而另外一个操作数默认为<code>%eax寄存器</code>。最终的结果，会将高32位存入%edx寄存器，而低32位存入%eax寄存器。</p>
+<p>试想一下，如果我们只取%eax寄存器当中的32位结果，那其实这里计算的结果就是S*%eax，此时<code>imull S</code>的作用就与<code>imul S D</code>是一样的，只是目的操作数被固定为%eax罢了。</p>
+<p>接下来我们看一个简单的示例，我们去看下指令<code>imull $0x3</code>的结果，我们假设此时<code>%eax</code>寄存器的值为<code>0x82345600</code>。也就是我们需要计算<code>0x3*0x82345600</code>的值，十六进制结果为<code>0xFFFF FFFE 869D 0200</code>。这个结果为64位的，因此我们寄存器的前后状态如下所示。</p>
+<p><img src="/images/汇编-18.png" alt="imull指令"></p>
+<p>可以看到，%eax保存着低32位的结果，单说这32位的话，它的有符号数值为-2036530688，正是我们直接计算0x3*0x82345600的32位截断后的有符号值，显然这个结果溢出了。如果组合上高32位，则结果为-6331497984，将它加上或者取模4294967296（2的32次方）将得到我们32位的结果。这里的有符号乘法采取的是先符号扩展被乘数，然后两者相乘，将结果再截断为64位所得。</p>
+<p>对于mull的单操作数指令来讲，就比较简单了，它采用的是无符号乘法，因此就和我们平时的十进制乘法运算类似，只是同样的，它也会将结果的高32位存入%edx，将低32位存入%eax。</p>
+<h3 id="cltd指令"><a href="#cltd指令" class="headerlink" title="cltd指令"></a>cltd指令</h3><p>这个指令相对来说就非常简单了，它就是简单的将%eax寄存器的值符号扩展32位到%edx寄存器，也就是说，如果%eax寄存器的二进制序列的最高位为0，则cltd指令将把%edx置为32个0，相反，如果%eax寄存器的二进制序列最高位为1，则cltd指令将会自从填充%edx寄存器为32个1。</p>
+<h3 id="idivl、divl指令"><a href="#idivl、divl指令" class="headerlink" title="idivl、divl指令"></a>idivl、divl指令</h3><p>这两个指令与前面的imull以及mull类似，它也将计算结果存放在两个寄存器当中，其中余数存放在%edx寄存器，商存放在%eax寄存器。如果各位理解了前面的imull以及mull，那么这里idivl和divl理解起来会非常简单。</p>
+<p>这里举一个简单的例子，考虑指令<code>idivl $0x3</code>的结果，我们假设此时%eax寄存器的值为<code>0x82345600</code>。也就是我们需要计算0x82345600/0x3的值，商为0xD6117200，余数为0x0。因此我们寄存器的前后状态如下所示。</p>
+<p><img src="/images/汇编-19.png" alt="idivl指令"></p>
+<p>可以看到，在idivl这个指令执行的过程中，其实对被除数进行了符号扩展，类似于cltd指令，或者有时也会将%eax移动到%edx，然后对%edx进行算术右移31位的运算。这两种方式的结果是一样的，都是将%eax符号扩展32位并存储在%edx当中。</p>
+<p><a href="http://www.cnblogs.com/zuoxiaolong/p/computer16.html" target="_blank" rel="external">深入理解计算机系统（3.4）—算数与逻辑运算指令详解</a><br><a href="http://www.cnblogs.com/zuoxiaolong/p/computer17.html" target="_blank" rel="external">深入理解计算机系统（3.5）—特殊的算术操作指令详解</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/深入理解计算机系统/">深入理解计算机系统</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/深入理解计算机系统/">深入理解计算机系统</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/05/07/总结-我的大二下/"  title="总结|我的大二下">
+ <span>总结|我的大二下
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分類</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>16</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>8</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/干货/" title="干货">干货<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/操作系统/" title="操作系统">操作系统<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/架构/" title="架构">架构<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机网络/" title="计算机网络">计算机网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/运维/" title="运维">运维<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/面试/" title="面试">面试<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/college/" title="college">college<sup>12</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具/" title="工具">工具<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/操作系统/" title="操作系统">操作系统<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/面试/" title="面试">面试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/干货/" title="干货">干货<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/运维/" title="运维">运维<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/架构/" title="架构">架构<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>

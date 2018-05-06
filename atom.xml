@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-06T12:18:56.261Z</updated>
+  <updated>2018-05-06T14:10:08.003Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,59 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>深入理解计算机系统|汇编的世界-3</title>
+    <link href="http://yoursite.com/2018/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E6%B1%87%E7%BC%96%E7%9A%84%E4%B8%96%E7%95%8C-3/"/>
+    <id>http://yoursite.com/2018/05/07/深入理解计算机系统-汇编的世界-3/</id>
+    <published>2018-05-06T20:43:50.000Z</published>
+    <updated>2018-05-06T14:10:08.003Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="算术与逻辑运算指令"><a href="#算术与逻辑运算指令" class="headerlink" title="算术与逻辑运算指令"></a>算术与逻辑运算指令</h3><p>算术与逻辑运算包括很多种，估计各位猿友也能很快的想出来，比如最常见的加减乘除、与或非、左移右移等等。不过还有一个很神奇的指令 <code>leal</code>。</p>
+<p><img src="/images/汇编-13.png" alt="算术与逻辑运算指令"></p>
+<h3 id="leal指令"><a href="#leal指令" class="headerlink" title="leal指令"></a>leal指令</h3><p>leal指令是非常神奇的一个指令，它可以取一个存储器操作数的地址，并且将其赋给目的操作数。如果用C语言当中来对应的话，它就相当于&amp;运算。</p>
+<p>比如对于<code>leal 4(%edx,%edx,4),%eax</code>这条指令来讲，我们假设<code>%edx</code>寄存器的值为x的话，那么这条指令的作用就是将<code>4 + x + 4x = 5x + 4</code>赋给<code>%eax</code>寄存器。它和<code>mov指令</code>的区别就在于，假设是<code>movl 4(%edx,%edx,4),%eax</code>这个指令，它的作用是将内存地址为<code>5x+4</code>的内存区域的值赋给<code>%eax</code>寄存器，而<code>leal指令</code>只是将5x+4这个地址赋给目的操<code>作数%eax</code>而已，它并不对存储器进行引用的值的计算。</p>
+<p><img src="/images/汇编-14.png" alt="leal指令"></p>
+<p>可以看到，此时在存储器中，地址为5x+4的区域的值为1000。那么此时若是进行movl 4(%edx,%edx,4),%eax操作，很显然，%eax的值应该为1000，也就是下图。</p>
+<p><img src="/images/汇编-15.png" alt="leal指令"></p>
+<p>但是如果进行leal 4(%edx,%edx,4),%eax操作的话，%eax的值就不是1000了，因为leal指令不会去取存储器当中的值，因此寄存器%eax的值应该是5x+4。</p>
+<p><img src="/images/汇编-16.png" alt="leal指令"></p>
+<p>试想一下，倘若在地址为5x+4的位置存储的是变量i，那么其实这条指令就相当于&amp;i操作，这也就是C语言当中的&amp;取地址操作的汇编级做法。</p>
+<h3 id="特殊的算术操作指令"><a href="#特殊的算术操作指令" class="headerlink" title="特殊的算术操作指令"></a>特殊的算术操作指令</h3><p>不难发现这张图的指令跟上面的指令有点类似，不过下面的指令有点特殊：<strong>这些指令可以让只有32位的寄存器存储64位的数据</strong>。</p>
+<p><img src="/images/汇编-17.png" alt="特殊的算术操作指令"></p>
+<h3 id="imull、mull指令"><a href="#imull、mull指令" class="headerlink" title="imull、mull指令"></a>imull、mull指令</h3><p>这两个指令一看就是双胞胎，它们一个负责有符号全64位乘法，一个负责无符号全64位乘法。不难发现，imull这个指令好像是负责乘法的指令，而且在之前的乘法并没有区分有符号和无符号，现在怎么又成双胞胎指令了。</p>
+<p>上张图中出现的指令是<code>IMUL指令</code>，当它操作双字的时候，也就是<code>imull指令</code>。不过不同的是，它的一般形式是<code>imull S D</code>，这里有两个操作数，它将计算S和D的乘积并截断为双字，然后存储在D当中。由于在截断时，无符号以及有符号的二进制序列是一样的，因此此处的乘法指令并不区分有符号和无符号。</p>
+<p>现在我们讨论的<code>imull指令</code>，则与上面的普通乘法指令稍有不同，它只有一个操作数，也就是说，它的一般形式为<code>imull S</code>，这点在图片中也能看出来，而另外一个操作数默认为<code>%eax寄存器</code>。最终的结果，会将高32位存入%edx寄存器，而低32位存入%eax寄存器。</p>
+<p>试想一下，如果我们只取%eax寄存器当中的32位结果，那其实这里计算的结果就是S*%eax，此时<code>imull S</code>的作用就与<code>imul S D</code>是一样的，只是目的操作数被固定为%eax罢了。</p>
+<p>接下来我们看一个简单的示例，我们去看下指令<code>imull $0x3</code>的结果，我们假设此时<code>%eax</code>寄存器的值为<code>0x82345600</code>。也就是我们需要计算<code>0x3*0x82345600</code>的值，十六进制结果为<code>0xFFFF FFFE 869D 0200</code>。这个结果为64位的，因此我们寄存器的前后状态如下所示。</p>
+<p><img src="/images/汇编-18.png" alt="imull指令"></p>
+<p>可以看到，%eax保存着低32位的结果，单说这32位的话，它的有符号数值为-2036530688，正是我们直接计算0x3*0x82345600的32位截断后的有符号值，显然这个结果溢出了。如果组合上高32位，则结果为-6331497984，将它加上或者取模4294967296（2的32次方）将得到我们32位的结果。这里的有符号乘法采取的是先符号扩展被乘数，然后两者相乘，将结果再截断为64位所得。</p>
+<p>对于mull的单操作数指令来讲，就比较简单了，它采用的是无符号乘法，因此就和我们平时的十进制乘法运算类似，只是同样的，它也会将结果的高32位存入%edx，将低32位存入%eax。</p>
+<h3 id="cltd指令"><a href="#cltd指令" class="headerlink" title="cltd指令"></a>cltd指令</h3><p>这个指令相对来说就非常简单了，它就是简单的将%eax寄存器的值符号扩展32位到%edx寄存器，也就是说，如果%eax寄存器的二进制序列的最高位为0，则cltd指令将把%edx置为32个0，相反，如果%eax寄存器的二进制序列最高位为1，则cltd指令将会自从填充%edx寄存器为32个1。</p>
+<h3 id="idivl、divl指令"><a href="#idivl、divl指令" class="headerlink" title="idivl、divl指令"></a>idivl、divl指令</h3><p>这两个指令与前面的imull以及mull类似，它也将计算结果存放在两个寄存器当中，其中余数存放在%edx寄存器，商存放在%eax寄存器。如果各位理解了前面的imull以及mull，那么这里idivl和divl理解起来会非常简单。</p>
+<p>这里举一个简单的例子，考虑指令<code>idivl $0x3</code>的结果，我们假设此时%eax寄存器的值为<code>0x82345600</code>。也就是我们需要计算0x82345600/0x3的值，商为0xD6117200，余数为0x0。因此我们寄存器的前后状态如下所示。</p>
+<p><img src="/images/汇编-19.png" alt="idivl指令"></p>
+<p>可以看到，在idivl这个指令执行的过程中，其实对被除数进行了符号扩展，类似于cltd指令，或者有时也会将%eax移动到%edx，然后对%edx进行算术右移31位的运算。这两种方式的结果是一样的，都是将%eax符号扩展32位并存储在%edx当中。</p>
+<p><a href="http://www.cnblogs.com/zuoxiaolong/p/computer16.html" target="_blank" rel="external">深入理解计算机系统（3.4）—算数与逻辑运算指令详解</a><br><a href="http://www.cnblogs.com/zuoxiaolong/p/computer17.html" target="_blank" rel="external">深入理解计算机系统（3.5）—特殊的算术操作指令详解</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;算术与逻辑运算指令&quot;&gt;&lt;a href=&quot;#算术与逻辑运算指令&quot; class=&quot;headerlink&quot; title=&quot;算术与逻辑运算指令&quot;&gt;&lt;/a&gt;算术与逻辑运算指令&lt;/h3&gt;&lt;p&gt;算术与逻辑运算包括很多种，估计各位猿友也能很快的想出来，比如最常见的加减乘除、与或非
+    
+    </summary>
+    
+      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
     <title>总结|我的大二下</title>
     <link href="http://yoursite.com/2018/05/07/%E6%80%BB%E7%BB%93-%E6%88%91%E7%9A%84%E5%A4%A7%E4%BA%8C%E4%B8%8B/"/>
     <id>http://yoursite.com/2018/05/07/总结-我的大二下/</id>
     <published>2018-05-06T19:39:25.000Z</published>
-    <updated>2018-05-06T12:18:56.261Z</updated>
+    <updated>2018-05-06T12:19:54.812Z</updated>
     
     <content type="html"><![CDATA[<p><code>May 6, 2018 7:54 PM</code></p>
 <h3 id="我的计划"><a href="#我的计划" class="headerlink" title="我的计划"></a>我的计划</h3><p>在寒假的时候，自己有看了吴恩达教授的机器学习的基础课程，了解了一些基本的概念，比如说<code>线性回归</code>、<code>梯度下降</code>等等。同时，自己从大一开始就在弄一些Web相关的，接触的都是一些应用的东西，想到是做项目、找实习，但自己冷静下来想想，自己还是没有一些核心竞争力，自己所学的这些别人花几个月就能搞定，所以自己就想着学习一些<code>高大尚</code>的东西，就想着入坑机器学习了。</p>
@@ -1834,30 +1882,6 @@ tex2jax: {inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]]
     
     
       <category term="干货" scheme="http://yoursite.com/tags/%E5%B9%B2%E8%B4%A7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>面试|php常考面试题</title>
-    <link href="http://yoursite.com/2018/04/12/%E9%9D%A2%E8%AF%95-php%E5%B8%B8%E8%80%83%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
-    <id>http://yoursite.com/2018/04/12/面试-php常考面试题/</id>
-    <published>2018-04-12T08:57:19.000Z</published>
-    <updated>2018-04-24T16:26:34.797Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="http://www.techug.com/post/php-interview-tips.html" target="_blank" rel="external">一个16年毕业生所经历的php面试</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;http://www.techug.com/post/php-interview-tips.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;一个16年毕业生所经历的php面试&lt;/a&gt;&lt;/p&gt;
-
-    
-    </summary>
-    
-      <category term="面试" scheme="http://yoursite.com/categories/%E9%9D%A2%E8%AF%95/"/>
-    
-    
-      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
     
   </entry>
   
