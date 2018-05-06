@@ -709,7 +709,7 @@ x[2] = 1;
     <link href="http://yoursite.com/2018/04/23/%E5%90%B4%E5%A4%9A%E6%99%BA-%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/"/>
     <id>http://yoursite.com/2018/04/23/吴多智-个人简历/</id>
     <published>2018-04-23T11:02:22.000Z</published>
-    <updated>2018-05-04T15:22:55.234Z</updated>
+    <updated>2018-05-06T11:30:14.794Z</updated>
     
     <content type="html"><![CDATA[<h3 id="个人信息"><a href="#个人信息" class="headerlink" title="个人信息"></a>个人信息</h3><ul>
 <li>吴多智</li>
@@ -766,8 +766,10 @@ x[2] = 1;
     
     </summary>
     
-      <category term="简历" scheme="http://yoursite.com/categories/%E7%AE%80%E5%8E%86/"/>
+      <category term="college" scheme="http://yoursite.com/categories/college/"/>
     
+    
+      <category term="college" scheme="http://yoursite.com/tags/college/"/>
     
   </entry>
   
