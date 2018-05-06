@@ -57,7 +57,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -77,7 +77,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -100,14 +100,14 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-02-12T14:57:36.000Z" itemprop="datePublished"> Published 2018-02-12</time>
+    <time datetime="2018-02-12T14:57:36.000Z" itemprop="datePublished"> 發表於 2018-02-12</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
+			<strong class="toc-title">文章目錄</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是HTTP？"><span class="toc-number">2.</span> <span class="toc-text">什么是HTTP？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#"><span class="toc-number">2.1.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-1"><span class="toc-number">2.2.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-2"><span class="toc-number">2.3.</span> <span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一个完整的HTTP请求过程"><span class="toc-number">3.</span> <span class="toc-text">一个完整的HTTP请求过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP请求报文"><span class="toc-number">4.</span> <span class="toc-text">HTTP请求报文</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#请求行"><span class="toc-number">4.1.</span> <span class="toc-text">请求行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#请求头"><span class="toc-number">4.2.</span> <span class="toc-text">请求头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Accept"><span class="toc-number">4.3.</span> <span class="toc-text">==Accept==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Accept-Encoding"><span class="toc-number">4.4.</span> <span class="toc-text">==Accept-Encoding==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Accept-Lanague"><span class="toc-number">4.5.</span> <span class="toc-text">==Accept-Lanague==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Connection"><span class="toc-number">4.6.</span> <span class="toc-text">==Connection==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Host"><span class="toc-number">4.7.</span> <span class="toc-text">==Host==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cache-control"><span class="toc-number">4.8.</span> <span class="toc-text">==Cache-control==</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#max-age-lt-0"><span class="toc-number">4.8.1.</span> <span class="toc-text">max-age<=0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#max-age-gt-0"><span class="toc-number">4.8.2.</span> <span class="toc-text">max-age>0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#no-cache"><span class="toc-number">4.8.3.</span> <span class="toc-text">no-cache</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#no-store"><span class="toc-number">4.8.4.</span> <span class="toc-text">no-store</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Upgrade-Insecure-Requests"><span class="toc-number">4.9.</span> <span class="toc-text">==Upgrade-Insecure-Requests==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#User-Agent"><span class="toc-number">4.10.</span> <span class="toc-text">==User-Agent==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cookies"><span class="toc-number">4.11.</span> <span class="toc-text">==Cookies==</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其它请求头字段信息"><span class="toc-number">5.</span> <span class="toc-text">其它请求头字段信息</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Referer"><span class="toc-number">5.1.</span> <span class="toc-text">==Referer==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Accept-Charset"><span class="toc-number">5.2.</span> <span class="toc-text">==Accept-Charset==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#If-Modified-Since"><span class="toc-number">5.3.</span> <span class="toc-text">==If-Modified-Since==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pragma"><span class="toc-number">5.4.</span> <span class="toc-text">==Pragma==</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Range"><span class="toc-number">5.5.</span> <span class="toc-text">==Range==</span></a></li></ol></li></ol>
 		
@@ -237,10 +237,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -268,7 +268,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">Categories</p>
+	<p class="asidetitle">分類</p>
 		<ul>
 		
 		  
@@ -357,7 +357,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">標簽</p>
 		<ul class="clearfix">
 		
 			
@@ -425,11 +425,7 @@
 			
 		
 			
-				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
 			
 		
 			
@@ -440,12 +436,16 @@
 				<li><a href="/tags/架构/" title="架构">架构<sup>1</sup></a></li>
 			
 		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
+			
+		
 		</ul>
 </div>
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
 </div>
 
 </aside>
@@ -638,7 +638,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
