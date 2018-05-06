@@ -11,17 +11,17 @@
     
 
     
-    <meta name="description" content="1234567891011121314151617181920212223242526272829303132333435function getData()&amp;#123;		$.ajax(&amp;#123;                url:&amp;quot;../api&amp;quot;,                type:&amp;quot;GET&amp;quot;,                data:&amp;#1">
+    <meta name="description" content="AJAX = Asynchronous JavaScript and XML（异步的 JavaScript 和 XML）。 AJAX 不是新的编程语言，而是一种使用现有标准的新方法。 AJAX 是与服务器交换数据并更新部分网页的艺术，在不重新加载整个页面的情况下。1234567891011121314151617181920212223242526272829303132333435functio">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jquery|Ajax">
 <meta property="og:url" content="http://yoursite.com/2018/01/24/jquery-Ajax/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="1234567891011121314151617181920212223242526272829303132333435function getData()&amp;#123;		$.ajax(&amp;#123;                url:&amp;quot;../api&amp;quot;,                type:&amp;quot;GET&amp;quot;,                data:&amp;#1">
+<meta property="og:description" content="AJAX = Asynchronous JavaScript and XML（异步的 JavaScript 和 XML）。 AJAX 不是新的编程语言，而是一种使用现有标准的新方法。 AJAX 是与服务器交换数据并更新部分网页的艺术，在不重新加载整个页面的情况下。1234567891011121314151617181920212223242526272829303132333435functio">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-01-27T08:22:15.016Z">
+<meta property="og:updated_time" content="2018-05-06T11:37:35.835Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jquery|Ajax">
-<meta name="twitter:description" content="1234567891011121314151617181920212223242526272829303132333435function getData()&amp;#123;		$.ajax(&amp;#123;                url:&amp;quot;../api&amp;quot;,                type:&amp;quot;GET&amp;quot;,                data:&amp;#1">
+<meta name="twitter:description" content="AJAX = Asynchronous JavaScript and XML（异步的 JavaScript 和 XML）。 AJAX 不是新的编程语言，而是一种使用现有标准的新方法。 AJAX 是与服务器交换数据并更新部分网页的艺术，在不重新加载整个页面的情况下。1234567891011121314151617181920212223242526272829303132333435functio">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -105,7 +105,10 @@
 		
 		</div>
 		
-		<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">function getData()&#123;</div><div class="line">		$.ajax(&#123;</div><div class="line">                url:&quot;../api&quot;,</div><div class="line">                type:&quot;GET&quot;,</div><div class="line">                data:&#123;&quot;page&quot;:&quot;1&quot;&#125;,</div><div class="line">                processData:false,</div><div class="line">                contentType:false,</div><div class="line">                dataType:&quot;json&quot;,</div><div class="line">                success:function(data)&#123;</div><div class="line">                	// console.info(data);</div><div class="line">                	$(&quot;#resText&quot;).html(&quot;状态：&quot;+data.status); </div><div class="line">                &#125;,</div><div class="line">                error:function(e)&#123;</div><div class="line">                    $(&quot;#resText&quot;).html(&quot;发生错误了&quot;);</div><div class="line">                &#125;</div><div class="line">            &#125;);    </div><div class="line">	&#125;</div><div class="line"></div><div class="line">	function sendData()&#123;</div><div class="line">		$.ajax(&#123;</div><div class="line">                url:&quot;../api/addFindThing&quot;,</div><div class="line">                type:&quot;post&quot;,</div><div class="line">                data:new FormData($(&quot;#form&quot;)[0]),</div><div class="line">                processData:false,</div><div class="line">                contentType:false,</div><div class="line">                dataType:&quot;json&quot;,</div><div class="line">                success:function(data)&#123;</div><div class="line">                	// console.info(data);</div><div class="line">                	$(&quot;#resText&quot;).html(&quot;状态：&quot;+data.status); </div><div class="line">                &#125;,</div><div class="line">                error:function(e)&#123;</div><div class="line">                    $(&quot;#resText&quot;).html(&quot;发生错误了&quot;);</div><div class="line">                &#125;</div><div class="line">            &#125;);        </div><div class="line">	&#125;</div></pre></td></tr></table></figure>  
+		<p>AJAX = Asynchronous JavaScript and XML（异步的 JavaScript 和 XML）。</p>
+<p>AJAX 不是新的编程语言，而是一种使用现有标准的新方法。</p>
+<p>AJAX 是与服务器交换数据并更新部分网页的艺术，在不重新加载整个页面的情况下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">function getData()&#123;</div><div class="line">		$.ajax(&#123;</div><div class="line">                url:&quot;../api&quot;,</div><div class="line">                type:&quot;GET&quot;,</div><div class="line">                data:&#123;&quot;page&quot;:&quot;1&quot;&#125;,</div><div class="line">                processData:false,</div><div class="line">                contentType:false,</div><div class="line">                dataType:&quot;json&quot;,</div><div class="line">                success:function(data)&#123;</div><div class="line">                	// console.info(data);</div><div class="line">                	$(&quot;#resText&quot;).html(&quot;状态：&quot;+data.status); </div><div class="line">                &#125;,</div><div class="line">                error:function(e)&#123;</div><div class="line">                    $(&quot;#resText&quot;).html(&quot;发生错误了&quot;);</div><div class="line">                &#125;</div><div class="line">            &#125;);    </div><div class="line">	&#125;</div><div class="line"></div><div class="line">	function sendData()&#123;</div><div class="line">		$.ajax(&#123;</div><div class="line">                url:&quot;../api/addFindThing&quot;,</div><div class="line">                type:&quot;post&quot;,</div><div class="line">                data:new FormData($(&quot;#form&quot;)[0]),</div><div class="line">                processData:false,</div><div class="line">                contentType:false,</div><div class="line">                dataType:&quot;json&quot;,</div><div class="line">                success:function(data)&#123;</div><div class="line">                	// console.info(data);</div><div class="line">                	$(&quot;#resText&quot;).html(&quot;状态：&quot;+data.status); </div><div class="line">                &#125;,</div><div class="line">                error:function(e)&#123;</div><div class="line">                    $(&quot;#resText&quot;).html(&quot;发生错误了&quot;);</div><div class="line">                &#125;</div><div class="line">            &#125;);        </div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -193,21 +196,15 @@
 		  
 		
 		  
-		
-		  
-		
-		  
 			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>4</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/colleage/" title="colleage">colleage<sup>2</sup></a></li>
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>1</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/college/" title="college">college<sup>6</sup></a></li>
-		  
-		
+			<li><a href="/categories/college/" title="college">college<sup>9</sup></a></li>
 		  
 		
 		  
@@ -251,9 +248,7 @@
 		  
 		
 		  
-		
-		  
-			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>3</sup></a></li>
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>6</sup></a></li>
 		  
 		
 		  
@@ -290,15 +285,19 @@
 			
 		
 			
+				<li><a href="/tags/college/" title="college">college<sup>9</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/工具/" title="工具">工具<sup>6</sup></a></li>
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>6</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/college/" title="college">college<sup>6</sup></a></li>
+				<li><a href="/tags/工具/" title="工具">工具<sup>6</sup></a></li>
 			
 		
 			
@@ -310,19 +309,15 @@
 			
 		
 			
-				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
 			
 		
 			
@@ -334,6 +329,10 @@
 			
 		
 			
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/干货/" title="干货">干货<sup>2</sup></a></li>
 			
 		
@@ -342,23 +341,19 @@
 			
 		
 			
-				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Octave/" title="Octave">Octave<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
 			
 		
 		</ul>

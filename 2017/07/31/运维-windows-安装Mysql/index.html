@@ -4,28 +4,25 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>浮点数的二进制表示 | 只为不凡而来</title>
+    <title>windows 安装Mysql | 只为不凡而来</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="wuduozhi">
     
 
     
-    <meta name="description" content="引言12345678910111213141516171819#include &amp;lt;stdio.h&amp;gt;　　void main(void)&amp;#123;　　　　int num=9; /* num是整型变量，设为9 */　　　　float* pFloat=&amp;amp;num; /* pFloat表示num的内存地址，但是设为浮点数 */　　　　printf(&amp;quot;num的值为：%d\n&amp;qu">
+    <meta name="description" content="Windows 环境下 MySQL 5.7 安装配置指南安装环境 Windows 版本：Windows 10 专业版 64bit MySQL 版本：MySQL 5.7.16  备注在安装 MySQL 前请务必确认自己电脑的 net 指令是正常工作的。有些 Windows 系统会丢失 net 指令(环境变量缺失)，解决方法请自行搜索一下。 配置过程 下载 MySQL Community Server">
+<meta name="keywords" content="运维">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浮点数的二进制表示">
-<meta property="og:url" content="http://yoursite.com/2018/04/09/浮点数的二进制表示/index.html">
+<meta property="og:title" content="windows 安装Mysql">
+<meta property="og:url" content="http://yoursite.com/2017/07/31/运维-windows-安装Mysql/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="引言12345678910111213141516171819#include &amp;lt;stdio.h&amp;gt;　　void main(void)&amp;#123;　　　　int num=9; /* num是整型变量，设为9 */　　　　float* pFloat=&amp;amp;num; /* pFloat表示num的内存地址，但是设为浮点数 */　　　　printf(&amp;quot;num的值为：%d\n&amp;qu">
+<meta property="og:description" content="Windows 环境下 MySQL 5.7 安装配置指南安装环境 Windows 版本：Windows 10 专业版 64bit MySQL 版本：MySQL 5.7.16  备注在安装 MySQL 前请务必确认自己电脑的 net 指令是正常工作的。有些 Windows 系统会丢失 net 指令(环境变量缺失)，解决方法请自行搜索一下。 配置过程 下载 MySQL Community Server">
 <meta property="og:locale" content="Chinese">
-<meta property="og:image" content="http://yoursite.com/images/浮点数的二进制表示01.png">
-<meta property="og:image" content="http://yoursite.com/images/浮点数的二进制表示02.png">
-<meta property="og:image" content="http://yoursite.com/images/浮点数的二进制表示03.png">
-<meta property="og:updated_time" content="2018-04-10T09:04:54.565Z">
+<meta property="og:updated_time" content="2018-05-06T11:26:52.544Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="浮点数的二进制表示">
-<meta name="twitter:description" content="引言12345678910111213141516171819#include &amp;lt;stdio.h&amp;gt;　　void main(void)&amp;#123;　　　　int num=9; /* num是整型变量，设为9 */　　　　float* pFloat=&amp;amp;num; /* pFloat表示num的内存地址，但是设为浮点数 */　　　　printf(&amp;quot;num的值为：%d\n&amp;qu">
-<meta name="twitter:image" content="http://yoursite.com/images/浮点数的二进制表示01.png">
+<meta name="twitter:title" content="windows 安装Mysql">
+<meta name="twitter:description" content="Windows 环境下 MySQL 5.7 安装配置指南安装环境 Windows 版本：Windows 10 专业版 64bit MySQL 版本：MySQL 5.7.16  备注在安装 MySQL 前请务必确认自己电脑的 net 指令是正常工作的。有些 Windows 系统会丢失 net 指令(环境变量缺失)，解决方法请自行搜索一下。 配置过程 下载 MySQL Community Server">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -89,14 +86,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2018/04/09/浮点数的二进制表示/" title="浮点数的二进制表示" itemprop="url">浮点数的二进制表示</a>
+      <a href="/2017/07/31/运维-windows-安装Mysql/" title="windows 安装Mysql" itemprop="url">windows 安装Mysql</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-04-08T16:38:58.000Z" itemprop="datePublished"> Published 2018-04-09</time>
+    <time datetime="2017-07-30T19:11:01.000Z" itemprop="datePublished"> Published 2017-07-31</time>
     
   </p>
 </header>
@@ -105,40 +102,126 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#int的表示"><span class="toc-number">2.</span> <span class="toc-text">int的表示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IEEE标准"><span class="toc-number">3.</span> <span class="toc-text">IEEE标准</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows-环境下-MySQL-5-7-安装配置指南"><span class="toc-number">1.</span> <span class="toc-text">Windows 环境下 MySQL 5.7 安装配置指南</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#安装环境"><span class="toc-number">1.0.1.</span> <span class="toc-text">安装环境</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#备注"><span class="toc-number">1.0.2.</span> <span class="toc-text">备注</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置过程"><span class="toc-number">1.1.</span> <span class="toc-text">配置过程</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#最后"><span class="toc-number">1.1.1.</span> <span class="toc-text">最后</span></a></li></ol></li></ol></li></ol>
 		
 		</div>
 		
-		<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line"></div><div class="line">　　void main(void)&#123;</div><div class="line"></div><div class="line">　　　　int num=9; /* num是整型变量，设为9 */</div><div class="line"></div><div class="line">　　　　float* pFloat=&amp;num; /* pFloat表示num的内存地址，但是设为浮点数 */</div><div class="line"></div><div class="line">　　　　printf(&quot;num的值为：%d\n&quot;,num); /* 显示num的整型值 */</div><div class="line"></div><div class="line">　　　　printf(&quot;*pFloat的值为：%f\n&quot;,*pFloat); /* 显示num的浮点值 */</div><div class="line"></div><div class="line">　　　　*pFloat=9.0; /* 将num的值改为浮点数 */</div><div class="line"></div><div class="line">　　　　printf(&quot;num的值为：%d\n&quot;,num); /* 显示num的整型值 */</div><div class="line"></div><div class="line">　　　　printf(&quot;*pFloat的值为：%f\n&quot;,*pFloat); /* 显示num的浮点值 */</div><div class="line"></div><div class="line">　　&#125;</div></pre></td></tr></table></figure>
-<p>大家知道程序运行的结果是什么嘛？</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">num的值为：9</div><div class="line">*pFloat的值为：0.000000</div><div class="line">num的值为：1091567616</div><div class="line">*pFloat的值为：9.000000</div></pre></td></tr></table></figure>
-<p>我很惊讶，num和*pFloat在内存中明明是同一个数，为什么浮点数和整数的解读结果会差别这么大？</p>
-<p>要理解这个结果，一定要搞懂浮点数在计算机内部的表示方法。我读了一些资料，下面就是我的笔记。</p>
-<h3 id="int的表示"><a href="#int的表示" class="headerlink" title="int的表示"></a>int的表示</h3><p>在讨论浮点数之前，先看一下整数在计算机内部是怎样表示的。<br><code>int num=9;</code></p>
-<p>上面这条命令，声明了一个整数变量，类型为int，值为9（二进制写法为1001）。普通的32位计算机，用4个字节表示int变量，所以9就被保存为00000000 00000000 00000000 00001001，写成16进制就是0x00000009。</p>
-<p>那么，我们的问题就简化成：为什么0x00000009还原成浮点数，就成了0.000000？</p>
-<h3 id="IEEE标准"><a href="#IEEE标准" class="headerlink" title="IEEE标准"></a>IEEE标准</h3><p>根据国际标准IEEE 754，任意一个二进制浮点数V可以表示成下面的形式：</p>
-<p><img src="/images/浮点数的二进制表示01.png" alt="IEEE754" title="浮点数的二进制表示01"></p>
-<p>举例来说，十进制的5.0，写成二进制是101.0，相当于1.01×2^2。那么，按照上面V的格式，可以得出s=0，M=1.01，E=2。</p>
-<p>十进制的-5.0，写成二进制是-101.0，相当于-1.01×2^2。那么，s=1，M=1.01，E=2。</p>
-<p>IEEE 754规定，对于32位的浮点数，最高的1位是符号位s，接着的8位是指数E，剩下的23位为有效数字M。</p>
-<p><img src="/images/浮点数的二进制表示02.png" alt="32bit" title="浮点数的二进制表示02"></p>
-<p>对于64位的浮点数，最高的1位是符号位S，接着的11位是指数E，剩下的52位为有效数字M。</p>
-<p><img src="/images/浮点数的二进制表示03.png" alt="64bit" title="浮点数的二进制表示03"></p>
-<p>IEEE 754对有效数字M和指数E，还有一些特别规定。</p>
-<p>前面说过，1≤M&lt;2，也就是说，M可以写成1.xxxxxx的形式，其中xxxxxx表示小数部分。IEEE 754规定，在计算机内部保存M时，默认这个数的第一位总是1，因此可以被舍去，只保存后面的xxxxxx部分。比如保存1.01的时候，只保存01，等到读取的时候，再把第一位的1加上去。这样做的目的，是节省1位有效数字。以32位浮点数为例，留给M只有23位，将第一位的1舍去以后，等于可以保存24位有效数字。</p>
-<p>至于指数E，情况就比较复杂。</p>
-<p>首先，E为一个无符号整数（unsigned int）。这意味着，如果E为8位，它的取值范围为0~255；如果E为11位，它的取值范围为0~2047。但是，我们知道，科学计数法中的E是可以出现负数的，所以IEEE 754规定，E的真实值必须再减去一个中间数，对于8位的E，这个中间数是127；对于11位的E，这个中间数是1023。</p>
-<p>比如，2^10的E是10，所以保存成32位浮点数时，必须保存成10+127=137，即10001001。</p>
-<p>然后，指数E还可以再分成三种情况：</p>
-<p>（1）E不全为0或不全为1。这时，浮点数就采用上面的规则表示，即指数E的计算值减去127（或1023），得到真实值，再将有效数字M前加上第一位的1。</p>
-<p>（2）E全为0。这时，浮点数的指数E等于1-127（或者1-1023），有效数字M不再加上第一位的1，而是还原为0.xxxxxx的小数。这样做是为了表示±0，以及接近于0的很小的数字。</p>
-<p>（3）E全为1。这时，如果有效数字M全为0，表示±无穷大（正负取决于符号位s）；如果有效数字M不全为0，表示这个数不是一个数（NaN）。</p>
+		<h3 id="Windows-环境下-MySQL-5-7-安装配置指南"><a href="#Windows-环境下-MySQL-5-7-安装配置指南" class="headerlink" title="Windows 环境下 MySQL 5.7 安装配置指南"></a>Windows 环境下 MySQL 5.7 安装配置指南</h3><h5 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h5><ul>
+<li>Windows 版本：Windows 10 专业版 64bit</li>
+<li>MySQL 版本：MySQL 5.7.16</li>
+</ul>
+<h5 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h5><p>在安装 MySQL 前请务必确认自己电脑的 net 指令是正常工作的。有些 Windows 系统会丢失 net 指令<em>(环境变量缺失)</em>，解决方法请自行搜索一下。</p>
+<h4 id="配置过程"><a href="#配置过程" class="headerlink" title="配置过程"></a>配置过程</h4><ol>
+<li><p>下载 MySQL Community Server <a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="external">下载链接</a></p>
+<ul>
+<li>选择合适自己操作系统的版本，通常使用 Windows (x86, 64-bit), ZIP Archive</li>
+</ul>
+</li>
+<li><p>解压并“合理安放” MySQL Server。</p>
+<ul>
+<li>将下载好的mysql-5.7.16-winx64.zip解压，并将解压好的文件夹妥善放置（比如放置在 Program FIles 文件夹内）。本教程中 MySQL 被放置在了D:\ProgramFiles下，并被重命名为了 MySQL。</li>
+</ul>
+</li>
+<li><p>为 MySQL Server 配置环境变量</p>
+<ul>
+<li>右击开始菜单按钮，选择“系统”选项。</li>
+<li>在“系统”界面左侧，选择“高级系统设置”。</li>
+<li><p>在打开的“系统属性”对话框中的“高级”选项卡页面的下方，选择“环境变量”。</p>
+<ul>
+<li><p>系统属性设置窗口</p>
+<p> 在“用户变量”区块中，选择“新建”，在打开的对话框中，变量名写 MySQL，变量值写 MySQL 文件夹的完整路径（本教程为D:\Program Files\MySQL）。</p>
+</li>
+<li><p>添加环境变量</p>
+<p> 同样在用户区块中寻找 PATH 环境变量，如果有，点击“编辑”。在弹出的对<br> 话框中点击“新建”，输入%MySQL%\bin（在老版本 Windows 系统中，变量值末尾用英文分号;分开后再添加%MySQL%\bin）。如果没有，点击“新建”，添加一个变量名为 Path 的环境变量。在这个环境变量的变量值处，添加%MySQL%\bin</p>
+</li>
+<li><p>修改环境变量<br>  点击确定按钮退出环境变量配置对话框。<br>  点击确定按钮退出系统属性配置对话框。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>注册 MySQL 服务</p>
+<ul>
+<li>右击开始菜单按钮，选择/“命令提示符（管理员）”/选项。</li>
+<li>输入盘符 + “:” 指令，进入MySQL文件夹所在的磁盘（本教程是 D 盘）。再使用  cd指令进入MySQL Server所在文件夹的bin文件夹中。<strong>这一步非常重要，如果不在这个目录下，无法正确注册 MySQL 服务。</strong></li>
+</ul>
+</li>
+<li><p>定位到 MySQL 所在路径</p>
+<ul>
+<li>执行mysqld -install指令，注册 MySQL 服务。</li>
+</ul>
+</li>
+<li><p>注册 MySQL 服务</p>
+<ul>
+<li>执行完毕后，请不要退出“命令提示符”。</li>
+</ul>
+</li>
+<li><p>配置 MySQL Server</p>
+<ul>
+<li>进入 MySQL Server 所在的文件夹 （本教程为D:\Program Files\MySQL）</li>
+<li><p>编辑my-default.ini</p>
+<ul>
+<li><p>在该文件中，#是注释标记。<br>去掉 basedir 的注释符号，并在等号后边填写 MySQL Server 文件夹的完整地址。<br>去掉 datadir 的注释符号，并在等号后边填写 MySQL Server 文件夹的完整地址外加\data。<br> <strong>切记不要手动创建 data 文件夹！</strong></p>
+</li>
+<li><p>port 不需要配置，不配置的状态下默认为 3306。（MySQL Server 默认使用的端口号）</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>最终配置</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"># For advice on how to change settings please see</div><div class="line"># http://dev.mysql.com/doc/refman/5.7/en/server-configuration-defaults.html</div><div class="line"># *** DO NOT EDIT THIS FILE. It&apos;s a template which will be copied to the</div><div class="line"># *** default location during install, and will be replaced if you</div><div class="line"># *** upgrade to a newer version of MySQL.</div><div class="line"></div><div class="line">[mysqld]</div><div class="line"></div><div class="line"># Remove leading # and set to the amount of RAM for the most important data</div><div class="line"># cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.</div><div class="line"># innodb_buffer_pool_size = 128M</div><div class="line"></div><div class="line"># Remove leading # to turn on a very important data integrity option: logging</div><div class="line"># changes to the binary log between backups.</div><div class="line"># log_bin</div><div class="line"></div><div class="line"># These are commonly set, remove the # and set as required.</div><div class="line">basedir =D:\Program Files\MySQL</div><div class="line">datadir =D:\Program Files\MySQL\date</div><div class="line"># port = .....</div><div class="line"># server_id = .....</div><div class="line"></div><div class="line"></div><div class="line"># Remove leading # to set options mainly useful for reporting servers.</div><div class="line"># The server defaults are faster for transactions and fast SELECTs.</div><div class="line"># Adjust sizes as needed, experiment to find the optimal values.</div><div class="line"># join_buffer_size = 128M</div><div class="line"># sort_buffer_size = 2M</div><div class="line"># read_rnd_buffer_size = 2M </div><div class="line"></div><div class="line">sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES</div></pre></td></tr></table></figure></p>
+<p>保存退出。退出后将my-default.ini重命名为my.ini</p>
+<ol>
+<li><p>在刚才的“命令提示符”中，执行mysqld –initialize（可能会假死，等一分钟手动关闭就好）。</p>
+</li>
+<li><p>开启 MySQL Server</p>
+<ul>
+<li>在“命令提示符”中执行net start mysql，开启 MySQL Server。</li>
+</ul>
+</li>
+<li><p>配置 MySQL root 账户。</p>
+<ul>
+<li>在“命令提示符”中，执行net stop mysql关闭 MySQL Server。</li>
+<li>再执行mysqld –skip-grant-tables开启无密码的 MySQL Server。</li>
+</ul>
+</li>
+<li><p>无密码启动 MySQL Server</p>
+<ul>
+<li>打开一个新的“命令提示符”，执行mysql -u root登陆 MySQL Server。</li>
+<li>执行flush privileges刷新权限。</li>
+<li>执行grant all privileges on <em>.</em> to ‘root’@’localhost’ identified by ‘你想设置的密码’ with grant option;。</li>
+<li>执行flush privileges刷新新的 root 用户密码。</li>
+<li>执行exit退出 MySQL。</li>
+</ul>
+</li>
+<li><p>结束进程</p>
+<ul>
+<li>在任务管理器下手动结束mysqld.exe。</li>
+</ul>
+</li>
+<li><p>正常登陆</p>
+<ul>
+<li>在“命令提示符”下执行net mysql start重新开启MySQL Server，再次使用mysql -u root -p 你设置的密码即可安全登陆 MySQL。</li>
+</ul>
+</li>
+</ol>
+<h5 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h5><p><strong>本教程中所有的“命令提示符”，一定要运行在 管理员模式下，否则会出现“拒绝访问”的问题。</strong></p>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/运维/">运维</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/运维/">运维</a>
+  </div>
 
 </div>
 
@@ -152,16 +235,16 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2018/04/09/运维-Nginx+Php-fpm运行原理详解/" title="运维|Nginx+Php-fpm运行原理详解">
+ <a href="/2017/07/31/Java异常处理/" title="Java异常处理">
   <span>
-  运维|Nginx+Php-fpm运行原理详解</span>
+  Java异常处理</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2018/04/01/工具-Dos下的debug工具使用/"  title="工具|Dos下的debug工具使用">
- <span>工具|Dos下的debug工具使用
+<a href="/2017/07/29/总结-我的大一/"  title="总结|我的大一">
+ <span>总结|我的大一
 </span>
 </a>
 </div>
@@ -222,21 +305,15 @@
 		  
 		
 		  
-		
-		  
-		
-		  
 			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>4</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/colleage/" title="colleage">colleage<sup>2</sup></a></li>
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>1</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/college/" title="college">college<sup>6</sup></a></li>
-		  
-		
+			<li><a href="/categories/college/" title="college">college<sup>9</sup></a></li>
 		  
 		
 		  
@@ -280,9 +357,7 @@
 		  
 		
 		  
-		
-		  
-			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>3</sup></a></li>
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>6</sup></a></li>
 		  
 		
 		  
@@ -319,15 +394,19 @@
 			
 		
 			
+				<li><a href="/tags/college/" title="college">college<sup>9</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/工具/" title="工具">工具<sup>6</sup></a></li>
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>6</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/college/" title="college">college<sup>6</sup></a></li>
+				<li><a href="/tags/工具/" title="工具">工具<sup>6</sup></a></li>
 			
 		
 			
@@ -339,19 +418,15 @@
 			
 		
 			
-				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
 			
 		
 			
@@ -363,6 +438,10 @@
 			
 		
 			
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/干货/" title="干货">干货<sup>2</sup></a></li>
 			
 		
@@ -371,23 +450,19 @@
 			
 		
 			
-				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Octave/" title="Octave">Octave<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
 			
 		
 		</ul>

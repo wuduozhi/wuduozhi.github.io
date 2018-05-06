@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-05T13:13:58.093Z</updated>
+  <updated>2018-05-06T11:39:36.804Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,20 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>总结|我的大二下</title>
+    <link href="http://yoursite.com/2018/05/07/%E6%80%BB%E7%BB%93-%E6%88%91%E7%9A%84%E5%A4%A7%E4%BA%8C%E4%B8%8B/"/>
+    <id>http://yoursite.com/2018/05/07/总结-我的大二下/</id>
+    <published>2018-05-06T19:39:25.000Z</published>
+    <updated>2018-05-06T11:39:36.804Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>深入理解计算机系统|汇编的世界-2</title>
@@ -1815,46 +1829,6 @@ tex2jax: {inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]]
     
       &lt;p&gt;&lt;a href=&quot;http://www.techug.com/post/php-interview-tips.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;一个16年毕业生所经历的php面试&lt;/a&gt;&lt;/p&gt;
 
-    
-    </summary>
-    
-      <category term="面试" scheme="http://yoursite.com/categories/%E9%9D%A2%E8%AF%95/"/>
-    
-    
-      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>面试|Java常考面试题</title>
-    <link href="http://yoursite.com/2018/04/12/%E9%9D%A2%E8%AF%95-Java%E5%B8%B8%E8%80%83%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
-    <id>http://yoursite.com/2018/04/12/面试-Java常考面试题/</id>
-    <published>2018-04-12T08:57:04.000Z</published>
-    <updated>2018-04-24T08:17:22.469Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="JDK和JRE的区别是什么？"><a href="#JDK和JRE的区别是什么？" class="headerlink" title="JDK和JRE的区别是什么？"></a>JDK和JRE的区别是什么？</h3><p>JRE： Java Runtime Environment<br>JDK：Java Development Kit<br>JRE顾名思义是java运行时环境，包含了java虚拟机，java基础类库。是使用java语言编写的程序运行所需要的软件环境，是提供给想运行java程序的用户使用的。<br>JDK顾名思义是java开发工具包，是程序员使用java语言编写java程序所需的开发工具包，是提供给程序员使用的。JDK包含了JRE，同时还包含了编译java源码的编译器javac，还包含了很多java程序调试和分析的工具：jconsole，jvisualvm等工具软件，还包含了java程序编写所需的文档和demo例子程序。<br>如果你需要运行java程序，只需安装JRE就可以了。如果你需要编写java程序，需要安装JDK。<br>JRE根据不同操作系统（如：windows，linux等）和不同JRE提供商（IBM,ORACLE等）有很多版本 </p>
-<p>再说说java的跨平台吧:<br>java源程序先经过javac编译器编译成二进制的.class字节码文件（java的跨平台指的就是.class字节码文件的跨平台，.class字节码文件是与平台无关的），.class文件再运行在jvm上，java解释器（jvm的一部分）会将其解释成对应平台的机器码执行，所以java所谓的跨平台就是在不同平台上安装了不同的jvm，而在不同平台上生成的.class文件都是一样的，而.class文件再由对应平台的jvm解释成对应平台的机器码执行</p>
-<p>最后解释下机器码和字节码的区别:<br> 一，机器码，完全依附硬件而存在～并且不同硬件由于内嵌指令集不同，即使相同的0 1代码<br>意思也可能是不同的～换句话说，根本不存在跨平台性～比如～不同型号的CPU,你给他个指令10001101，他们可能会解析为不同的结果～<br>二，我们知道JAVA是跨平台的，为什么呢？因为他有一个jvm,不论那种硬件，只要你装有jvm,那么他就认识这个JAVA字节码～～～～至于底层的机器码，咱不用管，有jvm搞定，他会把字节码再翻译成所在机器认识的机器码～～～</p>
-<h3 id="是否可以在static环境中访问非static变量？"><a href="#是否可以在static环境中访问非static变量？" class="headerlink" title="是否可以在static环境中访问非static变量？"></a>是否可以在static环境中访问非static变量？</h3><p>static变量在Java中是属于类的，它在所有的实例中的值是一样的。当类被Java虚拟机载入的时候，会对static变量进行初始化。如果你的代码尝试不用实例来访问非static的变量，编译器会报错，因为这些变量还没有被创建出来，还没有跟任何实例关联上。</p>
-<h3 id="Java支持的数据类型有哪些？什么是自动拆装箱？"><a href="#Java支持的数据类型有哪些？什么是自动拆装箱？" class="headerlink" title="Java支持的数据类型有哪些？什么是自动拆装箱？"></a>Java支持的数据类型有哪些？什么是自动拆装箱？</h3><p>Java语言支持的8种基本数据类型是：</p>
-<ul>
-<li>byte</li>
-<li>short</li>
-<li>int</li>
-<li>long</li>
-<li>float</li>
-<li>double</li>
-<li>boolean</li>
-<li>char</li>
-</ul>
-<p>自动装箱是Java编译器在基本数据类型和对应的对象包装类型之间做的一个转化。比如：把int转化成Integer，double转化成Double，等等。反之就是自动拆箱。</p>
-<p>Java支持的数据类型包括两种：一种是基本数据类型，包含byte，char,short, boolean ,int , long, float,double;另一种是引用类型：如String等，其实是对象的引用，JVM中虚拟栈中存的是对象的地址，创建的对象实质在堆中，通过地址来找到堆中的对象的过程，即为引用类型。自动装箱就是Java编译器在基本数据类型和对应的对象包装类型间的转化，即int转化为Integer,自动拆箱是Integer调用其方法将其转化为int的过程 .</p>
-<h3 id="Java支持多继承么？"><a href="#Java支持多继承么？" class="headerlink" title="Java支持多继承么？"></a>Java支持多继承么？</h3><p>Java中类不支持多继承，只支持单继承（即一个类只有一个父类）。 但是java中的接口支持多继承，，即一个子接口可以有多个父接口。（接口的作用是用来扩展对象的功能，一个子接口继承多个父接口，说明子接口扩展了多个功能，当类实现接口时，类就扩展了相应的功能）。 </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;JDK和JRE的区别是什么？&quot;&gt;&lt;a href=&quot;#JDK和JRE的区别是什么？&quot; class=&quot;headerlink&quot; title=&quot;JDK和JRE的区别是什么？&quot;&gt;&lt;/a&gt;JDK和JRE的区别是什么？&lt;/h3&gt;&lt;p&gt;JRE： Java Runtime Envi
     
     </summary>
     

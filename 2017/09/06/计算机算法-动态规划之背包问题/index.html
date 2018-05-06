@@ -12,18 +12,19 @@
 
     
     <meta name="description" content="一切都要从一则故事说起。 话说有一哥们去森林里玩发现了一堆宝石，他数了数，一共有n个。 但他身上能装宝石的就只有一个背包，背包的容量为C。这哥们把n个宝石排成一排并编上号： 0,1,2,…,n-1。第i个宝石对应的体积和价值分别为V[i]和W[i] 。排好后这哥们开始思考： 背包总共也就只能装下体积为C的东西，那我要装下哪些宝石才能让我获得最大的利益呢？ OK，如果是你，你会怎么做？你斩钉截铁的说">
+<meta name="keywords" content="计算机算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="动态规划|背包问题">
-<meta property="og:url" content="http://yoursite.com/2017/09/06/动态规划之背包问题/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/09/06/计算机算法-动态规划之背包问题/index.html">
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="一切都要从一则故事说起。 话说有一哥们去森林里玩发现了一堆宝石，他数了数，一共有n个。 但他身上能装宝石的就只有一个背包，背包的容量为C。这哥们把n个宝石排成一排并编上号： 0,1,2,…,n-1。第i个宝石对应的体积和价值分别为V[i]和W[i] 。排好后这哥们开始思考： 背包总共也就只能装下体积为C的东西，那我要装下哪些宝石才能让我获得最大的利益呢？ OK，如果是你，你会怎么做？你斩钉截铁的说">
 <meta property="og:locale" content="Chinese">
-<meta property="og:image" content="http://yoursite.com/2017/09/06/动态规划之背包问题/images/pic.png">
-<meta property="og:updated_time" content="2017-12-08T16:57:23.105Z">
+<meta property="og:image" content="http://yoursite.com/2017/09/06/计算机算法-动态规划之背包问题/images/pic.png">
+<meta property="og:updated_time" content="2018-05-06T11:35:57.081Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="动态规划|背包问题">
 <meta name="twitter:description" content="一切都要从一则故事说起。 话说有一哥们去森林里玩发现了一堆宝石，他数了数，一共有n个。 但他身上能装宝石的就只有一个背包，背包的容量为C。这哥们把n个宝石排成一排并编上号： 0,1,2,…,n-1。第i个宝石对应的体积和价值分别为V[i]和W[i] 。排好后这哥们开始思考： 背包总共也就只能装下体积为C的东西，那我要装下哪些宝石才能让我获得最大的利益呢？ OK，如果是你，你会怎么做？你斩钉截铁的说">
-<meta name="twitter:image" content="http://yoursite.com/2017/09/06/动态规划之背包问题/images/pic.png">
+<meta name="twitter:image" content="http://yoursite.com/2017/09/06/计算机算法-动态规划之背包问题/images/pic.png">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -87,7 +88,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/09/06/动态规划之背包问题/" title="动态规划|背包问题" itemprop="url">动态规划|背包问题</a>
+      <a href="/2017/09/06/计算机算法-动态规划之背包问题/" title="动态规划|背包问题" itemprop="url">动态规划|背包问题</a>
   </h1>
   <p class="article-author">By
        
@@ -129,6 +130,16 @@
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/计算机算法/">计算机算法</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/计算机算法/">计算机算法</a>
+  </div>
 
 </div>
 
@@ -142,7 +153,7 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2017/09/09/动态规划从新手到专家/" title="动态规划|从新手到专家">
+ <a href="/2017/09/09/计算机算法-动态规划从新手到专家/" title="动态规划|从新手到专家">
   <span>
   动态规划|从新手到专家</span>
 </a>
@@ -212,21 +223,15 @@
 		  
 		
 		  
-		
-		  
-		
-		  
 			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>4</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/colleage/" title="colleage">colleage<sup>2</sup></a></li>
+			<li><a href="/categories/colleage/" title="colleage">colleage<sup>1</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/college/" title="college">college<sup>6</sup></a></li>
-		  
-		
+			<li><a href="/categories/college/" title="college">college<sup>9</sup></a></li>
 		  
 		
 		  
@@ -270,9 +275,7 @@
 		  
 		
 		  
-		
-		  
-			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>3</sup></a></li>
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>6</sup></a></li>
 		  
 		
 		  
@@ -309,15 +312,19 @@
 			
 		
 			
+				<li><a href="/tags/college/" title="college">college<sup>9</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/工具/" title="工具">工具<sup>6</sup></a></li>
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>6</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/college/" title="college">college<sup>6</sup></a></li>
+				<li><a href="/tags/工具/" title="工具">工具<sup>6</sup></a></li>
 			
 		
 			
@@ -329,19 +336,15 @@
 			
 		
 			
-				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
 			
 		
 			
@@ -353,6 +356,10 @@
 			
 		
 			
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/干货/" title="干货">干货<sup>2</sup></a></li>
 			
 		
@@ -361,23 +368,19 @@
 			
 		
 			
-				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Octave/" title="Octave">Octave<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/life/" title="life">life<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
 			
 		
 		</ul>
