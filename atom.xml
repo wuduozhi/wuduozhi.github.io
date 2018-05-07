@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-07T16:03:47.390Z</updated>
+  <updated>2018-05-07T16:13:07.257Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/05/08/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E6%B1%87%E7%BC%96%E7%9A%84%E4%B8%96%E7%95%8C-4/"/>
     <id>http://yoursite.com/2018/05/08/深入理解计算机系统-汇编的世界-4/</id>
     <published>2018-05-07T17:28:03.000Z</published>
-    <updated>2018-05-07T16:03:47.390Z</updated>
+    <updated>2018-05-07T16:13:07.257Z</updated>
     
     <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>本章我们来看一个特别有趣的内容，就是汇编级别的语言，如何利用寄存器实现if/for/while这些高级语言的流程控制，我相信你能感受到它的神奇之处。</p>
 <h3 id="条件码寄存器"><a href="#条件码寄存器" class="headerlink" title="条件码寄存器"></a>条件码寄存器</h3><p>在汇编层面，if/for/while的流程控制，都是通过跳转来实现的，那是怎么判断是否跳转的呢？ <code>条件寄存器</code></p>
@@ -113,6 +113,7 @@
 <p>这下比较清楚了吧，当碰到<code>7d</code>指令（即jle）时，会检查后面的偏移量，结果一看是<code>0x05</code>，于是在条件满足的前提下，会跳过5个字节执行接下来的指令，也就是<code>8b 45 0c</code>（即mov指令）。</p>
 <h3 id="条件传送指令：cmov指令"><a href="#条件传送指令：cmov指令" class="headerlink" title="条件传送指令：cmov指令"></a>条件传送指令：cmov指令</h3><p>接下来我们来看最后一种条件指令，叫做条件传送指令。顾名思义，条件传送指令的意思就是在满足条件的时候进行传送的指令，也就是cmov指令。它与set指令十分相似，同样有12种，也就是加上12种条件码寄存器的组合即可，以下是一张书中的指令表格。</p>
 <p><img src="/images/汇编-24.png" alt="cmov指令"></p>
+<p><a href="http://www.cnblogs.com/zuoxiaolong/p/computer18.html" target="_blank" rel="external">深入理解计算机系统（3.6）—汇编中精妙的流程控制（重要）（难度较高）</a></p>
 ]]></content>
     
     <summary type="html">

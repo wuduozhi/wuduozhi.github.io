@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/05/08/images/汇编-22.png">
 <meta property="og:image" content="http://yoursite.com/images/汇编-23.png">
 <meta property="og:image" content="http://yoursite.com/images/汇编-24.png">
-<meta property="og:updated_time" content="2018-05-07T16:03:47.390Z">
+<meta property="og:updated_time" content="2018-05-07T16:13:07.257Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解计算机系统|汇编的世界-4">
 <meta name="twitter:description" content="引言本章我们来看一个特别有趣的内容，就是汇编级别的语言，如何利用寄存器实现if/for/while这些高级语言的流程控制，我相信你能感受到它的神奇之处。 条件码寄存器在汇编层面，if/for/while的流程控制，都是通过跳转来实现的，那是怎么判断是否跳转的呢？ 条件寄存器    寄存器 作用     CF (Carry Flag) 进位标志寄存器，它记录无符号操作的溢出，当溢出时会被设为1">
@@ -203,6 +203,7 @@
 <p>这下比较清楚了吧，当碰到<code>7d</code>指令（即jle）时，会检查后面的偏移量，结果一看是<code>0x05</code>，于是在条件满足的前提下，会跳过5个字节执行接下来的指令，也就是<code>8b 45 0c</code>（即mov指令）。</p>
 <h3 id="条件传送指令：cmov指令"><a href="#条件传送指令：cmov指令" class="headerlink" title="条件传送指令：cmov指令"></a>条件传送指令：cmov指令</h3><p>接下来我们来看最后一种条件指令，叫做条件传送指令。顾名思义，条件传送指令的意思就是在满足条件的时候进行传送的指令，也就是cmov指令。它与set指令十分相似，同样有12种，也就是加上12种条件码寄存器的组合即可，以下是一张书中的指令表格。</p>
 <p><img src="/images/汇编-24.png" alt="cmov指令"></p>
+<p><a href="http://www.cnblogs.com/zuoxiaolong/p/computer18.html" target="_blank" rel="external">深入理解计算机系统（3.6）—汇编中精妙的流程控制（重要）（难度较高）</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
