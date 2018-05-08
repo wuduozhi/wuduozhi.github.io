@@ -1,0 +1,699 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>深入理解计算机系统|汇编的世界-5 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="这一节我们探讨过程调用[函数调用]是如何完成的。 栈帧的结构倘若我们要想搞清楚过程的实现，就必须先知道栈帧的结构是如何构成的。栈帧其实可以认为是程序栈的一段，而程序栈又是存储器的一段，因此栈帧说到底还是存储器的一段。那么既然是一段，肯定有两个端点。 这两个端点其实就是两个地址，一个标识着起始地址，一个标识着结束地址，而这两个地址，则分别存储在固定的寄存器当中，即起始地址存在%ebp寄存器当中，结束">
+<meta name="keywords" content="深入理解计算机系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解计算机系统|汇编的世界-5">
+<meta property="og:url" content="http://yoursite.com/2018/05/08/深入理解计算机系统-汇编的世界-5/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="这一节我们探讨过程调用[函数调用]是如何完成的。 栈帧的结构倘若我们要想搞清楚过程的实现，就必须先知道栈帧的结构是如何构成的。栈帧其实可以认为是程序栈的一段，而程序栈又是存储器的一段，因此栈帧说到底还是存储器的一段。那么既然是一段，肯定有两个端点。 这两个端点其实就是两个地址，一个标识着起始地址，一个标识着结束地址，而这两个地址，则分别存储在固定的寄存器当中，即起始地址存在%ebp寄存器当中，结束">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/images/汇编-25.png">
+<meta property="og:image" content="http://yoursite.com/images/汇编-26.png">
+<meta property="og:image" content="http://yoursite.com/images/汇编-27.png">
+<meta property="og:image" content="http://yoursite.com/images/汇编-29.png">
+<meta property="og:image" content="http://yoursite.com/images/汇编-28.png">
+<meta property="og:updated_time" content="2018-05-08T05:03:05.691Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入理解计算机系统|汇编的世界-5">
+<meta name="twitter:description" content="这一节我们探讨过程调用[函数调用]是如何完成的。 栈帧的结构倘若我们要想搞清楚过程的实现，就必须先知道栈帧的结构是如何构成的。栈帧其实可以认为是程序栈的一段，而程序栈又是存储器的一段，因此栈帧说到底还是存储器的一段。那么既然是一段，肯定有两个端点。 这两个端点其实就是两个地址，一个标识着起始地址，一个标识着结束地址，而这两个地址，则分别存储在固定的寄存器当中，即起始地址存在%ebp寄存器当中，结束">
+<meta name="twitter:image" content="http://yoursite.com/images/汇编-25.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/05/08/深入理解计算机系统-汇编的世界-5/" title="深入理解计算机系统|汇编的世界-5" itemprop="url">深入理解计算机系统|汇编的世界-5</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-05-08T11:30:10.000Z" itemprop="datePublished"> 发表于 2018-05-08</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#栈帧的结构"><span class="toc-number">1.</span> <span class="toc-text">栈帧的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#过程的实现"><span class="toc-number">2.</span> <span class="toc-text">过程的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#过程相关指令：call、leave、ret"><span class="toc-number">3.</span> <span class="toc-text">过程相关指令：call、leave、ret</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#寄存器使用的规矩"><span class="toc-number">4.</span> <span class="toc-text">寄存器使用的规矩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一个过程示例"><span class="toc-number">5.</span> <span class="toc-text">一个过程示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#递归过程调用"><span class="toc-number">6.</span> <span class="toc-text">递归过程调用</span></a></li></ol>
+		
+		</div>
+		
+		<p>这一节我们探讨过程调用[函数调用]是如何完成的。</p>
+<h3 id="栈帧的结构"><a href="#栈帧的结构" class="headerlink" title="栈帧的结构"></a>栈帧的结构</h3><p>倘若我们要想搞清楚过程的实现，就必须先知道栈帧的结构是如何构成的。栈帧其实可以认为是程序栈的一段，而程序栈又是存储器的一段，因此栈帧说到底还是存储器的一段。那么既然是一段，肯定有两个端点。</p>
+<p>这两个端点其实就是两个地址，<strong>一个标识着起始地址，一个标识着结束地址，而这两个地址，则分别存储在固定的寄存器当中，即起始地址存在%ebp寄存器当中，结束地址存在%esp寄存器当中</strong>。至于为什么要存在这两个寄存器当中，就像程序的下一条指令地址为什么存在PC当中一样，是毫无意义的问题，就是这样规定的，没有为什么。</p>
+<p>起始地址和结束地址还有另外的名字，起始地址通常称为帧指针，结束地址通常称为栈指针（也就是栈顶的地址）。因此，我们就把过程的存储器内存使用区域称为栈帧。这下我们就了解了栈帧的来历以及它们的命名习惯和存储惯例，接下来的一幅图，它揭示了栈帧在存储器当中的位置。</p>
+<p><img src="/images/汇编-25.png" alt="栈帧"></p>
+<p>这个图基本上已经包括了程序栈的构成，它由一系列栈帧构成，这些栈帧每一个都对应一个过程，而且每一个帧指针+4的位置都存储着函数的返回地址，每一个帧指针指向的存储器位置当中都备份着调用者的帧指针。各位需要知道的是，每一个栈帧都建立在调用者的下方（也就是地址递减的方向），当被调用者执行完毕时，这一段栈帧会被释放。还有一点很重要的是，%ebp和%esp的值指示着栈帧的两端，而栈指针会在运行时移动，所以大部分时候，在访问存储器的时候会基于帧指针访问，因为在一直移动的栈指针无法根据偏移量准确的定位一个存储器位置。</p>
+<p>　　还有一点比较重要的内容，就是栈帧当中内存的分配和释放。由于栈帧是向地址递减的方向延伸，因此如果我们将栈指针减去一定的值，就相当于给栈帧分配了一定空间的内存。这个理解起来很简单，因为在栈指针向下移动以后（也就是变小了），帧指针和栈指针中间的区域会变长，这就是给栈帧分配了更多的内存。相反，如果将栈指针加上一定的值，也就是向上移动，那么就相当于压缩了栈帧的长度，也就是说内存被释放了。<strong>需要注意的是，上面的一切内容，都基于一个前提，那就是帧指针在过程调用当中是不会移动的。</strong></p>
+<h3 id="过程的实现"><a href="#过程的实现" class="headerlink" title="过程的实现"></a>过程的实现</h3><p>过程虽然很好，但想要实现过程，还是存在一定难度的，尽管现在看来它并不困难。<strong>它实现的难度主要就在于数据如何在调用者和被调用者之间传递，以及在被调用者当中局部变量内存的分配以及释放。</strong></p>
+<p>不过天大的难题都难不倒那群计算机界的大神们，他们找出了一种方式，可以简单并有效的处理过程实现当中的难题。这一切似乎看起来十分偶然，但其实也是必然的。世间的很多规律都是客观存在的，只是它在等着我们去发现而已。</p>
+<p>总的来说，过程实现当中，<code>参数传递</code>以及<code>局部变量内存的分配和释放</code>都是通过以上介绍的栈帧来实现的，大部分情况下，我们认为过程调用当中做了以下几个操作。</p>
+<p>1、备份原来的帧指针，调整当前的帧指针到栈指针的位置，这个过程就是我们经常看到的如下两句汇编代码做的事情。</p>
+<pre><code>pushl    %ebp
+movl    %esp, %ebp
+</code></pre><p>2、建立起来的栈帧就是为被调用者准备的，当被调用者使用栈帧时，需要给临时变量分配预留内存，这一步一般是经过下面这样的汇编代码处理的。</p>
+<pre><code>subl    $16,%esp
+</code></pre><p>3、备份被调用者保存的寄存器当中的值，如果有值的话，备份的方式就是压入栈顶。因此会采用如下的汇编代码处理。</p>
+<pre><code>pushl    %ebx
+</code></pre><p>4、使用建立好的栈帧，比如读取和写入，一般使用mov，push以及pop指令等等。</p>
+<p>5、恢复被调用者寄存器当中的值，这一过程其实是从栈帧中将备份的值再恢复到寄存器，不过此时这些值可能已经不在栈顶了。因此在恢复时，大多数会使用pop指令，但也并非一定如此。</p>
+<p>6、释放被调用者的栈帧，释放就意味着将栈指针加大，而具体的做法一般是直接将栈指针指向帧指针，因此会采用类似下面的汇编代码处理（也可能是addl）。</p>
+<pre><code>movl    %ebp,%esp
+</code></pre><p>7、<strong>恢复调用者的栈帧，恢复其实就是调整栈帧两端，使得当前栈帧的区域又回到了原始的位置</strong>。因为栈指针已经在第六步调整好了，因此此时只需要将备份的原帧指针弹出到%ebp即可。类似的汇编代码如下。</p>
+<pre><code>popl    %ebp
+</code></pre><p>8、弹出返回地址，跳出当前过程，继续执行调用者的代码。<strong>此时会将栈顶的返回地址弹出到PC，然后程序将按照弹出的返回地址继续执行。这个过程一般使用<code>ret指令</code>完成。</strong></p>
+<p>过程的实现大概就是以上八个步骤组成的，不过这些步骤并不都是必须的（大部分时候，开启编译器的优化会优化掉很多步骤），而且第6和第7步有时会使用leave指令代替。</p>
+<h3 id="过程相关指令：call、leave、ret"><a href="#过程相关指令：call、leave、ret" class="headerlink" title="过程相关指令：call、leave、ret"></a>过程相关指令：call、leave、ret</h3><p>由于过程调用当中会经常见到几个新的指令，因此在这里，先给大家介绍一下这三个指令。它们三个都是过程实现当中非常重要的角色，这三个指令很类似，因为它们都是<strong>一个指令做了两件事</strong>，这里就依次介绍一下它们各自都做了什么事。</p>
+<ul>
+<li><p>call指令：它一共做两件事，第一件是将返回地址（也就是call指令执行时PC的值）压入栈顶，第二件是将程序跳转到当前调用的方法的起始地址。第一件事是为了为过程的返回做准备，而第二件事则是真正的指令跳转。</p>
+</li>
+<li><p>leave指令：它也是一共做两件事，第一件是将栈指针指向帧指针，第二件是弹出备份的原帧指针到%ebp。第一件事是为了释放当前栈帧，第二件事是为了恢复调用者的栈帧。</p>
+</li>
+<li><p>ret指令：它同样也是做两件事，第一件是将栈顶的返回地址弹出到PC，第二件事则是按照PC此时指示的指令地址继续执行程序。这两件事其实也可以认为是一件事，因为第二件事是系统自己保证的，系统总是按照PC的指令地址执行程序。</p>
+</li>
+</ul>
+<p>可以看出，除了call指令之外，leave和ret指令都与上面8个步骤有些不可分割的关系。call指令没有在8个步骤当中体现，是因为它发生在进入过程之前，因此在第1步发生的时候，call指令往往已经被执行了，并且已经为ret指令准备好了返回地址。</p>
+<h3 id="寄存器使用的规矩"><a href="#寄存器使用的规矩" class="headerlink" title="寄存器使用的规矩"></a>寄存器使用的规矩</h3><p>寄存器一共就8个，因此在数目上来说的话，使用起来肯定是捉襟见肘的。在这种情况下，就肯定需要一定的规矩去约束程序如何使用，否则要是一群人翻同一个人的牌子，那到底伺候谁才是呢。其实我们在之前已经或多或少的接触到了寄存器的规矩，比如%eax一般用于存储过程的返回值，%ebp保存帧指针，%esp保存栈指针。这里要介绍的，是另外一个规矩，而这个规矩是与过程实现相关的。</p>
+<p>试想一下，在调用一个过程时，无论是调用者还是被调用者，都可能更新寄存器的值。假设调用者在%edx中存了一个整数值100，而被调用者也使用这个寄存器，并更新成了1000，于是悲剧就发生了。当过程调用完毕返回后，调用者再使用%edx的时候，值已经从100变成了1000，这几乎必将导致程序会错误的执行下去。</p>
+<p>为了避免上面这种情况发生，就需要在调用者和被调用者之间做一个协调。于是便有了这样的规矩，它的描述如下，我们假设这里在过程P中调用了过程Q，P是调用者，Q是被调用者。</p>
+<ul>
+<li><p><code>%eax、%edx、%ecx</code>：这三个寄存器被称为调用者保存寄存器。意思就是说，这三个寄存器由调用者P来保存，而对于Q来说，Q可以随便使用，用完了就不用再管了。</p>
+</li>
+<li><p><code>%ebx、%esi、%edi</code>：这三个寄存器被称为被调用者保存寄存器。同样的，这里是指这三个寄存器由被调用者Q来保存，换句话说，Q可以使用这三个寄存器，但是如果里面有P的变量值，Q必须保证使用完以后将这三个寄存器恢复到原来的值，这里的备份，其实就是上面那8个步骤中第3个步骤做的事情。</p>
+</li>
+</ul>
+<h3 id="一个过程示例"><a href="#一个过程示例" class="headerlink" title="一个过程示例"></a>一个过程示例</h3><p>进过上面纸上谈兵的阶段，接下来我们就要探索真理了，我们随便写一个如下的过程调用的例子，我们称它为function.c。</p>
+<pre><code>int add(int a,int b){
+   register int c = a + b; 
+   return c;
+}
+
+int main(){
+   int a = 100;
+   int b = 101;
+   int c = add(a,b);
+   return c;
+}
+</code></pre><p>这里为了完整的展现那8个步骤，因此给变量c加了register关键字修饰，这将会将c送入寄存器，从而更改被调用者保存寄存器，就会导致步骤3的发生。接下来我们就使用参数-S来编译这段代码，然后使用cat来看看这段代码的汇编形式。以下是main函数以及add函数各自的栈帧情况，贴心的我已经详细标记了它们属于哪个步骤。</p>
+<p><img src="/images/汇编-26.png" alt="过程调用"></p>
+<p><img src="/images/汇编-27.png" alt="过程调用"></p>
+<p>由于我们没有使用编译优化，因此汇编代码会多出很多，这也为了完整的诠释我们的步骤。可以看到，图中包含了完整的8个步骤，但是无论是main函数还是add函数，它们单独来讲，都没有完整的8个步骤，这其实是大多数的情况。大部分时候，一个函数不会完全包含上述的8个步骤。</p>
+<p>这里有几点各位需要注意的地方，首先第一点是，add函数会将返回结果存入%eax（前提是返回值可以使用整数来表示），在main函数中，call指令之后，默认将%eax作为返回结果来使用。第二点是，所有函数（包括main函数）都必须有第1步和第6、7、8步，这是必须的4步。最后一点是，我们的栈指针和帧指针有固定的大小关系，即栈指针永远小于等于帧指针，当二者相等时，当前栈帧被认为没有分配内存空间。</p>
+<h3 id="递归过程调用"><a href="#递归过程调用" class="headerlink" title="递归过程调用"></a>递归过程调用</h3><p>接下来我们看一个特殊的过程调用–递归是怎么实现的。</p>
+<p>看一个递归求和的例子：</p>
+<pre><code>int rfact(int n){
+    int result;
+    if(n&lt;=1){
+        result = 1;
+    }else{
+        result = n * rfact(n-1);
+    }
+    return result;
+}
+</code></pre><p>接下来我们编译一下这段代码，使用-O1优化，我们可以得到如下的汇编代码。</p>
+<p><img src="/images/汇编-29.png" alt="汇编代码"></p>
+<p>如果理解了过程调用的机制，不难读懂这个递归调用的例子，但是难点就在于，栈帧的变化是如何的，贴心的我就给各位演示一下栈帧的变化过程，如果各位已经把前面的那个main函数和add函数搞定了，那么可以在这里验证一下自己的理解是否正确。</p>
+<p><img src="/images/汇编-28.png" alt="递归调用"></p>
+<p>需要特殊说明的是，以上每一个栈帧（大括号括起来的），最上面（也就是地址递增方向）的都是帧指针位置，最下面的都是栈指针位置。然而寄存器中只有%ebp和%esp保存栈帧指针，因此同一时间只能保存一对。当进展到第三层的时候，已经有了三个栈帧（原则上来讲一定是多于3个），寄存器当然是存不下的，因此就需要在存储器当中备份一下，之后再恢复。于是就出现了每个栈帧的帧指针指向的存储器位置，都会备份着外层方法（也就是调用者）的帧指针。</p>
+<p>当方法递归到n=1结束时，栈帧会自下向上依次收回，栈帧指针（也就是%ebp和%esp当中的值）都会依次向上移动，直到程序结束。也就是说，上面的三幅图，如果倒过来，就是递归方法依次结束时栈帧的状态。</p>
+<p>由此就可以看出，过程当中栈帧建立以及完成的惯例，可以保证递归调用的正常运行，包括循环调用。不得不说，这群计算机界的大神们实在是太牛了，尽管当栈帧出现以后，看起来也并不复杂，但难点就在于<code>无中生有的发现或者说某种意义上的创造</code>。</p>
+<p>文章内容来自：<a href="http://www.cnblogs.com/zuoxiaolong/p/computer19.html" target="_blank" rel="external">深入理解计算机系统（3.7）—汇编世界当中过程的经典（十分重要）（难度较高）</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/深入理解计算机系统/">深入理解计算机系统</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/深入理解计算机系统/">深入理解计算机系统</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/05/08/深入理解计算机系统-汇编的世界-4/"  title="深入理解计算机系统|汇编的世界-4">
+ <span>深入理解计算机系统|汇编的世界-4
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>16</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>8</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/干货/" title="干货">干货<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/操作系统/" title="操作系统">操作系统<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/架构/" title="架构">架构<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>8</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机网络/" title="计算机网络">计算机网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/运维/" title="运维">运维<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/面试/" title="面试">面试<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/college/" title="college">college<sup>12</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具/" title="工具">工具<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/操作系统/" title="操作系统">操作系统<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/面试/" title="面试">面试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/干货/" title="干货">干货<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/运维/" title="运维">运维<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/架构/" title="架构">架构<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>
