@@ -1,0 +1,665 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>深入理解计算机系统|编译器堆栈保护原理 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="引言以堆栈溢出为代表的缓冲区溢出已成为最为普遍的安全漏洞。由此引发的安全问题比比皆是。早在 1988 年，美国康奈尔大学的计算机科学系研究生莫里斯 (Morris) 利用 UNIX fingered 程序的溢出漏洞，写了一段恶意程序并传播到其他机器上，结果造成 6000 台 Internet 上的服务器瘫痪，占当时总数的 10%。各种操作系统上出现的溢出漏洞也数不胜数。为了尽可能避免缓冲区溢出漏洞">
+<meta name="keywords" content="深入理解计算机系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解计算机系统|编译器堆栈保护原理">
+<meta property="og:url" content="http://yoursite.com/2018/05/09/深入理解计算机系统-编译器堆栈保护原理/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="引言以堆栈溢出为代表的缓冲区溢出已成为最为普遍的安全漏洞。由此引发的安全问题比比皆是。早在 1988 年，美国康奈尔大学的计算机科学系研究生莫里斯 (Morris) 利用 UNIX fingered 程序的溢出漏洞，写了一段恶意程序并传播到其他机器上，结果造成 6000 台 Internet 上的服务器瘫痪，占当时总数的 10%。各种操作系统上出现的溢出漏洞也数不胜数。为了尽可能避免缓冲区溢出漏洞">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/images/堆栈溢出-01.jpg">
+<meta property="og:image" content="http://yoursite.com/images/堆栈溢出-02.jpg">
+<meta property="og:updated_time" content="2018-05-08T17:29:55.187Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入理解计算机系统|编译器堆栈保护原理">
+<meta name="twitter:description" content="引言以堆栈溢出为代表的缓冲区溢出已成为最为普遍的安全漏洞。由此引发的安全问题比比皆是。早在 1988 年，美国康奈尔大学的计算机科学系研究生莫里斯 (Morris) 利用 UNIX fingered 程序的溢出漏洞，写了一段恶意程序并传播到其他机器上，结果造成 6000 台 Internet 上的服务器瘫痪，占当时总数的 10%。各种操作系统上出现的溢出漏洞也数不胜数。为了尽可能避免缓冲区溢出漏洞">
+<meta name="twitter:image" content="http://yoursite.com/images/堆栈溢出-01.jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/05/09/深入理解计算机系统-编译器堆栈保护原理/" title="深入理解计算机系统|编译器堆栈保护原理" itemprop="url">深入理解计算机系统|编译器堆栈保护原理</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-05-09T00:44:38.000Z" itemprop="datePublished"> Published 2018-05-09</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编译器堆栈保护原理"><span class="toc-number">2.</span> <span class="toc-text">编译器堆栈保护原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#“Canaries”-探测"><span class="toc-number">3.</span> <span class="toc-text">“Canaries” 探测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GCC-中的堆栈保护实现"><span class="toc-number">4.</span> <span class="toc-text">GCC 中的堆栈保护实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#GCC-中的-Canaries-探测"><span class="toc-number">4.1.</span> <span class="toc-text">GCC 中的 Canaries 探测</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>以堆栈溢出为代表的缓冲区溢出已成为最为普遍的安全漏洞。由此引发的安全问题比比皆是。早在 1988 年，美国康奈尔大学的计算机科学系研究生莫里斯 (Morris) 利用 UNIX fingered 程序的溢出漏洞，写了一段恶意程序并传播到其他机器上，结果造成 6000 台 Internet 上的服务器瘫痪，占当时总数的 10%。各种操作系统上出现的溢出漏洞也数不胜数。为了尽可能避免缓冲区溢出漏洞被攻击者利用，现今的编译器设计者已经开始在编译器层面上对堆栈进行保护。现在已经有了好几种编译器堆栈保护的实现，其中最著名的是 StackGuard 和 Stack-smashing Protection (SSP，又名 ProPolice）。</p>
+<h3 id="编译器堆栈保护原理"><a href="#编译器堆栈保护原理" class="headerlink" title="编译器堆栈保护原理"></a>编译器堆栈保护原理</h3><p>我们知道攻击者利用堆栈溢出漏洞时，通常会破坏当前的函数栈。例如，攻击者利用清单 1 中的函数的堆栈溢出漏洞时，典型的情况是攻击者会试图让程序往 name 数组中写超过数组长度的数据，直到函数栈中的返回地址被覆盖，使该函数返回时跳转至攻击者注入的恶意代码或 shellcode 处执行。溢出攻击后，函数栈变成了图 2 所示的情形，与溢出前（图 1）比较可以看出原本堆栈中的 EBP，返回地址已经被溢出字符串覆盖，即函数栈已经被破坏。</p>
+<pre><code>int vulFunc() {
+    char name[10];
+    //…
+    return 0;
+}
+</code></pre><p>溢出前的函数栈<br><img src="/images/堆栈溢出-01.jpg" alt="堆栈溢出"></p>
+<p>出后的函数栈<br><img src="/images/堆栈溢出-02.jpg" alt="堆栈溢出"></p>
+<p>如果能在运行时检测出这种破坏，就有可能对函数栈进行保护。目前的堆栈保护实现大多使用基于 “Canaries” 的探测技术来完成对这种破坏的检测。</p>
+<h3 id="“Canaries”-探测"><a href="#“Canaries”-探测" class="headerlink" title="“Canaries” 探测"></a>“Canaries” 探测</h3><p>要检测对函数栈的破坏，需要修改函数栈的组织，在缓冲区和控制信息（如 EBP 等）间插入一个 canary word。这样，当缓冲区被溢出时，在返回地址被覆盖之前 canary word 会首先被覆盖。通过检查 canary word 的值是否被修改，就可以判断是否发生了溢出攻击。</p>
+<p>常见的 canary word：</p>
+<ul>
+<li><p><strong>Terminator canaries</strong><br>由于绝大多数的溢出漏洞都是由那些不做数组越界检查的 C 字符串处理函数引起的，而这些字符串都是以 NULL 作为终结字符的。选择 NULL, CR, LF 这样的字符作为 canary word 就成了很自然的事情。例如，若 canary word 为 0x000aff0d，为了使溢出不被检测到，攻击者需要在溢出字符串中包含 0x000aff0d 并精确计算 canaries 的位置，使 canaries 看上去没有被改变。然而，0x000aff0d 中的 0x00 会使 strcpy() 结束复制从而防止返回地址被覆盖。而 0x0a 会使 gets() 结束读取。插入的 terminator canaries 给攻击者制造了很大的麻烦。</p>
+</li>
+<li><p><strong>Random canaries</strong><br>这种 canaries 是<code>随机产生</code>的。并且这样的随机数通常不能被攻击者读取。这种随机数在程序初始化时产生，然后保存在一个未被隐射到虚拟地址空间的内存页中。这样当攻击者试图通过指针访问保存随机数的内存时就会引发 segment fault。但是由于这个随机数的副本最终会作为 canary word 被保存在函数栈中，攻击者仍有可能通过函数栈获得 canary word 的值。</p>
+</li>
+<li><p><strong>andom XOR canaries</strong><br>这种 canaries 是由一个随机数和函数栈中的所有控制信息、返回地址通过异或运算得到。这样，函数栈中的 canaries 或者任何控制信息、返回地址被修改就都能被检测到了。</p>
+</li>
+</ul>
+<p>目前主要的编译器堆栈保护实现，如 Stack Guard，Stack-smashing Protection(SSP) 均把 Canaries 探测作为主要的保护技术，但是 Canaries 的产生方式各有不同。下面以 GCC 为例，简要介绍堆栈保护技术在 GCC 中的应用。</p>
+<h3 id="GCC-中的堆栈保护实现"><a href="#GCC-中的堆栈保护实现" class="headerlink" title="GCC 中的堆栈保护实现"></a>GCC 中的堆栈保护实现</h3><p>GCC 4.1 中三个与堆栈保护有关的编译选项</p>
+<ul>
+<li><p><code>-fstack-protector</code>：启用堆栈保护，不过只为局部变量中含有 char 数组的函数插入保护代码。</p>
+</li>
+<li><p><code>-fstack-protector-all</code>：启用堆栈保护，为所有函数插入保护代码。</p>
+</li>
+<li><p><code>-fno-stack-protector</code>：禁用堆栈保护。</p>
+</li>
+</ul>
+<h4 id="GCC-中的-Canaries-探测"><a href="#GCC-中的-Canaries-探测" class="headerlink" title="GCC 中的 Canaries 探测"></a>GCC 中的 Canaries 探测</h4><p>下面通过一个例子分析 GCC 堆栈保护所生成的代码。分别使用 <code>-fstack-protector</code> 选项和 <code>-fno-stack-protector</code> 编译清单2中的代码得到可执行文件 demo_sp (-fstack-protector)，demo_nosp (-fno-stack-protector)。</p>
+<pre><code>int main() {
+    int i;
+    char buffer[64];
+    i = 1;
+    buffer[0] = &apos;a&apos;;
+    return 0;
+}
+</code></pre><p>然后用 gdb 分别反汇编 demo_sp，deno_nosp。</p>
+<p>demo_nosp 的汇编代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">(gdb) disas main</div><div class="line">Dump of assembler code for function main:</div><div class="line">0x08048344 &lt;main+0&gt;:    lea    0x4(%esp),%ecx</div><div class="line">0x08048348 &lt;main+4&gt;:    and    $0xfffffff0,%esp</div><div class="line">0x0804834b &lt;main+7&gt;:    pushl  0xfffffffc(%ecx)</div><div class="line">0x0804834e &lt;main+10&gt;:   push   %ebp</div><div class="line">0x0804834f &lt;main+11&gt;:   mov    %esp,%ebp</div><div class="line">0x08048351 &lt;main+13&gt;:   push   %ecx</div><div class="line">0x08048352 &lt;main+14&gt;:   sub    $0x50,%esp</div><div class="line">0x08048355 &lt;main+17&gt;:   movl   $0x1,0xfffffff8(%ebp)</div><div class="line">0x0804835c &lt;main+24&gt;:   movb   $0x61,0xffffffb8(%ebp)</div><div class="line">0x08048360 &lt;main+28&gt;:   mov    $0x0,%eax</div><div class="line">0x08048365 &lt;main+33&gt;:   add    $0x50,%esp</div><div class="line">0x08048368 &lt;main+36&gt;:   pop    %ecx</div><div class="line">0x08048369 &lt;main+37&gt;:   pop    %ebp</div><div class="line">0x0804836a &lt;main+38&gt;:   lea    0xfffffffc(%ecx),%esp</div><div class="line">0x0804836d &lt;main+41&gt;:   ret    </div><div class="line">End of assembler dump.</div></pre></td></tr></table></figure>
+<p>demo_sp 的汇编代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">(gdb) disas main</div><div class="line">Dump of assembler code for function main:</div><div class="line">0x08048394 &lt;main+0&gt;:    lea    0x4(%esp),%ecx</div><div class="line">0x08048398 &lt;main+4&gt;:    and    $0xfffffff0,%esp</div><div class="line">0x0804839b &lt;main+7&gt;:    pushl  0xfffffffc(%ecx)</div><div class="line">0x0804839e &lt;main+10&gt;:   push   %ebp</div><div class="line">0x0804839f &lt;main+11&gt;:   mov    %esp,%ebp</div><div class="line">0x080483a1 &lt;main+13&gt;:   push   %ecx</div><div class="line">0x080483a2 &lt;main+14&gt;:   sub    $0x54,%esp</div><div class="line">0x080483a5 &lt;main+17&gt;:   mov    %gs:0x14,%eax</div><div class="line">0x080483ab &lt;main+23&gt;:   mov    %eax,0xfffffff8(%ebp)</div><div class="line">0x080483ae &lt;main+26&gt;:   xor    %eax,%eax</div><div class="line">0x080483b0 &lt;main+28&gt;:   movl   $0x1,0xffffffb4(%ebp)</div><div class="line">0x080483b7 &lt;main+35&gt;:   movb   $0x61,0xffffffb8(%ebp)</div><div class="line">0x080483bb &lt;main+39&gt;:   mov    $0x0,%eax</div><div class="line">0x080483c0 &lt;main+44&gt;:   mov    0xfffffff8(%ebp),%edx</div><div class="line">0x080483c3 &lt;main+47&gt;:   xor    %gs:0x14,%edx</div><div class="line">0x080483ca &lt;main+54&gt;:   je     0x80483d1 &lt;main+61&gt;</div><div class="line">0x080483cc &lt;main+56&gt;:   call   0x80482fc &lt;__stack_chk_fail@plt&gt;</div><div class="line">0x080483d1 &lt;main+61&gt;:   add    $0x54,%esp</div><div class="line">0x080483d4 &lt;main+64&gt;:   pop    %ecx</div><div class="line">0x080483d5 &lt;main+65&gt;:   pop    %ebp</div><div class="line">0x080483d6 &lt;main+66&gt;:   lea    0xfffffffc(%ecx),%esp</div><div class="line">0x080483d9 &lt;main+69&gt;:   ret    </div><div class="line">End of assembler dump.</div></pre></td></tr></table></figure></p>
+<p>demo_nosp 的汇编代码中地址为 0x08048344 的指令将 esp+4 存入 ecx，此时 esp 指向的内存中保存的是返回地址。地址为 0x0804834b 的指令将 ecx-4 所指向的内存压栈，由于之前已将 esp+4 存入 ecx，所以该指令执行后原先 esp 指向的内容将被压栈，即返回地址被再次压栈。0x08048348 处的 and 指令使堆顶以 16 字节对齐。从 0x0804834e 到 0x08048352 的指令是则保存了旧的 EBP，并为函数设置了新的栈框。当函数完成时，0x08048360 处的 mov 指令将返回值放入 EAX，然后恢复原来的 EBP，ESP。不难看出，demo_nosp 的汇编代码中，没有任何对堆栈进行检查和保护的代码。</p>
+<p>将用 <code>-fstack-protector</code> 选项编译的 demo_sp 与没有堆栈保护的 demo_nosp 的汇编代码相比较，两者最显著的区别就是在函数真正执行前多了 3 条语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">0x080483a5 &lt;main+17&gt;:   mov    %gs:0x14,%eax</div><div class="line">0x080483ab &lt;main+23&gt;:   mov    %eax,0xfffffff8(%ebp)</div><div class="line">0x080483ae &lt;main+26&gt;:   xor    %eax,%eax</div></pre></td></tr></table></figure>
+<p>在函数返回前又多了 4 条语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">0x080483c0 &lt;main+44&gt;:   mov    0xfffffff8(%ebp),%edx</div><div class="line">0x080483c3 &lt;main+47&gt;:   xor    %gs:0x14,%edx</div><div class="line">0x080483ca &lt;main+54&gt;:   je     0x80483d1 &lt;main+61&gt;</div><div class="line">0x080483cc &lt;main+56&gt;:   call   0x80482fc &lt;__stack_chk_fail@plt&gt;</div></pre></td></tr></table></figure></p>
+<p>这多出来的语句便是 SSP 堆栈保护的关键所在，通过这几句代码就在函数栈框中插入了一个 Canary，并实现了通过这个 canary 来检测函数栈是否被破坏。</p>
+<p><code>%gs:0x14</code> 中保存是一个随机数，0x080483a5 到 0x080483ae 处的 3 条语句将这个随机数放入了栈中 [EBP-8] 的位置。函数返回前 0x080483c0 到 0x080483cc 处的 4 条语句则将栈中 [EBP-8] 处保存的 Canary 取出并与 %gs:0x14 中的随机数作比较。若不等，则说明函数执行过程中发生了溢出，函数栈框已经被破坏，此时程序会跳转到 <code>__stack_chk_fail</code> 输出错误消息然后中止运行。若相等，则函数正常返回。</p>
+<p>文章来源：<a href="https://www.ibm.com/developerworks/cn/linux/l-cn-gccstack/index.html" target="_blank" rel="external">IBM-GCC 中的编译器堆栈保护技术</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/深入理解计算机系统/">深入理解计算机系统</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/深入理解计算机系统/">深入理解计算机系统</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/05/09/深入理解计算机系统-汇编的世界-6/"  title="深入理解计算机系统|汇编的世界-6">
+ <span>深入理解计算机系统|汇编的世界-6
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>16</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>8</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/干货/" title="干货">干货<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/操作系统/" title="操作系统">操作系统<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/架构/" title="架构">架构<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机网络/" title="计算机网络">计算机网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/运维/" title="运维">运维<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/面试/" title="面试">面试<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/college/" title="college">college<sup>12</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>10</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具/" title="工具">工具<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/操作系统/" title="操作系统">操作系统<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/面试/" title="面试">面试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/干货/" title="干货">干货<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/运维/" title="运维">运维<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/架构/" title="架构">架构<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>
