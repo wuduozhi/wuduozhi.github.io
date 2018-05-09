@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="GDB概述GDB是GNU开源组织发布的一个强大的UNIX下的程序调试工具。或许，各位比较喜欢那种图形界面方式的，像VC、BCB等IDE的调试，但如果你是在UNIX平台下做软件，你会发现GDB这个调试工具有比VC、BCB的图形化调试器更强大的功能。所谓“寸有所长，尺有所短”就是这个道理。 一般来说，GDB主要帮忙你完成下面四个方面的功能：  启动你的程序，可以按照你的自定义的要求随心所欲的运行程序。">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-05-08T06:16:13.200Z">
+<meta property="og:updated_time" content="2018-05-09T02:59:12.372Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="工具|gdb调试">
 <meta name="twitter:description" content="GDB概述GDB是GNU开源组织发布的一个强大的UNIX下的程序调试工具。或许，各位比较喜欢那种图形界面方式的，像VC、BCB等IDE的调试，但如果你是在UNIX平台下做软件，你会发现GDB这个调试工具有比VC、BCB的图形化调试器更强大的功能。所谓“寸有所长，尺有所短”就是这个道理。 一般来说，GDB主要帮忙你完成下面四个方面的功能：  启动你的程序，可以按照你的自定义的要求随心所欲的运行程序。">
@@ -102,7 +102,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GDB概述"><span class="toc-number">1.</span> <span class="toc-text">GDB概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用GDB"><span class="toc-number">2.</span> <span class="toc-text">使用GDB</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#whatis-命令"><span class="toc-number">2.1.</span> <span class="toc-text">whatis 命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#set-命令"><span class="toc-number">2.2.</span> <span class="toc-text">set 命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#next和step命令"><span class="toc-number">2.3.</span> <span class="toc-text">next和step命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#nexti和stepi命令"><span class="toc-number">2.4.</span> <span class="toc-text">nexti和stepi命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#list"><span class="toc-number">2.5.</span> <span class="toc-text">list</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#watch"><span class="toc-number">2.6.</span> <span class="toc-text">watch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看函数返回值"><span class="toc-number">2.7.</span> <span class="toc-text">查看函数返回值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看连续内存"><span class="toc-number">2.8.</span> <span class="toc-text">查看连续内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看内存"><span class="toc-number">2.9.</span> <span class="toc-text">查看内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自动显示"><span class="toc-number">2.10.</span> <span class="toc-text">自动显示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#几个相关的命令如下："><span class="toc-number">2.11.</span> <span class="toc-text">几个相关的命令如下：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一些小技巧"><span class="toc-number">2.12.</span> <span class="toc-text">一些小技巧</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objdump命令的使用"><span class="toc-number">3.</span> <span class="toc-text">objdump命令的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#for-example"><span class="toc-number">3.1.</span> <span class="toc-text">for example</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hexdump"><span class="toc-number">4.</span> <span class="toc-text">hexdump</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GDB概述"><span class="toc-number">1.</span> <span class="toc-text">GDB概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用GDB"><span class="toc-number">2.</span> <span class="toc-text">使用GDB</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#whatis-命令"><span class="toc-number">2.1.</span> <span class="toc-text">whatis 命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#set-命令"><span class="toc-number">2.2.</span> <span class="toc-text">set 命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#next和step命令"><span class="toc-number">2.3.</span> <span class="toc-text">next和step命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#nexti和stepi命令"><span class="toc-number">2.4.</span> <span class="toc-text">nexti和stepi命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#list"><span class="toc-number">2.5.</span> <span class="toc-text">list</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#disas"><span class="toc-number">2.6.</span> <span class="toc-text">disas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#watch"><span class="toc-number">2.7.</span> <span class="toc-text">watch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看函数返回值"><span class="toc-number">2.8.</span> <span class="toc-text">查看函数返回值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看连续内存"><span class="toc-number">2.9.</span> <span class="toc-text">查看连续内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看内存"><span class="toc-number">2.10.</span> <span class="toc-text">查看内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自动显示"><span class="toc-number">2.11.</span> <span class="toc-text">自动显示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#带有命令行参数"><span class="toc-number">2.12.</span> <span class="toc-text">带有命令行参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#几个相关的命令如下："><span class="toc-number">2.13.</span> <span class="toc-text">几个相关的命令如下：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一些小技巧"><span class="toc-number">2.14.</span> <span class="toc-text">一些小技巧</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objdump命令的使用"><span class="toc-number">3.</span> <span class="toc-text">objdump命令的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#for-example"><span class="toc-number">3.1.</span> <span class="toc-text">for example</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hexdump"><span class="toc-number">4.</span> <span class="toc-text">hexdump</span></a></li></ol>
 		
 		</div>
 		
@@ -210,6 +210,33 @@
 <li><filename:function>     文件中的函数。</filename:function></li>
 <li>&lt;*address&gt; 程序运行时的语句在内存中的地址。</li>
 </ul>
+<h4 id="disas"><a href="#disas" class="headerlink" title="disas"></a>disas</h4><p><code>disas</code>命令用于查看汇编代码。</p>
+<table>
+<thead>
+<tr>
+<th>命令格式</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>disas</td>
+<td>反汇编当前函数</td>
+</tr>
+<tr>
+<td>disas sum</td>
+<td>反汇编sum函数</td>
+</tr>
+<tr>
+<td>disas 0x8048397</td>
+<td>反汇编位于0x8048397附近的函数</td>
+</tr>
+<tr>
+<td>disas 0x8048397 0x80483a4</td>
+<td>反汇编指定地址范围内的代码</td>
+</tr>
+</tbody>
+</table>
 <h4 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h4><p>为表达式（变量）expr设置一个观察点。变量量表达式值有变化时，马上停住程序。</p>
 <ul>
 <li>表达式可以是一个变量<br>例如：watch value_a</li>
@@ -271,6 +298,13 @@ $2 = {2, 4, 6}
 <li>display fmt addr</li>
 </ul>
 <p>expr是一个表达式，fmt表示显示的格式，addr表示内存地址。当你用display设定好了一个或多个表达式后，只要你的程序被停下来（单步跟踪时），GDB会自动显示你所设置的这些表达式的值。</p>
+<h4 id="带有命令行参数"><a href="#带有命令行参数" class="headerlink" title="带有命令行参数"></a>带有命令行参数</h4><p>那么怎样在调试的时候输入我们需要的命令行参数呢。一般有两种方法。</p>
+<ul>
+<li>run  命令行参数</li>
+<li>set args  命令行参数</li>
+</ul>
+<p>如：我的程序中需要输入的时服务器端ip地址，可以通过以下两种方法输入</p>
+<p>1）如果直接运行程序，run  www.baidu.com<br>2)set  args www.baidu.com,后面再继续进行调试</p>
 <h4 id="几个相关的命令如下："><a href="#几个相关的命令如下：" class="headerlink" title="几个相关的命令如下："></a>几个相关的命令如下：</h4><ul>
 <li><code>undisplay &lt;dnums...&gt;</code>        不显示dispaly</li>
 <li><code>delete display [dnums]</code>      除自动显示，不带dnums参数则删除所有自动显示，也支持范围删除，如： <code>delete display 1,3-5</code></li>
@@ -441,7 +475,7 @@ $2 = {2, 4, 6}
 		  
 		
 		  
-			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>10</sup></a></li>
+			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>11</sup></a></li>
 		  
 		
 		  
@@ -490,7 +524,7 @@ $2 = {2, 4, 6}
 			
 		
 			
-				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>10</sup></a></li>
+				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>11</sup></a></li>
 			
 		
 			
@@ -510,7 +544,7 @@ $2 = {2, 4, 6}
 			
 		
 			
-				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
 			
 		
 			
@@ -518,11 +552,11 @@ $2 = {2, 4, 6}
 			
 		
 			
-				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
 			
 		
 			
@@ -542,11 +576,7 @@ $2 = {2, 4, 6}
 			
 		
 			
-				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/架构/" title="架构">架构<sup>1</sup></a></li>
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
 			
 		
 			
@@ -554,7 +584,11 @@ $2 = {2, 4, 6}
 			
 		
 			
-				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/架构/" title="架构">架构<sup>1</sup></a></li>
 			
 		
 		</ul>
