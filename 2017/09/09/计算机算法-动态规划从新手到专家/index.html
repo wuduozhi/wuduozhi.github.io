@@ -19,15 +19,15 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="前言我们遇到的问题中，有很大一部分可以用动态规划( dynamic programming 简称DP)来解。 解决这类问题可以很大地提升你的能力与技巧，我会试着帮助你理解如何使用DP来解题。 这篇文章是基于实例展开来讲的，因为干巴巴的理论实在不好理解。 简介什么是动态规划，我们要如何描述它? 动态规划算法通常基于一个递推公式及一个或多个初始状态。 当前子问题的解将由上一次子问题的解推出。使用动态规">
 <meta property="og:locale" content="Chinese">
-<meta property="og:image" content="http://yoursite.com/2017/09/09/images/计算机算法-动态规划-01.png">
-<meta property="og:image" content="http://yoursite.com/2017/09/09/images/计算机算法-动态规划-02.png">
-<meta property="og:image" content="http://yoursite.com/2017/09/09/images/计算机算法-动态规划-03.png">
-<meta property="og:image" content="http://yoursite.com/2017/09/09/images/计算机算法-动态规划-04.png">
-<meta property="og:updated_time" content="2018-05-11T03:28:46.914Z">
+<meta property="og:image" content="http://yoursite.com/images/计算机算法-动态规划-01.png">
+<meta property="og:image" content="http://yoursite.com/images/计算机算法-动态规划-02.png">
+<meta property="og:image" content="http://yoursite.com/images/计算机算法-动态规划-03.png">
+<meta property="og:image" content="http://yoursite.com/images/计算机算法-动态规划-04.png">
+<meta property="og:updated_time" content="2018-05-12T07:08:17.887Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="动态规划|从新手到专家">
 <meta name="twitter:description" content="前言我们遇到的问题中，有很大一部分可以用动态规划( dynamic programming 简称DP)来解。 解决这类问题可以很大地提升你的能力与技巧，我会试着帮助你理解如何使用DP来解题。 这篇文章是基于实例展开来讲的，因为干巴巴的理论实在不好理解。 简介什么是动态规划，我们要如何描述它? 动态规划算法通常基于一个递推公式及一个或多个初始状态。 当前子问题的解将由上一次子问题的解推出。使用动态规">
-<meta name="twitter:image" content="http://yoursite.com/2017/09/09/images/计算机算法-动态规划-01.png">
+<meta name="twitter:image" content="http://yoursite.com/images/计算机算法-动态规划-01.png">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -55,7 +55,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -98,14 +98,14 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2017-09-08T16:00:34.000Z" itemprop="datePublished"> 发表于 2017-09-09</time>
+    <time datetime="2017-09-08T16:00:34.000Z" itemprop="datePublished"> 發表於 2017-09-09</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
+			<strong class="toc-title">文章目錄</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">2.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#初级"><span class="toc-number">3.</span> <span class="toc-text">初级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#中级"><span class="toc-number">4.</span> <span class="toc-text">中级</span></a></li></ol>
 		
@@ -126,9 +126,9 @@
 <p>$d(i)=min{ d(i-v_j)+1 }$，其中$i-v_j &gt;=0$，$v_j$表示第 j 个硬币的面值;</p>
 <p>有了状态和状态转移方程，这个问题基本上也就解决了。当然了，Talk is cheap,show me the code!</p>
 <p>伪代码如下：</p>
-<p><img src="../images/计算机算法-动态规划-01.png" alt="伪代码">  </p>
+<p><img src="/images/计算机算法-动态规划-01.png" alt="伪代码">  </p>
 <p>下图是当i从0到11时的解：</p>
-<p><img src="../images/计算机算法-动态规划-02.png" alt="解"> </p>
+<p><img src="/images/计算机算法-动态规划-02.png" alt="解"> </p>
 <p> 从上图可以得出，要凑够11元至少需要3枚硬币。</p>
 <p>此外，通过追踪我们是如何从前一个状态值得到当前状态值的， 可以找到每一次我们用的是什么面值的硬币。比如，从上面的图我们可以看出， 最终结果d(11)=d(10)+1(面值为1)，而d(10)=d(5)+1(面值为5)，最后d(5)=d(0)+1 (面值为5)。所以我们凑够11元最少需要的3枚硬币是：1元、5元、5元。</p>
 <h3 id="初级"><a href="#初级" class="headerlink" title="初级"></a>初级</h3><p>上面讨论了一个非常简单的例子。现在让我们来看看对于更复杂的问题，<strong> 如何找到状态之间的转移方式(即找到状态转移方程)</strong>。 为此我们要引入一个新词叫<code>递推关系</code>来将状态联系起来(说的还是状态转移方程)。</p>
@@ -148,7 +148,7 @@
 <p>OK，分析到这，我觉得状态转移方程已经很明显了，如果我们已经求出了d(1)到d(i-1)， 那么d(i)可以用下面的状态转移方程得到：<code>d(i) = max{1, d(j)+1},其中j&lt;i,A[j]&lt;=A[i]</code></p>
 <p>用大白话解释就是，想要求d(i)，就把i前面的各个子序列中， 最后一个数不大于A[i]的序列长度加1，然后取出最大的长度即为d(i)。 当然了，有可能i前面的各个子序列中最后一个数都大于A[i]，那么d(i)=1， 即它自身成为一个长度为1的子序列。</p>
 <p>分析完了，上张图：(第二列表示前i个数中LIS的长度， 第三列表示，LIS中到达当前这个数的上一个数的下标，根据这个可以求出LIS序列)。</p>
-<p><img src="../images/计算机算法-动态规划-03.png" alt="LIS"></p>
+<p><img src="/images/计算机算法-动态规划-03.png" alt="LIS"></p>
 <p>Talk is cheap, show me the code:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">#include &lt;iostream&gt;</div><div class="line">using namespace std;</div><div class="line"></div><div class="line">int lis(int A[], int n)&#123;</div><div class="line">    int *d = new int[n];</div><div class="line">    int len = 1;</div><div class="line">    for(int i=0; i&lt;n; ++i)&#123;</div><div class="line">        d[i] = 1;</div><div class="line">        for(int j=0; j&lt;i; ++j)</div><div class="line">            if(A[j]&lt;=A[i] &amp;&amp; d[j]+1&gt;d[i])</div><div class="line">                d[i] = d[j] + 1;</div><div class="line">        if(d[i]&gt;len) len = d[i];</div><div class="line">    &#125;</div><div class="line">    delete[] d;</div><div class="line">    return len;</div><div class="line">&#125;</div><div class="line">int main()&#123;</div><div class="line">    int A[] = &#123;</div><div class="line">        5, 3, 4, 8, 6, 7</div><div class="line">    &#125;;</div><div class="line">    cout&lt;&lt;lis(A, 6)&lt;&lt;endl;</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>该算法的时间复杂度是O(n^2 )，并不是最优的解法。 还有一种很巧妙的算法可以将时间复杂度降到O(nlogn)，网上已经有各种文章介绍它， 这里就不再赘述。传送门： <a href="www.felix021.com/blog/read.php?1587">LIS的O(nlogn)解法</a>。 此题还可以用“排序+LCS”来解，感兴趣的话可自行Google。</p>
@@ -164,7 +164,7 @@
 <li>对于每一列，从上到下计算，然后从左向右逐列处理。 这样做的目的是为了在计算S[i][j]时，S[i-1][j]和S[i][j-1]都已经计算出来了。</li>
 </ol>
 <p>伪代码如下：</p>
-<p><img src="../images/计算机算法-动态规划-04.png" alt="中级dp"></p>
+<p><img src="/images/计算机算法-动态规划-04.png" alt="中级dp"></p>
 <p>Additional Note:</p>
 <p>When have read the description of a problem and started to solve it, first look at its restrictions. If a polynomial-time algorithm should be developed, then it’s possible that the solution may be of DP type. In this case try to see if there exist such states (sub-solutions) with the help of which the next states (sub-solutions) may be found. Having found that – think about how to pass from one state to another. If it seems to be a DP problem, but you can’t define such states, then try to reduce the problem to another one (like in the example above, from Section 5).</p>
 <p>文章来源:</p>
@@ -219,10 +219,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -250,7 +250,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分类</p>
+	<p class="asidetitle">分類</p>
 		<ul>
 		
 		  
@@ -341,7 +341,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">標簽</p>
 		<ul class="clearfix">
 		
 			
@@ -429,7 +429,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
 </div>
 
 </aside>
@@ -622,7 +622,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
