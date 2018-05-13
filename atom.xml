@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-12T14:33:27.638Z</updated>
+  <updated>2018-05-13T08:56:25.399Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,187 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>数据库|在2018毕业生彩蛋中学到的</title>
+    <link href="http://yoursite.com/2018/05/13/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%9C%A82018%E6%AF%95%E4%B8%9A%E7%94%9F%E5%BD%A9%E8%9B%8B%E4%B8%AD%E5%AD%A6%E5%88%B0%E7%9A%84/"/>
+    <id>http://yoursite.com/2018/05/13/数据库-在2018毕业生彩蛋中学到的/</id>
+    <published>2018-05-13T12:50:36.000Z</published>
+    <updated>2018-05-13T08:56:25.399Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="DISTINCT"><a href="#DISTINCT" class="headerlink" title="DISTINCT"></a>DISTINCT</h3><p>SQL SELECT DISTINCT 语句</p>
+<p>在表中，可能会包含重复值。这并不成问题，不过，有时您也许希望仅仅列出不同（distinct）的值。</p>
+<p>关键词 <code>DISTINCT</code> 用于返回唯一不同的值。</p>
+<p>语法：<code>SELECT DISTINCT 列名称 FROM 表名称</code></p>
+<h3 id="GROUP-BY"><a href="#GROUP-BY" class="headerlink" title="GROUP BY"></a>GROUP BY</h3><p><code>GROUP BY</code>语句用于结合聚合函数，根据一个或多个列对结果集进行分组。</p>
+<p>SQL GROUP BY 语法 :<code>SELECT column_name, aggregate_function(column_name) FROM table_name  WHERE column_name operator value
+GROUP BY column_name;</code> </p>
+<h3 id="nvl函数"><a href="#nvl函数" class="headerlink" title="nvl函数"></a>nvl函数</h3><p>NVL(E1, E2)的功能为：如果E1为NULL，则函数返回E2，否则返回E1本身。</p>
+<h3 id="CUME-DIST-函数"><a href="#CUME-DIST-函数" class="headerlink" title="CUME_DIST 函数"></a>CUME_DIST 函数</h3><p>计算某个窗口或分区中某个值的累积分布。假定升序排序，则使用以下公式确定累积分布：<code>count of rows with values &lt;= x / count of rows in the window or partition</code></p>
+<p>其中，x 等于 ORDER BY 子句中指定的列的当前行中的值。以下数据集说明了此公式的使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Row#	Value	  Calculation    CUME_DIST</div><div class="line">1        2500	   (1)/(5)	       0.2</div><div class="line">2        2600	   (2)/(5)	   	   0.4</div><div class="line">3        2800	   (3)/(5)	   	   0.6</div><div class="line">4        2900	   (4)/(5)	   	   0.8</div><div class="line">5        3100	   (5)/(5)	       1.0</div></pre></td></tr></table></figure>
+<p>返回值范围介于 0 和 1（含 1）之间。</p>
+<p>语法：</p>
+<pre><code>CUME_DIST ()
+OVER ( 
+[ PARTITION BY partition_expression ] 
+[ ORDER BY order_list ]
+)
+</code></pre><p>参数：</p>
+<pre><code>* OVER：一个指定窗口分区的子句。OVER 子句不能包含窗口框架规范。
+
+* PARTITION BY partition_expression：可选。一个设置 OVER 子句中每个组的记录范围的表达式。
+
+ * ORDER BY order_list：用于计算累积分布的表达式。该表达式必须具有数字数据类型或可隐式转换为 1。如果省略 ORDER BY，则所有行的返回值为 1。
+</code></pre><p>如果 ORDER BY 未生成唯一顺序，则行的顺序是不确定的。</p>
+<p>返回类型：FLOAT8</p>
+<p>效果展示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">select * from user;</div><div class="line"> OK</div><div class="line">user.dept    user.userid    user.sal</div><div class="line">d1    user1    1000</div><div class="line">d1    user2    2000</div><div class="line">d1    user3    3000</div><div class="line">d2    user4    4000</div><div class="line">d2    user5    5000</div></pre></td></tr></table></figure>
+<p>比如，统计小于等于当前薪水的人数，所占总人数的比例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">select dept,userid,sal,</div><div class="line">cume_dist() over(order by sal) as rn1,</div><div class="line">cume_dist() over(partition by dept order by sal) as rn2</div><div class="line">from user;</div><div class="line"></div><div class="line">OK</div><div class="line">dept    userid    sal    rn1    rn2</div><div class="line">d1    user1    1000    0.2    0.3333333333333333</div><div class="line">d1    user2    2000    0.4    0.6666666666666666</div><div class="line">d1    user3    3000    0.6    1.0</div><div class="line">d2    user4    4000    0.8    0.5</div><div class="line">d2    user5    5000    1.0    1.0</div></pre></td></tr></table></figure></p>
+<p>解释：</p>
+<ul>
+<li>rn1: 没有partition,所有数据均为1组，总行数为5，<ul>
+<li>第一行：小于等于1000的行数为1，因此，1/5=0.2</li>
+<li>第三行：小于等于3000的行数为3，因此，3/5=0.6</li>
+</ul>
+</li>
+<li>rn2: 按照部门分组，dpet=d1的行数为3,<br>  -第二行：小于等于2000的行数为2，因此，2/3=0.6666666666666666</li>
+</ul>
+<h3 id="rank函数"><a href="#rank函数" class="headerlink" title="rank函数"></a>rank函数</h3><p>rank函数是排名函数。rank函数最常用的是求某一个数值在某一区域内的排名。</p>
+<ul>
+<li>语法：<code>RANK() OVER([&lt;partition_by_clause&gt;]&lt;order by clause&gt;)</code></li>
+<li>参数<ul>
+<li>partition_by_clause 将from子句生成的结果集划分为应用到RANK函数的分区。</li>
+<li>Order_by_clause确定将RANK值应用到分区中的行时所使用的顺序。</li>
+</ul>
+</li>
+</ul>
+<h3 id="round函数"><a href="#round函数" class="headerlink" title="round函数"></a>round函数</h3><p>Round函数返回一个数值，该数值是按照指定的小数位数进行四舍五入运算的结果。可是当保留位跟着的即使是5，有可能进位，也有可能舍去，机会各50%。这样就会造成在应用程序中计算有误。</p>
+<ul>
+<li>语法:<code>round(number,digits)</code> </li>
+<li>参数<ul>
+<li>number,要四舍五入的数，digits是要小数点后保留的位数。</li>
+</ul>
+</li>
+<li>返回值 ：四舍五入后的值</li>
+</ul>
+<p>注： </p>
+<ul>
+<li>如果 digits 大于 0，则四舍五入到指定的小数位。 </li>
+<li>如果 digits 等于 0，则四舍五入到最接近的整数。 </li>
+<li>如果 digits 小于 0，则在小数点左侧进行四舍五入。</li>
+<li>如果round函数只有参数number,等同于digits 等于 0。</li>
+</ul>
+<p>举例：</p>
+<ul>
+<li>round(3.1415926,2)=3.14;</li>
+<li>round(3.1415926,3)=3.142;</li>
+<li>select round(193,-2)from dual; 200</li>
+<li>select round(193,-1)from dual;190</li>
+<li>select round(193,-3)from dual;0</li>
+</ul>
+<h3 id="TO-CHAR-函数"><a href="#TO-CHAR-函数" class="headerlink" title="TO_CHAR() 函数"></a>TO_CHAR() 函数</h3><p>to_char()，计算机语言函数，指的是将数值型或者日期型转化为字符型。</p>
+<table>
+<thead>
+<tr>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>to_char(1210.73, ‘9999.9’)</td>
+<td>would return ‘1210.7’</td>
+</tr>
+<tr>
+<td>to_char(1210.73, ‘9,999.99’)</td>
+<td>would return ‘1,210.73’</td>
+</tr>
+<tr>
+<td>to_char(1210.73, ‘$9,999.00’)</td>
+<td>would return ‘$1,210.73’</td>
+</tr>
+<tr>
+<td>to_char(21, ‘000099’)</td>
+<td>would return ‘000021’</td>
+</tr>
+</tbody>
+</table>
+<p>The following is a list of valid parameters when the to_char function is used to convert a date to a string. These parameters can be used in many combinations.</p>
+<p><img src="/images/数据库-03.png" alt="to_char函数模板"></p>
+<p>The following are date examples for the to_char function.</p>
+<table>
+<thead>
+<tr>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>to_char(sysdate, ‘yyyy/mm/dd’);</td>
+<td>would return ‘2003/07/09’</td>
+</tr>
+<tr>
+<td>to_char(sysdate, ‘Month DD, YYYY’);</td>
+<td>would return ‘July 09, 2003’</td>
+</tr>
+<tr>
+<td>to_char(sysdate, ‘FMMonth DD, YYYY’);</td>
+<td>would return ‘July 9, 2003’</td>
+</tr>
+<tr>
+<td>to_char(sysdate, ‘MON DDth, YYYY’);</td>
+<td>would return ‘JUL 09TH, 2003’</td>
+</tr>
+<tr>
+<td>to_char(sysdate, ‘FMMON DDth, YYYY’);</td>
+<td>would return ‘JUL 9TH, 2003’</td>
+</tr>
+<tr>
+<td>to_char(sysdate, ‘FMMon ddth, YYYY’);</td>
+<td>would return ‘Jul 9th, 2003’</td>
+</tr>
+</tbody>
+</table>
+<p>You will notice that in some examples, the format_mask parameter begins with “FM”. This means that zeros and blanks are suppressed. This can be seen in the examples below.</p>
+<table>
+<thead>
+<tr>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>to_char(sysdate, ‘FMMonth DD, YYYY’);</td>
+<td>would return ‘July 9, 2003’</td>
+</tr>
+<tr>
+<td>to_char(sysdate, ‘FMMON DDth, YYYY’);</td>
+<td>would return ‘JUL 9TH, 2003’</td>
+</tr>
+<tr>
+<td>to_char(sysdate, ‘FMMon ddth, YYYY’);</td>
+<td>would return ‘Jul 9th, 2003’</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;DISTINCT&quot;&gt;&lt;a href=&quot;#DISTINCT&quot; class=&quot;headerlink&quot; title=&quot;DISTINCT&quot;&gt;&lt;/a&gt;DISTINCT&lt;/h3&gt;&lt;p&gt;SQL SELECT DISTINCT 语句&lt;/p&gt;
+&lt;p&gt;在表中，可能会包含重复值。这并不
+    
+    </summary>
+    
+      <category term="数据库" scheme="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+      <category term="数据库" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
   
   <entry>
     <title>计算机算法|动态规划之0-1背包问题</title>
@@ -727,7 +908,7 @@ int main(){
     <published>2018-05-06T19:39:25.000Z</published>
     <updated>2018-05-06T17:03:11.776Z</updated>
     
-    <content type="html"><![CDATA[<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <div id="security"> <div class="input-container"> <input type="password" class="form-control" id="pass" placeholder=" Welcome to my blog, enter password to read. " /> <label for="pass"> Welcome to my blog, enter password to read. </label> <div class="bottom-line"></div> </div> </div> <div id="encrypt-blog" style="display:none"> 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 </div><script src="/lib/crypto-js.js"></script><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+    <content type="html"><![CDATA[<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <div id="security"> <div class="input-container"> <input type="password" class="form-control" id="pass" placeholder=" Welcome to my blog, enter password to read. " /> <label for="pass"> Welcome to my blog, enter password to read. </label> <div class="bottom-line"></div> </div> </div> <div id="encrypt-blog" style="display:none"> U2FsdGVkX1+rUf0jtfpUwKJzd/nV+XN6aJObLZq17roJGMF1x7/8m8FPRcrzLFsAQpcx4G4L84xSmme2ObELxRVRBqDeoSjvxBA6zBrtifSYOFneO73FtXVRU+g9jI5Bftx/tpLzHH5/6DqqisKO++p3SU7XTqyDfj32IjzCdzEM4XNVoLbcqjOxiPCElwAsdgEADLrpiHhkXdbvuZ+WlClavSoLSdaN3zicQ+kYC7z1BHrM5v/F1F87+ImlU9uE0yb8AxZYuqxg0L9xMGB9sWmS36jOntC9bL9XwdCgvZzlsK/f1wcZsBI/SGj7rLMfRH0ghTy92xs/kcSKeNPNmzlbx/R8W5B/ix/UooRHx7qz1Cq2z2QFmeIZJXYDbsJt4Mp7iy88MGYijTKfYgIDRc+obLHWa2LDH0vOHqvzb4Xtbr0Vyii/sdu0bk0yuJ9Ugz8kk/owPeQII82tJMN8Nzb7ZYoMqTXInYYUPyuP0LnDGxqrB6tNdLAgDHaTh4t2nd0E0dJSGsy/r9Aqm2ph7NCAKV7ROXVYhjYgnX2ulKrL7EdIxDv2z8bfS/wSC55sB+Ng2fFQFInE9dnatjERwlJkFJHeeJm3WKGg5zzXb5+TDotnAPMChmf8hokNz8eW8qimv0za5RQxblarHpAxsSvu0J9bB14DFYHEvHn35SWd6z/bXPyfCKU+fwfjlqwVtu03eQnQN4GLQJ/2EepsBvJJ1QkAhhOftwAdpNTbmTppYHdsRdDhPRqdURWHZQArkQg6kGLJ/84F8xEi0XVVOckRTh+TZxhnqIzZ1HIxzSKNLoL5q/5+fwIW58G7IQecyldiM0uvu+v+fPJ1NgOnyXYSXlSMg4uldQ6vkamHFllfDC9SfpyrL5v+CRfC/O5MGmq3l2j7p2OzXKuFozB0VFRPKD19gFV72vzJ6aga1KGoYqeVhUbwB8x6GaeEE9+t76EGvg5MF9AheZHYTRcFtjg2DjlNQim8Y0hm9BmHcEflJzahC1ihgF0a7nXEGgOtjJIv3fSf415lceNL7raDGbffmEtRJaCjBXDhKtGmnP7+JJQ/sVbcIcsDRV3Hkq2AkR0pOEGK4dqiAxzUcRQgU8bL6FTCFwWUTuzDTYBu2eosluFdfKWApofs43FrW/f022jqliMe5Vm3z+xPcGEeO1mxNU8NDMb/vhftNa9PDLxcAfiDaSkXepZ8HFrhnpI145r0T8rButUeVWTxxCkj5AVdn9+cFZpBH2lPMBOMn/dpXVS8OLM8z67D8ZeACy0hGsRPzURMfeS+IAOfWV61Pxuz7zjDEeD0vuNh3s7JCZUil4wVh5o6WqWETAioBPXBYF17bSVA6S5Y0sn5MGX9NGJ07OvpzRm9lkVGXR7WioPIa1Hp2n4I32A7opf82ujqRLcwVouk4UyUOHyfvbKxo38q9OvvQXpM3vSsC7u4DMcAujsWJx0vnhToN7GB7uOIzVg07QerI9DseF8FM7W3YyDwsAsIxYrTDqtZJM0QNeW/xqmuUH5PXIiXBBiUh6jqiFXkYWoLVCfDj6r8OVOBtmqmJE+mqao05BiyyzJmxFyw8kKEPBpCE8VnqIRgqHBxeo8n8k9d4YiP2T2gJho9dzhacInp2h5h4Yt7TRsWmbitG704xzdRx0l94XMQ5zJJ4q1pycYLO/K/MWYyDiA3ZvBSAapMY2XM/7f3R6UpTXdM0OEQ/mm2KjhGrW7iVFKvGyKjvJ65D4oYDJlvZsbL1YRCK29nAmY4RVHCYzBwanxUKyl6sDG5km59R2zjyZmT0eeiHnn0VSil8uC2bxtOBTLd2Kv0fvCZQ9xqzoW1pUzJPSvOl25/Iu0shnyEjFG4GCUZsOggDVZbJpMc3yPzWwGolQqOf6myfI0RiSJkcO/8Bpqo5TA2l6kSr38WQYQ+ihxe9nZ2fws+RhiAyFcHI+hi6dZ/HgHm+JaBeNVAXBhLPT/TAovCSb1+LCGRskkYJwQh9b0oDcXCSePMmjcwtaMmR82gm8qO0pzWw8vEbjWLtlcxCuSyC/fcYNqwa9tOf6Jrf0HngVgn7lESJE2O3GnosEaY6BoftwxIgjl48R1mcLCB8+2vWKY8ahqJ+NCivdhcK86xu4i/ovjONYjhy5A38bKFaFkOVtPrEh3O8KwSLpmiHRdATDJT2QUAKIP7bAJYRw0jtMgYOYvbtm6vZq2vwhD47NW7ZarPo99vY0bboHjHR3/e38M4IH02eYckV2o/eAEN536b4X6qvXooy1QvwtMImaSyhoFJOE4s5p6gGPR6zvqWN0vmxSSeszddHPNOwqMnJvntJVyTeadQRXDhmprH51ohEw2sGWiUNMrwW8cuAT1TKBhebhR0NNH6mIqwB3WucVBPpz/W4vHfxxscfUCT4ExnkUEUeq4SqaRaNh62Eb5/YfylPseNKRKlXgljBlP8xAD6BBoVCkq/O5IlCC9kJfLIJ9zFpSefW5TF+nf+mKpHVSSUojlhK7N8OfRe8TJ/KP1kj87ExhH2OixEbAcDJ52q9DrzlSIbKMVMzBWIqoK2Midv97YfI8kf5BQSvWs0CGYyyrF5sCEUZAyiaZAvCoGfzVpN1mYCdkJAr9Zv6g0URzUZAiGBZg4RcgqyfInH8csVNVALpDHFYMCnJ6hPtqFTM2kKe6GSLSv3baJmNhQqXC4k8xeYjqw58MsNPTTAjCeGGWOYZ728QNpMC6ynrZnvx+9d/q3OX33kGCYGare0Dw1DUWszsQ0Ku0K9nsjdGg+gq6S5IU5pGgHmvDp73GJ6WZYUh/gZmZo2V+adUcUkOpZ/wqj/olkEntMojiw5OsJkYr/StmalEL4ALVs4jZuEvA/O3B/HuNOcOd9FcYzwu3BkvNZgQbM8D10phydUyK0RfCEctg1+65iLMMCdIEalcGhh+FFuLcmleNONOmiZvh04Efy2iLl9Qqk0VgSRakJdfZ/ptJ8SF1J2+3O3JSTjmXEmQqkgQUcNkN8hYeAO+i2LvuwsuuspN5MftcHHe2mT0bLX+30bl0X3AVxQU2rEL5krIbvLNhytF0l34U+Vyhx47LTCMXFHRksdoVE5eQyr0te3ck3UKjhTQhGOD2F3cRTUwqHpGaVPGltjnPIJ3Kb+QYaVxd/xhVHflAN1vWvw5AbduiRfuA/xfEKRckVawxC3NIPDPadEtILcSLaEbURkJTbJMorD3DhG7y5tx+Ts1bXTR/KXCwDG8c9oywDzixpZtmzc6fcHFW1zx6TS/aIEF13oX0L+IiSErv5sEwfQ+Wz0ksdHymHaBKfmJ6igl2mlXcTvHr/lvascpnJgldbfI4f+94JT/Qo/r6RvuY6Z4o0Xd4+MR77/GVR1OqS8AXp6m1uQ7U9u454sxqDpGCefNdKs1ZG0A++VjGKNGJ9Klsgd1zLCwe4kKtJKTakjJf+x1LUjwQ1G5di9E5+7sU17VyDtuMrJGsGryGyobWmbKnzATZ/wr5G7Sp6RrE3sPRvArwO4K5zZ1KdIUvqQsnWYnvmNhvtCGWVNB/OukA6DjD2mmb647MzYQs9TT2cGJHbV+fIj/Mvk86T65J5jvVZ3pHha+U4nhFSGrgb8BcmvJOVRPm7zPqlF5djALlpj2f/6sKJUbLOL8gPkwR19GfIV8TfWC2Qvo3BMzKjD5OMhjjFyqzALHNiTXihIWKpmkpFfnXN7QOU8DwWvshBszgR6fJRrkZkVcP7Lu8sAUj7k6f2DYlJWd2/Y/dMwoehT4sHkr2stHriA+EhxRJPsC0onLm8xFc5RH58JH2AOgvE/IQ6PYIahFqx8sXPB7NH3T0TL6GkO5loII+fAc48JNGWjQsZrUIdyE3nu/+fXcf46oDO58PHD2dmg67VwAskBHCTtf7Md3KFevKb8oE18BwjdpjblVGpA2xpRc2l7sq81jqWGA8GtjeJ1d3RyeHo1BoPRCrLC5NQlHfhR7o+tnyq7TmDZA7SRj4xTipXwRnZ5euGvUNt9NUSsaeSdfgK50r7j0++zODUJwZ5lFFcTBahO6ncySHZJLOptCFPDIuIFH4a0iwXl8GTHSHPIUcLd6CwRD9GcCUbQi/DinR4JsHKtgh5W480djqY9cZGzcAV9oAmDKt8EG7nd3LJ3EEd6/uBoiUZw1X586fcSfA6EuJEJgJfb25xnrnRHw9KmpLg4T/3XSNdt2De2JlpVqGUXBzpJwoF28K0GDaeoxGqMdpQdXrDRQ/kNa+gWMowfbhPRJkBHKSwDG0iBydRIstww6ym5J9WBCOkppSXVwJbtZ/gEL0HxMdhjdsUUjvhB1y5rq2LlCJJ4qcMdpHrLwifzJ6paxAl1gdRS4HiTy8xzGq70mCi61ceSwwH841mYXdyAvZdfmHjXp+n3KS4o0XUgID3WTCG62em3M5d+bVR/XzUtyY48WzD7l1/BqgdzBdFXHYv1MmMVXkSIsu9PQrMQynbg0TivBKuSRijzVz9LAVGqeAP7fRMBSTuq/NnYhWkPea8o1CEHpZpg5qQFD0rCS8AfSifPri2D+RAPVwtpDgN7Ik0wAny0Ewj9VP7dDjB7uxoEFhYAzIHb2M4Zd/lk0OAeOLytK7wQkgO/yZaV6M00YBEf1mSS3w/nHlmzJkoZ+vsFQXF/YkTLfj7f2I0Y90wWN6h1XHnyYh8hwBKdqkQogYvJK0y48P/132pugW04cbMr/RORoOTTZAS45aMFnB8zV58S29dOW2/6Ifg4NXRVEf68OQ81tZNVvuOyH09XkfnrvprVfPHoKqD+e7f7Fw/564e/K7etxdx6c4x+2amDOwwnsJQ+dAkIT1XCZ68ay7BEjxpp3wmgltMLwuHm/MTfn6oUEAHd+83FVOawCvXRKQrr8y0lSGTb6gINdTpTJYrFr3F8dmtSyjTLnQt1g/BdgCiPL+PDABC0+c9x0ZksBtE2hYTgklvrCUa3Uf9lsfD3gGSPhjOoGOJX8/JLoHs1HEmjjYf5kYwb+vczipCtqfb0q3TG/+3lt8OVs2TN4TOqBNgzaYBTNdlLl+RKaOp5wTxZ1GXbuYEA3QhZV0jY/XJ/iTZfI4NcObXiX25Mj126jAkRnn5JkRDloH9zfJO6wmexxt9K4sxZg/KuXR2zfp2xrYyvnoNXX28U1NJM+JBcTklQpHkHF6H30keCRnlMkbdp4ihhfG3xnz/zOejxSgbPo2AHtynHT6o4LxrZsLa+dD4oC1eIMCIXDuycSLPjXHnV57JBtxV+V6APcWTFbTl4YN3I+H2NGWi+t8SiW1xqSlTrV16l779KVsp0vCs0/36XPqgI7CTg+0FRsWaIPeMBadx0xQrzwfkqZESy+jLupWu2GpmbRSUyZcUZYrhg26alS3yY0oS9/zYOZFLOFxZl4Rl4yeCNJ5I6ZVo8viq0cpdAl6wvtewBwTzbVz5ULvT1VbpOPpbpZPwXv/hT2SHtvjIJHpQYX674ZdutI14EDW1fuzCq8uXUziDn93ZNxBfwv1nB2fCDi2RBTfzJ6Vy1m4oXpZB4WxFCznGK82TGTRMRwjPPmuj5BVcjlNq7M92Yi23FyGYpUucVy8RDeGPZzDlzY8SLW3HLAINq4mxA5pR890+11JKK8GUmYDI/+A/ZCH4v728azVxo7LFeSeoIzlT3so2ErPjMXxT2NQ8iFu/lPf4Q0gQRd6dDpLKsMWe0i8W2z3Ta8681nQE4nKUPqaEg4ThH+hhu9H5e5G5x0ycI24lUUgnjn0HpPlkrOERaaK6MuabRoPy9EZBtW2jWbK+N++gbS6ZFU+xznN7cuFmXQi4kM1K/V/JC6O3jLOu2PDMeI3CcXSCwsPqKxjtNb9uH777gnopbyDhIFsbt6jBIPDUbwTw/DCmmw3o1FUoqTf+RrHsbhjOivzQdxZrnpeUrfVQQ8ndoZ8bu6zT8ny3zHKftUid+2w86o2RgamhVaFq4rVJ6Pc/i7O/+42oh9Vfw2QgdGGlAVnpwmNf7CaGbOWT8uNRf28Moq+gU7L8dQWL7NEN9i/E0m1WSXx2UVdMTloTlE0cD69xI/zd/KDOTdztfHHPkZF0Ir6lxqv17g92t9ea+PqPka+NXzzGgI+FYIz27b02leyi6JqSSsvRSoqe9MVlF8aTFgAAFMkS93duX36e+7GfbEEaD+rSK+ZcBW5iUChNODbWv59OnXzcqCE60SHdY8y/AUT88xbfnk7XsI2rdReDUMRPtEzQNyxfDPBuTMXP3MvV39S/aNoPo2dYDMkjByfz34F+BzTJMVWrCtD2zCzNIh2kfsbppFxXpMGKlUPLCTfn9smehnFFPbVU8VI5uDgII80WsGrx3AcS/a3+ZOaJ/He2aNhXFYMY9yUA3a7MOUqM1+xqn51zj0MJjn3PaT3f2tDeUA4N41Rm09EjGEpsnssbAvbRLOG5XLDHB/4xNuh+0jvlaTbck7b1zDvTaX7fZw0v6i2Id3SnsiqVzo02R/6rbFB6NVXa6gMV8ox1QI0aU1AXPEm5lJ1T0OFWiYyChBAle5AVeAhzdVjvjb3R7oCda3f/zIO72YEA435bcoWl7mYo3Y34l5YdmBh0iJsSEckZoPOnrE9kv8Pjnf+t1iPBcEWjV4Qol6NHE2V7+pYxdqbjJPvjyA+g4U9xK3K3YcDiHAFvuUJrYrvqEffnigeeHjM+n7o4pZm7h52OT253fi6WGpe1l/LwCpo9Kea7akBOqpbpwPpLrUIZnf+7KYo0bDVdeyi07xEvRVesDx3PRfVyNAvBu/seV/XE5OifO1AgBkUk6RsZ0//EEkvfzyrbiwUoB7Q/lBhX9coNplQrfT+aEQJFZUy3NyjlBNhX6D3UrPmkaSX6STVlR+sDBrvZ3EtcT2Mdfu/Sm/Xm0z679VMROKtcwHsFAt45YI+h0K4vPZOqEQVcW3VA0avopKd+3el8dh4RJPLf/nQtVhg/wUFoCPp55zBjUQ9g9bbHkUSiSXwRCMR9YFeyuYtM5iqZ7pHHWGeZBFATTQeWofXg2bOALFZwJhjx2rTWqnp1CdmL1bl1hXQfNW2kZzE08m98N7aGeTr3cRKn3kA3oW2MDOalJ7Yk7rllg469K4TrXegBrIfpjcDg3La2Dhzuxx9RjUvirMQTFP/3TTDo38Dletpv8BIjfX2Vx18zUu2WE54YEGZAvubdngcIe9OdwjYmFPMtpcHkdX8Nw+E9l8H5NAfoWzWKvNtwRs0KoaOhIHg5BxzrsZ7b5gdvxEphP4W3zkrStG4UQsHr4ueSACgNfh8txfyQDJGcwxZt8pPxPCQ9/4QYzTCqK3U4XJNrqnXx12waOGhw/NDkHCikqmeHC2p6rW9pu/XLB9J6fvLbDcgNupeyffZwxkdc1TJsY+6Wn1qaLJb9kUgtk/GpBJqHnPThmFYYZbU5iXk/koVDoLQkoG08lhhCTfRdbSeX6NC5XQmVP+V/LozEqt8KqR+79PRi57JvgG4isWHGT01gdRaYOwS/Rbx92qyNZ4E2w/8+VMM60L6xkldeKhdvU2G13ECn+TNX3WH887Iu43gX+mSNDp5FEr7HPasF30DonpLwR3ZwVFPrRviVnC1tYWCdIelotektMUN6w6QixKbvvHgu2FtY1Ss0Pb/G9TEnPz4GgP/AryTGrqb5polmCNcGX6cWwP5t+Nj5Aoy2hQtj9+sYl5qAKic6o2vsP3Z0bIcbqrGZ4nKLq770b8oGSJJL2OJmD0YNXIp8CEP2Dp86oGHYr0OGdpIarmmsvRr5KuCHhNZ6fpwW0wujywZTijDyci88NQRZgHMo47fUAGxHL7Dd1GQYJVfJUOEyodAtE+GjiB1GTIsCgx8hg2Y+wHeIizez6uPPkpNqQlnuEgWXQ6sSjiigI/qtQeSMpJ+3UVhDzf+Z0PkjFsdfgVOmR9ofJGqLfhRZPgzclZ5LVUZkAuxYvywJ8ojnEM4bhw42EprxV+rZ6FyOKKHrOwf7elhSryxTjssJR90p2lLsj55WuZCbSR8uGqD8Gxs6UIC7JgvCSesvNYuWpZ5tfrJ4kcDMN+0pJaHjV6vvT1D4HZN5LvcZXiNkTrIDNcOasETF9k0yh5AA2h8HWDKqLOG5lU2KtkEy9Wvu4+LqjbKZehKZBD783wHcpk+7YYXN+Em50JDeLpPXR1wCeMoR58EXmL5n9Lmy6WLt56H7nQIS9N9lTE99H0rcfyv2bL33IaO4nWqlV3dCP6QxNDLrCb/xCosL87SnijSDyXBEcWnnS6fx/zIj+16qfBBUh3woRAXmcCjFzaLCszNe6Zv7kag0CRvq5tCZ538OpYgAKelXDcGmy6B4RJKVJTYyxQWKSRom0mCAd2W+7tyyEATtOyJhnh2GaLKmQH5I1AdcwyPqeQoNzzNCotmsbi9UNMh9UVUTzfi/k3w/mhZyUHzTuILWXZUxDbCl/ZhOV3CUspdeTqy+g2aat7lEaLQtcTCM46MUGHPnU+UrQXJ3WVvaNLc4vLlysjhS5U81uSvht6VKVRUbgT7IwkibVrZf674G4liknQtkFgObzKfsLZ+gmjdt5xQR/KwUpWT9osK4EKwe05650b0WeuDkTE1ZuynnTzT9sj0xT68p+xjmsldtJMgPvmpJUSKQ2qi1SlgMpaB9+wBbAVyxHYKlnR8PZrGqJ/ZbI5d2/T2dfkyIfNVyFv1SYyYwEeu76XWPUOC8rg8ltGwvwSYp494pSBfHlzO02owse+0gw03CzUScS6LHniF26+UHTNqaKN2wwpxE0044BMUoR4i8jr+caM4VSeFtzNu9bAaNbRzgDYTPPGGFzpBGeFkpySJGTGUorhW0v3hg3jCMjNHI+lHAaIdc7gtm5btE1owPbmSgD1lFLIfWIMq3Up9lbxuplvH+APw5dXqgL26nBrIGombQ13b+pVq1JX5D/KCbdvBmuReL92QkWGBS71BlHMJQLrJjP/hhTPuw2I6jPp1g8HATKAoDEljgOEioqNb3B6rDWK8vyvnRHAQ3DnPv5L/Zf2WcmoS9G9RrWbpmPfIzA3KE6DPmYvzq+UO/Gb0XLspiI2UEh7FpRGzLIR8ob8XRpLJ37EzJv08lWimtIThjS1MAr7PkXFuMF/k1U4qXJ9+bDygreKkDovukrl3dLtvGMZzlOrWS6iGyhONGMcDbXvxf7Terzpx6DF2Vsf0NKE4DwdrwJUAyxLXyr/8kH7KWXM/C8oMog6Q2jW5Om/OTojFyPmDCBK1lcqrMwTDPsTTFQbK0oAPeylFmfykpdYtS0HrRZR3PCysoPuwqRI2MxbYsE6izM2I2/aahgN+T71WM86u+JLmG5+TY+plXwMtW19JZQSVP4rlPmJnA7i+5qMJH32YV1fxtJlud3rkZLIgI0cNC4E6QDcR5HGlUnIdkiQzMj7T3va14KoKMnHz2xEa62rDWd/r/LnM26+0TOX69pylQSKf/GIN9keAb/akbfgLQcwNN71JLFqaNL3e8xWFqIkzwmwtSuIA+Qoh4lamX8QHJs+jvT68jqwHIOVSQiTUBEHqvERznSJeDpdLVwoX3ODrJfOFzdP7qIpBeuSjawPHKESmhK25zRb5whPjopC0IndwprRBc+PKS/MT/AEwBq9/o9PQ85Vkea13VSXV/9NteUjallRd8wWZ2rDGmZuw6AsPR/Cjx/MFvbeShMI/40nzPav/yAGhUbnvDW7NDsQI1R/vIsIk18eMUkcU4x/tMSmoJBwbcaGcXWaBe6RavK0HZBkX/SfqNjp46NfQhh3ASDXDT33+bA8jeVuZrHbUqx7hR3zMjwXee9deLtAvVxHO5stHJ27VYklx/3EeJ1/xxq/RTg0jdOElFyFV6uEfSiKtx3MWc4N+FeIiyaBGrF0EwzS7PIrlwiIjHs7SXhCan8rSxQDr/pL1HiJotE/w/g0ko+3B7Z9mBPvOx1TDwwQfSwkx9STEZ8j27XgZDOJoM6+VR9MW3muB7/q1YLD4nhgQwEco0h3JCmAnETwxvVfyM/xVWG7Noh6CqLlQ4pbcnz+zmUs8ruFegx4V5ulQ0rOfThxidurfKSIhzgYtx4eVwlcYnEelJVrWfYKzkydGZ8WxlX9/nbpojbf1ySG8pyOdZ9IEHLk82qv/q037FwSPfeNAyRC5e1jw6JfWA1QilggQYTw05mYDGuVldbwRwuRFQpTkbpXDo/jXf4WCr7iUheB70El7oPy92IKRmRs79WKVYkaYFTmPH/GbuoZgxypN4nvcuWUh8e2MPGqXxoyM3Mo4Co4ePLg2EsoblbZjIlUbG104UoGkPV7UPtVAn3CyntIna7Q3F9HdmLLy+GON5j0slwEqNYpdGdhMXcQBiqAbP+QsvrQCmAKO2aHo7qNiDl/D8hjW0NqADY/YUKm4gC9ejajgcVJeRL4ngKTXcObFcKxyG+LBWkvtkDi4O8Qe++2ix6djHHrA8JQC66OfyuytIsACRFJ5HjS0VlnK95+sIlnw7fTi7C1/v7i/VI9Jgf9z4T36SA/IsXBrp3THq6+c2uAElruXyo+yWuGwAOh7d6oJ2OE0+Wfeeu4i6tqLdPBimdiSNs02fkgML0hsX8hCDZ7CapK1mx62EdYZ+h1MLXoOC7X7I2cH68rv17FcLGeOwD2mzVpKUt7h/pUYspQX07SvY3qJuI9DpfLTyzGu1UCvttHF09wHJTFeY2Or/kWDqrKBRDMRPhUzfM/nnGJMg+0YYCqGcWylh/6G76fMYvRTlxEaboN2ynCM8Aeu+zeOFxBN1QJ3/eRZ2K+PvXiHLJ0J+Gm+M/pJchnaFiBcnJ+qN32DJPjf8IJ9oy24JYX5Rg8io+TwJu9PBePn1haxFEsRAXl5BIENuAtil4wVJvMaTnA8s5dCpuCWJjGi15Rwr+r1G1piNXJ0snCW0pVgwgTKZOHwAJCswbungu1MluQJ8TV4/EwbkB0uTdhYDI10OPET6+8Jnu6WkO5LZ5HP+Idqx5SGgZIrkGSHbpX514Ves0dmrtv9Oi6Y8iDibB26KPRBSNNSZ1LjoyONSmakQQTYvS1YyB6tl77t4zwCvWOA3dQ9bqjPvwI8ciAMxVadjgwYPMpgtLD6NzYK/1cT2TPah6tufxO6k7g4Je/gB2eDDKHFx6EYEEFbdxzxRccVnYqUpnvOX14KdGMZOHsiMvTQM+k1DgOQzXkzBe3GkIywB8+8evXNXk0YixL35gzOvjlzBba3hMxqhutC0L6m9gp/HQrlRhXclzRTikwayxcs4sWyV4vd8X+9tqnuHzdHROuu4856J9OOrlF4DuTLg/pZwMa/kb9ifTpF15jlnE1O7amHMH0unbYzU7a2FpS1+SWdcE3BsNyTGofWKV0NeiPe7N+yhyuoT6P5r7qG0BLd1s35UQ7iOy/aq4+zq/wJWvBfAKs/qsG6ThcVfc/0HXOxxnOQ6MJ+TIytTR4enIXQ3c+6b09WRLUZxvedF7B5jusBgUi75SQPQi7BjviaB7GOuD2kTuvlcjTH7j98aLN0MnQfnLOs2RjAAHY4eSo1kHOe2w1fNJOeKwUXcDGr4YAiA7prGg7OxVzMJYqcEd75g4WwZfSth5uoj75mdNtPQuK1ZtZ85YcaUkJoPfW92A0cuZT5o5fpw2XKmf+H9S+8tWHLfr5Ch238NCVQZzzAulwLTzPVggx4EU/9fp+CXdACEWMnZYGGXaYNFiZAo4vi9KLelkV+aCxD9DuDskxNTOAxfVY0sncGIETeJ+MbHvGsoQ/1xgvsGs9Cfm/trQUIxf1U43+tGaC0oTWbv1QZ+yXiLMSV2Sf+DtgMjGPhLMdbhHpEZB+QYaiPtZWqGPMPH+eZwhGVmY2YCavllphVXMuBOVlThb+nfy8ekogUgrE2v72w2uCiDkI5Ot8Ww4JuV417krotQ4VX6+Vuume2uOLUU+yumP8lndRqoBt+rd0ZrlO4SUAJUqQDDk45DouJRFdCvjGjXjdRAZVfOEs+arLjNUAB4hkDDv8QWygTVxA5dcNW5aXUeGhGhiv8PfcxSDMehgvokAhjyG2bIW/d+hUBSI0W3Ph/r2vZJmGXM4iKiWqm2NWw+Jv0uKAttcM5AF+2BLlacplQSk3Ho40Jyw7kUcvLgZmAfUwI/55GxyyvaxDYwy1nV2waGPCpXUy6eEutVLFTsKas0HxKJoGWYlfibdgAwF5klRQW9dma4CCdcTLI39Sa9XkwMoBFiDQ1AcNYS16/cRjcyHIvzRLAkpoEJvzw1/D7pRyawixkPI0ixn7TQNLtOSQuDGuwjGvFw9GXUlI/09iygFVYS6SL8fYBv5ueCfWnw9QBypmkeV0+P0B1X8C8XrCrgfyJ3DbDoy1uNkKjAKnlt8uxPrj4f10jQafWeMSKZN8fT/0NfXacgkYvTZXPLScN7fl+44g5k50Nej36P9H/aKqViNR0vtlT1QW0Nd42l7A6xa7oGqu6+TeFzm88E5WDvoG3oe51Sp9IzNSOFAXWVamTwmQdhdtZB4ipp2XN59wqPSkCwA0Ra6Bh5TH2YudeBQ7bxw/XZq2UsXE3VDmC4K/w8L4fpI+adkcEfI2dbQOSt7l4cKe68DyZOUY93URb2rlL0Zqbl/H0br9TpHbaEdc07lzxXzqA/SA5EJ5ZJHWJpPweddGL5Mlb03Ji1uM0qOmAkKk6qxMHGowChKmQI5f0r2AaLjSwY1vplqb1YtW5eOfjhpEjwImTP5uGoUoXrJUolE6RfJzRbg7ATnOaFbQpdmPzpX9zl8nsd9bDIPvvrp7AfVmNjhdJsAzJ0zo9NQbvlC586oA8vxzx5KeBu3/+dB3D7/JA+n21Ury85wqlVXSPWFzzTEKZkNCFFvKg44bHwm0MsintSuZoN+yHq15VHUf7MksGotFFZyPo50z5HtJ7H3DhkIPAzu3KWVyybTin4qEhJ1uh64xKygC1UZGb9vGwoCu/mSZptvliXkHVJrKcqS8cpRlsLCJZp08ISsUrVEvEWR5dfmZl8ifvL1Uh5/9vYOwQkaAo8HO+AWbg24km47MnJMs1qo1jP50tbbGuqvgpRZBqb0yigIG94sw85DOf6VdQck8JP1y1O2Za6Z/aZ57jMtRqrwjRjpFi0BAtQ26JwpE+vGG+QBYBvRgAuSVTobOMozOK3+a8eW0ADFT9DaexqAEErZMraPf4D8o2UJfj4Dfj90F46n0lcBsf14/pz2pd3ZHwI62EgpmXKUszkQwXRF+jNJ9GJNPgZWPkjp7fWbkKYczgbjWVr6X5q179FuJca1YLQ6c4bytTmD3HMu+RxSTgpAoz9hmE+MgWnuTD2Q7h3Qa6P/PKl2ehS9zNuHLqx27TgiQ+kvawvfcps75eoVNDFpcH129pJcesQQlDOw8e75zOys7+DZlrcgHjvoZMn2JfvQvHQpQ11dAfd1AaLCIzBK5USLIaNiyvkigniN0fy04zRYsA09+adSuG4FwRl7Iw4EZcUf7tSk4GLL4wcUjxp1SDYTa6mUNxF8RBec6SqkguK/W2Q72QLZ+a/hXvnQ0mq4orX0d8AssbSBP1uMyW8BfTQYePr04voPueprJKiVpAzchyPlKJb3b76DF2DqZJaflzkniG71XgNTwP9PTXRDLJshTIekR6eKT70J+N0t8CrAi8UKJgIE1iyWb4SSDmmaRZ22NVKvErSFD2oON2s57F9D8SlWrD7sFVcT/fbBTTmeMkurqapYV1KMcdHNahhWOIRuLOKJpNgDRwuTROJWyEQ0AdBcxH8vWuaVbpca0onpVrzZpBn38RkG+E1KG5k6z1ECUcHNQ1Vi2k2wrvUSUVdS2wxMOJr/se9IaSpYBGKYfisL5IXMWP7eL96/IRSPWUdHPX4IL08NgxlhAcEhpWfq3oT/to/YM/pchyhILfVDVF6cZ7OWWILlpkUt9k6XlpYH6BhdA7Luz6KkC1ERkg3M0uV0uKwpm4uGotBYRLbS0lBVK/kU2WfuQEVtVlaJt9nHaV0BS8QtWbfi5hne1uhC5RBWuFBzHdYqxpG7JmSTcHVEqFQdYgc3Not53NdWFfyJXvOKD+KMI55rhnai+wEszM/WYnfEkPFNNSHWRBYQYQn5Ctsj/lO5/QfNSvaokKPBvAw11qYnLrWonpsh+3NW45RSPNpdTXtI3c61RYvVL8RG/pBLl2YFV9YjVLFhWIV8+p8Y314OKfTDry6yLGPcFx6/N3fthfi8wRrKgEQzJkYCrdbD+lTFabCMmo5/yCefHP5TP+lnYqdTgVDrZclRuSb+fOY/IbpWpWtdNecVRbqAYohQCpTKHWSDr9BkvuO/wZ047jCne8+7oYhnXpWGzX168PE0nZ5uboIzRricBVr4w+Z4ZJzuXbXRoTQi7N5uUUPsFgSZjdCd2ckZUtzRbHXPF6oj9zsqHR8cRjj40RiH/loKVQD0I+OXFme1qGjJER4dvNjQDRLR68Hx9ztd2fk5U2uUSGtoW9YVR1Yk3MOgKpeGgAYrjj5rVntRN4XtbH01n7FoAq8C1rRC9DFEiq6iJIK/B4+XXfrR0ukZXUAnBssahnOV9xfmJLjtbrLjSHHhaucLISNzo0Oc1+j/8wL90of5/FlUMw7DtRRr6LPScG46OgSqqPw6OC7ST5PAo2wvt/Mi5BOmvsuY2CvHjryBGWzYiLMSSfLDpLGWuNRP8HtDQ80S8f239OBlEAoDWsPv7uAoo3Hm3ph1t3DidwSUwpTR/X2zm+F9Fb9+sjkGiMe1mfXQaPpimlrXX2kouLExkb5T3lC5k7pPu1Rnakw1sBeoL9KW+i+j4cErZ1VpxN8g1BNGNUBGEKPL/FdAU02ir1dlWwG7s+4ETWeSLQoHdd0yQNyGOu6G6qbw61ye4rj0ZPWSWy/ujd8XdlRHvPD1r9UY8MdSAhAEf+3PXvsIW+HXbfgi0MlgKx9GEMgM2uJErhek6jXj9S9mpyayF2RrtnEV5is+fmZ6Ma5OZemseW+MG6EM8SxwnwnyXOLNlZsOSQ5lwwzg2okkh7bqPDIJHHSkSAu6fbLH2236J8zSzFgGVjuwyQRcpWrHz9b2MqhnNPC6++qvYjNABcxdR44Xhty1zfYVBdhnWPbXZ/XUlpecyCD38Bcl8WHGJSIkISrS7l092WOvprWXiAviOqxlwBX/MtsDz6PCwzAnJR3EvsuZs+yey/YkDCUnvH/ccbUr8bEUJI9NAlUJD4fh+75RAF3tc0EmCYg46JG05iojjgkagtV36Z4hIQScrHoD0QfepHbd2YRRZi35OyErVtEvuN0dHztg6FPpMgaXIQ3yEqH7XkyrAblKptTzqjyCPa8PFbkLJgcqlpj7QeeL00ngUKrVu/m5x0fWoRiu/nx0JuPS6HrL4eEeb4nSkbsqMdSKz7Lkm0U1izNI9tUx2s0= </div><script src="/lib/crypto-js.js"></script><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
     
     <summary type="html">
     
@@ -1497,247 +1678,6 @@ x[2] = 1;
     
     
       <category term="college" scheme="http://yoursite.com/tags/college/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java|Java多线程干货系列-1</title>
-    <link href="http://yoursite.com/2018/04/20/Java-Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%B9%B2%E8%B4%A7%E7%B3%BB%E5%88%97-1/"/>
-    <id>http://yoursite.com/2018/04/20/Java-Java多线程干货系列-1/</id>
-    <published>2018-04-20T10:14:04.000Z</published>
-    <updated>2018-04-20T07:38:15.641Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>多线程并发编程是Java编程中重要的一块内容，也是面试重点覆盖区域，所以学好多线程并发编程对我们来说极其重要，下面跟我一起开启本次的学习之旅吧。</p>
-<h3 id="线程与进程"><a href="#线程与进程" class="headerlink" title="线程与进程"></a>线程与进程</h3><ol>
-<li><p>线程：进程中负责程序执行的执行单元<br>线程本身依靠程序进行运行<br>线程是程序中的顺序控制流，只能使用分配给程序的资源和环境</p>
-</li>
-<li><p>进程：执行中的程序<br>一个进程至少包含一个线程</p>
-</li>
-<li><p>单线程：程序中只存在一个线程，实际上主方法就是一个主线程</p>
-</li>
-<li><p>多线程：在一个程序中运行多个任务<br>目的是更好地使用CPU资源</p>
-</li>
-</ol>
-<h3 id="线程的实现"><a href="#线程的实现" class="headerlink" title="线程的实现"></a>线程的实现</h3><h4 id="继承Thread类"><a href="#继承Thread类" class="headerlink" title="继承Thread类"></a>继承Thread类</h4><p>在java.lang包中定义, 继承Thread类必须重写run()方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">class MyThread extends Thread&#123;</div><div class="line">    private static int num = 0;</div><div class="line"> </div><div class="line">    public MyThread()&#123;</div><div class="line">        num++;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        System.out.println(&quot;主动创建的第&quot;+num+&quot;个线程&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>创建好了自己的线程类之后，就可以创建线程对象了，然后通过start()方法去启动线程。注意，不是调用run()方法启动线程，run方法中只是定义需要执行的任务，如果调用run方法，即相当于在主线程中执行run方法，跟普通的方法调用没有任何区别，此时并不会创建一个新的线程来执行定义的任务。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public class Test &#123;</div><div class="line">    public static void main(String[] args)  &#123;</div><div class="line">        MyThread thread = new MyThread();</div><div class="line">        thread.start();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">class MyThread extends Thread&#123;</div><div class="line">    private static int num = 0;</div><div class="line">    public MyThread()&#123;</div><div class="line">        num++;</div><div class="line">    &#125;</div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        System.out.println(&quot;主动创建的第&quot;+num+&quot;个线程&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在上面代码中，通过调用start()方法，就会创建一个新的线程了。为了分清start()方法调用和run()方法调用的区别，请看下面一个例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public class Test &#123;</div><div class="line">    public static void main(String[] args)  &#123;</div><div class="line">        System.out.println(&quot;主线程ID:&quot;+Thread.currentThread().getId());</div><div class="line">        MyThread thread1 = new MyThread(&quot;thread1&quot;);</div><div class="line">        thread1.start();</div><div class="line">        MyThread thread2 = new MyThread(&quot;thread2&quot;);</div><div class="line">        thread2.run();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line">class MyThread extends Thread&#123;</div><div class="line">    private String name;</div><div class="line"> </div><div class="line">    public MyThread(String name)&#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        System.out.println(&quot;name:&quot;+name+&quot; 子线程ID:&quot;+Thread.currentThread().getId());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><img src="/images/java-多线程-01.png" alt="结果"></p>
-<p>从输出结果可以得出以下结论：</p>
-<p>1）thread1和thread2的线程ID不同，thread2和主线程ID相同，说明通过run方法调用并不会创建新的线程，而是在主线程中直接运行run方法，跟普通的方法调用没有任何区别；</p>
-<p>2）虽然thread1的start方法调用在thread2的run方法前面调用，但是先输出的是thread2的run方法调用的相关信息，说明新线程创建的过程不会阻塞主线程的后续执行。</p>
-<h4 id="实现Runnable接口"><a href="#实现Runnable接口" class="headerlink" title="实现Runnable接口"></a>实现Runnable接口</h4><p>在Java中创建线程除了继承Thread类之外，还可以通过实现Runnable接口来实现类似的功能。实现Runnable接口必须重写其run方法。<br>下面是一个例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class Test &#123;</div><div class="line">    public static void main(String[] args)  &#123;</div><div class="line">        System.out.println(&quot;主线程ID：&quot;+Thread.currentThread().getId());</div><div class="line">        MyRunnable runnable = new MyRunnable();</div><div class="line">        Thread thread = new Thread(runnable);</div><div class="line">        thread.start();</div><div class="line">    &#125;</div><div class="line">&#125; </div><div class="line">class MyRunnable implements Runnable&#123;</div><div class="line">    public MyRunnable() &#123;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        System.out.println(&quot;子线程ID：&quot;+Thread.currentThread().getId());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>Runnable的中文意思是“任务”，顾名思义，通过实现Runnable接口，我们定义了一个子任务，然后将子任务交由Thread去执行。注意，这种方式必须将Runnable作为Thread类的参数，然后通过Thread的start方法来创建一个新线程来执行该子任务。如果调用Runnable的run方法的话，是不会创建新线程的，这根普通的方法调用没有任何区别。</p>
-<p>事实上，查看Thread类的实现源代码会发现Thread类是实现了Runnable接口的。</p>
-<p>在Java中，这2种方式都可以用来创建线程去执行子任务，具体选择哪一种方式要看自己的需求。直接继承Thread类的话，可能比实现Runnable接口看起来更加简洁，但是由于Java只允许单继承，所以如果自定义类需要继承其他类，则只能选择实现Runnable接口。</p>
-<h3 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h3><p>在正式学习Thread类中的具体方法之前，我们先来了解一下线程有哪些状态，这个将会有助于后面对Thread类中的方法的理解。</p>
-<ul>
-<li>创建（new）状态: 准备好了一个多线程的对象</li>
-<li>就绪（runnable）状态: 调用了start()方法, 等待CPU进行调度</li>
-<li>运行（running）状态: 执行run()方法</li>
-<li>阻塞（blocked）状态: 暂时停止执行, 可能将资源交给其它线程使用</li>
-<li>终止（dead）状态: 线程销毁</li>
-</ul>
-<p>当需要新起一个线程来执行某个子任务时，就创建了一个线程。但是线程创建之后，不会立即进入就绪状态，因为线程的运行需要一些条件（比如内存资源，在前面的JVM内存区域划分一篇博文中知道程序计数器、Java栈、本地方法栈都是线程私有的，所以需要为线程分配一定的内存空间），只有线程运行需要的所有条件满足了，才进入就绪状态。</p>
-<p>当线程进入就绪状态后，不代表立刻就能获取CPU执行时间，也许此时CPU正在执行其他的事情，因此它要等待。当得到CPU执行时间之后，线程便真正进入运行状态。</p>
-<p>线程在运行状态过程中，可能有多个原因导致当前线程不继续运行下去，比如用户主动让线程睡眠（睡眠一定的时间之后再重新执行）、用户主动让线程等待，或者被同步块给阻塞，此时就对应着多个状态：time waiting（睡眠或等待一定的事件）、waiting（等待被唤醒）、blocked（阻塞）。</p>
-<p>当由于突然中断或者子任务执行完毕，线程就会被消亡。</p>
-<p>下面这副图描述了线程从创建到消亡之间的状态：</p>
-<p><img src="/images/java-多线程-02.png" alt="线程状态图"></p>
-<p>在有些教程上将blocked、waiting、time waiting统称为阻塞状态，这个也是可以的，只不过这里我想将线程的状态和Java中的方法调用联系起来，所以将waiting和time waiting两个状态分离出来。</p>
-<p>注:sleep和wait的区别:</p>
-<ul>
-<li>sleep是Thread类的方法,wait是Object类中定义的方法.</li>
-<li>Thread.sleep不会导致锁行为的改变, 如果当前线程是拥有锁的, 那么Thread.sleep不会让线程释放锁.</li>
-<li>Thread.sleep和Object.wait都会暂停当前的线程. OS会将执行时间分配给其它线程. 区别是, 调用wait后, 需要别的线程执行notify/notifyAll才能够重新获得CPU执行时间.</li>
-</ul>
-<h3 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h3><p>对于单核CPU来说（对于多核CPU，此处就理解为一个核），CPU在一个时刻只能运行一个线程，当在运行一个线程的过程中转去运行另外一个线程，这个叫做线程上下文切换（对于进程也是类似）。</p>
-<p>由于可能当前线程的任务并没有执行完毕，所以在切换时需要保存线程的运行状态，以便下次重新切换回来时能够继续切换之前的状态运行。举个简单的例子：比如一个线程A正在读取一个文件的内容，正读到文件的一半，此时需要暂停线程A，转去执行线程B，当再次切换回来执行线程A的时候，我们不希望线程A又从文件的开头来读取。</p>
-<p>因此需要记录线程A的运行状态，那么会记录哪些数据呢？因为下次恢复时需要知道在这之前当前线程已经执行到哪条指令了，所以需要记录程序计数器的值，另外比如说线程正在进行某个计算的时候被挂起了，那么下次继续执行的时候需要知道之前挂起时变量的值时多少，因此需要记录CPU寄存器的状态。所以一般来说，线程上下文切换过程中会记录程序计数器、CPU寄存器状态等数据。</p>
-<p><strong>说简单点的：对于线程的上下文切换实际上就是 存储和恢复CPU状态的过程，它使得线程执行能够从中断点恢复执行</strong>。</p>
-<p>虽然多线程可以使得任务执行的效率得到提升，但是由于在线程切换时同样会带来一定的开销代价，并且多个线程会导致系统资源占用的增加，所以在进行多线程编程时要注意这些因素。</p>
-<h3 id="线程的常用方法"><a href="#线程的常用方法" class="headerlink" title="线程的常用方法"></a>线程的常用方法</h3><table>
-<thead>
-<tr>
-<th>编号</th>
-<th>方法</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>public void start()</td>
-<td>使该线程开始执行；Java 虚拟机调用该线程的 run 方法。</td>
-</tr>
-<tr>
-<td>2</td>
-<td>public void run()</td>
-<td>如果该线程是使用独立的 Runnable 运行对象构造的，则调用该 Runnable 对象的 run 方法；否则，该方法不执行任何操作并返回。</td>
-</tr>
-<tr>
-<td>3</td>
-<td>public final void setName(String name)</td>
-<td>改变线程名称，使之与参数 name 相同。</td>
-</tr>
-<tr>
-<td>4</td>
-<td>public final void setPriority(int priority)</td>
-<td>更改线程的优先级。</td>
-</tr>
-<tr>
-<td>5</td>
-<td>public final void setDaemon(boolean on )</td>
-<td>将该线程标记为守护线程或用户线程。</td>
-</tr>
-<tr>
-<td>6</td>
-<td>public final void join(long millisec)</td>
-<td>等待该线程终止的时间最长为 millis 毫秒。</td>
-</tr>
-<tr>
-<td>7</td>
-<td>public void interrupt()</td>
-<td>中断线程。</td>
-</tr>
-<tr>
-<td>8</td>
-<td>public final boolean isAlive()</td>
-<td>测试线程是否处于活动状态。</td>
-</tr>
-<tr>
-<td>9</td>
-<td>public static void yield()</td>
-<td>暂停当前正在执行的线程对象，并执行其他线程。</td>
-</tr>
-<tr>
-<td>10</td>
-<td>public static void sleep(long millisec)</td>
-<td>在指定的毫秒数内让当前正在执行的线程休眠（暂停执行），此操作受到系统计时器和调度程序精度和准确性的影响。</td>
-</tr>
-<tr>
-<td>11</td>
-<td>public static Thread currentThread()</td>
-<td>返回对当前正在执行的线程对象的引用。</td>
-</tr>
-</tbody>
-</table>
-<p><img src="/images/java-多线程-03.png" alt="线程方法"></p>
-<h4 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h4><h5 id="currentThread-方法"><a href="#currentThread-方法" class="headerlink" title="currentThread()方法"></a>currentThread()方法</h5><p>currentThread()方法可以返回代码段正在被哪个线程调用的信息。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public class Run&#123;</div><div class="line">    public static void main(String[] args)&#123;                 </div><div class="line">    	System.out.println(Thread.currentThread().getName());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h5 id="sleep-方法"><a href="#sleep-方法" class="headerlink" title="sleep()方法"></a>sleep()方法</h5><p>方法sleep()的作用是在指定的毫秒数内让当前“正在执行的线程”休眠（暂停执行）。这个“正在执行的线程”是指this.currentThread()返回的线程。</p>
-<p>sleep方法有两个重载版本：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sleep(long millis)     //参数为毫秒</div><div class="line">sleep(long millis,int nanoseconds)    //第一参数为毫秒，第二个参数为纳秒</div></pre></td></tr></table></figure>
-<p>sleep相当于让线程睡眠，交出CPU，让CPU去执行其他的任务。</p>
-<p>但是有一点要非常注意，sleep方法不会释放锁，也就是说如果当前线程持有对某个对象的锁，则即使调用sleep方法，其他线程也无法访问这个对象。看下面这个例子就清楚了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">public class Test &#123;</div><div class="line"> </div><div class="line">    private int i = 10;</div><div class="line">    private Object object = new Object();</div><div class="line"> </div><div class="line">    public static void main(String[] args)   &#123;</div><div class="line">        Test test = new Test();</div><div class="line">        MyThread thread1 = test.new MyThread();</div><div class="line">        MyThread thread2 = test.new MyThread();</div><div class="line">        thread1.start();</div><div class="line">        thread2.start();</div><div class="line">    &#125; </div><div class="line"> </div><div class="line">    class MyThread extends Thread&#123;</div><div class="line">        @Override</div><div class="line">        public void run() &#123;</div><div class="line">            synchronized (object) &#123;</div><div class="line">                i++;</div><div class="line">                System.out.println(&quot;i:&quot;+i);</div><div class="line">                try &#123;</div><div class="line">                    System.out.println(&quot;Thread &quot;+Thread.currentThread().getName()+&quot; is sleeping&quot;);</div><div class="line">                    Thread.currentThread().sleep(10000);</div><div class="line">                &#125; catch (InterruptedException e) &#123;</div><div class="line">                    // TODO: handle exception</div><div class="line">                &#125;</div><div class="line">                System.out.println(&quot;Thread &quot;+Thread.currentThread().getName()+&quot; is up&quot;);</div><div class="line">                i++;</div><div class="line">                System.out.println(&quot;i:&quot;+i);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><img src="/images/java-多线程-04.png" alt="执行结果"></p>
-<p>从上面输出结果可以看出，当Thread-0进入睡眠状态之后，Thread-1并没有去执行具体的任务。只有当Thread-0执行完之后，此时Thread-0释放了对象锁，Thread-1才开始执行。</p>
-<p>注意，如果调用了sleep方法，必须捕获InterruptedException异常或者将该异常向上层抛出。当线程睡眠时间满后，不一定会立即得到执行，因为此时可能CPU正在执行其他的任务。所以说调用sleep方法相当于让线程进入阻塞状态。</p>
-<h5 id="yield-方法"><a href="#yield-方法" class="headerlink" title="yield()方法"></a>yield()方法</h5><p>调用yield方法会让当前线程交出CPU权限，让CPU去执行其他的线程。它跟sleep方法类似，同样不会释放锁。但是yield不能控制具体的交出CPU的时间，另外，yield方法只能让拥有相同优先级的线程有获取CPU执行时间的机会。<br>注意，调用yield方法并不会让线程进入阻塞状态，而是让线程重回就绪状态，它只需要等待重新获取CPU执行时间，这一点是和sleep方法不一样的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">public class MyThread  extends Thread&#123;</div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        long beginTime=System.currentTimeMillis();</div><div class="line">        int count=0;</div><div class="line">        for (int i=0;i&lt;50000000;i++)&#123;</div><div class="line">            count=count+(i+1);</div><div class="line">            //Thread.yield();</div><div class="line">        &#125;</div><div class="line">        long endTime=System.currentTimeMillis();</div><div class="line">        System.out.println(&quot;用时：&quot;+(endTime-beginTime)+&quot; 毫秒！&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line">public class Run &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        MyThread t= new MyThread();</div><div class="line">        t.start();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<blockquote>
-<p>用时：3 毫秒！</p>
-</blockquote>
-<p>如果将 //Thread.yield();的注释去掉，执行结果如下：</p>
-<blockquote>
-<p>用时：16080 毫秒！</p>
-</blockquote>
-<h4 id="对象方法"><a href="#对象方法" class="headerlink" title="对象方法"></a>对象方法</h4><h5 id="start-方法"><a href="#start-方法" class="headerlink" title="start()方法"></a>start()方法</h5><p>start()用来启动一个线程，当调用start方法后，系统才会开启一个新的线程来执行用户定义的子任务，在这个过程中，会为相应的线程分配需要的资源。</p>
-<h5 id="run-方法"><a href="#run-方法" class="headerlink" title="run()方法"></a>run()方法</h5><p>run()方法是不需要用户来调用的，当通过start方法启动一个线程之后，当线程获得了CPU执行时间，便进入run方法体去执行具体的任务。注意，继承Thread类必须重写run方法，在run方法中定义具体要执行的任务。</p>
-<h5 id="getId"><a href="#getId" class="headerlink" title="getId()"></a>getId()</h5><p>getId()的作用是取得线程的唯一标识</p>
-<pre><code>public class Test {
-    public static void main(String[] args) {
-        Thread t= Thread.currentThread();
-        System.out.println(t.getName()+&quot; &quot;+t.getId());
-    }
-}
-</code></pre><p>输出</p>
-<blockquote>
-<p>main 1</p>
-</blockquote>
-<h5 id="isAlive-方法"><a href="#isAlive-方法" class="headerlink" title="isAlive()方法"></a>isAlive()方法</h5><p>方法isAlive()的功能是判断当前线程是否处于活动状态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class MyThread  extends Thread&#123;</div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">        System.out.println(&quot;run=&quot;+this.isAlive());</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">public class RunTest &#123;</div><div class="line">    public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">        MyThread myThread=new MyThread();</div><div class="line">        System.out.println(&quot;begin ==&quot;+myThread.isAlive());</div><div class="line">        myThread.start();</div><div class="line">        System.out.println(&quot;end ==&quot;+myThread.isAlive());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>程序运行结果：</p>
-<pre><code>---------- java ----------
-begin ==false
-end ==true
-run=true
-
-Output completed (0 sec consumed) - Normal Termination
-</code></pre><p>方法isAlive()的作用是测试线程是否偶处于活动状态。什么是活动状态呢？活动状态就是线程已经启动且尚未终止。线程处于正在运行或准备开始运行的状态，就认为线程是“存活”的。<br>有个需要注意的地方</p>
-<p><code>System.out.println(&quot;end ==&quot;+myThread.isAlive());</code><br>虽然上面的实例中打印的值是true,但此值是不确定的。打印true值是因为myThread线程还未执行完毕，所以输出true。如果代码改成下面这样，加了个sleep休眠：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">        MyThread myThread=new MyThread();</div><div class="line">        System.out.println(&quot;begin ==&quot;+myThread.isAlive());</div><div class="line">        myThread.start();</div><div class="line">        Thread.sleep(1000);</div><div class="line">        System.out.println(&quot;end ==&quot;+myThread.isAlive());</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>则执行结果输出为false,因为mythread对象已经在1秒之内执行完毕。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">---------- java ----------</div><div class="line">begin ==false</div><div class="line">run=true</div><div class="line">end ==false</div><div class="line"></div><div class="line">Output completed (1 sec consumed) - Normal Termination</div></pre></td></tr></table></figure></p>
-<h5 id="join-方法"><a href="#join-方法" class="headerlink" title="join()方法"></a>join()方法</h5><p>在很多情况下，主线程创建并启动了线程，如果子线程中药进行大量耗时运算，主线程往往将早于子线程结束之前结束。这时，如果主线程想等待子线程执行完成之后再结束，比如子线程处理一个数据，主线程要取得这个数据中的值，就要用到join()方法了。方法join()的作用是等待线程对象销毁。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public class Test extends Thread&#123;</div><div class="line">    public Test(String name) &#123;</div><div class="line">        super(name);</div><div class="line">    &#125;</div><div class="line">    public void run() &#123;</div><div class="line">        for (int i = 0; i &lt; 5; i++) &#123;</div><div class="line">            System.out.println(getName() + &quot;  &quot; + i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">        </div><div class="line">        new Test(&quot;new thread&quot;).start();</div><div class="line">        for (int i = 0; i &lt; 10; i++) &#123;</div><div class="line">            if (i == 5) &#123;</div><div class="line">                Test th = new Te(&quot;joined thread&quot;);</div><div class="line">                th.start();</div><div class="line">                th.join();</div><div class="line">            &#125;</div><div class="line">            System.out.println(Thread.currentThread().getName() + &quot;  &quot; + i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>执行结果：<br><img src="/images/java-多线程-07.png" alt="result one"><br><img src="/images/java-多线程-08.png" alt="result two"></p>
-<p>由上可以看出main主线程与new thread 的执行顺序是不确定的，交替执行，但当joined thread 执行join()后，主线程等待joined thread线程先执行完了才结束的。如果把th.join()这行注释掉，运行结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">---------- java ----------</div><div class="line">main  0</div><div class="line">new thread  0</div><div class="line">main  1</div><div class="line">main  2</div><div class="line">new thread  1</div><div class="line">main  3</div><div class="line">new thread  2</div><div class="line">main  4</div><div class="line">new thread  3</div><div class="line">new thread  4</div><div class="line">joined thread  0</div><div class="line">joined thread  1</div><div class="line">joined thread  2</div><div class="line">main  5</div><div class="line">joined thread  3</div><div class="line">main  6</div><div class="line">main  7</div><div class="line">main  8</div><div class="line">main  9</div><div class="line">joined thread  4</div><div class="line"></div><div class="line">Output completed (1 sec consumed) - Normal Termination</div></pre></td></tr></table></figure>
-<h5 id="getName和setName"><a href="#getName和setName" class="headerlink" title="getName和setName"></a>getName和setName</h5><p>用来得到或者设置线程名称。</p>
-<h5 id="getPriority和setPriority"><a href="#getPriority和setPriority" class="headerlink" title="getPriority和setPriority"></a>getPriority和setPriority</h5><p>用来获取和设置线程优先级。</p>
-<h5 id="setDaemon和isDaemon"><a href="#setDaemon和isDaemon" class="headerlink" title="setDaemon和isDaemon"></a>setDaemon和isDaemon</h5><p>用来设置线程是否成为守护线程和判断线程是否是守护线程。</p>
-<p>守护线程和用户线程的区别在于：守护线程依赖于创建它的线程，而用户线程则不依赖。举个简单的例子：如果在main线程中创建了一个守护线程，当main方法运行完毕之后，守护线程也会随着消亡。而用户线程则不会，用户线程会一直运行直到其运行完毕。在JVM中，像垃圾收集器线程就是守护线程。</p>
-<p>在上面已经说到了Thread类中的大部分方法，那么Thread类中的方法调用到底会引起线程状态发生怎样的变化呢？下面一幅图就是在上面的图上进行改进而来的：</p>
-<p><img src="/images/java-多线程-10.png" alt="对应方法的状态"></p>
-<h3 id="停止线程"><a href="#停止线程" class="headerlink" title="停止线程"></a>停止线程</h3><p>停止线程是在多线程开发时很重要的技术点，掌握此技术可以对线程的停止进行有效的处理。<br>停止一个线程可以使用Thread.stop()方法，但最好不用它。该方法是不安全的，已被弃用。<br>在Java中有以下3种方法可以终止正在运行的线程：</p>
-<ul>
-<li>使用退出标志，使线程正常退出，也就是当run方法完成后线程终止</li>
-<li>使用stop方法强行终止线程，但是不推荐使用这个方法，因为stop和suspend及resume一样，都是作废过期的方法，使用他们可能产生不可预料的结果。</li>
-<li>使用interrupt方法中断线程，但这个不会终止一个正在运行的线程，还需要加入一个判断才可以完成线程的停止。</li>
-</ul>
-<h3 id="暂停线程"><a href="#暂停线程" class="headerlink" title="暂停线程"></a>暂停线程</h3><p>interrupt()方法</p>
-<h3 id="线程的优先级"><a href="#线程的优先级" class="headerlink" title="线程的优先级"></a>线程的优先级</h3><p>在操作系统中，线程可以划分优先级，优先级较高的线程得到的CPU资源较多，也就是CPU优先执行优先级较高的线程对象中的任务。<br>设置线程优先级有助于帮“线程规划器”确定在下一次选择哪一个线程来优先执行。<br>设置线程的优先级使用setPriority()方法，此方法在JDK的源码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public final void setPriority(int newPriority) &#123;</div><div class="line">        ThreadGroup g;</div><div class="line">        checkAccess();</div><div class="line">        if (newPriority &gt; MAX_PRIORITY || newPriority &lt; MIN_PRIORITY) &#123;</div><div class="line">            throw new IllegalArgumentException();</div><div class="line">        &#125;</div><div class="line">        if((g = getThreadGroup()) != null) &#123;</div><div class="line">            if (newPriority &gt; g.getMaxPriority()) &#123;</div><div class="line">                newPriority = g.getMaxPriority();</div><div class="line">            &#125;</div><div class="line">            setPriority0(priority = newPriority);</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>在Java中，线程的优先级分为1~10这10个等级，如果小于1或大于10，则JDK抛出异常throw new IllegalArgumentException()。<br>JDK中使用3个常量来预置定义优先级的值，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public final static int MIN_PRIORITY = 1;</div><div class="line">public final static int NORM_PRIORITY = 5;</div><div class="line">public final static int MAX_PRIORITY = 10;</div></pre></td></tr></table></figure></p>
-<p>线程优先级特性：</p>
-<ul>
-<li>继承性<br>比如A线程启动B线程，则B线程的优先级与A是一样的。</li>
-<li>规则性<br>高优先级的线程总是大部分先执行完，但不代表高优先级线程全部先执行完。</li>
-<li>随机性<br>优先级较高的线程不一定每一次都先执行完。</li>
-</ul>
-<h3 id="守护线程"><a href="#守护线程" class="headerlink" title="守护线程"></a>守护线程</h3><p>在Java线程中有两种线程，一种是User Thread（用户线程），另一种是Daemon Thread(守护线程)。<br>Daemon的作用是为其他线程的运行提供服务，比如说GC线程。其实User Thread线程和Daemon Thread守护线程本质上来说去没啥区别的，唯一的区别之处就在虚拟机的离开：如果User Thread全部撤离，那么Daemon Thread也就没啥线程好服务的了，所以虚拟机也就退出了。</p>
-<p>只要当前JVM实例中尚存任何一个非守护线程没有结束，守护线程就全部工作；只有当最后一个非守护线程结束是，守护线程随着JVM一同结束工作，Daemon作用是为其他线程提供便利服务，守护线程最典型的应用就是GC(垃圾回收器)，他就是一个很称职的守护者。</p>
-<p>守护线程并非虚拟机内部可以提供，用户也可以自行的设定守护线程，方法：public final void setDaemon(boolean on) ；但是有几点需要注意：</p>
-<ul>
-<li>thread.setDaemon(true)必须在thread.start()之前设置，否则会跑出一个IllegalThreadStateException异常。你不能把正在运行的常规线程设置为守护线程。 （备注：这点与守护进程有着明显的区别，守护进程是创建后，让进程摆脱原会话的控制+让进程摆脱原进程组的控制+让进程摆脱原控制终端的控制；所以说寄托于虚拟机的语言机制跟系统级语言有着本质上面的区别）</li>
-<li>在Daemon线程中产生的新线程也是Daemon的。 （这一点又是有着本质的区别了：守护进程fork()出来的子进程不再是守护进程，尽管它把父进程的进程相关信息复制过去了，但是子进程的进程的父进程不是init进程，所谓的守护进程本质上说就是“父进程挂掉，init收养，然后文件0,1,2都是/dev/null，当前目录到/”）</li>
-<li>不是所有的应用都可以分配给Daemon线程来进行服务，比如读写操作或者计算逻辑。因为在Daemon Thread还没来的及进行操作时，虚拟机可能已经退出了。</li>
-</ul>
-<h3 id="同步与死锁"><a href="#同步与死锁" class="headerlink" title="同步与死锁"></a>同步与死锁</h3><ul>
-<li>同步代码块<br>在代码块上加上”synchronized”关键字，则此代码块就称为同步代码块</li>
-<li><p>同步代码块格式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">synchronized(同步对象)&#123;</div><div class="line"> 需要同步的代码块;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>同步方法<br>除了代码块可以同步，方法也是可以同步的</p>
-</li>
-<li>方法同步格式<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">synchronized void 方法名称()&#123;&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h3><h4 id="线程和进程有什么区别？"><a href="#线程和进程有什么区别？" class="headerlink" title="线程和进程有什么区别？"></a>线程和进程有什么区别？</h4><p>答：一个进程是一个独立(self contained)的运行环境，它可以被看作一个程序或者一个应用。而线程是在进程中执行的一个任务。线程是进程的子集，一个进程可以有很多线程，每条线程并行执行不同的任务。不同的进程使用不同的内存空间，而所有的线程共享一片相同的内存空间。别把它和栈内存搞混，每个线程都拥有单独的栈内存用来存储本地数据。</p>
-<h4 id="如何在Java中实现线程？"><a href="#如何在Java中实现线程？" class="headerlink" title="如何在Java中实现线程？"></a>如何在Java中实现线程？</h4><p>答：<br>创建线程有两种方式：<br>一、继承 Thread 类，扩展线程。<br>二、实现 Runnable 接口。</p>
-<p>启动一个线程是调用run()还是start()方法？<br>答：启动一个线程是调用start()方法，使线程所代表的虚拟处理机处于可运行状态，这意味着它可以由JVM 调度并执行，这并不意味着线程就会立即运行。run()方法是线程启动后要进行回调（callback）的方法。</p>
-<p>Thread类的sleep()方法和对象的wait()方法都可以让线程暂停执行，它们有什么区别?<br>答：sleep()方法（休眠）是线程类（Thread）的静态方法，调用此方法会让当前线程暂停执行指定的时间，将执行机会（CPU）让给其他线程，但是对象的锁依然保持，因此休眠时间结束后会自动恢复（线程回到就绪状态，请参考第66题中的线程状态转换图）。wait()是Object类的方法，调用对象的wait()方法导致当前线程放弃对象的锁（线程暂停执行），进入对象的等待池（wait pool），只有调用对象的notify()方法（或notifyAll()方法）时才能唤醒等待池中的线程进入等锁池（lock pool），如果线程重新获得对象的锁就可以进入就绪状态。</p>
-<h4 id="线程的sleep-方法和yield-方法有什么区别？"><a href="#线程的sleep-方法和yield-方法有什么区别？" class="headerlink" title="线程的sleep()方法和yield()方法有什么区别？"></a>线程的sleep()方法和yield()方法有什么区别？</h4><p>答：<br>① sleep()方法给其他线程运行机会时不考虑线程的优先级，因此会给低优先级的线程以运行的机会；yield()方法只会给相同优先级或更高优先级的线程以运行的机会；<br>② 线程执行sleep()方法后转入阻塞（blocked）状态，而执行yield()方法后转入就绪（ready）状态；<br>③ sleep()方法声明抛出InterruptedException，而yield()方法没有声明任何异常；<br>④ sleep()方法比yield()方法（跟操作系统CPU调度相关）具有更好的可移植性。</p>
-<h4 id="请说出与线程同步以及线程调度相关的方法。"><a href="#请说出与线程同步以及线程调度相关的方法。" class="headerlink" title="请说出与线程同步以及线程调度相关的方法。"></a>请说出与线程同步以及线程调度相关的方法。</h4><p>答：</p>
-<ul>
-<li>wait()：使一个线程处于等待（阻塞）状态，并且释放所持有的对象的锁；</li>
-<li>sleep()：使一个正在运行的线程处于睡眠状态，是一个静态方法，调用此方法要处理InterruptedException异常；</li>
-<li>notify()：唤醒一个处于等待状态的线程，当然在调用此方法的时候，并不能确切的唤醒某一个等待状态的线程，而是由JVM确定唤醒哪个线程，而且与优先级无关；</li>
-<li>notityAll()：唤醒所有处于等待状态的线程，该方法并不是将对象的锁给所有线程，而是让它们竞争，只有获得锁的线程才能进入就绪状态；</li>
-</ul>
-<p><a href="http://www.importnew.com/21136.html" target="_blank" rel="external">nice的教程</a><br><a href="http://www.importnew.com/27131.html" target="_blank" rel="external">图解Java多线程</a><br><a href="http://www.importnew.com/26850.html" target="_blank" rel="external">线程通信</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;多线程并发编程是Java编程中重要的一块内容，也是面试重点覆盖区域，所以学好多线程并发编程对我们来说极其重要，下面跟我一起开启本次的学习之旅
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="多线程" scheme="http://yoursite.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
   </entry>
   
