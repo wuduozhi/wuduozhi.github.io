@@ -19,12 +19,15 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="DISTINCTSQL SELECT DISTINCT 语句 在表中，可能会包含重复值。这并不成问题，不过，有时您也许希望仅仅列出不同（distinct）的值。 关键词 DISTINCT 用于返回唯一不同的值。 语法：SELECT DISTINCT 列名称 FROM 表名称 GROUP BYGROUP BY语句用于结合聚合函数，根据一个或多个列对结果集进行分组。 SQL GROUP BY 语法 :">
 <meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/2018/05/13/images/数据库-04.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/05/13/images/数据库-05.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/05/13/images/数据库-06.jpg">
 <meta property="og:image" content="http://yoursite.com/images/数据库-03.png">
-<meta property="og:updated_time" content="2018-05-13T08:56:25.399Z">
+<meta property="og:updated_time" content="2018-05-13T15:34:46.423Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库|在2018毕业生彩蛋中学到的">
 <meta name="twitter:description" content="DISTINCTSQL SELECT DISTINCT 语句 在表中，可能会包含重复值。这并不成问题，不过，有时您也许希望仅仅列出不同（distinct）的值。 关键词 DISTINCT 用于返回唯一不同的值。 语法：SELECT DISTINCT 列名称 FROM 表名称 GROUP BYGROUP BY语句用于结合聚合函数，根据一个或多个列对结果集进行分组。 SQL GROUP BY 语法 :">
-<meta name="twitter:image" content="http://yoursite.com/images/数据库-03.png">
+<meta name="twitter:image" content="http://yoursite.com/2018/05/13/images/数据库-04.jpg">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -52,7 +55,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -72,7 +75,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -95,16 +98,16 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-05-13T12:50:36.000Z" itemprop="datePublished"> Published 2018-05-13</time>
+    <time datetime="2018-05-13T12:50:36.000Z" itemprop="datePublished"> 发表于 2018-05-13</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
+			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#DISTINCT"><span class="toc-number">1.</span> <span class="toc-text">DISTINCT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GROUP-BY"><span class="toc-number">2.</span> <span class="toc-text">GROUP BY</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nvl函数"><span class="toc-number">3.</span> <span class="toc-text">nvl函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CUME-DIST-函数"><span class="toc-number">4.</span> <span class="toc-text">CUME_DIST 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rank函数"><span class="toc-number">5.</span> <span class="toc-text">rank函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#round函数"><span class="toc-number">6.</span> <span class="toc-text">round函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TO-CHAR-函数"><span class="toc-number">7.</span> <span class="toc-text">TO_CHAR() 函数</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#DISTINCT"><span class="toc-number">1.</span> <span class="toc-text">DISTINCT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GROUP-BY"><span class="toc-number">2.</span> <span class="toc-text">GROUP BY</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#用法详解"><span class="toc-number">2.1.</span> <span class="toc-text">用法详解</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nvl函数"><span class="toc-number">3.</span> <span class="toc-text">nvl函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CUME-DIST-函数"><span class="toc-number">4.</span> <span class="toc-text">CUME_DIST 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rank函数"><span class="toc-number">5.</span> <span class="toc-text">rank函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#round函数"><span class="toc-number">6.</span> <span class="toc-text">round函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TO-CHAR-函数"><span class="toc-number">7.</span> <span class="toc-text">TO_CHAR() 函数</span></a></li></ol>
 		
 		</div>
 		
@@ -115,6 +118,90 @@
 <h3 id="GROUP-BY"><a href="#GROUP-BY" class="headerlink" title="GROUP BY"></a>GROUP BY</h3><p><code>GROUP BY</code>语句用于结合聚合函数，根据一个或多个列对结果集进行分组。</p>
 <p>SQL GROUP BY 语法 :<code>SELECT column_name, aggregate_function(column_name) FROM table_name  WHERE column_name operator value
 GROUP BY column_name;</code> </p>
+<h4 id="用法详解"><a href="#用法详解" class="headerlink" title="用法详解"></a>用法详解</h4><p>原始表：</p>
+<p><img src="../images/数据库-04.jpg" alt="原始数据"></p>
+<ul>
+<li>简单Group By</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">select 类别, sum(数量) as 数量之和</div><div class="line">from A</div><div class="line">group by 类别</div></pre></td></tr></table></figure>
+<p>返回结果如下表，实际上就是分类汇总。</p>
+<p><img src="../images/数据库-05.jpg" alt="Group by"></p>
+<ul>
+<li>Group By中Select指定的字段限制</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">select 类别, sum(数量) as 数量之和, 摘要</div><div class="line">from A</div><div class="line">group by 类别</div><div class="line">order by 类别 desc</div></pre></td></tr></table></figure>
+<p>这个sql语句是错误的，原因是<strong>在select指定的字段要么就要包含在Group By语句的后面，作为分组的依据；要么就要被包含在聚合函数中。</strong></p>
+<ul>
+<li>GROUP BY 多列分组的使用：</li>
+</ul>
+<p>“多列分组”实际上就是就是按照多列（字段1+字段2）合并后的值进行分组。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">select 类别, 摘要, sum(数量) as 数量之和</div><div class="line">from A</div><div class="line">group by  类别, 摘要</div></pre></td></tr></table></figure>
+<p><img src="../images/数据库-06.jpg" alt="Group by"></p>
+<p>“多列分组”实际上就是就是按照多列（类别+摘要）合并后的值进行分组，示例4中可以看到“a, a2001, 13”为“a, a2001, 11”和“a, a2001, 2”两条记录的合并。</p>
+<ul>
+<li>Group By与聚合函数</li>
+</ul>
+<p>在示例3中提到group by语句中select指定的字段必须是“分组依据字段”，其他字段若想出现在select中则必须包含在聚合函数中，常见的聚合函数如下表：</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>作用</th>
+<th>支持性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sum(列名)</td>
+<td>求和    　　　</td>
+<td>　</td>
+</tr>
+<tr>
+<td>max(列名)</td>
+<td>最大值    　</td>
+<td>　　　</td>
+</tr>
+<tr>
+<td>min(列名)</td>
+<td>最小值    　</td>
+<td>　　　</td>
+</tr>
+<tr>
+<td>avg(列名)</td>
+<td>平均值    　　</td>
+<td>　　</td>
+</tr>
+<tr>
+<td>first(列名)</td>
+<td>第一条记录</td>
+<td>仅Access支持</td>
+</tr>
+<tr>
+<td>last(列名)</td>
+<td>最后一条记录</td>
+<td>仅Access支持</td>
+</tr>
+<tr>
+<td>count(列名)</td>
+<td>统计记录数</td>
+<td>注意和count(*)的区别</td>
+</tr>
+</tbody>
+</table>
+<p>例如：</p>
+<ul>
+<li>求各组平均值:<code>select 类别, avg(数量) AS 平均值 from A group by 类别;</code></li>
+<li>求各组记录数目:<code>select 类别, count(*) AS 记录数 from A group by 类别;</code></li>
+</ul>
+<ul>
+<li><p>Having与Where的区别</p>
+</li>
+<li><p>where 子句的作用是在对查询结果进行分组前，将不符合where条件的行去掉，即在分组之前过滤数据，where条件中不能包含聚组函数，使用where条件过滤出特定的行。</p>
+</li>
+<li>having 子句的作用是筛选满足条件的组，即在分组之后过滤数据，条件中经常包含聚组函数，使用having 条件过滤出特定的组，也可以使用多个分组标准进行分组。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">select 类别, sum(数量) as 数量之和 from A</div><div class="line">group by 类别</div><div class="line">having sum(数量) &gt; 18</div></pre></td></tr></table></figure>
+<p>Having和Where的联合使用方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">select 类别, SUM(数量)from A</div><div class="line">where 数量 &gt; 8</div><div class="line">group by 类别</div><div class="line">having SUM(数量) &gt; 10</div></pre></td></tr></table></figure></p>
 <h3 id="nvl函数"><a href="#nvl函数" class="headerlink" title="nvl函数"></a>nvl函数</h3><p>NVL(E1, E2)的功能为：如果E1为NULL，则函数返回E2，否则返回E1本身。</p>
 <h3 id="CUME-DIST-函数"><a href="#CUME-DIST-函数" class="headerlink" title="CUME_DIST 函数"></a>CUME_DIST 函数</h3><p>计算某个窗口或分区中某个值的累积分布。假定升序排序，则使用以下公式确定累积分布：<code>count of rows with values &lt;= x / count of rows in the window or partition</code></p>
 <p>其中，x 等于 ORDER BY 子句中指定的列的当前行中的值。以下数据集说明了此公式的使用：</p>
@@ -306,10 +393,10 @@ OVER (
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -337,7 +424,7 @@ OVER (
 
   
 <div class="categorieslist">
-	<p class="asidetitle">Categories</p>
+	<p class="asidetitle">分类</p>
 		<ul>
 		
 		  
@@ -426,7 +513,7 @@ OVER (
 
   
 <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
 			
@@ -514,7 +601,7 @@ OVER (
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
 </aside>
@@ -707,7 +794,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
