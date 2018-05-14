@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://yoursite.com/images/数据库-05.jpg">
 <meta property="og:image" content="http://yoursite.com/images/数据库-06.jpg">
 <meta property="og:image" content="http://yoursite.com/images/数据库-03.png">
-<meta property="og:updated_time" content="2018-05-13T16:44:21.791Z">
+<meta property="og:updated_time" content="2018-05-13T16:44:30.943Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库|在2018毕业生彩蛋中学到的">
 <meta name="twitter:description" content="DISTINCTSQL SELECT DISTINCT 语句 在表中，可能会包含重复值。这并不成问题，不过，有时您也许希望仅仅列出不同（distinct）的值。 关键词 DISTINCT 用于返回唯一不同的值。 语法：SELECT DISTINCT 列名称 FROM 表名称 GROUP BYGROUP BY语句用于结合聚合函数，根据一个或多个列对结果集进行分组。 SQL GROUP BY 语法 :">
@@ -55,7 +55,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -75,7 +75,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -98,14 +98,14 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-05-13T12:50:36.000Z" itemprop="datePublished"> 发表于 2018-05-13</time>
+    <time datetime="2018-05-13T12:50:36.000Z" itemprop="datePublished"> Published 2018-05-13</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
+			<strong class="toc-title">Contents</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#DISTINCT"><span class="toc-number">1.</span> <span class="toc-text">DISTINCT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GROUP-BY"><span class="toc-number">2.</span> <span class="toc-text">GROUP BY</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#用法详解"><span class="toc-number">2.1.</span> <span class="toc-text">用法详解</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#简单Group-By"><span class="toc-number">2.1.1.</span> <span class="toc-text">简单Group By</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Group-By中Select指定的字段限制"><span class="toc-number">2.1.2.</span> <span class="toc-text">Group By中Select指定的字段限制</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#GROUP-BY-多列分组的使用"><span class="toc-number">2.1.3.</span> <span class="toc-text">GROUP BY 多列分组的使用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Group-By与聚合函数"><span class="toc-number">2.1.4.</span> <span class="toc-text">Group By与聚合函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Having与Where的区别"><span class="toc-number">2.1.5.</span> <span class="toc-text">Having与Where的区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nvl函数"><span class="toc-number">3.</span> <span class="toc-text">nvl函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CUME-DIST-函数"><span class="toc-number">4.</span> <span class="toc-text">CUME_DIST 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rank函数"><span class="toc-number">5.</span> <span class="toc-text">rank函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#round函数"><span class="toc-number">6.</span> <span class="toc-text">round函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TO-CHAR-函数"><span class="toc-number">7.</span> <span class="toc-text">TO_CHAR() 函数</span></a></li></ol>
 		
@@ -365,10 +365,17 @@ OVER (
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2018/05/15/数据库-MySQL中实现Rank高级排名函数/" title="数据库|MySQL中实现Rank高级排名函数">
+  <span>
+  数据库|MySQL中实现Rank高级排名函数</span>
+</a>
+</div>
+
 
 <div class="next">
-<a href="/2018/05/13/计算机算法-动态规划之0-1背包问题/"  title="计算机算法|动态规划之0-1背包问题">
- <span>计算机算法|动态规划之0-1背包问题
+<a href="/2018/05/13/计算机算法-动态规划之0-1背包问题/"  title="计算机算法|动态规划之背包问题">
+ <span>计算机算法|动态规划之背包问题
 </span>
 </a>
 </div>
@@ -378,10 +385,10 @@ OVER (
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -409,7 +416,7 @@ OVER (
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分类</p>
+	<p class="asidetitle">Categories</p>
 		<ul>
 		
 		  
@@ -453,7 +460,7 @@ OVER (
 		  
 		
 		  
-			<li><a href="/categories/数据库/" title="数据库">数据库<sup>2</sup></a></li>
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>3</sup></a></li>
 		  
 		
 		  
@@ -498,7 +505,7 @@ OVER (
 
   
 <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -510,19 +517,19 @@ OVER (
 			
 		
 			
-				<li><a href="/tags/college/" title="college">college<sup>12</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>12</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/工具/" title="工具">工具<sup>7</sup></a></li>
+				<li><a href="/tags/college/" title="college">college<sup>12</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具/" title="工具">工具<sup>7</sup></a></li>
 			
 		
 			
@@ -534,11 +541,7 @@ OVER (
 			
 		
 			
-				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
 			
 		
 			
@@ -546,7 +549,15 @@ OVER (
 			
 		
 			
-				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+				<li><a href="/tags/数据库/" title="数据库">数据库<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
 			
 		
 			
@@ -554,11 +565,11 @@ OVER (
 			
 		
 			
-				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+				<li><a href="/tags/干货/" title="干货">干货<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/干货/" title="干货">干货<sup>2</sup></a></li>
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
 			
 		
 			
@@ -566,19 +577,15 @@ OVER (
 			
 		
 			
-				<li><a href="/tags/数据库/" title="数据库">数据库<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Jersey/" title="Jersey">Jersey<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/架构/" title="架构">架构<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -586,7 +593,7 @@ OVER (
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -779,7 +786,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 

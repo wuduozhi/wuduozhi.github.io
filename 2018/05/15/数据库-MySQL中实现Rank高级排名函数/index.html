@@ -1,0 +1,634 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>数据库|MySQL中实现Rank高级排名函数 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="引言MySQL中没有Rank排名函数，当我们需要查询排名时，只能使用MySQL数据库中的基本查询语句来查询普通排名。尽管如此，可不要小瞧基础而简单的查询语句，我们可以利用其来达到Rank函数一样的高级排名效果。 在这里我用一个简单例子来实现排名的查询： 首先我们先创建一个我们需要进行高级排名查询的players表： 123456789101112131415161718192021CREATE T">
+<meta name="keywords" content="数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库|MySQL中实现Rank高级排名函数">
+<meta property="og:url" content="http://yoursite.com/2018/05/15/数据库-MySQL中实现Rank高级排名函数/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="引言MySQL中没有Rank排名函数，当我们需要查询排名时，只能使用MySQL数据库中的基本查询语句来查询普通排名。尽管如此，可不要小瞧基础而简单的查询语句，我们可以利用其来达到Rank函数一样的高级排名效果。 在这里我用一个简单例子来实现排名的查询： 首先我们先创建一个我们需要进行高级排名查询的players表： 123456789101112131415161718192021CREATE T">
+<meta property="og:locale" content="Chinese">
+<meta property="og:updated_time" content="2018-05-14T16:35:55.112Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据库|MySQL中实现Rank高级排名函数">
+<meta name="twitter:description" content="引言MySQL中没有Rank排名函数，当我们需要查询排名时，只能使用MySQL数据库中的基本查询语句来查询普通排名。尽管如此，可不要小瞧基础而简单的查询语句，我们可以利用其来达到Rank函数一样的高级排名效果。 在这里我用一个简单例子来实现排名的查询： 首先我们先创建一个我们需要进行高级排名查询的players表： 123456789101112131415161718192021CREATE T">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/05/15/数据库-MySQL中实现Rank高级排名函数/" title="数据库|MySQL中实现Rank高级排名函数" itemprop="url">数据库|MySQL中实现Rank高级排名函数</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-05-15T00:03:10.000Z" itemprop="datePublished"> Published 2018-05-15</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在MySQL中实现Rank普通排名函数"><span class="toc-number">2.</span> <span class="toc-text">在MySQL中实现Rank普通排名函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查询以降序排列"><span class="toc-number">3.</span> <span class="toc-text">查询以降序排列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在MySQL中实现Rank普通并列排名函数"><span class="toc-number">4.</span> <span class="toc-text">在MySQL中实现Rank普通并列排名函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#case-when"><span class="toc-number">4.1.</span> <span class="toc-text">case when</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在MySQL中实现Rank高级并列排名函数"><span class="toc-number">5.</span> <span class="toc-text">在MySQL中实现Rank高级并列排名函数</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>MySQL中没有Rank排名函数，当我们需要查询排名时，只能使用MySQL数据库中的基本查询语句来查询普通排名。尽管如此，可不要小瞧基础而简单的查询语句，我们可以利用其来达到Rank函数一样的高级排名效果。</p>
+<p>在这里我用一个简单例子来实现排名的查询：</p>
+<p>首先我们先创建一个我们需要进行高级排名查询的players表：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE `players` (</div><div class="line">  `pid` int(2) NOT NULL AUTO_INCREMENT,</div><div class="line">  `name` varchar(50) NOT NULL,</div><div class="line">  `age` int(2) NOT NULL,</div><div class="line">  PRIMARY KEY (`pid`),</div><div class="line">  UNIQUE KEY `name` (`name`)</div><div class="line">) ENGINE=InnoDB  DEFAULT CHARSET=latin1;</div><div class="line"></div><div class="line">INSERT INTO `players` (`pid`, `name`, `age`) VALUES</div><div class="line">(1, &apos;Samual&apos;, 25),</div><div class="line">(2, &apos;Vino&apos;, 20),</div><div class="line">(3, &apos;John&apos;, 20),</div><div class="line">(4, &apos;Andy&apos;, 22),</div><div class="line">(5, &apos;Brian&apos;, 21),</div><div class="line">(6, &apos;Dew&apos;, 24),</div><div class="line">(7, &apos;Kris&apos;, 25),</div><div class="line">(8, &apos;William&apos;, 26),</div><div class="line">(9, &apos;George&apos;, 23),</div><div class="line">(10, &apos;Peter&apos;, 19),</div><div class="line">(11, &apos;Tom&apos;, 20),</div><div class="line">(12, &apos;Andre&apos;, 20);</div></pre></td></tr></table></figure>
+<h3 id="在MySQL中实现Rank普通排名函数"><a href="#在MySQL中实现Rank普通排名函数" class="headerlink" title="在MySQL中实现Rank普通排名函数"></a>在MySQL中实现Rank普通排名函数</h3><p>在这里，我们希望获得一个排名字段的列，以及age的升序排列。所以我们的查询语句将是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">SELECT pid, name, age, @curRank := @curRank + 1 AS rank</div><div class="line">FROM players p, (</div><div class="line">SELECT @curRank := 0</div><div class="line">) q</div><div class="line">ORDER BY age</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">| PID |    NAME | AGE | RANK |</div><div class="line">|-----|---------|-----|------|</div><div class="line">|  10 |   Peter |  19 |    1 |</div><div class="line">|  12 |   Andre |  20 |    2 |</div><div class="line">|   2 |    Vino |  20 |    3 |</div><div class="line">|   3 |    John |  20 |    4 |</div><div class="line">|  11 |     Tom |  20 |    5 |</div><div class="line">|   5 |   Brian |  21 |    6 |</div><div class="line">|   4 |    Andy |  22 |    7 |</div><div class="line">|   9 |  George |  23 |    8 |</div><div class="line">|   6 |     Dew |  24 |    9 |</div><div class="line">|   7 |    Kris |  25 |   10 |</div><div class="line">|   1 |  Samual |  25 |   11 |</div><div class="line">|   8 | William |  26 |   12 |</div></pre></td></tr></table></figure>
+<p>要在mysql中声明一个变量，你必须在变量名之前使用<code>@</code>符号。FROM子句中的<code>(@curRank := 0)</code>部分允许我们进行变量初始化，而不需要单独的SET命令。当然，也可以使用SET，但它会处理两个查询：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SET @curRank := 0;</div><div class="line">SELECT pid, name, age, @curRank := @curRank + 1 AS rank</div><div class="line">FROM players</div><div class="line">ORDER BY age</div></pre></td></tr></table></figure></p>
+<h3 id="查询以降序排列"><a href="#查询以降序排列" class="headerlink" title="查询以降序排列"></a>查询以降序排列</h3><p>首要按age的降序排列，其次按name进行排列，只需修改查询语句加上ORDER BY和 DESC以及列名即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">SELECT pid, name, age, @curRank := @curRank + 1 AS rank</div><div class="line">FROM players p, (</div><div class="line">SELECT @curRank := 0</div><div class="line">) q</div><div class="line">ORDER BY age DESC, name</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">| PID |    NAME | AGE | RANK |</div><div class="line">|-----|---------|-----|------|</div><div class="line">|   8 | William |  26 |    1 |</div><div class="line">|   7 |    Kris |  25 |    2 |</div><div class="line">|   1 |  Samual |  25 |    3 |</div><div class="line">|   6 |     Dew |  24 |    4 |</div><div class="line">|   9 |  George |  23 |    5 |</div><div class="line">|   4 |    Andy |  22 |    6 |</div><div class="line">|   5 |   Brian |  21 |    7 |</div><div class="line">|  12 |   Andre |  20 |    8 |</div><div class="line">|   3 |    John |  20 |    9 |</div><div class="line">|  11 |     Tom |  20 |   10 |</div><div class="line">|   2 |    Vino |  20 |   11 |</div><div class="line">|  10 |   Peter |  19 |   12 |</div></pre></td></tr></table></figure>
+<h3 id="在MySQL中实现Rank普通并列排名函数"><a href="#在MySQL中实现Rank普通并列排名函数" class="headerlink" title="在MySQL中实现Rank普通并列排名函数"></a>在MySQL中实现Rank普通并列排名函数</h3><p>现在，如果我们希望为并列数据的行赋予相同的排名，则意味着那些在排名比较列中具有相同值的行应在MySQL中计算排名时保持相同的排名(例如在我们的例子中的<code>age</code>)。为此，我们使用了一个额外的变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">SELECT pid, name, age, </div><div class="line">CASE </div><div class="line">WHEN @prevRank = age THEN @curRank </div><div class="line">WHEN @prevRank := age THEN @curRank := @curRank + 1</div><div class="line">END AS rank</div><div class="line">FROM players p, </div><div class="line">(SELECT @curRank :=0, @prevRank := NULL) r</div><div class="line">ORDER BY age</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">| PID |    NAME | AGE | RANK |</div><div class="line">|-----|---------|-----|------|</div><div class="line">|  10 |   Peter |  19 |    1 |</div><div class="line">|  12 |   Andre |  20 |    2 |</div><div class="line">|   2 |    Vino |  20 |    2 |</div><div class="line">|   3 |    John |  20 |    2 |</div><div class="line">|  11 |     Tom |  20 |    2 |</div><div class="line">|   5 |   Brian |  21 |    3 |</div><div class="line">|   4 |    Andy |  22 |    4 |</div><div class="line">|   9 |  George |  23 |    5 |</div><div class="line">|   6 |     Dew |  24 |    6 |</div><div class="line">|   7 |    Kris |  25 |    7 |</div><div class="line">|   1 |  Samual |  25 |    7 |</div><div class="line">|   8 | William |  26 |    8 |</div></pre></td></tr></table></figure>
+<p>如上所示，具有相同数据和排行的两行或多行，它们都会获得相同的排名。玩家Andre, Vino, John 和Tom都有相同的age，所以他们排名并列第二。下一个最高age的玩家(Brian)排名第3。这个查询相当于MSSQL和ORACLE 中的<code>DENSE_RANK()</code>函数。</p>
+<h4 id="case-when"><a href="#case-when" class="headerlink" title="case when"></a>case when</h4><p>sql语句中的case语句与高级语言中的switch语句，是标准sql的语法，适用于一个条件判断有多种值的情况下分别执行不同的操作。</p>
+<p>首先，让我们看一下CASE的语法。在一般的SELECT中，其语法格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">CASE   &lt;单值表达式&gt;</div><div class="line">       WHEN &lt;表达式值&gt; THEN &lt;SQL语句或者返回值&gt;</div><div class="line">       WHEN &lt;表达式值&gt; THEN &lt;SQL语句或者返回值&gt;</div><div class="line">       ...</div><div class="line">       WHEN &lt;表达式值&gt; THEN &lt;SQL语句或者返回值&gt;</div><div class="line">       ELSE &lt;SQL语句或者返回值&gt;</div><div class="line">END</div></pre></td></tr></table></figure></p>
+<h3 id="在MySQL中实现Rank高级并列排名函数"><a href="#在MySQL中实现Rank高级并列排名函数" class="headerlink" title="在MySQL中实现Rank高级并列排名函数"></a>在MySQL中实现Rank高级并列排名函数</h3><p>当使用RANK()函数时，如果两个或以上的行排名并列，则相同的行都会有相同的排名，但是实际排名中存在有关系的差距。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">SELECT pid, name, age, rank FROM</div><div class="line">(SELECT pid, name, age,</div><div class="line">@curRank := IF(@prevRank = age, @curRank, @incRank) AS rank, </div><div class="line">@incRank := @incRank + 1, </div><div class="line">@prevRank := age</div><div class="line">FROM players p, (</div><div class="line">SELECT @curRank :=0, @prevRank := NULL, @incRank := 1</div><div class="line">) r </div><div class="line">ORDER BY age) s</div></pre></td></tr></table></figure>
+<p>这是一个查询中的子查询。我们使用三个变量(<code>@incRank，@prevRank，@curRank</code>)来计算关系的情况下，在查询结果中我们已经补全了因为并列而导致的排名空位。我们已经封闭子查询到查询。这个查询相当于MSSQL和ORACLE中的RANK()函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">| PID |    NAME | AGE | RANK |</div><div class="line">|-----|---------|-----|------|</div><div class="line">|  10 |   Peter |  19 |    1 |</div><div class="line">|  12 |   Andre |  20 |    2 |</div><div class="line">|   2 |    Vino |  20 |    2 |</div><div class="line">|   3 |    John |  20 |    2 |</div><div class="line">|  11 |     Tom |  20 |    2 |</div><div class="line">|   5 |   Brian |  21 |    6 |</div><div class="line">|   4 |    Andy |  22 |    7 |</div><div class="line">|   9 |  George |  23 |    8 |</div><div class="line">|   6 |     Dew |  24 |    9 |</div><div class="line">|   7 |    Kris |  25 |   10 |</div><div class="line">|   1 |  Samual |  25 |   10 |</div><div class="line">|   8 | William |  26 |   12 |</div></pre></td></tr></table></figure>
+<p>在这里我们可以看到，Andre，Vino，John和Tom都有相同的age，所以他们排名并列第二。下一个最高年龄的球员(Brian)排名第6，而不是第3，因为有4个人并列排名在第2。</p>
+<p>文章来源：<a href="https://www.jianshu.com/p/bb1b72a1623e" target="_blank" rel="external">https://www.jianshu.com/p/bb1b72a1623e</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/数据库/">数据库</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/数据库/">数据库</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/05/13/数据库-在2018毕业生彩蛋中学到的/"  title="数据库|在2018毕业生彩蛋中学到的">
+ <span>数据库|在2018毕业生彩蛋中学到的
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>16</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/干货/" title="干货">干货<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/操作系统/" title="操作系统">操作系统<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/架构/" title="架构">架构<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机网络/" title="计算机网络">计算机网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/运维/" title="运维">运维<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/面试/" title="面试">面试<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>12</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/college/" title="college">college<sup>12</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具/" title="工具">工具<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/操作系统/" title="操作系统">操作系统<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据库/" title="数据库">数据库<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/面试/" title="面试">面试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/干货/" title="干货">干货<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/运维/" title="运维">运维<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/架构/" title="架构">架构<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>
