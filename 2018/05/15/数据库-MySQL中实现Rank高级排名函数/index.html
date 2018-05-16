@@ -4,27 +4,28 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>只为不凡而来</title>
+    <title>数据库|MySQL中实现Rank高级排名函数 | 只为不凡而来</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="wuduozhi">
     
 
     
-    <meta name="description" content="title: 数据库|MySQL中实现Rank高级排名函数date: 2018-05-15 00:03:10categories: 数据库 tags: 数据库引言MySQL中没有Rank排名函数，当我们需要查询排名时，只能使用MySQL数据库中的基本查询语句来查询普通排名。尽管如此，可不要小瞧基础而简单的查询语句，我们可以利用其来达到Rank函数一样的高级排名效果。 在这里我用一个简单例子来实现">
+    <meta name="description" content="引言MySQL中没有Rank排名函数，当我们需要查询排名时，只能使用MySQL数据库中的基本查询语句来查询普通排名。尽管如此，可不要小瞧基础而简单的查询语句，我们可以利用其来达到Rank函数一样的高级排名效果。 在这里我用一个简单例子来实现排名的查询： 首先我们先创建一个我们需要进行高级排名查询的players表： 12345678910111213141516171819202122232425">
+<meta name="keywords" content="数据库">
 <meta property="og:type" content="article">
-<meta property="og:title" content="只为不凡而来">
+<meta property="og:title" content="数据库|MySQL中实现Rank高级排名函数">
 <meta property="og:url" content="http://yoursite.com/2018/05/15/数据库-MySQL中实现Rank高级排名函数/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="title: 数据库|MySQL中实现Rank高级排名函数date: 2018-05-15 00:03:10categories: 数据库 tags: 数据库引言MySQL中没有Rank排名函数，当我们需要查询排名时，只能使用MySQL数据库中的基本查询语句来查询普通排名。尽管如此，可不要小瞧基础而简单的查询语句，我们可以利用其来达到Rank函数一样的高级排名效果。 在这里我用一个简单例子来实现">
+<meta property="og:description" content="引言MySQL中没有Rank排名函数，当我们需要查询排名时，只能使用MySQL数据库中的基本查询语句来查询普通排名。尽管如此，可不要小瞧基础而简单的查询语句，我们可以利用其来达到Rank函数一样的高级排名效果。 在这里我用一个简单例子来实现排名的查询： 首先我们先创建一个我们需要进行高级排名查询的players表： 12345678910111213141516171819202122232425">
 <meta property="og:locale" content="Chinese">
 <meta property="og:image" content="http://yoursite.com/images/数据库-07.jpg">
 <meta property="og:image" content="http://yoursite.com/images/数据库-08.jpg">
 <meta property="og:image" content="http://yoursite.com/images/数据库-09.jpg">
-<meta property="og:updated_time" content="2018-05-15T02:03:50.324Z">
+<meta property="og:updated_time" content="2018-05-15T17:21:45.921Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="只为不凡而来">
-<meta name="twitter:description" content="title: 数据库|MySQL中实现Rank高级排名函数date: 2018-05-15 00:03:10categories: 数据库 tags: 数据库引言MySQL中没有Rank排名函数，当我们需要查询排名时，只能使用MySQL数据库中的基本查询语句来查询普通排名。尽管如此，可不要小瞧基础而简单的查询语句，我们可以利用其来达到Rank函数一样的高级排名效果。 在这里我用一个简单例子来实现">
+<meta name="twitter:title" content="数据库|MySQL中实现Rank高级排名函数">
+<meta name="twitter:description" content="引言MySQL中没有Rank排名函数，当我们需要查询排名时，只能使用MySQL数据库中的基本查询语句来查询普通排名。尽管如此，可不要小瞧基础而简单的查询语句，我们可以利用其来达到Rank函数一样的高级排名效果。 在这里我用一个简单例子来实现排名的查询： 首先我们先创建一个我们需要进行高级排名查询的players表： 12345678910111213141516171819202122232425">
 <meta name="twitter:image" content="http://yoursite.com/images/数据库-07.jpg">
 
     
@@ -89,14 +90,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2018/05/15/数据库-MySQL中实现Rank高级排名函数/" title="" itemprop="url"></a>
+      <a href="/2018/05/15/数据库-MySQL中实现Rank高级排名函数/" title="数据库|MySQL中实现Rank高级排名函数" itemprop="url">数据库|MySQL中实现Rank高级排名函数</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-05-14T16:03:10.224Z" itemprop="datePublished"> 發表於 2018-05-15</time>
+    <time datetime="2018-05-15T00:03:10.000Z" itemprop="datePublished"> 發表於 2018-05-15</time>
     
   </p>
 </header>
@@ -105,201 +106,47 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目錄</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#tags-数据库"><span class="toc-number">1.</span> <span class="toc-text">tags: 数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#引言"><span class="toc-number">1.1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在MySQL中实现Rank普通排名函数"><span class="toc-number">1.2.</span> <span class="toc-text">在MySQL中实现Rank普通排名函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查询以降序排列"><span class="toc-number">1.3.</span> <span class="toc-text">查询以降序排列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在MySQL中实现Rank普通并列排名函数"><span class="toc-number">1.4.</span> <span class="toc-text">在MySQL中实现Rank普通并列排名函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#case-when"><span class="toc-number">1.4.1.</span> <span class="toc-text">case when</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在MySQL中实现Rank高级并列排名函数"><span class="toc-number">1.5.</span> <span class="toc-text">在MySQL中实现Rank高级并列排名函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MySQL-IF"><span class="toc-number">1.5.1.</span> <span class="toc-text">MySQL IF</span></a></li></ol></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在MySQL中实现Rank普通排名函数"><span class="toc-number">2.</span> <span class="toc-text">在MySQL中实现Rank普通排名函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查询以降序排列"><span class="toc-number">3.</span> <span class="toc-text">查询以降序排列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在MySQL中实现Rank普通并列排名函数"><span class="toc-number">4.</span> <span class="toc-text">在MySQL中实现Rank普通并列排名函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#case-when"><span class="toc-number">4.1.</span> <span class="toc-text">case when</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在MySQL中实现Rank高级并列排名函数"><span class="toc-number">5.</span> <span class="toc-text">在MySQL中实现Rank高级并列排名函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MySQL-IF"><span class="toc-number">5.1.</span> <span class="toc-text">MySQL IF</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<hr>
-<p>title: 数据库|MySQL中实现Rank高级排名函数<br>date: 2018-05-15 00:03:10<br>categories: 数据库</p>
-<h2 id="tags-数据库"><a href="#tags-数据库" class="headerlink" title="tags: 数据库"></a>tags: 数据库</h2><h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>MySQL中没有Rank排名函数，当我们需要查询排名时，只能使用MySQL数据库中的基本查询语句来查询普通排名。尽管如此，可不要小瞧基础而简单的查询语句，我们可以利用其来达到Rank函数一样的高级排名效果。</p>
+		<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>MySQL中没有Rank排名函数，当我们需要查询排名时，只能使用MySQL数据库中的基本查询语句来查询普通排名。尽管如此，可不要小瞧基础而简单的查询语句，我们可以利用其来达到Rank函数一样的高级排名效果。</p>
 <p>在这里我用一个简单例子来实现排名的查询：</p>
 <p>首先我们先创建一个我们需要进行高级排名查询的players表：</p>
-<pre><code>CREATE TABLE `players` (
-  `pid` int(2) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `age` int(2) NOT NULL,
-  PRIMARY KEY (`pid`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
-
-INSERT INTO `players` (`pid`, `name`, `age`) VALUES
-(1, &apos;Samual&apos;, 25),
-(2, &apos;Vino&apos;, 20),
-(3, &apos;John&apos;, 20),
-(4, &apos;Andy&apos;, 22),
-(5, &apos;Brian&apos;, 21),
-(6, &apos;Dew&apos;, 24),
-(7, &apos;Kris&apos;, 25),
-(8, &apos;William&apos;, 26),
-(9, &apos;George&apos;, 23),
-(10, &apos;Peter&apos;, 19),
-(11, &apos;Tom&apos;, 20),
-(12, &apos;Andre&apos;, 20);
-</code></pre><h3 id="在MySQL中实现Rank普通排名函数"><a href="#在MySQL中实现Rank普通排名函数" class="headerlink" title="在MySQL中实现Rank普通排名函数"></a>在MySQL中实现Rank普通排名函数</h3><p>在这里，我们希望获得一个排名字段的列，以及age的升序排列。所以我们的查询语句将是：</p>
-<pre><code>SELECT pid, name, age, @curRank := @curRank + 1 AS rank
-FROM players p, (
-SELECT @curRank := 0
-) q
-ORDER BY age
-</code></pre><pre><code>| PID |    NAME | AGE | RANK |
-|-----|---------|-----|------|
-|  10 |   Peter |  19 |    1 |
-|  12 |   Andre |  20 |    2 |
-|   2 |    Vino |  20 |    3 |
-|   3 |    John |  20 |    4 |
-|  11 |     Tom |  20 |    5 |
-|   5 |   Brian |  21 |    6 |
-|   4 |    Andy |  22 |    7 |
-|   9 |  George |  23 |    8 |
-|   6 |     Dew |  24 |    9 |
-|   7 |    Kris |  25 |   10 |
-|   1 |  Samual |  25 |   11 |
-|   8 | William |  26 |   12 |
-</code></pre><p>要在mysql中声明一个变量，你必须在变量名之前使用<code>@</code>符号。FROM子句中的<code>(@curRank := 0)</code>部分允许我们进行变量初始化，而不需要单独的SET命令。当然，也可以使用SET，但它会处理两个查询：</p>
-<pre><code>SET @curRank := 0;
-SELECT pid, name, age, @curRank := @curRank + 1 AS rank
-FROM players
-ORDER BY age
-</code></pre><h3 id="查询以降序排列"><a href="#查询以降序排列" class="headerlink" title="查询以降序排列"></a>查询以降序排列</h3><p>首要按age的降序排列，其次按name进行排列，只需修改查询语句加上ORDER BY和 DESC以及列名即可。</p>
-<pre><code>SELECT pid, name, age, @curRank := @curRank + 1 AS rank
-FROM players p, (
-SELECT @curRank := 0
-) q
-ORDER BY age DESC, name
-</code></pre><pre><code>| PID |    NAME | AGE | RANK |
-|-----|---------|-----|------|
-|   8 | William |  26 |    1 |
-|   7 |    Kris |  25 |    2 |
-|   1 |  Samual |  25 |    3 |
-|   6 |     Dew |  24 |    4 |
-|   9 |  George |  23 |    5 |
-|   4 |    Andy |  22 |    6 |
-|   5 |   Brian |  21 |    7 |
-|  12 |   Andre |  20 |    8 |
-|   3 |    John |  20 |    9 |
-|  11 |     Tom |  20 |   10 |
-|   2 |    Vino |  20 |   11 |
-|  10 |   Peter |  19 |   12 |
-</code></pre><h3 id="在MySQL中实现Rank普通并列排名函数"><a href="#在MySQL中实现Rank普通并列排名函数" class="headerlink" title="在MySQL中实现Rank普通并列排名函数"></a>在MySQL中实现Rank普通并列排名函数</h3><p>现在，如果我们希望为并列数据的行赋予相同的排名，则意味着那些在排名比较列中具有相同值的行应在MySQL中计算排名时保持相同的排名(例如在我们的例子中的<code>age</code>)。为此，我们使用了一个额外的变量。</p>
-<pre><code>SELECT pid, name, age, 
-CASE 
-WHEN @prevRank = age THEN @curRank 
-WHEN @prevRank := age THEN @curRank := @curRank + 1
-END AS rank
-FROM players p, 
-(SELECT @curRank :=0, @prevRank := NULL) r
-ORDER BY age
-</code></pre><pre><code>| PID |    NAME | AGE | RANK |
-|-----|---------|-----|------|
-|  10 |   Peter |  19 |    1 |
-|  12 |   Andre |  20 |    2 |
-|   2 |    Vino |  20 |    2 |
-|   3 |    John |  20 |    2 |
-|  11 |     Tom |  20 |    2 |
-|   5 |   Brian |  21 |    3 |
-|   4 |    Andy |  22 |    4 |
-|   9 |  George |  23 |    5 |
-|   6 |     Dew |  24 |    6 |
-|   7 |    Kris |  25 |    7 |
-|   1 |  Samual |  25 |    7 |
-|   8 | William |  26 |    8 |
-</code></pre><p>如上所示，具有相同数据和排行的两行或多行，它们都会获得相同的排名。玩家Andre, Vino, John 和Tom都有相同的age，所以他们排名并列第二。下一个最高age的玩家(Brian)排名第3。这个查询相当于MSSQL和ORACLE 中的<code>DENSE_RANK()</code>函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">CREATE TABLE `players` (</div><div class="line"></div><div class="line">  `pid` int(2) NOT NULL AUTO_INCREMENT,</div><div class="line"></div><div class="line">  `name` varchar(50) NOT NULL,</div><div class="line"></div><div class="line">  `age` int(2) NOT NULL,</div><div class="line"></div><div class="line">  PRIMARY KEY (`pid`),</div><div class="line"></div><div class="line">  UNIQUE KEY `name` (`name`)</div><div class="line"></div><div class="line">) ENGINE=InnoDB  DEFAULT CHARSET=latin1;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">INSERT INTO `players` (`pid`, `name`, `age`) VALUES</div><div class="line"></div><div class="line">(1, &apos;Samual&apos;, 25),</div><div class="line"></div><div class="line">(2, &apos;Vino&apos;, 20),</div><div class="line"></div><div class="line">(3, &apos;John&apos;, 20),</div><div class="line"></div><div class="line">(4, &apos;Andy&apos;, 22),</div><div class="line"></div><div class="line">(5, &apos;Brian&apos;, 21),</div><div class="line"></div><div class="line">(6, &apos;Dew&apos;, 24),</div><div class="line"></div><div class="line">(7, &apos;Kris&apos;, 25),</div><div class="line"></div><div class="line">(8, &apos;William&apos;, 26),</div><div class="line"></div><div class="line">(9, &apos;George&apos;, 23),</div><div class="line"></div><div class="line">(10, &apos;Peter&apos;, 19),</div><div class="line"></div><div class="line">(11, &apos;Tom&apos;, 20),</div><div class="line"></div><div class="line">(12, &apos;Andre&apos;, 20);</div></pre></td></tr></table></figure>
+<h3 id="在MySQL中实现Rank普通排名函数"><a href="#在MySQL中实现Rank普通排名函数" class="headerlink" title="在MySQL中实现Rank普通排名函数"></a>在MySQL中实现Rank普通排名函数</h3><p>在这里，我们希望获得一个排名字段的列，以及age的升序排列。所以我们的查询语句将是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">SELECT pid, name, age, @curRank := @curRank + 1 AS rank</div><div class="line"></div><div class="line">FROM players p, (</div><div class="line"></div><div class="line">SELECT @curRank := 0</div><div class="line"></div><div class="line">) q</div><div class="line"></div><div class="line">ORDER BY age</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">| PID |    NAME | AGE | RANK |</div><div class="line"></div><div class="line">|-----|---------|-----|------|</div><div class="line"></div><div class="line">|  10 |   Peter |  19 |    1 |</div><div class="line"></div><div class="line">|  12 |   Andre |  20 |    2 |</div><div class="line"></div><div class="line">|   2 |    Vino |  20 |    3 |</div><div class="line"></div><div class="line">|   3 |    John |  20 |    4 |</div><div class="line"></div><div class="line">|  11 |     Tom |  20 |    5 |</div><div class="line"></div><div class="line">|   5 |   Brian |  21 |    6 |</div><div class="line"></div><div class="line">|   4 |    Andy |  22 |    7 |</div><div class="line"></div><div class="line">|   9 |  George |  23 |    8 |</div><div class="line"></div><div class="line">|   6 |     Dew |  24 |    9 |</div><div class="line"></div><div class="line">|   7 |    Kris |  25 |   10 |</div><div class="line"></div><div class="line">|   1 |  Samual |  25 |   11 |</div><div class="line"></div><div class="line">|   8 | William |  26 |   12 |</div></pre></td></tr></table></figure>
+<p>要在mysql中声明一个变量，你必须在变量名之前使用<code>@</code>符号。FROM子句中的<code>(@curRank := 0)</code>部分允许我们进行变量初始化，而不需要单独的SET命令。当然，也可以使用SET，但它会处理两个查询：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">SET @curRank := 0;</div><div class="line"></div><div class="line">SELECT pid, name, age, @curRank := @curRank + 1 AS rank</div><div class="line"></div><div class="line">FROM players</div><div class="line"></div><div class="line">ORDER BY age</div></pre></td></tr></table></figure>
+<h3 id="查询以降序排列"><a href="#查询以降序排列" class="headerlink" title="查询以降序排列"></a>查询以降序排列</h3><p>首要按age的降序排列，其次按name进行排列，只需修改查询语句加上ORDER BY和 DESC以及列名即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">SELECT pid, name, age, @curRank := @curRank + 1 AS rank</div><div class="line"></div><div class="line">FROM players p, (</div><div class="line"></div><div class="line">SELECT @curRank := 0</div><div class="line"></div><div class="line">) q</div><div class="line"></div><div class="line">ORDER BY age DESC, name</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">| PID |    NAME | AGE | RANK |</div><div class="line"></div><div class="line">|-----|---------|-----|------|</div><div class="line"></div><div class="line">|   8 | William |  26 |    1 |</div><div class="line"></div><div class="line">|   7 |    Kris |  25 |    2 |</div><div class="line"></div><div class="line">|   1 |  Samual |  25 |    3 |</div><div class="line"></div><div class="line">|   6 |     Dew |  24 |    4 |</div><div class="line"></div><div class="line">|   9 |  George |  23 |    5 |</div><div class="line"></div><div class="line">|   4 |    Andy |  22 |    6 |</div><div class="line"></div><div class="line">|   5 |   Brian |  21 |    7 |</div><div class="line"></div><div class="line">|  12 |   Andre |  20 |    8 |</div><div class="line"></div><div class="line">|   3 |    John |  20 |    9 |</div><div class="line"></div><div class="line">|  11 |     Tom |  20 |   10 |</div><div class="line"></div><div class="line">|   2 |    Vino |  20 |   11 |</div><div class="line"></div><div class="line">|  10 |   Peter |  19 |   12 |</div></pre></td></tr></table></figure>
+<h3 id="在MySQL中实现Rank普通并列排名函数"><a href="#在MySQL中实现Rank普通并列排名函数" class="headerlink" title="在MySQL中实现Rank普通并列排名函数"></a>在MySQL中实现Rank普通并列排名函数</h3><p>现在，如果我们希望为并列数据的行赋予相同的排名，则意味着那些在排名比较列中具有相同值的行应在MySQL中计算排名时保持相同的排名(例如在我们的例子中的<code>age</code>)。为此，我们使用了一个额外的变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">SELECT pid, name, age, </div><div class="line"></div><div class="line">CASE </div><div class="line"></div><div class="line">WHEN @prevRank = age THEN @curRank </div><div class="line"></div><div class="line">WHEN @prevRank := age THEN @curRank := @curRank + 1</div><div class="line"></div><div class="line">END AS rank</div><div class="line"></div><div class="line">FROM players p, </div><div class="line"></div><div class="line">(SELECT @curRank :=0, @prevRank := NULL) r</div><div class="line"></div><div class="line">ORDER BY age</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">| PID |    NAME | AGE | RANK |</div><div class="line"></div><div class="line">|-----|---------|-----|------|</div><div class="line"></div><div class="line">|  10 |   Peter |  19 |    1 |</div><div class="line"></div><div class="line">|  12 |   Andre |  20 |    2 |</div><div class="line"></div><div class="line">|   2 |    Vino |  20 |    2 |</div><div class="line"></div><div class="line">|   3 |    John |  20 |    2 |</div><div class="line"></div><div class="line">|  11 |     Tom |  20 |    2 |</div><div class="line"></div><div class="line">|   5 |   Brian |  21 |    3 |</div><div class="line"></div><div class="line">|   4 |    Andy |  22 |    4 |</div><div class="line"></div><div class="line">|   9 |  George |  23 |    5 |</div><div class="line"></div><div class="line">|   6 |     Dew |  24 |    6 |</div><div class="line"></div><div class="line">|   7 |    Kris |  25 |    7 |</div><div class="line"></div><div class="line">|   1 |  Samual |  25 |    7 |</div><div class="line"></div><div class="line">|   8 | William |  26 |    8 |</div></pre></td></tr></table></figure>
+<p>如上所示，具有相同数据和排行的两行或多行，它们都会获得相同的排名。玩家Andre, Vino, John 和Tom都有相同的age，所以他们排名并列第二。下一个最高age的玩家(Brian)排名第3。这个查询相当于MSSQL和ORACLE 中的<code>DENSE_RANK()</code>函数。</p>
 <h4 id="case-when"><a href="#case-when" class="headerlink" title="case when"></a>case when</h4><p>sql语句中的case语句与高级语言中的switch语句，是标准sql的语法，适用于一个条件判断有多种值的情况下分别执行不同的操作。</p>
 <p>首先，让我们看一下CASE的语法。在一般的SELECT中，其语法格式如下：</p>
-<pre><code>CASE   &lt;单值表达式&gt;
-       WHEN &lt;表达式值&gt; THEN &lt;SQL语句或者返回值&gt;
-       WHEN &lt;表达式值&gt; THEN &lt;SQL语句或者返回值&gt;
-       ...
-       WHEN &lt;表达式值&gt; THEN &lt;SQL语句或者返回值&gt;
-       ELSE &lt;SQL语句或者返回值&gt;
-END
-</code></pre><pre><code>:= 和 = 运算符在大部分场景下并无区别，但 := 更为全场景些。
-
-= 只有在 set 和update时才是和 := 一样，赋值的作用，其它都是关系运算符 等于 的作用。
-
-:= 不只在 set 和 update 时赋值的作用，在 select 也是赋值的作用。
-</code></pre><pre><code>SET @name = &apos;big_cat&apos;;
-SELECT @name;
-
-# = 在 select 语句中成为了比较运算符 结果为 NULL (@name 为 NULL, 在 mysql 中 NULL 和任何值比较都为 NULL)
-# := 则为仍未赋值，@name_defined 被赋值为 big_cat 后再 select 就出来了
-SELECT @name = &apos;big_cat&apos;, @name_defined := &apos;big_cat&apos;, @name_defined;
-+-------------------+----------------------------+---------------+
-| @name = &apos;big_cat&apos; | @name_defined := &apos;big_cat&apos; | @name_defined |
-+-------------------+----------------------------+---------------+
-|              NULL | big_cat                    | big_cat       |
-+-------------------+----------------------------+---------------+
-</code></pre><h3 id="在MySQL中实现Rank高级并列排名函数"><a href="#在MySQL中实现Rank高级并列排名函数" class="headerlink" title="在MySQL中实现Rank高级并列排名函数"></a>在MySQL中实现Rank高级并列排名函数</h3><p>当使用RANK()函数时，如果两个或以上的行排名并列，则相同的行都会有相同的排名，但是实际排名中存在有关系的差距。</p>
-<pre><code>SELECT
-    pid,
-    NAME,
-    age,
-    rank
-FROM
-    (
-        SELECT
-            pid,
-            NAME,
-            age,
-            @curRank :=
-        IF (
-            @prevRank = age,
-            @curRank,
-            @incRank
-        ) AS rank,
-        @incRank := @incRank + 1,
-        @prevRank := age
-    FROM
-        players p,
-        (
-            SELECT
-                @curRank := 0,
-                @prevRank := NULL,
-                @incRank := 1
-        ) r
-    ORDER BY
-        age
-    ) s
-</code></pre><p>这是一个查询中的子查询。我们使用三个变量(<code>@incRank，@prevRank，@curRank</code>)来计算关系的情况下，在查询结果中我们已经补全了因为并列而导致的排名空位。我们已经封闭子查询到查询。这个查询相当于MSSQL和ORACLE中的RANK()函数。</p>
-<pre><code>| PID |    NAME | AGE | RANK |
-|-----|---------|-----|------|
-|  10 |   Peter |  19 |    1 |
-|  12 |   Andre |  20 |    2 |
-|   2 |    Vino |  20 |    2 |
-|   3 |    John |  20 |    2 |
-|  11 |     Tom |  20 |    2 |
-|   5 |   Brian |  21 |    6 |
-|   4 |    Andy |  22 |    7 |
-|   9 |  George |  23 |    8 |
-|   6 |     Dew |  24 |    9 |
-|   7 |    Kris |  25 |   10 |
-|   1 |  Samual |  25 |   10 |
-|   8 | William |  26 |   12 |
-</code></pre><p>在这里我们可以看到，Andre，Vino，John和Tom都有相同的age，所以他们排名并列第二。下一个最高年龄的球员(Brian)排名第6，而不是第3，因为有4个人并列排名在第2。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">CASE   &lt;单值表达式&gt;</div><div class="line"></div><div class="line">       WHEN &lt;表达式值&gt; THEN &lt;SQL语句或者返回值&gt;</div><div class="line"></div><div class="line">       WHEN &lt;表达式值&gt; THEN &lt;SQL语句或者返回值&gt;</div><div class="line"></div><div class="line">       ...</div><div class="line"></div><div class="line">       WHEN &lt;表达式值&gt; THEN &lt;SQL语句或者返回值&gt;</div><div class="line"></div><div class="line">       ELSE &lt;SQL语句或者返回值&gt;</div><div class="line"></div><div class="line">END</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">:= 和 = 运算符在大部分场景下并无区别，但 := 更为全场景些。</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">= 只有在 set 和update时才是和 := 一样，赋值的作用，其它都是关系运算符 等于 的作用。</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">:= 不只在 set 和 update 时赋值的作用，在 select 也是赋值的作用。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">SET @name = &apos;big_cat&apos;;</div><div class="line"></div><div class="line">SELECT @name;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"># = 在 select 语句中成为了比较运算符 结果为 NULL (@name 为 NULL, 在 mysql 中 NULL 和任何值比较都为 NULL)</div><div class="line"></div><div class="line"># := 则为仍未赋值，@name_defined 被赋值为 big_cat 后再 select 就出来了</div><div class="line"></div><div class="line">SELECT @name = &apos;big_cat&apos;, @name_defined := &apos;big_cat&apos;, @name_defined;</div><div class="line"></div><div class="line">+-------------------+----------------------------+---------------+</div><div class="line"></div><div class="line">| @name = &apos;big_cat&apos; | @name_defined := &apos;big_cat&apos; | @name_defined |</div><div class="line"></div><div class="line">+-------------------+----------------------------+---------------+</div><div class="line"></div><div class="line">|              NULL | big_cat                    | big_cat       |</div><div class="line"></div><div class="line">+-------------------+----------------------------+---------------+</div></pre></td></tr></table></figure>
+<h3 id="在MySQL中实现Rank高级并列排名函数"><a href="#在MySQL中实现Rank高级并列排名函数" class="headerlink" title="在MySQL中实现Rank高级并列排名函数"></a>在MySQL中实现Rank高级并列排名函数</h3><p>当使用RANK()函数时，如果两个或以上的行排名并列，则相同的行都会有相同的排名，但是实际排名中存在有关系的差距。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">SELECT</div><div class="line"></div><div class="line">	pid,</div><div class="line"></div><div class="line">	NAME,</div><div class="line"></div><div class="line">	age,</div><div class="line"></div><div class="line">	rank</div><div class="line"></div><div class="line">FROM</div><div class="line"></div><div class="line">	(</div><div class="line"></div><div class="line">		SELECT</div><div class="line"></div><div class="line">			pid,</div><div class="line"></div><div class="line">			NAME,</div><div class="line"></div><div class="line">			age,</div><div class="line"></div><div class="line">			@curRank :=</div><div class="line"></div><div class="line">		IF (</div><div class="line"></div><div class="line">			@prevRank = age,</div><div class="line"></div><div class="line">			@curRank,</div><div class="line"></div><div class="line">			@incRank</div><div class="line"></div><div class="line">		) AS rank,</div><div class="line"></div><div class="line">		@incRank := @incRank + 1,</div><div class="line"></div><div class="line">		@prevRank := age</div><div class="line"></div><div class="line">	FROM</div><div class="line"></div><div class="line">		players p,</div><div class="line"></div><div class="line">		(</div><div class="line"></div><div class="line">			SELECT</div><div class="line"></div><div class="line">				@curRank := 0,</div><div class="line"></div><div class="line">				@prevRank := NULL,</div><div class="line"></div><div class="line">				@incRank := 1</div><div class="line"></div><div class="line">		) r</div><div class="line"></div><div class="line">	ORDER BY</div><div class="line"></div><div class="line">		age</div><div class="line"></div><div class="line">	) s</div></pre></td></tr></table></figure>
+<p>这是一个查询中的子查询。我们使用三个变量(<code>@incRank，@prevRank，@curRank</code>)来计算关系的情况下，在查询结果中我们已经补全了因为并列而导致的排名空位。我们已经封闭子查询到查询。这个查询相当于MSSQL和ORACLE中的RANK()函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">| PID |    NAME | AGE | RANK |</div><div class="line"></div><div class="line">|-----|---------|-----|------|</div><div class="line"></div><div class="line">|  10 |   Peter |  19 |    1 |</div><div class="line"></div><div class="line">|  12 |   Andre |  20 |    2 |</div><div class="line"></div><div class="line">|   2 |    Vino |  20 |    2 |</div><div class="line"></div><div class="line">|   3 |    John |  20 |    2 |</div><div class="line"></div><div class="line">|  11 |     Tom |  20 |    2 |</div><div class="line"></div><div class="line">|   5 |   Brian |  21 |    6 |</div><div class="line"></div><div class="line">|   4 |    Andy |  22 |    7 |</div><div class="line"></div><div class="line">|   9 |  George |  23 |    8 |</div><div class="line"></div><div class="line">|   6 |     Dew |  24 |    9 |</div><div class="line"></div><div class="line">|   7 |    Kris |  25 |   10 |</div><div class="line"></div><div class="line">|   1 |  Samual |  25 |   10 |</div><div class="line"></div><div class="line">|   8 | William |  26 |   12 |</div></pre></td></tr></table></figure>
+<p>在这里我们可以看到，Andre，Vino，John和Tom都有相同的age，所以他们排名并列第二。下一个最高年龄的球员(Brian)排名第6，而不是第3，因为有4个人并列排名在第2。</p>
 <h4 id="MySQL-IF"><a href="#MySQL-IF" class="headerlink" title="MySQL IF"></a>MySQL IF</h4><p>MySQL IF语句允许您根据表达式的某个条件或值结果来执行一组SQL语句。 要在MySQL中形成一个表达式，可以结合文字，变量，运算符，甚至函数来组合。表达式可以返回TRUE,FALSE或NULL，这三个值之一。</p>
 <p>下面说明了IF语句的语法：</p>
-<pre><code>IF expression THEN 
-   statements;
-END IF;
-</code></pre><p>如果表达式<code>(expression)</code>计算结果为TRUE，那么将执行<code>statements</code>语句，否则控制流将传递到END IF之后的下一个语句。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">IF expression THEN </div><div class="line"></div><div class="line">   statements;</div><div class="line"></div><div class="line">END IF;</div></pre></td></tr></table></figure>
+<p>如果表达式<code>(expression)</code>计算结果为TRUE，那么将执行<code>statements</code>语句，否则控制流将传递到END IF之后的下一个语句。</p>
 <p><img src="/images/数据库-07.jpg" alt="IF"></p>
 <p>如果表达式计算结果为FALSE时执行语句，请使用IF ELSE语句，如下所示：</p>
-<pre><code>IF expression THEN
-   statements;
-ELSE
-   else-statements;
-END IF;
-</code></pre><p><img src="/images/数据库-08.jpg" alt="IF"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">IF expression THEN</div><div class="line"></div><div class="line">   statements;</div><div class="line"></div><div class="line">ELSE</div><div class="line"></div><div class="line">   else-statements;</div><div class="line"></div><div class="line">END IF;</div></pre></td></tr></table></figure>
+<p><img src="/images/数据库-08.jpg" alt="IF"></p>
 <p>如果要基于多个表达式有条件地执行语句，则使用IF ELSEIF ELSE语句如下：</p>
-<pre><code>IF expression THEN
-   statements;
-ELSEIF elseif-expression THEN
-   elseif-statements;
-...
-ELSE
-   else-statements;
-END IF;
-</code></pre><p>如果表达式<code>(expression)</code>求值为TRUE，则IF分支中的语句<code>(statements)</code>将执行；如果表达式求值为FALSE，则如果<code>elseif_expression</code>的计算结果为TRUE，MySQL将执行<code>elseif-expression</code>，否则执行ELSE分支中的<code>else-statements</code>语句。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">IF expression THEN</div><div class="line"></div><div class="line">   statements;</div><div class="line"></div><div class="line">ELSEIF elseif-expression THEN</div><div class="line"></div><div class="line">   elseif-statements;</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">ELSE</div><div class="line"></div><div class="line">   else-statements;</div><div class="line"></div><div class="line">END IF;</div></pre></td></tr></table></figure>
+<p>如果表达式<code>(expression)</code>求值为TRUE，则IF分支中的语句<code>(statements)</code>将执行；如果表达式求值为FALSE，则如果<code>elseif_expression</code>的计算结果为TRUE，MySQL将执行<code>elseif-expression</code>，否则执行ELSE分支中的<code>else-statements</code>语句。</p>
 <p><img src="/images/数据库-09.jpg" alt="IF"></p>
 <p>还有另一种操作：类似于三元运算符</p>
 <ul>
@@ -317,6 +164,16 @@ END IF;
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/数据库/">数据库</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/数据库/">数据库</a>
+  </div>
 
 </div>
 
@@ -329,6 +186,13 @@ END IF;
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2018/05/16/Linux-Linux的那些事/" title="Linux|Linux的那些事">
+  <span>
+  Linux|Linux的那些事</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2018/05/13/数据库-在2018毕业生彩蛋中学到的/"  title="数据库|在2018毕业生彩蛋中学到的">
@@ -389,6 +253,10 @@ END IF;
 		  
 		
 		  
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+		  
+		
+		  
 			<li><a href="/categories/PHP/" title="PHP">PHP<sup>12</sup></a></li>
 		  
 		
@@ -417,7 +285,7 @@ END IF;
 		  
 		
 		  
-			<li><a href="/categories/数据库/" title="数据库">数据库<sup>2</sup></a></li>
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>3</sup></a></li>
 		  
 		
 		  
@@ -474,19 +342,19 @@ END IF;
 			
 		
 			
-				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>12</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/college/" title="college">college<sup>12</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>7</sup></a></li>
+				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>12</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/工具/" title="工具">工具<sup>7</sup></a></li>
+				<li><a href="/tags/工具/" title="工具">工具<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>7</sup></a></li>
 			
 		
 			
@@ -498,15 +366,7 @@ END IF;
 			
 		
 			
-				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+				<li><a href="/tags/面试/" title="面试">面试<sup>3</sup></a></li>
 			
 		
 			
@@ -514,15 +374,23 @@ END IF;
 			
 		
 			
-				<li><a href="/tags/面试/" title="面试">面试<sup>3</sup></a></li>
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据库/" title="数据库">数据库<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/干货/" title="干货">干货<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/数据库/" title="数据库">数据库<sup>2</sup></a></li>
 			
 		
 			
@@ -534,7 +402,7 @@ END IF;
 			
 		
 			
-				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
 			
 		
 			
