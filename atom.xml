@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-16T02:48:16.813Z</updated>
+  <updated>2018-05-16T03:04:04.062Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/05/16/Linux-Linux%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/"/>
     <id>http://yoursite.com/2018/05/16/Linux-Linux的那些事/</id>
     <published>2018-05-16T10:13:29.000Z</published>
-    <updated>2018-05-16T02:48:16.813Z</updated>
+    <updated>2018-05-16T03:04:04.062Z</updated>
     
     <content type="html"><![CDATA[<h3 id="Linux的基础知识"><a href="#Linux的基础知识" class="headerlink" title="Linux的基础知识"></a>Linux的基础知识</h3><p>Linux系统的组成：</p>
 <ul>
@@ -36,7 +36,7 @@
 <li>应用程序</li>
 <li>shell脚本</li>
 </ul>
-<p><img src="../images/linux的那些事-01.png" alt="shell"></p>
+<p><img src="/images/linux的那些事-01.png" alt="shell"></p>
 <p>于是乎，我们利用Shell就可以干下面这些事了：</p>
 <ul>
 <li>命令行解释(这是用得最多的！)</li>
