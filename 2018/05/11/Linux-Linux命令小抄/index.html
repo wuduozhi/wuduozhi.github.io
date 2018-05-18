@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="引言本文章记录自己学习Linux路上的点点滴滴。 文本操作命令tar12345-c: 建立压缩档案-x：解压-t：查看内容-r：向压缩归档文件末尾追加文件-u：更新原压缩包中的文件 这五个是独立的命令，压缩解压都要用到其中一个，可以和别的命令连用但只能用其中一个。下面的参数是根据需要在压缩或解压档案时可选的。12345-z：有gzip属性的-j：有bz2属性的-Z：有compress属性的-v：显">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-05-10T15:58:35.395Z">
+<meta property="og:updated_time" content="2018-05-18T16:38:52.260Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux|Linux命令小抄">
 <meta name="twitter:description" content="引言本文章记录自己学习Linux路上的点点滴滴。 文本操作命令tar12345-c: 建立压缩档案-x：解压-t：查看内容-r：向压缩归档文件末尾追加文件-u：更新原压缩包中的文件 这五个是独立的命令，压缩解压都要用到其中一个，可以和别的命令连用但只能用其中一个。下面的参数是根据需要在压缩或解压档案时可选的。12345-z：有gzip属性的-j：有bz2属性的-Z：有compress属性的-v：显">
@@ -110,7 +110,7 @@
 <h2 id="文本操作命令"><a href="#文本操作命令" class="headerlink" title="文本操作命令"></a>文本操作命令</h2><h3 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">-c: 建立压缩档案</div><div class="line">-x：解压</div><div class="line">-t：查看内容</div><div class="line">-r：向压缩归档文件末尾追加文件</div><div class="line">-u：更新原压缩包中的文件</div></pre></td></tr></table></figure>
 <p>这五个是独立的命令，压缩解压都要用到其中一个，可以和别的命令连用但只能用其中一个。下面的参数是根据需要在压缩或解压档案时可选的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">-z：有gzip属性的</div><div class="line">-j：有bz2属性的</div><div class="line">-Z：有compress属性的</div><div class="line">-v：显示所有过程</div><div class="line">-O：将文件解开到标准输出</div></pre></td></tr></table></figure></p>
 <p>下面的参数-f是必须的</p>
-<p>-f: 使用档案名字，切记，这个参数是最后一个参数，后面只能接档案名。</p>
+<p><code>-f</code>: 使用档案名字，切记，这个参数是最后一个参数，后面只能接档案名。</p>
 <p><code>tar -cf all.tar *.jpg</code><br>这条命令是将所有.jpg的文件打成一个名为all.tar的包。-c是表示产生新的包，-f指定包的文件名。</p>
 <p><code>tar -rf all.tar *.gif</code><br>这条命令是将所有.gif的文件增加到all.tar的包里面去。-r是表示增加文件的意思。</p>
 <p><code>tar -uf all.tar logo.gif</code><br>这条命令是更新原来tar包all.tar中logo.gif文件，-u是表示更新文件的意思。</p>
