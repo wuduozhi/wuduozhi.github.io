@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-16T03:04:04.062Z</updated>
+  <updated>2018-05-17T11:04:16.288Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/05/16/Linux-Linux%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/"/>
     <id>http://yoursite.com/2018/05/16/Linux-Linux的那些事/</id>
     <published>2018-05-16T10:13:29.000Z</published>
-    <updated>2018-05-16T03:04:04.062Z</updated>
+    <updated>2018-05-17T11:04:16.288Z</updated>
     
     <content type="html"><![CDATA[<h3 id="Linux的基础知识"><a href="#Linux的基础知识" class="headerlink" title="Linux的基础知识"></a>Linux的基础知识</h3><p>Linux系统的组成：</p>
 <ul>
@@ -137,17 +137,17 @@
 </ul>
 <h4 id="文件的类型"><a href="#文件的类型" class="headerlink" title="文件的类型"></a>文件的类型</h4><p>在Linux下文件的类型有这么多：</p>
 <ul>
-<li>普通文件-</li>
-<li>目录 d</li>
-<li>符号链接 l<ul>
+<li>普通文件<code>-</code></li>
+<li>目录 <code>d</code></li>
+<li>符号链接 <code>l</code><ul>
 <li>硬链接： 与普通文件没什么不同，inode 都指向同一个文件在硬盘中的区块</li>
 <li>软链接： 保存了其代表的文件的绝对路径，是另外一种文件，在硬盘上有独立的区块，访问时替换自身路径(简单地理解为 Windows 中常见的快捷方式)。</li>
 </ul>
 </li>
-<li>字符设备文件 c</li>
-<li>块设备文件b</li>
-<li>套接字s</li>
-<li>命名管道p</li>
+<li>字符设备文件 <code>c</code></li>
+<li>块设备文件 <code>b</code></li>
+<li>套接字 <code>s</code></li>
+<li>命名管道 <code>p</code></li>
 </ul>
 <h3 id="常用的命令"><a href="#常用的命令" class="headerlink" title="常用的命令"></a>常用的命令</h3><p>由于使用Linux的过程中，基本都是通过命令进行操作，所以还是有必要记忆一些常用的命令，比如文件夹、文件的操作，怎么去编辑文件…</p>
 <h4 id="常用的文件、目录操作命令"><a href="#常用的文件、目录操作命令" class="headerlink" title="常用的文件、目录操作命令"></a>常用的文件、目录操作命令</h4><p>这是我们使用得最多的命令了，Linux最基础的命令！</p>
@@ -184,6 +184,25 @@
 <h4 id="文件打包和压缩命令"><a href="#文件打包和压缩命令" class="headerlink" title="文件打包和压缩命令"></a>文件打包和压缩命令</h4><p>接下来介绍如何在Linux下压缩和解压文件。</p>
 <p><img src="/images/linux的那些事-04.png" alt="压缩解压"></p>
 <p><img src="/images/linux的那些事-05.png" alt="压缩解压"></p>
+<h4 id="文件权限"><a href="#文件权限" class="headerlink" title="文件权限"></a>文件权限</h4><p> Linux系统上的所有的文件和目录都有权限<br> 有三种类别的权限：owner，group和other<br> 每个类别都有3个权限位：read, write, execute (rwx)</p>
+<p>对于普通文件:</p>
+<ul>
+<li>r =&gt; Can look at the contents of a file</li>
+<li>w =&gt; Can change or delete the contents of a file</li>
+<li>x =&gt; Can execute the file (r is also needed if a script)</li>
+</ul>
+<p>对于目录文件:</p>
+<ul>
+<li>r =&gt; Can list the files within a directory (ls)</li>
+<li>w =&gt; Can <strong>create/remove</strong> files in the directory</li>
+<li>x =&gt; Can change into the directory and access the files within (cd)</li>
+</ul>
+<h5 id="修改权限"><a href="#修改权限" class="headerlink" title="修改权限"></a>修改权限</h5><p> 修改文件权限用chmod 命令<br> 修改权限有两种方式：</p>
+<pre><code>1. 符号表示的权限(Symbolic Notation)
+2. 八进制表示的权限(Octal Notation)
+</code></pre><p> 必须是文件或目录的所有者才能修改其访问权限<br> root 用户可以修改任何文件和目录的权限</p>
+<p><img src="/images/linux的那些事-07.png" alt="文件权限"></p>
+<p><img src="/images/linux的那些事-08.png" alt="文件权限"></p>
 <h3 id="VI编辑器"><a href="#VI编辑器" class="headerlink" title="VI编辑器"></a>VI编辑器</h3><p><code>vi</code>是 “Visual interface” 的简称，它可以执行输出、删除、查找、替换、块操作等众多文本操作，而且用户可以根据自己的需要对其进行定制，这是其他编辑程序所没有的。</p>
 <p><img src="/images/linux的那些事-06.png" alt="vi编辑器"></p>
 <p><strong>普通模式</strong>：</p>
@@ -208,6 +227,8 @@
 <li><code>:q!</code> 用于不存盘退出Vi</li>
 <li><code>:q</code>用于直接退出Vi （未做修改）</li>
 </ul>
+<p>在扩展模式下可以进行查找并替换</p>
+<p>示例将全文的the 单词替换为the one 的vi 界面:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">This file is being created using the vi editor</div><div class="line">Welcome to using the vi editor...</div><div class="line">~</div><div class="line">~</div><div class="line">~</div><div class="line">:g/ the /s// the one /g</div><div class="line"></div><div class="line">命令解析：</div><div class="line">g/ the 查找文本中所有the的关键词</div><div class="line">/s// the one 替换成the one</div><div class="line">/g 替换所有(global)的关键词</div></pre></td></tr></table></figure></p>
 <p>设置Vi环境:</p>
 <ul>
 <li>`:set autoindent* 缩进,常用于程序的编写</li>
@@ -218,6 +239,128 @@
 <li>`:set *显示设置的所有选项</li>
 <li>`:set all* 显示所有可以设置的选项</li>
 </ul>
+<h3 id="关于进程"><a href="#关于进程" class="headerlink" title="关于进程"></a>关于进程</h3><h4 id="什么是进程"><a href="#什么是进程" class="headerlink" title="什么是进程"></a>什么是进程</h4><p> 进程是一个程序针对一组数据的一次执行<br> 进程是整个系统中资源分配的最小单位<br> 进程是系统调用，系统处理机调度最小的单位<br> 每个程序(命令)的运行都会产生一个进程</p>
+<p>执行中的程序在称作进程。当程序以可执行文件存放在存储中，并且运行的时候，每个进程会被动态得分配系统资源、内存、安全属性和与之相关的状态。可以有多个进程关联到同一个程序，并同时执行不会互相干扰。操作系统会有效地管理和追踪所有运行着的进程。</p>
+<p>为了管理这些进程，用户应该能够：</p>
+<ul>
+<li>查看所有运行中的进程</li>
+<li>查看进程消耗资源</li>
+<li>定位个别进程并且对其执行指定操作</li>
+<li>改变进程的优先级</li>
+<li>杀死指定进程</li>
+<li>限制进程可用的系统资源等</li>
+</ul>
+<h4 id="进程与变量"><a href="#进程与变量" class="headerlink" title="进程与变量"></a>进程与变量</h4><p> 变量是进程环境的一部分<br> 不同进程间变量是不能互相访问和修改的<br> 子进程要想继续父进程的变量，必须用export命令将变量输出成全局变量</p>
+<h4 id="管理进程"><a href="#管理进程" class="headerlink" title="管理进程"></a>管理进程</h4><p>Linux提供了许多命令来让用户来高效掌控上述的操作。接下来，一个一个的来讲解下。</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ps</code></td>
+<td>Linux 中最基础的浏览系统中的进程的命令。能列出系统中运行的进程，包括进程号、命令、CPU使用量、内存使用量等。</td>
+</tr>
+<tr>
+<td><code>pstree</code></td>
+<td>linux中，每一个进程都是由其父进程创建的。此命令以可视化方式显示进程，通过显示进程的树状图来展示进程间关系。如果指定了pid了，那么树的根是该pid，不然将会是init（pid： 1）。</td>
+</tr>
+<tr>
+<td><code>top</code></td>
+<td>top’是一个更加有用的命令，可以监视系统中不同的进程所使用的资源。它提供实时的系统状态信息。显示进程的数据包括 PID、进程属主、优先级、%CPU、%memory等。可以使用这些显示指示出资源使用量。</td>
+</tr>
+<tr>
+<td><code>htop</code></td>
+<td>htop与top很类似，但是htop是交互式的文本模式的进程查看器。它通过文字图形化地显示每一个进程的CPU和内存使用量、swap使用量。使用上下光标键选择进程，F7和F8改变优先级，F9杀死进程。Htop不是系统默认安装的，所以需要额外安装。</td>
+</tr>
+<tr>
+<td><code>nice</code></td>
+<td>通过nice命令的帮助，用户可以设置和改变进程的优先级。提高一个进程的优先级，内核会分配更多CPU时间片给这个进程。默认情况下，进程以0的优先级启动。进程优先级可以通过top命令显示的NI（nice value）列查看。</td>
+</tr>
+<tr>
+<td><code>renice</code></td>
+<td>renice命令类似nice命令。使用这个命令可以改变正在运行的进程优先值。注意，用户只能改变属于他们自己的进程的优先值。</td>
+</tr>
+<tr>
+<td><code>kill</code></td>
+<td>这个命令用于发送信号来结束进程。如果一个进程没有响应杀死命令，这也许就需要强制杀死，使用-9参数来执行。注意，使用强制杀死的时候一定要小心，因为进程没有时机清理现场，也许写入文件没有完成。如果我们不知道进程PID或者打算用名字杀死进程时候，killall就能派上用场。</td>
+</tr>
+<tr>
+<td><code>ulimit</code></td>
+<td>该命令用于控制系统资源在shell和进程上的分配量。对于系统管理员是最有用的，可以管理重度使用和存在性能问题的系统。限制资源大小可以确保重要进程持续运行，其他进程不会占用过多资源。</td>
+</tr>
+<tr>
+<td><code>w</code></td>
+<td>w 提供当前登录的用户及其正在执行的进程的信息。显示信息头包含信息，如当前时间、系统运行时长、登录用户总数、过去的1，5，15分钟内的负载均衡数。</td>
+</tr>
+<tr>
+<td><code>pgrep</code></td>
+<td>pgrep的意思是”进程号全局正则匹配输出”。该命令扫描当前运行进程，然后按照命令匹配条件列出匹配结果到标准输出。对于通过名字检索进程号是很有用。</td>
+</tr>
+<tr>
+<td><code>fg</code>,<code>bg</code></td>
+<td>有时，命令需要很长的时间才能执行完成。对于这种情况，我们使用‘bg’命令可以将任务放在后台执行，而用‘fg’可以调到前台来使用。</td>
+</tr>
+<tr>
+<td><code>ipcs</code></td>
+<td>ipcs命令报告进程间通信设施状态。（共享内存，信号量和消息队列）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="一些实用工具"><a href="#一些实用工具" class="headerlink" title="一些实用工具"></a>一些实用工具</h3><h4 id="find-文件查找工具"><a href="#find-文件查找工具" class="headerlink" title="find|文件查找工具"></a><code>find|文件查找工具</code></h4><p>find命令是一个无处不在命令，是linux中最有用的命令之一。find命令用于：在一个目录（及子目录）中搜索文件，你可以指定一些匹配条件，如按文件名、文件类型、用户甚至是时间戳查找文件。</p>
+<p><img src="../images/linux的那些事-09.png" alt="find"></p>
+<ul>
+<li>一般来说find主要用于在指定 目录结构中查找 特定文件:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ find . -name sum</div><div class="line">./color/sum</div><div class="line">./shape/sum</div></pre></td></tr></table></figure>
+<ul>
+<li>通过find执行命令</li>
+</ul>
+<p><img src="../images/linux的那些事-10.png" alt="find"></p>
+<ul>
+<li>交互式的命令执行</li>
+</ul>
+<p><img src="../images/linux的那些事-11.png" alt="find"></p>
+<ul>
+<li>find命令的其他选项</li>
+</ul>
+<p><img src="../images/linux的那些事-12.png" alt="find"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">$ find . -name &apos;s*&apos; -type f -size +2 -exec ls -l &#123;&#125; \;</div><div class="line">-rwxr-xr-x 1 joe staff 1512 Jan 11 15:43 ./color/sum</div><div class="line">-rwxr-xr-x 1 joe staff 2148 Jan 11 15:57 ./shape/sum</div><div class="line"></div><div class="line">$ find . -perm 644 -mtime +4 -print</div><div class="line">./shape/misc</div><div class="line"></div><div class="line">$ find . -name fleas -o -name misc</div><div class="line">./misc</div><div class="line">./shape/misc</div><div class="line">./fleas</div><div class="line"></div><div class="line">$ find / -name &apos;security&apos; -print 2&gt; errfile</div><div class="line">/var/security</div><div class="line">/usr/lpp/bos.sysmgt/inst_root/var/security</div><div class="line">/usr/lib/security</div><div class="line">/etc/security</div></pre></td></tr></table></figure>
+<h4 id="grep-模式匹配工具"><a href="#grep-模式匹配工具" class="headerlink" title="grep|模式匹配工具"></a><code>grep|模式匹配工具</code></h4><p><code>grep (global search regular expression(RE) and print out the line）</code>,全面搜索正则表达式并把行打印出来)是一种强大的文本搜索工具，它能使用正则表达式搜索文本，并把匹配的行打印出来。</p>
+<p><img src="../images/linux的那些事-13.png" alt="grep"></p>
+<p>grep命令示例样本数据文件:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">phone1:</div><div class="line">As of: 1/31/2000</div><div class="line">Anatole 389-8200</div><div class="line">Avis Betty 817 422-8345</div><div class="line">Baker John 656-4333</div><div class="line">Computer Room CE phone 689-5790</div><div class="line">Dade Travel Sue 422-5690</div><div class="line">Hotline HW 800 322-4500</div><div class="line"></div><div class="line"></div><div class="line">phone2:</div><div class="line">As of: 2/15/2000</div><div class="line">Anatole 389-8200</div><div class="line">Avis Betty 817 422-8345</div><div class="line">Baker John 656-4333</div><div class="line">Computer Room CE phone 592-5712</div><div class="line">Dade Travel Sue 422-5690</div><div class="line">Hotline HW 800 322-4500</div></pre></td></tr></table></figure>
+<ul>
+<li><code>grep</code>命令示例 一：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ grep 800 phone1</div><div class="line">Hotline HW 800 322-4500</div><div class="line">$ grep 800 phone*</div><div class="line">phone1:Hotline HW 800 322-4500</div><div class="line">phone2:Hotline</div></pre></td></tr></table></figure>
+<p> 第一个例子从文件phone1 中找出了包含800 的行<br> 第二个例子文件名使用了通配符，所以grep 会在phone1和phone2</p>
+<p><code>grep</code>命令示例 二：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ ps -ef | grep team01</div><div class="line">team01 10524 13126 0 09:27:45 pts/1 0:00 –ksh</div></pre></td></tr></table></figure>
+<p> 找出当前运行的进程中用户team01的所有进程。通过管道，ps的标准输出作为grep的标准输入。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ ps aux | grep httpd</div><div class="line">......</div></pre></td></tr></table></figure></p>
+<p> 找出进程名称包含httpd的进程</p>
+<ul>
+<li>grep与正则表达式</li>
+</ul>
+<p><img src="../images/linux的那些事-14.png" alt="grep"></p>
+<p><strong>元字符 对比 通配符</strong></p>
+<p><img src="../images/linux的那些事-15.png" alt="grep"></p>
+<p>注：grep命令和find命令中使用元字符，都应该用单引号括起来，避免shell对元字符进行扩展。</p>
+<ul>
+<li>grep正则表达式示例</li>
+</ul>
+<p><img src="../images/linux的那些事-16.png" alt="grep"></p>
+<ul>
+<li>grep命令的选项</li>
+</ul>
+<p><img src="../images/linux的那些事-17.png" alt="grep"></p>
+<ul>
+<li>其他grep工具</li>
+</ul>
+<p><img src="../images/linux的那些事-18.png" alt="grep"></p>
 ]]></content>
     
     <summary type="html">
