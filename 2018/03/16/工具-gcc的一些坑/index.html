@@ -19,7 +19,7 @@
 <meta property="og:description" content="简介GCC 的意思也只是 GNU C Compiler 而已。经过了这么多年的发展，GCC 已经不仅仅能支持 C 语言；它现在还支持 Ada 语言、C++ 语言、Java 语言、Objective C 语言、Pascal 语言、COBOL语言，以及支持函数式编程和逻辑编程的 Mercury 语言，等等。而 GCC 也不再单只是 GNU C 语言编译器的意思了，而是变成了 GNU Compiler">
 <meta property="og:locale" content="Chinese">
 <meta property="og:image" content="http://yoursite.com/images/工具--gcc编译流程.png">
-<meta property="og:updated_time" content="2018-03-30T08:56:53.471Z">
+<meta property="og:updated_time" content="2018-05-18T12:12:12.306Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="工具|gcc的一些坑">
 <meta name="twitter:description" content="简介GCC 的意思也只是 GNU C Compiler 而已。经过了这么多年的发展，GCC 已经不仅仅能支持 C 语言；它现在还支持 Ada 语言、C++ 语言、Java 语言、Objective C 语言、Pascal 语言、COBOL语言，以及支持函数式编程和逻辑编程的 Mercury 语言，等等。而 GCC 也不再单只是 GNU C 语言编译器的意思了，而是变成了 GNU Compiler">
@@ -125,6 +125,11 @@
 <p><img src="/images/工具--gcc编译流程.png" alt="gcc编译总结" title="工具--gcc编译流程"></p>
 <h4 id="多个程序文件的编译"><a href="#多个程序文件的编译" class="headerlink" title="多个程序文件的编译"></a>多个程序文件的编译</h4><p>通常整个程序是由多个源文件组成的，相应地也就形成了多个编译单元，使用GCC能够很好地管理这些编译单元。假设有一个由test1.c和 test2.c两个源文件组成的程序，为了对它们进行编译，并最终生成可执行程序test，可以使用下面这条命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc test1.c test2.c -o test</div></pre></td></tr></table></figure></p>
 <p>如果同时处理的文件不止一个，GCC仍然会按照预处理、编译和链接的过程依次进行。如果深究起来，上面这条命令大致相当于依次执行如下三条命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">gcc -c test1.c -o test1.o</div><div class="line">gcc -c test2.c -o test2.o</div><div class="line">gcc test1.o test2.o -o test</div></pre></td></tr></table></figure></p>
+<p>更多内容可参考：</p>
+<ul>
+<li><a href="http://edsionte.com/techblog/archives/3172" target="_blank" rel="external">使用gcc同时编译多个文件</a></li>
+<li><a href="https://www.jianshu.com/p/e5c6a255076b" target="_blank" rel="external">在linux下使用gcc/g++编译多个.h .c 文件</a></li>
+</ul>
 <h4 id="检错"><a href="#检错" class="headerlink" title="检错"></a>检错</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -pedantic illcode.c -o illcode</div></pre></td></tr></table></figure>
 <p><strong>-pedantic</strong>编译选项并不能保证被编译程序与ANSI/ISO C标准的完全兼容，它仅仅只能用来帮助Linux程序员离这个目标越来越近。或者换句话说，<strong>-pedantic</strong>选项能够帮助程序员发现一些不符合 ANSI/ISO C标准的代码，但不是全部，事实上只有ANSI/ISO C语言标准中要求进行编译器诊断的那些情况，才有可能被GCC发现并提出警告。</p>
 <p>除了-pedantic之外，GCC还有一些其它编译选项也能够产生有用的警告信息。这些选项大多以-W开头，其中最有价值的当数-Wall了，使用它能够使GCC产生尽可能多的警告信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -Wall illcode.c -o illcode</div></pre></td></tr></table></figure></p>
