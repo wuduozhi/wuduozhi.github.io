@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-17T11:04:16.288Z</updated>
+  <updated>2018-05-18T03:23:26.630Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/05/16/Linux-Linux%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/"/>
     <id>http://yoursite.com/2018/05/16/Linux-Linux的那些事/</id>
     <published>2018-05-16T10:13:29.000Z</published>
-    <updated>2018-05-17T11:04:16.288Z</updated>
+    <updated>2018-05-18T03:23:26.630Z</updated>
     
     <content type="html"><![CDATA[<h3 id="Linux的基础知识"><a href="#Linux的基础知识" class="headerlink" title="Linux的基础知识"></a>Linux的基础知识</h3><p>Linux系统的组成：</p>
 <ul>
@@ -311,7 +311,7 @@
 </tbody>
 </table>
 <h3 id="一些实用工具"><a href="#一些实用工具" class="headerlink" title="一些实用工具"></a>一些实用工具</h3><h4 id="find-文件查找工具"><a href="#find-文件查找工具" class="headerlink" title="find|文件查找工具"></a><code>find|文件查找工具</code></h4><p>find命令是一个无处不在命令，是linux中最有用的命令之一。find命令用于：在一个目录（及子目录）中搜索文件，你可以指定一些匹配条件，如按文件名、文件类型、用户甚至是时间戳查找文件。</p>
-<p><img src="../images/linux的那些事-09.png" alt="find"></p>
+<p><img src="/images/linux的那些事-09.png" alt="find"></p>
 <ul>
 <li>一般来说find主要用于在指定 目录结构中查找 特定文件:</li>
 </ul>
@@ -319,18 +319,18 @@
 <ul>
 <li>通过find执行命令</li>
 </ul>
-<p><img src="../images/linux的那些事-10.png" alt="find"></p>
+<p><img src="/images/linux的那些事-10.png" alt="find"></p>
 <ul>
 <li>交互式的命令执行</li>
 </ul>
-<p><img src="../images/linux的那些事-11.png" alt="find"></p>
+<p><img src="/images/linux的那些事-11.png" alt="find"></p>
 <ul>
 <li>find命令的其他选项</li>
 </ul>
-<p><img src="../images/linux的那些事-12.png" alt="find"></p>
+<p><img src="/images/linux的那些事-12.png" alt="find"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">$ find . -name &apos;s*&apos; -type f -size +2 -exec ls -l &#123;&#125; \;</div><div class="line">-rwxr-xr-x 1 joe staff 1512 Jan 11 15:43 ./color/sum</div><div class="line">-rwxr-xr-x 1 joe staff 2148 Jan 11 15:57 ./shape/sum</div><div class="line"></div><div class="line">$ find . -perm 644 -mtime +4 -print</div><div class="line">./shape/misc</div><div class="line"></div><div class="line">$ find . -name fleas -o -name misc</div><div class="line">./misc</div><div class="line">./shape/misc</div><div class="line">./fleas</div><div class="line"></div><div class="line">$ find / -name &apos;security&apos; -print 2&gt; errfile</div><div class="line">/var/security</div><div class="line">/usr/lpp/bos.sysmgt/inst_root/var/security</div><div class="line">/usr/lib/security</div><div class="line">/etc/security</div></pre></td></tr></table></figure>
 <h4 id="grep-模式匹配工具"><a href="#grep-模式匹配工具" class="headerlink" title="grep|模式匹配工具"></a><code>grep|模式匹配工具</code></h4><p><code>grep (global search regular expression(RE) and print out the line）</code>,全面搜索正则表达式并把行打印出来)是一种强大的文本搜索工具，它能使用正则表达式搜索文本，并把匹配的行打印出来。</p>
-<p><img src="../images/linux的那些事-13.png" alt="grep"></p>
+<p><img src="/images/linux的那些事-13.png" alt="grep"></p>
 <p>grep命令示例样本数据文件:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">phone1:</div><div class="line">As of: 1/31/2000</div><div class="line">Anatole 389-8200</div><div class="line">Avis Betty 817 422-8345</div><div class="line">Baker John 656-4333</div><div class="line">Computer Room CE phone 689-5790</div><div class="line">Dade Travel Sue 422-5690</div><div class="line">Hotline HW 800 322-4500</div><div class="line"></div><div class="line"></div><div class="line">phone2:</div><div class="line">As of: 2/15/2000</div><div class="line">Anatole 389-8200</div><div class="line">Avis Betty 817 422-8345</div><div class="line">Baker John 656-4333</div><div class="line">Computer Room CE phone 592-5712</div><div class="line">Dade Travel Sue 422-5690</div><div class="line">Hotline HW 800 322-4500</div></pre></td></tr></table></figure>
 <ul>
@@ -345,22 +345,28 @@
 <ul>
 <li>grep与正则表达式</li>
 </ul>
-<p><img src="../images/linux的那些事-14.png" alt="grep"></p>
+<p><img src="/images/linux的那些事-14.png" alt="grep"></p>
 <p><strong>元字符 对比 通配符</strong></p>
-<p><img src="../images/linux的那些事-15.png" alt="grep"></p>
+<p><img src="/images/linux的那些事-15.png" alt="grep"></p>
 <p>注：grep命令和find命令中使用元字符，都应该用单引号括起来，避免shell对元字符进行扩展。</p>
 <ul>
 <li>grep正则表达式示例</li>
 </ul>
-<p><img src="../images/linux的那些事-16.png" alt="grep"></p>
+<p><img src="/images/linux的那些事-16.png" alt="grep"></p>
 <ul>
 <li>grep命令的选项</li>
 </ul>
-<p><img src="../images/linux的那些事-17.png" alt="grep"></p>
+<p><img src="/images/linux的那些事-17.png" alt="grep"></p>
 <ul>
 <li>其他grep工具</li>
 </ul>
-<p><img src="../images/linux的那些事-18.png" alt="grep"></p>
+<p><img src="/images/linux的那些事-18.png" alt="grep"></p>
+<h4 id="sort-排序工具"><a href="#sort-排序工具" class="headerlink" title="sort|排序工具"></a><code>sort|排序工具</code></h4><p><code>sort</code>对指定文件中所有的行进行排序，并将结果到标准输出。</p>
+<p><code>sort [-t delimiter][+field[.column]][options]</code></p>
+<p><img src="/images/linux的那些事-19.png" alt="sort"></p>
+<p>命令示例：<br><img src="/images/linux的那些事-20.png" alt="sort"></p>
+<h3 id="head和tail工具"><a href="#head和tail工具" class="headerlink" title="head和tail工具"></a><code>head和tail工具</code></h3><p><code>head [-number_of_lines] file(s)</code>,显示文件的前n行，默认是10行。</p>
+<p><code>tail [-number_of_lines | +starting_line_number] file(s)</code>,显示文件后n行。<code>-n</code>表示显示文件的最后n行,<code>+n</code>表示从文件的第n行一直显示到文件尾.<code>-f</code>选项显示后10行并且动态刷新.</p>
 ]]></content>
     
     <summary type="html">
