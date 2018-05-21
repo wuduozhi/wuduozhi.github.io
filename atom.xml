@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-18T03:26:30.286Z</updated>
+  <updated>2018-05-21T16:19:15.820Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>干货|Arduino初体验</title>
+    <link href="http://yoursite.com/2018/05/22/%E5%B9%B2%E8%B4%A7-Arduino%E5%88%9D%E4%BD%93%E9%AA%8C/"/>
+    <id>http://yoursite.com/2018/05/22/干货-Arduino初体验/</id>
+    <published>2018-05-21T23:38:53.000Z</published>
+    <updated>2018-05-21T16:19:15.820Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Arduino是一款便捷灵活、方便上手的开源电子原型平台。主要包含两个主要的部分：硬件部分是可以用来做电路连接的各种型号的Arduino开发板；软件则是Arduino IDE(程序开发环境)，你只要在IDE中编写程序代码，将程序上载到Arduino后，程序便会告诉Arduino要做些什么。Arduino能通过各种各样的传感器来感知环境，通过控制灯光、马达和其他的装置来反馈、影响环境。Arduino的简易性，丰富的扩展板和成熟的开源社区使之成为开源硬件和Maker Movement的中流砥柱。</p>
+<h3 id="找到的一些干货"><a href="#找到的一些干货" class="headerlink" title="找到的一些干货"></a>找到的一些干货</h3><p><a href="http://www.naozhendang.com/s/learning-arduino" target="_blank" rel="external">干货教程</a><br><a href="https://www.arduino.cc/reference/en/" target="_blank" rel="external">官网教程</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;p&gt;Arduino是一款便捷灵活、方便上手的开源电子原型平台。主要包含两个主要的部分：硬件部分是可以用来做电路连接的各种型号的Arduino开发
+    
+    </summary>
+    
+      <category term="干货" scheme="http://yoursite.com/categories/%E5%B9%B2%E8%B4%A7/"/>
+    
+    
+      <category term="干货" scheme="http://yoursite.com/tags/%E5%B9%B2%E8%B4%A7/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux|Linux的那些事</title>
@@ -912,7 +936,7 @@ int getbuf()
     <link href="http://yoursite.com/2018/05/11/Linux-Linux%E5%91%BD%E4%BB%A4%E5%B0%8F%E6%8A%84/"/>
     <id>http://yoursite.com/2018/05/11/Linux-Linux命令小抄/</id>
     <published>2018-05-10T23:16:31.000Z</published>
-    <updated>2018-05-18T16:38:52.260Z</updated>
+    <updated>2018-05-18T17:01:56.032Z</updated>
     
     <content type="html"><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>本文章记录自己学习Linux路上的点点滴滴。</p>
 <h2 id="文本操作命令"><a href="#文本操作命令" class="headerlink" title="文本操作命令"></a>文本操作命令</h2><h3 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">-c: 建立压缩档案</div><div class="line">-x：解压</div><div class="line">-t：查看内容</div><div class="line">-r：向压缩归档文件末尾追加文件</div><div class="line">-u：更新原压缩包中的文件</div></pre></td></tr></table></figure>
@@ -1809,70 +1833,6 @@ int main(){
     <summary type="html">
     
       &lt;h3 id=&quot;系统调用&quot;&gt;&lt;a href=&quot;#系统调用&quot; class=&quot;headerlink&quot; title=&quot;系统调用&quot;&gt;&lt;/a&gt;系统调用&lt;/h3&gt;&lt;p&gt;操作系统是一个系统程序，即为别的程序提供服务的程序。那么，操作系统的服务是通过什么方式提供的呢？答案就是：&lt;code&gt;系统调
-    
-    </summary>
-    
-      <category term="操作系统" scheme="http://yoursite.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="操作系统" scheme="http://yoursite.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>操作系统|关于操作系统</title>
-    <link href="http://yoursite.com/2018/04/28/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%85%B3%E4%BA%8E%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    <id>http://yoursite.com/2018/04/28/操作系统-关于操作系统/</id>
-    <published>2018-04-28T09:57:44.000Z</published>
-    <updated>2018-04-28T04:07:16.473Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="操作系统是什么？"><a href="#操作系统是什么？" class="headerlink" title="操作系统是什么？"></a>操作系统是什么？</h2><h3 id="两个问题"><a href="#两个问题" class="headerlink" title="两个问题"></a>两个问题</h3><h4 id="操作系统到底是什么鬼？"><a href="#操作系统到底是什么鬼？" class="headerlink" title="操作系统到底是什么鬼？"></a>操作系统到底是什么鬼？</h4><p>操作系统是介于计算机和应用软件之间的一个软件系统[<strong>也是一种软件噢</strong>]，操作系统的上层和下层都有其他的对象存在：</p>
-<p><img src="/images/操作系统-关于操作系统01.jpg" alt="OS"></p>
-<p>从上图可以看出，OS上边是应用软件，下边是硬件平台。</p>
-<h4 id="操作系统到底操控什么事？"><a href="#操作系统到底操控什么事？" class="headerlink" title="操作系统到底操控什么事？"></a>操作系统到底操控什么事？</h4><p>最原始的计算机并没有OS，直接由人来掌管事情。随着计算机复杂性的增长，人已经不能胜任直接掌控计算机了。于是，OS这个软件被编写出来帮我们掌控计算机，使人类从日益复杂的掌控任务中解脱出来。既然OS是专门掌控计算机的，那么计算机上发生的所有事情都需要OS的知晓和认可，未经OS同意的任何事情均被视为非法的（想想病毒和入侵攻击者试图做的事情）。</p>
-<h3 id="两种角色"><a href="#两种角色" class="headerlink" title="两种角色"></a>两种角色</h3><ul>
-<li>魔术家</li>
-</ul>
-<p><img src="/images/操作系统-关于操作系统02.jpg" alt="魔术家"></p>
-<p>魔术家的目标是把差的东西变好，把少的东西变多，把复杂变简单。同样，OS将计算机以一个更加容易、更加方便、更加强大的方式呈现给用户。</p>
-<blockquote>
-<p>Example：OS通过进程抽象让每一个用户感觉有一台自己独享的CPU，通过虚拟内存抽象，让用户感觉物理内存空间具有无限扩张性，这就是把少变多的一个实例。</p>
-</blockquote>
-<ul>
-<li>管理者</li>
-</ul>
-<p><img src="/images/操作系统-关于操作系统03.jpg" alt="管理者"></p>
-<p>操作系统管理计算机上的软硬件资源，如CPU、内存、磁盘等，使得不同用户之间或者同一用户的不同程序之间可以安全有序地共享这些硬件资源。</p>
-<p>那么，问题来了，如何让用户很好地利用这些硬件资源呢？这就是分块（Parcel Out），把硬件分块给应用程序使用。这就涉及到有效和公平的原则，这也是一个管理者的必备素质，更是设计操作系统时的不懈追求！</p>
-<p>操作系统的两个角色之间既有区别又有联系，为了完成不同的任务，OS有时需要扮演魔术师，有时有需要扮演管理者，还有时需要同时扮演两个角色。</p>
-<h2 id="操作系统的范畴"><a href="#操作系统的范畴" class="headerlink" title="操作系统的范畴"></a>操作系统的范畴</h2><h3 id="CPU管理"><a href="#CPU管理" class="headerlink" title="CPU管理"></a>CPU管理</h3><p>即如何分配CPU给不同应用和用户，对于进程管理坚持三个目标：一是公平（每个程序都有机会使用CPU），二是非阻塞（任何程序不能无休止地阻挠其他程序的正常推进），三是优先级（优先级高的程序开始运行则优先级低的就需要让出资源—&gt;让一部分人先富起来）。</p>
-<h3 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h3><p>即如何分配内存给不同应用和用户，主要管理缓存、主存、磁盘、磁带等存储介质所形成的内存架构。其目的主要有二：一是将少变多（比如虚拟内存的使用能够使得运行程序的大小大大地增加），二是让多个程序共享同一个物理内存（这就需要对物理内存进行分割和保护，不让一个程序访问另一个程序所占的内存空间，专业术语称为运行时不能越界访问）。</p>
-<h3 id="外存管理"><a href="#外存管理" class="headerlink" title="外存管理"></a>外存管理</h3><p>即如何分配外存（磁盘）给不同应用和用户，外存管理也称存储管理，也就是我们所说的文件系统，其目的是将磁盘变为一个很容易使用的存储介质以提供给用户使用。</p>
-<h3 id="I-O管理"><a href="#I-O管理" class="headerlink" title="I/O管理"></a>I/O管理</h3><p>即如何分配输入输出设备给应用和用户，也称为设备管理，也就是管理输入输出设备。其目的主要有两个：一是屏蔽不同设备的差异性（用户用同样的方式访问不同的设备，从而减低编程的难度），二是提供并发访问（即将那些看上去并不具备共享特征的设备如打印机变得可以共享）。</p>
-<p>操作系统的四个核心功能如下图所示：</p>
-<p><img src="/images/操作系统-关于操作系统04.jpg" alt="操作系统核心功能"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>操作系统的技巧也应用于很多领域，如抽象、缓存、并发等。操作系统简单说来就是实现抽象：<code>进程抽象</code>、<code>文件抽象</code>、<code>虚拟存储抽象</code>等。而很多领域都会使用抽象，例如数据结构和程序设计（抽象数据类型？抽象类？）；很多地方也会用到缓存，例如开发Web应用程序时使用缓存降低数据库访问压力，加快页面响应速度等等。更为重要的是，对于一个程序员来说，要想知道计算机在软件层面是怎么运转的，就得学习操作系统。</p>
-<h2 id="程序是如何运行的？"><a href="#程序是如何运行的？" class="headerlink" title="程序是如何运行的？"></a>程序是如何运行的？</h2><h3 id="程序运行的四大要素"><a href="#程序运行的四大要素" class="headerlink" title="程序运行的四大要素"></a>程序运行的四大要素</h3><ol>
-<li><p>程序设计语言<br>首先，我们得使用一门程序设计语言进行编程，一般我们使用的都是高级程序设计语言（如C、C++、Java、C#等）。</p>
-</li>
-<li><p>编译系统<br>我们写好了代码，但是由于计算机不认识高级语言编写的程序，需要编译成计算机能够识别的机器语言，这就需要编译器和汇编器的帮助。</p>
-</li>
-<li><p>操作系统<br>机器语言程序需要加载到内存，才能形成一个运动中的程序（即进程），这就需要操作系统的帮助。</p>
-<blockquote>
-<p>about：进程需要在计算机芯片即CPU上执行才算是真正在执行，而将进程调度到CPU上运行也是由操作系统完成的，这里也就不难理解为什么进程管理会在我们的教科书中排在最重要的位置了。</p>
-</blockquote>
-</li>
-<li><p>指令集结构（计算机硬件系统）<br>在CPU上执行的机器语言指令需要变成能够在一个个时钟脉冲里执行的基本操作，这就需要指令集结构和计算机硬件的支持。</p>
-</li>
-</ol>
-<h3 id="程序运行的基本流程"><a href="#程序运行的基本流程" class="headerlink" title="程序运行的基本流程"></a>程序运行的基本流程</h3><p>基于上面提到的四大要素，我们可以得出下面一幅图，该图从一个线性角度展示了程序的演变过程，能够帮助我们理解整个程序是如何在计算机上执行的。</p>
-<p><img src="/images/操作系统-关于操作系统05.jpg" alt="程序运行"></p>
-<p>事实上，程序可以执行在机器语言或汇编语言上编写，用这种被称为“低级”（我更愿意称其为底层）的语言编写出来的机器语言程序无需经过编译器的翻译就可以在计算机指令集上执行。如果是在汇编语言上编写的汇编程序，则只需要经过汇编器的翻译即可加载执行。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;操作系统是什么？&quot;&gt;&lt;a href=&quot;#操作系统是什么？&quot; class=&quot;headerlink&quot; title=&quot;操作系统是什么？&quot;&gt;&lt;/a&gt;操作系统是什么？&lt;/h2&gt;&lt;h3 id=&quot;两个问题&quot;&gt;&lt;a href=&quot;#两个问题&quot; class=&quot;headerlink&quot; 
     
     </summary>
     

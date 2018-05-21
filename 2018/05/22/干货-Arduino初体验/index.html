@@ -4,25 +4,25 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>JDBC简单用 | 只为不凡而来</title>
+    <title>干货|Arduino初体验 | 只为不凡而来</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="wuduozhi">
     
 
     
-    <meta name="description" content="何为JDBCJDBC（Java Data Base Connectivity,Java数据库连接）是由原Sun公司制定的数据库连接技术。SQL是用户操作数据库的语言，JDBC则为用户与数据库之间搭起了通信的通道。JDBC的根本目的：为Java编程人员提供操作各种数据库统一接口 作为程序员，我们不能要求我们的用户只用一种数据库，所以说同一个Java应用能运用在不同的数据库之上是非常重要的，同时，这也">
-<meta name="keywords" content="Java">
+    <meta name="description" content="简介Arduino是一款便捷灵活、方便上手的开源电子原型平台。主要包含两个主要的部分：硬件部分是可以用来做电路连接的各种型号的Arduino开发板；软件则是Arduino IDE(程序开发环境)，你只要在IDE中编写程序代码，将程序上载到Arduino后，程序便会告诉Arduino要做些什么。Arduino能通过各种各样的传感器来感知环境，通过控制灯光、马达和其他的装置来反馈、影响环境。Ardui">
+<meta name="keywords" content="干货">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JDBC简单用">
-<meta property="og:url" content="http://yoursite.com/2017/08/08/JDBC简单用/index.html">
+<meta property="og:title" content="干货|Arduino初体验">
+<meta property="og:url" content="http://yoursite.com/2018/05/22/干货-Arduino初体验/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="何为JDBCJDBC（Java Data Base Connectivity,Java数据库连接）是由原Sun公司制定的数据库连接技术。SQL是用户操作数据库的语言，JDBC则为用户与数据库之间搭起了通信的通道。JDBC的根本目的：为Java编程人员提供操作各种数据库统一接口 作为程序员，我们不能要求我们的用户只用一种数据库，所以说同一个Java应用能运用在不同的数据库之上是非常重要的，同时，这也">
+<meta property="og:description" content="简介Arduino是一款便捷灵活、方便上手的开源电子原型平台。主要包含两个主要的部分：硬件部分是可以用来做电路连接的各种型号的Arduino开发板；软件则是Arduino IDE(程序开发环境)，你只要在IDE中编写程序代码，将程序上载到Arduino后，程序便会告诉Arduino要做些什么。Arduino能通过各种各样的传感器来感知环境，通过控制灯光、马达和其他的装置来反馈、影响环境。Ardui">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2017-08-07T14:40:31.782Z">
+<meta property="og:updated_time" content="2018-05-21T16:19:15.820Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JDBC简单用">
-<meta name="twitter:description" content="何为JDBCJDBC（Java Data Base Connectivity,Java数据库连接）是由原Sun公司制定的数据库连接技术。SQL是用户操作数据库的语言，JDBC则为用户与数据库之间搭起了通信的通道。JDBC的根本目的：为Java编程人员提供操作各种数据库统一接口 作为程序员，我们不能要求我们的用户只用一种数据库，所以说同一个Java应用能运用在不同的数据库之上是非常重要的，同时，这也">
+<meta name="twitter:title" content="干货|Arduino初体验">
+<meta name="twitter:description" content="简介Arduino是一款便捷灵活、方便上手的开源电子原型平台。主要包含两个主要的部分：硬件部分是可以用来做电路连接的各种型号的Arduino开发板；软件则是Arduino IDE(程序开发环境)，你只要在IDE中编写程序代码，将程序上载到Arduino后，程序便会告诉Arduino要做些什么。Arduino能通过各种各样的传感器来感知环境，通过控制灯光、马达和其他的装置来反馈、影响环境。Ardui">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -86,14 +86,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/08/08/JDBC简单用/" title="JDBC简单用" itemprop="url">JDBC简单用</a>
+      <a href="/2018/05/22/干货-Arduino初体验/" title="干货|Arduino初体验" itemprop="url">干货|Arduino初体验</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2017-08-07T22:15:28.000Z" itemprop="datePublished"> 发表于 2017-08-08</time>
+    <time datetime="2018-05-21T23:38:53.000Z" itemprop="datePublished"> 发表于 2018-05-22</time>
     
   </p>
 </header>
@@ -102,17 +102,12 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#何为JDBC"><span class="toc-number">1.</span> <span class="toc-text">何为JDBC</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#找到的一些干货"><span class="toc-number">2.</span> <span class="toc-text">找到的一些干货</span></a></li></ol>
 		
 		</div>
 		
-		<h4 id="何为JDBC"><a href="#何为JDBC" class="headerlink" title="何为JDBC"></a>何为JDBC</h4><p>JDBC（Java Data Base Connectivity,Java数据库连接）是由原Sun公司制定的数据库连接技术。SQL是用户操作数据库的语言，JDBC则为用户与数据库之间搭起了<strong>通信</strong>的通道。JDBC的根本目的：<strong>为Java编程人员提供操作各种数据库统一接口</strong></p>
-<p>作为程序员，我们不能要求我们的用户只用一种数据库，所以说同一个Java应用能运用在不同的数据库之上是非常重要的，同时，这也是很不容易的。当今的数据库种类繁多，就像不同的国家的人说不同的语言一样，不同的数据库也使用着不同的语言…想要跟不同的数据库“交流”，就要使用他们的语言，那是不是说作为一名Java程序员要懂得所有的数据库语言？</p>
-<p>要解决这个问题，我们就需要一个翻译，就像国家领导人经常出访不同的国家，但不需要懂得全世界的语言一样。</p>
-<p>原Sun公司制定了JDBC的标准，这个标准规定了JDBC的接口，就如同规定了Java程序员与JDBC使用的语言。不同数据库语言的表达方式被JDBC统一了起来。就拿 “给我一个数据库连接” 这样一个命令来说，不论在各个数据库中是怎么实现的，在JDBC中都是一个命令—-“getConnection” 。</p>
-<p>这些功能的实现，主要靠的是“JDBC驱动” 这个东西，它承担了翻译的核心机能。JDBC标准规定后，各个数据库厂商根据这个标准，开发出对应自己数据库产品的JDBC驱动。所以想要操作什么数据库，只要找到相应的驱动就好了。当然，JDBC驱动实际上就是一组class文件，它们被打包为Java专用压缩格式jar。</p>
-<p>这样一来，数据库程序的开发就变得简单了。JDBC为Java提供了一个统一接口，程序员在编程时，可以不考虑所要操作的是什么数据库，只需要使用标准的JDBC书写数据库操作代码，再根据目标数据库的不同，加在相应的JDBC驱动就行了。</p>
-<p>JDBC的所有接口都在Java基础类库的  java.sql 包以及 javax.sql 包中，但请注意这些都只是接口，所有的实现类就是由各数据库厂商根据这些接口编写的具体类而已。</p>
+		<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Arduino是一款便捷灵活、方便上手的开源电子原型平台。主要包含两个主要的部分：硬件部分是可以用来做电路连接的各种型号的Arduino开发板；软件则是Arduino IDE(程序开发环境)，你只要在IDE中编写程序代码，将程序上载到Arduino后，程序便会告诉Arduino要做些什么。Arduino能通过各种各样的传感器来感知环境，通过控制灯光、马达和其他的装置来反馈、影响环境。Arduino的简易性，丰富的扩展板和成熟的开源社区使之成为开源硬件和Maker Movement的中流砥柱。</p>
+<h3 id="找到的一些干货"><a href="#找到的一些干货" class="headerlink" title="找到的一些干货"></a>找到的一些干货</h3><p><a href="http://www.naozhendang.com/s/learning-arduino" target="_blank" rel="external">干货教程</a><br><a href="https://www.arduino.cc/reference/en/" target="_blank" rel="external">官网教程</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -120,13 +115,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Java/">Java</a>
+  <a class="article-category-link" href="/categories/干货/">干货</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Java/">Java</a>
+  <span></span> <a href="/tags/干货/">干货</a>
   </div>
 
 </div>
@@ -140,17 +135,10 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/09/02/大二的一些改变/" title="大二的一些改变">
-  <span>
-  大二的一些改变</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/08/06/写代码前的准备/"  title="写代码前的准备">
- <span>写代码前的准备
+<a href="/2018/05/16/Linux-Linux的那些事/"  title="Linux|Linux的那些事">
+ <span>Linux|Linux的那些事
 </span>
 </a>
 </div>
