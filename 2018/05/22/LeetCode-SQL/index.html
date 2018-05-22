@@ -1,0 +1,649 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>LeetCode|SQL | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="leetcode 181 Employees Earning More Than Their Managers123456789101112131415161718Employee 表包含所有员工，他们的经理也属于员工。每个员工都有一个 Id，此外还有一列对应员工的经理的 Id。+----+-------+--------+-----------+| Id | Name  | Salary | M">
+<meta name="keywords" content="LeetCode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode|SQL">
+<meta property="og:url" content="http://yoursite.com/2018/05/22/LeetCode-SQL/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="leetcode 181 Employees Earning More Than Their Managers123456789101112131415161718Employee 表包含所有员工，他们的经理也属于员工。每个员工都有一个 Id，此外还有一列对应员工的经理的 Id。+----+-------+--------+-----------+| Id | Name  | Salary | M">
+<meta property="og:locale" content="Chinese">
+<meta property="og:updated_time" content="2018-05-22T09:17:04.103Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LeetCode|SQL">
+<meta name="twitter:description" content="leetcode 181 Employees Earning More Than Their Managers123456789101112131415161718Employee 表包含所有员工，他们的经理也属于员工。每个员工都有一个 Id，此外还有一列对应员工的经理的 Id。+----+-------+--------+-----------+| Id | Name  | Salary | M">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/05/22/LeetCode-SQL/" title="LeetCode|SQL" itemprop="url">LeetCode|SQL</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-05-22T15:23:52.000Z" itemprop="datePublished"> Published 2018-05-22</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#leetcode-181-Employees-Earning-More-Than-Their-Managers"><span class="toc-number">1.</span> <span class="toc-text">leetcode 181 Employees Earning More Than Their Managers</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#leetcode-182-Duplicate-Emails"><span class="toc-number">1.1.</span> <span class="toc-text">leetcode 182 Duplicate Emails</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Leetcode-183-Customers-Who-Never-Order"><span class="toc-number">1.2.</span> <span class="toc-text">Leetcode 183 Customers Who Never Order</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Leetcode-184-Department-Highest-Salary"><span class="toc-number">2.</span> <span class="toc-text">Leetcode 184 Department Highest Salary</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Leetcode-185-Department-Top-Three-Salaries"><span class="toc-number">3.</span> <span class="toc-text">Leetcode 185 Department Top Three Salaries</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="leetcode-181-Employees-Earning-More-Than-Their-Managers"><a href="#leetcode-181-Employees-Earning-More-Than-Their-Managers" class="headerlink" title="leetcode 181 Employees Earning More Than Their Managers"></a><a href="https://leetcode-cn.com/problems/employees-earning-more-than-their-managers/description/" target="_blank" rel="external">leetcode 181 Employees Earning More Than Their Managers</a></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">Employee 表包含所有员工，他们的经理也属于员工。每个员工都有一个 Id，此外还有一列对应员工的经理的 Id。</div><div class="line"></div><div class="line">+----+-------+--------+-----------+</div><div class="line">| Id | Name  | Salary | ManagerId |</div><div class="line">+----+-------+--------+-----------+</div><div class="line">| 1  | Joe   | 70000  | 3         |</div><div class="line">| 2  | Henry | 80000  | 4         |</div><div class="line">| 3  | Sam   | 60000  | NULL      |</div><div class="line">| 4  | Max   | 90000  | NULL      |</div><div class="line">+----+-------+--------+-----------+</div><div class="line"></div><div class="line">给定 Employee 表，编写一个 SQL 查询，该查询可以获取收入超过他们经理的员工的姓名。在上面的表格中，Joe 是唯一一个收入超过他的经理的员工。</div><div class="line"></div><div class="line">+----------+</div><div class="line">| Employee |</div><div class="line">+----------+</div><div class="line">| Joe      |</div><div class="line">+----------+</div></pre></td></tr></table></figure>
+<p>MySQL:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">SELECT</div><div class="line">	E. NAME Employee</div><div class="line">FROM</div><div class="line">	Employee E,</div><div class="line">	Employee M</div><div class="line">WHERE</div><div class="line">	E.ManagerId = M.Id</div><div class="line">AND E.Salary &gt; M.salary;</div></pre></td></tr></table></figure></p>
+<h4 id="leetcode-182-Duplicate-Emails"><a href="#leetcode-182-Duplicate-Emails" class="headerlink" title="leetcode 182 Duplicate Emails"></a><a href="https://leetcode-cn.com/problems/duplicate-emails/description/" target="_blank" rel="external">leetcode 182 Duplicate Emails</a></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">编写一个 SQL 查询，查找 Person 表中所有重复的电子邮箱。</div><div class="line"></div><div class="line">示例：</div><div class="line"></div><div class="line">+----+---------+</div><div class="line">| Id | Email   |</div><div class="line">+----+---------+</div><div class="line">| 1  | a@b.com |</div><div class="line">| 2  | c@d.com |</div><div class="line">| 3  | a@b.com |</div><div class="line">+----+---------+</div><div class="line"></div><div class="line">根据以上输入，你的查询应返回以下结果：</div><div class="line"></div><div class="line">+---------+</div><div class="line">| Email   |</div><div class="line">+---------+</div><div class="line">| a@b.com |</div><div class="line">+---------+</div><div class="line"></div><div class="line">说明：所有电子邮箱都是小写字母。</div></pre></td></tr></table></figure>
+<p>My Solution</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">SELECT</div><div class="line">	Email</div><div class="line">FROM</div><div class="line">	Person</div><div class="line">GROUP BY</div><div class="line">	Email</div><div class="line">HAVING</div><div class="line">	count(*) &gt; 1;</div></pre></td></tr></table></figure>
+<h4 id="Leetcode-183-Customers-Who-Never-Order"><a href="#Leetcode-183-Customers-Who-Never-Order" class="headerlink" title="Leetcode 183 Customers Who Never Order"></a><a href="https://leetcode-cn.com/problems/customers-who-never-order/description/" target="_blank" rel="external">Leetcode 183 Customers Who Never Order</a></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">某网站包含两个表，Customers 表和 Orders 表。编写一个 SQL 查询，找出所有从不订购任何东西的客户。</div><div class="line"></div><div class="line">Customers 表：</div><div class="line"></div><div class="line">+----+-------+</div><div class="line">| Id | Name  |</div><div class="line">+----+-------+</div><div class="line">| 1  | Joe   |</div><div class="line">| 2  | Henry |</div><div class="line">| 3  | Sam   |</div><div class="line">| 4  | Max   |</div><div class="line">+----+-------+</div><div class="line"></div><div class="line">Orders 表：</div><div class="line"></div><div class="line">+----+------------+</div><div class="line">| Id | CustomerId |</div><div class="line">+----+------------+</div><div class="line">| 1  | 3          |</div><div class="line">| 2  | 1          |</div><div class="line">+----+------------+</div><div class="line"></div><div class="line">例如给定上述表格，你的查询应返回：</div><div class="line"></div><div class="line">+-----------+</div><div class="line">| Customers |</div><div class="line">+-----------+</div><div class="line">| Henry     |</div><div class="line">| Max       |</div><div class="line">+-----------+</div></pre></td></tr></table></figure>
+<p>My solution：</p>
+<ul>
+<li>使用not in:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">SELECT</div><div class="line">	NAME AS Customers</div><div class="line">FROM</div><div class="line">	Customers c</div><div class="line">WHERE</div><div class="line">	c.Id NOT IN (</div><div class="line">		SELECT</div><div class="line">			CustomerId</div><div class="line">		FROM</div><div class="line">			Orders o</div><div class="line">	);</div></pre></td></tr></table></figure>
+<ul>
+<li>使用not esists: </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">SELECT</div><div class="line">	NAME AS Customers</div><div class="line">FROM</div><div class="line">	Customers c</div><div class="line">WHERE</div><div class="line">	NOT EXISTS (</div><div class="line">		SELECT</div><div class="line">			CustomerId</div><div class="line">		FROM</div><div class="line">			Orders o</div><div class="line">		WHERE</div><div class="line">			o.CustomerId = c.id</div><div class="line">	);</div></pre></td></tr></table></figure>
+<ul>
+<li>使用left join:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">SELECT</div><div class="line">	NAME AS Customers</div><div class="line">FROM</div><div class="line">	Customers c</div><div class="line">LEFT JOIN Orders o ON c.Id = o.CustomerId</div><div class="line">WHERE</div><div class="line">	o.Id IS NULL;</div></pre></td></tr></table></figure>
+<h3 id="Leetcode-184-Department-Highest-Salary"><a href="#Leetcode-184-Department-Highest-Salary" class="headerlink" title="Leetcode 184 Department Highest Salary"></a><a href="https://leetcode-cn.com/problems/department-highest-salary/description/" target="_blank" rel="external">Leetcode 184 Department Highest Salary</a></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">Employee 表包含所有员工信息，每个员工有其对应的 Id, salary 和 department Id。</div><div class="line"></div><div class="line">+----+-------+--------+--------------+</div><div class="line">| Id | Name  | Salary | DepartmentId |</div><div class="line">+----+-------+--------+--------------+</div><div class="line">| 1  | Joe   | 70000  | 1            |</div><div class="line">| 2  | Henry | 80000  | 2            |</div><div class="line">| 3  | Sam   | 60000  | 2            |</div><div class="line">| 4  | Max   | 90000  | 1            |</div><div class="line">+----+-------+--------+--------------+</div><div class="line"></div><div class="line">Department 表包含公司所有部门的信息。</div><div class="line"></div><div class="line">+----+----------+</div><div class="line">| Id | Name     |</div><div class="line">+----+----------+</div><div class="line">| 1  | IT       |</div><div class="line">| 2  | Sales    |</div><div class="line">+----+----------+</div><div class="line"></div><div class="line">编写一个 SQL 查询，找出每个部门工资最高的员工。例如，根据上述给定的表格，Max 在 IT 部门有最高工资，Henry 在 Sales 部门有最高工资。</div><div class="line"></div><div class="line">+------------+----------+--------+</div><div class="line">| Department | Employee | Salary |</div><div class="line">+------------+----------+--------+</div><div class="line">| IT         | Max      | 90000  |</div><div class="line">| Sales      | Henry    | 80000  |</div><div class="line">+------------+----------+--------+</div></pre></td></tr></table></figure>
+<p>首先使用临时表t查询出每一个部门的最高薪水，然后使用薪水值和部门Id与雇员表Employee做内连接，再通过部门Id与部门表Department做内连接。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">SELECT</div><div class="line">	d.`Name` AS Department,</div><div class="line">	e. NAME AS Employee,</div><div class="line">	t.Salary</div><div class="line">FROM</div><div class="line">	Employee e</div><div class="line">INNER JOIN (</div><div class="line">	SELECT</div><div class="line">		DepartmentId,</div><div class="line">		max(Salary) AS Salary</div><div class="line">	FROM</div><div class="line">		Employee</div><div class="line">	GROUP BY</div><div class="line">		DepartmentId</div><div class="line">) t ON e.DepartmentId = t.DepartmentId</div><div class="line">AND e.Salary = t.Salary</div><div class="line">INNER JOIN Department d ON d.id = t.DepartmentId;</div></pre></td></tr></table></figure>
+<h3 id="Leetcode-185-Department-Top-Three-Salaries"><a href="#Leetcode-185-Department-Top-Three-Salaries" class="headerlink" title="Leetcode 185 Department Top Three Salaries"></a><a href="https://leetcode-cn.com/problems/department-top-three-salaries/description/" target="_blank" rel="external">Leetcode 185 Department Top Three Salaries</a></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">Employee 表包含所有员工信息，每个员工有其对应的 Id, salary 和 department Id 。</div><div class="line"></div><div class="line">+----+-------+--------+--------------+</div><div class="line">| Id | Name  | Salary | DepartmentId |</div><div class="line">+----+-------+--------+--------------+</div><div class="line">| 1  | Joe   | 70000  | 1            |</div><div class="line">| 2  | Henry | 80000  | 2            |</div><div class="line">| 3  | Sam   | 60000  | 2            |</div><div class="line">| 4  | Max   | 90000  | 1            |</div><div class="line">| 5  | Janet | 69000  | 1            |</div><div class="line">| 6  | Randy | 85000  | 1            |</div><div class="line">+----+-------+--------+--------------+</div><div class="line"></div><div class="line">Department 表包含公司所有部门的信息。</div><div class="line"></div><div class="line">+----+----------+</div><div class="line">| Id | Name     |</div><div class="line">+----+----------+</div><div class="line">| 1  | IT       |</div><div class="line">| 2  | Sales    |</div><div class="line">+----+----------+</div><div class="line"></div><div class="line">编写一个 SQL 查询，找出每个部门工资前三高的员工。例如，根据上述给定的表格，查询结果应返回：</div><div class="line"></div><div class="line">+------------+----------+--------+</div><div class="line">| Department | Employee | Salary |</div><div class="line">+------------+----------+--------+</div><div class="line">| IT         | Max      | 90000  |</div><div class="line">| IT         | Randy    | 85000  |</div><div class="line">| IT         | Joe      | 70000  |</div><div class="line">| Sales      | Henry    | 80000  |</div><div class="line">| Sales      | Sam      | 60000  |</div><div class="line">+------------+----------+--------+</div></pre></td></tr></table></figure>
+<p>My Solution</p>
+<ul>
+<li>使用变量</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">SELECT</div><div class="line">	d. NAME AS Department,</div><div class="line">	t. NAME AS Employee,</div><div class="line">	Salary</div><div class="line">FROM</div><div class="line">	(</div><div class="line">		SELECT</div><div class="line">			DepartmentId,</div><div class="line">			NAME,</div><div class="line">			Salary,</div><div class="line">			@rank :=</div><div class="line">		IF (</div><div class="line">			@prevDeptId != DepartmentId,</div><div class="line">			1,</div><div class="line"></div><div class="line">			IF (</div><div class="line">				@prevSalary = Salary,</div><div class="line">				@rank,</div><div class="line">				@rank + 1</div><div class="line">			)</div><div class="line">		) AS Rank,</div><div class="line">		@prevDeptId := DepartmentId AS prevDeptId,</div><div class="line">		@prevSalary := Salary AS prevSalary</div><div class="line">	FROM</div><div class="line">		Employee e,</div><div class="line">		(</div><div class="line">			SELECT</div><div class="line">				@rank := 0,</div><div class="line">				@prevDeptId := NULL,</div><div class="line">				@prevSalary := NULL</div><div class="line">		) r</div><div class="line">	ORDER BY</div><div class="line">		DepartmentId ASC,</div><div class="line">		Salary DESC</div><div class="line">	) t</div><div class="line">INNER JOIN Department d ON t.DepartmentId = d.Id</div><div class="line">WHERE</div><div class="line">	t.rank &lt;= 3;</div></pre></td></tr></table></figure>
+<ul>
+<li>不使用变量</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">SELECT</div><div class="line">	D. NAME AS Department,</div><div class="line">	E. NAME AS Employee,</div><div class="line">	E.Salary AS Salary</div><div class="line">FROM</div><div class="line">	Employee E,</div><div class="line">	Department D</div><div class="line">WHERE</div><div class="line">	(</div><div class="line">		SELECT</div><div class="line">			count(DISTINCT(Salary))</div><div class="line">		FROM</div><div class="line">			Employee</div><div class="line">		WHERE</div><div class="line">			DepartmentId = E.DepartmentId</div><div class="line">		AND Salary &gt; E.Salary</div><div class="line">	) &lt; 3</div><div class="line">AND E.DepartmentId = D.Id</div><div class="line">ORDER BY</div><div class="line">	E.DepartmentId,</div><div class="line">	E.Salary DESC;</div></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/LeetCode/">LeetCode</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/05/22/干货-Arduino初体验/"  title="干货|Arduino初体验">
+ <span>干货|Arduino初体验
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>16</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>10</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/干货/" title="干货">干货<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/操作系统/" title="操作系统">操作系统<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/架构/" title="架构">架构<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机网络/" title="计算机网络">计算机网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/运维/" title="运维">运维<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/面试/" title="面试">面试<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>12</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/college/" title="college">college<sup>12</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具/" title="工具">工具<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/操作系统/" title="操作系统">操作系统<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据库/" title="数据库">数据库<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/干货/" title="干货">干货<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/面试/" title="面试">面试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/运维/" title="运维">运维<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>
