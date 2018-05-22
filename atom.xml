@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-22T09:17:04.103Z</updated>
+  <updated>2018-05-22T09:21:25.567Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,47 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>操作系统|关于内存管理</title>
+    <link href="http://yoursite.com/2018/05/23/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%85%B3%E4%BA%8E%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"/>
+    <id>http://yoursite.com/2018/05/23/操作系统-关于内存管理/</id>
+    <published>2018-05-22T17:21:15.000Z</published>
+    <updated>2018-05-22T09:21:25.567Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="操作系统" scheme="http://yoursite.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="操作系统" scheme="http://yoursite.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>深入理解计算机系统|存储器层次结构</title>
+    <link href="http://yoursite.com/2018/05/23/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/"/>
+    <id>http://yoursite.com/2018/05/23/深入理解计算机系统-存储器层次结构/</id>
+    <published>2018-05-22T17:19:37.000Z</published>
+    <updated>2018-05-22T09:20:00.781Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
     <title>LeetCode|SQL</title>
     <link href="http://yoursite.com/2018/05/22/LeetCode-SQL/"/>
     <id>http://yoursite.com/2018/05/22/LeetCode-SQL/</id>
     <published>2018-05-22T15:23:52.000Z</published>
-    <updated>2018-05-22T09:17:04.103Z</updated>
+    <updated>2018-05-22T14:09:33.012Z</updated>
     
     <content type="html"><![CDATA[<h3 id="leetcode-181-Employees-Earning-More-Than-Their-Managers"><a href="#leetcode-181-Employees-Earning-More-Than-Their-Managers" class="headerlink" title="leetcode 181 Employees Earning More Than Their Managers"></a><a href="https://leetcode-cn.com/problems/employees-earning-more-than-their-managers/description/" target="_blank" rel="external">leetcode 181 Employees Earning More Than Their Managers</a></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">Employee 表包含所有员工，他们的经理也属于员工。每个员工都有一个 Id，此外还有一列对应员工的经理的 Id。</div><div class="line"></div><div class="line">+----+-------+--------+-----------+</div><div class="line">| Id | Name  | Salary | ManagerId |</div><div class="line">+----+-------+--------+-----------+</div><div class="line">| 1  | Joe   | 70000  | 3         |</div><div class="line">| 2  | Henry | 80000  | 4         |</div><div class="line">| 3  | Sam   | 60000  | NULL      |</div><div class="line">| 4  | Max   | 90000  | NULL      |</div><div class="line">+----+-------+--------+-----------+</div><div class="line"></div><div class="line">给定 Employee 表，编写一个 SQL 查询，该查询可以获取收入超过他们经理的员工的姓名。在上面的表格中，Joe 是唯一一个收入超过他的经理的员工。</div><div class="line"></div><div class="line">+----------+</div><div class="line">| Employee |</div><div class="line">+----------+</div><div class="line">| Joe      |</div><div class="line">+----------+</div></pre></td></tr></table></figure>
 <p>MySQL:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">SELECT</div><div class="line">	E. NAME Employee</div><div class="line">FROM</div><div class="line">	Employee E,</div><div class="line">	Employee M</div><div class="line">WHERE</div><div class="line">	E.ManagerId = M.Id</div><div class="line">AND E.Salary &gt; M.salary;</div></pre></td></tr></table></figure></p>
@@ -54,6 +90,8 @@
 <li>不使用变量</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">SELECT</div><div class="line">	D. NAME AS Department,</div><div class="line">	E. NAME AS Employee,</div><div class="line">	E.Salary AS Salary</div><div class="line">FROM</div><div class="line">	Employee E,</div><div class="line">	Department D</div><div class="line">WHERE</div><div class="line">	(</div><div class="line">		SELECT</div><div class="line">			count(DISTINCT(Salary))</div><div class="line">		FROM</div><div class="line">			Employee</div><div class="line">		WHERE</div><div class="line">			DepartmentId = E.DepartmentId</div><div class="line">		AND Salary &gt; E.Salary</div><div class="line">	) &lt; 3</div><div class="line">AND E.DepartmentId = D.Id</div><div class="line">ORDER BY</div><div class="line">	E.DepartmentId,</div><div class="line">	E.Salary DESC;</div></pre></td></tr></table></figure>
+<h3 id="leetcode-177-Nth-Highest-Salary"><a href="#leetcode-177-Nth-Highest-Salary" class="headerlink" title="leetcode 177 Nth Highest Salary"></a><a href="https://leetcode-cn.com/proleetcode177-Nth Highest Salaryblems/nth-highest-salary/description/" target="_blank" rel="external">leetcode 177 Nth Highest Salary</a></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">编写一个 SQL 查询，获取 Employee 表中第 n 高的薪水（Salary）。</div><div class="line"></div><div class="line">+----+--------+</div><div class="line">| Id | Salary |</div><div class="line">+----+--------+</div><div class="line">| 1  | 100    |</div><div class="line">| 2  | 200    |</div><div class="line">| 3  | 300    |</div><div class="line">+----+--------+</div><div class="line"></div><div class="line">例如上述 Employee 表，n = 2 时，应返回第二高的薪水 200。如果不存在第 n 高的薪水，那么查询应返回 null。</div><div class="line"></div><div class="line">+------------------------+</div><div class="line">| getNthHighestSalary(2) |</div><div class="line">+------------------------+</div><div class="line">| 200                    |</div><div class="line">+------------------------+</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">CREATE FUNCTION getNthHighestSalary (N INT) RETURNS INT</div><div class="line">BEGIN</div><div class="line">	DECLARE</div><div class="line">		n1 INT;</div><div class="line"></div><div class="line"></div><div class="line">SET n1 = N - 1;</div><div class="line"></div><div class="line">RETURN (</div><div class="line">	SELECT</div><div class="line">		Salary</div><div class="line">	FROM</div><div class="line">		(</div><div class="line">			SELECT DISTINCT</div><div class="line">				(Salary)</div><div class="line">			FROM</div><div class="line">				Employee</div><div class="line">		) t</div><div class="line">	ORDER BY</div><div class="line">		Salary DESC</div><div class="line">	LIMIT n1,</div><div class="line">	1</div><div class="line">);</div><div class="line"></div><div class="line">END</div></pre></td></tr></table></figure>
 ]]></content>
     
     <summary type="html">
@@ -1681,170 +1719,6 @@ int main(){
     
     
       <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>计算机算法|回溯法</title>
-    <link href="http://yoursite.com/2018/05/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95-%E5%9B%9E%E6%BA%AF%E6%B3%95/"/>
-    <id>http://yoursite.com/2018/05/04/计算机算法-回溯法/</id>
-    <published>2018-05-03T23:08:09.000Z</published>
-    <updated>2018-05-03T16:38:43.022Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p><code>回溯算法(Backtracking)</code>实际上一个类似枚举的搜索尝试过程，主要是在搜索尝试过程中寻找问题的解，当发现已不满足求解条件时，就“回溯”返回，尝试别的路径。</p>
-<p>回溯法是一种选优搜索法，按选优条件向前搜索，以达到目标。但当探索到某一步时，发现原先选择并不优或达不到目标，就退回一步重新选择，这种走不通就退回再走的技术为回溯法，而满足回溯条件的某个状态的点称为“回溯点”。</p>
-<p>许多复杂的，规模较大的问题都可以使用回溯法，有“通用解题方法”的美称。</p>
-<p>用爬山来比喻回溯，好比从山脚下找一条爬上山顶的路,起初有好几条道可走,当选择一条道走到某处时,又有几条岔道可供选择,只能选择其中一条道往前走,若能这样子顺利爬上山顶则罢了,否则走到一条绝路上时,只好返回到最近的一个路口,重新选择另一条没走过的道往前走。如果该路口的所有路都走不通,只得从该路口继续回返。照此规则走下去,要么找到一条到达山顶的路,要么最终试过所有可能的道,无法到达山顶。</p>
-<p><strong>回溯是一种穷举，但与brute force有一些区别，回溯带了两点脑子的，并不多，brute force一点也没带。</strong></p>
-<ul>
-<li>第一点脑子是回溯知道回头；相反如果是brute force,发现走不通立刻跳下山摔死，换第二条命从头换一条路走。</li>
-<li>第二点脑子是回溯知道剪枝；如果有一条岔路上放了一坨屎，那这条路我们不走，就可以少走很多不必要走的路。</li>
-</ul>
-<p>回溯法搜索解空间树的时候，通常有两种策略来避免无效搜索，即 剪枝函数：</p>
-<ul>
-<li>约束函数：在扩展节点处剪去不满足约束的子树，</li>
-<li>限界函数：剪去不能得到最优解的子树。</li>
-</ul>
-<p>还有一些爱混淆的概念：递归，回溯，DFS。</p>
-<ul>
-<li>回溯是一种找路方法，搜索的时候走不通就回头换路接着走，直到走通了或者发现此山根本不通。</li>
-<li>DFS是一种开路策略，就是一条道先走到头，再往回走一步换一条路走到头，这也是回溯用到的策略。<strong>在树和图上回溯时人们叫它DFS。</strong></li>
-<li>递归是一种行为，回溯和递归如出一辙，都是一言不合就回到来时的路，所以一般回溯用递归实现；当然也可以不用，用栈。</li>
-</ul>
-<h3 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h3><p>在包含问题的所有解的解空间树中，按照深度优先搜索的策略，从根结点出发深度探索解空间树。当探索到某一结点时，要先判断该结点是否包含问题的解，如果包含，就从该结点出发继续探索下去，如果该结点不包含问题的解，则逐层向其祖先结点回溯。（其实回溯法就是对隐式图的深度优先搜索算法）。</p>
-<p>若用回溯法求问题的所有解时，要回溯到根，且根结点的所有可行的子树都要已被搜索遍才结束。</p>
-<p>而若使用回溯法求任一个解时，只要搜索到问题的一个解就可以结束。</p>
-<h3 id="用回溯法解题的一般步骤"><a href="#用回溯法解题的一般步骤" class="headerlink" title="用回溯法解题的一般步骤"></a>用回溯法解题的一般步骤</h3><ol>
-<li>针对所给问题，确定问题的解空间：首先应明确定义问题的解空间，问题的解空间应至少包含问题的一个（最优）解。</li>
-<li>确定结点的扩展搜索规则</li>
-<li>以深度优先方式搜索解空间，并在搜索过程中用剪枝函数避免无效搜索。</li>
-</ol>
-<h3 id="算法框架"><a href="#算法框架" class="headerlink" title="算法框架"></a>算法框架</h3><p>问题框架</p>
-<p>设问题的解是一个n维向量(a1,a2,………,an),约束条件是ai(i=1,2,3,…..,n)之间满足某种条件，记为f(ai)。</p>
-<p>非递归回溯框架<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"> 1: int a[n],i;</div><div class="line"> 2: 初始化数组a[];</div><div class="line"> 3: i = 1;</div><div class="line"> 4: while (i&gt;0(有路可走)   and  (未达到目标))  // 还未回溯到头</div><div class="line"> 5: &#123;</div><div class="line"> 6:     if(i &gt; n)                                              // 搜索到叶结点</div><div class="line"> 7:     &#123;   </div><div class="line"> 8:           搜索到一个解，输出；</div><div class="line"> 9:     &#125;</div><div class="line">10:     else                                                   // 处理第i个元素</div><div class="line">11:     &#123; </div><div class="line">12:           a[i]第一个可能的值；</div><div class="line">13:           while(a[i]在不满足约束条件且在搜索空间内)</div><div class="line">14:           &#123;</div><div class="line">15:               a[i]下一个可能的值；</div><div class="line">16:           &#125;</div><div class="line">17:           if(a[i]在搜索空间内)</div><div class="line">18:          &#123;</div><div class="line">19:               标识占用的资源；</div><div class="line">20:               i = i+1;                              // 扩展下一个结点</div><div class="line">21:          &#125;</div><div class="line">22:          else </div><div class="line">23:         &#123;</div><div class="line">24:               清理所占的状态空间；            // 回溯</div><div class="line">25:               i = i –1; </div><div class="line">26:          &#125;</div><div class="line">27: &#125;</div></pre></td></tr></table></figure></p>
-<p>递归的算法框架</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"> 1: int a[n];</div><div class="line"> 2: try(int i)</div><div class="line"> 3: &#123;</div><div class="line"> 4:     if(i&gt;n)</div><div class="line"> 5:        输出结果;</div><div class="line"> 6:      else</div><div class="line"> 7:     &#123;</div><div class="line"> 8:        for(j = 下界; j &lt;= 上界; j=j+1)  // 枚举i所有可能的路径</div><div class="line"> 9:        &#123;</div><div class="line">10:            if(fun(j))                 // 满足限界函数和约束条件</div><div class="line">11:              &#123;</div><div class="line">12:                 a[i] = j;</div><div class="line">13:               ...                         // 其他操作</div><div class="line">14:                 try(i+1);</div><div class="line">15:               回溯前的清理工作（如a[i]置空值等）;</div><div class="line">16:               &#125;</div><div class="line">17:          &#125;</div><div class="line">18:      &#125;</div><div class="line">19: &#125;</div></pre></td></tr></table></figure>
-<p>DFS递归</p>
-<p>回溯法的递归伪代码描述：</p>
-<pre><code>void backtrack(int t)
-{
-    if(t &gt; n) output(x);
-    else
-        for (int i = f(n,t); i &lt;= g(n,t); ++i) {
-            x[t] = h(i);
-            if(constraint(t) &amp;&amp; bound(t)) backtrack(t+1);
-        }
-}
-</code></pre><p>其中，</p>
-<ul>
-<li>参数 t 表示递归深度，即当前扩展节点在解空间树中的深度，</li>
-<li>n 解空间树的高度，当 t&gt;n 时，表示已搜索到一个叶节点，</li>
-<li>output(x) 打印可行解，</li>
-<li>f(n,t) 和 g(n,t) 分别表示当前扩展节点处子树的起止编号，</li>
-<li>h(i) 表示当前扩展节点处 x[t] 的第i个可选值，</li>
-<li>constraint(t) 和 bound(t) 分别为约束函数和限界函数，用于剪枝。</li>
-</ul>
-<p>DFS迭代<br>回溯法的迭代伪代码描述：</p>
-<pre><code>void iterative_backtrack()
-{
-    int t = 1;
-    while (t &gt; 0) {
-        if (f(n,t) &lt;= g(n,t)) {
-            for (int i = f(n,t); i &lt;= g(n, t); ++i) {
-                x[t] = h(i);
-                if (constraint(t) &amp;&amp; bound(t)) {
-                    if (solution(t)) output(x);
-                    else ++t;
-                }
-            }
-        } else {
-            --t;
-        }
-    }
-}
-</code></pre><p>其中，</p>
-<ul>
-<li>solution(t) 判断当前扩展节点处是否已得到一个可行解。</li>
-</ul>
-<h3 id="常见回溯问题"><a href="#常见回溯问题" class="headerlink" title="常见回溯问题"></a>常见回溯问题</h3><h4 id="排列问题"><a href="#排列问题" class="headerlink" title="排列问题"></a>排列问题</h4><p>常见问题描述：<code>求字符集合的所有排列。</code></p>
-<p>思路：我们以三个字符abc为例来分析一下求字符串排列的过程。首先固定第一个字符a，求后面两个字符bc的排列。当两个字符bc的排列求好之后，我们把第一个字符a和后面的b交换，得到bac，接着我们固定第一个字符b，求后面两个字符ac的排列。现在是把c放到第一位置的时候了。记住前面我们已经把原先的第一个字符a和后面的b做了交换，为了保证这次c仍然是和原先处在第一位置的a交换，我们在拿c和第一个字符交换之前，先要把b和a交换回来。在交换b和a之后，再拿c和处在第一位置的a进行交换，得到cba。我们再次固定第一个字符c，求后面两个字符b、a的排列。</p>
-<h4 id="组合问题"><a href="#组合问题" class="headerlink" title="组合问题"></a>组合问题</h4><p>常见问题描述：<code>求字符集合的m种组合。</code></p>
-<p>思路：字符集合可以用一个长度为n的无重复字符的字符串表示。我们从头扫描字符串的第一个字符。针对第一个字符，有两种选择：一是把这个字符放到组合中去，接下来我们需要在剩下的n-1个字符中选取m-1个字符；二是不把这个字符放到组合中去，接下来我们需要在剩下的n-1个字符中选择m个字符。同样用递归的思路解决这个问题。</p>
-<h4 id="子集和问题"><a href="#子集和问题" class="headerlink" title="子集和问题"></a>子集和问题</h4><p>常见子集和问题描述：<code>给定一个正整数集合A和正整数S，求A所有可能的子集A&#39;，其中A&#39;中所有元素之和等于S。</code></p>
-<h4 id="8皇后问题"><a href="#8皇后问题" class="headerlink" title="8皇后问题"></a>8皇后问题</h4><p>8皇后的一个关键是确定约束函数，即如何判断某个位置是否可以放置一个皇后。</p>
-<p>由于是在棋盘上，考虑利用坐标系解决：如果给这个8*8的矩阵上个坐标，横向(rows)为i = 0 to 7，纵向(columns)为j = 0 to 7。那么可以发现，在每一条斜线(/)方向上，每一个格子的横纵坐标之和(i + j)是一个固定值，从左上到右下的斜线，其值依次是0~14 (0+0; 0+1,1+0; 0+2,1+1,2+0; … ; 6+7,7+6; 7+7)；同样地，在每一条反斜线()方向上，每一个格子的横坐标与纵坐标的关系 (i + (7 - j)) 也是固定值，从右上到左下的斜线，其值依次是0~14。</p>
-<p><a href="https://www.cnblogs.com/steven_oyj/archive/2010/05/22/1741376.html" target="_blank" rel="external">五大常用算法之四：回溯法</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;概念&quot;&gt;&lt;a href=&quot;#概念&quot; class=&quot;headerlink&quot; title=&quot;概念&quot;&gt;&lt;/a&gt;概念&lt;/h3&gt;&lt;p&gt;&lt;code&gt;回溯算法(Backtracking)&lt;/code&gt;实际上一个类似枚举的搜索尝试过程，主要是在搜索尝试过程中寻找问题的解，当发现已
-    
-    </summary>
-    
-      <category term="计算机算法" scheme="http://yoursite.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="计算机算法" scheme="http://yoursite.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>操作系统|关于cpu管理</title>
-    <link href="http://yoursite.com/2018/04/28/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%85%B3%E4%BA%8Ecpu%E7%AE%A1%E7%90%86/"/>
-    <id>http://yoursite.com/2018/04/28/操作系统-关于cpu管理/</id>
-    <published>2018-04-28T11:02:54.000Z</published>
-    <updated>2018-04-28T04:20:50.057Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="http://www.cnblogs.com/edisonchou/p/5003694.html" target="_blank" rel="external">进程</a></p>
-<h3 id="从单任务到多道任务"><a href="#从单任务到多道任务" class="headerlink" title="从单任务到多道任务"></a>从单任务到多道任务</h3><p>最开始的时候，计算机只能一个一个程序的运行，后来人们需求多了，需要在工作的同时还能听听歌、聊天…所以就发展到了多道任务的时代。同时，单一操作员单一控制终端，CPU使用率很低；多道任务也提高计算机CPU的利用率。</p>
-<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>多道任务的思想虽然表面上看是多个程序同时运行，但在计算机的内部还是一次只能执行一个任务，造成同时运行的表象是因为cpu能做到快速切换。</p>
-<p>我们都知道一个任务在运行的时候，是有它自己的状态的，比如说当前的指令是什么、下一条指令在哪里…专业点讲就是寄存器、程序计数器、状态字、栈指针、优先级、进程ID、创建时间、所耗CPU时间、当前持有的各种句柄等等。当CPU进行切换的时候，为了保证下次切换回来能恢复这些状态，就要有一个数据结构能保存这些数据，这就是<code>进程控制块（Process Control Block，PCB）</code>。</p>
-<p>同时为了管理的方便，也引出了<code>进程</code>的概念，作为任务的另一说法。</p>
-<blockquote>
-<p>进程（Process）是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。在早期面向进程设计的计算机结构中，进程是程序的基本执行实体；在当代面向线程设计的计算机结构中，进程是线程的容器。程序是指令、数据及其组织形式的描述，进程是程序的实体。</p>
-</blockquote>
-<p>所以，多道任务的理解就是：</p>
-<p><strong>操作系统将需要运行的程序载入到内存中，并通过某种策略进行切换、分配cpu执行权限，给用户一种多进程同时运行的假象。</strong></p>
-<h4 id="多视角度解读进程"><a href="#多视角度解读进程" class="headerlink" title="多视角度解读进程"></a>多视角度解读进程</h4><p><img src="/images/操作系统-关于cpu管理01.jpg" alt="多视角度解读进程"></p>
-<ul>
-<li><p>物理视角：从物理内存的分配来看，每个进程占用一片内存空间，从这点上看，进程其实就是内存的某片空间。由于在任意时刻，一个CPU只能执行一条指令，因此任意时刻在CPU上执行的进程只有一个，而到底执行哪条指令是由物理程序计数器指定。因此，<strong>在物理层面，所有进程共用一个程序计数器，只是CPU在不停地做进程切换</strong>。</p>
-</li>
-<li><p>逻辑视角：从逻辑层面来看，每个进程都可以执行，也可以暂时挂起让别的进程执行，之后又可以接着执行。所以，进程需要想办法保持状态才能在下次接着执行时从正确的地点开始。因此，每个进程都有自己的计数器，记录其下一条指令所在的位置。（从逻辑上来说，程序计数器可以有多个）</p>
-</li>
-<li><p>时序视角：从时间来看，每个进程都必须往前推进。在运行一定时间后，进程都应该完成了一定的工作量。换句话说，每次进程返回，它都处在上次返回点之后。哲学家有云：“一个人不能两次踏入同一条河流”</p>
-</li>
-</ul>
-<h3 id="进程切换"><a href="#进程切换" class="headerlink" title="进程切换"></a>进程切换</h3><h4 id="进程状态"><a href="#进程状态" class="headerlink" title="进程状态"></a>进程状态</h4><p><img src="/images/操作系统-关于CPU管理02.gif" alt="进程状态"></p>
-<h3 id="进程调度"><a href="#进程调度" class="headerlink" title="进程调度"></a>进程调度</h3><p>既然有多个进程在内存中等待执行，就需要有一种合理的策略来安排执行的顺序。首先，一般的程序任务分为三种：CPU计算密集型、IO密集型与平衡（计算与IO各半）型，对于不同类型的程序，调度需要达到的目的也有所不同。对于IO密集型，响应时间最重要；对于CPU密集型，则周转时间最重要；而对于平衡型，进行某种响应和周转之间的平衡就显得比较重要。</p>
-<p>因此，进程调度的目标就是要达到极小化平均响应时间、极大化系统吞吐率、保持系统各个功能部件均处于繁忙状态和提供某种貌似公平的机制。</p>
-<h4 id="基本调度算法"><a href="#基本调度算法" class="headerlink" title="基本调度算法"></a>基本调度算法</h4><h5 id="先来先服务算法"><a href="#先来先服务算法" class="headerlink" title="先来先服务算法"></a>先来先服务算法</h5><p><img src="/images/操作系统-关于CPU管理03.jpg" alt="FCFS"></p>
-<p>先来先服务（FCFS）算法是一种最常见的算法，它是人的本性中的一种公平观念。其优点就是简单且实现容易，缺点则是短的工作有可能变得很慢，因为其前面有很长的工作在执行，这样就会造成用户的交互式体验也比较差。</p>
-<p>例如排队办理业务时，你要办理的业务只需要几分钟就可以办好，但是你前面的一个人办理的事情很复杂需要1个小时，这时你需要在他后面等很久，于是你就想到：要是每个人轮流办理10分钟事务的话，那该多好！于是就出现了时间片轮转算法。</p>
-<h5 id="时间片轮转算法"><a href="#时间片轮转算法" class="headerlink" title="时间片轮转算法"></a>时间片轮转算法</h5><p><img src="/images/操作系统-关于cpu管理04.jpg" alt="RR"></p>
-<p>时间片轮转是对FCFS算法的一种改进，其主要目的是改善短程序的响应时间，实现方式就是周期性地进行进程切换。时间片轮转的重点在于时间片的选择，需要考虑多方因素：如果运行的进程多时，时间片就需要短一些；进程数量少时，时间片就可以适当长一些。因此，时间片的选择是一个综合的考虑，权衡各方利益，进行适当折中。</p>
-<p>但是，时间片轮转的系统响应时间也不一定总是比FCFS的响应时间短。时间片轮转是一种大锅饭的做法，但是现实生活中却是走的“一部分人先富，先富带动后富”的路线。例如，如果有30个任务，其中一个任务只需要1秒时间执行，而其他29个任务需要30秒钟执行，如果因为某种原因，这个只要1秒钟的任务排在另外29个任务的后面轮转，则它需要等待29秒钟才能执行（假定时间片为1秒）。于是，这个任务的响应时间和交互体验就变得非常差。因此，短任务优先算法被提出。</p>
-<h5 id="短任务优先算法"><a href="#短任务优先算法" class="headerlink" title="短任务优先算法"></a>短任务优先算法</h5><p>短任务优先算法的核心是所有的任务并不都一样，而是有优先级的区分。具体来说，就是短任务的优先级比长任务的高，而我们总是安排优先级高的任务先运行。</p>
-<p>短任务优先算法又分为两种类型：一种是非抢占式，一种是抢占式。非抢占式当已经在CPU上运行的任务结束或阻塞时，从候选任务中选择执行时间最短的进程来执行。而抢占式则是每增加一个新的进程就需要对所有进程（包括正在CPU上运行的进程）进行检查，谁的时间短就运行谁。</p>
-<p>由于短任务优先总是运行需要执行时间最短的程序，因此其系统平均响应时间在以上几种算法中是最优的，这也是短任务优先算法的优点。但短任务优先算法也有缺点：一是可能造成长任务无法得到CPU时间从而导致“肌饿”。二是如何知道每个进程还需要运转多久？于是为了解决第一个缺点，优先级调度算法被提出。而第二个缺点则可以采取一些启发式的方法来进行估算，目前很多的人工智能算法都可以做这个事。</p>
-<h5 id="优先级调度算法"><a href="#优先级调度算法" class="headerlink" title="优先级调度算法"></a>优先级调度算法</h5><p>优先级调度算法给每个进程赋予一个优先级，每次需要进程切换时，找一个优先级最高的进程进行调度。这样如果赋予长进程一个高优先级，则该进程就不会再“饥饿”。事实上，短任务优先算法本身就是一种优先级调度，只不过它给予短进程更高的优先级而已。</p>
-<p>该算法的优点在于可以赋予重要的进程以高优先级以确保重要任务能够得到CPU时间，其缺点则有二：一是低优先级的进程可能会“饥饿”，二是响应时间无法保证。第一个缺点可以通过动态地调节任务的优先级解决，例如一个进程如果等待时间过长，其优先级将因持续提升而超越其他进程的优先级，从而得到CPU时间。第二个缺点可以通过将一个进程优先级设置为最高来解决，但即使将优先级设置为最高，但如果每个人都将自己的进程优先级设置为最高，其响应时间还是无法保证。</p>
-<h5 id="混合调度算法"><a href="#混合调度算法" class="headerlink" title="混合调度算法"></a>混合调度算法</h5><p>之前的算法都存在一定缺点，那么可否有一个算法混合他们的优点，摒弃它们的缺点，这就是所谓的混合调度算法。混合调度算法将所有进程分为不同的大类，每个大类为一个优先级。如果两个进程处于不同的大类，则处于高优先级大类的进程优先执行；如果处于同一个大类，则采用时间片轮转算法来执行。混合调度算法的示意图如下图所示：</p>
-<p><img src="/images/操作系统-关于cpu管理05.jpg" alt="混合方法"></p>
-<h4 id="进程调度的过程"><a href="#进程调度的过程" class="headerlink" title="进程调度的过程"></a>进程调度的过程</h4><p><img src="/images/操作系统-关于cpu管理06.jpg" alt="调度过程"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/edisonchou/p/5003694.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;进程&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;从单任务到多道任务&quot;&gt;&lt;a href=&quot;#从单任务到多道
-    
-    </summary>
-    
-      <category term="操作系统" scheme="http://yoursite.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="操作系统" scheme="http://yoursite.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
