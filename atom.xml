@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-22T09:21:25.567Z</updated>
+  <updated>2018-05-23T05:29:07.811Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,180 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PHP|PDO数据库操作</title>
+    <link href="http://yoursite.com/2018/05/23/PHP-PDO%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C/"/>
+    <id>http://yoursite.com/2018/05/23/PHP-PDO数据库操作/</id>
+    <published>2018-05-23T13:26:50.000Z</published>
+    <updated>2018-05-23T05:29:07.811Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="PDO"><a href="#PDO" class="headerlink" title="PDO"></a>PDO</h3><p>PHP 数据对象 （PDO） 扩展为PHP访问数据库定义了一个轻量级的一致接口。</p>
+<p>PDO 提供了一个数据访问抽象层，这意味着，不管使用哪种数据库，都可以用相同的函数（方法）来查询和获取数据。</p>
+<h3 id="连接操作"><a href="#连接操作" class="headerlink" title="连接操作"></a>连接操作</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">&lt;?php </div><div class="line">	$dbms=&apos;mysql&apos;;     //数据库类型 Oracle 用ODI,对于开发者来说，使用不同的数据库，只要改这个，不用记住那么多的函数了</div><div class="line">	$host=&apos;localhost&apos;; //数据库主机名</div><div class="line">	$dbName=&apos;test&apos;;    //使用的数据库</div><div class="line">	$user=&apos;jtahstu&apos;;      //数据库连接用户名</div><div class="line">	$pass=&apos;jtahstu&apos;;          //对应的密码</div><div class="line">	$dsn=&quot;$dbms:host=$host;dbname=$dbName&quot;;</div><div class="line">	try &#123;</div><div class="line">		$dbh=new PDO($dsn, $user, $pass);</div><div class="line">		//默认这个不是长连接，如果需要数据库长连接，需要最后加一个参数：array(PDO::ATTR_PERSISTENT =&gt; true) 变成这样：</div><div class="line">		//$db = new PDO($dsn, $user, $pass, array(PDO::ATTR_PERSISTENT =&gt; true));</div><div class="line">		echo &quot;数据库连接成功！&lt;br&gt;&quot;;</div><div class="line">		$dbh-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);</div><div class="line">// 			foreach ($dbh-&gt;query(&apos;SELECT * from information&apos;) as $row) &#123;</div><div class="line">// 				echo $row[0].&quot;&lt;br&gt;&quot;;</div><div class="line">// 				echo $row[1].&quot;&lt;br&gt;&quot;;</div><div class="line">// 				echo $row[2].&quot;&lt;br&gt;&quot;;</div><div class="line">// 				echo $row[3].&quot;&lt;br&gt;&quot;;</div><div class="line">// 				echo $row[4].&quot;&lt;br&gt;&quot;;</div><div class="line">// 			&#125;</div><div class="line">		</div><div class="line">		$a=$dbh-&gt;exec(&quot;insert into information values(&apos;6&apos;,&apos;PDO教程&apos;,&apos;jtahstu&apos;,&apos;电子&apos;,&apos;2015-11-24&apos;)&quot;);</div><div class="line">		if($a)	echo &quot;插入成功！&quot;;</div><div class="line">		else echo &quot;插入失败&quot;;</div><div class="line">// 		$dbh = null;//关闭连接</div><div class="line">	&#125; catch (PDOException $e) &#123;</div><div class="line">		die (&quot;Error!: &quot; . $e-&gt;getMessage() . &quot;&lt;br/&gt;&quot;);</div><div class="line">	&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<h3 id="PDO-事务与自动提交"><a href="#PDO-事务与自动提交" class="headerlink" title="PDO 事务与自动提交"></a>PDO 事务与自动提交</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">    try &#123;</div><div class="line">      $dbh = new PDO(&apos;odbc:SAMPLE&apos;, &apos;db2inst1&apos;, &apos;ibmdb2&apos;, </div><div class="line">          array(PDO::ATTR_PERSISTENT =&gt; true));</div><div class="line">      echo &quot;Connected\n&quot;;</div><div class="line">    &#125; catch (Exception $e) &#123;</div><div class="line">      die(&quot;Unable to connect: &quot; . $e-&gt;getMessage());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    try &#123;  </div><div class="line">      $dbh-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);</div><div class="line"></div><div class="line">      $dbh-&gt;beginTransaction();//启动一个事务</div><div class="line">      $dbh-&gt;exec(&quot;insert into staff (id, first, last) values (23, &apos;Joe&apos;, &apos;Bloggs&apos;)&quot;);</div><div class="line">      $dbh-&gt;exec(&quot;insert into salarychange (id, amount, changedate) </div><div class="line">          values (23, 50000, NOW())&quot;);</div><div class="line">      $dbh-&gt;commit();//提交</div><div class="line"></div><div class="line">    &#125; catch (Exception $e) &#123;</div><div class="line">      $dbh-&gt;rollBack();//回滚</div><div class="line">      echo &quot;Failed: &quot; . $e-&gt;getMessage();</div><div class="line">    &#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<h3 id="用预处理语句进行重复插入"><a href="#用预处理语句进行重复插入" class="headerlink" title="用预处理语句进行重复插入"></a>用预处理语句进行重复插入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">    $stmt = $dbh-&gt;prepare(&quot;INSERT INTO REGISTRY (name, value) VALUES (:name, :value)&quot;);</div><div class="line">    $stmt-&gt;bindParam(&apos;:name&apos;, $name);</div><div class="line">    $stmt-&gt;bindParam(&apos;:value&apos;, $value);</div><div class="line">    // 插入一行</div><div class="line">    $name = &apos;one&apos;;</div><div class="line">    $value = 1;</div><div class="line">    $stmt-&gt;execute();</div><div class="line">    //  用不同的值插入另一行</div><div class="line">    $name = &apos;two&apos;;</div><div class="line">    $value = 2;</div><div class="line">    $stmt-&gt;execute();</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;PDO&quot;&gt;&lt;a href=&quot;#PDO&quot; class=&quot;headerlink&quot; title=&quot;PDO&quot;&gt;&lt;/a&gt;PDO&lt;/h3&gt;&lt;p&gt;PHP 数据对象 （PDO） 扩展为PHP访问数据库定义了一个轻量级的一致接口。&lt;/p&gt;
+&lt;p&gt;PDO 提供了一个数据访问抽象层，这
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PHP|PHP操作Oracle数据库</title>
+    <link href="http://yoursite.com/2018/05/23/PHP-PHP%E6%93%8D%E4%BD%9COracle%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <id>http://yoursite.com/2018/05/23/PHP-PHP操作Oracle数据库/</id>
+    <published>2018-05-23T13:13:25.000Z</published>
+    <updated>2018-05-23T05:52:36.018Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="PHP是世界上最好的语言"><a href="#PHP是世界上最好的语言" class="headerlink" title="PHP是世界上最好的语言"></a>PHP是世界上最好的语言</h3><p>PHP 是世界上最好的语言，不但支持 MySQL、SQL Server 等常见数据库，还支持 Oracle 数据库。让 PHP 支持 Oracle 只需将 php.ini 中的扩展 extention = php_oci8.dll 开启即可。</p>
+<h3 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h3><h4 id="数据库连接：函数：oci-connect"><a href="#数据库连接：函数：oci-connect" class="headerlink" title="数据库连接：函数：oci_connect()"></a>数据库连接：函数：<code>oci_connect()</code></h4><p>函数：<code>resource oci_connect ( string username, string password [, string db [, string charset [, int session_mode]]] )</code><br>说明：  </p>
+<ul>
+<li>函数的返回值为资源</li>
+<li>username、password：是Oracle的用户名密码，即方案名及密码</li>
+<li>db：是可选参数，如果使用本地的Oracle实例或者使用tnsnames.ora配置文件中注册的本地服务名，直接提供其名称即可。如果此参数留空，则使用本地的ORACLE_SID或者搜索tnsnames.ora文件的注册的默认本地服务名。</li>
+<li>charset：参数是在Oracle9.2以上的版本使用的参数，默认可以留空，使用NLS_LANG 环境变量替代。</li>
+<li>session_mode：用于设定使用特权身份登录（默认禁用），默认有3个选项：OCI_DEFAULT，OCI_SYSOPER 和 OCI_SYSDBA</li>
+</ul>
+<h4 id="编译SQL语句：函数：oci-parse"><a href="#编译SQL语句：函数：oci-parse" class="headerlink" title="编译SQL语句：函数：oci_parse()"></a>编译SQL语句：函数：<code>oci_parse()</code></h4><p>函数：<code>resource oci_parse ( resource connection, string query )</code><br>说明：   </p>
+<ul>
+<li>函数返回值为资源，编译以字符串形式提供的SQL语句</li>
+<li>connection：为在第一步中创建的链接资源标识符</li>
+<li>query：是一个查询字符串，用双引号引起来。</li>
+<li>在 connection 上配置 query 并返回语句标识符以用于 oci_bind_by_name()，oci_execute() 以及其它函数</li>
+</ul>
+<h4 id="执行SQL语句：函数：oci-execute"><a href="#执行SQL语句：函数：oci-execute" class="headerlink" title="执行SQL语句：函数：oci_execute()"></a>执行SQL语句：函数：<code>oci_execute()</code></h4><p>函数：bool oci_execute ( resource stmt [, int mode] )<br>说明：   </p>
+<ul>
+<li>函数返回布尔值，执行一条之前被解析过的语句</li>
+<li>stmt：在第二步创建的编译资源名</li>
+<li>mode：允许定义执行模式，<ul>
+<li>OCI_COMMIT_ON_SUCCESS（默认）：语句执行成功则自动提交</li>
+<li>OCI_DEFAULT：自动建立一个事务，此事务会在连接关闭或者脚本结束自动回退，如果想提交，需要明确调用<code>oci_commit()</code> 提交事务，或者调用<code>oci_rollback()</code>回退事务</li>
+</ul>
+</li>
+</ul>
+<h4 id="提取查询的结果"><a href="#提取查询的结果" class="headerlink" title="提取查询的结果"></a>提取查询的结果</h4><p>有几种提取结果的方式，如下：</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int oci_fetch_all ( resource statement, array &amp;output [, int skip [, int maxrows [, int flags]]] )</td>
+<td>提取所有的结果数据到数组(返回获取数据的行数)</td>
+</tr>
+<tr>
+<td>array oci_fetch_array ( resource statement [, int mode] )</td>
+<td>提取结果数据的一行到一个关联数组<code>(OCI_ASSOC)</code>或者数字索引数组<code>(OCI_NUM )</code>或两者(OCI_BOTH)等</td>
+</tr>
+<tr>
+<td>array oci_fetch_assoc ( resource statement )</td>
+<td>提取结果数据的一行到一个关联数组</td>
+</tr>
+<tr>
+<td>object oci_fetch_object ( resource statement )</td>
+<td>提取结果数据的一行到一个对象</td>
+</tr>
+<tr>
+<td>array oci_fetch_row ( resource statement )</td>
+<td>提取结果数据的一行到一个数字索引数组</td>
+</tr>
+</tbody>
+</table>
+<h4 id="释放资源"><a href="#释放资源" class="headerlink" title="释放资源"></a>释放资源</h4><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bool oci_free_statement ( resource statement )</td>
+<td>释放关联于语句或游标的所有资源</td>
+</tr>
+<tr>
+<td>bool oci_close ( resource connection )</td>
+<td>关闭 Oracle数据库连接</td>
+</tr>
+</tbody>
+</table>
+<h4 id="绑定变量"><a href="#绑定变量" class="headerlink" title="绑定变量"></a>绑定变量</h4><p>函数：<code>bool oci_bind_by_name ( resource stmt, string ph_name, mixed &amp;variable [, int maxlength [, int type]] )</code></p>
+<p>oci_bind_by_name() 将 PHP 变量 variable 绑定到 Oracle 的位置标志符 ph_name。该变量是否会被用作输入输出是在运行时决定的，并且函数给该变量分配必要的存储空间。length 参数确定该绑定的最大长度，如果将 length 设为 -1，oci_bind_by_name() 会用 variable 变量的当前长度确定绑定的最大长度。</p>
+<p>如果要绑定一个抽象数据类型（LOB/ROWID/BFILE），需要先用 oci_new_descriptor() 函数分配空间。length 没有用于抽象数据类型，应被设为 -1。type 参数告诉 Oracle 要使用什么样的描述符。可能的值为：</p>
+<ul>
+<li>SQLT_FILE - 对应于 BFILE；</li>
+<li>SQLT_CFILE - 对应于 CFILE；</li>
+<li>SQLT_CLOB - 对应于 CLOB；</li>
+<li>SQLT_BLOB - 对应于 BLOB；</li>
+<li>SQLT_ROWID - 对应于 ROWID；</li>
+<li>SQLT_NTY - 对应于有名字的数据类型；</li>
+<li>SQLT_INT - 对应于 integers；</li>
+<li>SQLT_CHR - 对应于 VARCHARs；</li>
+<li>SQLT_BIN - 对应于 RAW 列；</li>
+<li>SQLT_LNG - 对应于 LONG 列；</li>
+<li>SQLT_LBI - 对应于 LONG RAW 列；</li>
+<li>SQLT_RSET - 对应于游标，是之前由 oci_new_cursor() 创建的。</li>
+</ul>
+<h3 id="数据库连接"><a href="#数据库连接" class="headerlink" title="数据库连接"></a>数据库连接</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">//数据库配置信息</div><div class="line">$db_host = &apos;10.10.10.10&apos;;          //数据库地址</div><div class="line">$db_port = &apos;1521&apos;;                 //端口号</div><div class="line">$db_service_name = &apos;servicename&apos;;  //服务名称</div><div class="line">$db_username = &apos;username&apos;;         //用户名</div><div class="line">$db_password = &apos;password&apos;;         //密码</div><div class="line"></div><div class="line">//连接数据库/</div><div class="line">$db = &quot;(DESCRIPTION =</div><div class="line">            (ADDRESS = (PROTOCOL = TCP) (HOST = $db_host) (PORT = $db_port) )</div><div class="line">            (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = $db_service_name) )</div><div class="line">        )&quot;;</div><div class="line"></div><div class="line">//建立连接</div><div class="line">$conn = oci_connect($db_username, $db_password, $db);</div><div class="line"></div><div class="line">//连接是否成功</div><div class="line">if($conn)&#123;</div><div class="line">    echo &quot;connect success&quot;;</div><div class="line">&#125;else&#123;</div><div class="line">    echo &quot;connect error&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">$sql = &quot;SELECT * FROM USERS WHERE USERNAME=:username&quot;;</div><div class="line"></div><div class="line">//编译SQL语句</div><div class="line">$stmt = oci_parse($conn, $sql);</div><div class="line"></div><div class="line">//设置绑定变量的值</div><div class="line">$username = &quot;admin&quot;;</div><div class="line"></div><div class="line">oci_bind_by_name($stmt, &quot;:username&quot;, $username);</div><div class="line"></div><div class="line">//执行语句</div><div class="line">oci_execute($stmt);</div><div class="line"></div><div class="line">//取结果数据(方法一)</div><div class="line">oci_fetch_all($stmt, $result);</div><div class="line">foreach($result as $rows)&#123;</div><div class="line">    foreach($rows as $val)&#123;</div><div class="line">      echo $val;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//取结果数据(方法二)</div><div class="line">// while($row = oci_fetch_array($stmt, OCI_ASSOC)) &#123;</div><div class="line">//     echo $row[&apos;USERNAME&apos;];</div><div class="line">// &#125;</div><div class="line"></div><div class="line">//释放资源</div><div class="line">oci_free_statement($stmt);</div><div class="line">oci_close($conn);</div></pre></td></tr></table></figure>
+<h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">$sql = &quot;INSERT INTO USERS (USERNAME,PASSWORD) VALUES (:username,:password)&quot;;</div><div class="line"></div><div class="line">$stmt = oci_parse($conn, $sql);</div><div class="line"></div><div class="line">//设置绑定变量的值</div><div class="line">$username = &quot;admin&quot;;</div><div class="line">$password = &quot;123456&quot;;</div><div class="line"></div><div class="line">oci_bind_by_name($stmt, &quot;:username&quot;, $username);</div><div class="line">oci_bind_by_name($stmt, &quot;:password&quot;, $password);</div><div class="line"></div><div class="line">//执行语句</div><div class="line">oci_execute($stmt);</div><div class="line"></div><div class="line">//检查影响的行数</div><div class="line">if(oci_num_rows($stmt))&#123;</div><div class="line">   echo &quot;insert success&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//释放资源</div><div class="line">oci_free_statement($stmt);</div><div class="line">oci_close($conn);</div></pre></td></tr></table></figure>
+<h3 id="调用存储过程"><a href="#调用存储过程" class="headerlink" title="调用存储过程"></a>调用存储过程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">$sql = &quot;BEGIN :res:=chk_user_exist(:username); end;&quot;;</div><div class="line"></div><div class="line">$stmt = oci_parse($conn, $sql);</div><div class="line"></div><div class="line">//设置绑定变量的值</div><div class="line">$username = &quot;admin&quot;;</div><div class="line"></div><div class="line">oci_bind_by_name($stmt, &quot;:res&quot;, $res);</div><div class="line">oci_bind_by_name($stmt, &quot;:username&quot;, $username);</div><div class="line"></div><div class="line">//执行语句</div><div class="line">oci_execute($stmt);</div><div class="line"></div><div class="line">//判断是否存在</div><div class="line">if($res == 1)&#123;</div><div class="line">    echo &quot;此用户存在&quot;;</div><div class="line">&#125;else&#123;</div><div class="line">    echo &quot;此用户不存在&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//释放资源</div><div class="line">oci_free_statement($stmt);</div><div class="line">oci_close($conn);</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;PHP是世界上最好的语言&quot;&gt;&lt;a href=&quot;#PHP是世界上最好的语言&quot; class=&quot;headerlink&quot; title=&quot;PHP是世界上最好的语言&quot;&gt;&lt;/a&gt;PHP是世界上最好的语言&lt;/h3&gt;&lt;p&gt;PHP 是世界上最好的语言，不但支持 MySQL、SQL S
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PHP|关于oci_bind_by_name用foreach循环绑定问题</title>
+    <link href="http://yoursite.com/2018/05/23/PHP-%E5%85%B3%E4%BA%8Eoci-bind-by-name%E7%94%A8foreach%E5%BE%AA%E7%8E%AF%E7%BB%91%E5%AE%9A%E9%97%AE%E9%A2%98/"/>
+    <id>http://yoursite.com/2018/05/23/PHP-关于oci-bind-by-name用foreach循环绑定问题/</id>
+    <published>2018-05-23T12:30:12.000Z</published>
+    <updated>2018-05-23T04:40:26.631Z</updated>
+    
+    <content type="html"><![CDATA[<p>作为 Web 开发人员，您通常遇到的第二个问题是站点的安全性。 由于该问题体现在很多方面，因此找到解决它的方法无异于一场永无休止但却至观重要的战役。 在数据库驱动的站点中，许多查询都依赖于外部值，如用户从表单中提交的值、在 URL 中传递给页面的值等等。 此类查询很容易受到 SQL 注入攻击的破坏。 （“SQL 注入攻击”是指恶意用户在尝试破坏查询的过程中向 PHP 脚本提供无效数据。） 如果对查询的处理方法不当，恶意用户便有可能从生成的错误消息中了解一些有关脚本、数据库或服务器的信息。</p>
+<p>这两天很郁闷，老是为PHP为oracle语句绑定变量时出现问题，下面做为题描述：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">oci_bind_by_name($stmt,”:ip”,$ip,32);</div><div class="line">oci_bind_by_name($stmt,”:username”,$username,32);</div><div class="line">oci_bind_by_name($stmt,”:telephone”,$telephone,32);</div><div class="line">oci_bind_by_name($stmt,”:idname”,$idname,32);</div><div class="line"></div><div class="line">$name=array(“:ip”=&gt;$ip,”:username”=&gt;$username,”:telephone”=&gt;$telephone,”:idname”=&gt;$idname); </div><div class="line">foreach ($name as $k=&gt;$v) &#123;</div><div class="line">    oci_bind_by_name($stmt,$k,$v,32);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>第一种方式正常绑定；第二种方式，最后执行结果四个变量都绑定了$idname的值，为什么两种方法出现的结果不同呢？原因在于oci_bind_by_name函数没认识清楚，且看官方手册：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool oci_bind_by_name ( resource stmt, string ph_name, mixed &amp;variable [, int maxlength [, int type]] )</div></pre></td></tr></table></figure></p>
+<p>第三个变量，传递的是变量的引用，所以第一次循环，<code>:ip</code>绑定的是<code>$ip</code>的引用，即假设<code>$ip</code>的地址为223，第二次循环，<code>$ip</code>变量的地址被<code>$username</code>占用，所以<code>:username</code>也绑定了地址<code>223</code>，<code>:telephone</code>和<code>:idname</code>都如此，最后一次循环，内存地址223位置上存储的是$idname变量的值，所以当执行<code>oci_execute($stmt)</code>时给四个变量都绑定了<code>$idname</code>的值。哈哈，了解了吧。</p>
+<p>如何解决？<code>添加一个中间变量</code>,比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">foreach ($name as $k=&gt;$v) &#123;</div><div class="line">	$t = $v;</div><div class="line">    oci_bind_by_name($stmt,$k,$t,32);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;作为 Web 开发人员，您通常遇到的第二个问题是站点的安全性。 由于该问题体现在很多方面，因此找到解决它的方法无异于一场永无休止但却至观重要的战役。 在数据库驱动的站点中，许多查询都依赖于外部值，如用户从表单中提交的值、在 URL 中传递给页面的值等等。 此类查询很容易受到
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+  </entry>
   
   <entry>
     <title>操作系统|关于内存管理</title>
@@ -1585,140 +1759,6 @@ int main(){
     
     
       <category term="college" scheme="http://yoursite.com/tags/college/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深入理解计算机系统|汇编的世界-2</title>
-    <link href="http://yoursite.com/2018/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E6%B1%87%E7%BC%96%E7%9A%84%E4%B8%96%E7%95%8C-2/"/>
-    <id>http://yoursite.com/2018/05/06/深入理解计算机系统-汇编的世界-2/</id>
-    <published>2018-05-05T20:47:06.000Z</published>
-    <updated>2018-05-05T13:13:58.093Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="数据传送指令"><a href="#数据传送指令" class="headerlink" title="数据传送指令"></a>数据传送指令</h3><p>据传送指令的目的是为了将一个数据从一个位置复制到另外一个位置。既然如此，那么数据传送指令就会包含一个源操作数和一个目的操作数，指令会将原操作数的值复制到目的操作数并覆盖。</p>
-<p>数据传送指令一共可分为五种，分别是<code>mov</code>、<code>movs</code>、<code>movz</code>、<code>push</code>以及<code>pop</code>。</p>
-<h3 id="mov指令"><a href="#mov指令" class="headerlink" title="mov指令"></a>mov指令</h3><p>mov指令的作用是将源操作数S中的数据复制到目的操作数D中，mov指令有一个数据格式和两个操作数，因此一般的形式为[movx S D]。其中x为数据格式，S为源操作数，D为目的操作数。</p>
-<p>这里举一个简单的例子，比如我们有一条指令为<code>movl %edx %eax</code>。那么它的执行过程就如下图所示。</p>
-<p><img src="/images/汇编-06.png" alt="mov指令"></p>
-<p>可以看到，在指令执行之后，%edx寄存器当中的内容会被复制到%eax寄存器。需要一提的是，mov指令可以在后面加上任何数据格式，比如上面这一过程中，数据格式则为四个字节，也就是双字。因此不难推断出，我们还可以使用movb和movw去复制一个字节或者两个字节。</p>
-<h3 id="movs指令"><a href="#movs指令" class="headerlink" title="movs指令"></a>movs指令</h3><p>movs指令的作用是将源操作数S中的数据做符号扩展后，再复制到目的操作数D中，movs指令有两个数据格式和两个操作数，因此一般的形式为[movsxy S D]。其中x、y为数据格式，S为源操作数，D为目的操作数。其中x、y的组合一共有三种，分别是bw、bl、wl，这三个组合代表的意思分别是单字节到双字节，单字节到双字以及双字节到双字。</p>
-<p>对于指令<code>movswl %dx %eax</code>来讲，它的作用如下图所示。</p>
-<p><img src="/images/汇编-07.png" alt="movs指令"></p>
-<p>这里为了可以看出符号位的扩展，因此LZ这里使用了十六进制的整数表示方式。可以看到，movs指令将0x8FFF扩展以后存入%eax寄存器，其中%dx为寄存器%edx的后16位表示。</p>
-<h3 id="movz指令"><a href="#movz指令" class="headerlink" title="movz指令"></a>movz指令</h3><p>movz指令的作用是将源操作数S做零扩展后，再复制到目的操作数中。它与movs指令十分相似，也有两个数据格式和两个操作数，因此一般的形式为[movzxy S D]。其中x、y为数据格式，S为源操作数，D为目的操作数。其中x、y的组合一共有三种，分别是bw、bl、wl，这三个组合代表的意思分别是单字节到双字节，单字节到双字以及双字节到双字。</p>
-<p>这里依然采用相似的示例，我们来看看对于指令<code>movzwl %dx %eax</code>来讲，它的作用与上面的movs有何不同。</p>
-<p><img src="/images/汇编-08.png" alt="movz指令"></p>
-<p>可以看出，movz与movs指令是十分相似的，只是这里扩展后，目标寄存器%eax的前16位为0而不再是1。</p>
-<h3 id="push指令"><a href="#push指令" class="headerlink" title="push指令"></a>push指令</h3><p>push指令与上面的mov族指令有着不同，它的目的操作数被固定为栈顶，因此它的指令当中没有目的操作数。另外有一点需要注意的是，它在进行复制操作之前，需要移动栈顶指针（-4）。push指令的一般形式为[pushl S]，其中l代表数据格式为双字，S为源操作数，目的操作数默认为栈顶。</p>
-<p>这里举一个简单的例子，比如<code>pushl %edx</code>这条命令，它的任务是将%edx寄存器的值复制到栈顶。我们首先来看一下命令执行前，寄存器以及存储器的状态。</p>
-<p><img src="/images/汇编-09.png" alt="push指令"></p>
-<p>可以看到，寄存器%ebp和%esp分别指向帧指针和栈指针，而%esp实际上就是指向的栈顶。由于现在栈顶位于-16的位置，因此若要将%edx压入栈，则先需要将栈顶移动到-20的位置，然后再进行复制，移动后的状态如下图所示。</p>
-<p><img src="/images/汇编-10.png" alt="push指令"></p>
-<p>可以看到，这里栈指针的位置已经发生了变化，向下移动了四位，并且将%edx寄存器的值放入新的栈顶，因此pushl %edx指令就相当于下面两条指令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">subl $4,%esp</div><div class="line">movl %edx,(%esp)</div></pre></td></tr></table></figure></p>
-<p>###pop指令</p>
-<p>pop指令与push指令是做的相反的操作，一个是入栈一个是出栈。对于pop指令来讲，它的源操作数被固定为栈顶，相反，它会先进行复制操作，然后再移动栈指针。pop指令的一般形式为[popl D]，其中l代表数据格式为双字，D为目的操作数，源操作数默认为栈顶。</p>
-<p>接下来我们举一个例子，与上面的例子类似，我们考虑<code>popl %edx</code>这条指令的效果，它会将栈顶的值弹出到寄存器%edx。首先来看执行之前，寄存器以及存储器的状态。</p>
-<p><img src="/images/汇编-11.png" alt="ppo指令"></p>
-<p>接下来执行pop指令时，会先将栈顶的值复制到%edx，然后再将栈指针移动（+4）。我们来看一下它执行后的状态。</p>
-<p><img src="/images/汇编-12.png" alt="ppo指令"></p>
-<p>可以看到，之前栈顶的内容已经被弹出到%edx寄存器，并且当前栈顶已经移动到了-16的位置，也就是进行了+4操作。因此popl %edx指令就相当于下面两条指令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">movl (%esp),%edx</div><div class="line">addl $4,%esp</div></pre></td></tr></table></figure></p>
-<p><a href="http://www.cnblogs.com/zuoxiaolong/p/computer15.html" target="_blank" rel="external">深入理解计算机系统（3.3）—数据传送（或者说复制）指令详解</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;数据传送指令&quot;&gt;&lt;a href=&quot;#数据传送指令&quot; class=&quot;headerlink&quot; title=&quot;数据传送指令&quot;&gt;&lt;/a&gt;数据传送指令&lt;/h3&gt;&lt;p&gt;据传送指令的目的是为了将一个数据从一个位置复制到另外一个位置。既然如此，那么数据传送指令就会包含一个源操作数
-    
-    </summary>
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深入理解计算机系统|汇编的世界-1</title>
-    <link href="http://yoursite.com/2018/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E6%B1%87%E7%BC%96%E7%9A%84%E4%B8%96%E7%95%8C-1/"/>
-    <id>http://yoursite.com/2018/05/06/深入理解计算机系统-汇编的世界-1/</id>
-    <published>2018-05-05T20:38:21.000Z</published>
-    <updated>2018-05-05T12:46:53.667Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="汇编层次的对象"><a href="#汇编层次的对象" class="headerlink" title="汇编层次的对象"></a>汇编层次的对象</h3><p>在平时的开发过程中，CPU处理器的状态对开发者是隐藏的，我们看不到CPU当中各个对象的状态。但是在汇编语言中，我们可以清楚的看到这些对象的状态，其中CPU主要包含以下几个对象。</p>
-<ul>
-<li>程序计数器（PC）：记录下一条指令的地址。</li>
-<li>整数寄存器文件：共8个，可以存储一些地址或者整数的数据。</li>
-<li>条件寄存器：保存算数或逻辑指令的状态信息，可以实现程序的流程控制。</li>
-<li>浮点寄存器：存储浮点数。</li>
-</ul>
-<p>　　可以看出，这些都是CPU处理器当中的对象，这是汇编层面能操作的寄存器，当然，还有一节寄存器是我们不能操作的，比如说时钟寄存器。</p>
-<h3 id="操作数指示符"><a href="#操作数指示符" class="headerlink" title="操作数指示符"></a>操作数指示符</h3><p>在汇编指令中，有三种表示数据的格式：</p>
-<ul>
-<li>一种是$符号后跟一个标准C表示的整数，比如$100，$0x11等等</li>
-<li>第二种则是寄存器，当它作为一个操作数的时候，则是取的寄存器当中的数值。另外，对于寄存器来说，也可以选择性的操作4个、2个、1个字节，而并不一定非要操作4个字节</li>
-<li>最后一种，则是我们相对来说最熟悉的，就是存储器或者说内存。当它作为一个操作数的时候，会去计算存储器地址的数值，然后去这个地址取相应的数值。</li>
-</ul>
-<p><img src="/images/汇编-05.png" alt="数据格式"></p>
-<p>第一列是代表的类型，而第一行则是指的立即数，第二行则是指的寄存器，而剩下的都是存储器了。对于立即数和寄存器来讲，比较好理解，就是直接取值或者取寄存器的值。而对于存储器来讲，则有很多种情况，不过我们也可以看出，上面所有的情况，其实都是最后一种的特殊情况。Imm(Eb,Ei,s)是存储器取值的一般形式，比如当Imm为0时，则是倒数第二种取值方式。对于其它的形式，也可以使用同样的方式推算出来。</p>
-<p><a href="http://www.cnblogs.com/zuoxiaolong/p/computer14.html" target="_blank" rel="external">深入理解计算机系统（3.2）—数据格式、访问信息以及操作数指示符</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;汇编层次的对象&quot;&gt;&lt;a href=&quot;#汇编层次的对象&quot; class=&quot;headerlink&quot; title=&quot;汇编层次的对象&quot;&gt;&lt;/a&gt;汇编层次的对象&lt;/h3&gt;&lt;p&gt;在平时的开发过程中，CPU处理器的状态对开发者是隐藏的，我们看不到CPU当中各个对象的状态。但是在汇
-    
-    </summary>
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深入理解计算机系统|走进汇编的世界</title>
-    <link href="http://yoursite.com/2018/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%B5%B0%E8%BF%9B%E6%B1%87%E7%BC%96%E7%9A%84%E4%B8%96%E7%95%8C/"/>
-    <id>http://yoursite.com/2018/05/06/深入理解计算机系统-走进汇编的世界/</id>
-    <published>2018-05-05T20:03:58.000Z</published>
-    <updated>2018-05-05T12:36:59.063Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>计算机真正能够理解的是低级语言，它专门用来控制硬件。汇编语言就是低级语言，直接描述/控制 CPU 的运行。如果你想了解 CPU 到底干了些什么，以及代码的运行步骤，就一定要学习汇编语言。</p>
-<h3 id="What"><a href="#What" class="headerlink" title="What"></a>What</h3><p>我们知道，CPU 只负责计算，本身不具备智能。你输入一条指令（instruction），它就运行一次，然后停下来，等待下一条指令。</p>
-<p>这些指令都是二进制的，称为操作码（opcode），比如加法指令就是00000011。编译器的作用，就是将高级语言写好的程序，翻译成一条条操作码。</p>
-<p>对于人类来说，二进制程序是不可读的，根本看不出来机器干了什么。为了解决可读性的问题，以及偶尔的编辑需求，就诞生了汇编语言。</p>
-<p>汇编语言是二进制指令的文本形式，与指令是一一对应的关系。比如，加法指令00000011写成汇编语言就是 ADD。只要还原成二进制，汇编语言就可以被 CPU 直接执行，所以它是最底层的低级语言。</p>
-<h3 id="初次体会汇编"><a href="#初次体会汇编" class="headerlink" title="初次体会汇编"></a>初次体会汇编</h3><p>在编译一段C语言程序的过程中，其实做了很多步骤，比如预编译处理、编译处理、汇编处理以及链接处理。我们要了解的汇编语言，就是在编译处理后的产物。因此我们可以在GCC的编译器当中加入一些参数来控制它只生成汇编语言，而不进行汇编处理和链接处理。</p>
-<p>我们看下面这一段简单的C语言代码，假设为sum.c。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">int simple(int *xp,int y)&#123;</div><div class="line">    int t = *xp+y;</div><div class="line">    *xp=t;</div><div class="line">    return t;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我们使用GCC编译器加-S参数来编译这段代码，最终我们可以得到一个sum.s的文件，我们使用cat来查看一下这个文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">.file    &quot;sum.c&quot;</div><div class="line">    .text</div><div class="line">.globl simple</div><div class="line">    .type    simple, @function</div><div class="line">simple:</div><div class="line">    pushl    %ebp</div><div class="line">    movl    %esp, %ebp</div><div class="line">    subl    $16, %esp</div><div class="line">    movl    8(%ebp), %eax//这一步是从主存取变量xp</div><div class="line">    movl    (%eax), %eax//取*xp的值</div><div class="line">    addl    12(%ebp), %eax//计算*xp+y，并存到%eax寄存器</div><div class="line">    movl    %eax, -4(%ebp)//将*xp+y赋给变量t</div><div class="line">    movl    8(%ebp), %eax//再取xp</div><div class="line">    movl    -4(%ebp), %edx//取t</div><div class="line">    movl    %edx, (%eax)//执行t-&gt;*xp</div><div class="line">    movl    -4(%ebp), %eax//将t放入%eax准备返回</div><div class="line">    leave</div><div class="line">    ret</div><div class="line">    .size    simple, .-simple</div><div class="line">    .ident    &quot;GCC: (Ubuntu 4.4.3-4ubuntu5.1) 4.4.3&quot;</div><div class="line">    .section    .note.GNU-stack,&quot;&quot;,@progbits</div></pre></td></tr></table></figure></p>
-<p>有些人可能会惊讶，为什么我们的源代码只有短短的三行，但是汇编的代码却有这么多行。这是很正常的，汇编指令能做的事情是很简单的，比如我们的加法运算，我们需要去内存中找到操作数，把内存中的操作数存在寄存器中，然后在进行加法运算。</p>
-<h3 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h3><p>学习汇编语言，首先必须了解两个知识点：寄存器和内存模型。</p>
-<p>先来看寄存器。CPU 本身只负责运算，不负责储存数据。数据一般都储存在内存之中，CPU 要用的时候就去内存读写数据。但是，CPU 的运算速度远高于内存的读写速度，为了避免被拖慢，CPU 都自带一级缓存和二级缓存。基本上，CPU 缓存可以看作是读写速度较快的内存。</p>
-<p>但是，CPU 缓存还是不够快，另外数据在缓存里面的地址是不固定的，CPU 每次读写都要寻址也会拖慢速度。因此，除了缓存之外，CPU 还自带了寄存器（register），用来储存最常用的数据。也就是说，那些最频繁读写的数据（比如循环变量），都会放在寄存器里面，CPU 优先读写寄存器，再由寄存器跟内存交换数据。</p>
-<p>寄存器不依靠地址区分数据，而依靠名称。每一个寄存器都有自己的名称，我们告诉 CPU 去具体的哪一个寄存器拿数据，这样的速度是最快的。有人比喻寄存器是 CPU 的零级缓存。</p>
-<p><img src="/images/汇编-04.png" alt="寄存器"></p>
-<h3 id="内存模型：Heap"><a href="#内存模型：Heap" class="headerlink" title="内存模型：Heap"></a>内存模型：Heap</h3><p>寄存器只能存放很少量的数据，大多数时候，CPU 要指挥寄存器，直接跟内存交换数据。所以，除了寄存器，还必须了解内存怎么储存数据。</p>
-<p>程序运行的时候，操作系统会给它分配一段内存，用来储存程序和运行产生的数据。这段内存有起始地址和结束地址，比如从0x1000到0x8000，起始地址是较小的那个地址，结束地址是较大的那个地址</p>
-<p><img src="/images/汇编-03.png" alt="内存模型"></p>
-<p>程序运行过程中，对于动态的内存占用请求（比如新建对象，或者使用malloc命令），系统就会从预先分配好的那段内存之中，划出一部分给用户，具体规则是从起始地址开始划分（实际上，起始地址会有一段静态数据，这里忽略）。举例来说，用户要求得到10个字节内存，那么从起始地址0x1000开始给他分配，一直分配到地址0x100A，如果再要求得到22个字节，那么就分配到0x1020。</p>
-<p><img src="/images/汇编-01.png" alt="内存模型"></p>
-<p>这种因为用户主动请求而划分出来的内存区域，叫做 Heap（堆）。它由起始地址开始，从低位（地址）向高位（地址）增长。Heap 的一个重要特点就是不会自动消失，必须手动释放，或者由垃圾回收机制来回收。</p>
-<h3 id="内存模型：Stack"><a href="#内存模型：Stack" class="headerlink" title="内存模型：Stack"></a>内存模型：Stack</h3><p>除了 Heap 以外，其他的内存占用叫做 Stack（栈）。简单说，Stack 是由于函数运行而临时占用的内存区域。这里所说的栈与数据结构里的栈的思想是一样的，数据的操作都是<code>后进先出</code>。为什么这样呢，栈是为函数调用服务的，最后调用的函数进栈，哪当然是最后调用的函数先执行完，然后释放其占用的空间。<br><img src="/images/汇编-02.png" alt="Stack模型"></p>
-<p><a href="http://www.ruanyifeng.com/blog/2018/01/assembly-language-primer.html" target="_blank" rel="external">汇编语言入门教程</a><br><a href="http://www.ruanyifeng.com/blog/2018/01/assembly-language-primer.html" target="_blank" rel="external">深入理解计算机系统（3.1）—走进汇编的世界</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;计算机真正能够理解的是低级语言，它专门用来控制硬件。汇编语言就是低级语言，直接描述/控制 CPU 的运行。如果你想了解 CPU 到底干了些什
-    
-    </summary>
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
