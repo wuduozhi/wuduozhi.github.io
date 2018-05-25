@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="前言暑假在弦歌开发新生宝典的时候，就接触到Slim这个框架，但当时自己并没有深入了解，因为环境这些都是学长们搭的，我自己只需要写好自己的业务逻辑部分就好了，所以不深入理解也不影响工作。新学期开始，学长要求继续晚上新生宝典，也就是说重构，既然这样，那就需要深入了解Slim了。在一次读源码，感觉还是有很多问题需要解决,比如说：Slim是怎么实现路由转发的？Slim是怎么实现数据库连接的？Slim的作用">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2017-10-12T01:43:52.993Z">
+<meta property="og:updated_time" content="2018-05-25T03:01:42.298Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP|Slim入门demo">
 <meta name="twitter:description" content="前言暑假在弦歌开发新生宝典的时候，就接触到Slim这个框架，但当时自己并没有深入了解，因为环境这些都是学长们搭的，我自己只需要写好自己的业务逻辑部分就好了，所以不深入理解也不影响工作。新学期开始，学长要求继续晚上新生宝典，也就是说重构，既然这样，那就需要深入了解Slim了。在一次读源码，感觉还是有很多问题需要解决,比如说：Slim是怎么实现路由转发的？Slim是怎么实现数据库连接的？Slim的作用">
@@ -50,7 +50,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -93,16 +93,16 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2017-10-12T08:44:11.000Z" itemprop="datePublished"> 发表于 2017-10-12</time>
+    <time datetime="2017-10-12T08:44:11.000Z" itemprop="datePublished"> 發表於 2017-10-12</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
+			<strong class="toc-title">文章目錄</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是Slim"><span class="toc-number">2.</span> <span class="toc-text">什么是Slim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#怎么安装Slim"><span class="toc-number">3.</span> <span class="toc-text">怎么安装Slim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行Slim"><span class="toc-number">4.</span> <span class="toc-text">运行Slim</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#文件结构"><span class="toc-number">4.1.</span> <span class="toc-text">文件结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建目录"><span class="toc-number">4.2.</span> <span class="toc-text">创建目录</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#编辑index-php文件"><span class="toc-number">4.2.1.</span> <span class="toc-text">编辑index.php文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#添加路由管理文件"><span class="toc-number">4.2.2.</span> <span class="toc-text">添加路由管理文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#添加function-php"><span class="toc-number">4.2.3.</span> <span class="toc-text">添加function.php</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#附录"><span class="toc-number">5.</span> <span class="toc-text">附录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装Composer"><span class="toc-number">6.</span> <span class="toc-text">安装Composer</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是Slim"><span class="toc-number">2.</span> <span class="toc-text">什么是Slim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#怎么安装Slim"><span class="toc-number">3.</span> <span class="toc-text">怎么安装Slim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行Slim"><span class="toc-number">4.</span> <span class="toc-text">运行Slim</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#文件结构"><span class="toc-number">4.1.</span> <span class="toc-text">文件结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建目录"><span class="toc-number">4.2.</span> <span class="toc-text">创建目录</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#编辑index-php文件"><span class="toc-number">4.2.1.</span> <span class="toc-text">编辑index.php文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#添加路由管理文件"><span class="toc-number">4.2.2.</span> <span class="toc-text">添加路由管理文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#添加function-php"><span class="toc-number">4.2.3.</span> <span class="toc-text">添加function.php</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#附录"><span class="toc-number">5.</span> <span class="toc-text">附录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装Composer"><span class="toc-number">5.1.</span> <span class="toc-text">安装Composer</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -119,8 +119,8 @@
 <p>#public    —-用户可以访问的目录</p>
 <p>##index.php    —-index页面</p>
 <p>#vendor    —-使用composer自动生成的目录</p>
-<p>##composer.json    —-composer配置文件</p>
-<p>##composer.lock    —-composer文件不需要管</p>
+<p>#composer.json    —-composer配置文件</p>
+<p>#composer.lock    —-composer文件不需要管</p>
 <h4 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h4><p>按照上面的目录结构创建文件的目录app和public，vendor目录使用composer命令自动生成，所以不需要我们创建。</p>
 <h5 id="编辑index-php文件"><a href="#编辑index-php文件" class="headerlink" title="编辑index.php文件"></a>编辑index.php文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">use \Psr\Http\Message\ServerRequestInterface as Request;</div><div class="line">use \Psr\Http\Message\ResponseInterface as Response;</div><div class="line"></div><div class="line">require &apos;../vendor/autoload.php&apos;;   //添加Slim</div><div class="line">require &apos;../app/function.php&apos; ;        //添加功能函数</div><div class="line"></div><div class="line">$app = new \Slim\App;</div><div class="line"></div><div class="line">require &apos;../app/routes.php&apos;;            //添加路由管理</div><div class="line"></div><div class="line">$app-&gt;run();                            //执行</div></pre></td></tr></table></figure>
 <h5 id="添加路由管理文件"><a href="#添加路由管理文件" class="headerlink" title="添加路由管理文件"></a>添加路由管理文件</h5><p>在app文件夹里面创建routes.php文件</p>
@@ -128,7 +128,8 @@
 <h5 id="添加function-php"><a href="#添加function-php" class="headerlink" title="添加function.php"></a>添加function.php</h5><p>我们设置了路由调用 sayHello 函数，所以我们现在在function.php 文件中添加 sayHello函数。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function syaHello($request, $response, $args)&#123;</div><div class="line">   echo &quot;Hello World&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>到这里，我们的小demo就好啦，打开服务器，在浏览器中输入： <a href="http://127.0.0.1/SlimDemo/public/index.php/hello" target="_blank" rel="external">http://127.0.0.1/SlimDemo/public/index.php/hello</a> ;就能输出 Hello World啦。</p>
-<h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><h3 id="安装Composer"><a href="#安装Composer" class="headerlink" title="安装Composer"></a>安装Composer</h3><ul>
+<h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><p><a href="https://blog.csdn.net/weixin_41195218/article/category/7312966/1" target="_blank" rel="external">slim深入了解</a></p>
+<h4 id="安装Composer"><a href="#安装Composer" class="headerlink" title="安装Composer"></a>安装Composer</h4><ul>
 <li><p>下载<br>在终端执行curl -sS <a href="https://getcomposer.org/installer" target="_blank" rel="external">https://getcomposer.org/installer</a> | php下载composer</p>
 </li>
 <li><p>设置</p>
@@ -186,10 +187,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -217,7 +218,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分类</p>
+	<p class="asidetitle">分類</p>
 		<ul>
 		
 		  
@@ -277,7 +278,7 @@
 		  
 		
 		  
-			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>13</sup></a></li>
+			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>14</sup></a></li>
 		  
 		
 		  
@@ -310,7 +311,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">標簽</p>
 		<ul class="clearfix">
 		
 			
@@ -322,7 +323,7 @@
 			
 		
 			
-				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>13</sup></a></li>
+				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>14</sup></a></li>
 			
 		
 			
@@ -382,7 +383,7 @@
 			
 		
 			
-				<li><a href="/tags/计算机网络/" title="计算机网络">计算机网络<sup>1</sup></a></li>
+				<li><a href="/tags/Octave/" title="Octave">Octave<sup>1</sup></a></li>
 			
 		
 			
@@ -390,7 +391,7 @@
 			
 		
 			
-				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -398,7 +399,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
 </div>
 
 </aside>
@@ -591,7 +592,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-23T05:29:07.811Z</updated>
+  <updated>2018-05-25T17:26:25.587Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,52 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>深入理解计算机系统|Cache详解</title>
+    <link href="http://yoursite.com/2018/05/26/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-Cache%E8%AF%A6%E8%A7%A3/"/>
+    <id>http://yoursite.com/2018/05/26/深入理解计算机系统-Cache详解/</id>
+    <published>2018-05-26T00:08:38.000Z</published>
+    <updated>2018-05-25T17:26:25.587Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>随着工艺的提升最近几十年CPU的频率不断提升，而受制于制造工艺和成本限制，目前计算机的内存主要是DRAM并且在访问速度上没有质的突破。因此，CPU的处理速度和内存的访问速度差距越来越大，甚至可以达到上万倍。这种情况下传统的CPU通过FSB直连内存的方式显然就会因为内存访问的等待，导致计算资源大量闲置，降低CPU整体吞吐量。同时又由于内存数据访问的热点集中性，在CPU和内存之间用较为快速而成本较高的SRAM做一层缓存，就显得性价比极高了。</p>
+<h3 id="Cache结构"><a href="#Cache结构" class="headerlink" title="Cache结构"></a>Cache结构</h3><p><img src="/images/cache-01.png" alt="cache结构"></p>
+<p>如上图，高速缓存可以用元组（S,E,B，m）来表示。高速缓存是一个高速缓存组的数组，每个组包含一个多个行，每个行包含一个有效位，一些标记位，以及一些数据块。在元组中，S表示有多少组，E表示一个组内有多少行，B表示一个行内有多少个数据块，m 表示存储器[内存]地址的位数。在cpu内部，会将地址按下图划分：</p>
+<p><img src="/images/cache-02.png" alt="cache地址划分"></p>
+<p>其中，s为组索引且${2^s=S}$,b为块偏移且${s^b=B}$，t为标记位且$t=m-b-s$。</p>
+<p>这样划分有利于快速判断CPU请求的数据是否在高速缓存中。通过组索引，我们就能知道要请求的数据必须存储在那个组中，然后，<code>t</code>个标记位可以告诉我们组中的哪一行包含这个字(如果有的话)。当且仅当设置了有效位并且该行的标记位与请求地址中的标记位相匹配时，组中的这一行才包含这个字。一旦我们在由组索引标识的组中定位到了有标号所标识的行，那么<code>b</code> 个块偏移位给出了我们想要的数据的偏移地址。</p>
+<p>如果你不是很明白上述所说的，请耐心往下看。</p>
+<h3 id="缓存结构的分类"><a href="#缓存结构的分类" class="headerlink" title="缓存结构的分类"></a>缓存结构的分类</h3><p>根据E（每个组的高速缓存行数）高速缓存被分为不同的类。</p>
+<h4 id="直接映射高速缓存"><a href="#直接映射高速缓存" class="headerlink" title="直接映射高速缓存"></a>直接映射高速缓存</h4><p><img src="/images/cache-03.png" alt="直接映射高速缓存"></p>
+<p>每个组只有一行的（E=1）的高速缓存称为<code>直接映射</code>高速缓存(direct-mapped cache)。直接映射高速缓存是最容易理解的，接下来让我们用一个例子来说明这一切。</p>
+<p>高速缓存会通过三个步骤来确定一个请求的数据是否在缓存中：</p>
+<h5 id="组选择"><a href="#组选择" class="headerlink" title="组选择"></a>组选择</h5><p>在这一步中，高速缓存从 w 的地址中抽取去 s 个组索引位，s 个索引位被解释成一个无符号数。可以换个角度理解，我们可以把高速索引看成是一个关于组的一维数组，s 个索引位被解释成的无符号数就是这个数组的索引。如下图：</p>
+<p><img src="/images/cache-04.png" alt="直接映射高速缓存"></p>
+<p>上图中，组索引位 [00001] 被解释成一个选择组1的整数索引。</p>
+<h5 id="行匹配"><a href="#行匹配" class="headerlink" title="行匹配"></a>行匹配</h5><p>在上一步中，我们确定了组。在接下来的行选择中，要分为2个步骤：</p>
+<ul>
+<li>检查有效位</li>
+<li>检查标记位</li>
+</ul>
+<p>只有两个步骤都成功了，才能确定请求的数据在高速缓存中，且就在所找到的这个行中。如下图：</p>
+<p><img src="/images/cache-05.png" alt="直接映射高速缓存"></p>
+<h5 id="字选择"><a href="#字选择" class="headerlink" title="字选择"></a>字选择</h5><p>通过上面两个步骤，我们确定了请求的数据所在的组与行，最后一步就是确定数据在行的块偏移量。还是上图，通过块偏移，我们能得到所需数据的第一个字节的偏移。就像我们把高速缓存看成是组的数组一样，我们把块看成是一个字节的数据，块偏移提供了数组的索引。</p>
+<h4 id="关于为什么选择中间的位来确定组索引"><a href="#关于为什么选择中间的位来确定组索引" class="headerlink" title="关于为什么选择中间的位来确定组索引"></a>关于为什么选择中间的位来确定组索引</h4><p><img src="/images/cache-06.png" alt="为什么选择中间的位来确定组索引"></p>
+<p>上图很好说明了原因：如果用高位做索引，那么一些连续的存储器块就会映射到相同的高速缓冲块。例如图中的头四个块映射到第一个高速缓存组，第二个四个块映射到第二个组，依此类推。如果一个程序有良好的<code>局部性</code>,顺序访问一个数组的元素，那么在任何时刻，高速缓存都只保存着一个块大小的数组内容。这样对高速缓存的利用效率就很低。相对而言，用中间位作为索引，相邻的块总是映射到不同的高速缓存行。在这种情况下，高速缓存能够存放整个大小为<code>C[高速缓存的大小]</code>的<code>数组片</code>。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;随着工艺的提升最近几十年CPU的频率不断提升，而受制于制造工艺和成本限制，目前计算机的内存主要是DRAM并且在访问速度上没有质的突破。因此，
+    
+    </summary>
+    
+      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>PHP|PDO数据库操作</title>
@@ -166,19 +212,39 @@
     <link href="http://yoursite.com/2018/05/23/PHP-%E5%85%B3%E4%BA%8Eoci-bind-by-name%E7%94%A8foreach%E5%BE%AA%E7%8E%AF%E7%BB%91%E5%AE%9A%E9%97%AE%E9%A2%98/"/>
     <id>http://yoursite.com/2018/05/23/PHP-关于oci-bind-by-name用foreach循环绑定问题/</id>
     <published>2018-05-23T12:30:12.000Z</published>
-    <updated>2018-05-23T17:02:58.826Z</updated>
+    <updated>2018-05-25T03:34:39.196Z</updated>
     
-    <content type="html"><![CDATA[<p>作为 Web 开发人员，您通常遇到的第二个问题是站点的安全性。 由于该问题体现在很多方面，因此找到解决它的方法无异于一场永无休止但却至观重要的战役。 在数据库驱动的站点中，许多查询都依赖于外部值，如用户从表单中提交的值、在 URL 中传递给页面的值等等。 此类查询很容易受到 SQL 注入攻击的破坏。 （“SQL 注入攻击”是指恶意用户在尝试破坏查询的过程中向 PHP 脚本提供无效数据。） 如果对查询的处理方法不当，恶意用户便有可能从生成的错误消息中了解一些有关脚本、数据库或服务器的信息。</p>
-<p>这两天很郁闷，老是为PHP为oracle语句绑定变量时出现问题，下面做为题描述：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">oci_bind_by_name($stmt,”:ip”,$ip,32);</div><div class="line">oci_bind_by_name($stmt,”:username”,$username,32);</div><div class="line">oci_bind_by_name($stmt,”:telephone”,$telephone,32);</div><div class="line">oci_bind_by_name($stmt,”:idname”,$idname,32);</div><div class="line"></div><div class="line">$name=array(“:ip”=&gt;$ip,”:username”=&gt;$username,”:telephone”=&gt;$telephone,”:idname”=&gt;$idname); </div><div class="line">foreach ($name as $k=&gt;$v) &#123;</div><div class="line">    oci_bind_by_name($stmt,$k,$v,32);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+    <content type="html"><![CDATA[<h3 id="遇到了神奇的bug"><a href="#遇到了神奇的bug" class="headerlink" title="遇到了神奇的bug"></a>遇到了神奇的bug</h3><p>作为 Web 开发人员，您通常遇到的第二个问题是站点的安全性。 由于该问题体现在很多方面，因此找到解决它的方法无异于一场永无休止但却至观重要的战役。 在数据库驱动的站点中，许多查询都依赖于外部值，如用户从表单中提交的值、在 URL 中传递给页面的值等等。 此类查询很容易受到 SQL 注入攻击的破坏。 （“SQL 注入攻击”是指恶意用户在尝试破坏查询的过程中向 PHP 脚本提供无效数据。） 如果对查询的处理方法不当，恶意用户便有可能从生成的错误消息中了解一些有关脚本、数据库或服务器的信息。</p>
+<p>这两天很郁闷，老是为PHP为oracle语句绑定变量时出现问题，下面做为题描述：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">oci_bind_by_name($stmt,”:ip”,$ip);</div><div class="line">oci_bind_by_name($stmt,”:username”,$username);</div><div class="line">oci_bind_by_name($stmt,”:telephone”,$telephone);</div><div class="line">oci_bind_by_name($stmt,”:idname”,$idname);</div><div class="line"></div><div class="line">$name=array(“:ip”=&gt;$ip,”:username”=&gt;$username,”:telephone”=&gt;$telephone,”:idname”=&gt;$idname); </div><div class="line">foreach ($name as $k=&gt;$v) &#123;</div><div class="line">    oci_bind_by_name($stmt,$k,$v);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>第一种方式正常绑定；第二种方式，最后执行结果四个变量都绑定了$idname的值，为什么两种方法出现的结果不同呢？原因在于oci_bind_by_name函数没认识清楚，且看官方手册：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool oci_bind_by_name ( resource stmt, string ph_name, mixed &amp;variable [, int maxlength [, int type]] )</div></pre></td></tr></table></figure></p>
 <p>第三个变量，传递的是变量的引用，所以第一次循环，<code>:ip</code>绑定的是<code>$ip</code>的引用，即假设<code>$ip</code>的地址为223，第二次循环，<code>$ip</code>变量的地址被<code>$username</code>占用，所以<code>:username</code>也绑定了地址<code>223</code>，<code>:telephone</code>和<code>:idname</code>都如此，最后一次循环，内存地址223位置上存储的是$idname变量的值，所以当执行<code>oci_execute($stmt)</code>时给四个变量都绑定了<code>$idname</code>的值。哈哈，了解了吧。</p>
 <p>如何解决？<code>不用$value</code>,比如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">foreach ($array as $key =&gt; $value) &#123;</div><div class="line">	  // oci_bind_by_name($stid, $key, $val) does not work</div><div class="line">     // because it binds each placeholder to the same location: $val</div><div class="line">     // instead use the actual location of the data: $ba[$key]</div><div class="line">     </div><div class="line">    oci_bind_by_name($stmt, $key, $array[$key]);  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="对于PDO的bind也是一样的"><a href="#对于PDO的bind也是一样的" class="headerlink" title="对于PDO的bind也是一样的"></a>对于PDO的bind也是一样的</h3><p>废话不多说, 直接看代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$dbh = new PDO(&apos;mysql:host=localhost;dbname=test&apos;, &quot;test&quot;);</div><div class="line"> </div><div class="line">$query = &lt;&lt;&lt;QUERY</div><div class="line">  INSERT INTO `user` (`username`, `password`) VALUES (:username, :password);</div><div class="line">QUERY;</div><div class="line">$statement = $dbh-&gt;prepare($query);</div><div class="line"> </div><div class="line">$bind_params = array(&apos;:username&apos; =&gt; &quot;laruence&quot;, &apos;:password&apos; =&gt; &quot;weibo&quot;);</div><div class="line">foreach( $bind_params as $key =&gt; $value )&#123;</div><div class="line">    $statement-&gt;bindParam($key, $value);</div><div class="line">&#125;</div><div class="line">$statement-&gt;execute();</div></pre></td></tr></table></figure></p>
+<p>请问, 最终执行的SQL语句是什么, 上面的代码是否有什么问题?</p>
+<p>Okey, 我想大部分同学会认为, 最终执行的SQL是:</p>
+<p><code>INSERT INTO</code>user<code>(</code>username<code>,</code>password<code>) VALUES (&quot;laruence&quot;, &quot;weibo&quot;);</code><br>但是, 可惜的是, 你错了, 最终执行的SQL是:</p>
+<p><code>INSERT INTO</code>user<code>(</code>username<code>,</code>password<code>) VALUES (&quot;weibo&quot;, &quot;weibo&quot;);</code></p>
+<p>是不是很大的一个坑呢?</p>
+<p><strong>Why?!?</strong></p>
+<p>究其原因, 也就是bindParam和bindValue的不同之处, bindParam要求第二个参数是一个引用变量(reference).</p>
+<p>让我们把上面的代码的foreach拆开, 也就是这个foreach:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">foreach( $bind_params as $key =&gt; $value )&#123;</div><div class="line">    $statement-&gt;bindParam($key, $value);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>相当于:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">//第一次循环</div><div class="line">$value = $bind_params[&quot;:username&quot;];</div><div class="line">$statement-&gt;bindParam(&quot;:username&quot;, &amp;$value); //此时, :username是对$value变量的引用</div><div class="line"> </div><div class="line">//第二次循环</div><div class="line">$value = $bind_params[&quot;:password&quot;]; //oops! $value被覆盖成了:password的值</div><div class="line">$statement-&gt;bindParam(&quot;:password&quot;, &amp;$value);</div></pre></td></tr></table></figure></p>
+<p>所以, 在使用bindParam的时候, 尤其要注意和foreach联合使用的这个陷阱. 那么正确的作法呢?</p>
+<p><strong>How to do ?!?</strong></p>
+<ul>
+<li><p>不要使用foreach, 而是手动赋值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$statement-&gt;bindParam(&quot;:username&quot;, $bind_params[&quot;:username&quot;]); //$value是引用变量了</div><div class="line">$statement-&gt;bindParam(&quot;:password&quot;, $bind_params[&quot;:password&quot;]);</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用bindValue代替bindParam, 或者直接在execute中传递整个参数数组.</p>
+</li>
+</ul>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;作为 Web 开发人员，您通常遇到的第二个问题是站点的安全性。 由于该问题体现在很多方面，因此找到解决它的方法无异于一场永无休止但却至观重要的战役。 在数据库驱动的站点中，许多查询都依赖于外部值，如用户从表单中提交的值、在 URL 中传递给页面的值等等。 此类查询很容易受到
+      &lt;h3 id=&quot;遇到了神奇的bug&quot;&gt;&lt;a href=&quot;#遇到了神奇的bug&quot; class=&quot;headerlink&quot; title=&quot;遇到了神奇的bug&quot;&gt;&lt;/a&gt;遇到了神奇的bug&lt;/h3&gt;&lt;p&gt;作为 Web 开发人员，您通常遇到的第二个问题是站点的安全性。 由于该问题体现在很多
     
     </summary>
     
@@ -1052,7 +1118,7 @@ OVER (
     <link href="http://yoursite.com/2018/05/12/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-CSAPP-Bufferlab/"/>
     <id>http://yoursite.com/2018/05/12/深入理解计算机系统-CSAPP-Bufferlab/</id>
     <published>2018-05-11T20:29:36.000Z</published>
-    <updated>2018-05-13T03:13:53.412Z</updated>
+    <updated>2018-05-25T12:07:00.035Z</updated>
     
     <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Buffer Lab是传统的32位实验，现在已经被Attack Lab替代。在该实验中，需要利用<code>缓冲区溢出漏洞</code>生成攻击代码去修改一个32位的x86可执行程序的运行时行为。</p>
 <h3 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h3><ul>
@@ -1144,7 +1210,7 @@ int getbuf()
 <p>然后和阶段二一样汇编攻击代码和反汇编得到指令序列：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">level3-exlpoit.o:     file format elf32-i386</div><div class="line"></div><div class="line"></div><div class="line">Disassembly of section .text:</div><div class="line"></div><div class="line">00000000 &lt;.text&gt;:</div><div class="line">   0:	a1 e4 c1 04 08       	mov    0x804c1e4,%eax</div><div class="line">   5:	bd 80 34 68 55       	mov    $0x55683480,%ebp</div><div class="line">   a:	ff 35 93 8c 04 08    	pushl  0x8048c93</div><div class="line">  10:	c3                   	ret</div></pre></td></tr></table></figure>
 <p>所以我们构建的攻击代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">a1 e4 c1 04 08 bd 80 34</div><div class="line">68 55 68 93 8c 04 08 c3</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00 </div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 28 34 68 55</div></pre></td></tr></table></figure></p>
-<p>如果你看过我们阶段2的做法，会发现这里跟阶段二不一样了，我们现在把攻击代码放在了<code>buf</code>的开始位置了，因为这样能更方便的维护`%esp·。</p>
+<p>如果你看过我们阶段2的做法，会发现这里跟阶段二不一样了，我们现在把攻击代码放在了<code>buf</code>的开始位置了，因为这样能更方便的维护<code>%esp</code>。</p>
 <p>执行完<code>getbuf</code>后的内存结构:</p>
 <p><img src="/images/CSAPP-BufferLab-06.png" alt="level-3"></p>
 <p>注意到此时的<code>%esp</code>是在正确的位置的，也就是说现在的<code>%esp</code>就是函数test在调用getbuf前的值。</p>
@@ -1725,42 +1791,6 @@ int main(){
     
     
       <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>总结|我的大二下</title>
-    <link href="http://yoursite.com/2018/05/07/%E6%80%BB%E7%BB%93-%E6%88%91%E7%9A%84%E5%A4%A7%E4%BA%8C%E4%B8%8B/"/>
-    <id>http://yoursite.com/2018/05/07/总结-我的大二下/</id>
-    <published>2018-05-06T19:39:25.000Z</published>
-    <updated>2018-05-18T16:49:40.677Z</updated>
-    
-    <content type="html"><![CDATA[<p><code>May 6, 2018 7:54 PM</code></p>
-<h3 id="我的计划"><a href="#我的计划" class="headerlink" title="我的计划"></a>我的计划</h3><p>在寒假的时候，自己有看了吴恩达教授的机器学习的基础课程，了解了一些基本的概念，比如说<code>线性回归</code>、<code>梯度下降</code>等等。同时，自己从大一开始就在弄一些Web相关的，接触的都是一些应用的东西，想到是做项目、找实习，但自己冷静下来想想，自己还是没有一些核心竞争力，自己所学的这些别人花几个月就能搞定，所以自己就想着学习一些<code>高大尚</code>的东西，就想着入坑机器学习了。</p>
-<p>所以，自己就想着大二下能搞一下机器学习的东西，自己书都买好啦，周志华的西瓜书和机器学习实战，但…</p>
-<h3 id="改变计划"><a href="#改变计划" class="headerlink" title="改变计划"></a>改变计划</h3><p>新学期开始的时候，学校开的课是<code>操作系统</code>、<code>深入理解计算机雄</code>、<code>计算机算法</code>，自己刚开始以为在搞定学校开的课的同时还能研究机器学习得东西，还是高估了自己呀。学了一段时间才发现，这三门课并不简单，也是需要深入理解才能发现其奥秘的。</p>
-<h4 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h4><p>书上讲的都是概念性的东西，听课后的感觉是懵懂懵懂的，自己也意识到了操作系统的重要性，就上网找了一些公开课，淘到了哈工大李治军老师讲的公开课，结合代码原理一起讲，挺透彻的；还有就是<code>mit6.828</code>这个公开课。另外，操作系统这个东西，还是需要做一些实验，去改操作系统的源码，比如说加个系统调用…</p>
-<p>总之一句话，值得下功夫。</p>
-<h4 id="深入理解计算机系统"><a href="#深入理解计算机系统" class="headerlink" title="深入理解计算机系统"></a><a href="http://csapp.cs.cmu.edu/" target="_blank" rel="external">深入理解计算机系统</a></h4><p>这门课讲的是更底层面的东西，深入CPU、寄存器，研究汇编代码，看我们的代码是如何被解释运行的，说白了，就是进入了二进制的世界，去探寻二进制简单又不简单的奥秘。自己感觉这门课学校讲的是可以的，老师也挺不错的。自己刚开始不是很重视这个课，不是很认真对待，不过后来发现这些东西挺有意思的：用gdb调试，看寄存器的值，通过汇编代码还原出源代码，用简单的位运算在字节的层面处理数据…挺有意思的。要深入理解，是要沉下心来慢慢研究的。</p>
-<p>总之一句话，值得下功夫。</p>
-<h4 id="计算机算法"><a href="#计算机算法" class="headerlink" title="计算机算法"></a>计算机算法</h4><p>说到算法，自己有点惭愧。之前，自己没有花一点心思在算法上面，所以参加的笔试都是以失败告终。自己也买了许多算法的书，也看了，但是就是不能抓住一些算法的奥秘，不知为何。现在知道答案了：因为自己没有运用，说白了，就是没刷题。算法就好像数学里的公式，你不去做题运用，是不可能深刻理解的。也正以此，自己现在都在刷LeetCode的题目，也做记录，不是很怕笔试了。</p>
-<p>总之一句话，值得下功夫。</p>
-<p>这三门课都是挺重要的，都是需要不少时间和精力的，同时，人的精力是有限的，所以只能改变计划，重点研究这些东西，机器学习什么的，日后吧。</p>
-<h3 id="其他的小改变"><a href="#其他的小改变" class="headerlink" title="其他的小改变"></a>其他的小改变</h3><p>这学期，自己并不是把所有的时间放在的code上面了，生活中不在只有代码了。</p>
-<p>自己无意中看到了<code>每天五分钟VOA英语随声听</code>的小本本，每一篇新闻都挺简短的，听一次录音也只需要两分钟，有快速慢速的，自己时不常就听一篇，挺好。自己还看了一些课外书啊，经济方面的<code>激荡3o年</code>,<code>博弈论</code>…同时，也懂得享受生活了，时常听歌，晚上不下雨就去打球，挺好。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;code&gt;May 6, 2018 7:54 PM&lt;/code&gt;&lt;/p&gt;
-&lt;h3 id=&quot;我的计划&quot;&gt;&lt;a href=&quot;#我的计划&quot; class=&quot;headerlink&quot; title=&quot;我的计划&quot;&gt;&lt;/a&gt;我的计划&lt;/h3&gt;&lt;p&gt;在寒假的时候，自己有看了吴恩达教授的机器学习
-    
-    </summary>
-    
-      <category term="college" scheme="http://yoursite.com/categories/college/"/>
-    
-    
-      <category term="college" scheme="http://yoursite.com/tags/college/"/>
     
   </entry>
   
