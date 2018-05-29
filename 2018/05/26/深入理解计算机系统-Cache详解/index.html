@@ -37,7 +37,7 @@
 <meta property="og:image" content="http://yoursite.com/images/cache-10.png">
 <meta property="og:image" content="http://yoursite.com/images/cache-11.png">
 <meta property="og:image" content="http://yoursite.com/images/cache-06.png">
-<meta property="og:updated_time" content="2018-05-27T16:11:32.322Z">
+<meta property="og:updated_time" content="2018-05-29T02:44:20.429Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解计算机系统|Cache详解">
 <meta name="twitter:description" content="引言随着工艺的提升最近几十年CPU的频率不断提升，而受制于制造工艺和成本限制，目前计算机的内存主要是DRAM并且在访问速度上没有质的突破。因此，CPU的处理速度和内存的访问速度差距越来越大，甚至可以达到上万倍。这种情况下传统的CPU通过FSB直连内存的方式显然就会因为内存访问的等待，导致计算资源大量闲置，降低CPU整体吞吐量。同时又由于内存数据访问的热点集中性，在CPU和内存之间用较为快速而成本较">
@@ -121,7 +121,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cache结构"><span class="toc-number">2.</span> <span class="toc-text">Cache结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缓存结构的分类"><span class="toc-number">3.</span> <span class="toc-text">缓存结构的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#直接映射高速缓存"><span class="toc-number">3.1.</span> <span class="toc-text">直接映射高速缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#组选择"><span class="toc-number">3.1.1.</span> <span class="toc-text">组选择</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#行匹配"><span class="toc-number">3.1.2.</span> <span class="toc-text">行匹配</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#字选择"><span class="toc-number">3.1.3.</span> <span class="toc-text">字选择</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#来看一个实际的例子"><span class="toc-number">3.2.</span> <span class="toc-text">来看一个实际的例子</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#读地址0000的字"><span class="toc-number">3.2.1.</span> <span class="toc-text">读地址0000的字</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#读地址0001的字"><span class="toc-number">3.2.2.</span> <span class="toc-text">读地址0001的字</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#读地址1101的字"><span class="toc-number">3.2.3.</span> <span class="toc-text">读地址1101的字</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#读地址1000的字"><span class="toc-number">3.2.4.</span> <span class="toc-text">读地址1000的字</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#读地址0000的字-1"><span class="toc-number">3.2.5.</span> <span class="toc-text">读地址0000的字</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#组相联高速缓存"><span class="toc-number">3.3.</span> <span class="toc-text">组相联高速缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#组相联高速缓存的组选择"><span class="toc-number">3.3.1.</span> <span class="toc-text">组相联高速缓存的组选择</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#组相联高速缓存的行匹配"><span class="toc-number">3.3.2.</span> <span class="toc-text">组相联高速缓存的行匹配</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#组相联高速缓存的字选择"><span class="toc-number">3.3.3.</span> <span class="toc-text">组相联高速缓存的字选择</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#全相联高速缓存"><span class="toc-number">3.4.</span> <span class="toc-text">全相联高速缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#全相联高速缓存的组选择"><span class="toc-number">3.4.1.</span> <span class="toc-text">全相联高速缓存的组选择</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#全相联高速缓存的行匹配和字选择"><span class="toc-number">3.4.2.</span> <span class="toc-text">全相联高速缓存的行匹配和字选择</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于为什么选择中间的位来确定组索引"><span class="toc-number">3.5.</span> <span class="toc-text">关于为什么选择中间的位来确定组索引</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cache结构"><span class="toc-number">2.</span> <span class="toc-text">Cache结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缓存结构的分类"><span class="toc-number">3.</span> <span class="toc-text">缓存结构的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#直接映射高速缓存"><span class="toc-number">3.1.</span> <span class="toc-text">直接映射高速缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#组选择"><span class="toc-number">3.1.1.</span> <span class="toc-text">组选择</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#行匹配"><span class="toc-number">3.1.2.</span> <span class="toc-text">行匹配</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#字选择"><span class="toc-number">3.1.3.</span> <span class="toc-text">字选择</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#来看一个实际的例子"><span class="toc-number">3.2.</span> <span class="toc-text">来看一个实际的例子</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#读地址0000的字"><span class="toc-number">3.2.1.</span> <span class="toc-text">读地址0000的字</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#读地址0001的字"><span class="toc-number">3.2.2.</span> <span class="toc-text">读地址0001的字</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#读地址1101的字"><span class="toc-number">3.2.3.</span> <span class="toc-text">读地址1101的字</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#读地址1000的字"><span class="toc-number">3.2.4.</span> <span class="toc-text">读地址1000的字</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#读地址0000的字-1"><span class="toc-number">3.2.5.</span> <span class="toc-text">读地址0000的字</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#组相联高速缓存"><span class="toc-number">3.3.</span> <span class="toc-text">组相联高速缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#组相联高速缓存的组选择"><span class="toc-number">3.3.1.</span> <span class="toc-text">组相联高速缓存的组选择</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#组相联高速缓存的行匹配"><span class="toc-number">3.3.2.</span> <span class="toc-text">组相联高速缓存的行匹配</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#组相联高速缓存的字选择"><span class="toc-number">3.3.3.</span> <span class="toc-text">组相联高速缓存的字选择</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#全相联高速缓存"><span class="toc-number">3.4.</span> <span class="toc-text">全相联高速缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#全相联高速缓存的组选择"><span class="toc-number">3.4.1.</span> <span class="toc-text">全相联高速缓存的组选择</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#全相联高速缓存的行匹配和字选择"><span class="toc-number">3.4.2.</span> <span class="toc-text">全相联高速缓存的行匹配和字选择</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于为什么选择中间的位来确定组索引"><span class="toc-number">3.5.</span> <span class="toc-text">关于为什么选择中间的位来确定组索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#有关写的问题"><span class="toc-number">3.6.</span> <span class="toc-text">有关写的问题</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -189,6 +189,38 @@
 <h5 id="全相联高速缓存的行匹配和字选择"><a href="#全相联高速缓存的行匹配和字选择" class="headerlink" title="全相联高速缓存的行匹配和字选择"></a>全相联高速缓存的行匹配和字选择</h5><p>全相联高速缓存的行匹配和字选择与组相联高速缓存的方法一致，但是全相联高速缓存只有一个组，包含了所有的行，也就是所每一次都需要去匹配所有行的标记位，看是否有匹配的行。显而易见，如果高速缓存规模稍大的话，标记位匹配会是一个耗时且困难的过程。也正因此，全相联高速缓存只适合做规模小的高速缓存，例如虚拟存储器系统中的<code>翻译备用缓冲器[TLB]</code>,它的作用是缓存页表。</p>
 <h4 id="关于为什么选择中间的位来确定组索引"><a href="#关于为什么选择中间的位来确定组索引" class="headerlink" title="关于为什么选择中间的位来确定组索引"></a>关于为什么选择中间的位来确定组索引</h4><p><img src="/images/cache-06.png" alt="为什么选择中间的位来确定组索引"></p>
 <p>上图很好说明了原因：如果用高位做索引，那么一些连续的存储器块就会映射到相同的高速缓冲块。例如图中的头四个块映射到第一个高速缓存组，第二个四个块映射到第二个组，依此类推。如果一个程序有良好的<code>局部性</code>,顺序访问一个数组的元素，那么在任何时刻，高速缓存都只保存着一个块大小的数组内容。这样对高速缓存的利用效率就很低。相对而言，用中间位作为索引，相联的块总是映射到不同的高速缓存行。在这种情况下，高速缓存能够存放整个大小为<code>C[高速缓存的大小]</code>的<code>数组片</code>。</p>
+<h4 id="有关写的问题"><a href="#有关写的问题" class="headerlink" title="有关写的问题"></a>有关写的问题</h4><ul>
+<li><p>处理写命中:</p>
+<ul>
+<li><p>直写:立即将w的高速缓存块写会到紧接着的下一层。</p>
+<ul>
+<li>优点:简单</li>
+<li>缺点:引起总线流量，速度慢</li>
+</ul>
+</li>
+<li><p>写回:尽可能地推迟操作，只有当替换算法要驱逐时更新。</p>
+<ul>
+<li>优点:减少总线流量。</li>
+<li>缺电:复杂，额外维护一个修改位。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>处理写不命中</p>
+<ul>
+<li><p>写分配:加载相应的低一层块到高速缓存中，然后更新这个高速缓存块。</p>
+<ul>
+<li>跟写回搭配。</li>
+</ul>
+</li>
+<li><p>写不分配:直接写到低层。</p>
+<ul>
+<li>跟直写搭配。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
   
 	</div>
 		<footer class="article-footer clearfix">

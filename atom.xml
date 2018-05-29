@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-27T16:11:32.322Z</updated>
+  <updated>2018-05-29T02:44:20.429Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/05/26/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-Cache%E8%AF%A6%E8%A7%A3/"/>
     <id>http://yoursite.com/2018/05/26/深入理解计算机系统-Cache详解/</id>
     <published>2018-05-26T00:08:38.000Z</published>
-    <updated>2018-05-27T16:11:32.322Z</updated>
+    <updated>2018-05-29T02:44:20.429Z</updated>
     
     <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>随着工艺的提升最近几十年CPU的频率不断提升，而受制于制造工艺和成本限制，目前计算机的内存主要是DRAM并且在访问速度上没有质的突破。因此，CPU的处理速度和内存的访问速度差距越来越大，甚至可以达到上万倍。这种情况下传统的CPU通过FSB直连内存的方式显然就会因为内存访问的等待，导致计算资源大量闲置，降低CPU整体吞吐量。同时又由于内存数据访问的热点集中性，在CPU和内存之间用较为快速而成本较高的SRAM做一层缓存，就显得性价比极高了。</p>
 <h3 id="Cache结构"><a href="#Cache结构" class="headerlink" title="Cache结构"></a>Cache结构</h3><p><img src="/images/cache-01.png" alt="cache结构"></p>
@@ -86,6 +86,38 @@
 <h5 id="全相联高速缓存的行匹配和字选择"><a href="#全相联高速缓存的行匹配和字选择" class="headerlink" title="全相联高速缓存的行匹配和字选择"></a>全相联高速缓存的行匹配和字选择</h5><p>全相联高速缓存的行匹配和字选择与组相联高速缓存的方法一致，但是全相联高速缓存只有一个组，包含了所有的行，也就是所每一次都需要去匹配所有行的标记位，看是否有匹配的行。显而易见，如果高速缓存规模稍大的话，标记位匹配会是一个耗时且困难的过程。也正因此，全相联高速缓存只适合做规模小的高速缓存，例如虚拟存储器系统中的<code>翻译备用缓冲器[TLB]</code>,它的作用是缓存页表。</p>
 <h4 id="关于为什么选择中间的位来确定组索引"><a href="#关于为什么选择中间的位来确定组索引" class="headerlink" title="关于为什么选择中间的位来确定组索引"></a>关于为什么选择中间的位来确定组索引</h4><p><img src="/images/cache-06.png" alt="为什么选择中间的位来确定组索引"></p>
 <p>上图很好说明了原因：如果用高位做索引，那么一些连续的存储器块就会映射到相同的高速缓冲块。例如图中的头四个块映射到第一个高速缓存组，第二个四个块映射到第二个组，依此类推。如果一个程序有良好的<code>局部性</code>,顺序访问一个数组的元素，那么在任何时刻，高速缓存都只保存着一个块大小的数组内容。这样对高速缓存的利用效率就很低。相对而言，用中间位作为索引，相联的块总是映射到不同的高速缓存行。在这种情况下，高速缓存能够存放整个大小为<code>C[高速缓存的大小]</code>的<code>数组片</code>。</p>
+<h4 id="有关写的问题"><a href="#有关写的问题" class="headerlink" title="有关写的问题"></a>有关写的问题</h4><ul>
+<li><p>处理写命中:</p>
+<ul>
+<li><p>直写:立即将w的高速缓存块写会到紧接着的下一层。</p>
+<ul>
+<li>优点:简单</li>
+<li>缺点:引起总线流量，速度慢</li>
+</ul>
+</li>
+<li><p>写回:尽可能地推迟操作，只有当替换算法要驱逐时更新。</p>
+<ul>
+<li>优点:减少总线流量。</li>
+<li>缺电:复杂，额外维护一个修改位。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>处理写不命中</p>
+<ul>
+<li><p>写分配:加载相应的低一层块到高速缓存中，然后更新这个高速缓存块。</p>
+<ul>
+<li>跟写回搭配。</li>
+</ul>
+</li>
+<li><p>写不分配:直接写到低层。</p>
+<ul>
+<li>跟直写搭配。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 ]]></content>
     
     <summary type="html">
@@ -314,13 +346,144 @@
   </entry>
   
   <entry>
-    <title>深入理解计算机系统|存储器层次结构</title>
-    <link href="http://yoursite.com/2018/05/23/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/"/>
-    <id>http://yoursite.com/2018/05/23/深入理解计算机系统-存储器层次结构/</id>
+    <title>深入理解计算机系统|存储器结构</title>
+    <link href="http://yoursite.com/2018/05/23/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E7%BB%93%E6%9E%84/"/>
+    <id>http://yoursite.com/2018/05/23/深入理解计算机系统-存储器结构/</id>
     <published>2018-05-22T17:19:37.000Z</published>
-    <updated>2018-05-22T09:20:00.781Z</updated>
+    <updated>2018-05-29T03:11:55.683Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>在简单模型中，存储器系统是一个线性的字节数组，CPU能够在一个常数访问每个存储器位置。</p>
+<p>实际上，存储器系统(memory system)是一个具有不同容量，成本和访问时间的存储设备的层次结构。</p>
+<ul>
+<li>CPU寄存器保存着最常用的数据。(0周期)</li>
+<li>靠近CPU的小的，快速的高速缓存存储器(cache memory)作为一部分存储在相对慢速的主储存器(main memory,简称主存)中的数据和指令的缓冲区。(1~30周期)</li>
+<li>主存暂时存放 储存在容量较大的，慢速磁盘上的数据。(50~200周期)</li>
+<li>磁盘又作为存储在通过网络连接的其他机器的磁盘或磁带上数据的缓冲区。(几千万个周期)</li>
+</ul>
+<h3 id="存储技术"><a href="#存储技术" class="headerlink" title="存储技术"></a>存储技术</h3><p>随机访问存储器(Random-Access Memory,RAM)分为两类，<code>静态</code>的和<code>动态</code>的。</p>
+<p>下面列出两者的不同，稍后再详细分析：</p>
+<ul>
+<li>静态RAM(SRAM）比动态RAM(DRAM)快地多，也贵得多。</li>
+<li>SRAM用来作为高速缓存存储器。(一般只有几兆)</li>
+<li>DRAM用来作为主存以及图形系统的帧缓冲区(显存)。(一般有几G)</li>
+</ul>
+<h4 id="SRAM"><a href="#SRAM" class="headerlink" title="SRAM"></a>SRAM</h4><p>SRAM将每个位存储在一个双稳态(bistable)存储器单元里。</p>
+<ul>
+<li>每个存储单元用一个六晶体管电路来实现。<ul>
+<li>有这样属性，可以无限期保持在两个不同的电压配置(configuration)或状态之一。</li>
+<li>其他任何状态都是不稳定的。如图所示</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/存储器结构-01.png" alt="存储器结构"></p>
+<ul>
+<li>由于这种双稳态特性，只要有电，它就会永远保持他的值，即使有干扰。<ul>
+<li>例如电子噪音，来扰乱电压，当消除干扰时，电路就会恢复稳定值</li>
+</ul>
+</li>
+</ul>
+<h4 id="DRAM"><a href="#DRAM" class="headerlink" title="DRAM"></a>DRAM</h4><ul>
+<li><p>DRAM将每个位存储为对一个电容充电，这个电容非常小，通常只有30*10^-15法拉。</p>
+<ul>
+<li>因此，DRAM存储器可以造的十分密集。<ul>
+<li>每个单元由一个电容和一个访问晶体管组成。</li>
+</ul>
+</li>
+<li>但是，DRAM存储器对干扰非常敏感。当电容电压被扰乱后，就永远不会恢复。</li>
+</ul>
+</li>
+<li><p>很多原因会漏电，使得DRAM单元在10~100毫秒时间内失去电荷。</p>
+<ul>
+<li>幸运的是，计算机的时钟周期以纳秒衡量，这个保持时间也相当长。</li>
+</ul>
+</li>
+<li><p>存储器系统必须周期性地读出，然后重写来刷新存储器的每一位。</p>
+<ul>
+<li>有些系统也使用纠错码。</li>
+</ul>
+</li>
+</ul>
+<h4 id="SRAM与DRAM的对比"><a href="#SRAM与DRAM的对比" class="headerlink" title="SRAM与DRAM的对比"></a>SRAM与DRAM的对比</h4><ul>
+<li>只要有供电，SRAM就会保持不变。</li>
+<li>SRAM不需要刷新</li>
+<li>SRAM读取比DRAM快</li>
+<li>SRAM对干扰不敏感。</li>
+<li>代价是SRAM单元比DRAM单元使用更多的晶体管，因而密集度低，更贵，功耗更大。</li>
+</ul>
+<h3 id="磁盘存储"><a href="#磁盘存储" class="headerlink" title="磁盘存储"></a>磁盘存储</h3><p>磁盘是用来保存大量数据的存储设备，能比基于RAM的存储器存更多的数据，但是读取数据的速度却远远低于基于RAM的存储器。</p>
+<h4 id="磁盘构造"><a href="#磁盘构造" class="headerlink" title="磁盘构造"></a>磁盘构造</h4><p>磁盘是由盘片(platter)构成的.</p>
+<ul>
+<li><p>每个盘片有两面或者称为表面(surface)。</p>
+</li>
+<li><p>盘片中央有一个可以旋转的主轴(spindle)，它使得盘片以固定的旋转速率(rotational rate)旋转，通常是5400~15 000转每分钟(Revolution Per Minute,RPM)</p>
+<ul>
+<li>磁盘通常含一个或多个这样的盘片，并封装到一个密封的容器里。</li>
+</ul>
+</li>
+</ul>
+<p>如图，展示了一个典型的磁盘表面的结构。</p>
+<p><img src="/images/存储器结构-02.png" alt="存储器结构"></p>
+<ul>
+<li><p>每个表面是由一组称为磁道(track)的同心圆组成的。</p>
+<ul>
+<li>每个磁道被划分为一组扇区(sector)。<ul>
+<li>每个扇区包含相等数量的数据位(通常是512字节)，这些数据编码在扇区的磁性材料中。</li>
+<li>扇区之间由一些间隙(gap)分隔<ul>
+<li>不存储数据</li>
+<li>间隙存储用来标识扇区的格式化位。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>磁盘是由一个或多个叠放在一起的盘片组成，被封装在密封包装。</p>
+<ul>
+<li><p>整个装置称为磁盘驱动器(disk drive),我们通常简称为磁盘(disk).</p>
+</li>
+<li><p>有时又叫旋转磁盘(rotating disk),使之区别基于闪存的固态硬盘(SSD)。</p>
+<ul>
+<li>SSD没有可移动的地方</li>
+</ul>
+</li>
+<li><p>磁盘商通常用术语柱面(cylinder)描述多个盘片的构造 。</p>
+<ul>
+<li>柱面是所有盘片表面上到主轴中心的距离相等的磁道集合。</li>
+<li>例如，一个驱动器有三个盘片，六个面。那么柱面k是六个磁道k的集合。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="磁盘容量"><a href="#磁盘容量" class="headerlink" title="磁盘容量"></a>磁盘容量</h4><p>整个硬盘上一般有很多的盘片组成，每个盘片如同切西瓜一样被“切”成一块一块的扇面，同时沿着半径的方向被划分成了很多同心圆，就是传说中的磁道，每条磁道被扇面切成很多的扇形区域叫做扇区（扇区是从磁盘读出和写入信息的最小单位，通常大小为512字节），不同盘片上的同半径磁道组成了柱面。</p>
+<p>容量：<code>磁头数 × 磁道(柱面)数 × 每道扇区数 × 每扇区字节数</code></p>
+<ul>
+<li>磁头（head）数：每个盘片一般有上下两面，分别对应1个磁头，共2个磁头；</li>
+<li>磁道（track）数：磁道是从盘片外圈往内圈编号0磁道，1磁道.，靠近主轴的同心圆用于停靠磁头，不存储数据；</li>
+<li>柱面（cylinder）数：同磁道数量；</li>
+<li>扇区（sector）数：每个磁道都别切分成很多扇形区域，每道的扇区数量相同；</li>
+<li>圆盘（platter）数：就是盘片的数量。</li>
+</ul>
+<p><img src="/images/存储器结构-07.png" alt="存储器结构"></p>
+<h4 id="磁盘操作"><a href="#磁盘操作" class="headerlink" title="磁盘操作"></a>磁盘操作</h4><p>盘用读/写头（read/write head)来读写存储在磁性表面的位，而读写头连接到一个传动臂（actuator arm) —端，如下图。通过沿着半径轴前后移动这个传动臂，驱动器可以将 读/写头定位在盘面上的任何磁道上。这样的机械运动称为<code>寻道（seek)</code>。一旦读/写头定位到了 期望的磁道上，那么当磁道上的每个位通过它的下面时，读/写头可以感知到这个位的值（读该位)，也可以修改这个位的值（写该位)。有多个盘片的磁盘针对每个盘面都有一个独立的读/写头，如下图所示。读/写头垂直排列，一致行动。<strong>在任刻，所有的读/写头都位于同一个柱面上</strong>。</p>
+<p><img src="/images/存储器结构-03.png" alt="存储器结构"> <img src="/images/存储器结构-04.png" alt="存储器结构"></p>
+<p><strong>磁盘以扇区大小的块来读写数据。对扇区的访问时间(access time)主要有三个部分：寻道时间(seek time)、旋转时间(rotational time)和传送时间(transfer time)。</strong></p>
+<h4 id="访问磁盘"><a href="#访问磁盘" class="headerlink" title="访问磁盘"></a>访问磁盘</h4><p><img src="/images/存储器结构-05.png" alt="存储器结构"></p>
+<p>在磁盘控制器接收到CPU的读命令后，它将逻辑号翻译成一个扇区地址，读该扇区的内容，然后将这些内容直接传送到主存，不需要CPU的干涉，这个过程称为<code>直接存储器传送(Direct Memory Access, DMA)</code>，这种数据传送称为<code>DMA传送</code>。</p>
+<ol>
+<li>磁盘控制器接收到CPU的读命令后，它将逻辑号翻译成一个扇区地址，读该扇区的内容<br><img src="/images/存储器结构-09.jpg" alt="存储器结构"></li>
+<li>DMA传送，将这些内容直接传送到主存，不需要CPU的干涉<br><img src="/images/存储器结构-10.jpg" alt="存储器结构"></li>
+<li>给cpu发一个中断信号<br><img src="/images/存储器结构-11.jpg" alt="存储器结构"><h4 id="磁盘总结"><a href="#磁盘总结" class="headerlink" title="磁盘总结"></a>磁盘总结</h4>总的来说，整个硬盘上一般有很多的盘片组成，每个盘片如同切西瓜一样被“切”成一块一块的扇面，同时沿着半径的方向被划分成了很多同心圆，就是传说中的磁道，每条磁道被扇面切成很多的扇形区域叫做扇区（扇区是从磁盘读出和写入信息的最小单位，通常大小为512字节），不同盘片上的同半径磁道组成了柱面。</li>
+</ol>
+<p><img src="/images/存储器结构-06.png" alt="存储器结构"></p>
+<h3 id="固态硬盘"><a href="#固态硬盘" class="headerlink" title="固态硬盘"></a>固态硬盘</h3><p>固态硬盘内部完全由NAND存储芯片构成，通过高低电平和改变晶体管开关状态，以此来存储数据。从原理方面看，SSD固态硬盘相对与HDD传统硬盘而言再也没有了寻道时间、柱面、坏道等概念，所以其速度和安全性都有极大的提升。</p>
+<p><img src="/images/存储器结构-08.jpg" alt="存储器结构"></p>
+]]></content>
     
     <summary type="html">
+    
+      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;在简单模型中，存储器系统是一个线性的字节数组，CPU能够在一个常数访问每个存储器位置。&lt;/p&gt;
+&lt;p&gt;实际上，存储器系统(memory sy
     
     </summary>
     
