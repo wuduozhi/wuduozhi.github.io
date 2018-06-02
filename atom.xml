@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-29T02:44:20.429Z</updated>
+  <updated>2018-06-02T17:10:52.828Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,78 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>大学|BAT之路</title>
+    <link href="http://yoursite.com/2018/06/03/%E5%A4%A7%E5%AD%A6-BAT%E4%B9%8B%E8%B7%AF/"/>
+    <id>http://yoursite.com/2018/06/03/大学-BAT之路/</id>
+    <published>2018-06-03T00:43:58.000Z</published>
+    <updated>2018-06-02T17:10:52.828Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>今天胡哥叫了分来来自百度、阿里巴巴、腾讯[BAT] 的学长回来开一场主题为“BAT之路”的分享会，自己还是VIP专属座位呢，很荣幸了。</p>
+<p><img src="/images/BAT之路.jpg" alt=""></p>
+<h3 id="弦歌-蓝杰学长"><a href="#弦歌-蓝杰学长" class="headerlink" title="弦歌.蓝杰学长"></a>弦歌.蓝杰学长</h3><p>胡鹏威学长即是弦歌的，也是蓝杰的，自己跟学长的经历有点类似了，但相比之下，还是学长经历丰富一点：</p>
+<ul>
+<li>大二开始实习</li>
+<li>创业</li>
+<li>金山云</li>
+<li>百度</li>
+<li>腾讯</li>
+</ul>
+<p><img src="/images/BAT之路--胡鹏威.jpg" alt=""></p>
+<p>这里还是要谢谢学长一下：之前学长有帮忙内推过百度，同时，还指导修改简历，很感动了，虽然最后结局并没有那么美好。</p>
+<p>说到自己，自己暑假也有一个去深信服实习机会，但暑假有小学期，然后自己就犹豫要不要去？今天听了学长的分享，自己下决心了：去！！第一份实习挺难找的，同时，深信服也是一家不错的公司了，听说伙食还很好，没什么理由不去。</p>
+<p><strong>如果不能一步到达目的地，那就远的那条路，只要到达了就好了。</strong>学长毕业时，没被腾讯选中，进入自己理想的公司，但是学长先后去了很多公司，58，搜狐，百度，然后才去腾讯，最终还是去了自己想去的公司。是的，我们可能不是那些幸运儿，能一步到达我们想要去的公司，但是我们可以先去其他的公司，把其当做跳板，像跳一跳那样，一步一步去到我们想要去的地方。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;今天胡哥叫了分来来自百度、阿里巴巴、腾讯[BAT] 的学长回来开一场主题为“BAT之路”的分享会，自己还是VIP专属座位呢，很荣幸了。&lt;/p
+    
+    </summary>
+    
+      <category term="college" scheme="http://yoursite.com/categories/college/"/>
+    
+    
+      <category term="college" scheme="http://yoursite.com/tags/college/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数据库|读sql必知必会</title>
+    <link href="http://yoursite.com/2018/05/31/%E6%95%B0%E6%8D%AE%E5%BA%93-%E8%AF%BBsql%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/"/>
+    <id>http://yoursite.com/2018/05/31/数据库-读sql必知必会/</id>
+    <published>2018-05-31T15:08:58.000Z</published>
+    <updated>2018-05-31T07:33:27.762Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="用通配符进行过滤"><a href="#用通配符进行过滤" class="headerlink" title="用通配符进行过滤"></a>用通配符进行过滤</h3><ul>
+<li><p><code>百分号(%)通配符</code>：在搜索串中，<strong>%表示任何字符出现任意次数</strong>。</p>
+</li>
+<li><p><code>下划线(_)通配符</code>：下划线通配符只匹配单个字符而不是多个字符。</p>
+</li>
+<li><p><code>方括号([])匹配符</code>:方括号([])通配符用来指定一个字符集，它必须匹配指定位置（通配符的位置）的一个字符。也可以在前面用^来否定。</p>
+</li>
+</ul>
+<p>通配符何以在搜索模式中任意位置使用，并且可以使用多个通配符，同时，也能混合使用不同的通配符。需要注意的是，通配符搜索的处理一般会花费一定的时间代价。</p>
+<h3 id="创建计算字段"><a href="#创建计算字段" class="headerlink" title="创建计算字段"></a>创建计算字段</h3><p>存储在数据库表中的数据一般不是应用程序所需要的格式，我们需要直接从数据库中检索出转换、计算或格式化过的数据，而不是检索出数据，然后再在客户机应用程序中重新格式化。</p>
+<ul>
+<li>拼接字段：</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;用通配符进行过滤&quot;&gt;&lt;a href=&quot;#用通配符进行过滤&quot; class=&quot;headerlink&quot; title=&quot;用通配符进行过滤&quot;&gt;&lt;/a&gt;用通配符进行过滤&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;百分号(%)通配符&lt;/code&gt;：在搜索串中，&lt;strong&gt;
+    
+    </summary>
+    
+      <category term="数据库" scheme="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+      <category term="数据库" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
   
   <entry>
     <title>深入理解计算机系统|Cache详解</title>
@@ -1834,168 +1906,6 @@ int main(){
     
       &lt;p&gt;这一节我们探讨过程调用[函数调用]是如何完成的。&lt;/p&gt;
 &lt;h3 id=&quot;栈帧的结构&quot;&gt;&lt;a href=&quot;#栈帧的结构&quot; class=&quot;headerlink&quot; title=&quot;栈帧的结构&quot;&gt;&lt;/a&gt;栈帧的结构&lt;/h3&gt;&lt;p&gt;倘若我们要想搞清楚过程的实现，就必须先知道栈帧的结构
-    
-    </summary>
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深入理解计算机系统|汇编的世界-4</title>
-    <link href="http://yoursite.com/2018/05/08/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E6%B1%87%E7%BC%96%E7%9A%84%E4%B8%96%E7%95%8C-4/"/>
-    <id>http://yoursite.com/2018/05/08/深入理解计算机系统-汇编的世界-4/</id>
-    <published>2018-05-07T17:28:03.000Z</published>
-    <updated>2018-05-07T16:13:07.257Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>本章我们来看一个特别有趣的内容，就是汇编级别的语言，如何利用寄存器实现if/for/while这些高级语言的流程控制，我相信你能感受到它的神奇之处。</p>
-<h3 id="条件码寄存器"><a href="#条件码寄存器" class="headerlink" title="条件码寄存器"></a>条件码寄存器</h3><p>在汇编层面，if/for/while的流程控制，都是通过跳转来实现的，那是怎么判断是否跳转的呢？ <code>条件寄存器</code></p>
-<table>
-<thead>
-<tr>
-<th>寄存器</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>CF (Carry Flag)</td>
-<td>进位标志寄存器，它记录无符号操作的溢出，当溢出时会被设为1</td>
-</tr>
-<tr>
-<td>ZF (Zero Flag)</td>
-<td>零标志寄存器，当计算结果为0时将会被设为1</td>
-</tr>
-<tr>
-<td>SF (Sign Flag)</td>
-<td>符号标志寄存器，当计算结果为负数时会被设为1</td>
-</tr>
-<tr>
-<td>OF (Overflow Flag)</td>
-<td>溢出标志寄存器，当计算结果导致了补码溢出时，会被设为1</td>
-</tr>
-</tbody>
-</table>
-<p>从上面寄存器的简单说明可以看出，ZF和SF可以判断结果的符号，而CF和OF可以判断无符号和补码的溢出。而我们平时使用的高级程序语言，就仅仅靠这四个寄存器和跳转指令，就可以演化出千变万化的流程控制，再一次感叹汇编设计者的伟大。</p>
-<h3 id="改变条件码寄存器的值"><a href="#改变条件码寄存器的值" class="headerlink" title="改变条件码寄存器的值"></a>改变条件码寄存器的值</h3><p>通常情况下，条件码寄存器的值无法主动被改变，它们大多时候是被动改变，这算是条件码寄存器的特色。这其实理解起来并不困难，因为条件码寄存器是1位的，而我们的数据格式最低为b，也就是8位，因此你无法使用任何数据传送指令去传送一个单个位的值。</p>
-<p>几乎所有的算术与逻辑指令都会改变条件码寄存器的值，不过改变的前提是触发了条件码寄存器的条件。比如对于<code>subl %edx,%eax</code>这个减法指令，假设<code>%edx</code>和<code>%eax</code>寄存器的值都为<code>0x10</code>，则两者相减的结果为0，此时ZF寄存器将会被自动设为1。对于其它的指令运算，都是类似的，会根据结果的不同而设置不同的条件码寄存器。</p>
-<h3 id="特殊的测试指令"><a href="#特殊的测试指令" class="headerlink" title="特殊的测试指令"></a>特殊的测试指令</h3><p>在进行算术与逻辑操作时，条件码寄存器的值可能随之改变。这里介绍两个比较特别的测试指令，它们不改变普通寄存器或者存储器的值，只是为了设置条件码寄存器的值。这算是唯二两个可以主动设置条件码寄存器的指令，它们分别是cmp以及test指令。</p>
-<p>cmp是compare的意思，它有两个操作数，比如cmp S2，S1，最终会基于S1-S2的值去设置条件码寄存器的值。而对于test来说是类似的，对于test S2，S1来说，它将基于S1&amp;S2去设置条件码寄存器的值。另外需要一提的是，两者都需要加数据格式后缀，比如b、w、l这些后缀。</p>
-<p>举个简单的例子，对于cmpl %edx，%eax这个指令来讲，假设%edx的值为y，%eax的值为x。则当x=y时，ZF将会被置为1。当x<y时，sf将会被置为1。而当x>y时，ZF和SF将同时为0。对于test指令来讲，则相对特别一点，它经常用于判断一个数是正数、负数，或者是0。当test用来判断一个数的正负零时，两个操作数为同一个，也就是说testl %eax，%eax可以用来判断%eax寄存器当中的值是正数、负数还是0。因此testl %eax，%eax就相当于cmpl $0，%eax这个指令。</y时，sf将会被置为1。而当x></p>
-<p>对于testl %eax，%eax这个指令，或许有的猿友会比较容易蒙，想不明白它如何判断一个数到底是正是负还是零。其实这个道理是非常简单的，只是有时候会一时转不过来，当两个操作数相同时，则经过“与运算”以后还是它自身。此时系统会根据计算结果去设置条件码，而结果又是它自身，因此其实就相当于根据这个数的正负零去设置条件码，这样就可以判断出这个数的正负了。就像cmpl $0，%eax一样，在减去0之后，还是它自身，然后根据自身的正负零去设置条件码寄存器。</p>
-<h3 id="访问条件码寄存器"><a href="#访问条件码寄存器" class="headerlink" title="访问条件码寄存器"></a>访问条件码寄存器</h3><p>对于普通寄存器来讲，使用的时候一般是直接读取它的值，而对于条件码寄存器来说，则不一定非要读取它的值才能使用。对于条件码寄存器来讲，有三种使用方式，都可以让它发挥作用。</p>
-<ul>
-<li>可以根据条件码寄存器的某个组合，将一个字节设置为0或1，其实这个就相当于读值。</li>
-<li>可以直接条件跳转到程序的某个其它的部分。</li>
-<li>可以有条件的传送数据。</li>
-</ul>
-<p>其中第一种方式涉及到<code>SET</code>指令，只用一个目的操作数，一条<code>SET</code>指令的目的操作数是8个单字节寄存器元素之一，或是存储一个字节的存储器位置，将这个字节设置成0或1。所以第一种方式其实就是普通寄存器的用法，直接读取条件码寄存器的值，然后进行使用。对于第二和第三种来说，就不是这样了，它们不会显示的读取条件码寄存器的值，而是直接使用。</p>
-<h4 id="SET指令"><a href="#SET指令" class="headerlink" title="SET指令"></a>SET指令</h4><p><img src="/images/汇编-20.png" alt="SET指令"></p>
-<p>对于<code>setae %al</code>指令来说，<code>%al</code>是<code>%eax</code>寄存器中的最后一个字节，这个指令的含义是，将<code>~CF</code>的值设置到<code>%eax</code>寄存器的最后一个字节。</p>
-<h3 id="条件码寄存器的组合"><a href="#条件码寄存器的组合" class="headerlink" title="条件码寄存器的组合"></a>条件码寄存器的组合</h3><p>条件码寄存器的组合是执行跳转的重要判断依据，如何将条件码寄存器的组合与条件联系起来。</p>
-<p>首先要说明的一点是，对于所有的组合都基于a-b这样的前提，也就是说条件码寄存器的值是经过了一个减运算设置后的值。例如，对于【e-&gt;ZF】这样的形式，代表的意思是字母e作为后缀时，则以ZF的值为1视为条件成立。</p>
-<h3 id="条件跳转指令：jmp指令"><a href="#条件跳转指令：jmp指令" class="headerlink" title="条件跳转指令：jmp指令"></a>条件跳转指令：jmp指令</h3><p>这个指令是我们程序实现流程控制的关键指令，它可以直接将程序跳转到指定的位置，又或者根据条件码寄存器的组合进行条件跳转。</p>
-<p><img src="/images/汇编-21.png" alt="jmp指令"></p>
-<p>可以看到，除了两个jmp指令之外，其余指令均是由j与条件码的组合组成的，因此除了第一个jmp直接跳转指令以及第二个jmp间接跳转指令之外，剩下的12个都是条件跳转指令，它们基于条件码寄存器的组合进行跳转。</p>
-<p>总的来说，跳转指令的地址编码一般有两种，第一种是基于PC的，第二种则是绝对地址。基于PC（程序计数器）则是指给出一个偏移量，这个偏移量基于当前下一条指令的地址，也就是PC当中的值，这是一种最常用的方式。绝对地址则比较简单，它将直接给出存储器当中代码的位置。</p>
-<p>比如我们最容易理解的je指令，它代表的是“相等则跳转”。j是跳转的意思，e则是条件码的组合，代表英文equals，因为我们基于a-b去设置条件码寄存器，因此当ZF为1时，代表a等于b。因此ZF条件码寄存器就是相等的条件码组合，而je就代表相等则跳转，就像if(a==b){block}这样的代码所代表的意思。</p>
-<ul>
-<li><p>e-&gt;ZF（相等）：e是equals的意思。这里代表的组合是ZF，因为ZF在结果为0时设为1，即a-b=0，也就是说a==b。因此ZF代表的意义是相等。</p>
-</li>
-<li><p>ne-&gt;~ZF（不相等）：ne是not equals的意思。这里代表的组合是~ZF，也就是ZF做“非运算”，则很明显是不相等的意思。</p>
-</li>
-<li><p>s-&gt;SF（负数）：s这里没什么实际意义，因为负数的直译是negative number，首字母是n，这与not的首字母重复了，因此这里就取了SF条件码寄存器的首个字母（纯属LZ的猜测，无权威证明，不过LZ自我感觉应该八九不离十，0.0）。这里代表的组合是SF，因为SF在计算结果为负数时设为1，此时可以认为b为0，即a&lt;0。因此这里是负数的意思。</p>
-</li>
-<li><p>ns-&gt;~SF（非负数）：与s相反，加上n则是not的意思，因此这里代表非负数。</p>
-</li>
-<li><p>l-&gt;SF^OF（有符号的小于）：l代表的是less。这里的组合是SF^OF，即对SF和OF做“异或运算”。“异或运算”的意思则是代表，SF和OF不能相等。那么有两种情况，当OF为0时，则代表没有溢出，此时SF必须为1，SF为1则代表结果为负。即a-b&lt;0，也就是a&lt;b，也就是小于的意思。当OF为1时，则代表产生了溢出，而此时SF必须为0，也就是说结果最后为正数，那么此时则是负溢出，也可以得到a-b&lt;0，即a&lt;b。综合前面两种情况，SF^OF则代表小于的意思。</p>
-</li>
-<li><p>le-&gt;(SF^OF)|ZF（有符号的小于等于）：le是less equals的意思。有了前面小于的基础，这里就很容易理解了。SF^OF代表小于，ZF代表等于，因此两者的“或运算”则代表小于等于。</p>
-</li>
-<li><p>g-&gt;~(SF^OF)&amp;~ZF（有符号的大于）：g是greater的意思。这里的组合是~(SF^OF)&amp;~ZF，相对来说就比较复杂了。不过有了前面的铺垫，这个也非常好理解。SF^OF代表小于，则~(SF^OF)代表大于等于，而~ZF代表不等于，将~(SF^OF)与~ZF取“与运算”，则代表大于等于且不等于，也就是大于。</p>
-</li>
-<li><p>ge-&gt;~(SF^OF)（有符号的大于等于）：ge是greater equals的意思。这个组合就不需要再解释了吧。</p>
-</li>
-<li><p>b-&gt;CF（无符号的小于）：b是below的意思。CF是无符号溢出标志，这里的意思是指如果a-b结果溢出了，则代表a是小于b的，即a&lt;b。其实这个结论很显然，关键点就在于，无符号减法只有在减出负数的时候才可能溢出，也就是说只要结果溢出了，那么一定有a-b&lt;0。因此这个结论就显而易见了。</p>
-</li>
-<li><p>be-&gt;CF|ZF（无符号的小于等于）：这里是below equals的意思。因此这里会与ZF计算“或运算”，字面上也很容易理解，即CF（小于）|（或）ZF（等于），也就是小于等于。</p>
-</li>
-<li><p>a-&gt;~CF&amp;~ZF（无符号的大于）：a代表的是above。这个组合也是非常好理解的，CF代表小于，则~CF代表大于等于，~ZF代表不等于，因此~CF&amp;~ZF则代表大于等于且不等于，即大于。</p>
-</li>
-<li><p>ae-&gt;~CF（无符号的大于等于）：ae是above equals的意思。至于这个组合的意义，相信也不需要解释了吧。</p>
-</li>
-</ul>
-<p>以上则是几乎所有的条件码寄存器组合，如果你完全理解了上面的组合，那么接下来的一系列指令会非常简单。它们只是基于条件码的组合，进行设值、跳转、传送的操作而已。从形式上来讲，上面这些组合与数据格式中的b、w、l的用法非常相似。</p>
-<h4 id="基于PC的偏移量寻址"><a href="#基于PC的偏移量寻址" class="headerlink" title="基于PC的偏移量寻址"></a>基于PC的偏移量寻址</h4><p>相信大部分都听说过这样的说法，PC（程序计数器）会一直指向程序的下一条指令，因此这里所说的PC的相对位置，则是指跳转指令会附带一个偏移量，而这个偏移量与PC值的和则刚好指向跳转的位置。为了理解起来简单，这里举个简单的例子，我们考虑下面一段代码，这是一个非常简单的取两数最小值的方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">int min(int a,int b)&#123;</div><div class="line">    if( a &lt; b )&#123;</div><div class="line">        return a;</div><div class="line">    &#125;else&#123;</div><div class="line">        return b;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我们将其命名为jmp.c，并使用-O1和-S参数去编译它，我们将会得到以下汇编代码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">	.file	&quot;jmp.c&quot;</div><div class="line">	.text</div><div class="line">	.globl	min</div><div class="line">	.type	min, @function</div><div class="line">min:</div><div class="line">.LFB0:</div><div class="line">	.cfi_startproc</div><div class="line">	pushl	%ebp</div><div class="line">	.cfi_def_cfa_offset 8</div><div class="line">	.cfi_offset 5, -8</div><div class="line">	movl	%esp, %ebp</div><div class="line">	.cfi_def_cfa_register 5</div><div class="line">	movl	8(%ebp), %eax</div><div class="line">	cmpl	12(%ebp), %eax</div><div class="line">	jge	.L2</div><div class="line">	movl	8(%ebp), %eax   </div><div class="line">	jmp	.L3</div><div class="line">.L2:</div><div class="line">	movl	12(%ebp), %eax</div><div class="line">.L3:</div><div class="line">	popl	%ebp</div><div class="line">	.cfi_restore 5</div><div class="line">	.cfi_def_cfa 4, 4</div><div class="line">	ret</div><div class="line">	.cfi_endproc</div><div class="line">.LFE0:</div><div class="line">	.size	min, .-min</div><div class="line">	.ident	&quot;GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4&quot;</div><div class="line">	.section	.note.GNU-stack,&quot;&quot;,@progbits</div></pre></td></tr></table></figure>
-<p>经过前面的学习，不难看懂上面的汇编代码。其中a和b分别存储在栈顶+8和+12的位置，<code>cmpl    12(%ebp), %eax</code>比较 <code>a-b</code>的结果，如果<code>a&gt;=b</code>，就跳转到 .L2,执行<code>movl    12(%ebp), %eax</code>把b的值放到寄存器<code>%eax</code>中，作为函数返回值；如果<code>a&lt;b</code>则不跳转，执行<code>movl    8(%ebp), %eax</code>把a的值放到寄存器<code>%eax</code>中，作为函数返回值,然后<code>jmp</code>无条件跳转到 .L3 。可以看到，在汇编代码当中，<code>jmp族指令</code>会使用标签指示跳转地址，比如上面出现过的<code>.L2</code>、<code>.L3</code>。</p>
-<p>不过经过汇编器处理之后，标签将不会再存在，此时会使用上面所说的PC偏移量记录跳转地址。接下来，我们看一下这个<code>偏移量寻址</code>的方式。我们可以使用-O1和-c编译jmp.c，并使用objdump加-d参数去查看jmp.o，这样会得到下面的反汇编代码。</p>
-<p><img src="../images/汇编-22.png" alt="反汇编代码"></p>
-<p>可以看到，这里面的指令序列与刚才的一模一样，因为我们采取了同样的优化等级-O1。值得注意的是，在第<code>0x9</code>行的指令<code>jge    10 &lt;min+0x10&gt;</code>中，跳转的偏移地址是<code>0x10</code>，也就是<code>mov    0xc(%ebp),%eax</code>,其实这个地址是通过偏移量计算出来的。作为暖男的我，已经在图上圈出来了，在指令的<code>jge    10</code>二进制序列<code>7d 05</code>中,<code>7d</code>指的是指令<code>jge</code>,<code>05</code>指的是操作数，此时的<code>pc</code>值是<code>0xb</code>。请切记<strong>PC（程序计数器）会一直指向程序的下一条指令</strong>，所以指令<code>jge</code>的跳转地址为<code>0x05+0xb = 0x10</code>,正是指令<code>mov    0xc(%ebp),%eax</code>。</p>
-<p>为了证明这一点，我们可以使用hexdump加-C参数查看jmp.o。</p>
-<p><img src="/images/汇编-23.png" alt="hexdump查看"></p>
-<p>这下比较清楚了吧，当碰到<code>7d</code>指令（即jle）时，会检查后面的偏移量，结果一看是<code>0x05</code>，于是在条件满足的前提下，会跳过5个字节执行接下来的指令，也就是<code>8b 45 0c</code>（即mov指令）。</p>
-<h3 id="条件传送指令：cmov指令"><a href="#条件传送指令：cmov指令" class="headerlink" title="条件传送指令：cmov指令"></a>条件传送指令：cmov指令</h3><p>接下来我们来看最后一种条件指令，叫做条件传送指令。顾名思义，条件传送指令的意思就是在满足条件的时候进行传送的指令，也就是cmov指令。它与set指令十分相似，同样有12种，也就是加上12种条件码寄存器的组合即可，以下是一张书中的指令表格。</p>
-<p><img src="/images/汇编-24.png" alt="cmov指令"></p>
-<p><a href="http://www.cnblogs.com/zuoxiaolong/p/computer18.html" target="_blank" rel="external">深入理解计算机系统（3.6）—汇编中精妙的流程控制（重要）（难度较高）</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;本章我们来看一个特别有趣的内容，就是汇编级别的语言，如何利用寄存器实现if/for/while这些高级语言的流程控制，我相信你能感受到它的神
-    
-    </summary>
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深入理解计算机系统|汇编的世界-3</title>
-    <link href="http://yoursite.com/2018/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E6%B1%87%E7%BC%96%E7%9A%84%E4%B8%96%E7%95%8C-3/"/>
-    <id>http://yoursite.com/2018/05/07/深入理解计算机系统-汇编的世界-3/</id>
-    <published>2018-05-06T20:43:50.000Z</published>
-    <updated>2018-05-06T14:10:08.003Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="算术与逻辑运算指令"><a href="#算术与逻辑运算指令" class="headerlink" title="算术与逻辑运算指令"></a>算术与逻辑运算指令</h3><p>算术与逻辑运算包括很多种，估计各位猿友也能很快的想出来，比如最常见的加减乘除、与或非、左移右移等等。不过还有一个很神奇的指令 <code>leal</code>。</p>
-<p><img src="/images/汇编-13.png" alt="算术与逻辑运算指令"></p>
-<h3 id="leal指令"><a href="#leal指令" class="headerlink" title="leal指令"></a>leal指令</h3><p>leal指令是非常神奇的一个指令，它可以取一个存储器操作数的地址，并且将其赋给目的操作数。如果用C语言当中来对应的话，它就相当于&amp;运算。</p>
-<p>比如对于<code>leal 4(%edx,%edx,4),%eax</code>这条指令来讲，我们假设<code>%edx</code>寄存器的值为x的话，那么这条指令的作用就是将<code>4 + x + 4x = 5x + 4</code>赋给<code>%eax</code>寄存器。它和<code>mov指令</code>的区别就在于，假设是<code>movl 4(%edx,%edx,4),%eax</code>这个指令，它的作用是将内存地址为<code>5x+4</code>的内存区域的值赋给<code>%eax</code>寄存器，而<code>leal指令</code>只是将5x+4这个地址赋给目的操<code>作数%eax</code>而已，它并不对存储器进行引用的值的计算。</p>
-<p><img src="/images/汇编-14.png" alt="leal指令"></p>
-<p>可以看到，此时在存储器中，地址为5x+4的区域的值为1000。那么此时若是进行movl 4(%edx,%edx,4),%eax操作，很显然，%eax的值应该为1000，也就是下图。</p>
-<p><img src="/images/汇编-15.png" alt="leal指令"></p>
-<p>但是如果进行leal 4(%edx,%edx,4),%eax操作的话，%eax的值就不是1000了，因为leal指令不会去取存储器当中的值，因此寄存器%eax的值应该是5x+4。</p>
-<p><img src="/images/汇编-16.png" alt="leal指令"></p>
-<p>试想一下，倘若在地址为5x+4的位置存储的是变量i，那么其实这条指令就相当于&amp;i操作，这也就是C语言当中的&amp;取地址操作的汇编级做法。</p>
-<h3 id="特殊的算术操作指令"><a href="#特殊的算术操作指令" class="headerlink" title="特殊的算术操作指令"></a>特殊的算术操作指令</h3><p>不难发现这张图的指令跟上面的指令有点类似，不过下面的指令有点特殊：<strong>这些指令可以让只有32位的寄存器存储64位的数据</strong>。</p>
-<p><img src="/images/汇编-17.png" alt="特殊的算术操作指令"></p>
-<h3 id="imull、mull指令"><a href="#imull、mull指令" class="headerlink" title="imull、mull指令"></a>imull、mull指令</h3><p>这两个指令一看就是双胞胎，它们一个负责有符号全64位乘法，一个负责无符号全64位乘法。不难发现，imull这个指令好像是负责乘法的指令，而且在之前的乘法并没有区分有符号和无符号，现在怎么又成双胞胎指令了。</p>
-<p>上张图中出现的指令是<code>IMUL指令</code>，当它操作双字的时候，也就是<code>imull指令</code>。不过不同的是，它的一般形式是<code>imull S D</code>，这里有两个操作数，它将计算S和D的乘积并截断为双字，然后存储在D当中。由于在截断时，无符号以及有符号的二进制序列是一样的，因此此处的乘法指令并不区分有符号和无符号。</p>
-<p>现在我们讨论的<code>imull指令</code>，则与上面的普通乘法指令稍有不同，它只有一个操作数，也就是说，它的一般形式为<code>imull S</code>，这点在图片中也能看出来，而另外一个操作数默认为<code>%eax寄存器</code>。最终的结果，会将高32位存入%edx寄存器，而低32位存入%eax寄存器。</p>
-<p>试想一下，如果我们只取%eax寄存器当中的32位结果，那其实这里计算的结果就是S*%eax，此时<code>imull S</code>的作用就与<code>imul S D</code>是一样的，只是目的操作数被固定为%eax罢了。</p>
-<p>接下来我们看一个简单的示例，我们去看下指令<code>imull $0x3</code>的结果，我们假设此时<code>%eax</code>寄存器的值为<code>0x82345600</code>。也就是我们需要计算<code>0x3*0x82345600</code>的值，十六进制结果为<code>0xFFFF FFFE 869D 0200</code>。这个结果为64位的，因此我们寄存器的前后状态如下所示。</p>
-<p><img src="/images/汇编-18.png" alt="imull指令"></p>
-<p>可以看到，%eax保存着低32位的结果，单说这32位的话，它的有符号数值为-2036530688，正是我们直接计算0x3*0x82345600的32位截断后的有符号值，显然这个结果溢出了。如果组合上高32位，则结果为-6331497984，将它加上或者取模4294967296（2的32次方）将得到我们32位的结果。这里的有符号乘法采取的是先符号扩展被乘数，然后两者相乘，将结果再截断为64位所得。</p>
-<p>对于mull的单操作数指令来讲，就比较简单了，它采用的是无符号乘法，因此就和我们平时的十进制乘法运算类似，只是同样的，它也会将结果的高32位存入%edx，将低32位存入%eax。</p>
-<h3 id="cltd指令"><a href="#cltd指令" class="headerlink" title="cltd指令"></a>cltd指令</h3><p>这个指令相对来说就非常简单了，它就是简单的将%eax寄存器的值符号扩展32位到%edx寄存器，也就是说，如果%eax寄存器的二进制序列的最高位为0，则cltd指令将把%edx置为32个0，相反，如果%eax寄存器的二进制序列最高位为1，则cltd指令将会自从填充%edx寄存器为32个1。</p>
-<h3 id="idivl、divl指令"><a href="#idivl、divl指令" class="headerlink" title="idivl、divl指令"></a>idivl、divl指令</h3><p>这两个指令与前面的imull以及mull类似，它也将计算结果存放在两个寄存器当中，其中余数存放在%edx寄存器，商存放在%eax寄存器。如果各位理解了前面的imull以及mull，那么这里idivl和divl理解起来会非常简单。</p>
-<p>这里举一个简单的例子，考虑指令<code>idivl $0x3</code>的结果，我们假设此时%eax寄存器的值为<code>0x82345600</code>。也就是我们需要计算0x82345600/0x3的值，商为0xD6117200，余数为0x0。因此我们寄存器的前后状态如下所示。</p>
-<p><img src="/images/汇编-19.png" alt="idivl指令"></p>
-<p>可以看到，在idivl这个指令执行的过程中，其实对被除数进行了符号扩展，类似于cltd指令，或者有时也会将%eax移动到%edx，然后对%edx进行算术右移31位的运算。这两种方式的结果是一样的，都是将%eax符号扩展32位并存储在%edx当中。</p>
-<p><a href="http://www.cnblogs.com/zuoxiaolong/p/computer16.html" target="_blank" rel="external">深入理解计算机系统（3.4）—算数与逻辑运算指令详解</a><br><a href="http://www.cnblogs.com/zuoxiaolong/p/computer17.html" target="_blank" rel="external">深入理解计算机系统（3.5）—特殊的算术操作指令详解</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;算术与逻辑运算指令&quot;&gt;&lt;a href=&quot;#算术与逻辑运算指令&quot; class=&quot;headerlink&quot; title=&quot;算术与逻辑运算指令&quot;&gt;&lt;/a&gt;算术与逻辑运算指令&lt;/h3&gt;&lt;p&gt;算术与逻辑运算包括很多种，估计各位猿友也能很快的想出来，比如最常见的加减乘除、与或非
     
     </summary>
     
