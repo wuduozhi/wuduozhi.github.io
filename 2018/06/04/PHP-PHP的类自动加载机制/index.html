@@ -4,24 +4,25 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>Java|Restful和Jersey介绍 | 只为不凡而来</title>
+    <title>PHP|PHP的类自动加载机制 | 只为不凡而来</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="wuduozhi">
     
 
     
-    <meta name="description" content="简介REST 中最重要的概念是资源（resources） ，使用全球 ID（通常使用 URI）标识。client应用程序使用 HTTP 方法（GET/ POST/ PUT/ DELETE ）操作资源或资源集。 RESTful Web 服务是使用 HTTP 和 REST 原理实现的 Web 服务。通常。RESTful Web 服务应该定义下面方面：Web 服务的基/根 URI。比方 http://h">
+    <meta name="description" content="在PHP开发过程中，如果希望从外部引入一个class，通常会使用include和require方法，去把定义这个class的文件包含进来。这个在小规模开发的时候，没什么大问题。但在大型的开发项目中，这么做会产生大量的require或者include方法调用，这样不因降低效率，而且使得代码难以维护，况且require_once的代价很大。 在PHP5之前，各个PHP框架如果要实现类的自动加载，一般都">
+<meta name="keywords" content="PHP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java|Restful和Jersey介绍">
-<meta property="og:url" content="http://yoursite.com/2018/01/28/Java-Restful-和-Jersey介绍/index.html">
+<meta property="og:title" content="PHP|PHP的类自动加载机制">
+<meta property="og:url" content="http://yoursite.com/2018/06/04/PHP-PHP的类自动加载机制/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="简介REST 中最重要的概念是资源（resources） ，使用全球 ID（通常使用 URI）标识。client应用程序使用 HTTP 方法（GET/ POST/ PUT/ DELETE ）操作资源或资源集。 RESTful Web 服务是使用 HTTP 和 REST 原理实现的 Web 服务。通常。RESTful Web 服务应该定义下面方面：Web 服务的基/根 URI。比方 http://h">
+<meta property="og:description" content="在PHP开发过程中，如果希望从外部引入一个class，通常会使用include和require方法，去把定义这个class的文件包含进来。这个在小规模开发的时候，没什么大问题。但在大型的开发项目中，这么做会产生大量的require或者include方法调用，这样不因降低效率，而且使得代码难以维护，况且require_once的代价很大。 在PHP5之前，各个PHP框架如果要实现类的自动加载，一般都">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-02-03T03:22:19.444Z">
+<meta property="og:updated_time" content="2018-06-03T12:04:25.099Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java|Restful和Jersey介绍">
-<meta name="twitter:description" content="简介REST 中最重要的概念是资源（resources） ，使用全球 ID（通常使用 URI）标识。client应用程序使用 HTTP 方法（GET/ POST/ PUT/ DELETE ）操作资源或资源集。 RESTful Web 服务是使用 HTTP 和 REST 原理实现的 Web 服务。通常。RESTful Web 服务应该定义下面方面：Web 服务的基/根 URI。比方 http://h">
+<meta name="twitter:title" content="PHP|PHP的类自动加载机制">
+<meta name="twitter:description" content="在PHP开发过程中，如果希望从外部引入一个class，通常会使用include和require方法，去把定义这个class的文件包含进来。这个在小规模开发的时候，没什么大问题。但在大型的开发项目中，这么做会产生大量的require或者include方法调用，这样不因降低效率，而且使得代码难以维护，况且require_once的代价很大。 在PHP5之前，各个PHP框架如果要实现类的自动加载，一般都">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -85,14 +86,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2018/01/28/Java-Restful-和-Jersey介绍/" title="Java|Restful和Jersey介绍" itemprop="url">Java|Restful和Jersey介绍</a>
+      <a href="/2018/06/04/PHP-PHP的类自动加载机制/" title="PHP|PHP的类自动加载机制" itemprop="url">PHP|PHP的类自动加载机制</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-01-27T20:38:21.000Z" itemprop="datePublished"> Published 2018-01-28</time>
+    <time datetime="2018-06-03T19:06:12.000Z" itemprop="datePublished"> Published 2018-06-04</time>
     
   </p>
 </header>
@@ -101,41 +102,50 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#REST-与-JSR（jersey"><span class="toc-number">1.1.</span> <span class="toc-text">REST 与 JSR（jersey)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jersey-jar包简单介绍"><span class="toc-number">1.2.</span> <span class="toc-text">Jersey jar包简单介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jersey配置"><span class="toc-number">1.3.</span> <span class="toc-text">Jersey配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加Json支持"><span class="toc-number">1.4.</span> <span class="toc-text">添加Json支持</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#autoload示例"><span class="toc-number">1.</span> <span class="toc-text">__autoload示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#spl-autoload-register-函数"><span class="toc-number">2.</span> <span class="toc-text">spl_autoload_register()函数</span></a></li></ol>
 		
 		</div>
 		
-		<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>REST 中最重要的概念是资源（resources） ，使用全球 ID（通常使用 URI）标识。client应用程序使用 HTTP 方法（GET/ POST/ PUT/ DELETE ）操作资源或资源集。</p>
-<p>RESTful Web 服务是使用 HTTP 和 REST 原理实现的 Web 服务。通常。RESTful Web 服务应该定义下面方面：Web 服务的基/根 URI。比方 <a href="http://host/" target="_blank" rel="external">http://host/</a><appcontext>/resources。支持 MIME 类型的响应数据，包含JSON/XML/ATOM等等。服务支持的操作集合（比如 POST、GET、PUT 或  DELETE)</appcontext></p>
-<h3 id="REST-与-JSR（jersey"><a href="#REST-与-JSR（jersey" class="headerlink" title="REST 与 JSR（jersey)"></a>REST 与 JSR（jersey)</h3><p>JSR－311  Java API for RESTful Web Services (JAX-RS) 1.0 and 1.1</p>
-<p>JAX-RS是将在JavaEE 6引起的一种新技术。 JAX-RS即Java API for RESTful Web Services。是一个Java编程语言的应用程序接口，支持依照表述性状态转移（REST）架构风格创建Web服务。</p>
-<p>JAX-RS使用了Java SE5引入的Java标注来简化Web服务的client和服务端 的开发和部署。包含：</p>
-<p>@Path。标注资源类或者方法的相对路径 　　<br>@GET。@PUT。@POST。@DELETE，标注方法是HTTP请求的类型。</p>
-<p>　　<br>@Produces，标注返回的MIME媒体类型 　　<br>@Consumes。标注可接受请求的MIME媒体类型<br>@PathParam。@QueryParam。@HeaderParam。@CookieParam，@MatrixParam。@FormParam,分别标注方法的參数来自于HTTP请求的不同位置。比如@PathParam来自于URL的路径，@QueryParam来自于URL的查询參数，@HeaderParam来自于HTTP请求的头信息，@CookieParam来自于HTTP请求的Cookie,@FormParam来自于HTTP请求的post的form格式。</p>
-<h3 id="Jersey-jar包简单介绍"><a href="#Jersey-jar包简单介绍" class="headerlink" title="Jersey jar包简单介绍"></a>Jersey jar包简单介绍</h3><p>Jersey 是 JAX-RS 的參考实现，它包括三个主要部分。</p>
+		<p>在PHP开发过程中，如果希望从外部引入一个class，通常会使用include和require方法，去把定义这个class的文件包含进来。这个在小规模开发的时候，没什么大问题。但在大型的开发项目中，这么做会产生大量的require或者include方法调用，这样不因降低效率，而且使得代码难以维护，况且require_once的代价很大。</p>
+<p>在PHP5之前，各个PHP框架如果要实现类的自动加载，一般都是按照某种约定自己实现一个遍历目录，自动加载所有符合约定规则的文件的类或函数。 当然，PHP5之前对面向对象的支持并不是太好，类的使用也没有现在频繁。 在PHP5后，当加载PHP类时，如果类所在文件没有被包含进来，或者类名出错，Zend引擎会自动调用<code>__autoload</code> 函数。此函数需要用户自己实现<code>__autoload</code>函数。 在PHP5.1.2版本后，可以使用<code>spl_autoload_register</code>函数自定义自动加载处理函数。当没有调用此函数，默认情况下会使用SPL自定义的<code>spl_autoload</code>函数。</p>
+<h4 id="autoload示例"><a href="#autoload示例" class="headerlink" title="__autoload示例"></a><code>__autoload</code>示例</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">__autoload</span><span class="params">($class_name)</span> </span>&#123;  </div><div class="line">   <span class="keyword">echo</span> <span class="string">'__autload class:'</span>, $class_name, <span class="string">'&lt;br /&gt;'</span>;  </div><div class="line">&#125;  </div><div class="line"></div><div class="line"><span class="keyword">new</span> Demo();</div></pre></td></tr></table></figure>
+<p>以上的代码在最后会输出：__autload class:Demo。<br>并在此之后报错显示： Fatal error: Class ‘Demo’ not found</p>
+<p>我们一般使用_autoload自动加载类如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">__autoload</span><span class="params">($class_name)</span> </span>&#123;  </div><div class="line">   <span class="keyword">echo</span> <span class="string">'__autload class:'</span>, $class_name, <span class="string">'&lt;br /&gt;'</span>;  </div><div class="line">&#125;  </div><div class="line"></div><div class="line"><span class="keyword">new</span> Demo();</div></pre></td></tr></table></figure>
+<p>我们可以看出_autoload至少要做三件事情:</p>
 <ul>
-<li>核心server（CoreServer）：通过提供JSR311中标准化的凝视和API标准化，您能够用直观的方式开发 RESTful Web 服务。</li>
-<li>核心client（CoreClient）：JerseyclientAPI帮助您与REST服务轻松通信</li>
-<li>集成（Integration）：Jersey 还提供能够轻松集成 Spring、Guice、Apache Abdera 的库。</li>
+<li>第一件事是根据类名确定类文件名</li>
+<li>第二件事是确定类文件所在的磁盘路径[在我们的例子是最简单的情况，类与调用它们的PHP程序文件在同一个文件夹下]</li>
+<li>第三件事是将类从磁盘文件中加载到系统中。</li>
 </ul>
-<h3 id="Jersey配置"><a href="#Jersey配置" class="headerlink" title="Jersey配置"></a>Jersey配置</h3><p>从 Jersey 开发包中下面的库为必须：</p>
-<ul>
-<li>核心服务器：jersey-core.jar。jersey-server.jar。jsr311-api.jar。asm.jar</li>
-<li>核心客户端：（用于測试）jersey-client.jar</li>
-<li>JAXB 支持：（在高级例子中使用）jaxb-impl.jar，jaxb-api.jar。activation.jar，stax-api.jar，wstx-asl.jar</li>
-<li>JSON 支持：（在高级例子中使用）jersey-json.jar</li>
-</ul>
-<p>(JSON是类似于xml的一种通用。在不同project/语言/平台间传递数据的格式，其比xml更精炼更优良，差点儿全部的语言和框架已经支持了，传递过来的数据再用JSON解码就可以，就像c++struct结构体一样，直接json.xxx就可以訪问。多层的话就json.xxx.xxx)</p>
-<p>您须要将全部的 REST 请求发送到 Jersey 容器 —— 在应用程序的 web.xml 文件里定义 servlet 调度程序（參见清单 1）。</p>
-<p>除了声明 Jersey servlet 外，它还定义一个初始化參数，指示包括资源的 Java 包。</p>
-<p>Web.xml: Xml代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;servlet&gt;  </div><div class="line">    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;  </div><div class="line">    &lt;servlet-class&gt;  </div><div class="line">      com.sun.jersey.spi.container.servlet.ServletContainer  </div><div class="line">    &lt;/servlet-class&gt;  </div><div class="line">    &lt;init-param&gt;  </div><div class="line">      &lt;param-name&gt;com.sun.jersey.config.property.packages&lt;/param-name&gt;  </div><div class="line">      &lt;param-value&gt;sh.cmbchina.pension.resources&lt;/param-value&gt;  </div><div class="line">    &lt;/init-param&gt;  </div><div class="line">    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;  </div><div class="line">&lt;/servlet&gt;  </div><div class="line">&lt;servlet-mapping&gt;  </div><div class="line">    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;  </div><div class="line">    &lt;url-pattern&gt;/rest/*&lt;/url-pattern&gt;  </div><div class="line">&lt;/servlet-mapping&gt;</div></pre></td></tr></table></figure></p>
-<p>这样，全部在包sh.cmbchina.pension.resources以下的resource类都会被注冊为Restful url的响应处理类。</p>
-<h3 id="添加Json支持"><a href="#添加Json支持" class="headerlink" title="添加Json支持"></a>添加Json支持</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;com.sun.jersey&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;jersey-json&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;1.18&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<p>第三步最简单，只需要使用include/require即可。要实现第一步，第二步的功能，必须在开发时约定类名与磁盘文件的映射方法，只有这样我们才能根据类名找到它对应的磁盘文件。 </p>
+<p>因此，当有大量的类文件要包含的时候，我们只要确定相应的规则，然后在<code>__autoload()</code>函数中，将类名与实际的磁盘文件对应起来，就可以实现lazy loading的效果。从这里我们也可以看出<code>__autoload()</code>函数的实现中最重要的是类名与实际的磁盘文件映射规则的实现。 </p>
+<p>但现在问题来了，假如在一个系统的实现中，假如需要使用很多其它的类库，这些类库可能是由不同的开发工程师开发，其类名与实际的磁盘文件的映射规则不尽相同。这时假如要实现类库文件的自动加载，就必须在<code>__autoload()</code>函数中将所有的映射规则全部实现，因此<code>__autoload()</code>函数有可能会非常复杂，甚至无法实现。最后可能会导致<code>__autoload()</code>函数十分臃肿，这时即便能够实现，也会给将来的维护和系统效率带来很大的负面影响。在这种情况下，在PHP5引入SPL标准库,一种新的解决方案，即<code>spl_autoload_register()</code>函数。</p>
+<h4 id="spl-autoload-register-函数"><a href="#spl-autoload-register-函数" class="headerlink" title="spl_autoload_register()函数"></a>spl_autoload_register()函数</h4><p><strong>此函数的功能就是把函数注册至SPL的<code>__autoload</code>函数栈中，并移除系统默认的<code>__autoload()</code>函数</strong>。下面的例子可以看出：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">__autoload</span><span class="params">($class_name)</span> </span>&#123;  </div><div class="line">    <span class="keyword">echo</span> <span class="string">'__autload class:'</span>, $class_name, <span class="string">'&lt;br /&gt;'</span>;  </div><div class="line">&#125;  </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">classLoader</span><span class="params">($class_name)</span> </span>&#123;  </div><div class="line">    <span class="keyword">echo</span> <span class="string">'SPL load class:'</span>, $class_name, <span class="string">'&lt;br /&gt;'</span>;  </div><div class="line">&#125;  </div><div class="line">spl_autoload_register(<span class="string">'classLoader'</span>);  </div><div class="line"><span class="keyword">new</span> Test();<span class="comment">//结果：SPL load class:Test</span></div></pre></td></tr></table></figure>
+<p>语法：<code>bool  spl_autoload_register ( [callback $autoload_function] )</code>   接受两个参数：一个是添加到自动加载栈的函数，另外一个是加载器不能找到这个类时是否抛出异常的标志。第一个参数是可选的，并且默认指向<code>spl_autoload()</code>函数，这个函数会自动在路径中查找具有小写类名和.php扩展或者.ini扩展名，或者任何注册到<code>spl_autoload_extensions()</code>函数中的其它扩展名的文件。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CalssLoader</span>     </span></div><div class="line">&#123;     </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">loader</span><span class="params">($classname)</span>     </span></div><div class="line">    &#123;     </div><div class="line">        $class_file = strtolower($classname).<span class="string">".php"</span>;     </div><div class="line">        <span class="keyword">if</span> (file_exists($class_file))&#123;     </div><div class="line">            <span class="keyword">require_once</span>($class_file);     </div><div class="line">        &#125;     </div><div class="line">    &#125;     </div><div class="line">&#125;      </div><div class="line"><span class="comment">// 方法为静态方法     </span></div><div class="line">spl_autoload_register(<span class="string">'CalssLoader::loader'</span>);      </div><div class="line">$test = <span class="keyword">new</span> Test();</div></pre></td></tr></table></figure></p>
+<p>一旦调用<code>spl_autoload_register()</code>函数，当调用未定义类时，系统会按顺序调用注册到<code>spl_autoload_register()</code>函数的所有函数，而不是自动调用<code>__autoload()</code>函数。如果要避免这种情况，需采用一种更加安全的<code>spl_autoload_register()</code>函数的初始化调用方法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="keyword">false</span> === spl_autoload_functions())&#123;      </div><div class="line">    <span class="keyword">if</span>(function_exists(<span class="string">'__autoload'</span>))&#123;      </div><div class="line">        spl_autoload_registe(<span class="string">'__autoload'</span>,<span class="keyword">false</span>);      </div><div class="line">    &#125;      </div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p><code>spl_autoload_functions()</code>函数会返回已注册函数的一个数组,如果SPL自动加载栈还没有被初始化,它会返回布尔值false。然后，检查是否有一个名为<code>__autoload()</code>的函数存在,如果存在，可以将它注册为自动加载栈中的第一个函数，从而保留它的功能。之后，可以继续注册自动加载函数。</p>
+<p>还可以调用<code>spl_autoload_register()</code>函数以注册一个回调函数,而不是为函数提供一个字符串名称。如提供一个如<code>array(&#39;class&#39;,&#39;method&#39;)</code>这样的数组,使得可以使用某个对象的方法。</p>
+<p>下一步，通过调用<code>spl_autoload_call(&#39;className&#39;)</code>函数，可以手动调用加载器，而不用尝试去使用那个类。这个函数可以和函数<code>class_exists(&#39;className&#39;,false)</code>组合在一起使用以尝试去加载一个类，并且在所有的自动加载器都不能找到那个类的情况下失败。 </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(spl_autoload_call(<span class="string">'className'</span>) &amp;&amp; class_exists(<span class="string">'className'</span>,<span class="keyword">false</span>))&#123;      </div><div class="line">    </div><div class="line">  &#125; <span class="keyword">else</span> &#123;      </div><div class="line">    </div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>SPL自动加载功能是由<code>spl_autoload()</code> ,<code>spl_autoload_register()</code>, <code>spl_autoload_functions()</code> ,<code>spl_autoload_extensions()</code>和<code>spl_autoload_call()</code>函数提供的。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/PHP/">PHP</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/PHP/">PHP</a>
+  </div>
 
 </div>
 
@@ -148,17 +158,10 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2018/01/30/架构-RESTful-API设计/" title="架构|RESTful API设计">
-  <span>
-  架构|RESTful API设计</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2018/01/24/数据结构-树/"  title="数据结构|树">
- <span>数据结构|树
+<a href="/2018/06/03/大学-BAT之路/"  title="大学|BAT之路">
+ <span>大学|BAT之路
 </span>
 </a>
 </div>

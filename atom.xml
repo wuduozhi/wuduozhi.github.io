@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-06-02T17:15:16.117Z</updated>
+  <updated>2018-06-03T12:04:25.099Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,53 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PHP|PHP的类自动加载机制</title>
+    <link href="http://yoursite.com/2018/06/04/PHP-PHP%E7%9A%84%E7%B1%BB%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/"/>
+    <id>http://yoursite.com/2018/06/04/PHP-PHP的类自动加载机制/</id>
+    <published>2018-06-03T19:06:12.000Z</published>
+    <updated>2018-06-03T12:04:25.099Z</updated>
+    
+    <content type="html"><![CDATA[<p>在PHP开发过程中，如果希望从外部引入一个class，通常会使用include和require方法，去把定义这个class的文件包含进来。这个在小规模开发的时候，没什么大问题。但在大型的开发项目中，这么做会产生大量的require或者include方法调用，这样不因降低效率，而且使得代码难以维护，况且require_once的代价很大。</p>
+<p>在PHP5之前，各个PHP框架如果要实现类的自动加载，一般都是按照某种约定自己实现一个遍历目录，自动加载所有符合约定规则的文件的类或函数。 当然，PHP5之前对面向对象的支持并不是太好，类的使用也没有现在频繁。 在PHP5后，当加载PHP类时，如果类所在文件没有被包含进来，或者类名出错，Zend引擎会自动调用<code>__autoload</code> 函数。此函数需要用户自己实现<code>__autoload</code>函数。 在PHP5.1.2版本后，可以使用<code>spl_autoload_register</code>函数自定义自动加载处理函数。当没有调用此函数，默认情况下会使用SPL自定义的<code>spl_autoload</code>函数。</p>
+<h4 id="autoload示例"><a href="#autoload示例" class="headerlink" title="__autoload示例"></a><code>__autoload</code>示例</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">__autoload</span><span class="params">($class_name)</span> </span>&#123;  </div><div class="line">   <span class="keyword">echo</span> <span class="string">'__autload class:'</span>, $class_name, <span class="string">'&lt;br /&gt;'</span>;  </div><div class="line">&#125;  </div><div class="line"></div><div class="line"><span class="keyword">new</span> Demo();</div></pre></td></tr></table></figure>
+<p>以上的代码在最后会输出：__autload class:Demo。<br>并在此之后报错显示： Fatal error: Class ‘Demo’ not found</p>
+<p>我们一般使用_autoload自动加载类如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">__autoload</span><span class="params">($class_name)</span> </span>&#123;  </div><div class="line">   <span class="keyword">echo</span> <span class="string">'__autload class:'</span>, $class_name, <span class="string">'&lt;br /&gt;'</span>;  </div><div class="line">&#125;  </div><div class="line"></div><div class="line"><span class="keyword">new</span> Demo();</div></pre></td></tr></table></figure>
+<p>我们可以看出_autoload至少要做三件事情:</p>
+<ul>
+<li>第一件事是根据类名确定类文件名</li>
+<li>第二件事是确定类文件所在的磁盘路径[在我们的例子是最简单的情况，类与调用它们的PHP程序文件在同一个文件夹下]</li>
+<li>第三件事是将类从磁盘文件中加载到系统中。</li>
+</ul>
+<p>第三步最简单，只需要使用include/require即可。要实现第一步，第二步的功能，必须在开发时约定类名与磁盘文件的映射方法，只有这样我们才能根据类名找到它对应的磁盘文件。 </p>
+<p>因此，当有大量的类文件要包含的时候，我们只要确定相应的规则，然后在<code>__autoload()</code>函数中，将类名与实际的磁盘文件对应起来，就可以实现lazy loading的效果。从这里我们也可以看出<code>__autoload()</code>函数的实现中最重要的是类名与实际的磁盘文件映射规则的实现。 </p>
+<p>但现在问题来了，假如在一个系统的实现中，假如需要使用很多其它的类库，这些类库可能是由不同的开发工程师开发，其类名与实际的磁盘文件的映射规则不尽相同。这时假如要实现类库文件的自动加载，就必须在<code>__autoload()</code>函数中将所有的映射规则全部实现，因此<code>__autoload()</code>函数有可能会非常复杂，甚至无法实现。最后可能会导致<code>__autoload()</code>函数十分臃肿，这时即便能够实现，也会给将来的维护和系统效率带来很大的负面影响。在这种情况下，在PHP5引入SPL标准库,一种新的解决方案，即<code>spl_autoload_register()</code>函数。</p>
+<h4 id="spl-autoload-register-函数"><a href="#spl-autoload-register-函数" class="headerlink" title="spl_autoload_register()函数"></a>spl_autoload_register()函数</h4><p><strong>此函数的功能就是把函数注册至SPL的<code>__autoload</code>函数栈中，并移除系统默认的<code>__autoload()</code>函数</strong>。下面的例子可以看出：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">__autoload</span><span class="params">($class_name)</span> </span>&#123;  </div><div class="line">    <span class="keyword">echo</span> <span class="string">'__autload class:'</span>, $class_name, <span class="string">'&lt;br /&gt;'</span>;  </div><div class="line">&#125;  </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">classLoader</span><span class="params">($class_name)</span> </span>&#123;  </div><div class="line">    <span class="keyword">echo</span> <span class="string">'SPL load class:'</span>, $class_name, <span class="string">'&lt;br /&gt;'</span>;  </div><div class="line">&#125;  </div><div class="line">spl_autoload_register(<span class="string">'classLoader'</span>);  </div><div class="line"><span class="keyword">new</span> Test();<span class="comment">//结果：SPL load class:Test</span></div></pre></td></tr></table></figure>
+<p>语法：<code>bool  spl_autoload_register ( [callback $autoload_function] )</code>   接受两个参数：一个是添加到自动加载栈的函数，另外一个是加载器不能找到这个类时是否抛出异常的标志。第一个参数是可选的，并且默认指向<code>spl_autoload()</code>函数，这个函数会自动在路径中查找具有小写类名和.php扩展或者.ini扩展名，或者任何注册到<code>spl_autoload_extensions()</code>函数中的其它扩展名的文件。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CalssLoader</span>     </span></div><div class="line">&#123;     </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">loader</span><span class="params">($classname)</span>     </span></div><div class="line">    &#123;     </div><div class="line">        $class_file = strtolower($classname).<span class="string">".php"</span>;     </div><div class="line">        <span class="keyword">if</span> (file_exists($class_file))&#123;     </div><div class="line">            <span class="keyword">require_once</span>($class_file);     </div><div class="line">        &#125;     </div><div class="line">    &#125;     </div><div class="line">&#125;      </div><div class="line"><span class="comment">// 方法为静态方法     </span></div><div class="line">spl_autoload_register(<span class="string">'CalssLoader::loader'</span>);      </div><div class="line">$test = <span class="keyword">new</span> Test();</div></pre></td></tr></table></figure></p>
+<p>一旦调用<code>spl_autoload_register()</code>函数，当调用未定义类时，系统会按顺序调用注册到<code>spl_autoload_register()</code>函数的所有函数，而不是自动调用<code>__autoload()</code>函数。如果要避免这种情况，需采用一种更加安全的<code>spl_autoload_register()</code>函数的初始化调用方法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="keyword">false</span> === spl_autoload_functions())&#123;      </div><div class="line">    <span class="keyword">if</span>(function_exists(<span class="string">'__autoload'</span>))&#123;      </div><div class="line">        spl_autoload_registe(<span class="string">'__autoload'</span>,<span class="keyword">false</span>);      </div><div class="line">    &#125;      </div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p><code>spl_autoload_functions()</code>函数会返回已注册函数的一个数组,如果SPL自动加载栈还没有被初始化,它会返回布尔值false。然后，检查是否有一个名为<code>__autoload()</code>的函数存在,如果存在，可以将它注册为自动加载栈中的第一个函数，从而保留它的功能。之后，可以继续注册自动加载函数。</p>
+<p>还可以调用<code>spl_autoload_register()</code>函数以注册一个回调函数,而不是为函数提供一个字符串名称。如提供一个如<code>array(&#39;class&#39;,&#39;method&#39;)</code>这样的数组,使得可以使用某个对象的方法。</p>
+<p>下一步，通过调用<code>spl_autoload_call(&#39;className&#39;)</code>函数，可以手动调用加载器，而不用尝试去使用那个类。这个函数可以和函数<code>class_exists(&#39;className&#39;,false)</code>组合在一起使用以尝试去加载一个类，并且在所有的自动加载器都不能找到那个类的情况下失败。 </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(spl_autoload_call(<span class="string">'className'</span>) &amp;&amp; class_exists(<span class="string">'className'</span>,<span class="keyword">false</span>))&#123;      </div><div class="line">    </div><div class="line">  &#125; <span class="keyword">else</span> &#123;      </div><div class="line">    </div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>SPL自动加载功能是由<code>spl_autoload()</code> ,<code>spl_autoload_register()</code>, <code>spl_autoload_functions()</code> ,<code>spl_autoload_extensions()</code>和<code>spl_autoload_call()</code>函数提供的。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在PHP开发过程中，如果希望从外部引入一个class，通常会使用include和require方法，去把定义这个class的文件包含进来。这个在小规模开发的时候，没什么大问题。但在大型的开发项目中，这么做会产生大量的require或者include方法调用，这样不因降低效率
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+  </entry>
   
   <entry>
     <title>大学|BAT之路</title>
@@ -1803,109 +1850,6 @@ andl    $-16, %esi
     
       &lt;p&gt;现在我们一起去探讨C语言中数组、结构体的实现，相比之下，数组与流程控制和过程的实现难度差不多，尤其是动态数组可能相对来说困难一点。&lt;/p&gt;
 &lt;h3 id=&quot;数组简介&quot;&gt;&lt;a href=&quot;#数组简介&quot; class=&quot;headerlink&quot; title=&quot;数组简介&quot;&gt;&lt;/a&gt;数
-    
-    </summary>
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深入理解计算机系统|汇编的世界-5</title>
-    <link href="http://yoursite.com/2018/05/08/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E6%B1%87%E7%BC%96%E7%9A%84%E4%B8%96%E7%95%8C-5/"/>
-    <id>http://yoursite.com/2018/05/08/深入理解计算机系统-汇编的世界-5/</id>
-    <published>2018-05-08T11:30:10.000Z</published>
-    <updated>2018-05-08T05:03:05.691Z</updated>
-    
-    <content type="html"><![CDATA[<p>这一节我们探讨过程调用[函数调用]是如何完成的。</p>
-<h3 id="栈帧的结构"><a href="#栈帧的结构" class="headerlink" title="栈帧的结构"></a>栈帧的结构</h3><p>倘若我们要想搞清楚过程的实现，就必须先知道栈帧的结构是如何构成的。栈帧其实可以认为是程序栈的一段，而程序栈又是存储器的一段，因此栈帧说到底还是存储器的一段。那么既然是一段，肯定有两个端点。</p>
-<p>这两个端点其实就是两个地址，<strong>一个标识着起始地址，一个标识着结束地址，而这两个地址，则分别存储在固定的寄存器当中，即起始地址存在%ebp寄存器当中，结束地址存在%esp寄存器当中</strong>。至于为什么要存在这两个寄存器当中，就像程序的下一条指令地址为什么存在PC当中一样，是毫无意义的问题，就是这样规定的，没有为什么。</p>
-<p>起始地址和结束地址还有另外的名字，起始地址通常称为帧指针，结束地址通常称为栈指针（也就是栈顶的地址）。因此，我们就把过程的存储器内存使用区域称为栈帧。这下我们就了解了栈帧的来历以及它们的命名习惯和存储惯例，接下来的一幅图，它揭示了栈帧在存储器当中的位置。</p>
-<p><img src="/images/汇编-25.png" alt="栈帧"></p>
-<p>这个图基本上已经包括了程序栈的构成，它由一系列栈帧构成，这些栈帧每一个都对应一个过程，而且每一个帧指针+4的位置都存储着函数的返回地址，每一个帧指针指向的存储器位置当中都备份着调用者的帧指针。各位需要知道的是，每一个栈帧都建立在调用者的下方（也就是地址递减的方向），当被调用者执行完毕时，这一段栈帧会被释放。还有一点很重要的是，%ebp和%esp的值指示着栈帧的两端，而栈指针会在运行时移动，所以大部分时候，在访问存储器的时候会基于帧指针访问，因为在一直移动的栈指针无法根据偏移量准确的定位一个存储器位置。</p>
-<p>　　还有一点比较重要的内容，就是栈帧当中内存的分配和释放。由于栈帧是向地址递减的方向延伸，因此如果我们将栈指针减去一定的值，就相当于给栈帧分配了一定空间的内存。这个理解起来很简单，因为在栈指针向下移动以后（也就是变小了），帧指针和栈指针中间的区域会变长，这就是给栈帧分配了更多的内存。相反，如果将栈指针加上一定的值，也就是向上移动，那么就相当于压缩了栈帧的长度，也就是说内存被释放了。<strong>需要注意的是，上面的一切内容，都基于一个前提，那就是帧指针在过程调用当中是不会移动的。</strong></p>
-<h3 id="过程的实现"><a href="#过程的实现" class="headerlink" title="过程的实现"></a>过程的实现</h3><p>过程虽然很好，但想要实现过程，还是存在一定难度的，尽管现在看来它并不困难。<strong>它实现的难度主要就在于数据如何在调用者和被调用者之间传递，以及在被调用者当中局部变量内存的分配以及释放。</strong></p>
-<p>不过天大的难题都难不倒那群计算机界的大神们，他们找出了一种方式，可以简单并有效的处理过程实现当中的难题。这一切似乎看起来十分偶然，但其实也是必然的。世间的很多规律都是客观存在的，只是它在等着我们去发现而已。</p>
-<p>总的来说，过程实现当中，<code>参数传递</code>以及<code>局部变量内存的分配和释放</code>都是通过以上介绍的栈帧来实现的，大部分情况下，我们认为过程调用当中做了以下几个操作。</p>
-<p>1、备份原来的帧指针，调整当前的帧指针到栈指针的位置，这个过程就是我们经常看到的如下两句汇编代码做的事情。</p>
-<pre><code>pushl    %ebp
-movl    %esp, %ebp
-</code></pre><p>2、建立起来的栈帧就是为被调用者准备的，当被调用者使用栈帧时，需要给临时变量分配预留内存，这一步一般是经过下面这样的汇编代码处理的。</p>
-<pre><code>subl    $16,%esp
-</code></pre><p>3、备份被调用者保存的寄存器当中的值，如果有值的话，备份的方式就是压入栈顶。因此会采用如下的汇编代码处理。</p>
-<pre><code>pushl    %ebx
-</code></pre><p>4、使用建立好的栈帧，比如读取和写入，一般使用mov，push以及pop指令等等。</p>
-<p>5、恢复被调用者寄存器当中的值，这一过程其实是从栈帧中将备份的值再恢复到寄存器，不过此时这些值可能已经不在栈顶了。因此在恢复时，大多数会使用pop指令，但也并非一定如此。</p>
-<p>6、释放被调用者的栈帧，释放就意味着将栈指针加大，而具体的做法一般是直接将栈指针指向帧指针，因此会采用类似下面的汇编代码处理（也可能是addl）。</p>
-<pre><code>movl    %ebp,%esp
-</code></pre><p>7、<strong>恢复调用者的栈帧，恢复其实就是调整栈帧两端，使得当前栈帧的区域又回到了原始的位置</strong>。因为栈指针已经在第六步调整好了，因此此时只需要将备份的原帧指针弹出到%ebp即可。类似的汇编代码如下。</p>
-<pre><code>popl    %ebp
-</code></pre><p>8、弹出返回地址，跳出当前过程，继续执行调用者的代码。<strong>此时会将栈顶的返回地址弹出到PC，然后程序将按照弹出的返回地址继续执行。这个过程一般使用<code>ret指令</code>完成。</strong></p>
-<p>过程的实现大概就是以上八个步骤组成的，不过这些步骤并不都是必须的（大部分时候，开启编译器的优化会优化掉很多步骤），而且第6和第7步有时会使用leave指令代替。</p>
-<h3 id="过程相关指令：call、leave、ret"><a href="#过程相关指令：call、leave、ret" class="headerlink" title="过程相关指令：call、leave、ret"></a>过程相关指令：call、leave、ret</h3><p>由于过程调用当中会经常见到几个新的指令，因此在这里，先给大家介绍一下这三个指令。它们三个都是过程实现当中非常重要的角色，这三个指令很类似，因为它们都是<strong>一个指令做了两件事</strong>，这里就依次介绍一下它们各自都做了什么事。</p>
-<ul>
-<li><p>call指令：它一共做两件事，第一件是将返回地址（也就是call指令执行时PC的值）压入栈顶，第二件是将程序跳转到当前调用的方法的起始地址。第一件事是为了为过程的返回做准备，而第二件事则是真正的指令跳转。</p>
-</li>
-<li><p>leave指令：它也是一共做两件事，第一件是将栈指针指向帧指针，第二件是弹出备份的原帧指针到%ebp。第一件事是为了释放当前栈帧，第二件事是为了恢复调用者的栈帧。</p>
-</li>
-<li><p>ret指令：它同样也是做两件事，第一件是将栈顶的返回地址弹出到PC，第二件事则是按照PC此时指示的指令地址继续执行程序。这两件事其实也可以认为是一件事，因为第二件事是系统自己保证的，系统总是按照PC的指令地址执行程序。</p>
-</li>
-</ul>
-<p>可以看出，除了call指令之外，leave和ret指令都与上面8个步骤有些不可分割的关系。call指令没有在8个步骤当中体现，是因为它发生在进入过程之前，因此在第1步发生的时候，call指令往往已经被执行了，并且已经为ret指令准备好了返回地址。</p>
-<h3 id="寄存器使用的规矩"><a href="#寄存器使用的规矩" class="headerlink" title="寄存器使用的规矩"></a>寄存器使用的规矩</h3><p>寄存器一共就8个，因此在数目上来说的话，使用起来肯定是捉襟见肘的。在这种情况下，就肯定需要一定的规矩去约束程序如何使用，否则要是一群人翻同一个人的牌子，那到底伺候谁才是呢。其实我们在之前已经或多或少的接触到了寄存器的规矩，比如%eax一般用于存储过程的返回值，%ebp保存帧指针，%esp保存栈指针。这里要介绍的，是另外一个规矩，而这个规矩是与过程实现相关的。</p>
-<p>试想一下，在调用一个过程时，无论是调用者还是被调用者，都可能更新寄存器的值。假设调用者在%edx中存了一个整数值100，而被调用者也使用这个寄存器，并更新成了1000，于是悲剧就发生了。当过程调用完毕返回后，调用者再使用%edx的时候，值已经从100变成了1000，这几乎必将导致程序会错误的执行下去。</p>
-<p>为了避免上面这种情况发生，就需要在调用者和被调用者之间做一个协调。于是便有了这样的规矩，它的描述如下，我们假设这里在过程P中调用了过程Q，P是调用者，Q是被调用者。</p>
-<ul>
-<li><p><code>%eax、%edx、%ecx</code>：这三个寄存器被称为调用者保存寄存器。意思就是说，这三个寄存器由调用者P来保存，而对于Q来说，Q可以随便使用，用完了就不用再管了。</p>
-</li>
-<li><p><code>%ebx、%esi、%edi</code>：这三个寄存器被称为被调用者保存寄存器。同样的，这里是指这三个寄存器由被调用者Q来保存，换句话说，Q可以使用这三个寄存器，但是如果里面有P的变量值，Q必须保证使用完以后将这三个寄存器恢复到原来的值，这里的备份，其实就是上面那8个步骤中第3个步骤做的事情。</p>
-</li>
-</ul>
-<h3 id="一个过程示例"><a href="#一个过程示例" class="headerlink" title="一个过程示例"></a>一个过程示例</h3><p>进过上面纸上谈兵的阶段，接下来我们就要探索真理了，我们随便写一个如下的过程调用的例子，我们称它为function.c。</p>
-<pre><code>int add(int a,int b){
-   register int c = a + b; 
-   return c;
-}
-
-int main(){
-   int a = 100;
-   int b = 101;
-   int c = add(a,b);
-   return c;
-}
-</code></pre><p>这里为了完整的展现那8个步骤，因此给变量c加了register关键字修饰，这将会将c送入寄存器，从而更改被调用者保存寄存器，就会导致步骤3的发生。接下来我们就使用参数-S来编译这段代码，然后使用cat来看看这段代码的汇编形式。以下是main函数以及add函数各自的栈帧情况，贴心的我已经详细标记了它们属于哪个步骤。</p>
-<p><img src="/images/汇编-26.png" alt="过程调用"></p>
-<p><img src="/images/汇编-27.png" alt="过程调用"></p>
-<p>由于我们没有使用编译优化，因此汇编代码会多出很多，这也为了完整的诠释我们的步骤。可以看到，图中包含了完整的8个步骤，但是无论是main函数还是add函数，它们单独来讲，都没有完整的8个步骤，这其实是大多数的情况。大部分时候，一个函数不会完全包含上述的8个步骤。</p>
-<p>这里有几点各位需要注意的地方，首先第一点是，add函数会将返回结果存入%eax（前提是返回值可以使用整数来表示），在main函数中，call指令之后，默认将%eax作为返回结果来使用。第二点是，所有函数（包括main函数）都必须有第1步和第6、7、8步，这是必须的4步。最后一点是，我们的栈指针和帧指针有固定的大小关系，即栈指针永远小于等于帧指针，当二者相等时，当前栈帧被认为没有分配内存空间。</p>
-<h3 id="递归过程调用"><a href="#递归过程调用" class="headerlink" title="递归过程调用"></a>递归过程调用</h3><p>接下来我们看一个特殊的过程调用–递归是怎么实现的。</p>
-<p>看一个递归求和的例子：</p>
-<pre><code>int rfact(int n){
-    int result;
-    if(n&lt;=1){
-        result = 1;
-    }else{
-        result = n * rfact(n-1);
-    }
-    return result;
-}
-</code></pre><p>接下来我们编译一下这段代码，使用-O1优化，我们可以得到如下的汇编代码。</p>
-<p><img src="/images/汇编-29.png" alt="汇编代码"></p>
-<p>如果理解了过程调用的机制，不难读懂这个递归调用的例子，但是难点就在于，栈帧的变化是如何的，贴心的我就给各位演示一下栈帧的变化过程，如果各位已经把前面的那个main函数和add函数搞定了，那么可以在这里验证一下自己的理解是否正确。</p>
-<p><img src="/images/汇编-28.png" alt="递归调用"></p>
-<p>需要特殊说明的是，以上每一个栈帧（大括号括起来的），最上面（也就是地址递增方向）的都是帧指针位置，最下面的都是栈指针位置。然而寄存器中只有%ebp和%esp保存栈帧指针，因此同一时间只能保存一对。当进展到第三层的时候，已经有了三个栈帧（原则上来讲一定是多于3个），寄存器当然是存不下的，因此就需要在存储器当中备份一下，之后再恢复。于是就出现了每个栈帧的帧指针指向的存储器位置，都会备份着外层方法（也就是调用者）的帧指针。</p>
-<p>当方法递归到n=1结束时，栈帧会自下向上依次收回，栈帧指针（也就是%ebp和%esp当中的值）都会依次向上移动，直到程序结束。也就是说，上面的三幅图，如果倒过来，就是递归方法依次结束时栈帧的状态。</p>
-<p>由此就可以看出，过程当中栈帧建立以及完成的惯例，可以保证递归调用的正常运行，包括循环调用。不得不说，这群计算机界的大神们实在是太牛了，尽管当栈帧出现以后，看起来也并不复杂，但难点就在于<code>无中生有的发现或者说某种意义上的创造</code>。</p>
-<p>文章内容来自：<a href="http://www.cnblogs.com/zuoxiaolong/p/computer19.html" target="_blank" rel="external">深入理解计算机系统（3.7）—汇编世界当中过程的经典（十分重要）（难度较高）</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这一节我们探讨过程调用[函数调用]是如何完成的。&lt;/p&gt;
-&lt;h3 id=&quot;栈帧的结构&quot;&gt;&lt;a href=&quot;#栈帧的结构&quot; class=&quot;headerlink&quot; title=&quot;栈帧的结构&quot;&gt;&lt;/a&gt;栈帧的结构&lt;/h3&gt;&lt;p&gt;倘若我们要想搞清楚过程的实现，就必须先知道栈帧的结构
     
     </summary>
     
