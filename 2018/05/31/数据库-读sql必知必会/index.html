@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="用通配符进行过滤 百分号(%)通配符：在搜索串中，%表示任何字符出现任意次数。  下划线(_)通配符：下划线通配符只匹配单个字符而不是多个字符。  方括号([])匹配符:方括号([])通配符用来指定一个字符集，它必须匹配指定位置（通配符的位置）的一个字符。也可以在前面用^来否定。   通配符何以在搜索模式中任意位置使用，并且可以使用多个通配符，同时，也能混合使用不同的通配符。需要注意的是，通配符搜">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-05-31T07:33:27.762Z">
+<meta property="og:updated_time" content="2018-06-05T16:25:52.794Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库|读sql必知必会">
 <meta name="twitter:description" content="用通配符进行过滤 百分号(%)通配符：在搜索串中，%表示任何字符出现任意次数。  下划线(_)通配符：下划线通配符只匹配单个字符而不是多个字符。  方括号([])匹配符:方括号([])通配符用来指定一个字符集，它必须匹配指定位置（通配符的位置）的一个字符。也可以在前面用^来否定。   通配符何以在搜索模式中任意位置使用，并且可以使用多个通配符，同时，也能混合使用不同的通配符。需要注意的是，通配符搜">
@@ -102,7 +102,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#用通配符进行过滤"><span class="toc-number">1.</span> <span class="toc-text">用通配符进行过滤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建计算字段"><span class="toc-number">2.</span> <span class="toc-text">创建计算字段</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#用通配符进行过滤"><span class="toc-number">1.</span> <span class="toc-text">用通配符进行过滤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建计算字段"><span class="toc-number">2.</span> <span class="toc-text">创建计算字段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用数据处理函数"><span class="toc-number">3.</span> <span class="toc-text">使用数据处理函数</span></a></li></ol>
 		
 		</div>
 		
@@ -116,8 +116,14 @@
 </ul>
 <p>通配符何以在搜索模式中任意位置使用，并且可以使用多个通配符，同时，也能混合使用不同的通配符。需要注意的是，通配符搜索的处理一般会花费一定的时间代价。</p>
 <h3 id="创建计算字段"><a href="#创建计算字段" class="headerlink" title="创建计算字段"></a>创建计算字段</h3><p>存储在数据库表中的数据一般不是应用程序所需要的格式，我们需要直接从数据库中检索出转换、计算或格式化过的数据，而不是检索出数据，然后再在客户机应用程序中重新格式化。</p>
+<p>可以通过<code>计算字段</code>、<code>拼接字段</code>、<code>使用别名</code>、<code>执行算术计算</code>的方法来获得我们需要的数据格式。</p>
+<h3 id="使用数据处理函数"><a href="#使用数据处理函数" class="headerlink" title="使用数据处理函数"></a>使用数据处理函数</h3><p>与其他计算机语言一样，sql支持利用函数来处理数据，给数据的转换和处理提供了方便。不过，使用函数也会带来一些问题：不同的DBMS提供的函数不同，所以使用函数的sql可移植性不高</p>
+<p>一般支持如下函数：</p>
 <ul>
-<li>拼接字段：</li>
+<li>用于处理文本串（如删除或填充值，转换为大写或小写）的文本函数</li>
+<li>用于在数值数据上进行算术操作（如返回绝对值，进行代数运算）的数值函数</li>
+<li>用于处理日期和时间的时间和日期函数</li>
+<li>返回DBMS信息的系统函数</li>
 </ul>
   
 	</div>

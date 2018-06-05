@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-06-05T10:05:08.539Z</updated>
+  <updated>2018-06-05T10:49:21.510Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,12 +20,12 @@
     <link href="http://yoursite.com/2018/06/05/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5%E5%99%A8/"/>
     <id>http://yoursite.com/2018/06/05/深入理解计算机系统-链接器/</id>
     <published>2018-06-04T19:41:08.000Z</published>
-    <updated>2018-06-05T10:05:08.539Z</updated>
+    <updated>2018-06-05T10:49:21.510Z</updated>
     
     <content type="html"><![CDATA[<h3 id="What"><a href="#What" class="headerlink" title="What"></a>What</h3><p>链接（Linking）是把各种代码和数据部分收集起来并组合成为一个单一文件的过程。</p>
 <h4 id="一个例子"><a href="#一个例子" class="headerlink" title="一个例子"></a>一个例子</h4><p>个简单的C语言的例子：</p>
-<p>main.c<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">()</span></span>;</div><div class="line"><span class="keyword">int</span> buf[<span class="number">2</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	swap();</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>swap.c<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">extern</span> <span class="keyword">int</span> buf[];</div><div class="line"></div><div class="line"><span class="keyword">int</span> *bufp0 = &amp;buf[<span class="number">0</span>];</div><div class="line"><span class="keyword">static</span> <span class="keyword">int</span> *bufp1;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> temp;</div><div class="line">    bufp1 = &amp;buf[<span class="number">1</span>];</div><div class="line">    temp = *bufp0;</div><div class="line">    *bufp0 = *bufp1;</div><div class="line">    *bufp1 = temp;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>main.c<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">()</span></span>;</div><div class="line"><span class="keyword">int</span> buf[<span class="number">2</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	swap();</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>swap.c<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">extern</span> <span class="keyword">int</span> buf[];</div><div class="line"></div><div class="line"><span class="keyword">int</span> *bufp0 = &amp;buf[<span class="number">0</span>];</div><div class="line"><span class="keyword">static</span> <span class="keyword">int</span> *bufp1;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> temp;</div><div class="line">    bufp1 = &amp;buf[<span class="number">1</span>];</div><div class="line">    temp = *bufp0;</div><div class="line">    *bufp0 = *bufp1;</div><div class="line">    *bufp1 = temp;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>编译：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">unix&gt; gcc -O2 -g -o p main.c swap.c</div><div class="line">unix&gt; ./p</div></pre></td></tr></table></figure></p>
 <p>这个方法就是使用了静态链接。</p>
 <p><img src="/images/链接-01.png" alt=""></p>
@@ -59,11 +59,12 @@
 <h3 id="链接做什么"><a href="#链接做什么" class="headerlink" title="链接做什么"></a>链接做什么</h3><p><code>符号解析(Symbol resolution)</code></p>
 <ul>
 <li><p>程序中有定义和引用的符号 (包括变量和函数等)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">void swap() &#123;…&#125; /* 定义符号swap */</div><div class="line">swap(); /* 引用符号swap */</div><div class="line">int *xp = &amp;x; /* 定义符号 xp, 引用符号 x */</div></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">()</span> </span>&#123;…&#125; <span class="comment">/* 定义符号swap */</span></div><div class="line">swap(); <span class="comment">/* 引用符号swap */</span></div><div class="line"><span class="keyword">int</span> *xp = &amp;x; <span class="comment">/* 定义符号 xp, 引用符号 x */</span></div></pre></td></tr></table></figure>
 </li>
 <li><p>编译器将符号的定义储存在一个符号表（symbol table）中</p>
 <ul>
-<li>符号表是一个结构数组<br>– 每个条目包含符号的名称、长度和位置信息</li>
+<li>符号表是一个结构数组</li>
+<li>每个条目包含符号的名称、长度和位置信息</li>
 </ul>
 </li>
 <li>链接器将每个符号的引用都与一个符号定义关联起来</li>
@@ -467,7 +468,7 @@
     <link href="http://yoursite.com/2018/05/31/%E6%95%B0%E6%8D%AE%E5%BA%93-%E8%AF%BBsql%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/"/>
     <id>http://yoursite.com/2018/05/31/数据库-读sql必知必会/</id>
     <published>2018-05-31T15:08:58.000Z</published>
-    <updated>2018-05-31T07:33:27.762Z</updated>
+    <updated>2018-06-05T16:25:52.794Z</updated>
     
     <content type="html"><![CDATA[<h3 id="用通配符进行过滤"><a href="#用通配符进行过滤" class="headerlink" title="用通配符进行过滤"></a>用通配符进行过滤</h3><ul>
 <li><p><code>百分号(%)通配符</code>：在搜索串中，<strong>%表示任何字符出现任意次数</strong>。</p>
@@ -479,8 +480,14 @@
 </ul>
 <p>通配符何以在搜索模式中任意位置使用，并且可以使用多个通配符，同时，也能混合使用不同的通配符。需要注意的是，通配符搜索的处理一般会花费一定的时间代价。</p>
 <h3 id="创建计算字段"><a href="#创建计算字段" class="headerlink" title="创建计算字段"></a>创建计算字段</h3><p>存储在数据库表中的数据一般不是应用程序所需要的格式，我们需要直接从数据库中检索出转换、计算或格式化过的数据，而不是检索出数据，然后再在客户机应用程序中重新格式化。</p>
+<p>可以通过<code>计算字段</code>、<code>拼接字段</code>、<code>使用别名</code>、<code>执行算术计算</code>的方法来获得我们需要的数据格式。</p>
+<h3 id="使用数据处理函数"><a href="#使用数据处理函数" class="headerlink" title="使用数据处理函数"></a>使用数据处理函数</h3><p>与其他计算机语言一样，sql支持利用函数来处理数据，给数据的转换和处理提供了方便。不过，使用函数也会带来一些问题：不同的DBMS提供的函数不同，所以使用函数的sql可移植性不高</p>
+<p>一般支持如下函数：</p>
 <ul>
-<li>拼接字段：</li>
+<li>用于处理文本串（如删除或填充值，转换为大写或小写）的文本函数</li>
+<li>用于在数值数据上进行算术操作（如返回绝对值，进行代数运算）的数值函数</li>
+<li>用于处理日期和时间的时间和日期函数</li>
+<li>返回DBMS信息的系统函数</li>
 </ul>
 ]]></content>
     
