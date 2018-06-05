@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-06-04T13:40:59.173Z</updated>
+  <updated>2018-06-05T10:05:08.539Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/06/05/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5%E5%99%A8/"/>
     <id>http://yoursite.com/2018/06/05/深入理解计算机系统-链接器/</id>
     <published>2018-06-04T19:41:08.000Z</published>
-    <updated>2018-06-04T13:40:59.173Z</updated>
+    <updated>2018-06-05T10:05:08.539Z</updated>
     
     <content type="html"><![CDATA[<h3 id="What"><a href="#What" class="headerlink" title="What"></a>What</h3><p>链接（Linking）是把各种代码和数据部分收集起来并组合成为一个单一文件的过程。</p>
 <h4 id="一个例子"><a href="#一个例子" class="headerlink" title="一个例子"></a>一个例子</h4><p>个简单的C语言的例子：</p>
@@ -243,6 +243,126 @@
 </li>
 </ul>
 <h5 id="链接顺序问题"><a href="#链接顺序问题" class="headerlink" title="链接顺序问题"></a>链接顺序问题</h5><p><img src="/images/链接-11.png" alt=""></p>
+<h3 id="重定位与动态链接"><a href="#重定位与动态链接" class="headerlink" title="重定位与动态链接"></a>重定位与动态链接</h3><p>符号解析完成后，可进行重定位工作，由两步组成：</p>
+<ul>
+<li>对节和符号定义进行重定位<ul>
+<li>将集合E的所有目标模块中相同的节合并成新的聚合节，并将运行时的虚拟地址赋给每个新节中所有定义的符号。</li>
+<li>例如，所有.text节合并作为可执行文件中的.text节，并为每个.text节确定在新.text节中的绝对地址，从而为其中定义的函数确定首地址（含有多个函数时），进而确定每条指令的地址。</li>
+<li>完成这一步后，每条指令和每个全局变量都有唯一的运行时地址。</li>
+</ul>
+</li>
+<li>对节中的符号引用进行重定位<ul>
+<li>修改.text节和.data节中对每个符号的引用（指向正确的运行时地址）。</li>
+<li>需要用到在.rel_data和.rel_text节中保存的重定位信息。</li>
+</ul>
+</li>
+</ul>
+<p>下图是链接的目的：</p>
+<p><img src="/images/链接-12.png" alt=""></p>
+<h4 id="重定位条目"><a href="#重定位条目" class="headerlink" title="重定位条目"></a>重定位条目</h4><p>当汇编器生成一个目标模块时，它并不知道数据和代码最终将存放在存储器的什么位置，也不知道当前模块引用的任何外部定义的函数或全局变量的位置。汇编器遇到对位置未知的目标引用时，生成一个<code>重定位条目</code>，已初始化数据引用的重定位条目在<code>.rel_data</code>节中,指令中引用的重定位条目在<code>.rel_text</code>节中。</p>
+<p>ELF中重定位条目的格式如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span> </div><div class="line">    <span class="keyword">int</span> offset;     <span class="comment">/* offset of the reference to relocate */</span> </div><div class="line">    <span class="keyword">int</span> symbol:<span class="number">24</span>,  <span class="comment">/* symbol the reference should point to */</span> </div><div class="line">	type:<span class="number">8</span>;     <span class="comment">/* relocation type */</span> </div><div class="line">&#125; Elf32_Rel</div></pre></td></tr></table></figure>
+<p>有两种最基本的重定位类型（11种重定位类型）</p>
+<ul>
+<li><code>R_386_PC32</code>: 使用32位PC相对地址的引用，PC为下条指令地址</li>
+<li><code>R_386_32</code>: 使用32位绝对地址</li>
+</ul>
+<p>在main.o的<code>.rel_text</code>节中有重定位条目:</p>
+<p><img src="/images/链接-13.png" alt=""></p>
+<p>说明在<code>.text</code>节中偏移为0x7的地方需重定位,引用的符号为swap,按PC相对地址方式修改。</p>
+<h5 id="重定位算法伪代码"><a href="#重定位算法伪代码" class="headerlink" title="重定位算法伪代码"></a>重定位算法伪代码</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">foreach section s &#123;</div><div class="line">   foreach relocation entry r &#123;</div><div class="line">   refptr = s + r.offset; <span class="comment">/* ptr to reference to be relocated*/</span></div><div class="line">   <span class="comment">/* relocate a pc-relative reference*/</span></div><div class="line">   <span class="keyword">if</span> ( r.type == R_386_PC32) &#123;</div><div class="line">       refaddr = ADDR(s) + r.offset; <span class="comment">/*ref’s run-time address*/</span></div><div class="line">       *refptr = (<span class="keyword">unsigned</span>)(ADDR(r.symbol) + *refptr – refaddr);</div><div class="line">   &#125;</div><div class="line">   <span class="comment">/*relocate an absolute reference */</span></div><div class="line">  <span class="keyword">if</span> ( r.type == R_386_32)</div><div class="line">      *refptr = (<span class="keyword">unsigned</span>) (ADDR(r.symbol)+ *refptr);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>算法描述 ：</p>
+<ul>
+<li>1-2 行 ： 在每个节s 及其关联的重定位条目r 上迭代执行</li>
+<li>节s 是字节数组 ， 运行时地址为ADDR(s), 重定位条目r 是Elf32_Rel结构 ， 运行时地址为ADDR(r.symbol)</li>
+<li>3 行 ： 计算需要被重定位的引用的数组s 中的地址</li>
+<li>5-9 行 ： 使用PC 相对定位寻址计算重定位地址</li>
+<li>11-31 行 ：使用绝对寻址计算重定位地址</li>
+</ul>
+<p>下面让我们来看看main.o重定位前的样子：</p>
+<p><img src="/images/链接-14.png" alt=""></p>
+<p>从上图中，我们知道：</p>
+<ul>
+<li>main的定义在.text节中偏移为0处开始，占0x12B</li>
+<li>buf的定义在.data节中偏移为0处开始，占8B</li>
+<li>在rel_text节中的重定位条目为：<code>r_offset=0x7</code>,<code>r_sym=swap</code>,<code>r_type=R_386_PC32</code>，objdump出来后为<code>“7: R_386_PC32 swap”</code></li>
+</ul>
+<p>main.o的符号表：</p>
+<p><img src="/images/链接-15.png" alt=""></p>
+<p>swap是main.o的符号表中第10项，是未定义符号，类型和大小未知，并是全局符号，故在其他模块中定义。</p>
+<p>用命令<code>readelf -r main.o</code>或者<code>objdump -r -j .text main.o</code>可以查看目标文件中的重定位信息：偏移值/重定位类型/引用符号。</p>
+<p><img src="/images/链接-16.png" alt=""></p>
+<h5 id="R-386-PC32-的重定位方式-相对引用"><a href="#R-386-PC32-的重定位方式-相对引用" class="headerlink" title="R_386_PC32 的重定位方式( 相对引用)"></a><code>R_386_PC32</code> 的重定位方式( 相对引用)</h5><p>假定：</p>
+<p>ADDR(s) = ADDR(.text) = <code>0x80483b4</code></p>
+<p>由于mian函数在<code>.text</code>的起始位置，所以 ADDR(main) = <code>0x80483b4</code>;同时swap紧跟main后，所以swap起始地址: ADDR(swap) = <code>0x80483b4</code>+<code>0x12</code>=<code>0x80483c6</code>,(main占0x12字节)，但是在4字节边界对齐的情况下，ADDR(swap) = <code>0x80483c8</code>。</p>
+<p>则重定位后call指令的机器代码是什么？</p>
+<ul>
+<li>call转移目标地址 = PC+偏移地址，PC=<code>0x80483b4</code>+<code>0x07</code> - init</li>
+<li>PC = <code>0x80483b4</code>+<code>0x07</code>-<code>(-4)</code>= <code>0x80483bf</code></li>
+<li>重定位值 = 偏移地址 = 转移目标地址-PC=0x80483c8-0x80483bf=0x9</li>
+<li>重定位后call指令的机器代码为“e8 09 00 00 00 ” (小端表示)</li>
+</ul>
+<p>可以总结，PC相对地址方式下，重定位值计算公式为：</p>
+<p><img src="/images/链接-17.png" alt=""></p>
+<p>main.o中.data和.rel.data节内容：</p>
+<p><img src="/images/链接-18.png" alt=""></p>
+<p>buf定义在.data节中偏移为0处，占8B，没有需重定位的符号。</p>
+<p>swap.o中.data和.rel.data节内容：</p>
+<p><img src="/images/链接-19.png" alt=""></p>
+<p><img src="/images/链接-20.png" alt=""></p>
+<p>bufp0定义在.data节中偏移为0处，占4B，初值为0x0。重定位节<code>.rel.data</code>中有一个重定位表项：<code>r_offset=0x0</code>,<code>r_sym=buf</code>,<code>r_type=R_386_32</code>，OBJDUMP工具解释后显示为<code>“0：R_386_32 buf”</code></p>
+<p> swap.o中的符号表中:</p>
+<p><img src="/images/链接-21.png" alt=""></p>
+<p>buf是swap.o的符号表中第10项，是未定义符号，类型和大小未知，并是全局符号，故在其他模块中定义。</p>
+<p>用命令<code>readelf -r swap.o</code>或者<code>objdump -r -j .data swap.o</code>可以查看目标文件中的重定位信息：偏移值/重定位类型/引用符号。</p>
+<p><img src="/images/链接-22.png" alt=""></p>
+<h5 id="R-386-32-的重定位方式"><a href="#R-386-32-的重定位方式" class="headerlink" title="R_386_32 的重定位方式"></a><code>R_386_32</code> 的重定位方式</h5><p>假定：buf在运行时的存储地址 <code>ADDR(buf)=0x8049454</code></p>
+<p>则重定位后，bufp0的地址及内容变为什么？</p>
+<ul>
+<li>buf和bufp0同属于.data节，故在可执行文件中它们被合并</li>
+<li>bufp0紧接在buf后，故地址为0x8049454+8= 0x804945c</li>
+<li>因是R_386_32方式，故bufp0内容为buf的绝对地址<code>0x8049454</code>，即“54 94 04 08”</li>
+</ul>
+<p>可执行目标文件p中.data节的内容:</p>
+<p><img src="/images/链接-23.png" alt=""></p>
+<p>swap.o重定位信息：</p>
+<p><img src="/images/链接-24.png" alt=""></p>
+<p><img src="/images/链接-25.png" alt=""></p>
+<p>重定位后的可执行程序 (.text)：</p>
+<p><img src="/images/链接-26.png" alt=""></p>
+<h3 id="可执行目标格式"><a href="#可执行目标格式" class="headerlink" title="可执行目标格式"></a>可执行目标格式</h3><p><img src="/images/链接-27.png" alt=""></p>
+<h3 id="可执行目标文件的存储器映像"><a href="#可执行目标文件的存储器映像" class="headerlink" title="可执行目标文件的存储器映像"></a>可执行目标文件的存储器映像</h3><p><img src="/images/链接-28.png" alt=""></p>
+<h3 id="加载时的动态链接"><a href="#加载时的动态链接" class="headerlink" title="加载时的动态链接"></a>加载时的动态链接</h3><ul>
+<li>静态链接库的缺点:<ul>
+<li>存储可执行程序中可能存在同一段公共代码的多个拷贝。（例如： 每个c程序都有c标准库）</li>
+<li>多个进程的虚拟存储空间可能有同一段代码的多个拷贝.</li>
+<li>对系统库的小的修改都需要每个应用程序显式重新链接</li>
+</ul>
+</li>
+</ul>
+<p>现代解决方法: 共享库</p>
+<pre><code>- 包含数据和代码的目标文件在加载或执行时动态链接到应用程序中
+- 也叫动态链接库, 包括DLLs, .so files
+</code></pre><p><img src="/images/链接-29.png" alt=""></p>
+<p>为了构造上图中向量运算的的示例程序的共享库libvector.so ,我们调用编译器，给链接器如下特殊指令：</p>
+<p><code>unix&gt; gcc -shared -fPIC -o libvector.so addvec.c multvec.c</code></p>
+<p><code>-fPIC</code>告诉编译器生成与位置无关的代码，<code>-shared</code>告诉链接器创建一个共享的目标文件。</p>
+<p><img src="/images/链接-30.png" alt=""></p>
+<p>动态库创建好了，然后我们进行链接到我们的程序中：</p>
+<p><code>unix&gt; gcc -o p2 main2.c ./libvector.so</code></p>
+<p>这样就创建了一个可执行目标文件p2,而此文件的形式使得它在运行时可以和 libvector.so 链接。基本的思路是当创建可执行文件时，静态执行一些链接，然后程序加载时，动态完成链接过程。</p>
+<p>还有一点是需要知道的：<strong>没有任何libvector.so的代码和数据节真的被拷贝到可执行文件p2中。反之，链接器只拷贝了一些重定位和符号表信息，它们使得在运行是可以解析对libvector.so中代码和数据的引用。</strong></p>
+<h4 id="运行时的动态链接"><a href="#运行时的动态链接" class="headerlink" title="运行时的动态链接"></a>运行时的动态链接</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;dlfcn.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">int</span> x[<span class="number">2</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>&#125;;</div><div class="line"><span class="keyword">int</span> y[<span class="number">2</span>] = &#123;<span class="number">3</span>, <span class="number">4</span>&#125;;</div><div class="line"><span class="keyword">int</span> z[<span class="number">2</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">void</span> *handle;</div><div class="line">    <span class="keyword">void</span> (*addvec)(<span class="keyword">int</span> *, <span class="keyword">int</span> *, <span class="keyword">int</span> *, <span class="keyword">int</span>);</div><div class="line">    <span class="keyword">char</span> *error; </div><div class="line"></div><div class="line">    <span class="comment">/* dynamically load the shared library that contains addvec() */</span></div><div class="line">    handle = dlopen(<span class="string">"./libvector.so"</span>, RTLD_LAZY);</div><div class="line">    <span class="keyword">if</span> (!handle) &#123;</div><div class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"%s\n"</span>, dlerror());</div><div class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/* get a pointer to the addvec() function we just loaded */</span></div><div class="line">    addvec = dlsym(handle, <span class="string">"addvec"</span>);</div><div class="line">    <span class="keyword">if</span> ((error = dlerror()) != <span class="literal">NULL</span>) &#123;</div><div class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"%s\n"</span>, error);</div><div class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/* Now we can call addvec() it just like any other function */</span></div><div class="line">    addvec(x, y, z, <span class="number">2</span>);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"z = [%d %d]\n"</span>, z[<span class="number">0</span>], z[<span class="number">1</span>]);</div><div class="line"></div><div class="line">    <span class="comment">/* unload the shared library */</span></div><div class="line">    <span class="keyword">if</span> (dlclose(handle) &lt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"%s\n"</span>, dlerror());</div><div class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>dlopen</code>以指定模式打开指定的动态连接库文件，并返回一个句柄给调用进程，dlerror返回出现的错误，<code>dlsym</code>通过句柄和连接符名称获取函数名或者变量名，    dlclose    来卸载打开的库。 dlopen打开模式如下：</p>
+<ul>
+<li>RTLD_LAZY 暂缓决定，等有需要时再解出符号 </li>
+<li>RTLD_NOW 立即决定，返回前解除所有未决定的符号。</li>
+</ul>
+<p>我们通过以下命令编译我们的这个程序：</p>
+<p><code>unix&gt; gcc -rdynamic -o2 -o p3 dll.c -ldl</code></p>
+<p><img src="/images/链接-31.png" alt=""></p>
+<p>下面我们通过ldd命令来看看p2，p3所需要的共享库：</p>
+<p><img src="/images/链接-32.png" alt=""></p>
 ]]></content>
     
     <summary type="html">
