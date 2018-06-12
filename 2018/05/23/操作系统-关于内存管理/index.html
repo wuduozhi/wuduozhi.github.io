@@ -36,7 +36,7 @@
 <meta property="og:image" content="http://yoursite.com/images/内存管理-14.jpg">
 <meta property="og:image" content="http://yoursite.com/images/内存管理-16.jpg">
 <meta property="og:image" content="http://yoursite.com/images/内存管理-17.jpg">
-<meta property="og:updated_time" content="2018-06-06T12:49:32.907Z">
+<meta property="og:updated_time" content="2018-06-06T13:08:53.267Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="操作系统|关于内存管理">
 <meta name="twitter:description" content="引言内存一直是计算机系统中宝贵而又紧俏的资源，内存能否被有效、合理地使用，将直接影响到操作系统的性能。此外，虽然物理内存的增长现在达到了N个GB，但比物理内存增长还快的是程序，所以无论物理内存如何增长，都赶不上程序增长的速度，所以操作系统如何有效的管理内存便显得尤为重要。 为改善CPU的使用率和对用户的相应速度，计算机必须在内存里保留多个进程。 内存管理的目标 地址保护：一个程序不能访问另一个程序">
@@ -68,7 +68,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -111,16 +111,16 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-05-22T17:21:15.000Z" itemprop="datePublished"> 發表於 2018-05-23</time>
+    <time datetime="2018-05-22T17:21:15.000Z" itemprop="datePublished"> 发表于 2018-05-23</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目錄</strong>
+			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内存管理的目标"><span class="toc-number">2.</span> <span class="toc-text">内存管理的目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#虚拟内存的概念"><span class="toc-number">3.</span> <span class="toc-text">虚拟内存的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本内存管理"><span class="toc-number">4.</span> <span class="toc-text">基本内存管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#单道编程的内存管理"><span class="toc-number">4.1.</span> <span class="toc-text">单道编程的内存管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多道编程的内存管理"><span class="toc-number">4.2.</span> <span class="toc-text">多道编程的内存管理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#固定分区"><span class="toc-number">4.2.1.</span> <span class="toc-text">固定分区</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#非固定分区"><span class="toc-number">4.2.2.</span> <span class="toc-text">非固定分区</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分页内存管理"><span class="toc-number">5.</span> <span class="toc-text">分页内存管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#虚拟地址的构成与地址翻译"><span class="toc-number">5.1.</span> <span class="toc-text">虚拟地址的构成与地址翻译</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#页表"><span class="toc-number">5.2.</span> <span class="toc-text">页表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分页系统的优缺点"><span class="toc-number">5.3.</span> <span class="toc-text">分页系统的优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缺页中断处理"><span class="toc-number">5.4.</span> <span class="toc-text">缺页中断处理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#段式存储管理"><span class="toc-number">6.</span> <span class="toc-text">段式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#何为分段管理"><span class="toc-number">6.1.</span> <span class="toc-text">何为分段管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分段管理优缺点"><span class="toc-number">6.2.</span> <span class="toc-text">分段管理优缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#段页式内存管理"><span class="toc-number">7.</span> <span class="toc-text">段页式内存管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#段页式内存管理的实现"><span class="toc-number">7.1.</span> <span class="toc-text">段页式内存管理的实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内存管理的演变"><span class="toc-number">8.</span> <span class="toc-text">内存管理的演变</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内存管理的目标"><span class="toc-number">2.</span> <span class="toc-text">内存管理的目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#虚拟内存的概念"><span class="toc-number">3.</span> <span class="toc-text">虚拟内存的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#连续内存分配"><span class="toc-number">4.</span> <span class="toc-text">连续内存分配</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#单道编程的内存管理"><span class="toc-number">4.1.</span> <span class="toc-text">单道编程的内存管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多道编程的内存管理"><span class="toc-number">4.2.</span> <span class="toc-text">多道编程的内存管理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#固定分区"><span class="toc-number">4.2.1.</span> <span class="toc-text">固定分区</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#非固定分区"><span class="toc-number">4.2.2.</span> <span class="toc-text">非固定分区</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分页内存管理"><span class="toc-number">5.</span> <span class="toc-text">分页内存管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#虚拟地址的构成与地址翻译"><span class="toc-number">5.1.</span> <span class="toc-text">虚拟地址的构成与地址翻译</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#页表"><span class="toc-number">5.2.</span> <span class="toc-text">页表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分页系统的优缺点"><span class="toc-number">5.3.</span> <span class="toc-text">分页系统的优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缺页中断处理"><span class="toc-number">5.4.</span> <span class="toc-text">缺页中断处理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#段式存储管理"><span class="toc-number">6.</span> <span class="toc-text">段式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#何为分段管理"><span class="toc-number">6.1.</span> <span class="toc-text">何为分段管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分段管理优缺点"><span class="toc-number">6.2.</span> <span class="toc-text">分段管理优缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#段页式内存管理"><span class="toc-number">7.</span> <span class="toc-text">段页式内存管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#段页式内存管理的实现"><span class="toc-number">7.1.</span> <span class="toc-text">段页式内存管理的实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内存管理的演变"><span class="toc-number">8.</span> <span class="toc-text">内存管理的演变</span></a></li></ol>
 		
 		</div>
 		
@@ -137,7 +137,7 @@
 <p>但是，如果在书桌和抽屉之间频繁进行文件的交换，工作效率肯定会下降。如果每次要看一份文件都要先收拾书桌再到抽屉里面拿的话，那工作根本就无法进行了。</p>
 <p>虚拟内存的优点在于除了让程序员感觉到内存容量大大增加之外，还让程序员感觉到内存速度也增快了。</p>
 <p>虚拟内存也有同样的缺点：硬盘的容量比内存大，但也只是相对的，速度却非常缓慢，如果和硬盘之间的数据交换过于频繁，处理速度就会下降，表面上看起来就像卡住了一样，这种现象称为<strong>抖动（Thrushing）</strong>。相信很多人都有过计算机停止响应的经历，而造成死机的主要原因之一就是抖动。</p>
-<h3 id="基本内存管理"><a href="#基本内存管理" class="headerlink" title="基本内存管理"></a>基本内存管理</h3><h4 id="单道编程的内存管理"><a href="#单道编程的内存管理" class="headerlink" title="单道编程的内存管理"></a>单道编程的内存管理</h4><p>在单道编程环境下，整个内存里面只有两个程序：一个是用户程序，另一个是操作系统。</p>
+<h3 id="连续内存分配"><a href="#连续内存分配" class="headerlink" title="连续内存分配"></a>连续内存分配</h3><h4 id="单道编程的内存管理"><a href="#单道编程的内存管理" class="headerlink" title="单道编程的内存管理"></a>单道编程的内存管理</h4><p>在单道编程环境下，整个内存里面只有两个程序：一个是用户程序，另一个是操作系统。</p>
 <p>由于只有一个用户程序，而操作系统所占用的内存空间是恒定的，所以我们可以将用户程序总是加载到同一个内存地址上，即用户程序永远从同一个地方开始执行。</p>
 <p>这样，用户程序里面的地址都可以事先计算出来，即在程序运行之前就计算出所有的物理地址。这种在运行前即将物理地址计算好的方式叫做<strong>静态地址翻译</strong>。下面看看此方式如何达到两个目标。</p>
 <ul>
@@ -304,10 +304,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -335,7 +335,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分類</p>
+	<p class="asidetitle">分类</p>
 		<ul>
 		
 		  
@@ -375,7 +375,7 @@
 		  
 		
 		  
-			<li><a href="/categories/干货/" title="干货">干货<sup>3</sup></a></li>
+			<li><a href="/categories/干货/" title="干货">干货<sup>4</sup></a></li>
 		  
 		
 		  
@@ -428,7 +428,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
 			
@@ -436,11 +436,11 @@
 			
 		
 			
-				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
+				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>15</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>15</sup></a></li>
+				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
 			
 		
 			
@@ -468,7 +468,7 @@
 			
 		
 			
-				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>3</sup></a></li>
+				<li><a href="/tags/干货/" title="干货">干货<sup>4</sup></a></li>
 			
 		
 			
@@ -476,11 +476,11 @@
 			
 		
 			
-				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
 			
 		
 			
@@ -488,7 +488,7 @@
 			
 		
 			
-				<li><a href="/tags/干货/" title="干货">干货<sup>3</sup></a></li>
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>3</sup></a></li>
 			
 		
 			
@@ -500,10 +500,6 @@
 			
 		
 			
-				<li><a href="/tags/计算机网络/" title="计算机网络">计算机网络<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
 			
 		
@@ -511,12 +507,16 @@
 				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
 			
 		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
 		</ul>
 </div>
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
 </aside>
@@ -709,7 +709,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
