@@ -4,24 +4,25 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>jquery|Ajax | 只为不凡而来</title>
+    <title>干货|如何设计安全的api接口 | 只为不凡而来</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="wuduozhi">
     
 
     
-    <meta name="description" content="AJAX = Asynchronous JavaScript and XML（异步的 JavaScript 和 XML）。 AJAX 不是新的编程语言，而是一种使用现有标准的新方法。 AJAX 是与服务器交换数据并更新部分网页的艺术，在不重新加载整个页面的情况下。1234567891011121314151617181920212223242526272829303132333435functio">
+    <meta name="description" content="REST API 安全设计指南开放api接口签名验证防止表单重复提交前后端分离的身份认证(一)：JSON WEB TOKEN介绍">
+<meta name="keywords" content="干货">
 <meta property="og:type" content="article">
-<meta property="og:title" content="jquery|Ajax">
-<meta property="og:url" content="http://yoursite.com/2018/01/24/jquery-Ajax/index.html">
+<meta property="og:title" content="干货|如何设计安全的api接口">
+<meta property="og:url" content="http://yoursite.com/2018/06/14/干货-如何设计安全的api接口/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="AJAX = Asynchronous JavaScript and XML（异步的 JavaScript 和 XML）。 AJAX 不是新的编程语言，而是一种使用现有标准的新方法。 AJAX 是与服务器交换数据并更新部分网页的艺术，在不重新加载整个页面的情况下。1234567891011121314151617181920212223242526272829303132333435functio">
+<meta property="og:description" content="REST API 安全设计指南开放api接口签名验证防止表单重复提交前后端分离的身份认证(一)：JSON WEB TOKEN介绍">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-05-06T11:37:35.835Z">
+<meta property="og:updated_time" content="2018-06-13T16:16:10.863Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="jquery|Ajax">
-<meta name="twitter:description" content="AJAX = Asynchronous JavaScript and XML（异步的 JavaScript 和 XML）。 AJAX 不是新的编程语言，而是一种使用现有标准的新方法。 AJAX 是与服务器交换数据并更新部分网页的艺术，在不重新加载整个页面的情况下。1234567891011121314151617181920212223242526272829303132333435functio">
+<meta name="twitter:title" content="干货|如何设计安全的api接口">
+<meta name="twitter:description" content="REST API 安全设计指南开放api接口签名验证防止表单重复提交前后端分离的身份认证(一)：JSON WEB TOKEN介绍">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -85,14 +86,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2018/01/24/jquery-Ajax/" title="jquery|Ajax" itemprop="url">jquery|Ajax</a>
+      <a href="/2018/06/14/干货-如何设计安全的api接口/" title="干货|如何设计安全的api接口" itemprop="url">干货|如何设计安全的api接口</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-01-24T15:26:56.000Z" itemprop="datePublished"> 發表於 2018-01-24</time>
+    <time datetime="2018-06-13T23:26:42.000Z" itemprop="datePublished"> 發表於 2018-06-14</time>
     
   </p>
 </header>
@@ -105,14 +106,22 @@
 		
 		</div>
 		
-		<p>AJAX = Asynchronous JavaScript and XML（异步的 JavaScript 和 XML）。</p>
-<p>AJAX 不是新的编程语言，而是一种使用现有标准的新方法。</p>
-<p>AJAX 是与服务器交换数据并更新部分网页的艺术，在不重新加载整个页面的情况下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">function getData()&#123;</div><div class="line">		$.ajax(&#123;</div><div class="line">                url:&quot;../api&quot;,</div><div class="line">                type:&quot;GET&quot;,</div><div class="line">                data:&#123;&quot;page&quot;:&quot;1&quot;&#125;,</div><div class="line">                processData:false,</div><div class="line">                contentType:false,</div><div class="line">                dataType:&quot;json&quot;,</div><div class="line">                success:function(data)&#123;</div><div class="line">                	// console.info(data);</div><div class="line">                	$(&quot;#resText&quot;).html(&quot;状态：&quot;+data.status); </div><div class="line">                &#125;,</div><div class="line">                error:function(e)&#123;</div><div class="line">                    $(&quot;#resText&quot;).html(&quot;发生错误了&quot;);</div><div class="line">                &#125;</div><div class="line">            &#125;);    </div><div class="line">	&#125;</div><div class="line"></div><div class="line">	function sendData()&#123;</div><div class="line">		$.ajax(&#123;</div><div class="line">                url:&quot;../api/addFindThing&quot;,</div><div class="line">                type:&quot;post&quot;,</div><div class="line">                data:new FormData($(&quot;#form&quot;)[0]),</div><div class="line">                processData:false,</div><div class="line">                contentType:false,</div><div class="line">                dataType:&quot;json&quot;,</div><div class="line">                success:function(data)&#123;</div><div class="line">                	// console.info(data);</div><div class="line">                	$(&quot;#resText&quot;).html(&quot;状态：&quot;+data.status); </div><div class="line">                &#125;,</div><div class="line">                error:function(e)&#123;</div><div class="line">                    $(&quot;#resText&quot;).html(&quot;发生错误了&quot;);</div><div class="line">                &#125;</div><div class="line">            &#125;);        </div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+		<p><a href="http://blog.nsfocus.net/rest-api-d/esign-safety" target="_blank" rel="external">REST API 安全设计指南</a><br><a href="https://www.cnblogs.com/codelir/p/5327462.html" target="_blank" rel="external">开放api接口签名验证</a><br><a href="https://www.xncoding.com/2016/07/29/web/form.html" target="_blank" rel="external">防止表单重复提交</a><br><a href="https://mrxf.github.io/2017/09/25/using-the-jwt-for-api-to-add-authentication/" target="_blank" rel="external">前后端分离的身份认证(一)：JSON WEB TOKEN介绍</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/干货/">干货</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/干货/">干货</a>
+  </div>
 
 </div>
 
@@ -125,17 +134,10 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2018/01/24/数据结构-树/" title="数据结构|树">
-  <span>
-  数据结构|树</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2018/01/24/总结-我的大二-上/"  title="总结|我的大二.上">
- <span>总结|我的大二.上
+<a href="/2018/06/12/干货-理解OAuth-2-0/"  title="干货|理解OAuth 2.0">
+ <span>干货|理解OAuth 2.0
 </span>
 </a>
 </div>
