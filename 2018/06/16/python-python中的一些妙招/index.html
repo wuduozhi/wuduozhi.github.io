@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="引言最近准备入坑python,但又不想从基础的学起，又深知要想掌握一门语言，需要了解其的特性，所以以此文来记录日常发现的一些特性。 python 中的[::-1]123for value in rang(10)涉及的数字倒序输出：　　for value in rang(10)[::-1]涉及的数字倒序输出： 这个是python的slice notation的特殊用法。 a = [0,1,2,3,4">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-06-21T07:41:03.838Z">
+<meta property="og:updated_time" content="2018-06-23T03:19:13.834Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python|python中的一些妙招">
 <meta name="twitter:description" content="引言最近准备入坑python,但又不想从基础的学起，又深知要想掌握一门语言，需要了解其的特性，所以以此文来记录日常发现的一些特性。 python 中的[::-1]123for value in rang(10)涉及的数字倒序输出：　　for value in rang(10)[::-1]涉及的数字倒序输出： 这个是python的slice notation的特殊用法。 a = [0,1,2,3,4">
@@ -102,7 +102,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-中的-1"><span class="toc-number">2.</span> <span class="toc-text">python 中的[::-1]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python函数-int"><span class="toc-number">3.</span> <span class="toc-text">Python函数 int()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python函数-bin"><span class="toc-number">4.</span> <span class="toc-text">Python函数 bin()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-join-方法"><span class="toc-number">5.</span> <span class="toc-text">Python join()方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表生成式"><span class="toc-number">6.</span> <span class="toc-text">列表生成式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-range-xrange-区别"><span class="toc-number">7.</span> <span class="toc-text">python  range() xrange() 区别</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-中的-1"><span class="toc-number">2.</span> <span class="toc-text">python 中的[::-1]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python函数-int"><span class="toc-number">3.</span> <span class="toc-text">Python函数 int()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python函数-bin"><span class="toc-number">4.</span> <span class="toc-text">Python函数 bin()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-join-方法"><span class="toc-number">5.</span> <span class="toc-text">Python join()方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表生成式"><span class="toc-number">6.</span> <span class="toc-text">列表生成式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-range-xrange-区别"><span class="toc-number">7.</span> <span class="toc-text">python  range() xrange() 区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-name-‘main‘-的作用"><span class="toc-number">8.</span> <span class="toc-text">python name = ‘main‘ 的作用</span></a></li></ol>
 		
 		</div>
 		
@@ -174,6 +174,22 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; c = xrange(1,100)</div><div class="line">&gt;&gt;&gt; print type(c)</div><div class="line">&lt;type &apos;xrange&apos;&gt;</div><div class="line">&gt;&gt;&gt; print c</div><div class="line">xrange(1, 100)</div><div class="line">&gt;&gt;&gt; print c[1],c[2]</div><div class="line">2 3</div></pre></td></tr></table></figure>
 <p>由上面的示例可以知道：要生成很大的数字序列的时候，用xrange会比range性能优很多，因为不需要一上来就开辟一块很大的内存空间，这两个基本上都是在循环的时候用，可以说是延迟执行的。</p>
 <p>range会直接生成一个list对象,而xrange则不会直接生成一个list，而是每次调用返回其中的一个值。所以xrange做循环的性能比range好，尤其是返回很大的时候，尽量用xrange吧，除非你是要返回一个列表。</p>
+<h3 id="python-name-‘main‘-的作用"><a href="#python-name-‘main‘-的作用" class="headerlink" title="python name = ‘main‘ 的作用"></a>python <strong>name</strong> = ‘<strong>main</strong>‘ 的作用</h3><p>很多新手刚开始学习python的时候经常会看到python 中<code>__name__ = \&#39;__main__\&#39;</code> 这样的代码，可能很多新手一开始学习的时候都比较疑惑，python 中<code>__name__ = &#39;__main__&#39;</code> 的作用，到底干嘛的？</p>
+<p>有句话经典的概括了这段代码的意义：</p>
+<p>“Make a script both importable and executable” ,意思就是说让你写的脚本模块既可以导入到别的模块中用，另外该模块自己也可执行。</p>
+<p>这句话，可能一开始听的还不是很懂。下面举例说明：</p>
+<p>先写一个模块：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#module.py</div><div class="line">def main():</div><div class="line">  print &quot;we are in %s&quot;%__name__</div><div class="line">if __name__ == &apos;__main__&apos;:</div><div class="line">  main()</div></pre></td></tr></table></figure></p>
+<p>这个函数定义了一个main函数，我们执行一下该py文件发现结果是打印出”we are in <strong>main</strong>“,说明我们的if语句中的内容被执行了，调用了main()：</p>
+<p>但是如果我们从另我一个模块导入该模块，并调用一次main()函数会是怎样的结果呢？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#anothermodle.py</div><div class="line">from module import main</div><div class="line">main()</div></pre></td></tr></table></figure></p>
+<p>其执行的结果是：we are in module</p>
+<p>但是没有显示”we are in <strong>main</strong>“,也就是说模块<strong>name</strong> = ‘<strong>main</strong>‘ 下面的函数没有执行。</p>
+<p>这样既可以让“模块”文件运行，也可以被其他模块引入，而且不会执行函数2次。这才是关键。</p>
+<p>总结一下：</p>
+<p>这是特殊的与模块相关的技巧，可把文件作为成模块导入，并以独立式程序的形式运行。每个模块都有个名为<code>__name__</code>的内置属性，python会自动设置该属性：</p>
+<p>a、如果文件是以顶层程序文件执行，在启动时，<code>__name__</code>就会设置为字符串”<strong>main</strong>“；</p>
+<p>b、如果文件被导入，<code>__name__</code>就会改设成客户端所了解的模块名。</p>
+<p>结果就是模块可以检测自己的<code>__name__</code>，来确定它是在执行还是在导入。</p>
+<p>这个功能还有一个用处：<strong>调试代码的时候，在<code>”if __name__ == &#39;__main__&#39;“</code>中加入一些我们的调试代码，我们可以让外部模块调用的时候不执行我们的调试代码，但是如果我们想排查问题的时候，直接执行该模块文件，调试代码能够正常运行！</strong></p>
   
 	</div>
 		<footer class="article-footer clearfix">
