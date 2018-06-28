@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-06-28T08:46:53.656Z</updated>
+  <updated>2018-06-28T09:02:08.128Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/06/29/Linux-shell%E7%BC%96%E7%A8%8B%E4%BA%86%E8%A7%A3%E4%B8%80%E4%B8%8B/"/>
     <id>http://yoursite.com/2018/06/29/Linux-shell编程了解一下/</id>
     <published>2018-06-28T16:00:01.000Z</published>
-    <updated>2018-06-28T08:46:53.656Z</updated>
+    <updated>2018-06-28T09:02:08.128Z</updated>
     
     <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p><strong>Shell 是一个用 C 语言编写的程序，它是用户使用 Linux 的桥梁</strong>Shell 既是一种命令语言，又是一种程序设计语言。</p>
 <p>Shell 是指一种应用程序，这个应用程序提供了一个界面，用户通过这个界面访问操作系统内核的服务。</p>
@@ -74,12 +74,10 @@
 <li>双引号里可以有变量</li>
 <li>双引号里可以出现转义字符</li>
 </ul>
-<p>####拼接字符串<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">me=&quot;小智&quot;</div><div class="line">greeting=&quot;hello, &quot;$me&quot; !&quot;</div><div class="line">greeting_1=&quot;hello, $&#123;me&#125; !&quot;</div><div class="line">echo $greeting $greeting_1</div></pre></td></tr></table></figure></p>
-<p>####获取字符串长度<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">string=&quot;abcd&quot;</div><div class="line">echo $&#123;#string&#125; #输出 4</div></pre></td></tr></table></figure></p>
-<p>####提取子字符串</p>
-<p>以下实例从字符串第 2 个字符开始截取 4 个字符：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">string=&quot;runoob is a great site&quot;</div><div class="line">echo $&#123;string:1:4&#125; # 输出 unoo</div></pre></td></tr></table></figure></p>
-<p>####查找子字符串</p>
-<p>查找字符 “i 或 s” 的位置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">string=&quot;runoob is a great company&quot;</div><div class="line">echo `expr index &quot;$string&quot; is`  # 输出 8</div></pre></td></tr></table></figure></p>
+<h4 id="拼接字符串"><a href="#拼接字符串" class="headerlink" title="拼接字符串"></a>拼接字符串</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">me=&quot;小智&quot;</div><div class="line">greeting=&quot;hello, &quot;$me&quot; !&quot;</div><div class="line">greeting_1=&quot;hello, $&#123;me&#125; !&quot;</div><div class="line">echo $greeting $greeting_1</div></pre></td></tr></table></figure>
+<h4 id="获取字符串长度"><a href="#获取字符串长度" class="headerlink" title="获取字符串长度"></a>获取字符串长度</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">string=&quot;abcd&quot;</div><div class="line">echo $&#123;#string&#125; #输出 4</div></pre></td></tr></table></figure>
+<h4 id="提取子字符串"><a href="#提取子字符串" class="headerlink" title="提取子字符串"></a>提取子字符串</h4><p>以下实例从字符串第 2 个字符开始截取 4 个字符：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">string=&quot;runoob is a great site&quot;</div><div class="line">echo $&#123;string:1:4&#125; # 输出 unoo</div></pre></td></tr></table></figure></p>
+<h4 id="查找子字符串"><a href="#查找子字符串" class="headerlink" title="查找子字符串"></a>查找子字符串</h4><p>查找字符 “i 或 s” 的位置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">string=&quot;runoob is a great company&quot;</div><div class="line">echo `expr index &quot;$string&quot; is`  # 输出 8</div></pre></td></tr></table></figure></p>
 <h3 id="Shell-传递参数"><a href="#Shell-传递参数" class="headerlink" title="Shell 传递参数"></a>Shell 传递参数</h3><p>我们可以在执行 Shell 脚本时，向脚本传递参数，脚本内获取参数的格式为：<code>$n</code>。n 代表一个数字，1 为执行脚本的第一个参数，2 为执行脚本的第二个参数，以此类推……</p>
 <p>实例</p>
 <p>以下实例我们向脚本传递三个参数，并分别输出，其中 $0 为执行的文件名：</p>
