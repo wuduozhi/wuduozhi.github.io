@@ -1,0 +1,680 @@
+
+ <!DOCTYPE HTML>
+<html lang="Chinese">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>UNIX编程|信号集 | 只为不凡而来</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wuduozhi">
+    
+
+    
+    <meta name="description" content="信号传递过程信号源为目标进程产生了一个信号,然后由内核来决定是否要将该信号传递给目标进程。从信号产生到传递给目标进程的流程图如下图所示：  进程可以阻塞信号的传递。当信号源为目标进程产生了一个信号之后,内核会执行依次执行下面操作,  如果目标进程设置了忽略该信号,则内核直接将该信号丢弃。  如果目标进程没有阻塞该信号,则内核将该信号传递给目标进程,由目标进程执行相对应操作。  如果目标进程设置阻塞">
+<meta name="keywords" content="unix,深入理解计算机系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UNIX编程|信号集">
+<meta property="og:url" content="http://yoursite.com/2018/07/06/UNIX编程-信号集/index.html">
+<meta property="og:site_name" content="只为不凡而来">
+<meta property="og:description" content="信号传递过程信号源为目标进程产生了一个信号,然后由内核来决定是否要将该信号传递给目标进程。从信号产生到传递给目标进程的流程图如下图所示：  进程可以阻塞信号的传递。当信号源为目标进程产生了一个信号之后,内核会执行依次执行下面操作,  如果目标进程设置了忽略该信号,则内核直接将该信号丢弃。  如果目标进程没有阻塞该信号,则内核将该信号传递给目标进程,由目标进程执行相对应操作。  如果目标进程设置阻塞">
+<meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/images/Unix-信号集-01.png">
+<meta property="og:updated_time" content="2018-07-05T12:36:36.588Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UNIX编程|信号集">
+<meta name="twitter:description" content="信号传递过程信号源为目标进程产生了一个信号,然后由内核来决定是否要将该信号传递给目标进程。从信号产生到传递给目标进程的流程图如下图所示：  进程可以阻塞信号的传递。当信号源为目标进程产生了一个信号之后,内核会执行依次执行下面操作,  如果目标进程设置了忽略该信号,则内核直接将该信号丢弃。  如果目标进程没有阻塞该信号,则内核将该信号传递给目标进程,由目标进程执行相对应操作。  如果目标进程设置阻塞">
+<meta name="twitter:image" content="http://yoursite.com/images/Unix-信号集-01.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/unnamed4_n_mSY_icon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/profile.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/profile.png">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="只为不凡而来" title="只为不凡而来"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
+				<h2 class="blog-motto">小智的世界</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/07/06/UNIX编程-信号集/" title="UNIX编程|信号集" itemprop="url">UNIX编程|信号集</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
+		
+  <p class="article-time">
+    <time datetime="2018-07-05T19:32:01.000Z" itemprop="datePublished"> Published 2018-07-06</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#信号传递过程"><span class="toc-number">1.</span> <span class="toc-text">信号传递过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#信号集及其操作"><span class="toc-number">2.</span> <span class="toc-text">信号集及其操作</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="信号传递过程"><a href="#信号传递过程" class="headerlink" title="信号传递过程"></a>信号传递过程</h3><p>信号源为目标进程产生了一个信号,然后由内核来决定是否要将该信号传递给目标进程。从信号产生到传递给目标进程的流程图如下图所示：</p>
+<p><img src="/images/Unix-信号集-01.png" alt=""></p>
+<p>进程可以阻塞信号的传递。当信号源为目标进程产生了一个信号之后,内核会执行依次执行下面操作,</p>
+<ol>
+<li><p>如果目标进程设置了忽略该信号,则内核直接将该信号丢弃。</p>
+</li>
+<li><p>如果目标进程没有阻塞该信号,则内核将该信号传递给目标进程,由目标进程执行相对应操作。</p>
+</li>
+<li><p>如果目标进程设置阻塞该信号,则内核将该信号放到目标进程的阻塞信号列表中,等待目标进程对该类型信号的下一步设置。若目标进程后续设置忽略该信号,则内核将该信号从目标进程的阻塞信号列表中移除并丢弃。若目标进程对该信号解除了阻塞,内核将该信号传递给目标进程进行相对应的操作。</p>
+</li>
+</ol>
+<p>在信号产生到信号传递给目标进程之间的时间间隔内,我们称该<strong>信号为未决的(pending)</strong>。</p>
+<p>每个进程都有一个<strong>信号屏蔽字(signal mask)</strong>,它规定了当前要阻塞传递给该进程的信号集。对于每种可能的信号,信号屏蔽字中都有一位与之对应。</p>
+<h3 id="信号集及其操作"><a href="#信号集及其操作" class="headerlink" title="信号集及其操作"></a>信号集及其操作</h3><p>POSIX.1 定义了一个数据类型sigset_t,用于表示信号集。另外,头文件 signal.h 提供了下列五个处理信号集的函数。</p>
+<p>函数 <code>sigemptyset</code> 初始化由 set 指向的信号集,清除其中所有信号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">int sigemptyset(sigset_t *set);</div><div class="line"></div><div class="line">返回值:若成功则返回0,若出错则返回-1</div></pre></td></tr></table></figure>
+<p>函数 <code>sigfillset</code> 初始化由 set 指向的信号集,使其包含所有信号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">int sigfillset(sigset_t *set);</div><div class="line">返回值:若成功则返回0,若出错则返回-1</div></pre></td></tr></table></figure>
+<p>函数<code>sigaddset</code> 将一个信号 signo 添加到现有信号集 set 中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">int sigaddset(sigset_t *set, int signo);</div><div class="line">返回值:若成功则返回0,若出错则返回-1</div></pre></td></tr></table></figure>
+<p>函数 <code>sigdelset</code> 将一个信号 signo 从信号集 set 中删除。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">int sigdelset(sigset_t *set, int signo);</div><div class="line">返回值:若成功则返回0,若出错则返回-1</div></pre></td></tr></table></figure>
+<p>函数<code>sigismember</code>判断指定信号 signo 是否在信号集 set 中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">int sigismember(const sigset_t *set, int signo);</div><div class="line">返回值:若真则返回1,若假则返回0,若出错则返回-1</div></pre></td></tr></table></figure>
+<p>函数 <code>sigprocmask</code>可以检测或者设置进程的信号屏蔽字。</p>
+<p><code>task_struct</code>结构有一个<code>blocked</code> 成员[业界称之为“信号屏蔽字”]，它指定了进程阻塞的信号，被阻塞的信号将不能被递送给进程，直到进程解除阻塞。在信号被阻塞时，内核将其放置到待决列表上。如果同一个信号在阻塞期间被发送了多次，则在待决列表中只放置一次。也就是说，不管发送了多少相同的信号，在进程删除阻塞后，都只会接收到一个信号。调用函数sigprocmask 可以检测或更改其信号屏蔽字。在调用 sigprocmask 后如果有任何未决的、不再阻塞的信号，则在 sigprocmask 返回前，至少会将其中一个信号递送给该进程。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">   #include &lt;signal.h&gt;  </div><div class="line">int sigprocmask(int how, const sigset_t *set, sigset_t *oset);  </div><div class="line">   返回值:若成功则返回0,若出错则返回-1</div></pre></td></tr></table></figure></p>
+<p>如果oset是非空指针，则读取进程的当前信号屏蔽字通过oset参数传出。如果set是非空指针，则更改进程的信号屏蔽字，参数how指示如何更改。如果oset和set都是非空指针，则先将原来的信号屏蔽字备份到oset里，然后根据set和how参数更改信号屏蔽字。假设当前的信号屏蔽字为mask，下表说明了how参数的可选值:</p>
+<table>
+<thead>
+<tr>
+<th>how</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SIG_BLOCK</td>
+<td>set包含了我们希望添加到当前信号屏蔽字的信号，相当于 <strong>mask=mask l set</strong></td>
+</tr>
+<tr>
+<td>SIG_UNBLOCK</td>
+<td>set包含了我们希望从当前信号屏蔽字中解除阻塞的信号，相当于<strong>mask=mask&amp;~set</strong></td>
+</tr>
+<tr>
+<td>SIG_SETMASK</td>
+<td>设置当前信号屏蔽字为set所指向的值，相当于mask=set</td>
+</tr>
+</tbody>
+</table>
+<p>下面我们来看一个例子:在下面的程序文件中先调用 <code>sigprocmask</code> 设置阻塞信号 SIGALRM,然后调用 <code>alarm(2)</code>设置一个两秒钟的闹钟 [两秒钟之后将向当前进程产生一个 SIGALRM 信号]。在睡眠 4 秒钟之后[此时应该已经产生了 SIGALRM 信号],调用 sigprocmask 函数解除对信号SIGALRM 的阻塞。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sig_alrm</span><span class="params">(<span class="keyword">int</span> signo)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"received SIGALRM\n"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">sigset_t</span> sigset;</div><div class="line"></div><div class="line">  sigemptyset(&amp;sigset);</div><div class="line">  sigaddset(&amp;sigset, SIGALRM);</div><div class="line">  </div><div class="line">  <span class="keyword">if</span> (sigprocmask(SIG_BLOCK, &amp;sigset, <span class="literal">NULL</span>) &lt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"sigprocmask error: %s\n"</span>, strerror(errno));</div><div class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (signal(SIGALRM, sig_alrm) &lt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"signal error: %s\n"</span>, strerror(errno));</div><div class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  alarm(<span class="number">2</span>);</div><div class="line">  sleep(<span class="number">4</span>);</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"before unblock sigprocmask\n"</span>);</div><div class="line">  <span class="keyword">if</span> (sigprocmask(SIG_UNBLOCK, &amp;sigset, <span class="literal">NULL</span>) &lt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"sigprocmask SIG_UNBLOCK error: %s\n"</span>, strerror(errno));</div><div class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"before exit\n"</span>);</div><div class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/LAB-shlab/<span class="built_in">test</span>$ gcc sigset.c -o sigset</div><div class="line">ubuntu@VM-162-156-ubuntu:~/LAB-shlab/<span class="built_in">test</span>$ ./sigset | cat </div><div class="line">before unblock sigprocmask</div><div class="line">received SIGALRM</div><div class="line">before <span class="built_in">exit</span></div></pre></td></tr></table></figure>
+<p>从上面的执行输出,我们看到信号 SIGALRM 是在调用 sigprocmask函 数 执 行 unblock 之 后 才 被 传 递 给 当 前 进 程 进 行 处 理 的。 如 果 我 们 将sigprocmaskdemo.c 中的sigprocemask(SIG_BLOCK, &amp;sigset, NULL) 注释掉,编译执行,生成如下结果:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/LAB-shlab/<span class="built_in">test</span>$ gcc sigset.c -o sigset</div><div class="line">ubuntu@VM-162-156-ubuntu:~/LAB-shlab/<span class="built_in">test</span>$ ./sigset | cat </div><div class="line">received SIGALRM</div><div class="line">before unblock sigprocmask</div><div class="line">before <span class="built_in">exit</span></div></pre></td></tr></table></figure>
+<p>sigpending读取当前进程的未决信号集，通过set参数传出。调用成功则返回0，出错则返回-1。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#include &lt;signal.h&gt;</span></div><div class="line">int sigpending(sigset_t *<span class="built_in">set</span>);</div><div class="line">返回值:若成功则返回0,若出错则返回-1</div></pre></td></tr></table></figure>
+<p>下面我们来看一个例子:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></div><div class="line"><span class="comment">#include &lt;stdio.h&gt;</span></div><div class="line"><span class="comment">#include &lt;unistd.h&gt;</span></div><div class="line"><span class="comment">#include &lt;string.h&gt;</span></div><div class="line"><span class="comment">#include &lt;errno.h&gt;</span></div><div class="line"><span class="comment">#include &lt;signal.h&gt;</span></div><div class="line"></div><div class="line">void alrm_is_pending(const char *str)</div><div class="line">&#123;</div><div class="line">  sigset_t pendingsigset;</div><div class="line"></div><div class="line">  <span class="built_in">printf</span>(<span class="string">"%s: "</span>, str);</div><div class="line">  <span class="keyword">if</span> (sigpending(&amp;pendingsigset) &lt; 0) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"sigpending error: %s\n"</span>, strerror(errno));</div><div class="line">    <span class="built_in">exit</span>(-1);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (sigismember(&amp;pendingsigset, SIGALRM)) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"SIGALRM is pending\n"</span>);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"SIGALRM is not pending\n"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int main(void)</div><div class="line">&#123;</div><div class="line">  sigset_t sigset;</div><div class="line"></div><div class="line">  sigemptyset(&amp;sigset);</div><div class="line">  sigaddset(&amp;sigset, SIGALRM);</div><div class="line">  <span class="keyword">if</span> (sigprocmask(SIG_BLOCK, &amp;sigset, NULL) &lt; 0) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"sigprocmask error: %s\n"</span>, strerror(errno));</div><div class="line">    <span class="built_in">exit</span>(-1);</div><div class="line">  &#125;</div><div class="line">  alrm_is_pending(<span class="string">"before alarm"</span>);</div><div class="line">  alarm(2);</div><div class="line">  sleep(4);</div><div class="line">  alrm_is_pending(<span class="string">"after alarm"</span>);</div><div class="line">  <span class="built_in">exit</span>(0);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>从下面的运行结果,我们看到调用 <code>alarm</code> 函数产生信号 SIGALRM 之后,该信号在 sigpending 函数的 set 参数指向的信号集中。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/LAB-shlab/<span class="built_in">test</span>$ gcc pending.c -o pending</div><div class="line">ubuntu@VM-162-156-ubuntu:~/LAB-shlab/<span class="built_in">test</span>$ ./pending | cat</div><div class="line">before alarm: SIGALRM is not pending</div><div class="line">after alarm: SIGALRM is pending</div></pre></td></tr></table></figure>
+<p><a href="https://www.cnblogs.com/lienhua34/p/4072417.html" target="_blank" rel="external">UNIX环境编程学习笔记（24）——信号处理进阶学习之信号集和进程信号屏蔽字</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/深入理解计算机系统/">深入理解计算机系统</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/unix/">unix</a><a href="/tags/深入理解计算机系统/">深入理解计算机系统</a>
+  </div>
+
+</div>
+
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/07/05/UNIX编程-信号量/"  title="UNIX编程|信号量">
+ <span>UNIX编程|信号量
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-img"></div>		
+	
+	<div class="social-info" class="clearfix">
+		
+		
+		<a href="https://github.com/wuduozhi" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:1220555415@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/DataStruct/" title="DataStruct">DataStruct<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>16</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>17</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Web安全/" title="Web安全">Web安全<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/college/" title="college">college<sup>13</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>5</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>9</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/干货/" title="干货">干货<sup>5</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/操作系统/" title="操作系统">操作系统<sup>5</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数据库/" title="数据库">数据库<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/machine/" title="机器学习">机器学习<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/架构/" title="架构">架构<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>18</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机算法/" title="计算机算法">计算机算法<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/计算机网络/" title="计算机网络">计算机网络<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/运维/" title="运维">运维<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/面试/" title="面试">面试<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>18</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/深入理解计算机系统/" title="深入理解计算机系统">深入理解计算机系统<sup>18</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/college/" title="college">college<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具/" title="工具">工具<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/干货/" title="干货">干货<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/操作系统/" title="操作系统">操作系统<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据库/" title="数据库">数据库<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/面试/" title="面试">面试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/unix/" title="unix">unix<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/运维/" title="运维">运维<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/hsihohuang/kiddochan" target="_blank" title="Kiddochan">Kiddochan</a> © 2018 
+		
+		<a href="/about" target="_blank" title="wuduozhi">wuduozhi</a>
+		
+		
+		</p>
+</div>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  </body>
+</html>
