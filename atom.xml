@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-07-03T05:21:24.723Z</updated>
+  <updated>2018-07-05T06:35:17.705Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,62 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>UNIX编程|信号量</title>
+    <link href="http://yoursite.com/2018/07/05/UNIX%E7%BC%96%E7%A8%8B-%E4%BF%A1%E5%8F%B7%E9%87%8F/"/>
+    <id>http://yoursite.com/2018/07/05/UNIX编程-信号量/</id>
+    <published>2018-07-05T10:47:56.000Z</published>
+    <updated>2018-07-05T06:35:17.705Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>信号是软件中断，很比较重要的应用程序都需要处理信号。信号提供了一种处理异步事件的方法，例如，中断用户键入中断键，则会通过信号机制停止一个程序，或及早终止管道中的下一个程序。</p>
+<p>每个信号都有一个名字, 这些名字都以三个字符 SIG 开头。 例如,SIGABRT是夭折信号, 当进程调用 abort 函数时产生这种信号。SIGALRM 是闹钟信号,当由 alarm 函数设置的计时器超时后产生此信号。在 UNIX 系统中,这些信号都定义在头文件 <signal.h> 中,并且都是以一个正整数来表示(信号编号)。通过在 shell 中运行命令 kill -l 可以查看当前系统所执行的所有信号。</signal.h></p>
+<p>每一个信号对应一个正整数，定义在头文件<signal.h>中。</signal.h></p>
+<p>没有信号对应整数0，kill函数使用信号编号0表示一种特殊情况，所以信号编号0又叫做空信号（null signal）。</p>
+<p>下面的各种情况会产生一个信号：</p>
+<ul>
+<li>当用户在终端按下特定的键时，会产生信号。例如，当用户按下DELETE按键（或Control-C）时，会产生一个中断信号（interrupt signal，SIGINIT），该信号使得一个运行中的程序终止。</li>
+<li><p>硬件异常可以产生信号。会引发硬件异常的情况如除以0，非法内存引用（invalid memory reference）等。这种情况会被硬件检测到，并通知内核，然后内核产生相应的信号通知对应的运行进程。例如，当一个进程执行了一个非法的内存引用，会触发SIGSEGV信号。 </p>
+</li>
+<li><p>kill函数允许当前进程向其他的进程或者进程组发送任意的信号。当然，这种方法存在限制：我们必须是信号接收进程的所有者，或者我们必须是超级用户（superuser）。</p>
+</li>
+<li>kill命令的作用和kill函数类似。这个命令多用户杀死后台进程。</li>
+<li>软件异常可以根据不同的条件产生不同的信号。例如：网络连接中接受的数据超出边界时，会触发SIGURG信号。</li>
+</ul>
+<p>对于进程来说，信号是随机产生的，所以进程不能简单地根据检测某个变量是否改变来判断信号是否发生，而应该告诉内核<strong>“当这个信号发生时，做下面的这些事情”</strong>。</p>
+<p>我们告诉内核当某个信号发生时做的事情叫做信号处理函数。信号处理函数有三种功能可供选择：</p>
+<ul>
+<li><strong>忽略该信号</strong>。该行为适用于大部分的信号，除了两个信号不能被忽略：<code>SIGKILL</code>和<code>SIGSTOP</code>。这两个信号不能被忽略，是因为其作用是为内核和超级用户提供了一种杀死或者暂停进程的万无一失的方法（a surefire way）。</li>
+<li><strong>捕获该信号</strong>。当某个信号发生时，我们告诉进程去执行我们的一段程序。在该程序中，我们可以做任何操作来处理该种情况。两个信号SIGKILL和SIGSTOP不可以被捕获。</li>
+<li><strong>执行默认的信号处理程序</strong>。每个信号都有一个默认的处理程序，而大部分的信号默认处理程序都是终止该进程。</li>
+</ul>
+<h3 id="signal函数"><a href="#signal函数" class="headerlink" title="signal函数"></a>signal函数</h3><p>说了那么多，信号接收和处理使用哪个系统api呢？unix系统信号机制最简单的借口是<code>signal函数</code>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">void</span> (*signal(<span class="keyword">int</span> signo,<span class="keyword">void</span>(*func)(<span class="keyword">int</span>)))(<span class="keyword">int</span>);</div></pre></td></tr></table></figure>
+<p>返回值：若成功则返回信号以前的处理配置，出错返回SIG_ERR;</p>
+<p>其中,参数 func 的值可以是:</p>
+<ul>
+<li>常 量SIG_IGN, 向 内 核 表 示 忽 略 此 信 号 (有 两 个 信 号 SIGKILL 和SIGSTOP 不可忽略,调用 signal 函数会报错)。</li>
+<li>常量SIG_DFL,表示执行信号的系统默认动作。</li>
+<li>一个函数指针,表示信号发生时执行该函数进行处理,这个函数称为<strong>信号处理程序</strong>。信号处理函数接收一个 int 类型的信号值参数,无返回值。</li>
+</ul>
+<p>signal 信号的返回值也是一个函数指针,指向该信号之前的信号处理程序。</p>
+<p>看个例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sig_usr</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">if</span> (signal(SIGUSR1, sig_usr) == SIG_ERR) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"can't catch SIGUSR1: %s\n"</span>, strerror(errno));</div><div class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (signal(SIGUSR2, sig_usr) == SIG_ERR) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"can't catch SIGUSR2: %s\n"</span>, strerror(errno));</div><div class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">for</span> (;;) &#123;</div><div class="line">    pause();</div><div class="line">  &#125;</div><div class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sig_usr</span><span class="params">(<span class="keyword">int</span> signo)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">if</span> (signo == SIGUSR1) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"received SIGUSR1\n"</span>);</div><div class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (signo == SIGUSR2) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"received SIGUSR2\n"</span>);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"received signal: %d\n"</span>, signo);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;信号是软件中断，很比较重要的应用程序都需要处理信号。信号提供了一种处理异步事件的方法，例如，中断用户键入中断键，则会通过信号机制停止一个程序
+    
+    </summary>
+    
+      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="unix" scheme="http://yoursite.com/tags/unix/"/>
+    
+      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>PHP|PHP图像处理类</title>
@@ -2229,375 +2285,6 @@
     
     
       <category term="干货" scheme="http://yoursite.com/tags/%E5%B9%B2%E8%B4%A7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux|Linux的那些事</title>
-    <link href="http://yoursite.com/2018/05/16/Linux-Linux%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/"/>
-    <id>http://yoursite.com/2018/05/16/Linux-Linux的那些事/</id>
-    <published>2018-05-16T10:13:29.000Z</published>
-    <updated>2018-06-29T02:55:59.609Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="Linux的基础知识"><a href="#Linux的基础知识" class="headerlink" title="Linux的基础知识"></a>Linux的基础知识</h3><p>Linux系统的组成：</p>
-<ul>
-<li>linux内核（linus 团队管理）</li>
-<li>shell：用户与内核交互的接口</li>
-<li>文件系统：ext3、ext4等，windows 有 fat32 、ntfs</li>
-<li>第三方应用软件</li>
-</ul>
-<h4 id="Shell的基本知识"><a href="#Shell的基本知识" class="headerlink" title="Shell的基本知识"></a>Shell的基本知识</h4><p><strong>Shell是系统的用户界面，提供了用户与内核进行交互操作的一种接口(命令解释器)。</strong></p>
-<p>Shell可以执行：</p>
-<ul>
-<li>内部命令</li>
-<li>应用程序</li>
-<li>shell脚本</li>
-</ul>
-<p><img src="/images/linux的那些事-01.png" alt="shell"></p>
-<p>于是乎，我们利用Shell就可以干下面这些事了：</p>
-<ul>
-<li>命令行解释(这是用得最多的！)</li>
-<li>命令的多种执行顺序</li>
-<li>通配符（ wild-card characters ）</li>
-<li>命令补全、别名机制、命令历史</li>
-<li>I/O重定向（ Input/output redirection ）</li>
-<li>管道（ pipes ）</li>
-<li>命令替换（ 或$( ) ）</li>
-<li>Shell编程语言（ Shell Script ）</li>
-</ul>
-<p>常见的shell版本：</p>
-<p><img src="/images/linux的那些事-02.png" alt="shell"></p>
-<h4 id="Linux基本目录结构"><a href="#Linux基本目录结构" class="headerlink" title="Linux基本目录结构"></a>Linux基本目录结构</h4><p><img src="/images/linux的那些事-03.png" alt="目录结构"></p>
-<p>Linux 文件系统是一个目录树的结构，文件系统结构从一个根目录开始，根目录下可以有任意多个文件和子目录，子目录中又可以有任意多个文件和子目录。</p>
-<table>
-<thead>
-<tr>
-<th>目录名称</th>
-<th>一般作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>bin</td>
-<td>存放二进制可执行文件(ls,cat,mkdir等)</td>
-</tr>
-<tr>
-<td>boot</td>
-<td>存放用于系统引导时使用的各种文件</td>
-</tr>
-<tr>
-<td>dev</td>
-<td>用于存放设备文件</td>
-</tr>
-<tr>
-<td>etc</td>
-<td>存放系统配置文件</td>
-</tr>
-<tr>
-<td>home</td>
-<td>存放所有用户文件的根目录</td>
-</tr>
-<tr>
-<td>lib</td>
-<td>存放跟文件系统中的程序运行所需要的共享库及内核模块</td>
-</tr>
-<tr>
-<td>mnt</td>
-<td>系统管理员安装临时文件系统的安装点</td>
-</tr>
-<tr>
-<td>opt</td>
-<td>额外安装的可选应用程序包所放置的位置</td>
-</tr>
-<tr>
-<td>proc</td>
-<td>虚拟文件系统，存放当前内存的映射</td>
-</tr>
-<tr>
-<td>root</td>
-<td>超级用户目录</td>
-</tr>
-<tr>
-<td>sbin</td>
-<td>存放二进制可执行文件，只有root才能访问</td>
-</tr>
-<tr>
-<td>tmp</td>
-<td>用于存放各种临时文件</td>
-</tr>
-<tr>
-<td>usr</td>
-<td>用于存放系统应用程序，比较重要的目录/usr/local 本地管理员软件安装目录</td>
-</tr>
-<tr>
-<td>var</td>
-<td>用于存放运行时需要改变数据的文件</td>
-</tr>
-</tbody>
-</table>
-<h4 id="命令基本格式"><a href="#命令基本格式" class="headerlink" title="命令基本格式"></a>命令基本格式</h4><p><code>cmd [options] [arguments]</code>，options称为选项，arguments称为参数。选项和参数都作为Shell命令执行时的输入，它们之间用空格分隔开。同时，<strong>Linux是区分大小写的</strong>。</p>
-<p>一般来说，后面跟的选项如果单字符选项前使用一个<code>减号-</code>,单词选项前使用<code>两个减号--</code>。</p>
-<p>在Linux中，可执行的文件也进行了分类：</p>
-<ul>
-<li>内置命令：出于效率的考虑，将一些常用命令的解释程序构造在Shell内部。</li>
-<li>外置命令：存放在/bin、/sbin目录下的命令</li>
-<li>实用程序：存放在/usr/bin、/usr/sbin、/usr/share、/usr/local/bin等目录下的实用程序</li>
-<li>用户程序：用户程序经过编译生成可执行文件后，可作为Shell命令运行</li>
-<li>Shell脚本：由Shell语言编写的批处理文件，可作为Shell命令运行</li>
-</ul>
-<h4 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h4><p>通配符和正则表达式还是不同的，不要混为一谈了。</p>
-<ul>
-<li>*：匹配任何字符和任何数目的字符</li>
-<li>?：匹配单一数目的任何字符</li>
-<li>[]：匹配 [] 之内的任意一个字符</li>
-<li>[! ]：匹配除了[! ]之外的任意一个字符，!表示非的意思</li>
-</ul>
-<h4 id="文件的类型"><a href="#文件的类型" class="headerlink" title="文件的类型"></a>文件的类型</h4><p>在Linux下文件的类型有这么多：</p>
-<ul>
-<li>普通文件<code>-</code></li>
-<li>目录 <code>d</code></li>
-<li>符号链接 <code>l</code><ul>
-<li>硬链接： 与普通文件没什么不同，inode 都指向同一个文件在硬盘中的区块</li>
-<li>软链接： 保存了其代表的文件的绝对路径，是另外一种文件，在硬盘上有独立的区块，访问时替换自身路径(简单地理解为 Windows 中常见的快捷方式)。</li>
-</ul>
-</li>
-<li>字符设备文件 <code>c</code></li>
-<li>块设备文件 <code>b</code></li>
-<li>套接字 <code>s</code></li>
-<li>命名管道 <code>p</code></li>
-</ul>
-<h3 id="常用的命令"><a href="#常用的命令" class="headerlink" title="常用的命令"></a>常用的命令</h3><p>由于使用Linux的过程中，基本都是通过命令进行操作，所以还是有必要记忆一些常用的命令，比如文件夹、文件的操作，怎么去编辑文件…</p>
-<h4 id="常用的文件、目录操作命令"><a href="#常用的文件、目录操作命令" class="headerlink" title="常用的文件、目录操作命令"></a>常用的文件、目录操作命令</h4><p>这是我们使用得最多的命令了，Linux最基础的命令！</p>
-<ul>
-<li>可用 <code>pwd</code> 命令查看用户的当前目录</li>
-<li>可用 <code>cd</code> 命令来切换目录</li>
-<li><code>.</code>表示当前目录</li>
-<li><code>..</code> 表示当前目录的上一级目录（父目录）</li>
-<li><code>-</code>表示用 cd 命令切换目录前所在的目录</li>
-<li><code>~</code>表示用户主目录的绝对路径名</li>
-</ul>
-<p><strong>tips:输入命令的时候要常用<code>tab键</code>来补全</strong></p>
-<ul>
-<li><code>ls</code>：显示文件或目录信息</li>
-<li><code>mkdir</code>：当前目录下创建一个空目录</li>
-<li><code>rmdir</code>：要求目录为空</li>
-<li><code>touch</code>：生成一个空文件或更改文件的时间</li>
-<li><code>cp</code>：复制文件或目录</li>
-<li><code>mv</code>：移动文件或目录、文件或目录改名</li>
-<li><code>rm</code>：删除文件或目录</li>
-<li><code>ln</code>：建立链接文件</li>
-<li><code>find</code>：查找文件</li>
-<li><code>file/stat</code>：查看文件类型或文件属性信息</li>
-<li><code>cat</code>：查看文本文件内容</li>
-<li><code>more</code>：可以分页看</li>
-<li><code>less</code>：不仅可以分页，还可以方便地搜索，回翻等操作</li>
-<li><code>tail -10</code>： 查看文件的尾部的10行</li>
-<li><code>head -20</code>：查看文件的头部20行</li>
-<li><code>echo</code> ：把内容重定向到指定的文件中 ，有则打开，无则创建</li>
-<li><code>管道命令 |</code> ：将前面的结果给后面的命令，例如：ls -la | wc ，将ls的结果加油wc命令来统计字数</li>
-<li><code>重定向 &gt; 是覆盖模式，&gt;&gt; 是追加模式</code> :例如：echo “Java3y,zhen de hen xihuan ni” &gt; qingshu.txt 把左边的输出放到右边的文件里去</li>
-</ul>
-<p>学了这些命令我们能干嘛？其实就是在Windows下复制文件、粘贴文件、创建文件、查看文件这几种~~~</p>
-<h4 id="文件打包和压缩命令"><a href="#文件打包和压缩命令" class="headerlink" title="文件打包和压缩命令"></a>文件打包和压缩命令</h4><p>接下来介绍如何在Linux下压缩和解压文件。</p>
-<p><img src="/images/linux的那些事-04.png" alt="压缩解压"></p>
-<p><img src="/images/linux的那些事-05.png" alt="压缩解压"></p>
-<h4 id="文件权限"><a href="#文件权限" class="headerlink" title="文件权限"></a>文件权限</h4><p> Linux系统上的所有的文件和目录都有权限<br> 有三种类别的权限：owner，group和other<br> 每个类别都有3个权限位：read, write, execute (rwx)</p>
-<p>对于普通文件:</p>
-<ul>
-<li>r =&gt; Can look at the contents of a file</li>
-<li>w =&gt; Can change or delete the contents of a file</li>
-<li>x =&gt; Can execute the file (r is also needed if a script)</li>
-</ul>
-<p>对于目录文件:</p>
-<ul>
-<li>r =&gt; Can list the files within a directory (ls)</li>
-<li>w =&gt; Can <strong>create/remove</strong> files in the directory</li>
-<li>x =&gt; Can change into the directory and access the files within (cd)</li>
-</ul>
-<h5 id="修改权限"><a href="#修改权限" class="headerlink" title="修改权限"></a>修改权限</h5><p> 修改文件权限用chmod 命令<br> 修改权限有两种方式：</p>
-<pre><code>1. 符号表示的权限(Symbolic Notation)
-2. 八进制表示的权限(Octal Notation)
-</code></pre><p> 必须是文件或目录的所有者才能修改其访问权限<br> root 用户可以修改任何文件和目录的权限</p>
-<p><img src="/images/linux的那些事-07.png" alt="文件权限"></p>
-<p><img src="/images/linux的那些事-08.png" alt="文件权限"></p>
-<h3 id="VI编辑器"><a href="#VI编辑器" class="headerlink" title="VI编辑器"></a>VI编辑器</h3><p><code>vi</code>是 “Visual interface” 的简称，它可以执行输出、删除、查找、替换、块操作等众多文本操作，而且用户可以根据自己的需要对其进行定制，这是其他编辑程序所没有的。</p>
-<p><img src="/images/linux的那些事-06.png" alt="vi编辑器"></p>
-<p><strong>普通模式</strong>：</p>
-<ul>
-<li><code>G</code> 用于直接跳转到文件尾</li>
-<li><code>ZZ</code>用于存盘退出Vi</li>
-<li><code>ZQ</code> 用于不存盘退出Vi</li>
-<li><code>/和？</code> 用于查找字符串</li>
-<li><code>n</code>继续查找下一个</li>
-<li><code>yy</code> 复制一行</li>
-<li><code>p</code>粘帖在下一行，<code>P</code>粘贴在前一行</li>
-<li><code>dd</code> 剪切一行</li>
-<li><code>x</code> 删除光标所在的字符</li>
-<li><code>u</code> 取消上一次编辑操作（undo）</li>
-</ul>
-<p><strong>编辑模式</strong>：在编辑模式下，用户输入的任何字符都被vim当做文件内容保存起来，并将其显示在屏幕上。</p>
-<p><strong>命令行模式</strong>：Normal 模式下，用户按冒号 :即可进入 Command 模式，此时 vim 会在显示窗口的最后一行 (屏幕的最后一行) 显示一个 “:” 作为 Command 模式的提示符，等待输入命令。</p>
-<ul>
-<li><code>:w</code> 保存当前编辑文件，但并不退出</li>
-<li><code>:w</code> newfile 存为另外一个名为 “newfile” 的文件</li>
-<li><code>:wq</code> 用于存盘退出Vi</li>
-<li><code>:q!</code> 用于不存盘退出Vi</li>
-<li><code>:q</code>用于直接退出Vi （未做修改）</li>
-</ul>
-<p>在扩展模式下可以进行查找并替换</p>
-<p>示例将全文的the 单词替换为the one 的vi 界面:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">This file is being created using the vi editor</div><div class="line">Welcome to using the vi editor...</div><div class="line">~</div><div class="line">~</div><div class="line">~</div><div class="line">:g/ the /s// the one /g</div><div class="line"></div><div class="line">命令解析：</div><div class="line">g/ the 查找文本中所有the的关键词</div><div class="line">/s// the one 替换成the one</div><div class="line">/g 替换所有(global)的关键词</div></pre></td></tr></table></figure></p>
-<p>设置Vi环境:</p>
-<ul>
-<li>:set autoindent* 缩进,常用于程序的编写</li>
-<li>:set noautoindent *取消缩进</li>
-<li>:set number* 在编辑文件时显示行号</li>
-<li>:set nonumber *不显示行号</li>
-<li>:set tabstop=value *设置显示制表符的空格字符个数</li>
-<li>:set *显示设置的所有选项</li>
-<li>:set all* 显示所有可以设置的选项</li>
-</ul>
-<h3 id="关于进程"><a href="#关于进程" class="headerlink" title="关于进程"></a>关于进程</h3><h4 id="什么是进程"><a href="#什么是进程" class="headerlink" title="什么是进程"></a>什么是进程</h4><p> 进程是一个程序针对一组数据的一次执行<br> 进程是整个系统中资源分配的最小单位<br> 进程是系统调用，系统处理机调度最小的单位<br> 每个程序(命令)的运行都会产生一个进程</p>
-<p>执行中的程序在称作进程。当程序以可执行文件存放在存储中，并且运行的时候，每个进程会被动态得分配系统资源、内存、安全属性和与之相关的状态。可以有多个进程关联到同一个程序，并同时执行不会互相干扰。操作系统会有效地管理和追踪所有运行着的进程。</p>
-<p>为了管理这些进程，用户应该能够：</p>
-<ul>
-<li>查看所有运行中的进程</li>
-<li>查看进程消耗资源</li>
-<li>定位个别进程并且对其执行指定操作</li>
-<li>改变进程的优先级</li>
-<li>杀死指定进程</li>
-<li>限制进程可用的系统资源等</li>
-</ul>
-<h4 id="进程与变量"><a href="#进程与变量" class="headerlink" title="进程与变量"></a>进程与变量</h4><p> 变量是进程环境的一部分<br> 不同进程间变量是不能互相访问和修改的<br> 子进程要想继续父进程的变量，必须用export命令将变量输出成全局变量</p>
-<h4 id="管理进程"><a href="#管理进程" class="headerlink" title="管理进程"></a>管理进程</h4><p>Linux提供了许多命令来让用户来高效掌控上述的操作。接下来，一个一个的来讲解下。</p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>ps</code></td>
-<td>Linux 中最基础的浏览系统中的进程的命令。能列出系统中运行的进程，包括进程号、命令、CPU使用量、内存使用量等。</td>
-</tr>
-<tr>
-<td><code>pstree</code></td>
-<td>linux中，每一个进程都是由其父进程创建的。此命令以可视化方式显示进程，通过显示进程的树状图来展示进程间关系。如果指定了pid了，那么树的根是该pid，不然将会是init（pid： 1）。</td>
-</tr>
-<tr>
-<td><code>top</code></td>
-<td>top’是一个更加有用的命令，可以监视系统中不同的进程所使用的资源。它提供实时的系统状态信息。显示进程的数据包括 PID、进程属主、优先级、%CPU、%memory等。可以使用这些显示指示出资源使用量。</td>
-</tr>
-<tr>
-<td><code>htop</code></td>
-<td>htop与top很类似，但是htop是交互式的文本模式的进程查看器。它通过文字图形化地显示每一个进程的CPU和内存使用量、swap使用量。使用上下光标键选择进程，F7和F8改变优先级，F9杀死进程。Htop不是系统默认安装的，所以需要额外安装。</td>
-</tr>
-<tr>
-<td><code>nice</code></td>
-<td>通过nice命令的帮助，用户可以设置和改变进程的优先级。提高一个进程的优先级，内核会分配更多CPU时间片给这个进程。默认情况下，进程以0的优先级启动。进程优先级可以通过top命令显示的NI（nice value）列查看。</td>
-</tr>
-<tr>
-<td><code>renice</code></td>
-<td>renice命令类似nice命令。使用这个命令可以改变正在运行的进程优先值。注意，用户只能改变属于他们自己的进程的优先值。</td>
-</tr>
-<tr>
-<td><code>kill</code></td>
-<td>这个命令用于发送信号来结束进程。如果一个进程没有响应杀死命令，这也许就需要强制杀死，使用-9参数来执行。注意，使用强制杀死的时候一定要小心，因为进程没有时机清理现场，也许写入文件没有完成。如果我们不知道进程PID或者打算用名字杀死进程时候，killall就能派上用场。</td>
-</tr>
-<tr>
-<td><code>ulimit</code></td>
-<td>该命令用于控制系统资源在shell和进程上的分配量。对于系统管理员是最有用的，可以管理重度使用和存在性能问题的系统。限制资源大小可以确保重要进程持续运行，其他进程不会占用过多资源。</td>
-</tr>
-<tr>
-<td><code>w</code></td>
-<td>w 提供当前登录的用户及其正在执行的进程的信息。显示信息头包含信息，如当前时间、系统运行时长、登录用户总数、过去的1，5，15分钟内的负载均衡数。</td>
-</tr>
-<tr>
-<td><code>pgrep</code></td>
-<td>pgrep的意思是”进程号全局正则匹配输出”。该命令扫描当前运行进程，然后按照命令匹配条件列出匹配结果到标准输出。对于通过名字检索进程号是很有用。</td>
-</tr>
-<tr>
-<td><code>fg</code>,<code>bg</code></td>
-<td>有时，命令需要很长的时间才能执行完成。对于这种情况，我们使用<code>bg</code>命令可以将任务放在后台执行，而用<code>fg</code>可以调到前台来使用。</td>
-</tr>
-<tr>
-<td><code>ipcs</code></td>
-<td>ipcs命令报告进程间通信设施状态。（共享内存，信号量和消息队列）</td>
-</tr>
-</tbody>
-</table>
-<h3 id="一些实用工具"><a href="#一些实用工具" class="headerlink" title="一些实用工具"></a>一些实用工具</h3><h4 id="find-文件查找工具"><a href="#find-文件查找工具" class="headerlink" title="find|文件查找工具"></a><code>find|文件查找工具</code></h4><p>find命令是一个无处不在命令，是linux中最有用的命令之一。find命令用于：在一个目录（及子目录）中搜索文件，你可以指定一些匹配条件，如按文件名、文件类型、用户甚至是时间戳查找文件。</p>
-<p><img src="/images/linux的那些事-09.png" alt="find"></p>
-<ul>
-<li>一般来说find主要用于在指定 目录结构中查找 特定文件:</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ find . -name sum</div><div class="line">./color/sum</div><div class="line">./shape/sum</div></pre></td></tr></table></figure>
-<ul>
-<li>通过find执行命令</li>
-</ul>
-<p><img src="/images/linux的那些事-10.png" alt="find"></p>
-<ul>
-<li>交互式的命令执行</li>
-</ul>
-<p><img src="/images/linux的那些事-11.png" alt="find"></p>
-<ul>
-<li>find命令的其他选项</li>
-</ul>
-<p><img src="/images/linux的那些事-12.png" alt="find"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">$ find . -name &apos;s*&apos; -type f -size +2 -exec ls -l &#123;&#125; \;</div><div class="line">-rwxr-xr-x 1 joe staff 1512 Jan 11 15:43 ./color/sum</div><div class="line">-rwxr-xr-x 1 joe staff 2148 Jan 11 15:57 ./shape/sum</div><div class="line"></div><div class="line">$ find . -perm 644 -mtime +4 -print</div><div class="line">./shape/misc</div><div class="line"></div><div class="line">$ find . -name fleas -o -name misc</div><div class="line">./misc</div><div class="line">./shape/misc</div><div class="line">./fleas</div><div class="line"></div><div class="line">$ find / -name &apos;security&apos; -print 2&gt; errfile</div><div class="line">/var/security</div><div class="line">/usr/lpp/bos.sysmgt/inst_root/var/security</div><div class="line">/usr/lib/security</div><div class="line">/etc/security</div></pre></td></tr></table></figure>
-<h4 id="grep-模式匹配工具"><a href="#grep-模式匹配工具" class="headerlink" title="grep|模式匹配工具"></a><code>grep|模式匹配工具</code></h4><p><code>grep (global search regular expression(RE) and print out the line）</code>,全面搜索正则表达式并把行打印出来)是一种强大的文本搜索工具，它能使用正则表达式搜索文本，并把匹配的行打印出来。</p>
-<p><img src="/images/linux的那些事-13.png" alt="grep"></p>
-<p>grep命令示例样本数据文件:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">phone1:</div><div class="line">As of: 1/31/2000</div><div class="line">Anatole 389-8200</div><div class="line">Avis Betty 817 422-8345</div><div class="line">Baker John 656-4333</div><div class="line">Computer Room CE phone 689-5790</div><div class="line">Dade Travel Sue 422-5690</div><div class="line">Hotline HW 800 322-4500</div><div class="line"></div><div class="line"></div><div class="line">phone2:</div><div class="line">As of: 2/15/2000</div><div class="line">Anatole 389-8200</div><div class="line">Avis Betty 817 422-8345</div><div class="line">Baker John 656-4333</div><div class="line">Computer Room CE phone 592-5712</div><div class="line">Dade Travel Sue 422-5690</div><div class="line">Hotline HW 800 322-4500</div></pre></td></tr></table></figure>
-<ul>
-<li><code>grep</code>命令示例 一：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ grep 800 phone1</div><div class="line">Hotline HW 800 322-4500</div><div class="line">$ grep 800 phone*</div><div class="line">phone1:Hotline HW 800 322-4500</div><div class="line">phone2:Hotline</div></pre></td></tr></table></figure>
-<p> 第一个例子从文件phone1 中找出了包含800 的行<br> 第二个例子文件名使用了通配符，所以grep 会在phone1和phone2</p>
-<p><code>grep</code>命令示例 二：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ ps -ef | grep team01</div><div class="line">team01 10524 13126 0 09:27:45 pts/1 0:00 –ksh</div></pre></td></tr></table></figure>
-<p> 找出当前运行的进程中用户team01的所有进程。通过管道，ps的标准输出作为grep的标准输入。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ ps aux | grep httpd</div><div class="line">......</div></pre></td></tr></table></figure></p>
-<p> 找出进程名称包含httpd的进程</p>
-<ul>
-<li>grep与正则表达式</li>
-</ul>
-<p><img src="/images/linux的那些事-14.png" alt="grep"></p>
-<p><strong>元字符 对比 通配符</strong></p>
-<p><img src="/images/linux的那些事-15.png" alt="grep"></p>
-<p>注：grep命令和find命令中使用元字符，都应该用单引号括起来，避免shell对元字符进行扩展。</p>
-<ul>
-<li>grep正则表达式示例</li>
-</ul>
-<p><img src="/images/linux的那些事-16.png" alt="grep"></p>
-<ul>
-<li>grep命令的选项</li>
-</ul>
-<p><img src="/images/linux的那些事-17.png" alt="grep"></p>
-<ul>
-<li>其他grep工具</li>
-</ul>
-<p><img src="/images/linux的那些事-18.png" alt="grep"></p>
-<h4 id="sort-排序工具"><a href="#sort-排序工具" class="headerlink" title="sort|排序工具"></a><code>sort|排序工具</code></h4><p><code>sort</code>对指定文件中所有的行进行排序，并将结果到标准输出。</p>
-<p><code>sort [-t delimiter][+field[.column]][options]</code></p>
-<p><img src="/images/linux的那些事-19.png" alt="sort"></p>
-<p>命令示例：<br><img src="/images/linux的那些事-20.png" alt="sort"></p>
-<h3 id="head和tail工具"><a href="#head和tail工具" class="headerlink" title="head和tail工具"></a><code>head和tail工具</code></h3><p><code>head [-number_of_lines] file(s)</code>,显示文件的前n行，默认是10行。</p>
-<p><code>tail [-number_of_lines | +starting_line_number] file(s)</code>,显示文件后n行。<code>-n</code>表示显示文件的最后n行,<code>+n</code>表示从文件的第n行一直显示到文件尾.<code>-f</code>选项显示后10行并且动态刷新.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;Linux的基础知识&quot;&gt;&lt;a href=&quot;#Linux的基础知识&quot; class=&quot;headerlink&quot; title=&quot;Linux的基础知识&quot;&gt;&lt;/a&gt;Linux的基础知识&lt;/h3&gt;&lt;p&gt;Linux系统的组成：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;linux内核（linus
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
   </entry>
   
