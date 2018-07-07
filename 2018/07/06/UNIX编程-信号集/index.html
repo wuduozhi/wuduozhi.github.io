@@ -20,7 +20,7 @@
 <meta property="og:description" content="信号传递过程信号源为目标进程产生了一个信号,然后由内核来决定是否要将该信号传递给目标进程。从信号产生到传递给目标进程的流程图如下图所示：  进程可以阻塞信号的传递。当信号源为目标进程产生了一个信号之后,内核会执行依次执行下面操作,  如果目标进程设置了忽略该信号,则内核直接将该信号丢弃。  如果目标进程没有阻塞该信号,则内核将该信号传递给目标进程,由目标进程执行相对应操作。  如果目标进程设置阻塞">
 <meta property="og:locale" content="Chinese">
 <meta property="og:image" content="http://yoursite.com/images/Unix-信号集-01.png">
-<meta property="og:updated_time" content="2018-07-05T12:36:36.588Z">
+<meta property="og:updated_time" content="2018-07-06T07:01:50.155Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UNIX编程|信号集">
 <meta name="twitter:description" content="信号传递过程信号源为目标进程产生了一个信号,然后由内核来决定是否要将该信号传递给目标进程。从信号产生到传递给目标进程的流程图如下图所示：  进程可以阻塞信号的传递。当信号源为目标进程产生了一个信号之后,内核会执行依次执行下面操作,  如果目标进程设置了忽略该信号,则内核直接将该信号丢弃。  如果目标进程没有阻塞该信号,则内核将该信号传递给目标进程,由目标进程执行相对应操作。  如果目标进程设置阻塞">
@@ -134,7 +134,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">int sigismember(const sigset_t *set, int signo);</div><div class="line">返回值:若真则返回1,若假则返回0,若出错则返回-1</div></pre></td></tr></table></figure>
 <p>函数 <code>sigprocmask</code>可以检测或者设置进程的信号屏蔽字。</p>
 <p><code>task_struct</code>结构有一个<code>blocked</code> 成员[业界称之为“信号屏蔽字”]，它指定了进程阻塞的信号，被阻塞的信号将不能被递送给进程，直到进程解除阻塞。在信号被阻塞时，内核将其放置到待决列表上。如果同一个信号在阻塞期间被发送了多次，则在待决列表中只放置一次。也就是说，不管发送了多少相同的信号，在进程删除阻塞后，都只会接收到一个信号。调用函数sigprocmask 可以检测或更改其信号屏蔽字。在调用 sigprocmask 后如果有任何未决的、不再阻塞的信号，则在 sigprocmask 返回前，至少会将其中一个信号递送给该进程。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">   #include &lt;signal.h&gt;  </div><div class="line">int sigprocmask(int how, const sigset_t *set, sigset_t *oset);  </div><div class="line">   返回值:若成功则返回0,若出错则返回-1</div></pre></td></tr></table></figure></p>
-<p>如果oset是非空指针，则读取进程的当前信号屏蔽字通过oset参数传出。如果set是非空指针，则更改进程的信号屏蔽字，参数how指示如何更改。如果oset和set都是非空指针，则先将原来的信号屏蔽字备份到oset里，然后根据set和how参数更改信号屏蔽字。假设当前的信号屏蔽字为mask，下表说明了how参数的可选值:</p>
+<p>如果oset是非空指针，则读取进程的当前信号屏蔽字并保存到oset中。如果set是非空指针，则更改进程的信号屏蔽字，参数how指示如何更改。如果oset和set都是非空指针，则先将原来的信号屏蔽字备份到oset里，然后根据set和how参数更改信号屏蔽字。假设当前的信号屏蔽字为mask，下表说明了how参数的可选值:</p>
 <table>
 <thead>
 <tr>
@@ -196,6 +196,13 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2018/07/07/PHP-PHP中的无限极分类、无线嵌套评论/" title="PHP|PHP中的无限极分类、无限嵌套评论">
+  <span>
+  PHP|PHP中的无限极分类、无限嵌套评论</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2018/07/05/UNIX编程-信号量/"  title="UNIX编程|信号量">
@@ -260,7 +267,7 @@
 		  
 		
 		  
-			<li><a href="/categories/PHP/" title="PHP">PHP<sup>17</sup></a></li>
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>18</sup></a></li>
 		  
 		
 		  
@@ -337,7 +344,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/PHP/" title="PHP">PHP<sup>18</sup></a></li>
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>19</sup></a></li>
 			
 		
 			
@@ -365,10 +372,6 @@
 			
 		
 			
-				<li><a href="/tags/干货/" title="干货">干货<sup>5</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/操作系统/" title="操作系统">操作系统<sup>5</sup></a></li>
 			
 		
@@ -377,11 +380,11 @@
 			
 		
 			
-				<li><a href="/tags/数据库/" title="数据库">数据库<sup>4</sup></a></li>
+				<li><a href="/tags/干货/" title="干货">干货<sup>5</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+				<li><a href="/tags/数据库/" title="数据库">数据库<sup>4</sup></a></li>
 			
 		
 			
@@ -389,7 +392,7 @@
 			
 		
 			
-				<li><a href="/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
 			
 		
 			
@@ -398,6 +401,10 @@
 		
 			
 				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
 			
 		
 			
@@ -413,7 +420,7 @@
 			
 		
 			
-				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
 			
 		
 		</ul>

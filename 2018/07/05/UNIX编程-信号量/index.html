@@ -19,12 +19,13 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="引言信号是软件中断，很比较重要的应用程序都需要处理信号。信号提供了一种处理异步事件的方法，例如，中断用户键入中断键，则会通过信号机制停止一个程序，或及早终止管道中的下一个程序。 每个信号都有一个名字, 这些名字都以三个字符 SIG 开头。 例如,SIGABRT是夭折信号, 当进程调用 abort 函数时产生这种信号。SIGALRM 是闹钟信号,当由 alarm 函数设置的计时器超时后产生此信号。在">
 <meta property="og:locale" content="Chinese">
+<meta property="og:image" content="http://yoursite.com/images/Unix-信号-02.jpg">
 <meta property="og:image" content="http://yoursite.com/images/Unix-信号-01.png">
-<meta property="og:updated_time" content="2018-07-05T12:36:28.039Z">
+<meta property="og:updated_time" content="2018-07-06T08:24:42.858Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UNIX编程|信号量">
 <meta name="twitter:description" content="引言信号是软件中断，很比较重要的应用程序都需要处理信号。信号提供了一种处理异步事件的方法，例如，中断用户键入中断键，则会通过信号机制停止一个程序，或及早终止管道中的下一个程序。 每个信号都有一个名字, 这些名字都以三个字符 SIG 开头。 例如,SIGABRT是夭折信号, 当进程调用 abort 函数时产生这种信号。SIGALRM 是闹钟信号,当由 alarm 函数设置的计时器超时后产生此信号。在">
-<meta name="twitter:image" content="http://yoursite.com/images/Unix-信号-01.png">
+<meta name="twitter:image" content="http://yoursite.com/images/Unix-信号-02.jpg">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -104,7 +105,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#信号在内核中的表示"><span class="toc-number">2.</span> <span class="toc-text">信号在内核中的表示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#signal函数"><span class="toc-number">3.</span> <span class="toc-text">signal函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#向进程发送信号"><span class="toc-number">4.</span> <span class="toc-text">向进程发送信号</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#信号在内核中的表示"><span class="toc-number">2.</span> <span class="toc-text">信号在内核中的表示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#signal函数"><span class="toc-number">3.</span> <span class="toc-text">signal函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#向进程发送信号"><span class="toc-number">4.</span> <span class="toc-text">向进程发送信号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sigaction-函数"><span class="toc-number">5.</span> <span class="toc-text">sigaction 函数</span></a></li></ol>
 		
 		</div>
 		
@@ -114,13 +115,16 @@
 <p>没有信号对应整数0，kill函数使用信号编号0表示一种特殊情况，所以信号编号0又叫做空信号（null signal）。</p>
 <p>下面的各种情况会产生一个信号：</p>
 <ul>
-<li>当用户在终端按下特定的键时，会产生信号。例如，当用户按下DELETE按键（或Control-C）时，会产生一个中断信号（interrupt signal，SIGINIT），该信号使得一个运行中的程序终止。</li>
+<li><p>当用户在终端按下特定的键时，会产生信号。例如，当用户按下DELETE按键（或Control-C）时，会产生一个中断信号（interrupt signal，SIGINIT），该信号使得一个运行中的程序终止。</p>
+</li>
 <li><p>硬件异常可以产生信号。会引发硬件异常的情况如除以0，非法内存引用（invalid memory reference）等。这种情况会被硬件检测到，并通知内核，然后内核产生相应的信号通知对应的运行进程。例如，当一个进程执行了一个非法的内存引用，会触发SIGSEGV信号。 </p>
 </li>
 <li><p>kill函数允许当前进程向其他的进程或者进程组发送任意的信号。当然，这种方法存在限制：我们必须是信号接收进程的所有者，或者我们必须是超级用户（superuser）。</p>
 </li>
-<li>kill命令的作用和kill函数类似。这个命令多用户杀死后台进程。</li>
-<li>软件异常可以根据不同的条件产生不同的信号。例如：网络连接中接受的数据超出边界时，会触发SIGURG信号。</li>
+<li><p>kill命令的作用和kill函数类似。这个命令多用户杀死后台进程。</p>
+</li>
+<li><p>软件异常可以根据不同的条件产生不同的信号。例如：网络连接中接受的数据超出边界时，会触发SIGURG信号。</p>
+</li>
 </ul>
 <p>对于进程来说，信号是随机产生的，所以进程不能简单地根据检测某个变量是否改变来判断信号是否发生，而应该告诉内核<strong>“当这个信号发生时，做下面的这些事情”</strong>。</p>
 <p>我们告诉内核当某个信号发生时做的事情叫做信号处理函数。信号处理函数有三种功能可供选择：</p>
@@ -129,6 +133,9 @@
 <li><strong>捕获该信号</strong>。当某个信号发生时，我们告诉进程去执行我们的一段程序。在该程序中，我们可以做任何操作来处理该种情况。两个信号SIGKILL和SIGSTOP不可以被捕获。</li>
 <li><strong>执行默认的信号处理程序</strong>。每个信号都有一个默认的处理程序，而大部分的信号默认处理程序都是终止该进程。</li>
 </ul>
+<p><img src="/images/Unix-信号-02.jpg" alt=""></p>
+<p>如果信号已被发送但是未被接收，那么处于等待状态<code>(pending)</code>，<strong>同类型的信号至多只会有一个待处理信号(pending signal)</strong>，一定要注意这个特性，因为内部实现机制不可能提供较复杂的数据结构，所以<strong>信号的接收并不是一个队列</strong>。比如说进程有一个 <code>SIGCHLD</code> 信号处于等待状态，那么之后进来的 <code>SIGCHLD</code>信号都会被直接扔掉。</p>
+<p>当然，<strong>进程也可以阻塞特定信号的接收，但信号的发送并不受控制，所以被阻塞的信号仍然可以被发送，不过直到进程取消阻塞该信号之后才会被接收。</strong><code>内核用等待(pending)位向量和阻塞(blocked)位向量来维护每个进程的信号相关状态</code>。</p>
 <h3 id="信号在内核中的表示"><a href="#信号在内核中的表示" class="headerlink" title="信号在内核中的表示"></a>信号在内核中的表示</h3><p>信号在内核中的表示：<br><img src="/images/Unix-信号-01.png" alt=""></p>
 <p>每个信号都有两个标志位分别表示阻塞和未决，还有一个函数指针表示处理动作。信号产生时，内核在进程控制块中设置该信号的未决标志，直到信号递达才清除该标志。</p>
 <p>在上图的例子中：</p>
@@ -137,7 +144,7 @@
 <li>SIGINT信号产生过，但正在被阻塞，所以暂时不能递达。虽然它的处理动作是忽略，但在没有解除阻塞之前不能忽略这个信号，因为进程仍有机会改变处理动作之后再解除阻塞。</li>
 <li>SIGQUIT信号未产生过，一旦产生SIGQUIT信号将被阻塞，它的处理动作是用户自定义函数sighandler。</li>
 </ul>
-<p>如果在进程解除对某信号的阻塞之前这种信号产生过多次，将如何处理？</p>
+<p><strong>如果在进程解除对某信号的阻塞之前这种信号产生过多次，将如何处理？</strong></p>
 <p>POSIX.1允许系统递送该信号一次或多次。从上图来看，每个信号只有一个bit的未决标志，非0即1，不记录该信号产生了多少次，阻塞标志也是这样表示的。<strong>因此，未决和阻塞标志可以用相同的数据类型sigset_t来存储，sigset_t称为信号集，这个类型可以表示每个信号的“有效”或“无效”状态，在阻塞信号集中“有效”和“无效”的含义是该信号是否被阻塞，而在未决信号集中“有效”和“无效”的含义是该信号是否处于未决状态。</strong></p>
 <p>阻塞信号集也叫做当前进程的<strong>信号屏蔽字（Signal Mask）</strong>，这里的“屏蔽”应该理解为阻塞而不是忽略。</p>
 <h3 id="signal函数"><a href="#signal函数" class="headerlink" title="signal函数"></a>signal函数</h3><p>说了那么多，信号接收和处理使用哪个系统api呢？unix系统信号机制最简单的借口是<code>signal函数</code>。</p>
@@ -170,6 +177,17 @@
 <p>上面的 <code>kill.c</code> 程序文件中,父进程为信号 <code>SIGUSR1</code> 和<code>SIGUSR2</code>设置了信号处理程序<code>sig_us</code>r。然后调用 <code>fork</code>创建一个子进程,子进程的信号 <code>SIGUSR1</code> 和 <code>SIGUSR2</code>的信号处理程序继承父进程的,同样是sig_usr[除非子进程调用了 <code>exec</code> 函数,子进程中这两个信号的信号处理动作才会设置为系统默认]。父进程调用 kill 函数向子进程发送信号 SIGUSR1,而调用 raise 函数向自身发送信号 SIGUSR2. </p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/LAB-shlab/<span class="built_in">test</span>$ gcc kill.c -o <span class="built_in">kill</span></div><div class="line">ubuntu@VM-162-156-ubuntu:~/LAB-shlab/<span class="built_in">test</span>$ ./<span class="built_in">kill</span> | cat</div><div class="line">process 21764 creates a child process 21766</div><div class="line">process 21764 received SIGUSR2</div><div class="line">process 21766 received SIGUSR1</div></pre></td></tr></table></figure>
 <p>通过上面的运行结果,可以看到父进程 21764 创建了子进程 21766,父进程 21764 捕获了信号 SIGUSR2,子进程捕获了信号 SIGUSR1。实际运行结果与预期结果相符合。</p>
+<h3 id="sigaction-函数"><a href="#sigaction-函数" class="headerlink" title="sigaction 函数"></a>sigaction 函数</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line"> <span class="function"><span class="keyword">int</span> <span class="title">sigaction</span><span class="params">(<span class="keyword">int</span> signum, <span class="keyword">const</span> struct sigaction *act, struct sigaction *oldact)</span></span>;</div></pre></td></tr></table></figure>
+<p>◆ signum：要操作的信号。<br>◆ act：要设置的对信号的新处理方式。<br>◆ oldact：原来对信号的处理方式。<br>◆ 返回值：0 表示成功，-1 表示有错误发生。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> 类型用来描述对信号的处理，定义如下：</span></div><div class="line"><span class="title">struct</span> <span class="title">sigaction</span></div><div class="line">&#123;</div><div class="line"> <span class="keyword">void</span>     (*sa_handler)(<span class="keyword">int</span>);</div><div class="line"> <span class="keyword">void</span>     (*sa_sigaction)(<span class="keyword">int</span>, <span class="keyword">siginfo_t</span> *, <span class="keyword">void</span> *);</div><div class="line"> <span class="keyword">sigset_t</span>  sa_mask;</div><div class="line"> <span class="keyword">int</span>       sa_flags;</div><div class="line"> <span class="keyword">void</span>     (*sa_restorer)(<span class="keyword">void</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>在这个结构体中，成员 sa_handler 是一个函数指针，其含义与 signal 函数中的信号处理函数类似。成员sa_sigaction 则是另一个信号处理函数，它有三个参数，可以获得关于信号的更详细的信息。当 sa_flags 成员的值包含了 SA_SIGINFO 标志时，系统将使用 sa_sigaction 函数作为信号处理函数，否则使用sa_handler 作为信号处理函数。</p>
+<p>sa_flags 成员用于指定信号处理的行为，它可以是一下值的“按位或”组合。</p>
+<p>◆ SA_RESTART：使被信号打断的系统调用自动重新发起。<br>◆ SA_NOCLDSTOP：使父进程在它的子进程暂停或继续运行时不会收到 SIGCHLD 信号。<br>◆ SA_NOCLDWAIT：使父进程在它的子进程退出时不会收到 SIGCHLD 信号，这时子进程如果退出也不会成为僵尸进程。<br>◆ SA_NODEFER：使对信号的屏蔽无效，即在信号处理函数执行期间仍能发出这个信号。<br>◆ SA_RESETHAND：信号处理之后重新设置为默认的处理方式。<br>◆ SA_SIGINFO：使用 sa_sigaction 成员而不是 sa_handler 作为信号处理函数。</p>
+<p>re_restorer 成员则是一个已经废弃的数据域，不要使用。</p>
+<p>下面用一个例程来说明 sigaction 函数的使用，代码如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sig_usr</span><span class="params">(<span class="keyword">int</span> signum)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(signum == SIGUSR1)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"SIGUSR1 received\n"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(signum == SIGUSR2)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"SIGUSR2 received\n"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"signal %d received\n"</span>, signum);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">char</span> buf[<span class="number">512</span>];</div><div class="line">    <span class="keyword">int</span>  n;</div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> <span class="title">sa_usr</span>;</span></div><div class="line">    sa_usr.sa_flags = <span class="number">0</span>;</div><div class="line">    sa_usr.sa_handler = sig_usr;   <span class="comment">//信号处理函数</span></div><div class="line">    </div><div class="line">    sigaction(SIGUSR1, &amp;sa_usr, <span class="literal">NULL</span>);</div><div class="line">    sigaction(SIGUSR2, &amp;sa_usr, <span class="literal">NULL</span>);</div><div class="line">    </div><div class="line">    <span class="built_in">printf</span>(<span class="string">"My PID is %d\n"</span>, getpid());</div><div class="line">    </div><div class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>((n = read(STDIN_FILENO, buf, <span class="number">511</span>)) == <span class="number">-1</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(errno == EINTR)</div><div class="line">            &#123;</div><div class="line">                <span class="built_in">printf</span>(<span class="string">"read is interrupted by signal\n"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            buf[n] = <span class="string">'\0'</span>;</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"%d bytes read: %s\n"</span>, n, buf);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在这个例程中使用 sigaction 函数为 SIGUSR1 和 SIGUSR2 信号注册了处理函数，然后从标准输入读入字符。程序运行后首先输出自己的 PID，如：<br> <code>My PID is 8888</code></p>
+<p>这时如果从另外一个终端向进程发送 SIGUSR1 或 SIGUSR2 信号，用类似如下的命令：<code>kill -USR1 8888</code></p>
+<p>则程序将继续输出如下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">SIGUSR1 received</div><div class="line">read is interrupted by signal</div><div class="line">``` </div><div class="line"></div><div class="line">这说明用 sigaction 注册信号处理函数时，不会自动重新发起被信号打断的系统调用。如果需要自动重新发起，则要设置 SA_RESTART 标志，比如在上述例程中可以进行类似一下的设置：</div></pre></td></tr></table></figure></p>
+<p>sa_usr.sa_flags = SA_RESTART;<br>```</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -268,7 +286,7 @@
 		  
 		
 		  
-			<li><a href="/categories/PHP/" title="PHP">PHP<sup>17</sup></a></li>
+			<li><a href="/categories/PHP/" title="PHP">PHP<sup>18</sup></a></li>
 		  
 		
 		  
@@ -345,7 +363,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/PHP/" title="PHP">PHP<sup>18</sup></a></li>
+				<li><a href="/tags/PHP/" title="PHP">PHP<sup>19</sup></a></li>
 			
 		
 			
@@ -373,10 +391,6 @@
 			
 		
 			
-				<li><a href="/tags/干货/" title="干货">干货<sup>5</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/操作系统/" title="操作系统">操作系统<sup>5</sup></a></li>
 			
 		
@@ -385,11 +399,11 @@
 			
 		
 			
-				<li><a href="/tags/数据库/" title="数据库">数据库<sup>4</sup></a></li>
+				<li><a href="/tags/干货/" title="干货">干货<sup>5</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+				<li><a href="/tags/数据库/" title="数据库">数据库<sup>4</sup></a></li>
 			
 		
 			
@@ -397,7 +411,7 @@
 			
 		
 			
-				<li><a href="/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
 			
 		
 			
@@ -406,6 +420,10 @@
 		
 			
 				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
 			
 		
 			
@@ -421,7 +439,7 @@
 			
 		
 			
-				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+				<li><a href="/tags/Slim/" title="Slim">Slim<sup>1</sup></a></li>
 			
 		
 		</ul>
