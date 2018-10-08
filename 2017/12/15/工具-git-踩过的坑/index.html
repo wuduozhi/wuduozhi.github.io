@@ -23,7 +23,10 @@
 <meta property="og:image" content="http://yoursite.com/images/git--项目分支管理-01.png">
 <meta property="og:image" content="http://yoursite.com/images/git--项目分支管理-02.png">
 <meta property="og:image" content="http://yoursite.com/images/git--项目分支管理-03.png">
-<meta property="og:updated_time" content="2018-05-10T16:11:06.115Z">
+<meta property="og:image" content="http://yoursite.com/images/githook.png">
+<meta property="og:image" content="http://yoursite.com/images/githook_2.png">
+<meta property="og:image" content="http://yoursite.com/images/githook_3.png">
+<meta property="og:updated_time" content="2018-07-30T16:16:16.409Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git|踩过的坑">
 <meta name="twitter:description" content="记录这些年踩过的坑第一次接触 Git 是在大一，刚进弦歌那会。由于Git是命令行操作的，没接触过命令行，就觉得这东西挺高大尚的，自己还专门也研究了好久呢，书都借了好几本。 刚开始自己也没概念，搞不清楚本地仓库和远程仓库，只有到开发新生宝典时真正使用了才知道是怎么回事，确实啊，这种工具类的东西，是要使用才能真正掌握的，就像后来用的Composer和Maven。 说说Git为什么要用Git首先，一定要">
@@ -55,7 +58,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -98,16 +101,16 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2017-12-15T00:03:02.000Z" itemprop="datePublished"> 發表於 2017-12-15</time>
+    <time datetime="2017-12-15T00:03:02.000Z" itemprop="datePublished"> 发表于 2017-12-15</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目錄</strong>
+			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#记录这些年踩过的坑"><span class="toc-number">1.</span> <span class="toc-text">记录这些年踩过的坑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#说说Git"><span class="toc-number">2.</span> <span class="toc-text">说说Git</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么要用Git"><span class="toc-number">2.1.</span> <span class="toc-text">为什么要用Git</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Git是怎么工作的"><span class="toc-number">2.2.</span> <span class="toc-text">Git是怎么工作的</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些干货"><span class="toc-number">3.</span> <span class="toc-text">一些干货</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#添加-gitignore没起作用"><span class="toc-number">3.1.</span> <span class="toc-text">添加 .gitignore没起作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#提交到远程仓库前"><span class="toc-number">3.2.</span> <span class="toc-text">提交到远程仓库前</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fetch和pull的区别"><span class="toc-number">3.3.</span> <span class="toc-text">fetch和pull的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#git-fetch"><span class="toc-number">3.3.1.</span> <span class="toc-text">git fetch</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#git-pull"><span class="toc-number">3.3.2.</span> <span class="toc-text">git pull</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-diff-的用法"><span class="toc-number">3.4.</span> <span class="toc-text">git diff 的用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-clean"><span class="toc-number">3.5.</span> <span class="toc-text">git clean</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#举个例子"><span class="toc-number">3.5.1.</span> <span class="toc-text">举个例子</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于公钥-秘钥"><span class="toc-number">3.6.</span> <span class="toc-text">关于公钥|秘钥</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#如何创建公钥"><span class="toc-number">3.6.1.</span> <span class="toc-text">如何创建公钥</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#可以参考的资料"><span class="toc-number">3.7.</span> <span class="toc-text">可以参考的资料</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#项目分支管理"><span class="toc-number">4.</span> <span class="toc-text">项目分支管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分支策略"><span class="toc-number">4.1.</span> <span class="toc-text">分支策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分支说明"><span class="toc-number">4.2.</span> <span class="toc-text">分支说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分支常用命令"><span class="toc-number">4.3.</span> <span class="toc-text">分支常用命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#合并分支策略"><span class="toc-number">4.4.</span> <span class="toc-text">合并分支策略</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#记录这些年踩过的坑"><span class="toc-number">1.</span> <span class="toc-text">记录这些年踩过的坑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#说说Git"><span class="toc-number">2.</span> <span class="toc-text">说说Git</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么要用Git"><span class="toc-number">2.1.</span> <span class="toc-text">为什么要用Git</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Git是怎么工作的"><span class="toc-number">2.2.</span> <span class="toc-text">Git是怎么工作的</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些干货"><span class="toc-number">3.</span> <span class="toc-text">一些干货</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#添加-gitignore没起作用"><span class="toc-number">3.1.</span> <span class="toc-text">添加 .gitignore没起作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#提交到远程仓库前"><span class="toc-number">3.2.</span> <span class="toc-text">提交到远程仓库前</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fetch和pull的区别"><span class="toc-number">3.3.</span> <span class="toc-text">fetch和pull的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#git-fetch"><span class="toc-number">3.3.1.</span> <span class="toc-text">git fetch</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#git-pull"><span class="toc-number">3.3.2.</span> <span class="toc-text">git pull</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-diff-的用法"><span class="toc-number">3.4.</span> <span class="toc-text">git diff 的用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git-clean"><span class="toc-number">3.5.</span> <span class="toc-text">git clean</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#举个例子"><span class="toc-number">3.5.1.</span> <span class="toc-text">举个例子</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于公钥-秘钥"><span class="toc-number">3.6.</span> <span class="toc-text">关于公钥|秘钥</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#如何创建公钥"><span class="toc-number">3.6.1.</span> <span class="toc-text">如何创建公钥</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#可以参考的资料"><span class="toc-number">3.7.</span> <span class="toc-text">可以参考的资料</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#项目分支管理"><span class="toc-number">4.</span> <span class="toc-text">项目分支管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分支策略"><span class="toc-number">4.1.</span> <span class="toc-text">分支策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分支说明"><span class="toc-number">4.2.</span> <span class="toc-text">分支说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分支常用命令"><span class="toc-number">4.3.</span> <span class="toc-text">分支常用命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#合并分支策略"><span class="toc-number">4.4.</span> <span class="toc-text">合并分支策略</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git-钩子"><span class="toc-number">5.</span> <span class="toc-text">Git 钩子</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Git-钩子安装"><span class="toc-number">5.1.</span> <span class="toc-text">Git 钩子安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Git-钩子的作用域"><span class="toc-number">5.2.</span> <span class="toc-text">Git 钩子的作用域</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Git-钩子进行自动部署"><span class="toc-number">5.3.</span> <span class="toc-text">Git 钩子进行自动部署</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -331,6 +334,23 @@
 <p>==–no-ff==</p>
 <blockquote>
 <p>合并分支时，加上–no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。</p>
+</blockquote>
+<h3 id="Git-钩子"><a href="#Git-钩子" class="headerlink" title="Git 钩子"></a>Git 钩子</h3><p>Git 钩子(hooks)是在 Git 仓库中特定事件(certain points)触发后被调用的脚本。通过钩子可以自定义 Git 内部的相关（如 git push）行为，在开发周期中的关键点触发自定义的行为。Git 含有两种类型的钩子：客户端的和服务器端的。客户端钩子由诸如提交和合并这样的操作所调用，而服务器端钩子作用于诸如接收被推送的提交这样的联网操作。</p>
+<p><img src="/images/githook.png" alt=""></p>
+<p>Git 钩子最常见的使用场景包括根据仓库状态改变项目环境、接入持续集成工作流等。由于脚本是可以完全定制，所以你可以用 Git 钩子来自动化或者优化你开发工作流中任意部分。</p>
+<h4 id="Git-钩子安装"><a href="#Git-钩子安装" class="headerlink" title="Git 钩子安装"></a>Git 钩子安装</h4><p>Git 钩子存在于每个 Git 仓库的 .git/hooks 目录中。 当你用 git init 初始化一个新版本库时，Git 默认会在这个目录中放置一些示例脚本。所有的示例都是 shell 脚本，其中一些还混杂了 Perl 代码，不过，任何正确命名的可执行脚本都可以正常使用 —— 你可以用 Ruby 或 Python，或其它语言编写它们。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@wdz hooks]# ls</div><div class="line">applypatch-msg.sample  post-update.sample     pre-commit.sample          pre-push.sample    update.sample</div><div class="line">commit-msg.sample      pre-applypatch.sample  prepare-commit-msg.sample  pre-rebase.sample</div></pre></td></tr></table></figure>
+<p><code>.sample拓展名是为了防止它们默认被执行，安装一个钩子只需要去掉.sample拓展名即可。</code></p>
+<h4 id="Git-钩子的作用域"><a href="#Git-钩子的作用域" class="headerlink" title="Git 钩子的作用域"></a>Git 钩子的作用域</h4><p>Git 钩子是对本地仓库相关操作影响，对于任何 Git 仓库来说钩子都是本地的，初始的钩子都是从 Git 默认模板目录中自动安装。</p>
+<p>在开发团队中为了保持团队所使用钩子一致，维护起来算是比较复杂的，因为 .git/hooks 目录不随你的项目一起拷贝，也不受版本控制影响。</p>
+<p><img src="/images/githook_2.png" alt=""></p>
+<blockquote>
+<p>简单的解决办法是把钩子文件存放在项目的实际目录中（在.git 外），这样就可以像其他文件一样进行版本控制，然后在.git/hooks中创建一个链接，或者简单地在更新后把它们复制到.git/hooks目录下。</p>
+</blockquote>
+<h4 id="Git-钩子进行自动部署"><a href="#Git-钩子进行自动部署" class="headerlink" title="Git 钩子进行自动部署"></a>Git 钩子进行自动部署</h4><p>如何实现 Git 钩子进行自动部署，其实原理很简单，我们只需要监听每次本地 git push到远程服务器，然后远程服务器同步拉取最新文件，重启服务器即可（pm2 reload xx）。</p>
+<p><img src="/images/githook_3.png" alt=""></p>
+<p><a href="https://aotu.io/notes/2017/04/10/githooks/index.html" target="_blank" rel="external">用 Git 钩子进行简单自动部署</a></p>
+<blockquote>
 <blockquote>
 <p><a href="http://huanglei.me/git-theory.html" target="_blank" rel="external">http://huanglei.me/git-theory.html</a><br><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000</a></p>
 </blockquote>
@@ -382,10 +402,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -413,7 +433,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分類</p>
+	<p class="asidetitle">分类</p>
 		<ul>
 		
 		  
@@ -445,7 +465,7 @@
 		  
 		
 		  
-			<li><a href="/categories/python/" title="python">python<sup>5</sup></a></li>
+			<li><a href="/categories/python/" title="python">python<sup>6</sup></a></li>
 		  
 		
 		  
@@ -506,7 +526,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
 			
@@ -526,11 +546,11 @@
 			
 		
 			
-				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>7</sup></a></li>
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>7</sup></a></li>
 			
 		
 			
@@ -542,11 +562,7 @@
 			
 		
 			
-				<li><a href="/tags/python/" title="python">python<sup>5</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/数据库/" title="数据库">数据库<sup>5</sup></a></li>
+				<li><a href="/tags/python/" title="python">python<sup>6</sup></a></li>
 			
 		
 			
@@ -554,7 +570,15 @@
 			
 		
 			
+				<li><a href="/tags/数据库/" title="数据库">数据库<sup>5</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/面试/" title="面试">面试<sup>3</sup></a></li>
 			
 		
 			
@@ -574,10 +598,6 @@
 			
 		
 			
-				<li><a href="/tags/面试/" title="面试">面试<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/unix/" title="unix">unix<sup>2</sup></a></li>
 			
 		
@@ -594,7 +614,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
 </aside>
@@ -787,7 +807,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 

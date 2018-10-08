@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-07-20T08:15:16.108Z</updated>
+  <updated>2018-10-08T00:58:38.216Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python|init.py</title>
+    <link href="http://yoursite.com/2018/10/08/python-init-py/"/>
+    <id>http://yoursite.com/2018/10/08/python-init-py/</id>
+    <published>2018-10-08T08:10:15.000Z</published>
+    <updated>2018-10-08T00:58:38.216Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>最近在用python写项目，老搞不清楚python里面的包，模块的概念，今天系统学习下。</p>
+<p><a href="https://www.cnblogs.com/Lands-ljk/p/5880483.html" target="_blank" rel="external">Python <strong>init</strong>.py 作用详解</a><br><a href="https://juejin.im/post/5aa0ba38f265da2395308dbd" target="_blank" rel="external">python模块详解</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;最近在用python写项目，老搞不清楚python里面的包，模块的概念，今天系统学习下。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://w
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>数据库|关于索引</title>
@@ -2050,54 +2075,6 @@
     <summary type="html">
     
       &lt;h3 id=&quot;PHP是世界上最好的语言&quot;&gt;&lt;a href=&quot;#PHP是世界上最好的语言&quot; class=&quot;headerlink&quot; title=&quot;PHP是世界上最好的语言&quot;&gt;&lt;/a&gt;PHP是世界上最好的语言&lt;/h3&gt;&lt;p&gt;PHP 是世界上最好的语言，不但支持 MySQL、SQL S
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
-    
-    
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP|关于oci_bind_by_name用foreach循环绑定问题</title>
-    <link href="http://yoursite.com/2018/05/23/PHP-%E5%85%B3%E4%BA%8Eoci-bind-by-name%E7%94%A8foreach%E5%BE%AA%E7%8E%AF%E7%BB%91%E5%AE%9A%E9%97%AE%E9%A2%98/"/>
-    <id>http://yoursite.com/2018/05/23/PHP-关于oci-bind-by-name用foreach循环绑定问题/</id>
-    <published>2018-05-23T12:30:12.000Z</published>
-    <updated>2018-05-25T03:34:39.196Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="遇到了神奇的bug"><a href="#遇到了神奇的bug" class="headerlink" title="遇到了神奇的bug"></a>遇到了神奇的bug</h3><p>作为 Web 开发人员，您通常遇到的第二个问题是站点的安全性。 由于该问题体现在很多方面，因此找到解决它的方法无异于一场永无休止但却至观重要的战役。 在数据库驱动的站点中，许多查询都依赖于外部值，如用户从表单中提交的值、在 URL 中传递给页面的值等等。 此类查询很容易受到 SQL 注入攻击的破坏。 （“SQL 注入攻击”是指恶意用户在尝试破坏查询的过程中向 PHP 脚本提供无效数据。） 如果对查询的处理方法不当，恶意用户便有可能从生成的错误消息中了解一些有关脚本、数据库或服务器的信息。</p>
-<p>这两天很郁闷，老是为PHP为oracle语句绑定变量时出现问题，下面做为题描述：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">oci_bind_by_name($stmt,”:ip”,$ip);</div><div class="line">oci_bind_by_name($stmt,”:username”,$username);</div><div class="line">oci_bind_by_name($stmt,”:telephone”,$telephone);</div><div class="line">oci_bind_by_name($stmt,”:idname”,$idname);</div><div class="line"></div><div class="line">$name=array(“:ip”=&gt;$ip,”:username”=&gt;$username,”:telephone”=&gt;$telephone,”:idname”=&gt;$idname); </div><div class="line">foreach ($name as $k=&gt;$v) &#123;</div><div class="line">    oci_bind_by_name($stmt,$k,$v);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>第一种方式正常绑定；第二种方式，最后执行结果四个变量都绑定了$idname的值，为什么两种方法出现的结果不同呢？原因在于oci_bind_by_name函数没认识清楚，且看官方手册：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool oci_bind_by_name ( resource stmt, string ph_name, mixed &amp;variable [, int maxlength [, int type]] )</div></pre></td></tr></table></figure></p>
-<p>第三个变量，传递的是变量的引用，所以第一次循环，<code>:ip</code>绑定的是<code>$ip</code>的引用，即假设<code>$ip</code>的地址为223，第二次循环，<code>$ip</code>变量的地址被<code>$username</code>占用，所以<code>:username</code>也绑定了地址<code>223</code>，<code>:telephone</code>和<code>:idname</code>都如此，最后一次循环，内存地址223位置上存储的是$idname变量的值，所以当执行<code>oci_execute($stmt)</code>时给四个变量都绑定了<code>$idname</code>的值。哈哈，了解了吧。</p>
-<p>如何解决？<code>不用$value</code>,比如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">foreach ($array as $key =&gt; $value) &#123;</div><div class="line">	  // oci_bind_by_name($stid, $key, $val) does not work</div><div class="line">     // because it binds each placeholder to the same location: $val</div><div class="line">     // instead use the actual location of the data: $ba[$key]</div><div class="line">     </div><div class="line">    oci_bind_by_name($stmt, $key, $array[$key]);  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="对于PDO的bind也是一样的"><a href="#对于PDO的bind也是一样的" class="headerlink" title="对于PDO的bind也是一样的"></a>对于PDO的bind也是一样的</h3><p>废话不多说, 直接看代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$dbh = new PDO(&apos;mysql:host=localhost;dbname=test&apos;, &quot;test&quot;);</div><div class="line"> </div><div class="line">$query = &lt;&lt;&lt;QUERY</div><div class="line">  INSERT INTO `user` (`username`, `password`) VALUES (:username, :password);</div><div class="line">QUERY;</div><div class="line">$statement = $dbh-&gt;prepare($query);</div><div class="line"> </div><div class="line">$bind_params = array(&apos;:username&apos; =&gt; &quot;laruence&quot;, &apos;:password&apos; =&gt; &quot;weibo&quot;);</div><div class="line">foreach( $bind_params as $key =&gt; $value )&#123;</div><div class="line">    $statement-&gt;bindParam($key, $value);</div><div class="line">&#125;</div><div class="line">$statement-&gt;execute();</div></pre></td></tr></table></figure></p>
-<p>请问, 最终执行的SQL语句是什么, 上面的代码是否有什么问题?</p>
-<p>Okey, 我想大部分同学会认为, 最终执行的SQL是:</p>
-<p><code>INSERT INTO</code>user<code>(</code>username<code>,</code>password<code>) VALUES (&quot;laruence&quot;, &quot;weibo&quot;);</code><br>但是, 可惜的是, 你错了, 最终执行的SQL是:</p>
-<p><code>INSERT INTO</code>user<code>(</code>username<code>,</code>password<code>) VALUES (&quot;weibo&quot;, &quot;weibo&quot;);</code></p>
-<p>是不是很大的一个坑呢?</p>
-<p><strong>Why?!?</strong></p>
-<p>究其原因, 也就是bindParam和bindValue的不同之处, bindParam要求第二个参数是一个引用变量(reference).</p>
-<p>让我们把上面的代码的foreach拆开, 也就是这个foreach:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">foreach( $bind_params as $key =&gt; $value )&#123;</div><div class="line">    $statement-&gt;bindParam($key, $value);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>相当于:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">//第一次循环</div><div class="line">$value = $bind_params[&quot;:username&quot;];</div><div class="line">$statement-&gt;bindParam(&quot;:username&quot;, &amp;$value); //此时, :username是对$value变量的引用</div><div class="line"> </div><div class="line">//第二次循环</div><div class="line">$value = $bind_params[&quot;:password&quot;]; //oops! $value被覆盖成了:password的值</div><div class="line">$statement-&gt;bindParam(&quot;:password&quot;, &amp;$value);</div></pre></td></tr></table></figure></p>
-<p>所以, 在使用bindParam的时候, 尤其要注意和foreach联合使用的这个陷阱. 那么正确的作法呢?</p>
-<p><strong>How to do ?!?</strong></p>
-<ul>
-<li><p>不要使用foreach, 而是手动赋值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$statement-&gt;bindParam(&quot;:username&quot;, $bind_params[&quot;:username&quot;]); //$value是引用变量了</div><div class="line">$statement-&gt;bindParam(&quot;:password&quot;, $bind_params[&quot;:password&quot;]);</div></pre></td></tr></table></figure>
-</li>
-<li><p>使用bindValue代替bindParam, 或者直接在execute中传递整个参数数组.</p>
-</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;遇到了神奇的bug&quot;&gt;&lt;a href=&quot;#遇到了神奇的bug&quot; class=&quot;headerlink&quot; title=&quot;遇到了神奇的bug&quot;&gt;&lt;/a&gt;遇到了神奇的bug&lt;/h3&gt;&lt;p&gt;作为 Web 开发人员，您通常遇到的第二个问题是站点的安全性。 由于该问题体现在很多
     
     </summary>
     
