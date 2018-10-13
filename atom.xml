@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-10-08T00:58:38.216Z</updated>
+  <updated>2018-10-13T17:04:30.241Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,51 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python|SQLAlchemy之Relationship</title>
+    <link href="http://yoursite.com/2018/10/14/python-SQLAlchemy%E4%B9%8BRelationship/"/>
+    <id>http://yoursite.com/2018/10/14/python-SQLAlchemy之Relationship/</id>
+    <published>2018-10-13T23:21:12.000Z</published>
+    <updated>2018-10-13T17:04:30.241Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="relationship"><a href="#relationship" class="headerlink" title="relationship"></a><code>relationship</code></h3><p>简单来说, <code>relationship</code>函数是<code>sqlalchemy</code>对关系之间提供的一种便利的调用方式, backref参数则对关系提供反向引用的声明。假如没有relationship，我们只能像下面这样调用关系数据：给定参数User.name,获取该user的addresses。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">def get_addresses_from_user(user_name):</div><div class="line">    user = session.query(User).filter_by(name=user_name).first()</div><div class="line">    addresses = session.query(Address).filter_by(user_id=user.id).all()</div><div class="line">    return addresses</div></pre></td></tr></table></figure></p>
+<p>如果在User中使用relationship定义addresses属性的话，<code>addresses = relationship(&#39;Address&#39;)</code>,则我们可以直接在User对象中通过addresses属性获得指定用户的所有地址。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def get_addresses_from_user(user_name):</div><div class="line">    user = session.query(User).filter_by(name=user_name).first()</div><div class="line">    return user.addresses</div></pre></td></tr></table></figure></p>
+<p>注意，在上面的addresses属性中我们并没有定义backref属性,所以我们可以通过User对象获取所拥有的地址，但是不能通过Address对象获取到所属的用户。</p>
+<h3 id="backref"><a href="#backref" class="headerlink" title="backref"></a><code>backref</code></h3><p>简单地说就是: <code>backref</code>用于在关系另一端的类中快捷地创建一个指向当前类对象的属性, 而当需要对那个属性指定参数时使用 <code>db.backref()</code></p>
+<p>在上例中，在<code>user</code>的<code>addresses</code>属性中我们并没有定义<code>backref</code>属性,所以我们可以通过User对象获取所拥有的地址，但是不能通过Address对象获取到所属的用户。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; u = User()</div><div class="line">&gt;&gt;&gt; u.addresses</div><div class="line">[]</div><div class="line">&gt;&gt;&gt; a = Address()</div><div class="line">&gt;&gt;&gt; a.user</div><div class="line">Traceback (most recent call last):</div><div class="line">  File &quot;&lt;input&gt;&quot;, line 1, in &lt;module&gt;</div><div class="line">AttributeError: &apos;Address&apos; object has no attribute &apos;user&apos;</div></pre></td></tr></table></figure>
+<p>但是当我们有从Address对象获取所属用户的需求时，backref参数就派上用场了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">addresses = relationship(&apos;Address&apos;, backref=&apos;user&apos;)</div><div class="line">&gt;&gt;&gt; a = Address()</div><div class="line">&gt;&gt;&gt; a.user</div></pre></td></tr></table></figure></p>
+<p>大致原理应该就是sqlalchemy在运行时对Address对象动态的设置了一个指向所属User对象的属性，这样就能在实际开发中使逻辑关系更加清晰，代码更加简洁了。</p>
+<p>转:<a href="https://www.zhihu.com/question/38456789" target="_blank" rel="external">知乎</a></p>
+<h3 id="lazy"><a href="#lazy" class="headerlink" title="lazy"></a><code>lazy</code></h3><p>lazy 决定了 SQLAlchemy 什么时候从数据库中加载数据:，有如下四个值:(其实还有个noload不常用)</p>
+<ul>
+<li><p>select: (which is the default) means that SQLAlchemy will load the data as necessary in one go using a standard select statement.</p>
+</li>
+<li><p>joined: tells SQLAlchemy to load the relationship in the same query as the parent using a JOIN statement.</p>
+</li>
+<li><p>subquery: works like ‘joined’ but instead SQLAlchemy will use a subquery.</p>
+</li>
+<li><p>dynamic : is special and useful if you have many items. Instead of loading the items SQLAlchemy will return another query object which you can further refine before loading the items. This is usually what you want if you expect more than a handful of items for this relationship</p>
+</li>
+</ul>
+<p>通俗了说，<code>select</code>就是访问到属性的时候，就会全部加载该属性的数据。<code>joined</code>则是在对关联的两个表进行join操作，从而获取到所有相关的对象。<code>dynamic</code>则不一样，在访问属性的时候，并没有在内存中加载数据，而是返回一个<code>query对象</code>, 需要执行相应方法才可以获取对象，比如<code>.all()</code>.</p>
+<p>转:<a href="https://blog.csdn.net/qq_34146899/article/details/52559747" target="_blank" rel="external">flask-sqlalchemy中 backref lazy的参数实例解释和选择</a><br>转:<a href="https://blog.csdn.net/bestallen/article/details/52601457" target="_blank" rel="external">SQLalchemy relationship之lazy属性 学习笔记</a></p>
+<p>转:<a href="https://www.xncoding.com/2016/03/07/python/sqlalchemy02.html" target="_blank" rel="external">SQLAlchemy进阶</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;relationship&quot;&gt;&lt;a href=&quot;#relationship&quot; class=&quot;headerlink&quot; title=&quot;relationship&quot;&gt;&lt;/a&gt;&lt;code&gt;relationship&lt;/code&gt;&lt;/h3&gt;&lt;p&gt;简单来说, &lt;code&gt;relat
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>python|init.py</title>
@@ -1957,124 +2002,6 @@
     
       &lt;h3 id=&quot;PDO&quot;&gt;&lt;a href=&quot;#PDO&quot; class=&quot;headerlink&quot; title=&quot;PDO&quot;&gt;&lt;/a&gt;PDO&lt;/h3&gt;&lt;p&gt;PHP 数据对象 （PDO） 扩展为PHP访问数据库定义了一个轻量级的一致接口。&lt;/p&gt;
 &lt;p&gt;PDO 提供了一个数据访问抽象层，这
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
-    
-    
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP|PHP操作Oracle数据库</title>
-    <link href="http://yoursite.com/2018/05/23/PHP-PHP%E6%93%8D%E4%BD%9COracle%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    <id>http://yoursite.com/2018/05/23/PHP-PHP操作Oracle数据库/</id>
-    <published>2018-05-23T13:13:25.000Z</published>
-    <updated>2018-05-23T05:52:36.018Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="PHP是世界上最好的语言"><a href="#PHP是世界上最好的语言" class="headerlink" title="PHP是世界上最好的语言"></a>PHP是世界上最好的语言</h3><p>PHP 是世界上最好的语言，不但支持 MySQL、SQL Server 等常见数据库，还支持 Oracle 数据库。让 PHP 支持 Oracle 只需将 php.ini 中的扩展 extention = php_oci8.dll 开启即可。</p>
-<h3 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h3><h4 id="数据库连接：函数：oci-connect"><a href="#数据库连接：函数：oci-connect" class="headerlink" title="数据库连接：函数：oci_connect()"></a>数据库连接：函数：<code>oci_connect()</code></h4><p>函数：<code>resource oci_connect ( string username, string password [, string db [, string charset [, int session_mode]]] )</code><br>说明：  </p>
-<ul>
-<li>函数的返回值为资源</li>
-<li>username、password：是Oracle的用户名密码，即方案名及密码</li>
-<li>db：是可选参数，如果使用本地的Oracle实例或者使用tnsnames.ora配置文件中注册的本地服务名，直接提供其名称即可。如果此参数留空，则使用本地的ORACLE_SID或者搜索tnsnames.ora文件的注册的默认本地服务名。</li>
-<li>charset：参数是在Oracle9.2以上的版本使用的参数，默认可以留空，使用NLS_LANG 环境变量替代。</li>
-<li>session_mode：用于设定使用特权身份登录（默认禁用），默认有3个选项：OCI_DEFAULT，OCI_SYSOPER 和 OCI_SYSDBA</li>
-</ul>
-<h4 id="编译SQL语句：函数：oci-parse"><a href="#编译SQL语句：函数：oci-parse" class="headerlink" title="编译SQL语句：函数：oci_parse()"></a>编译SQL语句：函数：<code>oci_parse()</code></h4><p>函数：<code>resource oci_parse ( resource connection, string query )</code><br>说明：   </p>
-<ul>
-<li>函数返回值为资源，编译以字符串形式提供的SQL语句</li>
-<li>connection：为在第一步中创建的链接资源标识符</li>
-<li>query：是一个查询字符串，用双引号引起来。</li>
-<li>在 connection 上配置 query 并返回语句标识符以用于 oci_bind_by_name()，oci_execute() 以及其它函数</li>
-</ul>
-<h4 id="执行SQL语句：函数：oci-execute"><a href="#执行SQL语句：函数：oci-execute" class="headerlink" title="执行SQL语句：函数：oci_execute()"></a>执行SQL语句：函数：<code>oci_execute()</code></h4><p>函数：bool oci_execute ( resource stmt [, int mode] )<br>说明：   </p>
-<ul>
-<li>函数返回布尔值，执行一条之前被解析过的语句</li>
-<li>stmt：在第二步创建的编译资源名</li>
-<li>mode：允许定义执行模式，<ul>
-<li>OCI_COMMIT_ON_SUCCESS（默认）：语句执行成功则自动提交</li>
-<li>OCI_DEFAULT：自动建立一个事务，此事务会在连接关闭或者脚本结束自动回退，如果想提交，需要明确调用<code>oci_commit()</code> 提交事务，或者调用<code>oci_rollback()</code>回退事务</li>
-</ul>
-</li>
-</ul>
-<h4 id="提取查询的结果"><a href="#提取查询的结果" class="headerlink" title="提取查询的结果"></a>提取查询的结果</h4><p>有几种提取结果的方式，如下：</p>
-<table>
-<thead>
-<tr>
-<th>函数</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>int oci_fetch_all ( resource statement, array &amp;output [, int skip [, int maxrows [, int flags]]] )</td>
-<td>提取所有的结果数据到数组(返回获取数据的行数)</td>
-</tr>
-<tr>
-<td>array oci_fetch_array ( resource statement [, int mode] )</td>
-<td>提取结果数据的一行到一个关联数组<code>(OCI_ASSOC)</code>或者数字索引数组<code>(OCI_NUM )</code>或两者(OCI_BOTH)等</td>
-</tr>
-<tr>
-<td>array oci_fetch_assoc ( resource statement )</td>
-<td>提取结果数据的一行到一个关联数组</td>
-</tr>
-<tr>
-<td>object oci_fetch_object ( resource statement )</td>
-<td>提取结果数据的一行到一个对象</td>
-</tr>
-<tr>
-<td>array oci_fetch_row ( resource statement )</td>
-<td>提取结果数据的一行到一个数字索引数组</td>
-</tr>
-</tbody>
-</table>
-<h4 id="释放资源"><a href="#释放资源" class="headerlink" title="释放资源"></a>释放资源</h4><table>
-<thead>
-<tr>
-<th>函数</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>bool oci_free_statement ( resource statement )</td>
-<td>释放关联于语句或游标的所有资源</td>
-</tr>
-<tr>
-<td>bool oci_close ( resource connection )</td>
-<td>关闭 Oracle数据库连接</td>
-</tr>
-</tbody>
-</table>
-<h4 id="绑定变量"><a href="#绑定变量" class="headerlink" title="绑定变量"></a>绑定变量</h4><p>函数：<code>bool oci_bind_by_name ( resource stmt, string ph_name, mixed &amp;variable [, int maxlength [, int type]] )</code></p>
-<p>oci_bind_by_name() 将 PHP 变量 variable 绑定到 Oracle 的位置标志符 ph_name。该变量是否会被用作输入输出是在运行时决定的，并且函数给该变量分配必要的存储空间。length 参数确定该绑定的最大长度，如果将 length 设为 -1，oci_bind_by_name() 会用 variable 变量的当前长度确定绑定的最大长度。</p>
-<p>如果要绑定一个抽象数据类型（LOB/ROWID/BFILE），需要先用 oci_new_descriptor() 函数分配空间。length 没有用于抽象数据类型，应被设为 -1。type 参数告诉 Oracle 要使用什么样的描述符。可能的值为：</p>
-<ul>
-<li>SQLT_FILE - 对应于 BFILE；</li>
-<li>SQLT_CFILE - 对应于 CFILE；</li>
-<li>SQLT_CLOB - 对应于 CLOB；</li>
-<li>SQLT_BLOB - 对应于 BLOB；</li>
-<li>SQLT_ROWID - 对应于 ROWID；</li>
-<li>SQLT_NTY - 对应于有名字的数据类型；</li>
-<li>SQLT_INT - 对应于 integers；</li>
-<li>SQLT_CHR - 对应于 VARCHARs；</li>
-<li>SQLT_BIN - 对应于 RAW 列；</li>
-<li>SQLT_LNG - 对应于 LONG 列；</li>
-<li>SQLT_LBI - 对应于 LONG RAW 列；</li>
-<li>SQLT_RSET - 对应于游标，是之前由 oci_new_cursor() 创建的。</li>
-</ul>
-<h3 id="数据库连接"><a href="#数据库连接" class="headerlink" title="数据库连接"></a>数据库连接</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">//数据库配置信息</div><div class="line">$db_host = &apos;10.10.10.10&apos;;          //数据库地址</div><div class="line">$db_port = &apos;1521&apos;;                 //端口号</div><div class="line">$db_service_name = &apos;servicename&apos;;  //服务名称</div><div class="line">$db_username = &apos;username&apos;;         //用户名</div><div class="line">$db_password = &apos;password&apos;;         //密码</div><div class="line"></div><div class="line">//连接数据库/</div><div class="line">$db = &quot;(DESCRIPTION =</div><div class="line">            (ADDRESS = (PROTOCOL = TCP) (HOST = $db_host) (PORT = $db_port) )</div><div class="line">            (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = $db_service_name) )</div><div class="line">        )&quot;;</div><div class="line"></div><div class="line">//建立连接</div><div class="line">$conn = oci_connect($db_username, $db_password, $db);</div><div class="line"></div><div class="line">//连接是否成功</div><div class="line">if($conn)&#123;</div><div class="line">    echo &quot;connect success&quot;;</div><div class="line">&#125;else&#123;</div><div class="line">    echo &quot;connect error&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">$sql = &quot;SELECT * FROM USERS WHERE USERNAME=:username&quot;;</div><div class="line"></div><div class="line">//编译SQL语句</div><div class="line">$stmt = oci_parse($conn, $sql);</div><div class="line"></div><div class="line">//设置绑定变量的值</div><div class="line">$username = &quot;admin&quot;;</div><div class="line"></div><div class="line">oci_bind_by_name($stmt, &quot;:username&quot;, $username);</div><div class="line"></div><div class="line">//执行语句</div><div class="line">oci_execute($stmt);</div><div class="line"></div><div class="line">//取结果数据(方法一)</div><div class="line">oci_fetch_all($stmt, $result);</div><div class="line">foreach($result as $rows)&#123;</div><div class="line">    foreach($rows as $val)&#123;</div><div class="line">      echo $val;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//取结果数据(方法二)</div><div class="line">// while($row = oci_fetch_array($stmt, OCI_ASSOC)) &#123;</div><div class="line">//     echo $row[&apos;USERNAME&apos;];</div><div class="line">// &#125;</div><div class="line"></div><div class="line">//释放资源</div><div class="line">oci_free_statement($stmt);</div><div class="line">oci_close($conn);</div></pre></td></tr></table></figure>
-<h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">$sql = &quot;INSERT INTO USERS (USERNAME,PASSWORD) VALUES (:username,:password)&quot;;</div><div class="line"></div><div class="line">$stmt = oci_parse($conn, $sql);</div><div class="line"></div><div class="line">//设置绑定变量的值</div><div class="line">$username = &quot;admin&quot;;</div><div class="line">$password = &quot;123456&quot;;</div><div class="line"></div><div class="line">oci_bind_by_name($stmt, &quot;:username&quot;, $username);</div><div class="line">oci_bind_by_name($stmt, &quot;:password&quot;, $password);</div><div class="line"></div><div class="line">//执行语句</div><div class="line">oci_execute($stmt);</div><div class="line"></div><div class="line">//检查影响的行数</div><div class="line">if(oci_num_rows($stmt))&#123;</div><div class="line">   echo &quot;insert success&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//释放资源</div><div class="line">oci_free_statement($stmt);</div><div class="line">oci_close($conn);</div></pre></td></tr></table></figure>
-<h3 id="调用存储过程"><a href="#调用存储过程" class="headerlink" title="调用存储过程"></a>调用存储过程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">$sql = &quot;BEGIN :res:=chk_user_exist(:username); end;&quot;;</div><div class="line"></div><div class="line">$stmt = oci_parse($conn, $sql);</div><div class="line"></div><div class="line">//设置绑定变量的值</div><div class="line">$username = &quot;admin&quot;;</div><div class="line"></div><div class="line">oci_bind_by_name($stmt, &quot;:res&quot;, $res);</div><div class="line">oci_bind_by_name($stmt, &quot;:username&quot;, $username);</div><div class="line"></div><div class="line">//执行语句</div><div class="line">oci_execute($stmt);</div><div class="line"></div><div class="line">//判断是否存在</div><div class="line">if($res == 1)&#123;</div><div class="line">    echo &quot;此用户存在&quot;;</div><div class="line">&#125;else&#123;</div><div class="line">    echo &quot;此用户不存在&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//释放资源</div><div class="line">oci_free_statement($stmt);</div><div class="line">oci_close($conn);</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;PHP是世界上最好的语言&quot;&gt;&lt;a href=&quot;#PHP是世界上最好的语言&quot; class=&quot;headerlink&quot; title=&quot;PHP是世界上最好的语言&quot;&gt;&lt;/a&gt;PHP是世界上最好的语言&lt;/h3&gt;&lt;p&gt;PHP 是世界上最好的语言，不但支持 MySQL、SQL S
     
     </summary>
     

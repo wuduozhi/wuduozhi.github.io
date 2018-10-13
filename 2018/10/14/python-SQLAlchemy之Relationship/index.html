@@ -4,25 +4,25 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>干货|Arduino初体验 | 只为不凡而来</title>
+    <title>python|SQLAlchemy之Relationship | 只为不凡而来</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="wuduozhi">
     
 
     
-    <meta name="description" content="简介Arduino是一款便捷灵活、方便上手的开源电子原型平台。主要包含两个主要的部分：硬件部分是可以用来做电路连接的各种型号的Arduino开发板；软件则是Arduino IDE(程序开发环境)，你只要在IDE中编写程序代码，将程序上载到Arduino后，程序便会告诉Arduino要做些什么。Arduino能通过各种各样的传感器来感知环境，通过控制灯光、马达和其他的装置来反馈、影响环境。Ardui">
-<meta name="keywords" content="干货">
+    <meta name="description" content="relationship简单来说, relationship函数是sqlalchemy对关系之间提供的一种便利的调用方式, backref参数则对关系提供反向引用的声明。假如没有relationship，我们只能像下面这样调用关系数据：给定参数User.name,获取该user的addresses。1234def get_addresses_from_user(user_name):    use">
+<meta name="keywords" content="python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="干货|Arduino初体验">
-<meta property="og:url" content="http://yoursite.com/2018/05/22/干货-Arduino初体验/index.html">
+<meta property="og:title" content="python|SQLAlchemy之Relationship">
+<meta property="og:url" content="http://yoursite.com/2018/10/14/python-SQLAlchemy之Relationship/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="简介Arduino是一款便捷灵活、方便上手的开源电子原型平台。主要包含两个主要的部分：硬件部分是可以用来做电路连接的各种型号的Arduino开发板；软件则是Arduino IDE(程序开发环境)，你只要在IDE中编写程序代码，将程序上载到Arduino后，程序便会告诉Arduino要做些什么。Arduino能通过各种各样的传感器来感知环境，通过控制灯光、马达和其他的装置来反馈、影响环境。Ardui">
+<meta property="og:description" content="relationship简单来说, relationship函数是sqlalchemy对关系之间提供的一种便利的调用方式, backref参数则对关系提供反向引用的声明。假如没有relationship，我们只能像下面这样调用关系数据：给定参数User.name,获取该user的addresses。1234def get_addresses_from_user(user_name):    use">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-05-21T16:19:15.820Z">
+<meta property="og:updated_time" content="2018-10-13T17:04:30.241Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="干货|Arduino初体验">
-<meta name="twitter:description" content="简介Arduino是一款便捷灵活、方便上手的开源电子原型平台。主要包含两个主要的部分：硬件部分是可以用来做电路连接的各种型号的Arduino开发板；软件则是Arduino IDE(程序开发环境)，你只要在IDE中编写程序代码，将程序上载到Arduino后，程序便会告诉Arduino要做些什么。Arduino能通过各种各样的传感器来感知环境，通过控制灯光、马达和其他的装置来反馈、影响环境。Ardui">
+<meta name="twitter:title" content="python|SQLAlchemy之Relationship">
+<meta name="twitter:description" content="relationship简单来说, relationship函数是sqlalchemy对关系之间提供的一种便利的调用方式, backref参数则对关系提供反向引用的声明。假如没有relationship，我们只能像下面这样调用关系数据：给定参数User.name,获取该user的addresses。1234def get_addresses_from_user(user_name):    use">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -86,14 +86,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2018/05/22/干货-Arduino初体验/" title="干货|Arduino初体验" itemprop="url">干货|Arduino初体验</a>
+      <a href="/2018/10/14/python-SQLAlchemy之Relationship/" title="python|SQLAlchemy之Relationship" itemprop="url">python|SQLAlchemy之Relationship</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-05-21T23:38:53.000Z" itemprop="datePublished"> 發表於 2018-05-22</time>
+    <time datetime="2018-10-13T23:21:12.000Z" itemprop="datePublished"> 發表於 2018-10-14</time>
     
   </p>
 </header>
@@ -102,12 +102,33 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目錄</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#找到的一些干货"><span class="toc-number">2.</span> <span class="toc-text">找到的一些干货</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#relationship"><span class="toc-number">1.</span> <span class="toc-text">relationship</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#backref"><span class="toc-number">2.</span> <span class="toc-text">backref</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lazy"><span class="toc-number">3.</span> <span class="toc-text">lazy</span></a></li></ol>
 		
 		</div>
 		
-		<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Arduino是一款便捷灵活、方便上手的开源电子原型平台。主要包含两个主要的部分：硬件部分是可以用来做电路连接的各种型号的Arduino开发板；软件则是Arduino IDE(程序开发环境)，你只要在IDE中编写程序代码，将程序上载到Arduino后，程序便会告诉Arduino要做些什么。Arduino能通过各种各样的传感器来感知环境，通过控制灯光、马达和其他的装置来反馈、影响环境。Arduino的简易性，丰富的扩展板和成熟的开源社区使之成为开源硬件和Maker Movement的中流砥柱。</p>
-<h3 id="找到的一些干货"><a href="#找到的一些干货" class="headerlink" title="找到的一些干货"></a>找到的一些干货</h3><p><a href="http://www.naozhendang.com/s/learning-arduino" target="_blank" rel="external">干货教程</a><br><a href="https://www.arduino.cc/reference/en/" target="_blank" rel="external">官网教程</a></p>
+		<h3 id="relationship"><a href="#relationship" class="headerlink" title="relationship"></a><code>relationship</code></h3><p>简单来说, <code>relationship</code>函数是<code>sqlalchemy</code>对关系之间提供的一种便利的调用方式, backref参数则对关系提供反向引用的声明。假如没有relationship，我们只能像下面这样调用关系数据：给定参数User.name,获取该user的addresses。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">def get_addresses_from_user(user_name):</div><div class="line">    user = session.query(User).filter_by(name=user_name).first()</div><div class="line">    addresses = session.query(Address).filter_by(user_id=user.id).all()</div><div class="line">    return addresses</div></pre></td></tr></table></figure></p>
+<p>如果在User中使用relationship定义addresses属性的话，<code>addresses = relationship(&#39;Address&#39;)</code>,则我们可以直接在User对象中通过addresses属性获得指定用户的所有地址。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def get_addresses_from_user(user_name):</div><div class="line">    user = session.query(User).filter_by(name=user_name).first()</div><div class="line">    return user.addresses</div></pre></td></tr></table></figure></p>
+<p>注意，在上面的addresses属性中我们并没有定义backref属性,所以我们可以通过User对象获取所拥有的地址，但是不能通过Address对象获取到所属的用户。</p>
+<h3 id="backref"><a href="#backref" class="headerlink" title="backref"></a><code>backref</code></h3><p>简单地说就是: <code>backref</code>用于在关系另一端的类中快捷地创建一个指向当前类对象的属性, 而当需要对那个属性指定参数时使用 <code>db.backref()</code></p>
+<p>在上例中，在<code>user</code>的<code>addresses</code>属性中我们并没有定义<code>backref</code>属性,所以我们可以通过User对象获取所拥有的地址，但是不能通过Address对象获取到所属的用户。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; u = User()</div><div class="line">&gt;&gt;&gt; u.addresses</div><div class="line">[]</div><div class="line">&gt;&gt;&gt; a = Address()</div><div class="line">&gt;&gt;&gt; a.user</div><div class="line">Traceback (most recent call last):</div><div class="line">  File &quot;&lt;input&gt;&quot;, line 1, in &lt;module&gt;</div><div class="line">AttributeError: &apos;Address&apos; object has no attribute &apos;user&apos;</div></pre></td></tr></table></figure>
+<p>但是当我们有从Address对象获取所属用户的需求时，backref参数就派上用场了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">addresses = relationship(&apos;Address&apos;, backref=&apos;user&apos;)</div><div class="line">&gt;&gt;&gt; a = Address()</div><div class="line">&gt;&gt;&gt; a.user</div></pre></td></tr></table></figure></p>
+<p>大致原理应该就是sqlalchemy在运行时对Address对象动态的设置了一个指向所属User对象的属性，这样就能在实际开发中使逻辑关系更加清晰，代码更加简洁了。</p>
+<p>转:<a href="https://www.zhihu.com/question/38456789" target="_blank" rel="external">知乎</a></p>
+<h3 id="lazy"><a href="#lazy" class="headerlink" title="lazy"></a><code>lazy</code></h3><p>lazy 决定了 SQLAlchemy 什么时候从数据库中加载数据:，有如下四个值:(其实还有个noload不常用)</p>
+<ul>
+<li><p>select: (which is the default) means that SQLAlchemy will load the data as necessary in one go using a standard select statement.</p>
+</li>
+<li><p>joined: tells SQLAlchemy to load the relationship in the same query as the parent using a JOIN statement.</p>
+</li>
+<li><p>subquery: works like ‘joined’ but instead SQLAlchemy will use a subquery.</p>
+</li>
+<li><p>dynamic : is special and useful if you have many items. Instead of loading the items SQLAlchemy will return another query object which you can further refine before loading the items. This is usually what you want if you expect more than a handful of items for this relationship</p>
+</li>
+</ul>
+<p>通俗了说，<code>select</code>就是访问到属性的时候，就会全部加载该属性的数据。<code>joined</code>则是在对关联的两个表进行join操作，从而获取到所有相关的对象。<code>dynamic</code>则不一样，在访问属性的时候，并没有在内存中加载数据，而是返回一个<code>query对象</code>, 需要执行相应方法才可以获取对象，比如<code>.all()</code>.</p>
+<p>转:<a href="https://blog.csdn.net/qq_34146899/article/details/52559747" target="_blank" rel="external">flask-sqlalchemy中 backref lazy的参数实例解释和选择</a><br>转:<a href="https://blog.csdn.net/bestallen/article/details/52601457" target="_blank" rel="external">SQLalchemy relationship之lazy属性 学习笔记</a></p>
+<p>转:<a href="https://www.xncoding.com/2016/03/07/python/sqlalchemy02.html" target="_blank" rel="external">SQLAlchemy进阶</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -115,13 +136,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/干货/">干货</a>
+  <a class="article-category-link" href="/categories/python/">python</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/干货/">干货</a>
+  <span></span> <a href="/tags/python/">python</a>
   </div>
 
 </div>
@@ -135,17 +156,10 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2018/05/22/LeetCode-SQL/" title="LeetCode|SQL">
-  <span>
-  LeetCode|SQL</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2018/05/16/Linux-Linux的那些事/"  title="Linux|Linux的那些事">
- <span>Linux|Linux的那些事
+<a href="/2018/10/08/python-init-py/"  title="python|init.py">
+ <span>python|init.py
 </span>
 </a>
 </div>
