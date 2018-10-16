@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-10-13T17:04:30.241Z</updated>
+  <updated>2018-10-16T15:57:18.959Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,66 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python|flask简单用</title>
+    <link href="http://yoursite.com/2018/10/17/python-flask%E7%AE%80%E5%8D%95%E7%94%A8/"/>
+    <id>http://yoursite.com/2018/10/17/python-flask简单用/</id>
+    <published>2018-10-16T23:56:41.000Z</published>
+    <updated>2018-10-16T15:57:18.959Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="nginx-Gunicorn部署Flask项目"><a href="#nginx-Gunicorn部署Flask项目" class="headerlink" title="nginx+Gunicorn部署Flask项目"></a>nginx+Gunicorn部署Flask项目</h3><p><a href="https://juejin.im/post/5a5c1825f265da3e3e33bf70" target="_blank" rel="external">部署</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;nginx-Gunicorn部署Flask项目&quot;&gt;&lt;a href=&quot;#nginx-Gunicorn部署Flask项目&quot; class=&quot;headerlink&quot; title=&quot;nginx+Gunicorn部署Flask项目&quot;&gt;&lt;/a&gt;nginx+Gunicorn部署F
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python|pytest单元测试</title>
+    <link href="http://yoursite.com/2018/10/17/python-pytest%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/"/>
+    <id>http://yoursite.com/2018/10/17/python-pytest单元测试/</id>
+    <published>2018-10-16T23:54:37.000Z</published>
+    <updated>2018-10-16T16:40:39.666Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="pytest的fixture"><a href="#pytest的fixture" class="headerlink" title="pytest的fixture"></a>pytest的fixture</h3><ul>
+<li>将fixture作为函数参数</li>
+<li><p>使用fixture的依赖注入</p>
+</li>
+<li><p>转:<a href="https://blog.csdn.net/hekaiyou/article/details/79242391" target="_blank" rel="external">pytest的fixture</a></p>
+</li>
+<li>转:<a href="https://www.jianshu.com/p/552c3f1e9946" target="_blank" rel="external">Pytest - 进阶功能fixture</a></li>
+<li>转:<a href="http://www.testclass.net/pytest/parametrize_fixture/" target="_blank" rel="external">参数化的Fixture</a></li>
+</ul>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>转:<a href="http://ningning.today/2016/11/22/python/flask-unittest/" target="_blank" rel="external">flask项目单元测试实践</a></li>
+<li>转:<a href="http://ningning.today/2016/08/27/python/python%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" target="_blank" rel="external">python单元测试</a></li>
+<li>转:<a href="http://www.testclass.net/tags/pytest/" target="_blank" rel="external">pytest系列教程</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;pytest的fixture&quot;&gt;&lt;a href=&quot;#pytest的fixture&quot; class=&quot;headerlink&quot; title=&quot;pytest的fixture&quot;&gt;&lt;/a&gt;pytest的fixture&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;将fixture作为函数参数&lt;/
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>python|SQLAlchemy之Relationship</title>
@@ -1863,152 +1923,6 @@
     
     
       <category term="数据库" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深入理解计算机系统|Cache详解</title>
-    <link href="http://yoursite.com/2018/05/26/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-Cache%E8%AF%A6%E8%A7%A3/"/>
-    <id>http://yoursite.com/2018/05/26/深入理解计算机系统-Cache详解/</id>
-    <published>2018-05-26T00:08:38.000Z</published>
-    <updated>2018-05-29T02:44:20.429Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>随着工艺的提升最近几十年CPU的频率不断提升，而受制于制造工艺和成本限制，目前计算机的内存主要是DRAM并且在访问速度上没有质的突破。因此，CPU的处理速度和内存的访问速度差距越来越大，甚至可以达到上万倍。这种情况下传统的CPU通过FSB直连内存的方式显然就会因为内存访问的等待，导致计算资源大量闲置，降低CPU整体吞吐量。同时又由于内存数据访问的热点集中性，在CPU和内存之间用较为快速而成本较高的SRAM做一层缓存，就显得性价比极高了。</p>
-<h3 id="Cache结构"><a href="#Cache结构" class="headerlink" title="Cache结构"></a>Cache结构</h3><p><img src="/images/cache-01.png" alt="cache结构"></p>
-<p>如上图，高速缓存可以用元组（S,E,B，m）来表示。高速缓存是一个高速缓存组的数组，每个组包含一个多个行，每个行包含一个有效位，一些标记位，以及一些数据块。在元组中，S表示有多少组，E表示一个组内有多少行，B表示一个行内有多少个数据块，m 表示存储器[内存]地址的位数。在cpu内部，会将地址按下图划分：</p>
-<p><img src="/images/cache-02.png" alt="cache地址划分"></p>
-<p>其中，s为组索引且${2^s=S}$,b为块偏移且${s^b=B}$，t为标记位且$t=m-b-s$。</p>
-<p>这样划分有利于快速判断CPU请求的数据是否在高速缓存中。通过组索引，我们就能知道要请求的数据必须存储在那个组中，然后，<code>t</code>个标记位可以告诉我们组中的哪一行包含这个字(如果有的话)。当且仅当设置了有效位并且该行的标记位与请求地址中的标记位相匹配时，组中的这一行才包含这个字。一旦我们在由组索引标识的组中定位到了有标号所标识的行，那么<code>b</code> 个块偏移位给出了我们想要的数据的偏移地址。</p>
-<p>如果你不是很明白上述所说的，请耐心往下看。</p>
-<h3 id="缓存结构的分类"><a href="#缓存结构的分类" class="headerlink" title="缓存结构的分类"></a>缓存结构的分类</h3><p>根据E（每个组的高速缓存行数）高速缓存被分为不同的类。</p>
-<h4 id="直接映射高速缓存"><a href="#直接映射高速缓存" class="headerlink" title="直接映射高速缓存"></a>直接映射高速缓存</h4><p><img src="/images/cache-03.png" alt="直接映射高速缓存"></p>
-<p>每个组只有一行的（E=1）的高速缓存称为<code>直接映射</code>高速缓存(direct-mapped cache)。直接映射高速缓存是最容易理解的，接下来让我们用一个例子来说明这一切。</p>
-<p>高速缓存会通过三个步骤来确定一个请求的数据是否在缓存中：</p>
-<h5 id="组选择"><a href="#组选择" class="headerlink" title="组选择"></a>组选择</h5><p>在这一步中，高速缓存从 w 的地址中抽取去 s 个组索引位，s 个索引位被解释成一个无符号数。可以换个角度理解，我们可以把高速索引看成是一个关于组的一维数组，s 个索引位被解释成的无符号数就是这个数组的索引。如下图：</p>
-<p><img src="/images/cache-04.png" alt="直接映射高速缓存"></p>
-<p>上图中，组索引位 [00001] 被解释成一个选择组1的整数索引。</p>
-<h5 id="行匹配"><a href="#行匹配" class="headerlink" title="行匹配"></a>行匹配</h5><p>在上一步中，我们确定了组。在接下来的行选择中，要分为2个步骤：</p>
-<ul>
-<li>检查有效位</li>
-<li>检查标记位</li>
-</ul>
-<p>只有两个步骤都成功了，才能确定请求的数据在高速缓存中，且就在所找到的这个行中。如下图：</p>
-<p><img src="/images/cache-05.png" alt="直接映射高速缓存"></p>
-<h5 id="字选择"><a href="#字选择" class="headerlink" title="字选择"></a>字选择</h5><p>通过上面两个步骤，我们确定了请求的数据所在的组与行，最后一步就是确定数据在行的块偏移量。还是上图，通过块偏移，我们能得到所需数据的第一个字节的偏移。就像我们把高速缓存看成是组的数组一样，我们把块看成是一个字节的数据，块偏移提供了数组的索引。</p>
-<h4 id="来看一个实际的例子"><a href="#来看一个实际的例子" class="headerlink" title="来看一个实际的例子"></a>来看一个实际的例子</h4><p>首先假设我们有一个直接映射的高速缓存，描述如下：<code>(S,E,B,m)=(4,1,2,4)</code>。如果你理解了上述说的内容，那么就一定知道这些参数的意义。换句话说，高速缓存有四个组、每个组一行，每个块两个字节，地址是四位的。首先，我们先对四位的地址的不同的表示位找出来，如图：</p>
-<p><img src="/images/cache-13.png" alt="地址划分"></p>
-<p>有四个组，所以需要2个二进制位来表示组号；每个块有两个字节，只需要一个bit来表示偏移量即可。注意到存储器一共有 16 个字节的大小，但我们的高速缓存只有 2*4=8 个字节的大小，很显然，高速缓存中不能同时装下所有的存储器中的数据。</p>
-<p>有了地址的划分，我们就能根据地址来请求的数据是否能在高速缓存中命中了。如地址<code>0101</code>映射的地址为<code>10</code>也就是在组2中，标记位为<code>0</code>,块偏移位<code>1</code>。</p>
-<p>初始时，高速缓存是空的，即每个组的有效位都是0，如下图：</p>
-<p><img src="/images/cache-14.png" alt="初始"></p>
-<p>需要注意的组号信息是没有存储在高速缓存中的，也就是下图中圈起来的部分：</p>
-<p><img src="/images/cache-15.png" alt="初始"></p>
-<p>然后，我们以如下地址顺序读取数据：</p>
-<ol>
-<li><code>0000</code></li>
-<li><code>0001</code></li>
-<li><code>1101</code></li>
-<li><code>1000</code></li>
-<li><code>0000</code></li>
-</ol>
-<h5 id="读地址0000的字"><a href="#读地址0000的字" class="headerlink" title="读地址0000的字"></a>读地址<code>0000</code>的字</h5><p>有地址<code>0000</code>可知映射的高速缓存的内容是：组<code>0</code>，标记<code>0</code>,块偏移<code>0</code>。因为组0的有效位是<code>0</code>,是缓存不命中。高速缓存从存储器（或第一层的高速缓存）取出块0，并存入组0中。然后，高速缓存返回新取出的高速缓存行的块[0]的<code>m[0]</code>(存储器位置0的内容)。此时高速缓存的状态如下图：</p>
-<p><img src="/images/cache-16.png" alt="读地址0000"></p>
-<p>注意到，我们取地址<code>0000</code>的数据的同时，也把地址<code>0001</code>的数据加载到了高速缓存中了，为什么呢？这里就需要明确<strong>数据总是以<code>块大小</code>为传输单元在第 k 层和第 k+1 层之间来回拷贝的</strong>。高速缓存的块大小为 2 个字节，所以每次都会加载 2 个字节的数据到高速缓存中。</p>
-<h5 id="读地址0001的字"><a href="#读地址0001的字" class="headerlink" title="读地址0001的字"></a>读地址<code>0001</code>的字</h5><p>不难发现这会是一个高速缓存命中。高速缓存解析地址后，会发现在组0中有请求地址的数据，并根据块偏移 <code>1</code> 返回<code>组0</code>中块[1]中的m[1],并且高速缓存状态没有变化。</p>
-<h5 id="读地址1101的字"><a href="#读地址1101的字" class="headerlink" title="读地址1101的字"></a>读地址<code>1101</code>的字</h5><p>根据地址<code>1101</code>能得到组索引位<code>10</code>，也就是组2。由于组二中的高速缓存行有效位为0，缓存不命中。高速缓存会把访问存储器，把地址<code>1100</code>和地址<code>1101</code>的数据加载在高速缓存的组2中，并返回组2中的块1的数据。如下图：</p>
-<p><img src="/images/cache-17.png" alt="读地址1101"></p>
-<p>不知道大家有没有疑问：<strong>为什么是加载地址12和地址13的数据而不是加载地址13和地址14的数据呢？原因是地址12和地址13同映射到组2，所以高速缓存会加载加载地址12和地址13的数据而不是加载地址13和地址14的数据。</strong></p>
-<h5 id="读地址1000的字"><a href="#读地址1000的字" class="headerlink" title="读地址1000的字"></a>读地址<code>1000</code>的字</h5><p>这会发生缓存不命中。地址<code>1000</code>映射到组0，且组0的有效位为1，但是地址<code>1000</code>的标记位为<code>1</code>,高速缓存组0的标记位<code>0</code>,两者不匹配，所以是缓存不命中。高速缓存将地址8和地址9的数据加载到组0中（替换读地址0是读入的行)，然后返回组0的块0的数据。如下图：</p>
-<p><img src="/images/cache-18.png" alt="读地址1000"></p>
-<h5 id="读地址0000的字-1"><a href="#读地址0000的字-1" class="headerlink" title="读地址0000的字"></a>读地址<code>0000</code>的字</h5><p>这又会发生缓存不命中。因为在前面读地址<code>1000</code>时，我们正好替换了读地址<code>0000</code>时加载的组0。需要注意的是，这就是<code>冲突不命中</code>,不难发现，此时高速缓存是有空闲空间的，但是因为交替地引用映射到同一个组的块而发生缓存不命中。这也是直接映射的最大的缺点。</p>
-<p><img src="/images/cache-17.png" alt="读地址0000"></p>
-<h4 id="组相联高速缓存"><a href="#组相联高速缓存" class="headerlink" title="组相联高速缓存"></a>组相联高速缓存</h4><p>直接映射高速缓存中造成冲突不命中的根源是每个组只有一个行，这样，对于高速缓存中的数据，加载到高速缓存中是的位置是唯一确定的，当交替访问映射到同一个组的数据时就会发生冲突不命中。但是组相联高速缓存(set associative cache)放松了限制，每一个组不在是只有一个行，而是有多个行。<strong>一个<code>1&lt;E&lt;C/B</code>的高速缓存通常称为<code>E路组相联高速缓存</code></strong>。结构如下如图：</p>
-<p><img src="/images/cache-07.png" alt="组相联高速缓存"></p>
-<p>接下来我们分别讨论<code>组相联高速缓存</code>结构的组选择、行匹配和字选择。</p>
-<h5 id="组相联高速缓存的组选择"><a href="#组相联高速缓存的组选择" class="headerlink" title="组相联高速缓存的组选择"></a>组相联高速缓存的组选择</h5><p>组相联高速缓存的组选择与直接映射高速缓存的组选择是一样的，都是根据<code>组索引位</code>来标识组。如下图：</p>
-<p><img src="/images/cache-08.png" alt="组相联高速缓存"></p>
-<h5 id="组相联高速缓存的行匹配"><a href="#组相联高速缓存的行匹配" class="headerlink" title="组相联高速缓存的行匹配"></a>组相联高速缓存的行匹配</h5><p>在行匹配是，有一个总要的思想：<strong>组中的任何一个行都可以包含任何映射到这个组的存储器块</strong>。这也就是说，高速缓存需要搜索组中的每一行，寻找一个有效的行，其标记与地址中的标记相匹配。只有找到了，才能说明缓存名中。具体操作如下如图：</p>
-<p><img src="/images/cache-09.png" alt="组相联高速缓存"></p>
-<h5 id="组相联高速缓存的字选择"><a href="#组相联高速缓存的字选择" class="headerlink" title="组相联高速缓存的字选择"></a>组相联高速缓存的字选择</h5><p>字选择的方法也与直相联接映射高速缓存的方法一样，也是根据块偏移来得到块的起始位置。</p>
-<h4 id="全相联高速缓存"><a href="#全相联高速缓存" class="headerlink" title="全相联高速缓存"></a>全相联高速缓存</h4><p>一个<code>全相链高速缓存</code>（fully associative cache）是由一个包含所有高速缓存行的组（即E=C/B)组成的。如下图：</p>
-<p><img src="/images/cache-10.png" alt="全相联高速缓存"></p>
-<h5 id="全相联高速缓存的组选择"><a href="#全相联高速缓存的组选择" class="headerlink" title="全相联高速缓存的组选择"></a>全相联高速缓存的组选择</h5><p>全相联高速缓存中的组选择非常简单，因为我们不需要选择。既然这样，那么在地址划分中也不需要划分组索引位了，只需要划分标记位和块偏移位。</p>
-<p><img src="/images/cache-11.png" alt="全相联高速缓存"></p>
-<h5 id="全相联高速缓存的行匹配和字选择"><a href="#全相联高速缓存的行匹配和字选择" class="headerlink" title="全相联高速缓存的行匹配和字选择"></a>全相联高速缓存的行匹配和字选择</h5><p>全相联高速缓存的行匹配和字选择与组相联高速缓存的方法一致，但是全相联高速缓存只有一个组，包含了所有的行，也就是所每一次都需要去匹配所有行的标记位，看是否有匹配的行。显而易见，如果高速缓存规模稍大的话，标记位匹配会是一个耗时且困难的过程。也正因此，全相联高速缓存只适合做规模小的高速缓存，例如虚拟存储器系统中的<code>翻译备用缓冲器[TLB]</code>,它的作用是缓存页表。</p>
-<h4 id="关于为什么选择中间的位来确定组索引"><a href="#关于为什么选择中间的位来确定组索引" class="headerlink" title="关于为什么选择中间的位来确定组索引"></a>关于为什么选择中间的位来确定组索引</h4><p><img src="/images/cache-06.png" alt="为什么选择中间的位来确定组索引"></p>
-<p>上图很好说明了原因：如果用高位做索引，那么一些连续的存储器块就会映射到相同的高速缓冲块。例如图中的头四个块映射到第一个高速缓存组，第二个四个块映射到第二个组，依此类推。如果一个程序有良好的<code>局部性</code>,顺序访问一个数组的元素，那么在任何时刻，高速缓存都只保存着一个块大小的数组内容。这样对高速缓存的利用效率就很低。相对而言，用中间位作为索引，相联的块总是映射到不同的高速缓存行。在这种情况下，高速缓存能够存放整个大小为<code>C[高速缓存的大小]</code>的<code>数组片</code>。</p>
-<h4 id="有关写的问题"><a href="#有关写的问题" class="headerlink" title="有关写的问题"></a>有关写的问题</h4><ul>
-<li><p>处理写命中:</p>
-<ul>
-<li><p>直写:立即将w的高速缓存块写会到紧接着的下一层。</p>
-<ul>
-<li>优点:简单</li>
-<li>缺点:引起总线流量，速度慢</li>
-</ul>
-</li>
-<li><p>写回:尽可能地推迟操作，只有当替换算法要驱逐时更新。</p>
-<ul>
-<li>优点:减少总线流量。</li>
-<li>缺电:复杂，额外维护一个修改位。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>处理写不命中</p>
-<ul>
-<li><p>写分配:加载相应的低一层块到高速缓存中，然后更新这个高速缓存块。</p>
-<ul>
-<li>跟写回搭配。</li>
-</ul>
-</li>
-<li><p>写不分配:直接写到低层。</p>
-<ul>
-<li>跟直写搭配。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;随着工艺的提升最近几十年CPU的频率不断提升，而受制于制造工艺和成本限制，目前计算机的内存主要是DRAM并且在访问速度上没有质的突破。因此，
-    
-    </summary>
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP|PDO数据库操作</title>
-    <link href="http://yoursite.com/2018/05/23/PHP-PDO%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C/"/>
-    <id>http://yoursite.com/2018/05/23/PHP-PDO数据库操作/</id>
-    <published>2018-05-23T13:26:50.000Z</published>
-    <updated>2018-05-23T05:29:07.811Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="PDO"><a href="#PDO" class="headerlink" title="PDO"></a>PDO</h3><p>PHP 数据对象 （PDO） 扩展为PHP访问数据库定义了一个轻量级的一致接口。</p>
-<p>PDO 提供了一个数据访问抽象层，这意味着，不管使用哪种数据库，都可以用相同的函数（方法）来查询和获取数据。</p>
-<h3 id="连接操作"><a href="#连接操作" class="headerlink" title="连接操作"></a>连接操作</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">&lt;?php </div><div class="line">	$dbms=&apos;mysql&apos;;     //数据库类型 Oracle 用ODI,对于开发者来说，使用不同的数据库，只要改这个，不用记住那么多的函数了</div><div class="line">	$host=&apos;localhost&apos;; //数据库主机名</div><div class="line">	$dbName=&apos;test&apos;;    //使用的数据库</div><div class="line">	$user=&apos;jtahstu&apos;;      //数据库连接用户名</div><div class="line">	$pass=&apos;jtahstu&apos;;          //对应的密码</div><div class="line">	$dsn=&quot;$dbms:host=$host;dbname=$dbName&quot;;</div><div class="line">	try &#123;</div><div class="line">		$dbh=new PDO($dsn, $user, $pass);</div><div class="line">		//默认这个不是长连接，如果需要数据库长连接，需要最后加一个参数：array(PDO::ATTR_PERSISTENT =&gt; true) 变成这样：</div><div class="line">		//$db = new PDO($dsn, $user, $pass, array(PDO::ATTR_PERSISTENT =&gt; true));</div><div class="line">		echo &quot;数据库连接成功！&lt;br&gt;&quot;;</div><div class="line">		$dbh-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);</div><div class="line">// 			foreach ($dbh-&gt;query(&apos;SELECT * from information&apos;) as $row) &#123;</div><div class="line">// 				echo $row[0].&quot;&lt;br&gt;&quot;;</div><div class="line">// 				echo $row[1].&quot;&lt;br&gt;&quot;;</div><div class="line">// 				echo $row[2].&quot;&lt;br&gt;&quot;;</div><div class="line">// 				echo $row[3].&quot;&lt;br&gt;&quot;;</div><div class="line">// 				echo $row[4].&quot;&lt;br&gt;&quot;;</div><div class="line">// 			&#125;</div><div class="line">		</div><div class="line">		$a=$dbh-&gt;exec(&quot;insert into information values(&apos;6&apos;,&apos;PDO教程&apos;,&apos;jtahstu&apos;,&apos;电子&apos;,&apos;2015-11-24&apos;)&quot;);</div><div class="line">		if($a)	echo &quot;插入成功！&quot;;</div><div class="line">		else echo &quot;插入失败&quot;;</div><div class="line">// 		$dbh = null;//关闭连接</div><div class="line">	&#125; catch (PDOException $e) &#123;</div><div class="line">		die (&quot;Error!: &quot; . $e-&gt;getMessage() . &quot;&lt;br/&gt;&quot;);</div><div class="line">	&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
-<h3 id="PDO-事务与自动提交"><a href="#PDO-事务与自动提交" class="headerlink" title="PDO 事务与自动提交"></a>PDO 事务与自动提交</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">    try &#123;</div><div class="line">      $dbh = new PDO(&apos;odbc:SAMPLE&apos;, &apos;db2inst1&apos;, &apos;ibmdb2&apos;, </div><div class="line">          array(PDO::ATTR_PERSISTENT =&gt; true));</div><div class="line">      echo &quot;Connected\n&quot;;</div><div class="line">    &#125; catch (Exception $e) &#123;</div><div class="line">      die(&quot;Unable to connect: &quot; . $e-&gt;getMessage());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    try &#123;  </div><div class="line">      $dbh-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);</div><div class="line"></div><div class="line">      $dbh-&gt;beginTransaction();//启动一个事务</div><div class="line">      $dbh-&gt;exec(&quot;insert into staff (id, first, last) values (23, &apos;Joe&apos;, &apos;Bloggs&apos;)&quot;);</div><div class="line">      $dbh-&gt;exec(&quot;insert into salarychange (id, amount, changedate) </div><div class="line">          values (23, 50000, NOW())&quot;);</div><div class="line">      $dbh-&gt;commit();//提交</div><div class="line"></div><div class="line">    &#125; catch (Exception $e) &#123;</div><div class="line">      $dbh-&gt;rollBack();//回滚</div><div class="line">      echo &quot;Failed: &quot; . $e-&gt;getMessage();</div><div class="line">    &#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
-<h3 id="用预处理语句进行重复插入"><a href="#用预处理语句进行重复插入" class="headerlink" title="用预处理语句进行重复插入"></a>用预处理语句进行重复插入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">    $stmt = $dbh-&gt;prepare(&quot;INSERT INTO REGISTRY (name, value) VALUES (:name, :value)&quot;);</div><div class="line">    $stmt-&gt;bindParam(&apos;:name&apos;, $name);</div><div class="line">    $stmt-&gt;bindParam(&apos;:value&apos;, $value);</div><div class="line">    // 插入一行</div><div class="line">    $name = &apos;one&apos;;</div><div class="line">    $value = 1;</div><div class="line">    $stmt-&gt;execute();</div><div class="line">    //  用不同的值插入另一行</div><div class="line">    $name = &apos;two&apos;;</div><div class="line">    $value = 2;</div><div class="line">    $stmt-&gt;execute();</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;PDO&quot;&gt;&lt;a href=&quot;#PDO&quot; class=&quot;headerlink&quot; title=&quot;PDO&quot;&gt;&lt;/a&gt;PDO&lt;/h3&gt;&lt;p&gt;PHP 数据对象 （PDO） 扩展为PHP访问数据库定义了一个轻量级的一致接口。&lt;/p&gt;
-&lt;p&gt;PDO 提供了一个数据访问抽象层，这
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
-    
-    
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
   </entry>
   
