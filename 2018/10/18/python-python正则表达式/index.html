@@ -4,31 +4,25 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
-    <title>Web安全|Sqlmap的使用入门 | 只为不凡而来</title>
+    <title>python|python正则表达式 | 只为不凡而来</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="wuduozhi">
     
 
     
-    <meta name="description" content="简介SQLmap 是一款用来检测与利用 SQL 注入漏洞的免费开源工具，有一个非常棒的特性，即对检测与利用的自动化处理（数据库指纹、访问底层文件系统、执行命令） SQLmap 环境 python 2.7.x Sqlmap 官网下载  将 SQLmap 解压至 Python 目录下，将 SQLmap 的程序目录重命名为 sqlmap  DVWA  Github 下载地址DVWA(Dam Vulner">
-<meta name="keywords" content="Web安全">
+    <meta name="description" content="参考 转:廖雪峰的官方网站|正则表达式 转:Python3网络爬虫开发实战">
+<meta name="keywords" content="python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Web安全|Sqlmap的使用入门">
-<meta property="og:url" content="http://yoursite.com/2018/03/26/Web安全-Sqlmap的使用入门/index.html">
+<meta property="og:title" content="python|python正则表达式">
+<meta property="og:url" content="http://yoursite.com/2018/10/18/python-python正则表达式/index.html">
 <meta property="og:site_name" content="只为不凡而来">
-<meta property="og:description" content="简介SQLmap 是一款用来检测与利用 SQL 注入漏洞的免费开源工具，有一个非常棒的特性，即对检测与利用的自动化处理（数据库指纹、访问底层文件系统、执行命令） SQLmap 环境 python 2.7.x Sqlmap 官网下载  将 SQLmap 解压至 Python 目录下，将 SQLmap 的程序目录重命名为 sqlmap  DVWA  Github 下载地址DVWA(Dam Vulner">
+<meta property="og:description" content="参考 转:廖雪峰的官方网站|正则表达式 转:Python3网络爬虫开发实战">
 <meta property="og:locale" content="Chinese">
-<meta property="og:image" content="http://yoursite.com/images/sqlmap使用-01.png">
-<meta property="og:image" content="http://yoursite.com/images/sqlmap使用-02.png">
-<meta property="og:image" content="http://yoursite.com/images/sqlmap使用-03.png">
-<meta property="og:image" content="http://yoursite.com/images/sqlmap使用-04.png">
-<meta property="og:image" content="http://yoursite.com/images/sqlmap使用-05.png">
-<meta property="og:updated_time" content="2018-03-26T06:08:39.060Z">
+<meta property="og:updated_time" content="2018-10-17T16:38:12.180Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Web安全|Sqlmap的使用入门">
-<meta name="twitter:description" content="简介SQLmap 是一款用来检测与利用 SQL 注入漏洞的免费开源工具，有一个非常棒的特性，即对检测与利用的自动化处理（数据库指纹、访问底层文件系统、执行命令） SQLmap 环境 python 2.7.x Sqlmap 官网下载  将 SQLmap 解压至 Python 目录下，将 SQLmap 的程序目录重命名为 sqlmap  DVWA  Github 下载地址DVWA(Dam Vulner">
-<meta name="twitter:image" content="http://yoursite.com/images/sqlmap使用-01.png">
+<meta name="twitter:title" content="python|python正则表达式">
+<meta name="twitter:description" content="参考 转:廖雪峰的官方网站|正则表达式 转:Python3网络爬虫开发实战">
 
     
     <link rel="alternative" href="/atom.xml" title="只为不凡而来" type="application/atom+xml">
@@ -92,14 +86,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2018/03/26/Web安全-Sqlmap的使用入门/" title="Web安全|Sqlmap的使用入门" itemprop="url">Web安全|Sqlmap的使用入门</a>
+      <a href="/2018/10/18/python-python正则表达式/" title="python|python正则表达式" itemprop="url">python|python正则表达式</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-03-26T11:19:43.000Z" itemprop="datePublished"> 发表于 2018-03-26</time>
+    <time datetime="2018-10-17T23:57:33.000Z" itemprop="datePublished"> 发表于 2018-10-18</time>
     
   </p>
 </header>
@@ -108,74 +102,14 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQLmap-环境"><span class="toc-number">2.</span> <span class="toc-text">SQLmap 环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQlmap-使用方法"><span class="toc-number">3.</span> <span class="toc-text">SQlmap 使用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#查看帮助"><span class="toc-number">3.1.</span> <span class="toc-text">查看帮助</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开始爆库-DVWA-的难度为-low"><span class="toc-number">3.2.</span> <span class="toc-text">开始爆库 [DVWA 的难度为 low]</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#先获取-Cookie"><span class="toc-number">3.2.1.</span> <span class="toc-text">先获取 Cookie</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取数据库，–current-db"><span class="toc-number">3.2.2.</span> <span class="toc-text">获取数据库，–current-db</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取表，–tables"><span class="toc-number">3.2.3.</span> <span class="toc-text">获取表，–tables</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取字段，–columns"><span class="toc-number">3.2.4.</span> <span class="toc-text">获取字段，–columns</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取数据，–dump"><span class="toc-number">3.2.5.</span> <span class="toc-text">获取数据，–dump</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#finally"><span class="toc-number">4.</span> <span class="toc-text">finally</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#参考"><span class="toc-number">1.</span> <span class="toc-text">参考</span></a></li></ol>
 		
 		</div>
 		
-		<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>SQLmap 是一款用来检测与利用 SQL 注入漏洞的免费开源工具，有一个非常棒的特性，即对检测与利用的自动化处理（数据库指纹、访问底层文件系统、执行命令）</p>
-<h3 id="SQLmap-环境"><a href="#SQLmap-环境" class="headerlink" title="SQLmap 环境"></a>SQLmap 环境</h3><ul>
-<li>python 2.7.x</li>
-<li>Sqlmap <a href="https://sqlmap.org/" target="_blank" rel="external">官网下载</a></li>
+		<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li>转:<a href="https://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/001386832260566c26442c671fa489ebc6fe85badda25cd000" target="_blank" rel="external">廖雪峰的官方网站|正则表达式</a></li>
+<li>转:<a href="https://cuiqingcai.com/5530.html" target="_blank" rel="external">Python3网络爬虫开发实战</a></li>
 </ul>
-<p>将 SQLmap 解压至 Python 目录下，将 SQLmap 的程序目录重命名为 sqlmap</p>
-<ul>
-<li>DVWA  <a href="https://github.com/ethicalhack3r/DVWA" target="_blank" rel="external">Github 下载地址</a><br>DVWA(Dam Vulnerable Web Application) 使用 PHP+Mysql 编写的一套用于常规 WEB 漏洞教学和检测的 WEB 脆弱性测试程序。包含 SQL 注入、XSS、盲注等常见的一些漏洞。</li>
-</ul>
-<p>注:[在 Windows 下还需安装 PHP 环境，这里推介两个 PHP 集成环境 (Wamp、phpStudy)]</p>
-<h3 id="SQlmap-使用方法"><a href="#SQlmap-使用方法" class="headerlink" title="SQlmap 使用方法"></a>SQlmap 使用方法</h3><p>本次实验的目的：使用 SQLmap 得到以下信息：</p>
-<ul>
-<li>枚举 MYSQL 用户名与密码。</li>
-<li>枚举所有数据库。</li>
-<li>枚举指定数据库的数据表。</li>
-<li>枚举指定数据表中的所有用户名与密码。</li>
-</ul>
-<h4 id="查看帮助"><a href="#查看帮助" class="headerlink" title="查看帮助"></a>查看帮助</h4><p>Windows：查看 Python 帮助命令 <code>python sqlmap.py -h</code></p>
-<p>选项解释</p>
-<ul>
-<li>–cookie =&gt; 设置我们的 cookie 值 “将 DVWA 安全等级设置为 low”</li>
-<li>–data =&gt; 设置 POST 提交的值，如果是 GET 提交，不需要此选项</li>
-<li>-u =&gt; 指定目标 URL</li>
-<li>-b =&gt; 获取 DBMS banner</li>
-<li>–current-db =&gt; 获取当前数据库</li>
-<li>–current-user =&gt; 获取当前数据库的用户</li>
-<li>–tables =&gt; 获取数据库里所有的表名</li>
-<li>–columns =&gt; 获取表里的所有字段</li>
-<li>–dump =&gt; 获取值</li>
-<li>–current-user =&gt; 获取当前用户</li>
-<li>-D =&gt; 爆库指定数据库名</li>
-<li>-T =&gt; 爆库指定表名</li>
-<li>-C =&gt; 爆库指定字段名</li>
-<li>–string =&gt; 当查询可用时用来匹配页面中的字符串</li>
-<li>–users =&gt; 枚举 DBMS 用户</li>
-<li>–password =&gt; 枚举 DBMS 用户密码 hash</li>
-<li>–dbs =&gt; 枚举 DBMS 中的数据库</li>
-</ul>
-<h4 id="开始爆库-DVWA-的难度为-low"><a href="#开始爆库-DVWA-的难度为-low" class="headerlink" title="开始爆库 [DVWA 的难度为 low]"></a>开始爆库 [DVWA 的难度为 low]</h4><h5 id="先获取-Cookie"><a href="#先获取-Cookie" class="headerlink" title="先获取 Cookie"></a>先获取 Cookie</h5><p>登录DVWA，开开发者工具，查看cookie,复制下来，看图：</p>
-<p><img src="/images/sqlmap使用-01.png" alt="Sqlmap使用" title="sqlmap使用-01"></p>
-<h5 id="获取数据库，–current-db"><a href="#获取数据库，–current-db" class="headerlink" title="获取数据库，–current-db"></a>获取数据库，–current-db</h5><p>for example<br><code>python sqlmap.py -u &quot;http://127.0.0.1/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit#&quot; --cookie=&quot;security=low; PHPSESSID=n9q4k788od014b1invk832qal0&quot; --current-db</code></p>
-<blockquote>
-<p>URL 地址和 Cookie 请用真实的替换掉。这条命令可以把当前所有的数据库获取出来的。注意 –current-db 的 - 可是有两个的。</p>
-</blockquote>
-<p><img src="/images/sqlmap使用-02.png" alt="获取数据库" title="sqlmap使用-02"></p>
-<h5 id="获取表，–tables"><a href="#获取表，–tables" class="headerlink" title="获取表，–tables"></a>获取表，–tables</h5><blockquote>
-<p>前面，我们已经获取到数据库名，这时候我们要指定数据库名。使用 -D 选项指定数据库名。注意 –tables 的 - 可是有两个的。</p>
-</blockquote>
-<p>For Example:<br><code>python sqlmap.py -u &quot;http://127.0.0.1/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit#&quot; --cookie=&quot;security=low; PHPSESSID=n9q4k788od014b1invk832qal0&quot;  -D &#39;dvwa&#39; --tables</code></p>
-<p><img src="/images/sqlmap使用-03.png" alt="获取表" title="sqlmap使用-03"></p>
-<h5 id="获取字段，–columns"><a href="#获取字段，–columns" class="headerlink" title="获取字段，–columns"></a>获取字段，–columns</h5><blockquote>
-<p>前面，我们已经获取到数据库名和表名了，这时候我们要指定数据库名和表名。使用 -D 选项指定数据库名，使用 -T 指定表名。这里我们选择表 users。注意 –columns 的 - 可是有两个的。</p>
-</blockquote>
-<p>For Example:</p>
-<p><code>python sqlmap.py -u &quot;http://127.0.0.1/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit#&quot; --cookie=&quot;security=low; PHPSESSID=n9q4k788od014b1invk832qal0&quot; -D &#39;dvwa&#39; -T &#39;users&#39; --columns</code></p>
-<p><img src="/images/sqlmap使用-04.png" alt="获取字段" title="sqlmap使用-04"></p>
-<h5 id="获取数据，–dump"><a href="#获取数据，–dump" class="headerlink" title="获取数据，–dump"></a>获取数据，–dump</h5><blockquote>
-<p>前面，我们已经获取到数据库名、表名还有字段名了，这时候我们要指定数据库名、表名还有字段名。使用 -D 选项指定数据库名，使用 -T 指定表名，使用 -C 指定字段名。这里我们选择表 users中的字段 user_id。注意 –dump 的 - 可是有两个的。</p>
-</blockquote>
-<p>For Example:</p>
-<p><code>python sqlmap.py -u &quot;http://127.0.0.1/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit#&quot; --cookie=&quot;security=low; PHPSESSID=n9q4k788od014b1invk832qal0&quot; -D &#39;dvwa&#39; -T &#39;users&#39; -C &#39;user_id&#39; --dump</code></p>
-<p><img src="/images/sqlmap使用-05.png" alt="获取数据" title="sqlmap使用-05"></p>
-<h3 id="finally"><a href="#finally" class="headerlink" title="finally"></a>finally</h3><p>这就是Sqlmap的简单使用了，希望对你们有帮助。</p>
-<p><a href="https://vxhly.github.io/2016/09/usage-of-sqlmap/" target="_blank" rel="external">渗透工具用法（一）：SQLmap 的用法</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -183,13 +117,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Web安全/">Web安全</a>
+  <a class="article-category-link" href="/categories/python/">python</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Web安全/">Web安全</a>
+  <span></span> <a href="/tags/python/">python</a>
   </div>
 
 </div>
@@ -203,17 +137,10 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2018/03/27/工具-Cmder使用教程/" title="工具|Cmder使用教程">
-  <span>
-  工具|Cmder使用教程</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2018/03/26/Web安全-渗透基础知识/"  title="Web安全|渗透基础知识">
- <span>Web安全|渗透基础知识
+<a href="/2018/10/17/python-flask简单用/"  title="python|flask简单用">
+ <span>python|flask简单用
 </span>
 </a>
 </div>
