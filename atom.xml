@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-10-17T16:38:12.180Z</updated>
+  <updated>2018-10-19T12:38:15.955Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python|Flask+uWSGI+Nginx+Ubuntu部署教程</title>
+    <link href="http://yoursite.com/2018/10/19/python-Flask-uWSGI-Nginx-Ubuntu%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/"/>
+    <id>http://yoursite.com/2018/10/19/python-Flask-uWSGI-Nginx-Ubuntu部署教程/</id>
+    <published>2018-10-19T14:31:37.000Z</published>
+    <updated>2018-10-19T12:38:15.955Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li>转:<a href="https://www.linuxidc.com/Linux/2016-06/132690.htm" target="_blank" rel="external">Flask+uWSGI+Nginx+Ubuntu部署教程</a></li>
+<li>转：<a href="https://www.itread01.com/articles/1475898630.html" target="_blank" rel="external">Flask+uWSGI+Nginx+Ubuntu部署教程</a></li>
+<li>转：<a href="http://www.bjhee.com/nginx-uwsgi.html" target="_blank" rel="external">使用Nginx和uWSGI来运行Python应用</a></li>
+<li>转:<a href="https://uwsgi-docs-cn.readthedocs.io/zh_CN/latest/WSGIquickstart.html" target="_blank" rel="external">Python/WSGI 应用快速入门</a></li>
+<li></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;参考&quot;&gt;&lt;a href=&quot;#参考&quot; class=&quot;headerlink&quot; title=&quot;参考&quot;&gt;&lt;/a&gt;参考&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;转:&lt;a href=&quot;https://www.linuxidc.com/Linux/2016-06/132690.htm&quot; ta
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>python|python正则表达式</title>
@@ -1872,42 +1902,6 @@
     
     
       <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>大学|BAT之路</title>
-    <link href="http://yoursite.com/2018/06/03/%E5%A4%A7%E5%AD%A6-BAT%E4%B9%8B%E8%B7%AF/"/>
-    <id>http://yoursite.com/2018/06/03/大学-BAT之路/</id>
-    <published>2018-06-03T00:43:58.000Z</published>
-    <updated>2018-06-02T17:15:16.117Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>今天胡哥叫了分来来自百度、阿里巴巴、腾讯[BAT] 的学长回来开一场主题为“BAT之路”的分享会，自己还是VIP专属座位呢，很荣幸了。</p>
-<p><img src="/images/BAT之路.jpg" alt=""></p>
-<h3 id="弦歌-蓝杰学长"><a href="#弦歌-蓝杰学长" class="headerlink" title="弦歌.蓝杰学长"></a>弦歌.蓝杰学长</h3><p>胡鹏威学长即是弦歌的，也是蓝杰的，自己跟学长的经历有点类似了，但相比之下，还是学长经历丰富一点：</p>
-<ul>
-<li>大二开始实习</li>
-<li>创业</li>
-<li>金山云</li>
-<li>百度</li>
-<li>腾讯</li>
-</ul>
-<p><img src="/images/BAT之路--胡鹏威.jpg" alt=""></p>
-<p>这里还是要谢谢学长一下：之前学长有帮忙内推过百度，同时，还指导修改简历，很感动了，虽然最后结局并没有那么美好。自己也有做的不对的地方，事后也应该问一下学长自己为什么没有过，原因在哪里。同时，也可以继续请学长帮忙内推其他部门。记下了。</p>
-<p>说到自己，自己暑假也有一个去深信服实习机会，但暑假有小学期，然后自己就犹豫要不要去？今天听了学长的分享，自己下决心了：去！！第一份实习挺难找的，同时，深信服也是一家不错的公司了，听说伙食还很好，没什么理由不去。</p>
-<p><strong>如果不能一步到达目的地，那就远的那条路，只要到达了就好了。</strong>学长毕业时，没被腾讯选中，进入自己理想的公司，但是学长先后去了很多公司，58，搜狐，百度，然后才去腾讯，最终还是去了自己想去的公司。是的，我们可能不是那些幸运儿，能一步到达我们想要去的公司，但是我们可以先去其他的公司，把其当做跳板，像跳一跳那样，一步一步去到我们想要去的地方。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;今天胡哥叫了分来来自百度、阿里巴巴、腾讯[BAT] 的学长回来开一场主题为“BAT之路”的分享会，自己还是VIP专属座位呢，很荣幸了。&lt;/p
-    
-    </summary>
-    
-      <category term="college" scheme="http://yoursite.com/categories/college/"/>
-    
-    
-      <category term="college" scheme="http://yoursite.com/tags/college/"/>
     
   </entry>
   
