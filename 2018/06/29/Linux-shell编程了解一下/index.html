@@ -52,7 +52,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -72,7 +72,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -95,14 +95,14 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-06-28T16:00:01.000Z" itemprop="datePublished"> 发表于 2018-06-29</time>
+    <time datetime="2018-06-28T16:00:01.000Z" itemprop="datePublished"> Published 2018-06-29</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
+			<strong class="toc-title">Contents</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shell-脚本"><span class="toc-number">2.</span> <span class="toc-text">Shell 脚本</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#第一个shell脚本"><span class="toc-number">2.1.</span> <span class="toc-text">第一个shell脚本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运行-Shell-脚本有两种方法："><span class="toc-number">2.2.</span> <span class="toc-text">运行 Shell 脚本有两种方法：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shell-变量"><span class="toc-number">3.</span> <span class="toc-text">Shell 变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用变量"><span class="toc-number">3.1.</span> <span class="toc-text">使用变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#只读变量"><span class="toc-number">3.2.</span> <span class="toc-text">只读变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#删除变量"><span class="toc-number">3.3.</span> <span class="toc-text">删除变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#变量类型"><span class="toc-number">3.4.</span> <span class="toc-text">变量类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shell-字符串"><span class="toc-number">3.5.</span> <span class="toc-text">Shell 字符串</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#拼接字符串"><span class="toc-number">3.6.</span> <span class="toc-text">拼接字符串</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获取字符串长度"><span class="toc-number">3.7.</span> <span class="toc-text">获取字符串长度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#提取子字符串"><span class="toc-number">3.8.</span> <span class="toc-text">提取子字符串</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查找子字符串"><span class="toc-number">3.9.</span> <span class="toc-text">查找子字符串</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shell-传递参数"><span class="toc-number">4.</span> <span class="toc-text">Shell 传递参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shell-数组"><span class="toc-number">5.</span> <span class="toc-text">Shell 数组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#读取数组"><span class="toc-number">5.1.</span> <span class="toc-text">读取数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获取数组中的所有元素"><span class="toc-number">5.2.</span> <span class="toc-text">获取数组中的所有元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获取数组的长度"><span class="toc-number">5.3.</span> <span class="toc-text">获取数组的长度</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shell-基本运算符"><span class="toc-number">6.</span> <span class="toc-text">Shell 基本运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#算术运算符"><span class="toc-number">6.1.</span> <span class="toc-text">算术运算符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关系运算符"><span class="toc-number">6.2.</span> <span class="toc-text">关系运算符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#布尔运算符"><span class="toc-number">6.3.</span> <span class="toc-text">布尔运算符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#逻辑运算符"><span class="toc-number">6.4.</span> <span class="toc-text">逻辑运算符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#条件测试命令-test"><span class="toc-number">6.5.</span> <span class="toc-text">条件测试命令 test</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shell-流程控制"><span class="toc-number">7.</span> <span class="toc-text">Shell 流程控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#if"><span class="toc-number">7.1.</span> <span class="toc-text">if</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#if…else"><span class="toc-number">7.2.</span> <span class="toc-text">if…else</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#if…else-if…else"><span class="toc-number">7.3.</span> <span class="toc-text">if…else-if…else</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#for"><span class="toc-number">7.4.</span> <span class="toc-text">for</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#while"><span class="toc-number">7.5.</span> <span class="toc-text">while</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#无限循环"><span class="toc-number">7.6.</span> <span class="toc-text">无限循环</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#until"><span class="toc-number">7.7.</span> <span class="toc-text">until</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#case"><span class="toc-number">7.8.</span> <span class="toc-text">case</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#break"><span class="toc-number">7.9.</span> <span class="toc-text">break</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#continue"><span class="toc-number">7.10.</span> <span class="toc-text">continue</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shell中-与-还有-的区别"><span class="toc-number">8.</span> <span class="toc-text">shell中$(( )) 与 $( ) 还有${ }的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shell-函数"><span class="toc-number">9.</span> <span class="toc-text">Shell 函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#函数参数"><span class="toc-number">9.1.</span> <span class="toc-text">函数参数</span></a></li></ol></li></ol>
 		
@@ -592,10 +592,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -623,7 +623,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分类</p>
+	<p class="asidetitle">Categories</p>
 		<ul>
 		
 		  
@@ -631,7 +631,7 @@
 		  
 		
 		  
-			<li><a href="/categories/Java/" title="Java">Java<sup>16</sup></a></li>
+			<li><a href="/categories/Java/" title="Java">Java<sup>17</sup></a></li>
 		  
 		
 		  
@@ -716,7 +716,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -728,7 +728,7 @@
 			
 		
 			
-				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
+				<li><a href="/tags/Java/" title="Java">Java<sup>16</sup></a></li>
 			
 		
 			
@@ -764,15 +764,11 @@
 			
 		
 			
-				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
 			
 		
 			
@@ -781,6 +777,10 @@
 		
 			
 				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
 			
 		
 			
@@ -796,7 +796,7 @@
 			
 		
 			
-				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -804,7 +804,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -997,7 +997,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 

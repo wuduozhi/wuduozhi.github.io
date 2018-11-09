@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="只为不凡而来">
 <meta property="og:description" content="relationship简单来说, relationship函数是sqlalchemy对关系之间提供的一种便利的调用方式, backref参数则对关系提供反向引用的声明。假如没有relationship，我们只能像下面这样调用关系数据：给定参数User.name,获取该user的addresses。1234def get_addresses_from_user(user_name):    use">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-10-13T17:04:30.241Z">
+<meta property="og:updated_time" content="2018-11-06T07:02:04.319Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python|SQLAlchemy之Relationship">
 <meta name="twitter:description" content="relationship简单来说, relationship函数是sqlalchemy对关系之间提供的一种便利的调用方式, backref参数则对关系提供反向引用的声明。假如没有relationship，我们只能像下面这样调用关系数据：给定参数User.name,获取该user的addresses。1234def get_addresses_from_user(user_name):    use">
@@ -50,7 +50,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -70,7 +70,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -93,14 +93,14 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-10-13T23:21:12.000Z" itemprop="datePublished"> 发表于 2018-10-14</time>
+    <time datetime="2018-10-13T23:21:12.000Z" itemprop="datePublished"> Published 2018-10-14</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
+			<strong class="toc-title">Contents</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#relationship"><span class="toc-number">1.</span> <span class="toc-text">relationship</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#backref"><span class="toc-number">2.</span> <span class="toc-text">backref</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lazy"><span class="toc-number">3.</span> <span class="toc-text">lazy</span></a></li></ol>
 		
@@ -129,6 +129,7 @@
 <p>通俗了说，<code>select</code>就是访问到属性的时候，就会全部加载该属性的数据。<code>joined</code>则是在对关联的两个表进行join操作，从而获取到所有相关的对象。<code>dynamic</code>则不一样，在访问属性的时候，并没有在内存中加载数据，而是返回一个<code>query对象</code>, 需要执行相应方法才可以获取对象，比如<code>.all()</code>.</p>
 <p>转:<a href="https://blog.csdn.net/qq_34146899/article/details/52559747" target="_blank" rel="external">flask-sqlalchemy中 backref lazy的参数实例解释和选择</a><br>转:<a href="https://blog.csdn.net/bestallen/article/details/52601457" target="_blank" rel="external">SQLalchemy relationship之lazy属性 学习笔记</a></p>
 <p>转:<a href="https://www.xncoding.com/2016/03/07/python/sqlalchemy02.html" target="_blank" rel="external">SQLAlchemy进阶</a></p>
+<p>转:<a href="https://wing324.github.io/2017/02/25/%E4%BD%BF%E7%94%A8flask-sqlalchemy%E7%8E%A9%E8%BD%ACMySQL/" target="_blank" rel="external">使用flask-sqlalchemy玩转MySQL</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -176,10 +177,10 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -207,7 +208,7 @@
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分类</p>
+	<p class="asidetitle">Categories</p>
 		<ul>
 		
 		  
@@ -215,7 +216,7 @@
 		  
 		
 		  
-			<li><a href="/categories/Java/" title="Java">Java<sup>16</sup></a></li>
+			<li><a href="/categories/Java/" title="Java">Java<sup>17</sup></a></li>
 		  
 		
 		  
@@ -300,7 +301,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -312,7 +313,7 @@
 			
 		
 			
-				<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
+				<li><a href="/tags/Java/" title="Java">Java<sup>16</sup></a></li>
 			
 		
 			
@@ -348,15 +349,11 @@
 			
 		
 			
-				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
 			
 		
 			
@@ -365,6 +362,10 @@
 		
 			
 				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
 			
 		
 			
@@ -380,7 +381,7 @@
 			
 		
 			
-				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -388,7 +389,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -581,7 +582,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
