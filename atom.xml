@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-11-10T07:08:56.240Z</updated>
+  <updated>2018-11-10T13:40:00.611Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/11/10/Java-spring-boot%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"/>
     <id>http://yoursite.com/2018/11/10/Java-spring-boot学习记录/</id>
     <published>2018-11-10T00:26:16.000Z</published>
-    <updated>2018-11-10T07:08:56.240Z</updated>
+    <updated>2018-11-10T13:40:00.611Z</updated>
     
     <content type="html"><![CDATA[<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
 <li>部署<ul>
@@ -30,15 +30,22 @@
 </ul>
 </li>
 <li>数据库-ORM<ul>
-<li><code>http://www.spring4all.com/article/500</code></li>
-<li><code>https://www.cnblogs.com/chenpi/p/6357527.html</code></li>
-<li><code>https://blog.csdn.net/u012702547/article/details/53946440</code></li>
+<li><a href="http://www.spring4all.com/article/500" target="_blank" rel="external">Spring Data JPA 从入门到进阶系列教程</a></li>
+<li><a href="https://www.cnblogs.com/chenpi/p/6357527.html" target="_blank" rel="external">Spring Data JPA例子[基于Spring Boot、Mysql]</a></li>
+<li><a href="https://blog.csdn.net/u012702547/article/details/53946440" target="_blank" rel="external">初识在Spring Boot中使用JPA</a></li>
 <li><a href="http://westerly-lzh.github.io/cn/2014/12/JPA-CascadeType-Explaining/" target="_blank" rel="external">Jpa CascadeType 详解</a></li>
 <li><a href="https://hellokoding.com/jpa-one-to-many-relationship-mapping-example-with-spring-boot-maven-and-mysql/" target="_blank" rel="external">Jpa Mapping</a></li>
+<li><a href="https://github.com/longfeizheng/jpa-example" target="_blank" rel="external">Github-jpa-example</a></li>
 </ul>
 </li>
-<li>项目demo<ul>
+<li><p>项目demo</p>
+<ul>
 <li><code>https://github.com/aidansu/spring-boot-jpa</code></li>
+</ul>
+</li>
+<li><p>Spring-Boot</p>
+<ul>
+<li><a href="http://zetcode.com/springboot/responsebody/" target="_blank" rel="external">Spring Boot注解</a></li>
 </ul>
 </li>
 </ul>
