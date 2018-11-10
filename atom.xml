@@ -234,9 +234,16 @@
     <link href="http://yoursite.com/2018/10/17/python-flask%E7%AE%80%E5%8D%95%E7%94%A8/"/>
     <id>http://yoursite.com/2018/10/17/python-flask简单用/</id>
     <published>2018-10-16T23:56:41.000Z</published>
-    <updated>2018-10-16T15:57:18.959Z</updated>
+    <updated>2018-11-10T09:00:31.930Z</updated>
     
     <content type="html"><![CDATA[<h3 id="nginx-Gunicorn部署Flask项目"><a href="#nginx-Gunicorn部署Flask项目" class="headerlink" title="nginx+Gunicorn部署Flask项目"></a>nginx+Gunicorn部署Flask项目</h3><p><a href="https://juejin.im/post/5a5c1825f265da3e3e33bf70" target="_blank" rel="external">部署</a></p>
+<h3 id="flask-sqlalchemy"><a href="#flask-sqlalchemy" class="headerlink" title="flask-sqlalchemy"></a>flask-sqlalchemy</h3><ul>
+<li><a href="https://wing324.github.io/2017/02/25/%E4%BD%BF%E7%94%A8flask-sqlalchemy%E7%8E%A9%E8%BD%ACMySQL/" target="_blank" rel="external">使用flask-sqlalchemy玩转MySQL</a></li>
+<li><a href="https://www.cnblogs.com/franknihao/p/7268752.html" target="_blank" rel="external">【Python】 SQLAlchemy的初步使用</a></li>
+</ul>
+<h3 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h3><ul>
+<li><a href="http://docs.jinkan.org/docs/flask/index.html" target="_blank" rel="external">中文文档</a></li>
+</ul>
 ]]></content>
     
     <summary type="html">
