@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-11-10T13:40:00.611Z</updated>
+  <updated>2018-11-10T14:34:11.883Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,38 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>UML|UML学习记录</title>
+    <link href="http://yoursite.com/2018/11/11/UML-UML%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"/>
+    <id>http://yoursite.com/2018/11/11/UML-UML学习记录/</id>
+    <published>2018-11-10T21:57:37.000Z</published>
+    <updated>2018-11-10T14:34:11.883Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="http://ifeve.com/uml-intro/" target="_blank" rel="external">UML建模图实战笔记</a></li>
+<li></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://ifeve.com/uml-intro/&quot; target=&quot;_blank&quot; re
+    
+    </summary>
+    
+      <category term="UML" scheme="http://yoursite.com/categories/UML/"/>
+    
+    
+      <category term="UML" scheme="http://yoursite.com/tags/UML/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Java|spring-boot学习记录</title>
     <link href="http://yoursite.com/2018/11/10/Java-spring-boot%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"/>
     <id>http://yoursite.com/2018/11/10/Java-spring-boot学习记录/</id>
     <published>2018-11-10T00:26:16.000Z</published>
-    <updated>2018-11-10T13:40:00.611Z</updated>
+    <updated>2018-11-13T12:03:55.779Z</updated>
     
     <content type="html"><![CDATA[<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
 <li>部署<ul>
@@ -46,6 +73,7 @@
 <li><p>Spring-Boot</p>
 <ul>
 <li><a href="http://zetcode.com/springboot/responsebody/" target="_blank" rel="external">Spring Boot注解</a></li>
+<li><a href="https://mrbird.cc/Spring-Boot%20JSON.html" target="_blank" rel="external">Spring Boot中的JSON技术</a></li>
 </ul>
 </li>
 </ul>
@@ -1372,139 +1400,6 @@
     
     
       <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>python|Multiprocessing多进程</title>
-    <link href="http://yoursite.com/2018/06/21/python-Multiprocessing%E5%A4%9A%E8%BF%9B%E7%A8%8B/"/>
-    <id>http://yoursite.com/2018/06/21/python-Multiprocessing多进程/</id>
-    <published>2018-06-20T23:47:38.000Z</published>
-    <updated>2018-06-23T02:10:16.842Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="为什么要使用python多进程？"><a href="#为什么要使用python多进程？" class="headerlink" title="为什么要使用python多进程？"></a>为什么要使用python多进程？</h3><p>因为python使用全局解释器锁(GIL)，他会将进程中的线程序列化，也就是多核cpu实际上并不能达到并行提高速度的目的，而使用多进程则是不受限的，所以实际应用中都是推荐多进程的。</p>
-<p>如果每个子进程执行需要消耗的时间非常短（执行+1操作等），这不必使用多进程，因为进程的启动关闭也会耗费资源。</p>
-<p>当然使用多进程往往是用来处理CPU密集型（科学计算）的需求，如果是IO密集型（文件读取，爬虫等）则可以使用多线程去处理。</p>
-<h3 id="multiprocessing常用组件及功能"><a href="#multiprocessing常用组件及功能" class="headerlink" title="multiprocessing常用组件及功能"></a>multiprocessing常用组件及功能</h3><p>创建管理进程模块：</p>
-<ul>
-<li>Process（用于创建进程模块）</li>
-<li>Pool（用于创建管理进程池）</li>
-<li>Queue（用于进程通信，资源共享）</li>
-<li>Value，Array（用于进程通信，资源共享）</li>
-<li>Pipe（用于管道通信）</li>
-<li>Manager（用于资源共享）</li>
-</ul>
-<p>同步子进程模块：</p>
-<ul>
-<li>Condition</li>
-<li>Event</li>
-<li>Lock</li>
-<li>RLock</li>
-<li>Semaphore</li>
-</ul>
-<h4 id="Process模块"><a href="#Process模块" class="headerlink" title="Process模块"></a>Process模块</h4><p>Process模块用来创建子进程，是Multiprocessing核心模块，使用方式与Threading类似，可以实现多进程的创建，启动，关闭等操作。</p>
-<p>构造方法：</p>
-<ul>
-<li>Process([group [, target [, name [, args [, kwargs]]]]])</li>
-<li>group: 线程组，目前还没有实现，库引用中提示必须是None；</li>
-<li>target: 要执行的方法；</li>
-<li>name: 进程名；</li>
-<li>args/kwargs: 要传入方法的参数。</li>
-</ul>
-<p>实例方法：</p>
-<ul>
-<li>is_alive()：返回进程是否在运行。</li>
-<li>join([timeout])：阻塞当前上下文环境的进程程，直到调用此方法的进程终止或到达指定的timeout（可选参数）。</li>
-<li>start()：进程准备就绪，等待CPU调度。</li>
-<li>run()：strat()调用run方法，如果实例进程时未制定传入target，这star执行t默认run()方法。</li>
-<li>terminate()：不管任务是否完成，立即停止工作进程。</li>
-</ul>
-<p>属性：</p>
-<ul>
-<li>authkey</li>
-<li>daemon：和线程的setDeamon功能一样（将父进程设置为守护进程，当父进程结束时，子进程也结束）。</li>
-<li>exitcode(进程在运行时为None、如果为–N，表示被信号N结束）。</li>
-<li>name：进程名字。</li>
-<li>pid：进程号。</li>
-</ul>
-<h4 id="使用Process创建子进程"><a href="#使用Process创建子进程" class="headerlink" title="使用Process创建子进程"></a>使用Process创建子进程</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process  <span class="comment">#导入Process模块 </span></div><div class="line"><span class="keyword">import</span> os  </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(name)</span>:</span></div><div class="line">	<span class="string">'''</span></div><div class="line">	函数输出当前进程ID，以及其父进程ID。</div><div class="line">	此代码应在Linux下运行，因为windows下os模块不支持getppid()</div><div class="line">	'''</div><div class="line">    <span class="keyword">print</span> <span class="string">"Process ID： %s"</span> % (os.getpid())  </div><div class="line">    <span class="keyword">print</span> <span class="string">"Parent Process ID： %s"</span> % (os.getppid())  </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>: </div><div class="line">	<span class="string">'''</span></div><div class="line">	windows下，创建进程的代码一下要放在main函数里面</div><div class="line">	''' </div><div class="line">    proc = Process(target=test, args=(<span class="string">'nmask'</span>,))  </div><div class="line">    proc.start()  </div><div class="line">    proc.join()</div></pre></td></tr></table></figure>
-<h4 id="使用Process类继承创建子进程"><a href="#使用Process类继承创建子进程" class="headerlink" title="使用Process类继承创建子进程"></a>使用Process类继承创建子进程</h4><p>通过继承Process类，修改run函数代码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyProcess</span><span class="params">(Process)</span>:</span></div><div class="line"><span class="string">'''</span></div><div class="line">继承Process类，类似threading.Thread</div><div class="line">'''</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, arg)</span>:</span></div><div class="line">        super(MyProcess, self).__init__()</div><div class="line">        <span class="comment">#multiprocessing.Process.__init__(self)</span></div><div class="line">        self.arg = arg</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    重构run函数</div><div class="line">    '''</div><div class="line">        <span class="keyword">print</span> <span class="string">'nMask'</span>, self.arg</div><div class="line">        time.sleep(<span class="number">1</span>)</div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</div><div class="line">        p = MyProcess(i)</div><div class="line">        p.start()</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</div><div class="line">    	p.join()</div></pre></td></tr></table></figure>
-<p>重点讲两个方法：<code>run</code> 和<code>join</code></p>
-<ul>
-<li>run：如果在创建Process对象的时候不指定target，那么就会默认执行Process的run方法</li>
-<li>join方法:阻塞当前进程，直到调用join方法的那个进程执行完，再继续执行当前进程。</li>
-</ul>
-<h3 id="Pool"><a href="#Pool" class="headerlink" title="Pool"></a>Pool</h3><p>.Pool可以提供指定数量的进程供用户调用，当有新的请求提交到pool中时，如果池还没有满，那么就会创建一个新的进程用来执行该请求；但如果池中的进程数已经达到规定最大值，那么该请求就会等待，直到池中有进程结束，才会创建新的进程来执行它。在共享资源时，只能使用Multiprocessing.Manager类，而不能使用Queue或者Array。</p>
-<p>Pool类用于需要执行的目标很多，而手动限制进程数量又太繁琐时，如果目标少且不用控制进程数量则可以用Process类。</p>
-<p>构造方法</p>
-<ul>
-<li>Pool([processes[, initializer[, initargs[, maxtasksperchild[, context]]]]])</li>
-<li>processes ：使用的工作进程的数量，如果processes是None那么使用 os.cpu_count()返回的数量。</li>
-<li>initializer： 如果initializer是None，那么每一个工作进程在开始的时候会调用initializer(*initargs)</li>
-<li>maxtasksperchild：工作进程退出之前可以完成的任务数，完成后用一个新的工作进程来替代原进程，来让闲置的资源被释放。maxtasksperchild默认是None，意味着只要Pool存在工作进程就会一直存活。</li>
-<li>context: 用在制定工作进程启动时的上下文，一般使用 multiprocessing.Pool() 或者一个context对象的Pool()方法来创建一个池，两种方法都适当的设置了context。</li>
-</ul>
-<p>实例方法</p>
-<ul>
-<li>apply_async(func[, args[, kwds[, callback]]]) 它是非阻塞。</li>
-<li>apply(func[, args[, kwds]])是阻塞的。</li>
-<li>close() 关闭pool，使其不在接受新的任务。</li>
-<li>terminate() 关闭pool，结束工作进程，不在处理未完成的任务。</li>
-<li>join() 主进程阻塞，等待子进程的退出， join方法要在close或terminate之后使用。</li>
-</ul>
-<h4 id="Pool使用方法"><a href="#Pool使用方法" class="headerlink" title="Pool使用方法"></a>Pool使用方法</h4><h5 id="Pool-map函数"><a href="#Pool-map函数" class="headerlink" title="Pool+map函数"></a>Pool+map函数</h5><p>说明：此写法缺点在于只能通过map向函数传递一个参数。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(i)</span>:</span></div><div class="line">    <span class="keyword">print</span> i</div><div class="line"><span class="keyword">if</span> __name__==<span class="string">"__main__"</span>:</div><div class="line">	lists=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line">	pool=Pool(processes=<span class="number">2</span>) <span class="comment">#定义最大的进程数</span></div><div class="line">	pool.map(test,lists)        <span class="comment">#p必须是一个可迭代变量。</span></div><div class="line">	pool.close()</div><div class="line">	pool.join()</div></pre></td></tr></table></figure>
-<h5 id="异步进程池（非阻塞）"><a href="#异步进程池（非阻塞）" class="headerlink" title="异步进程池（非阻塞）"></a>异步进程池（非阻塞）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">from multiprocessing import Pool</div><div class="line">def test(i):</div><div class="line">    print i</div><div class="line">if __name__==&quot;__main__&quot;:</div><div class="line">	pool = Pool(processes=10)</div><div class="line">	for i  in xrange(500):</div><div class="line">		&apos;&apos;&apos;</div><div class="line">		For循环中执行步骤：</div><div class="line">		（1）循环遍历，将500个子进程添加到进程池（相对父进程会阻塞）</div><div class="line">		（2）每次执行10个子进程，等一个子进程执行完后，立马启动新的子进程。（相对父进程不阻塞）</div><div class="line">		</div><div class="line">		apply_async为异步进程池写法。</div><div class="line">		异步指的是启动子进程的过程，与父进程本身的执行（print）是异步的，而For循环中往进程池添加子进程的过程，与父进程本身的执行却是同步的。</div><div class="line">		&apos;&apos;&apos;</div><div class="line">	    pool.apply_async(test, args=(i,)) #维持执行的进程总数为10，当一个进程执行完后启动一个新进程.       </div><div class="line">	print “test”</div><div class="line">	pool.close()</div><div class="line">	pool.join()</div></pre></td></tr></table></figure>
-<p>执行顺序：For循环内执行了2个步骤，第一步：将500个对象放入进程池（阻塞）。第二步：同时执行10个子进程（非阻塞），有结束的就立即添加，维持10个子进程运行。（apply_async方法的会在执行完for循环的添加步骤后，直接执行后面的print语句，而apply方法会等所有进程池中的子进程运行完以后再执行后面的print语句）</p>
-<p>注意：调用join之前，先调用close或者terminate方法，否则会出错。执行完close后不会有新的进程加入到pool,join函数等待所有子进程结束。</p>
-<h5 id="同步进程池（阻塞）"><a href="#同步进程池（阻塞）" class="headerlink" title="同步进程池（阻塞）"></a>同步进程池（阻塞）</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(p)</span>:</span></div><div class="line">       <span class="keyword">print</span> p</div><div class="line">       time.sleep(<span class="number">3</span>)</div><div class="line"><span class="keyword">if</span> __name__==<span class="string">"__main__"</span>:</div><div class="line">	pool = Pool(processes=<span class="number">10</span>)</div><div class="line">	<span class="keyword">for</span> i  <span class="keyword">in</span> xrange(<span class="number">500</span>):</div><div class="line">	<span class="string">'''</span></div><div class="line">	实际测试发现，for循环内部执行步骤：</div><div class="line">	（1）遍历500个可迭代对象，往进程池放一个子进程</div><div class="line">	（2）执行这个子进程，等子进程执行完毕，再往进程池放一个子进程，再执行。（同时只执行一个子进程）</div><div class="line">	for循环执行完毕，再执行print函数。</div><div class="line">	'''</div><div class="line">	    pool.apply(test, args=(i,))   <span class="comment">#维持执行的进程总数为10，当一个进程执行完后启动一个新进程.</span></div><div class="line">	<span class="keyword">print</span> “test”</div><div class="line">	pool.close()</div><div class="line">	pool.join()</div></pre></td></tr></table></figure>
-<p>说明：for循环内执行的步骤顺序，往进程池中添加一个子进程，执行子进程，等待执行完毕再添加一个子进程…..等500个子进程都执行完了，再执行print “test”。（从结果来看，并没有多进程并发）</p>
-<h3 id="共享资源"><a href="#共享资源" class="headerlink" title="共享资源"></a>共享资源</h3><p>在使用多进程的过程中，最好不要使用共享资源，如果非得使用，则请往下看。Multiprocessing类中共享资源可以使用3种方式，分别是<code>Queue</code>，<code>Array</code>，<code>Manager</code>。这三个都是Multiprocessing自带的组件，使用起来也非常方便。</p>
-<p>注意：<strong>普通的全局变量是不能被子进程所共享的，只有通过Multiprocessing组件构造的数据结构可以被共享。</strong></p>
-<h4 id="Queue类"><a href="#Queue类" class="headerlink" title="Queue类"></a>Queue类</h4><p>使用Multiprocessing.Queue类，共享资源（share memory）（只适用Process类）</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process, Queue  </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(queue)</span>:</span>  </div><div class="line">    queue.put(<span class="string">"Hello World"</span>)  </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    q = Queue()  </div><div class="line">    p = Process(target=test, args=(q,))  <span class="comment">#需要将q对象传递给子进程</span></div><div class="line">    p.start()</div><div class="line">    <span class="keyword">print</span> q.get()</div></pre></td></tr></table></figure>
-<p>缺点：不能再Pool进程池中使用</p>
-<h4 id="Array、Value类"><a href="#Array、Value类" class="headerlink" title="Array、Value类"></a>Array、Value类</h4><p>使用Multiprocessing.Array类，共享资源（share memory）（只适用于Process类）</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process, Array</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(a)</span>:</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(a)):</div><div class="line">        a[i] = -a[i]</div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    arr = Array(<span class="string">'i'</span>, range(<span class="number">10</span>))</div><div class="line">    p = Process(target=test, args=(arr))  <span class="comment">#需要将arr对象传递给子进程</span></div><div class="line">    p.start()</div><div class="line">    p.join()</div><div class="line">    <span class="keyword">print</span> arr[:]</div></pre></td></tr></table></figure>
-<p>缺点：无法与Pool一起使用。</p>
-<h4 id="Manager类"><a href="#Manager类" class="headerlink" title="Manager类"></a>Manager类</h4><p>使用Multiprocessing.Manager类，共享资源。（可以适用Pool类）</p>
-<p>说明：由于windows操作系统下，创建Multiprocessing类对象代码一定要放在main()函数下，而linux不需要，因此这里区分2个版本。</p>
-<p>实例目的：父进程在执行子进程的过程中，同步判断一个公共资源值，如果满足条件则结束所有进程。</p>
-<p>linux版本:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">from multiprocessing import Manager,Pool</div><div class="line">lists=Manager().list()    ##定义可被子进程共享的全局变量lists</div><div class="line">def test(i):</div><div class="line">     print i</div><div class="line">     lists.append(i)</div><div class="line">if __name__==&quot;__main__&quot;:</div><div class="line">    pool=Pool()</div><div class="line">    for i in xrange(10000000):</div><div class="line">    	&apos;&apos;&apos;</div><div class="line">    	判断如果lists长度大于0，则不再往进程池中添加进程。</div><div class="line">    	&apos;&apos;&apos;</div><div class="line">        if len(lists)&lt;=0:</div><div class="line">            pool.apply_async(test,args=(i,))</div><div class="line">        else:</div><div class="line">            break</div><div class="line">     pool.close()</div><div class="line">     pool.join()</div></pre></td></tr></table></figure>
-<p>优点：可以跟Pool一起用，且速度比较快。</p>
-<p>windows版本</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Manager</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(i,lists)</span>:</span></div><div class="line">     <span class="keyword">print</span> i</div><div class="line">     lists.append(i)</div><div class="line"><span class="keyword">if</span> __name__==<span class="string">"__main__"</span>:</div><div class="line">    pool=Pool()</div><div class="line">    lists=Manager().list() <span class="comment">#Manager类实例化代码只能写在main()函数里面</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">10000000</span>):</div><div class="line">        <span class="keyword">if</span> len(lists)&lt;=<span class="number">0</span>:</div><div class="line">        	<span class="string">'''</span></div><div class="line">        	在创建子进程时，需要将lists对象传入，不然无法共享。</div><div class="line">        	'''</div><div class="line">            pool.apply_async(test,args=(i,lists))<span class="comment">##需要将lists对象传递给子进程，这里比较耗资源，原因可能是因为Manager类是基于通信的。</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">break</span></div></pre></td></tr></table></figure>
-<p>说明：与linux版本代码相比，windows下代码将lists的引用放在了main()之后，因为windows下只能在main函数下引用多进程。而在实例化子进程时，必须把Manager对象传递给子进程，否则lists无法被共享，而这个过程会消耗巨大资源，因此性能很差。<br>缺点：速度很慢，因此在windows下想要提前结束所有进程，可以使用获取返回值的方式</p>
-<h3 id="子进程返回值"><a href="#子进程返回值" class="headerlink" title="子进程返回值"></a>子进程返回值</h3><p>在实际使用多进程的时候，可能需要获取到子进程运行的返回值。如果只是用来存储，则可以将返回值保存到一个数据结构中；如果需要判断此返回值，从而决定是否继续执行所有子进程，则会相对比较复杂。另外在Multiprocessing中，可以利用Process与Pool创建子进程，这两种用法在获取子进程返回值上的写法上也不相同。</p>
-<h4 id="初级用法（Pool）"><a href="#初级用法（Pool）" class="headerlink" title="初级用法（Pool）"></a>初级用法（Pool）</h4><p>目的：存储子进程返回值</p>
-<p>说明：如果只是单纯的存储子进程返回值，则可以使用Pool的apply_async异步进程池；当然也可以使用Process，用法与threading中的相同，这里只介绍前者。</p>
-<p>实例：当进程池中所有子进程执行完毕后，输出每个子进程的返回值。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"># -*- coding=utf-8 -*-</div><div class="line">from multiprocessing import Pool</div><div class="line">def test(p):     </div><div class="line">    return p</div><div class="line">if __name__==&quot;__main__&quot;:</div><div class="line">    pool = Pool(processes=10)</div><div class="line">    result=[]</div><div class="line">    for i  in xrange(50000):</div><div class="line">       &apos;&apos;&apos;</div><div class="line">       for循环执行流程：</div><div class="line">       （1）添加子进程到pool，并将这个对象（子进程）添加到result这个列表中。（此时子进程并没有运行）</div><div class="line">       （2）执行子进程（同时执行10个）</div><div class="line">       &apos;&apos;&apos;</div><div class="line">       result.append(pool.apply_async(test, args=(i,)))#维持执行的进程总数为10，当一个进程执行完后添加新进程.       </div><div class="line">    pool.close()</div><div class="line">    pool.join()</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    遍历result列表，取出子进程对象，访问get()方法，获取返回值。（此时所有子进程已执行完毕）</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    for i in result:</div><div class="line">        print i.get()</div></pre></td></tr></table></figure>
-<h4 id="高级用法（Pool）"><a href="#高级用法（Pool）" class="headerlink" title="高级用法（Pool）"></a>高级用法（Pool）</h4><p>目的：父进程实时获取子进程返回值，以此为标记结束所有进程。</p>
-<p>实例（一）<br>执行子进程的过程中，不断获取返回值并校验，如果返回值为True则结果所有进程。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"># -*- coding=utf-8 -*-</div><div class="line">from multiprocessing import Pool</div><div class="line">import Queue</div><div class="line">import time</div><div class="line">def test(p):</div><div class="line">    time.sleep(0.001)</div><div class="line">    if p==10000:</div><div class="line">        return True</div><div class="line">    else:</div><div class="line">        return False</div><div class="line">if __name__==&quot;__main__&quot;:</div><div class="line">    pool = Pool(processes=10)</div><div class="line">    q=Queue.Queue()</div><div class="line">    for i  in xrange(50000):</div><div class="line">        &apos;&apos;&apos;</div><div class="line">        将子进程对象存入队列中。</div><div class="line">        &apos;&apos;&apos;</div><div class="line">        q.put(pool.apply_async(test, args=(i,)))#维持执行的进程总数为10，当一个进程执行完后添加新进程.       </div><div class="line">    &apos;&apos;&apos;</div><div class="line">    因为这里使用的为pool.apply_async异步方法，因此子进程执行的过程中，父进程会执行while，获取返回值并校验。</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    while 1:</div><div class="line">        if q.get().get():</div><div class="line">            pool.terminate() #结束进程池中的所有子进程。</div><div class="line">            break</div><div class="line">    pool.close()</div><div class="line">    pool.join()</div></pre></td></tr></table></figure>
-<p>说明：总共要执行50000个子进程（并发数量为10），当其中一个子进程返回True时，结束进程池。因为使用了apply_async为异步进程，因此在执行完for循环的添加子进程操作后（只是添加并没有执行完所有的子进程），可以直接执行while代码，实时判断子进程返回值是否有True，有的话结束所有进程。</p>
-<p>优点：不必等到所有子进程结束再结束程序，只要得到想要的结果就可以提前结束，节省资源。</p>
-<p>不足：当需要执行的子进程非常大时，不适用，因为for循环在添加子进程时，要花费很长的时间，虽然是异步，但是也需要等待for循环添加子进程操作结束才能执行while代码，因此会比较慢。</p>
-<p>实例（二）<br>多线程+多进程，添加执行子进程的过程中，不断获取返回值并校验，如果返回值为True则结果所有进程。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"># -*- coding=utf-8 -*-</div><div class="line">from multiprocessing import Pool</div><div class="line">import Queue</div><div class="line">import threading</div><div class="line">import time</div><div class="line">def test(p):</div><div class="line">    time.sleep(0.001)</div><div class="line">    if p==10000:</div><div class="line">        return True</div><div class="line">    else:</div><div class="line">        return False</div><div class="line">if __name__==&quot;__main__&quot;:</div><div class="line">    result=Queue.Queue() #队列</div><div class="line">    pool = Pool(10)</div><div class="line">    def pool_th():</div><div class="line">        for i  in xrange(50000000): ##这里需要创建执行的子进程非常多</div><div class="line">            try:</div><div class="line">                result.put(pool.apply_async(test, args=(i,)))</div><div class="line">            except:</div><div class="line">                break</div><div class="line">    def result_th():</div><div class="line">        while 1:</div><div class="line">            a=result.get().get() #获取子进程返回值</div><div class="line">            if a:</div><div class="line">                pool.terminate() #结束所有子进程</div><div class="line">                break</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    利用多线程，同时运行Pool函数创建执行子进程，以及运行获取子进程返回值函数。</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    t1=threading.Thread(target=pool_th)</div><div class="line">    t2=threading.Thread(target=result_th)</div><div class="line">    t1.start()</div><div class="line">    t2.start()</div><div class="line">    t1.join()</div><div class="line">    t2.join()</div><div class="line">    pool.join()</div></pre></td></tr></table></figure>
-<p>执行流程：利用多线程，创建一个执行pool_th函数线程，一个执行result_th函数线程，pool_th函数用来添加进程池，开启进程执行功能函数并将子进程对象存入队列，而result_th()函数用来不停地从队列中取子进程对象，调用get（）方法获取返回值。等发现其中存在子进程的返回值为True时，结束所有进程，最后结束线程。</p>
-<p>优点：弥补了实例（一）的不足，即使for循环的子进程数量很多，也能提高性能，因为for循环与判断子进程返回值同时进行。</p>
-<p><a href="https://thief.one/2016/11/23/Python-multiprocessing/" target="_blank" rel="external">【Multiprocessing系列】Multiprocessing基础</a><br><a href="https://thief.one/2016/11/24/Multiprocessing%E5%AD%90%E8%BF%9B%E7%A8%8B%E8%BF%94%E5%9B%9E%E5%80%BC/" target="_blank" rel="external">http://thief.one/2016/11/24/Multiprocessing子进程返回值/ </a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;为什么要使用python多进程？&quot;&gt;&lt;a href=&quot;#为什么要使用python多进程？&quot; class=&quot;headerlink&quot; title=&quot;为什么要使用python多进程？&quot;&gt;&lt;/a&gt;为什么要使用python多进程？&lt;/h3&gt;&lt;p&gt;因为python使用全局解释
-    
-    </summary>
-    
-      <category term="python" scheme="http://yoursite.com/categories/python/"/>
-    
-    
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
   </entry>
   
