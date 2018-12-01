@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-11-30T11:31:27.628Z</updated>
+  <updated>2018-12-01T04:48:56.928Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,92 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python|上下文管理器</title>
+    <link href="http://yoursite.com/2018/12/01/python-%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86%E5%99%A8/"/>
+    <id>http://yoursite.com/2018/12/01/python-上下文管理器/</id>
+    <published>2018-12-01T12:47:45.000Z</published>
+    <updated>2018-12-01T04:48:56.928Z</updated>
+    
+    <content type="html"><![CDATA[<p>经常在Python代码中看到with语句，仔细分析下，会发现这个with语句功能好强，可以自动关闭资源。这个在Python中叫上下文管理器Context Manager。那我们要怎么用它，什么时候用它呢。这里我们就来聊一聊。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="http://www.bjhee.com/python-context.html" target="_blank" rel="external">谈一谈Python的上下文管理器</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;经常在Python代码中看到with语句，仔细分析下，会发现这个with语句功能好强，可以自动关闭资源。这个在Python中叫上下文管理器Context Manager。那我们要怎么用它，什么时候用它呢。这里我们就来聊一聊。&lt;/p&gt;
+&lt;h3 id=&quot;参考&quot;&gt;&lt;a href=
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python|生成器</title>
+    <link href="http://yoursite.com/2018/12/01/python-%E7%94%9F%E6%88%90%E5%99%A8/"/>
+    <id>http://yoursite.com/2018/12/01/python-生成器/</id>
+    <published>2018-12-01T01:12:46.000Z</published>
+    <updated>2018-11-30T17:14:46.483Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="http://www.bjhee.com/python-yield.html" target="_blank" rel="external">谈谈Python的生成器</a></li>
+<li></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;参考&quot;&gt;&lt;a href=&quot;#参考&quot; class=&quot;headerlink&quot; title=&quot;参考&quot;&gt;&lt;/a&gt;参考&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.bjhee.com/python-yield.html&quot; target=&quot;_blank&quot;
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python|装饰器</title>
+    <link href="http://yoursite.com/2018/12/01/python-%E8%A3%85%E9%A5%B0%E5%99%A8/"/>
+    <id>http://yoursite.com/2018/12/01/python-装饰器/</id>
+    <published>2018-11-30T21:44:59.000Z</published>
+    <updated>2018-11-30T16:54:35.043Z</updated>
+    
+    <content type="html"><![CDATA[<p>本质上，装饰器就是一个返回函数的高阶函数。</p>
+<p><strong>装饰器可以动态地修改一个类或函数的功能，通过在原有的类或者函数上包裹一层修饰类或修饰函数实现。</strong></p>
+<p>事实上，装饰器就是闭包的一种应用，但它比较特别，<strong>接收被装饰函数为参数，并返回一个函数，赋给被装饰函数</strong>，闭包则没这种限制。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="http://www.bjhee.com/python-decorator.html" target="_blank" rel="external">Python中的装饰器介绍</a> </li>
+<li><a href="https://www.jqhtml.com/11360.html" target="_blank" rel="external">Python 会打扮的装饰器</a></li>
+<li><a href="https://coolshell.cn/articles/11265.html" target="_blank" rel="external">PYTHON修饰器的函数式编程</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本质上，装饰器就是一个返回函数的高阶函数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;装饰器可以动态地修改一个类或函数的功能，通过在原有的类或者函数上包裹一层修饰类或修饰函数实现。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;事实上，装饰器就是闭包的一种应用，但它比较特别，&lt;strong&gt;接收被装
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>python|celery初体验</title>
@@ -379,9 +465,12 @@
     <link href="http://yoursite.com/2018/10/17/python-flask%E7%AE%80%E5%8D%95%E7%94%A8/"/>
     <id>http://yoursite.com/2018/10/17/python-flask简单用/</id>
     <published>2018-10-16T23:56:41.000Z</published>
-    <updated>2018-11-10T09:00:31.930Z</updated>
+    <updated>2018-11-30T11:51:50.604Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="nginx-Gunicorn部署Flask项目"><a href="#nginx-Gunicorn部署Flask项目" class="headerlink" title="nginx+Gunicorn部署Flask项目"></a>nginx+Gunicorn部署Flask项目</h3><p><a href="https://juejin.im/post/5a5c1825f265da3e3e33bf70" target="_blank" rel="external">部署</a></p>
+    <content type="html"><![CDATA[<h3 id="about-flask"><a href="#about-flask" class="headerlink" title="about flask"></a>about flask</h3><ul>
+<li><a href="http://www.bjhee.com/flask-ext1.html" target="_blank" rel="external">Flask扩展系列</a></li>
+</ul>
+<h3 id="nginx-Gunicorn部署Flask项目"><a href="#nginx-Gunicorn部署Flask项目" class="headerlink" title="nginx+Gunicorn部署Flask项目"></a>nginx+Gunicorn部署Flask项目</h3><p><a href="https://juejin.im/post/5a5c1825f265da3e3e33bf70" target="_blank" rel="external">部署</a></p>
 <h3 id="flask-sqlalchemy"><a href="#flask-sqlalchemy" class="headerlink" title="flask-sqlalchemy"></a>flask-sqlalchemy</h3><ul>
 <li><a href="https://wing324.github.io/2017/02/25/%E4%BD%BF%E7%94%A8flask-sqlalchemy%E7%8E%A9%E8%BD%ACMySQL/" target="_blank" rel="external">使用flask-sqlalchemy玩转MySQL</a></li>
 <li><a href="https://www.cnblogs.com/franknihao/p/7268752.html" target="_blank" rel="external">【Python】 SQLAlchemy的初步使用</a></li>
@@ -393,7 +482,8 @@
     
     <summary type="html">
     
-      &lt;h3 id=&quot;nginx-Gunicorn部署Flask项目&quot;&gt;&lt;a href=&quot;#nginx-Gunicorn部署Flask项目&quot; class=&quot;headerlink&quot; title=&quot;nginx+Gunicorn部署Flask项目&quot;&gt;&lt;/a&gt;nginx+Gunicorn部署F
+      &lt;h3 id=&quot;about-flask&quot;&gt;&lt;a href=&quot;#about-flask&quot; class=&quot;headerlink&quot; title=&quot;about flask&quot;&gt;&lt;/a&gt;about flask&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.bjhee.co
     
     </summary>
     
@@ -559,225 +649,6 @@
     
     
       <category term="干货" scheme="http://yoursite.com/tags/%E5%B9%B2%E8%B4%A7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP|PHP中的无限极分类、无限嵌套评论</title>
-    <link href="http://yoursite.com/2018/07/07/PHP-PHP%E4%B8%AD%E7%9A%84%E6%97%A0%E9%99%90%E6%9E%81%E5%88%86%E7%B1%BB%E3%80%81%E6%97%A0%E7%BA%BF%E5%B5%8C%E5%A5%97%E8%AF%84%E8%AE%BA/"/>
-    <id>http://yoursite.com/2018/07/07/PHP-PHP中的无限极分类、无线嵌套评论/</id>
-    <published>2018-07-07T14:08:59.000Z</published>
-    <updated>2018-07-07T06:26:53.292Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>无限级的分类在平常的开发中是常见的需求，并且在不少面试题中都会碰到。不管你做什么项目，应该都碰到过类似的问题。下面，我们就使用递归的思想，实战一把。</p>
-<h3 id="无线分类"><a href="#无线分类" class="headerlink" title="无线分类"></a>无线分类</h3><p>首先，看下我们的表结构：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE `categories` (</div><div class="line">  `id` int(11) NOT NULL AUTO_INCREMENT,</div><div class="line">  `categoryName` varchar(100) NOT NULL,</div><div class="line">  `parentCategory` int(11) DEFAULT &apos;0&apos;,</div><div class="line">  `sortInd` int(11) NOT NULL,</div><div class="line">  PRIMARY KEY (`id`)</div><div class="line">) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;</div><div class="line"></div><div class="line"></div><div class="line">INSERT INTO `categories` VALUES (1, &apos;First&apos;, 0, 0);</div><div class="line">INSERT INTO `categories` VALUES (2, &apos;Second&apos;, 1, 0);</div><div class="line">INSERT INTO `categories` VALUES (3, &apos;Third&apos;, 1, 0);</div><div class="line">INSERT INTO `categories` VALUES (4, &apos;Fourth&apos;, 3, 0);</div><div class="line">INSERT INTO `categories` VALUES (5, &apos;Fifth&apos;, 4, 0);</div><div class="line">INSERT INTO `categories` VALUES (6, &apos;Sixth&apos;, 5, 0);</div><div class="line">INSERT INTO `categories` VALUES (7, &apos;Seventh&apos;, 6, 0);</div><div class="line">INSERT INTO `categories` VALUES (8, &apos;Eighth&apos;, 7, 0);</div><div class="line">INSERT INTO `categories` VALUES (9, &apos;Nineth&apos;, 1, 0);</div><div class="line">INSERT INTO `categories` VALUES (10, &apos;Tenth&apos;, 2, 0);</div></pre></td></tr></table></figure>
-<p>下面 我们直接看代码实现。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$dsn = <span class="string">"mysql:host=127.0.0.1;port=3306;dbname=test;charset=UTF8;"</span>;</div><div class="line">$username = <span class="string">'root'</span>;</div><div class="line">$password = <span class="string">'admin'</span>;</div><div class="line">$pdo = <span class="keyword">new</span> PDO($dsn, $username, $password);</div><div class="line">$sql = <span class="string">'SELECT * FROM `categories` ORDER BY `parentCategory`, `sortInd`'</span>;</div><div class="line">$result = $pdo-&gt;query($sql, PDO::FETCH_OBJ);</div><div class="line">$categories = [];</div><div class="line"><span class="keyword">foreach</span> ($result <span class="keyword">as</span> $category) &#123;</div><div class="line">    $categories[$category-&gt;parentCategory][] = $category;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">showCategoryTree</span><span class="params">($categories, $n)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">isset</span>($categories[$n])) &#123;</div><div class="line">        <span class="keyword">foreach</span> ($categories[$n] <span class="keyword">as</span> $category) &#123;</div><div class="line">            <span class="keyword">echo</span> str_repeat(<span class="string">'-'</span>, $n) . $category-&gt;categoryName . PHP_EOL;</div><div class="line">            showCategoryTree($categories, $category-&gt;id);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">&#125;</div><div class="line">showCategoryTree($categories, <span class="number">0</span>);</div></pre></td></tr></table></figure></p>
-<p>可以看到，我们首先获取到了所有的数据，然后按照父级ID归类。这是一个非常棒的数据结构。想象一下，我们把展示顶级目录下所有子目录的问题分解成了展示自己的类目标题和展示数据中parentCategory为当前目录id的子目录，然后使用开始递归调用。最后的输出是这个样子的。</p>
-<p><img src="../images/php.png" alt=""></p>
-<h3 id="无限嵌套评论"><a href="#无限嵌套评论" class="headerlink" title="无限嵌套评论"></a>无限嵌套评论</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE `comments` (</div><div class="line">  `id` int(11) NOT NULL AUTO_INCREMENT,</div><div class="line">  `comment` varchar(500) NOT NULL,</div><div class="line">  `username` varchar(50) NOT NULL,</div><div class="line">  `datetime` datetime NOT NULL,</div><div class="line">  `parentID` int(11) NOT NULL,</div><div class="line">  `postID` int(11) NOT NULL,</div><div class="line">  PRIMARY KEY (`id`)</div><div class="line">) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;</div></pre></td></tr></table></figure>
-<p>代码实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$dsn = &quot;mysql:host=127.0.0.1;port=3306;dbname=test;charset=UTF8;&quot;;</div><div class="line">$username = &apos;root&apos;;</div><div class="line">$password = &apos;admin&apos;;</div><div class="line">$pdo = new PDO($dsn, $username, $password);</div><div class="line">$sql = &apos;SELECT * FROM `comments` WHERE `postID` = :id ORDER BY `parentId`, `datetime`&apos;;</div><div class="line">$stmt = $pdo-&gt;prepare($sql);</div><div class="line">$stmt-&gt;setFetchMode(PDO::FETCH_OBJ);</div><div class="line">$stmt-&gt;execute([&apos;:id&apos; =&gt; 1]);</div><div class="line">$result = $stmt-&gt;fetchAll();</div><div class="line">$comments = [];</div><div class="line">foreach ($result as $comment) &#123;</div><div class="line">    $comments[$comment-&gt;parentID][] = $comment;</div><div class="line">&#125;</div><div class="line">function showComments(array $comments, $n)</div><div class="line">&#123;</div><div class="line">    if (isset($comments[$n])) &#123;</div><div class="line">        foreach ($comments[$n] as $comment) &#123;</div><div class="line">            echo str_repeat(&apos;-&apos;, $n) . $comment-&gt;comment . PHP_EOL;</div><div class="line">            showComments($comments, $comment-&gt;id);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return;</div><div class="line">&#125;</div><div class="line">showComments($comments, 0);</div></pre></td></tr></table></figure></p>
-<p><a href="https://juejin.im/post/5b3e1fa55188251b134e54aa?utm_source=gold_browser_extension" target="_blank" rel="external">PHP中的无限级分类、无限嵌套评论</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;无限级的分类在平常的开发中是常见的需求，并且在不少面试题中都会碰到。不管你做什么项目，应该都碰到过类似的问题。下面，我们就使用递归的思想，实
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
-    
-    
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>UNIX编程|信号集</title>
-    <link href="http://yoursite.com/2018/07/06/UNIX%E7%BC%96%E7%A8%8B-%E4%BF%A1%E5%8F%B7%E9%9B%86/"/>
-    <id>http://yoursite.com/2018/07/06/UNIX编程-信号集/</id>
-    <published>2018-07-05T19:32:01.000Z</published>
-    <updated>2018-07-06T07:01:50.155Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="信号传递过程"><a href="#信号传递过程" class="headerlink" title="信号传递过程"></a>信号传递过程</h3><p>信号源为目标进程产生了一个信号,然后由内核来决定是否要将该信号传递给目标进程。从信号产生到传递给目标进程的流程图如下图所示：</p>
-<p><img src="/images/Unix-信号集-01.png" alt=""></p>
-<p>进程可以阻塞信号的传递。当信号源为目标进程产生了一个信号之后,内核会执行依次执行下面操作,</p>
-<ol>
-<li><p>如果目标进程设置了忽略该信号,则内核直接将该信号丢弃。</p>
-</li>
-<li><p>如果目标进程没有阻塞该信号,则内核将该信号传递给目标进程,由目标进程执行相对应操作。</p>
-</li>
-<li><p>如果目标进程设置阻塞该信号,则内核将该信号放到目标进程的阻塞信号列表中,等待目标进程对该类型信号的下一步设置。若目标进程后续设置忽略该信号,则内核将该信号从目标进程的阻塞信号列表中移除并丢弃。若目标进程对该信号解除了阻塞,内核将该信号传递给目标进程进行相对应的操作。</p>
-</li>
-</ol>
-<p>在信号产生到信号传递给目标进程之间的时间间隔内,我们称该<strong>信号为未决的(pending)</strong>。</p>
-<p>每个进程都有一个<strong>信号屏蔽字(signal mask)</strong>,它规定了当前要阻塞传递给该进程的信号集。对于每种可能的信号,信号屏蔽字中都有一位与之对应。</p>
-<h3 id="信号集及其操作"><a href="#信号集及其操作" class="headerlink" title="信号集及其操作"></a>信号集及其操作</h3><p>POSIX.1 定义了一个数据类型sigset_t,用于表示信号集。另外,头文件 signal.h 提供了下列五个处理信号集的函数。</p>
-<p>函数 <code>sigemptyset</code> 初始化由 set 指向的信号集,清除其中所有信号。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">int sigemptyset(sigset_t *set);</div><div class="line"></div><div class="line">返回值:若成功则返回0,若出错则返回-1</div></pre></td></tr></table></figure>
-<p>函数 <code>sigfillset</code> 初始化由 set 指向的信号集,使其包含所有信号。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">int sigfillset(sigset_t *set);</div><div class="line">返回值:若成功则返回0,若出错则返回-1</div></pre></td></tr></table></figure>
-<p>函数<code>sigaddset</code> 将一个信号 signo 添加到现有信号集 set 中。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">int sigaddset(sigset_t *set, int signo);</div><div class="line">返回值:若成功则返回0,若出错则返回-1</div></pre></td></tr></table></figure>
-<p>函数 <code>sigdelset</code> 将一个信号 signo 从信号集 set 中删除。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">int sigdelset(sigset_t *set, int signo);</div><div class="line">返回值:若成功则返回0,若出错则返回-1</div></pre></td></tr></table></figure>
-<p>函数<code>sigismember</code>判断指定信号 signo 是否在信号集 set 中。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">int sigismember(const sigset_t *set, int signo);</div><div class="line">返回值:若真则返回1,若假则返回0,若出错则返回-1</div></pre></td></tr></table></figure>
-<p>函数 <code>sigprocmask</code>可以检测或者设置进程的信号屏蔽字。</p>
-<p><code>task_struct</code>结构有一个<code>blocked</code> 成员[业界称之为“信号屏蔽字”]，它指定了进程阻塞的信号，被阻塞的信号将不能被递送给进程，直到进程解除阻塞。在信号被阻塞时，内核将其放置到待决列表上。如果同一个信号在阻塞期间被发送了多次，则在待决列表中只放置一次。也就是说，不管发送了多少相同的信号，在进程删除阻塞后，都只会接收到一个信号。调用函数sigprocmask 可以检测或更改其信号屏蔽字。在调用 sigprocmask 后如果有任何未决的、不再阻塞的信号，则在 sigprocmask 返回前，至少会将其中一个信号递送给该进程。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">   #include &lt;signal.h&gt;  </div><div class="line">int sigprocmask(int how, const sigset_t *set, sigset_t *oset);  </div><div class="line">   返回值:若成功则返回0,若出错则返回-1</div></pre></td></tr></table></figure></p>
-<p>如果oset是非空指针，则读取进程的当前信号屏蔽字并保存到oset中。如果set是非空指针，则更改进程的信号屏蔽字，参数how指示如何更改。如果oset和set都是非空指针，则先将原来的信号屏蔽字备份到oset里，然后根据set和how参数更改信号屏蔽字。假设当前的信号屏蔽字为mask，下表说明了how参数的可选值:</p>
-<table>
-<thead>
-<tr>
-<th>how</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SIG_BLOCK</td>
-<td>set包含了我们希望添加到当前信号屏蔽字的信号，相当于 <strong>mask=mask l set</strong></td>
-</tr>
-<tr>
-<td>SIG_UNBLOCK</td>
-<td>set包含了我们希望从当前信号屏蔽字中解除阻塞的信号，相当于<strong>mask=mask&amp;~set</strong></td>
-</tr>
-<tr>
-<td>SIG_SETMASK</td>
-<td>设置当前信号屏蔽字为set所指向的值，相当于mask=set</td>
-</tr>
-</tbody>
-</table>
-<p>下面我们来看一个例子:在下面的程序文件中先调用 <code>sigprocmask</code> 设置阻塞信号 SIGALRM,然后调用 <code>alarm(2)</code>设置一个两秒钟的闹钟 [两秒钟之后将向当前进程产生一个 SIGALRM 信号]。在睡眠 4 秒钟之后[此时应该已经产生了 SIGALRM 信号],调用 sigprocmask 函数解除对信号SIGALRM 的阻塞。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sig_alrm</span><span class="params">(<span class="keyword">int</span> signo)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"received SIGALRM\n"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">sigset_t</span> sigset;</div><div class="line"></div><div class="line">  sigemptyset(&amp;sigset);</div><div class="line">  sigaddset(&amp;sigset, SIGALRM);</div><div class="line">  </div><div class="line">  <span class="keyword">if</span> (sigprocmask(SIG_BLOCK, &amp;sigset, <span class="literal">NULL</span>) &lt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"sigprocmask error: %s\n"</span>, strerror(errno));</div><div class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (signal(SIGALRM, sig_alrm) &lt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"signal error: %s\n"</span>, strerror(errno));</div><div class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  alarm(<span class="number">2</span>);</div><div class="line">  sleep(<span class="number">4</span>);</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"before unblock sigprocmask\n"</span>);</div><div class="line">  <span class="keyword">if</span> (sigprocmask(SIG_UNBLOCK, &amp;sigset, <span class="literal">NULL</span>) &lt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"sigprocmask SIG_UNBLOCK error: %s\n"</span>, strerror(errno));</div><div class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"before exit\n"</span>);</div><div class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/LAB-shlab/<span class="built_in">test</span>$ gcc sigset.c -o sigset</div><div class="line">ubuntu@VM-162-156-ubuntu:~/LAB-shlab/<span class="built_in">test</span>$ ./sigset | cat </div><div class="line">before unblock sigprocmask</div><div class="line">received SIGALRM</div><div class="line">before <span class="built_in">exit</span></div></pre></td></tr></table></figure>
-<p>从上面的执行输出,我们看到信号 SIGALRM 是在调用 sigprocmask函 数 执 行 unblock 之 后 才 被 传 递 给 当 前 进 程 进 行 处 理 的。 如 果 我 们 将sigprocmaskdemo.c 中的sigprocemask(SIG_BLOCK, &amp;sigset, NULL) 注释掉,编译执行,生成如下结果:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/LAB-shlab/<span class="built_in">test</span>$ gcc sigset.c -o sigset</div><div class="line">ubuntu@VM-162-156-ubuntu:~/LAB-shlab/<span class="built_in">test</span>$ ./sigset | cat </div><div class="line">received SIGALRM</div><div class="line">before unblock sigprocmask</div><div class="line">before <span class="built_in">exit</span></div></pre></td></tr></table></figure>
-<p>sigpending读取当前进程的未决信号集，通过set参数传出。调用成功则返回0，出错则返回-1。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#include &lt;signal.h&gt;</span></div><div class="line">int sigpending(sigset_t *<span class="built_in">set</span>);</div><div class="line">返回值:若成功则返回0,若出错则返回-1</div></pre></td></tr></table></figure>
-<p>下面我们来看一个例子:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></div><div class="line"><span class="comment">#include &lt;stdio.h&gt;</span></div><div class="line"><span class="comment">#include &lt;unistd.h&gt;</span></div><div class="line"><span class="comment">#include &lt;string.h&gt;</span></div><div class="line"><span class="comment">#include &lt;errno.h&gt;</span></div><div class="line"><span class="comment">#include &lt;signal.h&gt;</span></div><div class="line"></div><div class="line">void alrm_is_pending(const char *str)</div><div class="line">&#123;</div><div class="line">  sigset_t pendingsigset;</div><div class="line"></div><div class="line">  <span class="built_in">printf</span>(<span class="string">"%s: "</span>, str);</div><div class="line">  <span class="keyword">if</span> (sigpending(&amp;pendingsigset) &lt; 0) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"sigpending error: %s\n"</span>, strerror(errno));</div><div class="line">    <span class="built_in">exit</span>(-1);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (sigismember(&amp;pendingsigset, SIGALRM)) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"SIGALRM is pending\n"</span>);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"SIGALRM is not pending\n"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int main(void)</div><div class="line">&#123;</div><div class="line">  sigset_t sigset;</div><div class="line"></div><div class="line">  sigemptyset(&amp;sigset);</div><div class="line">  sigaddset(&amp;sigset, SIGALRM);</div><div class="line">  <span class="keyword">if</span> (sigprocmask(SIG_BLOCK, &amp;sigset, NULL) &lt; 0) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"sigprocmask error: %s\n"</span>, strerror(errno));</div><div class="line">    <span class="built_in">exit</span>(-1);</div><div class="line">  &#125;</div><div class="line">  alrm_is_pending(<span class="string">"before alarm"</span>);</div><div class="line">  alarm(2);</div><div class="line">  sleep(4);</div><div class="line">  alrm_is_pending(<span class="string">"after alarm"</span>);</div><div class="line">  <span class="built_in">exit</span>(0);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>从下面的运行结果,我们看到调用 <code>alarm</code> 函数产生信号 SIGALRM 之后,该信号在 sigpending 函数的 set 参数指向的信号集中。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/LAB-shlab/<span class="built_in">test</span>$ gcc pending.c -o pending</div><div class="line">ubuntu@VM-162-156-ubuntu:~/LAB-shlab/<span class="built_in">test</span>$ ./pending | cat</div><div class="line">before alarm: SIGALRM is not pending</div><div class="line">after alarm: SIGALRM is pending</div></pre></td></tr></table></figure>
-<p><a href="https://www.cnblogs.com/lienhua34/p/4072417.html" target="_blank" rel="external">UNIX环境编程学习笔记（24）——信号处理进阶学习之信号集和进程信号屏蔽字</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;信号传递过程&quot;&gt;&lt;a href=&quot;#信号传递过程&quot; class=&quot;headerlink&quot; title=&quot;信号传递过程&quot;&gt;&lt;/a&gt;信号传递过程&lt;/h3&gt;&lt;p&gt;信号源为目标进程产生了一个信号,然后由内核来决定是否要将该信号传递给目标进程。从信号产生到传递给目标进程的流
-    
-    </summary>
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="unix" scheme="http://yoursite.com/tags/unix/"/>
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>UNIX编程|信号量</title>
-    <link href="http://yoursite.com/2018/07/05/UNIX%E7%BC%96%E7%A8%8B-%E4%BF%A1%E5%8F%B7%E9%87%8F/"/>
-    <id>http://yoursite.com/2018/07/05/UNIX编程-信号量/</id>
-    <published>2018-07-05T10:47:56.000Z</published>
-    <updated>2018-07-06T08:24:42.858Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>信号是软件中断，很比较重要的应用程序都需要处理信号。信号提供了一种处理异步事件的方法，例如，中断用户键入中断键，则会通过信号机制停止一个程序，或及早终止管道中的下一个程序。</p>
-<p>每个信号都有一个名字, 这些名字都以三个字符 SIG 开头。 例如,SIGABRT是夭折信号, 当进程调用 abort 函数时产生这种信号。SIGALRM 是闹钟信号,当由 alarm 函数设置的计时器超时后产生此信号。在 UNIX 系统中,这些信号都定义在头文件 <signal.h> 中,并且都是以一个正整数来表示(信号编号)。通过在 shell 中运行命令 kill -l 可以查看当前系统所执行的所有信号。</signal.h></p>
-<p>每一个信号对应一个正整数，定义在头文件<signal.h>中。</signal.h></p>
-<p>没有信号对应整数0，kill函数使用信号编号0表示一种特殊情况，所以信号编号0又叫做空信号（null signal）。</p>
-<p>下面的各种情况会产生一个信号：</p>
-<ul>
-<li><p>当用户在终端按下特定的键时，会产生信号。例如，当用户按下DELETE按键（或Control-C）时，会产生一个中断信号（interrupt signal，SIGINIT），该信号使得一个运行中的程序终止。</p>
-</li>
-<li><p>硬件异常可以产生信号。会引发硬件异常的情况如除以0，非法内存引用（invalid memory reference）等。这种情况会被硬件检测到，并通知内核，然后内核产生相应的信号通知对应的运行进程。例如，当一个进程执行了一个非法的内存引用，会触发SIGSEGV信号。 </p>
-</li>
-<li><p>kill函数允许当前进程向其他的进程或者进程组发送任意的信号。当然，这种方法存在限制：我们必须是信号接收进程的所有者，或者我们必须是超级用户（superuser）。</p>
-</li>
-<li><p>kill命令的作用和kill函数类似。这个命令多用户杀死后台进程。</p>
-</li>
-<li><p>软件异常可以根据不同的条件产生不同的信号。例如：网络连接中接受的数据超出边界时，会触发SIGURG信号。</p>
-</li>
-</ul>
-<p>对于进程来说，信号是随机产生的，所以进程不能简单地根据检测某个变量是否改变来判断信号是否发生，而应该告诉内核<strong>“当这个信号发生时，做下面的这些事情”</strong>。</p>
-<p>我们告诉内核当某个信号发生时做的事情叫做信号处理函数。信号处理函数有三种功能可供选择：</p>
-<ul>
-<li><strong>忽略该信号</strong>。该行为适用于大部分的信号，除了两个信号不能被忽略：<code>SIGKILL</code>和<code>SIGSTOP</code>。这两个信号不能被忽略，是因为其作用是为内核和超级用户提供了一种杀死或者暂停进程的万无一失的方法（a surefire way）。</li>
-<li><strong>捕获该信号</strong>。当某个信号发生时，我们告诉进程去执行我们的一段程序。在该程序中，我们可以做任何操作来处理该种情况。两个信号SIGKILL和SIGSTOP不可以被捕获。</li>
-<li><strong>执行默认的信号处理程序</strong>。每个信号都有一个默认的处理程序，而大部分的信号默认处理程序都是终止该进程。</li>
-</ul>
-<p><img src="/images/Unix-信号-02.jpg" alt=""></p>
-<p>如果信号已被发送但是未被接收，那么处于等待状态<code>(pending)</code>，<strong>同类型的信号至多只会有一个待处理信号(pending signal)</strong>，一定要注意这个特性，因为内部实现机制不可能提供较复杂的数据结构，所以<strong>信号的接收并不是一个队列</strong>。比如说进程有一个 <code>SIGCHLD</code> 信号处于等待状态，那么之后进来的 <code>SIGCHLD</code>信号都会被直接扔掉。</p>
-<p>当然，<strong>进程也可以阻塞特定信号的接收，但信号的发送并不受控制，所以被阻塞的信号仍然可以被发送，不过直到进程取消阻塞该信号之后才会被接收。</strong><code>内核用等待(pending)位向量和阻塞(blocked)位向量来维护每个进程的信号相关状态</code>。</p>
-<h3 id="信号在内核中的表示"><a href="#信号在内核中的表示" class="headerlink" title="信号在内核中的表示"></a>信号在内核中的表示</h3><p>信号在内核中的表示：<br><img src="/images/Unix-信号-01.png" alt=""></p>
-<p>每个信号都有两个标志位分别表示阻塞和未决，还有一个函数指针表示处理动作。信号产生时，内核在进程控制块中设置该信号的未决标志，直到信号递达才清除该标志。</p>
-<p>在上图的例子中：</p>
-<ul>
-<li>SIGHUP信号未阻塞也未产生过，当它递达时执行默认处理动作。</li>
-<li>SIGINT信号产生过，但正在被阻塞，所以暂时不能递达。虽然它的处理动作是忽略，但在没有解除阻塞之前不能忽略这个信号，因为进程仍有机会改变处理动作之后再解除阻塞。</li>
-<li>SIGQUIT信号未产生过，一旦产生SIGQUIT信号将被阻塞，它的处理动作是用户自定义函数sighandler。</li>
-</ul>
-<p><strong>如果在进程解除对某信号的阻塞之前这种信号产生过多次，将如何处理？</strong></p>
-<p>POSIX.1允许系统递送该信号一次或多次。从上图来看，每个信号只有一个bit的未决标志，非0即1，不记录该信号产生了多少次，阻塞标志也是这样表示的。<strong>因此，未决和阻塞标志可以用相同的数据类型sigset_t来存储，sigset_t称为信号集，这个类型可以表示每个信号的“有效”或“无效”状态，在阻塞信号集中“有效”和“无效”的含义是该信号是否被阻塞，而在未决信号集中“有效”和“无效”的含义是该信号是否处于未决状态。</strong></p>
-<p>阻塞信号集也叫做当前进程的<strong>信号屏蔽字（Signal Mask）</strong>，这里的“屏蔽”应该理解为阻塞而不是忽略。</p>
-<h3 id="signal函数"><a href="#signal函数" class="headerlink" title="signal函数"></a>signal函数</h3><p>说了那么多，信号接收和处理使用哪个系统api呢？unix系统信号机制最简单的借口是<code>signal函数</code>。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">void</span> (*signal(<span class="keyword">int</span> signo,<span class="keyword">void</span>(*func)(<span class="keyword">int</span>)))(<span class="keyword">int</span>);</div></pre></td></tr></table></figure>
-<p>返回值：若成功则返回信号以前的处理配置，出错返回SIG_ERR;</p>
-<p>其中,参数 func 的值可以是:</p>
-<ul>
-<li>常 量SIG_IGN, 向 内 核 表 示 忽 略 此 信 号 (有 两 个 信 号 SIGKILL 和SIGSTOP 不可忽略,调用 signal 函数会报错)。</li>
-<li>常量SIG_DFL,表示执行信号的系统默认动作。</li>
-<li>一个函数指针,表示信号发生时执行该函数进行处理,这个函数称为<strong>信号处理程序</strong>。信号处理函数接收一个 int 类型的信号值参数,无返回值。</li>
-</ul>
-<p>signal 信号的返回值也是一个函数指针,指向该信号之前的信号处理程序。</p>
-<p>看个例子：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sig_usr</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">if</span> (signal(SIGUSR1, sig_usr) == SIG_ERR) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"can't catch SIGUSR1: %s\n"</span>, strerror(errno));</div><div class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (signal(SIGUSR2, sig_usr) == SIG_ERR) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"can't catch SIGUSR2: %s\n"</span>, strerror(errno));</div><div class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">for</span> (;;) &#123;</div><div class="line">    pause();</div><div class="line">  &#125;</div><div class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sig_usr</span><span class="params">(<span class="keyword">int</span> signo)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">if</span> (signo == SIGUSR1) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"received SIGUSR1\n"</span>);</div><div class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (signo == SIGUSR2) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"received SIGUSR2\n"</span>);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"received signal: %d\n"</span>, signo);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="向进程发送信号"><a href="#向进程发送信号" class="headerlink" title="向进程发送信号"></a>向进程发送信号</h3><p>UNIX 系统提供了两个函数 <code>kill</code> 和 <code>raise</code> 来产生信号。kill 函数将信号发送给指定的进程或进程组。raise 函数则允许进程向自身发送信号。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">kill</span><span class="params">(<span class="keyword">pid_t</span> pid, <span class="keyword">int</span> signo)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">raise</span><span class="params">(<span class="keyword">int</span> signo)</span></span>;</div><div class="line"></div><div class="line">两个函数返回值:若成功则返回<span class="number">0</span>,若出错则返回<span class="number">-1</span></div></pre></td></tr></table></figure>
-<p>调用 raise(signo) 等价于 kill(getpid(), signo)。</p>
-<p>kill 函数的 pid 参数有 4 种不同情况:</p>
-<ol>
-<li><p><code>pid&gt;0</code> 将信号发送给进程 ID 为 pid 的进程。</p>
-</li>
-<li><p><code>pid==0</code> 将信号发送给与发送进程属于同一个进程组的所有进程,而且发送进程具有向这些进程发送信号的权限。</p>
-</li>
-</ol>
-<p>3.<code>pid&lt;0</code>将信号发送给其进程组 ID 等于 pid 的绝对值的所有进程,而且发送进程具有向这些进程发送信号的权限。</p>
-<p>4.<code>pid==-1</code> 将信号发送给发送进程有权限向他们发送信号的系统上的所有进程。</p>
-<p>上面有两点需要说明一下:(1)“所有进程”不包括系统进程集;(2)发送进程是超级用户,或者发送进程的实际或有效用户 ID 等于接收进程的实际或有效用户 ID 才具有发送信号权限。</p>
-<p>下面来看个例子:</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sig_usr</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">pid_t</span> pid;</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (signal(SIGUSR1, sig_usr) == SIG_ERR) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"can't catch SIGUSR1: %s\n"</span>, strerror(errno));</div><div class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (signal(SIGUSR2, sig_usr) == SIG_ERR) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"can't catch SIGUSR2: %s\n"</span>, strerror(errno));</div><div class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">if</span> ((pid = fork()) &lt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"fork error: %s\n"</span>, strerror(errno));</div><div class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (pid == <span class="number">0</span>) &#123;</div><div class="line">    pause();</div><div class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="built_in">printf</span>(<span class="string">"process %d creates a child process %d\n"</span>, getpid(), pid);</div><div class="line"></div><div class="line">  sleep(<span class="number">1</span>);</div><div class="line">  kill(pid, SIGUSR1);</div><div class="line">  waitpid(pid, <span class="literal">NULL</span>);</div><div class="line">  raise(SIGUSR2);</div><div class="line"></div><div class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sig_usr</span><span class="params">(<span class="keyword">int</span> signo)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">if</span> (signo == SIGUSR1) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"process %d received SIGUSR1\n"</span>, getpid());</div><div class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (signo == SIGUSR2) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"process %d received SIGUSR2\n"</span>, getpid());</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"process %d received signal: %d\n"</span>, getpid(), signo);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上面的 <code>kill.c</code> 程序文件中,父进程为信号 <code>SIGUSR1</code> 和<code>SIGUSR2</code>设置了信号处理程序<code>sig_us</code>r。然后调用 <code>fork</code>创建一个子进程,子进程的信号 <code>SIGUSR1</code> 和 <code>SIGUSR2</code>的信号处理程序继承父进程的,同样是sig_usr[除非子进程调用了 <code>exec</code> 函数,子进程中这两个信号的信号处理动作才会设置为系统默认]。父进程调用 kill 函数向子进程发送信号 SIGUSR1,而调用 raise 函数向自身发送信号 SIGUSR2. </p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ubuntu@VM-162-156-ubuntu:~/LAB-shlab/<span class="built_in">test</span>$ gcc kill.c -o <span class="built_in">kill</span></div><div class="line">ubuntu@VM-162-156-ubuntu:~/LAB-shlab/<span class="built_in">test</span>$ ./<span class="built_in">kill</span> | cat</div><div class="line">process 21764 creates a child process 21766</div><div class="line">process 21764 received SIGUSR2</div><div class="line">process 21766 received SIGUSR1</div></pre></td></tr></table></figure>
-<p>通过上面的运行结果,可以看到父进程 21764 创建了子进程 21766,父进程 21764 捕获了信号 SIGUSR2,子进程捕获了信号 SIGUSR1。实际运行结果与预期结果相符合。</p>
-<h3 id="sigaction-函数"><a href="#sigaction-函数" class="headerlink" title="sigaction 函数"></a>sigaction 函数</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line"> <span class="function"><span class="keyword">int</span> <span class="title">sigaction</span><span class="params">(<span class="keyword">int</span> signum, <span class="keyword">const</span> struct sigaction *act, struct sigaction *oldact)</span></span>;</div></pre></td></tr></table></figure>
-<p>◆ signum：要操作的信号。<br>◆ act：要设置的对信号的新处理方式。<br>◆ oldact：原来对信号的处理方式。<br>◆ 返回值：0 表示成功，-1 表示有错误发生。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> 类型用来描述对信号的处理，定义如下：</span></div><div class="line"><span class="title">struct</span> <span class="title">sigaction</span></div><div class="line">&#123;</div><div class="line"> <span class="keyword">void</span>     (*sa_handler)(<span class="keyword">int</span>);</div><div class="line"> <span class="keyword">void</span>     (*sa_sigaction)(<span class="keyword">int</span>, <span class="keyword">siginfo_t</span> *, <span class="keyword">void</span> *);</div><div class="line"> <span class="keyword">sigset_t</span>  sa_mask;</div><div class="line"> <span class="keyword">int</span>       sa_flags;</div><div class="line"> <span class="keyword">void</span>     (*sa_restorer)(<span class="keyword">void</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>在这个结构体中，成员 sa_handler 是一个函数指针，其含义与 signal 函数中的信号处理函数类似。成员sa_sigaction 则是另一个信号处理函数，它有三个参数，可以获得关于信号的更详细的信息。当 sa_flags 成员的值包含了 SA_SIGINFO 标志时，系统将使用 sa_sigaction 函数作为信号处理函数，否则使用sa_handler 作为信号处理函数。</p>
-<p>sa_flags 成员用于指定信号处理的行为，它可以是一下值的“按位或”组合。</p>
-<p>◆ SA_RESTART：使被信号打断的系统调用自动重新发起。<br>◆ SA_NOCLDSTOP：使父进程在它的子进程暂停或继续运行时不会收到 SIGCHLD 信号。<br>◆ SA_NOCLDWAIT：使父进程在它的子进程退出时不会收到 SIGCHLD 信号，这时子进程如果退出也不会成为僵尸进程。<br>◆ SA_NODEFER：使对信号的屏蔽无效，即在信号处理函数执行期间仍能发出这个信号。<br>◆ SA_RESETHAND：信号处理之后重新设置为默认的处理方式。<br>◆ SA_SIGINFO：使用 sa_sigaction 成员而不是 sa_handler 作为信号处理函数。</p>
-<p>re_restorer 成员则是一个已经废弃的数据域，不要使用。</p>
-<p>下面用一个例程来说明 sigaction 函数的使用，代码如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sig_usr</span><span class="params">(<span class="keyword">int</span> signum)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(signum == SIGUSR1)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"SIGUSR1 received\n"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(signum == SIGUSR2)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"SIGUSR2 received\n"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"signal %d received\n"</span>, signum);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">char</span> buf[<span class="number">512</span>];</div><div class="line">    <span class="keyword">int</span>  n;</div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> <span class="title">sa_usr</span>;</span></div><div class="line">    sa_usr.sa_flags = <span class="number">0</span>;</div><div class="line">    sa_usr.sa_handler = sig_usr;   <span class="comment">//信号处理函数</span></div><div class="line">    </div><div class="line">    sigaction(SIGUSR1, &amp;sa_usr, <span class="literal">NULL</span>);</div><div class="line">    sigaction(SIGUSR2, &amp;sa_usr, <span class="literal">NULL</span>);</div><div class="line">    </div><div class="line">    <span class="built_in">printf</span>(<span class="string">"My PID is %d\n"</span>, getpid());</div><div class="line">    </div><div class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>((n = read(STDIN_FILENO, buf, <span class="number">511</span>)) == <span class="number">-1</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(errno == EINTR)</div><div class="line">            &#123;</div><div class="line">                <span class="built_in">printf</span>(<span class="string">"read is interrupted by signal\n"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            buf[n] = <span class="string">'\0'</span>;</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"%d bytes read: %s\n"</span>, n, buf);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>在这个例程中使用 sigaction 函数为 SIGUSR1 和 SIGUSR2 信号注册了处理函数，然后从标准输入读入字符。程序运行后首先输出自己的 PID，如：<br> <code>My PID is 8888</code></p>
-<p>这时如果从另外一个终端向进程发送 SIGUSR1 或 SIGUSR2 信号，用类似如下的命令：<code>kill -USR1 8888</code></p>
-<p>则程序将继续输出如下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">SIGUSR1 received</div><div class="line">read is interrupted by signal</div><div class="line">``` </div><div class="line"></div><div class="line">这说明用 sigaction 注册信号处理函数时，不会自动重新发起被信号打断的系统调用。如果需要自动重新发起，则要设置 SA_RESTART 标志，比如在上述例程中可以进行类似一下的设置：</div></pre></td></tr></table></figure></p>
-<p>sa_usr.sa_flags = SA_RESTART;<br>```</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;信号是软件中断，很比较重要的应用程序都需要处理信号。信号提供了一种处理异步事件的方法，例如，中断用户键入中断键，则会通过信号机制停止一个程序
-    
-    </summary>
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="unix" scheme="http://yoursite.com/tags/unix/"/>
-    
-      <category term="深入理解计算机系统" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
