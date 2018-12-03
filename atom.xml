@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-12-01T04:48:56.928Z</updated>
+  <updated>2018-12-03T15:53:25.216Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>php|php底层运行机制与原理</title>
+    <link href="http://yoursite.com/2018/12/04/php-php%E5%BA%95%E5%B1%82%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E4%B8%8E%E5%8E%9F%E7%90%86/"/>
+    <id>http://yoursite.com/2018/12/04/php-php底层运行机制与原理/</id>
+    <published>2018-12-03T23:14:08.000Z</published>
+    <updated>2018-12-03T15:53:25.216Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://www.awaimai.com/509.html" target="_blank" rel="external">PHP底层的运行机制与原理</a></li>
+<li><a href="https://www.awaimai.com/371.html" target="_blank" rel="external">CGI、FastCGI和PHP-FPM关系图解</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;参考&quot;&gt;&lt;a href=&quot;#参考&quot; class=&quot;headerlink&quot; title=&quot;参考&quot;&gt;&lt;/a&gt;参考&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.awaimai.com/509.html&quot; target=&quot;_blank&quot; rel=&quot;
+    
+    </summary>
+    
+      <category term="php" scheme="http://yoursite.com/categories/php/"/>
+    
+    
+      <category term="php" scheme="http://yoursite.com/tags/php/"/>
+    
+  </entry>
   
   <entry>
     <title>python|上下文管理器</title>
@@ -624,31 +651,6 @@
     
     
       <category term="数据库" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>干货|单片机学习历程</title>
-    <link href="http://yoursite.com/2018/07/13/%E5%B9%B2%E8%B4%A7-%E5%8D%95%E7%89%87%E6%9C%BA%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/"/>
-    <id>http://yoursite.com/2018/07/13/干货-单片机学习历程/</id>
-    <published>2018-07-12T16:38:02.000Z</published>
-    <updated>2018-07-12T09:29:29.805Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="http://wiki.jikexueyuan.com/project/mcu-tutorial-one/" target="_blank" rel="external">单片机教程(一)</a></p>
-<p><a href="http://wiki.jikexueyuan.com/list/microcontrollers/" target="_blank" rel="external">单片机</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;http://wiki.jikexueyuan.com/project/mcu-tutorial-one/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;单片机教程(一)&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://wiki.j
-    
-    </summary>
-    
-      <category term="干货" scheme="http://yoursite.com/categories/%E5%B9%B2%E8%B4%A7/"/>
-    
-    
-      <category term="干货" scheme="http://yoursite.com/tags/%E5%B9%B2%E8%B4%A7/"/>
     
   </entry>
   
