@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://yoursite.com/images/汇编-27.png">
 <meta property="og:image" content="http://yoursite.com/images/汇编-29.png">
 <meta property="og:image" content="http://yoursite.com/images/汇编-28.png">
-<meta property="og:updated_time" content="2018-05-08T05:03:05.691Z">
+<meta property="og:updated_time" content="2018-05-08T05:03:05.692Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解计算机系统|汇编的世界-5">
 <meta name="twitter:description" content="这一节我们探讨过程调用[函数调用]是如何完成的。 栈帧的结构倘若我们要想搞清楚过程的实现，就必须先知道栈帧的结构是如何构成的。栈帧其实可以认为是程序栈的一段，而程序栈又是存储器的一段，因此栈帧说到底还是存储器的一段。那么既然是一段，肯定有两个端点。 这两个端点其实就是两个地址，一个标识着起始地址，一个标识着结束地址，而这两个地址，则分别存储在固定的寄存器当中，即起始地址存在%ebp寄存器当中，结束">
@@ -56,7 +56,7 @@
 				<h1 class="site-name"><a href="/" title="只为不凡而来">只为不凡而来</a></h1>
 				<h2 class="blog-motto">小智的世界</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -76,7 +76,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -99,14 +99,14 @@
 		<a href="/about" title="wuduozhi" target="_blank" itemprop="author">wuduozhi</a>
 		
   <p class="article-time">
-    <time datetime="2018-05-08T11:30:10.000Z" itemprop="datePublished"> 发表于 2018-05-08</time>
+    <time datetime="2018-05-08T11:30:10.000Z" itemprop="datePublished"> Published 2018-05-08</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
+			<strong class="toc-title">Contents</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#栈帧的结构"><span class="toc-number">1.</span> <span class="toc-text">栈帧的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#过程的实现"><span class="toc-number">2.</span> <span class="toc-text">过程的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#过程相关指令：call、leave、ret"><span class="toc-number">3.</span> <span class="toc-text">过程相关指令：call、leave、ret</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#寄存器使用的规矩"><span class="toc-number">4.</span> <span class="toc-text">寄存器使用的规矩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一个过程示例"><span class="toc-number">5.</span> <span class="toc-text">一个过程示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#递归过程调用"><span class="toc-number">6.</span> <span class="toc-text">递归过程调用</span></a></li></ol>
 		
@@ -239,10 +239,10 @@ int main(){
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 <div id="authorInfo">
 	
@@ -270,7 +270,7 @@ int main(){
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分类</p>
+	<p class="asidetitle">Categories</p>
 		<ul>
 		
 		  
@@ -379,7 +379,7 @@ int main(){
 
   
 <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -403,11 +403,11 @@ int main(){
 			
 		
 			
-				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
+				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>7</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/计算机算法/" title="计算机算法">计算机算法<sup>7</sup></a></li>
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>7</sup></a></li>
 			
 		
 			
@@ -431,7 +431,7 @@ int main(){
 			
 		
 			
-				<li><a href="/tags/面试/" title="面试">面试<sup>3</sup></a></li>
+				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
 			
 		
 			
@@ -439,15 +439,15 @@ int main(){
 			
 		
 			
-				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Web安全/" title="Web安全">Web安全<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/面试/" title="面试">面试<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/爬虫/" title="爬虫">爬虫<sup>3</sup></a></li>
 			
 		
 			
@@ -459,7 +459,7 @@ int main(){
 			
 		
 			
-				<li><a href="/tags/大学/" title="大学">大学<sup>1</sup></a></li>
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -467,7 +467,7 @@ int main(){
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -660,7 +660,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-12-11T09:21:24.665Z</updated>
+  <updated>2019-04-14T13:03:32.486Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,81 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>ARST.md</title>
+    <link href="http://yoursite.com/2019/04/15/ARST%20%E7%AC%AC%E4%B8%80%E5%91%A8/"/>
+    <id>http://yoursite.com/2019/04/15/ARST 第一周/</id>
+    <published>2019-04-14T20:57:17.000Z</published>
+    <updated>2019-04-14T13:03:32.486Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h1><p><del>For：编程训练和学习</del></p>
+<p><a href="https://leetcode.com/problems/median-of-two-sorted-arrays/" target="_blank" rel="external">Leetcode 4. Median of Two Sorted Arrays</a>  给定连个有序数组，求合并后的中位数。</p>
+<h3 id="解法一-O-n-复杂度"><a href="#解法一-O-n-复杂度" class="headerlink" title="解法一  O(n) 复杂度"></a>解法一  O(n) 复杂度</h3><p>对于 O(n) 复杂度的解法，就是先合并两个数组为一个有序数组，然后在找中位数，合并过程的复杂度是 O(n)。</p>
+<p>代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">class Solution:</div><div class="line">    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -&gt; float:</div><div class="line">        merge = self.merge(nums1,nums2)</div><div class="line">        length = len(merge)</div><div class="line"></div><div class="line">        if (length % 2) == 1:</div><div class="line">            return merge[length // 2]</div><div class="line">        else:</div><div class="line">            left ,right = merge[length // 2 - 1],merge[length // 2]</div><div class="line"></div><div class="line">            return (left + right) /2</div><div class="line"></div><div class="line">    </div><div class="line">    def merge(self,a,b):</div><div class="line">        i,j = 0,0</div><div class="line">        result = []</div><div class="line">        while i&lt;len(a) or j&lt;len(b):</div><div class="line">            if i &lt; len(a) and j &lt; len(b):</div><div class="line">                if a[i] &lt; b[j]:</div><div class="line">                    result.append(a[i])</div><div class="line">                    i += 1</div><div class="line">                else:</div><div class="line">                    result.append(b[j])</div><div class="line">                    j += 1</div><div class="line">            else:</div><div class="line">                if i &lt; len(a):</div><div class="line">                    result.append(a[i])</div><div class="line">                    i += 1</div><div class="line">                else:</div><div class="line">                    result.append(b[j])</div><div class="line">                    j += 1</div><div class="line"></div><div class="line">        return result</div></pre></td></tr></table></figure>
+<h3 id="解法二-O-logn-复杂度"><a href="#解法二-O-logn-复杂度" class="headerlink" title="解法二 O(logn) 复杂度"></a>解法二 O(logn) 复杂度</h3><p>自己一下子也没想出来，看了一下讨论，发现用 <strong>二分查找</strong>  的方法也能解决，复杂度为 O(logn) 。参考的这个 [Share my O(log(min(m,n)) solution with explanation]<code>(https://leetcode.com/problems/median-of-two-sorted-arrays/discuss/2481/Share-my-O(log(min(mn))-solution-with-explanation)</code> 。</p>
+<p>代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">class Solution:</div><div class="line">    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -&gt; float:</div><div class="line">        return self.median(nums1,nums2)</div><div class="line"></div><div class="line">    </div><div class="line">    def median(self,A, B):</div><div class="line">        m, n = len(A), len(B)</div><div class="line">        if m &gt; n:</div><div class="line">            A, B, m, n = B, A, n, m</div><div class="line">        if n == 0:</div><div class="line">            raise ValueError</div><div class="line"></div><div class="line">        imin, imax, half_len = 0, m, (m + n + 1) // 2</div><div class="line">        while imin &lt;= imax:</div><div class="line">            i = (imin + imax) // 2</div><div class="line">            j = half_len - i</div><div class="line">            if i &lt; m and B[j-1] &gt; A[i]:</div><div class="line">                # i is too small, must increase it</div><div class="line">                imin = i + 1</div><div class="line">            elif i &gt; 0 and A[i-1] &gt; B[j]:</div><div class="line">                # i is too big, must decrease it</div><div class="line">                imax = i - 1</div><div class="line">            else:</div><div class="line">                # i is perfect</div><div class="line"></div><div class="line">                if i == 0: max_of_left = B[j-1]</div><div class="line">                elif j == 0: max_of_left = A[i-1]</div><div class="line">                else: max_of_left = max(A[i-1], B[j-1])</div><div class="line"></div><div class="line">                if (m + n) % 2 == 1:</div><div class="line">                    return max_of_left</div><div class="line"></div><div class="line">                if i == m: min_of_right = B[j]</div><div class="line">                elif j == n: min_of_right = A[i]</div><div class="line">                else: min_of_right = min(A[i], B[j])</div><div class="line"></div><div class="line">                return (max_of_left + min_of_right) / 2.0</div></pre></td></tr></table></figure>
+<h1 id="Review"><a href="#Review" class="headerlink" title="Review"></a>Review</h1><p><del>For：Learning English</del></p>
+<p><a href="https://www.ultravioletsoftware.com/single-post/2017/03/23/An-introduction-into-the-WSGI-ecosystem" target="_blank" rel="external">An introduction into the WSGI ecosystem</a></p>
+<p>这周参加了一场面试，面试官的一个问题：在部署 Python 应用的时候，为什么需要用到 uWSGI？Flask 框架里不是有内嵌的 Web 服务器吗？</p>
+<p>说实话，自己确实没有想过这个问题，觉得别人都是这样部署的，自己也应该这样部署。这犯了大忌了，学技术，我们应该首先知道这门技术解决了什么问题？然后在深入研究是如何解决的？在最后思考这样解决有没有什么缺点、会不会引入新的问题？要有自己的思考。</p>
+<p>说到文章，总的讲述了 WSGI，uWSGI，uwsgi 这三个看起来很像，但是却有着本质上的区别的三个名词。</p>
+<ul>
+<li><strong><em>WSGI*</em></strong> stands for <em><a href="https://en.wikipedia.org/wiki/Web_Server_Gateway_Interface" target="_blank" rel="external">Web Server Gateway Interface</a></em> and it’s a spec for a software interface between a web server and a python application.  *简单讲，WSGI 是一种网关协议，用于 Web Server 与 python 程序的通信。</li>
+<li><a href="http://uwsgi-docs.readthedocs.io/en/latest/index.html" target="_blank" rel="external">uWSGI</a><em> is a popular web server that implements the WSGI standard. </em>用人话讲，uWSGI 是一个正儿八经的 Web 服务器，与 Nginx 是同一种东西，不过跟 Nginx 比起来，稍占下风。</li>
+<li><em>So we know WSGI is a software spec, uWSGI is a server, so what the hell is uwsgi? When it’s spelled using all <strong>lowercase letters</strong>, it refers to a binary protocol for connecting the uWSGI server to other applications. </em>全部都是小写字母组成的名词 <strong>uwsgi </strong>是一种二进制协议，是 uWSGI 与其他应用程序通信的协议。</li>
+</ul>
+<p>一图胜前言，看下面这张图就明白了：</p>
+<p><img src="https://uploader.shimo.im/f/KmF8y3hYTE8nbjHg.png!thumbnail" alt="图片"></p>
+<h1 id="Tip"><a href="#Tip" class="headerlink" title="Tip"></a>Tip</h1><p><del>For：总结归纳学习中遇到的知识点</del></p>
+<p>这一周主要研究了 Web 安全相关的 SQL 注入漏洞。之前也了解过 SQL 注入的攻击，知道 SQL 注入攻击会有数据安全，但是没深入了解与实践过，不知道造成的影响有多严重。</p>
+<p>这一次结合<a href="http://www.dvwa.co.uk/" target="_blank" rel="external"> DVWA</a> 这个 Application 实践了一波，实践的同时，参考了：<a href="https://pentestlab.blog/2012/09/18/sql-injection-exploitation-dvwa/" target="_blank" rel="external">SQL Injection Exploitation – DVWA</a> 这篇博客。</p>
+<p>SQL Injection 攻击的产生是由于开发者编码的不严谨，相信用户的输入是符合预期的，但是这往往是错的，<del>用户不一定都是好用户</del>。</p>
+<p><img src="https://uploader.shimo.im/f/SilQNchiKEQfnGic.png!thumbnail" alt="图片"></p>
+<p>上面的代码实例中，接收用户的输入，不做任何验证，拼接成想要查询的 SQL 查询，然后交给数据库服务器执行。以上代码能安全无误的工作的前提是：<strong>用户的输入符合我们的设想，即 id。</strong>但是如果用户输入的是  <strong>0’ or 1=1’</strong> 呢？</p>
+<p>那这样的话，最终的 SQL 语句就是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SELECT first_name, last_name FROM users WHERE user_id = ‘1’ or 1=1;</div></pre></td></tr></table></figure>
+<p>代码原本的逻辑就改变了，现在能查询出数据表里所有的数据了。</p>
+<p>如果只是这样还好，如果 “用户” 是个高手，结合 union 关键字，就能做很多事情了…比如：</p>
+<h3 id="查看数据库版本"><a href="#查看数据库版本" class="headerlink" title="查看数据库版本"></a>查看数据库版本</h3><ul>
+<li>输入 <strong>‘ union select 1,@@version#</strong></li>
+</ul>
+<p><img src="https://uploader.shimo.im/f/bhE397Iq4E8rXhlv.png!thumbnail" alt="图片"></p>
+<h3 id="查看-hostname"><a href="#查看-hostname" class="headerlink" title="查看 hostname"></a>查看 hostname</h3><p><img src="https://uploader.shimo.im/f/EULpAJvuxX86WLLu.png!thumbnail" alt="图片"></p>
+<h3 id="查看当前数据库连接用户名"><a href="#查看当前数据库连接用户名" class="headerlink" title="查看当前数据库连接用户名"></a>查看当前数据库连接用户名</h3><p><img src="https://uploader.shimo.im/f/uswLLTRFQwsojRQt.png!thumbnail" alt="图片"></p>
+<h3 id="查看当前使用的数据库"><a href="#查看当前使用的数据库" class="headerlink" title="查看当前使用的数据库"></a>查看当前使用的数据库</h3><p><img src="https://uploader.shimo.im/f/9cXY1ddyB68bqwlQ.png!thumbnail" alt="图片"></p>
+<h3 id="查看当前数据库服务器的所有数据库"><a href="#查看当前数据库服务器的所有数据库" class="headerlink" title="查看当前数据库服务器的所有数据库"></a>查看当前数据库服务器的所有数据库</h3><p><img src="https://uploader.shimo.im/f/9XRVnEHuKVE6eSbt.png!thumbnail" alt="图片"></p>
+<h3 id="查看某一个数据库里面的所有表"><a href="#查看某一个数据库里面的所有表" class="headerlink" title="查看某一个数据库里面的所有表"></a>查看某一个数据库里面的所有表</h3><p><img src="https://uploader.shimo.im/f/7dK8XLmx4fgjxQQq.png!thumbnail" alt="图片"></p>
+<h3 id="查看其他表的信息"><a href="#查看其他表的信息" class="headerlink" title="查看其他表的信息"></a>查看其他表的信息</h3><p><img src="https://uploader.shimo.im/f/wASX4wwa5MMsQCg1.png!thumbnail" alt="图片"></p>
+<h1 id="Share"><a href="#Share" class="headerlink" title="Share"></a>Share</h1><p><del>For：有自己的观点</del></p>
+<p>大三下学期了，半只脚踏在社会了，开始找实习了，就记录下自己近期面试的一些随（tu）想(cao) 吧。</p>
+<h3 id="面试是平等沟通交流的过程"><a href="#面试是平等沟通交流的过程" class="headerlink" title="面试是平等沟通交流的过程"></a>面试是平等沟通交流的过程</h3><p>其实不少人把面试当成是一种考试，一种跟在学校一样的考试，只有对与错。在我看来，面试是一个平等交流的过程，在这个过程中，面试官与应聘者通过真诚的沟通，面试官可以发现应聘者的优点，应聘者也能发挥自己的优点。</p>
+<p>对于技术面试，很多人会怕面试官会问到一些我们不懂的技术点，就像考试一样，害怕老师考我们没复习到的地方。不过，这毕竟不是考试。这么多技术点，我们当然是无法全部掌握的，不过如果我们能做到，对自己接触到的技术，能有深层次的理解，让面试官感觉到你是一个懂得学习的人。做到了这一点，也就是让面试官发现了你的优点：懂得学习，那么对于其他的技术点，也能很快通过学习掌握。</p>
+<p>同时，很多面试官，对于某些问题，总会打破砂锅问到底，这也是面试官想通过追问的方式，来挖掘应聘者的优点，是不是会深入技术点的本质，不仅懂得用，还能知道为什么。</p>
+<h3 id="关于面经"><a href="#关于面经" class="headerlink" title="关于面经"></a>关于面经</h3><p>很多人会去看面经，觉得面经是葵花宝典，面试前，看一看，就像在学校考试前一夜，看看必考题。</p>
+<p>面经可以看，可以让我们有一个参考，知道技术重点是什么，同时，也能找到自己欠缺什么，但面经，毕竟是别人写的，是别人的理解，不是我们自己的。这个，我们还是要有自己的思考，这样，在面试的时候，才能更加自信、从容。</p>
+<h3 id="关于面试结果"><a href="#关于面试结果" class="headerlink" title="关于面试结果"></a>关于面试结果</h3><p>面试通过与否，有很大的不确定性。不像在学校考试，只要我们答对了，肯定能得分。为什么有很大的不确定行呢？因为你无法知道给你面试的面试官的性格、对优秀的标准、考察标准…这些都因人而异。不过，如果有实力，这种情况还是很少发生。</p>
+<p>最后，面试通过，开心庆祝一下；不通过，也不要灰心，不是自己不行，做一下复盘，是一个学习的过程。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;Algorithm&quot;&gt;&lt;a href=&quot;#Algorithm&quot; class=&quot;headerlink&quot; title=&quot;Algorithm&quot;&gt;&lt;/a&gt;Algorithm&lt;/h1&gt;&lt;p&gt;&lt;del&gt;For：编程训练和学习&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;htt
+    
+    </summary>
+    
+    
+      <category term="ARST" scheme="http://yoursite.com/tags/ARST/"/>
+    
+  </entry>
+  
+  <entry>
     <title>数据结构|二叉树</title>
     <link href="http://yoursite.com/2018/12/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E4%BA%8C%E5%8F%89%E6%A0%91/"/>
     <id>http://yoursite.com/2018/12/12/数据结构-二叉树/</id>
     <published>2018-12-11T17:16:40.000Z</published>
-    <updated>2018-12-11T09:21:24.665Z</updated>
+    <updated>2018-12-11T09:21:24.666Z</updated>
     
     <content type="html"><![CDATA[<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
 <li><a href="https://mp.weixin.qq.com/s/ONKJyusGCIE2ctwT9uLv9g" target="_blank" rel="external">坐下，这些都是二叉树的基本操作</a></li>
@@ -73,7 +143,7 @@
     <link href="http://yoursite.com/2018/12/04/php-php%E5%BA%95%E5%B1%82%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E4%B8%8E%E5%8E%9F%E7%90%86/"/>
     <id>http://yoursite.com/2018/12/04/php-php底层运行机制与原理/</id>
     <published>2018-12-03T23:14:08.000Z</published>
-    <updated>2018-12-03T15:53:25.216Z</updated>
+    <updated>2018-12-03T15:53:25.217Z</updated>
     
     <content type="html"><![CDATA[<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
 <li><a href="https://www.awaimai.com/509.html" target="_blank" rel="external">PHP底层的运行机制与原理</a></li>
@@ -127,7 +197,7 @@
     <link href="http://yoursite.com/2018/12/01/python-%E7%94%9F%E6%88%90%E5%99%A8/"/>
     <id>http://yoursite.com/2018/12/01/python-生成器/</id>
     <published>2018-12-01T01:12:46.000Z</published>
-    <updated>2018-11-30T17:14:46.483Z</updated>
+    <updated>2018-11-30T17:14:46.484Z</updated>
     
     <content type="html"><![CDATA[<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
 <li><a href="http://www.bjhee.com/python-yield.html" target="_blank" rel="external">谈谈Python的生成器</a></li>
@@ -227,7 +297,7 @@
     <link href="http://yoursite.com/2018/11/23/Mysql-%E7%B4%A2%E5%BC%95%E7%9B%B8%E5%85%B3/"/>
     <id>http://yoursite.com/2018/11/23/Mysql-索引相关/</id>
     <published>2018-11-23T00:35:16.000Z</published>
-    <updated>2018-11-23T11:18:58.267Z</updated>
+    <updated>2018-11-23T11:18:58.268Z</updated>
     
     <content type="html"><![CDATA[<h3 id="B树"><a href="#B树" class="headerlink" title="B树"></a>B树</h3><ul>
 <li><a href="http://www.ligen.pro/2018/02/09/%E4%BD%BF%E7%94%A8B-%E6%A0%91%E5%AE%9E%E7%8E%B0%E7%B4%A2%E5%BC%95/" target="_blank" rel="external">使用B+树实现索引</a></li>
@@ -372,6 +442,29 @@
   
   <entry>
     <title>Mysql|性能优化化</title>
+    <link href="http://yoursite.com/2018/11/01/mysql-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    <id>http://yoursite.com/2018/11/01/mysql-性能优化/</id>
+    <published>2018-10-31T17:14:18.000Z</published>
+    <updated>2018-10-31T16:00:16.119Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://segmentfault.com/a/1190000008131735" target="_blank" rel="external">MySQL 性能优化神器 Explain 使用分析</a></li>
+<li><a href="http://www.ywnds.com/?p=5202" target="_blank" rel="external">MySQL执行计划详解（EXPLAIN）</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;参考&quot;&gt;&lt;a href=&quot;#参考&quot; class=&quot;headerlink&quot; title=&quot;参考&quot;&gt;&lt;/a&gt;参考&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://segmentfault.com/a/1190000008131735&quot; target=&quot;_b
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Mysql|性能优化化</title>
     <link href="http://yoursite.com/2018/11/01/Mysql-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%8C%96/"/>
     <id>http://yoursite.com/2018/11/01/Mysql-性能优化化/</id>
     <published>2018-10-31T17:14:18.000Z</published>
@@ -394,34 +487,11 @@
   </entry>
   
   <entry>
-    <title>Mysql|性能优化化</title>
-    <link href="http://yoursite.com/2018/11/01/mysql-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
-    <id>http://yoursite.com/2018/11/01/mysql-性能优化/</id>
-    <published>2018-10-31T17:14:18.000Z</published>
-    <updated>2018-10-31T16:00:16.118Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
-<li><a href="https://segmentfault.com/a/1190000008131735" target="_blank" rel="external">MySQL 性能优化神器 Explain 使用分析</a></li>
-<li><a href="http://www.ywnds.com/?p=5202" target="_blank" rel="external">MySQL执行计划详解（EXPLAIN）</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;参考&quot;&gt;&lt;a href=&quot;#参考&quot; class=&quot;headerlink&quot; title=&quot;参考&quot;&gt;&lt;/a&gt;参考&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://segmentfault.com/a/1190000008131735&quot; target=&quot;_b
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>Mysql|Mysql存储过程入门</title>
     <link href="http://yoursite.com/2018/10/27/Mysql-Mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E5%85%A5%E9%97%A8/"/>
     <id>http://yoursite.com/2018/10/27/Mysql-Mysql存储过程入门/</id>
     <published>2018-10-27T13:42:01.000Z</published>
-    <updated>2018-10-27T05:45:16.726Z</updated>
+    <updated>2018-10-27T05:45:16.727Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://segmentfault.com/a/1190000009058579" target="_blank" rel="external">MySQL存储过程暴力入门手记</a><br><a href="https://juejin.im/post/587f58bd8d6d810058e4eec2" target="_blank" rel="external">mysql 中的存储过程和自定义函数</a></p>
 ]]></content>
@@ -440,7 +510,7 @@
     <link href="http://yoursite.com/2018/10/26/Navicat%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-md/"/>
     <id>http://yoursite.com/2018/10/26/Navicat基本使用-md/</id>
     <published>2018-10-25T17:32:17.000Z</published>
-    <updated>2018-10-25T15:04:35.802Z</updated>
+    <updated>2018-10-25T15:04:35.803Z</updated>
     
     <content type="html"><![CDATA[<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>自己之前就安装过了，也使用了好久，现在有使用很多账号、连接管理，由于之前没做好这些账号信息的记录，重装后得再去找这些账号的信息就比较麻烦，就不卸载重装了，请老师能理解。</p>
 <h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><ul>
@@ -488,7 +558,7 @@
     <link href="http://yoursite.com/2018/10/19/python-Flask-uWSGI-Nginx-Ubuntu%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/"/>
     <id>http://yoursite.com/2018/10/19/python-Flask-uWSGI-Nginx-Ubuntu部署教程/</id>
     <published>2018-10-19T14:31:37.000Z</published>
-    <updated>2018-10-19T12:38:15.955Z</updated>
+    <updated>2018-10-19T12:38:15.956Z</updated>
     
     <content type="html"><![CDATA[<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
 <li>转:<a href="https://www.linuxidc.com/Linux/2016-06/132690.htm" target="_blank" rel="external">Flask+uWSGI+Nginx+Ubuntu部署教程</a></li>
@@ -545,7 +615,7 @@
     <link href="http://yoursite.com/2018/10/17/python-flask%E7%AE%80%E5%8D%95%E7%94%A8/"/>
     <id>http://yoursite.com/2018/10/17/python-flask简单用/</id>
     <published>2018-10-16T23:56:41.000Z</published>
-    <updated>2018-11-30T11:51:50.604Z</updated>
+    <updated>2018-11-30T11:51:50.605Z</updated>
     
     <content type="html"><![CDATA[<h3 id="about-flask"><a href="#about-flask" class="headerlink" title="about flask"></a>about flask</h3><ul>
 <li><a href="http://www.bjhee.com/flask-ext1.html" target="_blank" rel="external">Flask扩展系列</a></li>
@@ -601,52 +671,6 @@
     
       &lt;h3 id=&quot;pytest的fixture&quot;&gt;&lt;a href=&quot;#pytest的fixture&quot; class=&quot;headerlink&quot; title=&quot;pytest的fixture&quot;&gt;&lt;/a&gt;pytest的fixture&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;将fixture作为函数参数&lt;/
-    
-    </summary>
-    
-      <category term="python" scheme="http://yoursite.com/categories/python/"/>
-    
-    
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>python|SQLAlchemy之Relationship</title>
-    <link href="http://yoursite.com/2018/10/14/python-SQLAlchemy%E4%B9%8BRelationship/"/>
-    <id>http://yoursite.com/2018/10/14/python-SQLAlchemy之Relationship/</id>
-    <published>2018-10-13T23:21:12.000Z</published>
-    <updated>2018-11-06T07:02:04.319Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="relationship"><a href="#relationship" class="headerlink" title="relationship"></a><code>relationship</code></h3><p>简单来说, <code>relationship</code>函数是<code>sqlalchemy</code>对关系之间提供的一种便利的调用方式, backref参数则对关系提供反向引用的声明。假如没有relationship，我们只能像下面这样调用关系数据：给定参数User.name,获取该user的addresses。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">def get_addresses_from_user(user_name):</div><div class="line">    user = session.query(User).filter_by(name=user_name).first()</div><div class="line">    addresses = session.query(Address).filter_by(user_id=user.id).all()</div><div class="line">    return addresses</div></pre></td></tr></table></figure></p>
-<p>如果在User中使用relationship定义addresses属性的话，<code>addresses = relationship(&#39;Address&#39;)</code>,则我们可以直接在User对象中通过addresses属性获得指定用户的所有地址。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def get_addresses_from_user(user_name):</div><div class="line">    user = session.query(User).filter_by(name=user_name).first()</div><div class="line">    return user.addresses</div></pre></td></tr></table></figure></p>
-<p>注意，在上面的addresses属性中我们并没有定义backref属性,所以我们可以通过User对象获取所拥有的地址，但是不能通过Address对象获取到所属的用户。</p>
-<h3 id="backref"><a href="#backref" class="headerlink" title="backref"></a><code>backref</code></h3><p>简单地说就是: <code>backref</code>用于在关系另一端的类中快捷地创建一个指向当前类对象的属性, 而当需要对那个属性指定参数时使用 <code>db.backref()</code></p>
-<p>在上例中，在<code>user</code>的<code>addresses</code>属性中我们并没有定义<code>backref</code>属性,所以我们可以通过User对象获取所拥有的地址，但是不能通过Address对象获取到所属的用户。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; u = User()</div><div class="line">&gt;&gt;&gt; u.addresses</div><div class="line">[]</div><div class="line">&gt;&gt;&gt; a = Address()</div><div class="line">&gt;&gt;&gt; a.user</div><div class="line">Traceback (most recent call last):</div><div class="line">  File &quot;&lt;input&gt;&quot;, line 1, in &lt;module&gt;</div><div class="line">AttributeError: &apos;Address&apos; object has no attribute &apos;user&apos;</div></pre></td></tr></table></figure>
-<p>但是当我们有从Address对象获取所属用户的需求时，backref参数就派上用场了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">addresses = relationship(&apos;Address&apos;, backref=&apos;user&apos;)</div><div class="line">&gt;&gt;&gt; a = Address()</div><div class="line">&gt;&gt;&gt; a.user</div></pre></td></tr></table></figure></p>
-<p>大致原理应该就是sqlalchemy在运行时对Address对象动态的设置了一个指向所属User对象的属性，这样就能在实际开发中使逻辑关系更加清晰，代码更加简洁了。</p>
-<p>转:<a href="https://www.zhihu.com/question/38456789" target="_blank" rel="external">知乎</a></p>
-<h3 id="lazy"><a href="#lazy" class="headerlink" title="lazy"></a><code>lazy</code></h3><p>lazy 决定了 SQLAlchemy 什么时候从数据库中加载数据:，有如下四个值:(其实还有个noload不常用)</p>
-<ul>
-<li><p>select: (which is the default) means that SQLAlchemy will load the data as necessary in one go using a standard select statement.</p>
-</li>
-<li><p>joined: tells SQLAlchemy to load the relationship in the same query as the parent using a JOIN statement.</p>
-</li>
-<li><p>subquery: works like ‘joined’ but instead SQLAlchemy will use a subquery.</p>
-</li>
-<li><p>dynamic : is special and useful if you have many items. Instead of loading the items SQLAlchemy will return another query object which you can further refine before loading the items. This is usually what you want if you expect more than a handful of items for this relationship</p>
-</li>
-</ul>
-<p>通俗了说，<code>select</code>就是访问到属性的时候，就会全部加载该属性的数据。<code>joined</code>则是在对关联的两个表进行join操作，从而获取到所有相关的对象。<code>dynamic</code>则不一样，在访问属性的时候，并没有在内存中加载数据，而是返回一个<code>query对象</code>, 需要执行相应方法才可以获取对象，比如<code>.all()</code>.</p>
-<p>转:<a href="https://blog.csdn.net/qq_34146899/article/details/52559747" target="_blank" rel="external">flask-sqlalchemy中 backref lazy的参数实例解释和选择</a><br>转:<a href="https://blog.csdn.net/bestallen/article/details/52601457" target="_blank" rel="external">SQLalchemy relationship之lazy属性 学习笔记</a></p>
-<p>转:<a href="https://www.xncoding.com/2016/03/07/python/sqlalchemy02.html" target="_blank" rel="external">SQLAlchemy进阶</a></p>
-<p>转:<a href="https://wing324.github.io/2017/02/25/%E4%BD%BF%E7%94%A8flask-sqlalchemy%E7%8E%A9%E8%BD%ACMySQL/" target="_blank" rel="external">使用flask-sqlalchemy玩转MySQL</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;relationship&quot;&gt;&lt;a href=&quot;#relationship&quot; class=&quot;headerlink&quot; title=&quot;relationship&quot;&gt;&lt;/a&gt;&lt;code&gt;relationship&lt;/code&gt;&lt;/h3&gt;&lt;p&gt;简单来说, &lt;code&gt;relat
     
     </summary>
     
